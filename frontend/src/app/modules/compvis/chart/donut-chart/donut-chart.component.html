@@ -1,0 +1,43 @@
+<div id="donutComponent" (mouseleave)="mouseOutDonutPart()">
+    <h5 *ngIf="selectedBar">
+      {{ selectedBar.competence.name }}
+    </h5>
+    <div #donutChart id="donut-chart">
+      <svg>
+        <g>
+          <g *ngFor="let d of donutChartData; index as i"
+            (click)="mouseInDonutPart(i)"
+            (mouseover)="mouseInDonutPart(i)">
+            <path #donutPart *ngIf="d.value !== 0"
+              [attr.d]="this.arc(d)"
+              [attr.fill]="this.color[i]"
+              stroke="black" style="stroke-width: 1px; opacity: 0.7;">
+            </path>
+            <text *ngIf="d.value !== 0"
+                  [attr.x] = "this.arc.centroid(d)[0]-5"
+                  [attr.y] = "this.arc.centroid(d)[1]"
+                  [attr.font-size] = "10">
+              {{ getShortDescription(i) }}
+            </text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div id="competence-list">
+      <h6>Unterkompetenzen, welche nicht abgedeckt sind:</h6>
+      <span *ngFor="let comp of childCompetences; index as i"> 
+        <span *ngIf="this.fulfillment && this.fulfillment[i].fulfillment === 0" class="no-fulfillment" 
+              (click)="mouseInDonutPart(i)"
+              (mouseover)="mouseInDonutPart(i)"> {{ comp.compId | formatCompetence }} </span>
+      </span>
+    </div>
+    <div id="infoField">
+      <div id="shortDescription">{{ description }}</div>
+      <hr>
+      <div id="longDescription">{{ longDescription }}</div>
+    </div>
+    <div class="alert alert-primary" id="hint">
+        Bitte klicken Sie auf eines der Kreissegmente oder fahren mit der Maus hinein um nähere Informationen zu erhalten.
+    </div>
+  </div>
+  

@@ -1,0 +1,43 @@
+// applies to all searches (search panel, course search, ...)
+
+.search-input-wrapper {
+  width: 75%;
+}
+
+.search-filter-button {
+  margin-left: 1rem;
+  min-width: fit-content;
+  white-space: nowrap;
+  gap: 0.5rem;
+
+  &.filter-icon {
+    font-size: 1.25rem;
+  }
+}
+
+// is applied if search panel is passed [customStyle]="true"
+// currently: sidenav search
+.custom-expansion-panel {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+// remove margins and paddings
+.custom-expansion-panel {
+
+  .mat-expansion-panel-header,
+  .mat-expansion-panel-body {
+    padding: 0 !important;
+  }
+
+  .search-input-field {
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .search-panel {
+    width: 100%;
+  }
+
+}

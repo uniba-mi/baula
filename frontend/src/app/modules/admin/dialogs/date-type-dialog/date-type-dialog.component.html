@@ -1,0 +1,21 @@
+<form [formGroup]="dateTypeForm">
+    <div>
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input type="text" matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Beschreibung</mat-label>
+            <input type="text" matInput formControlName="desc">
+        </mat-form-field>
+    </div>
+</form>
+
+<mat-dialog-actions>
+    <button mat-raised-button class="btn btn-outline" mat-dialog-close>Abbrechen</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="this.dateTypeForm.value"
+        [disabled]="!this.dateTypeForm.valid">Speichern</button>
+
+</mat-dialog-actions>

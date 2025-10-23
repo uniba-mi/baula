@@ -1,0 +1,39 @@
+<!-- <div *ngIf="course && moduleId" class="d-inline-flex " (mouseenter)="hoverSelectCourse(course)" (mouseleave)="hoverDeselectCourse()">
+  <mat-checkbox class="my-2" [checked]="this.checkSelectedCourses(this.selectedCourses, course)" (change)="selectCourse(course)"
+    [id]="course.id" ariaLabel="Lehrveranstaltung auswählen">
+    {{ course.name }} ({{ course.type | ShortenCourseType }})
+  </mat-checkbox>
+  <i class="d-flex bi bi-info-circle icon ms-3 me-0 align-items-center" (click)="openDialog(course)"></i>
+</div> -->
+<ng-container *ngIf="course && course.mCourses && course.mCourses.length > 1; else noModuleSelection">
+  <div class="d-inline-flex" (click)="toggle()">
+    <span class="ms-2 me-2 d-flex align-items-center">
+      <i class="bi bi-chevron-down" *ngIf="!collapsed"></i>
+      <i class="bi bi-chevron-up" *ngIf="collapsed"></i>
+    </span>
+    <span>
+      {{ course.name }} ({{ course.type | ShortenCourseType }})
+    </span>
+    <i class="d-flex bi bi-info-circle icon ms-3 me-0 align-items-center" (click)="openDialog($event, course)"></i>
+  </div>
+  <div *ngIf="collapsed">
+    <div *ngFor="let mCourse of course.mCourses" (mouseenter)="hoverSelectCourse(course, mCourse.modCourse.mcId)" (mouseleave)="hoverDeselectCourse()">
+      <mat-checkbox class="ms-4" [checked]="this.checkSelectedCourses(course, mCourse.modCourse.mcId)"
+        (change)="selectCourse(course, mCourse.modCourse.mcId)" ariaLabel="Lehrveranstaltung auswählen" [disabled]="this.checkIfDisabled(course, mCourse.modCourse.mcId)">
+        {{ mCourse.modCourse.identifier.acronym }} | {{ mCourse.modCourse.name }}
+      </mat-checkbox>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noModuleSelection>
+  <ng-container *ngIf="course && course.mCourses && course.mCourses.length == 1">
+    <div class="d-inline-flex" (mouseenter)="hoverSelectCourse(course, course.mCourses[0].modCourse.mcId)" (mouseleave)="hoverDeselectCourse()">
+      <mat-checkbox [checked]="this.checkSelectedCourses(course, course.mCourses[0].modCourse.mcId)"
+        (change)="selectCourse(course, course.mCourses[0].modCourse.mcId)" ariaLabel="Lehrveranstaltung auswählen">
+        {{ course.name }} ({{ course.type | ShortenCourseType }})
+      </mat-checkbox>
+      <i class="d-flex bi bi-info-circle icon ms-3 me-0 align-items-center" (click)="openDialog($event, course)"></i>
+    </div>
+  </ng-container>
+</ng-template>

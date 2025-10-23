@@ -1,0 +1,175 @@
+Module,Avg_Pass_Semester,Success_Pass_Semester,Successors,Precursors
+IT English - Security,,,[],[]
+ISDL-ISS3-M,,,[],[]
+SNA-WIM-B,,,[],[]
+ISDL-ITCon-B,3,,"[('Bachelorarbeit', 55), ('BaIISM-Sem1-B', 43), ('BaIISM-Sem2-B', 41), ('IIS-EAM-B', 38), ('ISM-LCR-B', 35), ('ISDL-MED-B', 33), ('EESYS-IITP-B', 32), ('SEDA-WI-Proj-B', 31), ('ISM-SaaS-B', 30), ('ISDL-Start-B', 29), ('SNA-ITSM-B', 28), ('ISDL-ECM-B', 25), ('SNA-IWM-B', 24), ('ISDL-SOA', 23), ('IntMan-B-01', 22), ('MOBI-DBS-B', 20), ('WiPäd-B-01', 18), ('Inno-B-01', 18), ('IISM-PrakIntKon-B', 17), ('ISM-PT-B', 16), ('Con-B-01', 16), ('IIS-E-Biz-B', 15), ('ISDL-IOM-B', 15), ('ISDL-ITCHANGE-M', 15), ('IntMan-B-04', 14), ('DSG-EiAPS-B', 13), ('PuL-B-101', 12), ('IIS-EBAS-B', 12), ('EVWL', 10), ('Stat-B-01', 10)]","[('SEDA-GbIS-B', 42), ('IRWP-B-01', 41), ('Mathe-B-02', 41), ('Mathe-B-01', 40), ('BSL-B-00', 39), ('IIS-EBAS-B', 37), ('ETH', 33), ('MOBI-DBS-B', 30), ('Wirtschaftsenglisch I', 29), ('IntMan-B-01', 27), ('SNA-IWM-B', 27), ('Stat-B-01', 26), ('Wirtschaftsenglisch II', 25), ('Recht-B-02', 21), ('DSG-EiAPS-B', 19), ('EESYS-IITP-B', 17), ('Wirtschaftsenglisch IV', 11), ('Con-B-01', 10), ('PM-B-01', 10)]"
+Stat-B-01,3,2.0,"[('Bachelorarbeit', 41), ('BaIISM-Sem1-B', 36), ('BaIISM-Sem2-B', 33), ('IIS-EAM-B', 32), ('ISDL-ITCon-B', 32), ('Con-B-01', 30), ('SEDA-WI-Proj-B', 30), ('SNA-ITSM-B', 30), ('EESYS-IITP-B', 28), ('ISM-LCR-B', 27), ('ISDL-ECM-B', 26), ('ISDL-MED-B', 25), ('ISM-SaaS-B', 24), ('SNA-IWM-B', 24), ('ISM-PT-B', 24), ('ISDL-IOM-B', 23), ('ISDL-Start-B', 23), ('MOBI-DBS-B', 21), ('IntMan-B-01', 21), ('IIS-EBAS-B', 20), ('Inno-B-01', 20), ('WiPäd-B-01', 20), ('ISDL-SOA', 19), ('IIS-E-Biz-B', 15), ('IntMan-B-04', 15), ('DSG-EiAPS-B', 14), ('ETH', 12), ('Recht-B-01', 12), ('ISDL-ITCHANGE-M', 11), ('EVWL', 11), ('Recht-B-02', 11), ('IISM-PrakIntKon-B', 11), ('ISDL-WAWI-B', 10)]","[('Mathe-B-01', 29), ('BSL-B-00', 29), ('IRWP-B-01', 27), ('Mathe-B-02', 22), ('SEDA-GbIS-B', 21), ('Wirtschaftsenglisch I', 21), ('DSG-EiAPS-B', 14), ('IIS-EBAS-B', 14), ('Wirtschaftsenglisch II', 11), ('ETH', 11)]"
+WiMa-B-01a,,,[],[]
+Englisch,,,[],[]
+Francais B1,,,[],[]
+IISM in der betrieblichen Praxis,,,[],[]
+SEDA-EbIS-1-M,,,[],[]
+ISDL-Sem-B,,,[],[]
+ISDL-IOM-B,5,,"[('Bachelorarbeit', 31), ('BaIISM-Sem2-B', 20), ('ISDL-MED-B', 18), ('BaIISM-Sem1-B', 17), ('SEDA-WI-Proj-B', 16), ('EESYS-IITP-B', 16), ('ISM-LCR-B', 15), ('IIS-EAM-B', 13), ('ISDL-ECM-B', 13), ('ISM-SaaS-B', 12), ('ETH', 11), ('ISDL-SOA', 11), ('IIS-E-Biz-B', 10), ('SNA-IWM-B', 10), ('IISM-PrakIntKon-B', 10)]","[('BSL-B-00', 21), ('IRWP-B-01', 19), ('Stat-B-01', 18), ('Mathe-B-01', 17), ('MOBI-DBS-B', 17), ('IntMan-B-01', 16), ('Mathe-B-02', 15), ('SEDA-GbIS-B', 13), ('Wirtschaftsenglisch I', 13), ('SNA-IWM-B', 13), ('ETH', 12), ('IIS-EBAS-B', 12), ('ISDL-ITCon-B', 12), ('Recht-B-02', 11), ('IIS-EAM-B', 11), ('Wirtschaftsenglisch II', 10), ('ISDL-MED-B', 10)]"
+SWT-PMI-B,,,[],[]
+PM-B-01,,,[],[]
+ETH,2,2.0,"[('Bachelorarbeit', 53), ('BaIISM-Sem2-B', 47), ('BaIISM-Sem1-B', 44), ('ISDL-ITCon-B', 43), ('SEDA-WI-Proj-B', 43), ('ISDL-ECM-B', 39), ('SNA-ITSM-B', 36), ('IIS-EAM-B', 35), ('ISM-LCR-B', 34), ('Con-B-01', 34), ('ISDL-MED-B', 32), ('ISDL-SOA', 32), ('EESYS-IITP-B', 30), ('ISM-SaaS-B', 30), ('ISDL-Start-B', 30), ('MOBI-DBS-B', 28), ('ISDL-IOM-B', 26), ('IntMan-B-01', 26), ('SNA-IWM-B', 25), ('ISM-PT-B', 25), ('DSG-EiAPS-B', 24), ('IntMan-B-04', 22), ('IISM-PrakIntKon-B', 21), ('WiPäd-B-01', 21), ('Stat-B-01', 21), ('IIS-E-Biz-B', 20), ('ISDL-ITCHANGE-M', 19), ('Inno-B-01', 18), ('Recht-B-02', 16), ('EVWL', 15), ('ISDL-WAWI-B', 14), ('IIS-EBAS-B', 14), ('PM-B-01', 10), ('Wirtschaftsenglisch IV', 10), ('SEDA-EuU-B', 10)]","[('Mathe-B-01', 36), ('SEDA-GbIS-B', 36), ('Wirtschaftsenglisch I', 33), ('IRWP-B-01', 32), ('Mathe-B-02', 31), ('BSL-B-00', 30), ('Con-B-01', 12), ('Stat-B-01', 12), ('ISDL-IOM-B', 10)]"
+Fremdsprachen,,,[],[]
+Con-B-01,4,,"[('Bachelorarbeit', 38), ('BaIISM-Sem2-B', 29), ('BaIISM-Sem1-B', 24), ('IIS-EAM-B', 22), ('ISDL-Start-B', 20), ('EESYS-IITP-B', 20), ('ISDL-MED-B', 20), ('ISM-LCR-B', 17), ('ISM-SaaS-B', 17), ('MOBI-DBS-B', 16), ('SEDA-WI-Proj-B', 16), ('SNA-ITSM-B', 16), ('SNA-IWM-B', 15), ('ISDL-ITCHANGE-M', 14), ('ISDL-ECM-B', 14), ('IntMan-B-01', 13), ('ISDL-SOA', 13), ('DSG-EiAPS-B', 12), ('ISDL-ITCon-B', 11), ('WiPäd-B-01', 11), ('ISM-PT-B', 11), ('IIS-E-Biz-B', 10), ('IntMan-B-04', 10), ('Recht-B-02', 10)]","[('SEDA-GbIS-B', 30), ('Mathe-B-01', 29), ('BSL-B-00', 28), ('IRWP-B-01', 26), ('Stat-B-01', 24), ('ETH', 24), ('IIS-EBAS-B', 22), ('Mathe-B-02', 21), ('IntMan-B-01', 20), ('Wirtschaftsenglisch I', 20), ('Wirtschaftsenglisch II', 18), ('Recht-B-02', 14), ('SNA-IWM-B', 14), ('MOBI-DBS-B', 14), ('EESYS-IITP-B', 13), ('ISDL-MED-B', 11), ('IIS-EAM-B', 10), ('ISDL-ITCon-B', 10), ('Inno-B-01', 10), ('Wirtschaftsenglisch IV', 10)]"
+Français économique III (inkl. Modulteilprüfung),,,[],[]
+BFC-B-01,,,[],[]
+ISDL-ITCHANGE-B,,,[],[]
+BAEES2.3,,,[],[]
+Mikro-B-01,,,[],[]
+Wirtschaftsfranzösisch V,,,[],[]
+ISM-EidWI-B,,,[],[]
+IT English - Debating Legal Issues,,,[],[]
+PSI-EDS-B,,,[],[]
+Inno-B-01,4,,"[('Bachelorarbeit', 19), ('BaIISM-Sem2-B', 18), ('BaIISM-Sem1-B', 15), ('IIS-EAM-B', 13), ('EESYS-IITP-B', 12), ('ISDL-ECM-B', 12), ('ISM-LCR-B', 12), ('ISDL-Start-B', 11), ('SEDA-WI-Proj-B', 11), ('ISDL-MED-B', 10), ('ISM-SaaS-B', 10), ('Con-B-01', 10)]","[('IRWP-B-01', 18), ('SEDA-GbIS-B', 18), ('Mathe-B-01', 18), ('BSL-B-00', 17), ('Wirtschaftsenglisch I', 17), ('ETH', 16), ('Mathe-B-02', 15), ('IIS-EBAS-B', 14), ('Stat-B-01', 14), ('Wirtschaftsenglisch II', 12), ('MOBI-DBS-B', 10)]"
+IIS-IAA-M,,,[],[]
+SEDA-EbIS-3-M,,,[],[]
+EESYS-ES2-M,,,[],[]
+ISDL-MED-B,5,,"[('Bachelorarbeit', 37), ('BaIISM-Sem2-B', 26), ('ISM-SaaS-B', 18), ('ISDL-ECM-B', 18), ('ISDL-SOA', 18), ('BaIISM-Sem1-B', 17), ('SEDA-WI-Proj-B', 15), ('ISDL-Start-B', 13), ('IISM-PrakIntKon-B', 12), ('ISM-LCR-B', 12), ('ISDL-ITCon-B', 11), ('IIS-EAM-B', 11), ('IIS-E-Biz-B', 10), ('Con-B-01', 10), ('SNA-ITSM-B', 10)]","[('BSL-B-00', 27), ('SEDA-GbIS-B', 26), ('IRWP-B-01', 24), ('Stat-B-01', 24), ('ISDL-ITCon-B', 23), ('Wirtschaftsenglisch I', 22), ('Mathe-B-01', 21), ('MOBI-DBS-B', 21), ('IIS-EBAS-B', 21), ('Con-B-01', 20), ('Mathe-B-02', 20), ('IntMan-B-01', 20), ('SNA-ITSM-B', 19), ('SNA-IWM-B', 18), ('ETH', 17), ('ISDL-IOM-B', 16), ('SEDA-WI-Proj-B', 16), ('Wirtschaftsenglisch II', 14), ('ISDL-WAWI-B', 13), ('DSG-EiAPS-B', 13), ('Recht-B-01', 12), ('EESYS-IITP-B', 12), ('Inno-B-01', 11), ('IntMan-B-04', 10), ('DSG-EidI-B', 10), ('IIS-EAM-B', 10), ('ISDL-ECM-B', 10), ('ISM-PT-B', 10), ('Recht-B-02', 10)]"
+IIS-Sem-B,,,[],[]
+KInf-GeoInf-B,,,[],[]
+BSL-B-01,,,[],[]
+ISPL-FIISM-B,6,,[],[]
+Business English VII,,,[],[]
+ISDL-eFin-B,6,,"[('Bachelorarbeit', 11)]","[('BSL-B-00', 12), ('IIS-EBAS-B', 12), ('MOBI-DBS-B', 12), ('SEDA-GbIS-B', 11), ('SNA-IWM-B', 11), ('Con-B-01', 10), ('ISDL-ITCon-B', 10), ('IRWP-B-01', 10)]"
+ISDL-ISS1-M,,,[],[]
+Business English II,,,[],[]
+PSI-EiRBS-B,,,[],[]
+PuL-B-101,4,,"[('Bachelorarbeit', 11)]",[]
+IntMan-B-04,4,,"[('Bachelorarbeit', 17), ('BaIISM-Sem2-B', 13), ('ISDL-SOA', 11), ('MOBI-DBS-B', 11), ('BaIISM-Sem1-B', 10), ('ISDL-Start-B', 10), ('SEDA-WI-Proj-B', 10), ('SNA-IWM-B', 10)]","[('IRWP-B-01', 16), ('Wirtschaftsenglisch I', 13), ('ETH', 12), ('SEDA-GbIS-B', 12), ('Stat-B-01', 12), ('Wirtschaftsenglisch II', 12), ('BSL-B-00', 11), ('IntMan-B-01', 11)]"
+Wirtschaftsenglisch III,,,[],[]
+PM-B-04,,,[],[]
+BaIISM-Sem1-B,6,,"[('Bachelorarbeit', 31), ('BaIISM-Sem2-B', 21), ('ISM-SaaS-B', 13), ('ISDL-MED-B', 11), ('SEDA-WI-Proj-B', 10)]","[('SEDA-GbIS-B', 24), ('Stat-B-01', 24), ('MOBI-DBS-B', 24), ('BSL-B-00', 22), ('IIS-EBAS-B', 22), ('IRWP-B-01', 22), ('ISDL-ITCon-B', 22), ('IntMan-B-01', 22), ('Mathe-B-02', 21), ('Con-B-01', 20), ('Mathe-B-01', 20), ('Wirtschaftsenglisch I', 18), ('IIS-EAM-B', 17), ('SNA-IWM-B', 17), ('DSG-EiAPS-B', 16), ('SNA-ITSM-B', 16), ('ISDL-MED-B', 16), ('ETH', 15), ('EESYS-IITP-B', 14), ('ISM-LCR-B', 14), ('Recht-B-02', 13), ('SEDA-WI-Proj-B', 13), ('WiPäd-B-01', 12), ('Wirtschaftsenglisch II', 12), ('ISDL-IOM-B', 11), ('Inno-B-01', 11), ('ISDL-Start-B', 10), ('ISM-SaaS-B', 10), ('ISDL-ECM-B', 10), ('Wirtschaftsenglisch IV', 10)]"
+ISM-PT-B,5,,"[('Bachelorarbeit', 22), ('BaIISM-Sem2-B', 15), ('ISDL-ECM-B', 11), ('ISM-SaaS-B', 10), ('BaIISM-Sem1-B', 10)]","[('BSL-B-00', 19), ('IRWP-B-01', 19), ('ETH', 19), ('SEDA-GbIS-B', 18), ('Stat-B-01', 18), ('Wirtschaftsenglisch I', 18), ('Mathe-B-01', 16), ('IntMan-B-01', 15), ('Mathe-B-02', 15), ('Con-B-01', 13), ('ISDL-ITCon-B', 13), ('ISDL-IOM-B', 12), ('Wirtschaftsenglisch II', 12), ('IIS-EBAS-B', 12), ('IIS-EAM-B', 11), ('SNA-ITSM-B', 11), ('EESYS-IITP-B', 10), ('MOBI-DBS-B', 10), ('SEDA-WI-Proj-B', 10)]"
+Market-B-01,,,[],[]
+BSL-B-00,1,1.0,"[('Bachelorarbeit', 39), ('ISDL-ITCon-B', 36), ('MOBI-DBS-B', 35), ('BaIISM-Sem1-B', 34), ('BaIISM-Sem2-B', 34), ('ISDL-MED-B', 34), ('Con-B-01', 33), ('SEDA-WI-Proj-B', 33), ('EESYS-IITP-B', 32), ('IIS-EAM-B', 31), ('SNA-ITSM-B', 31), ('SNA-IWM-B', 31), ('ISDL-ECM-B', 30), ('Stat-B-01', 30), ('ISM-LCR-B', 29), ('ETH', 28), ('ISDL-Start-B', 28), ('IntMan-B-01', 27), ('IIS-EBAS-B', 26), ('ISM-SaaS-B', 26), ('DSG-EiAPS-B', 22), ('Inno-B-01', 22), ('ISDL-SOA', 22), ('Recht-B-02', 20), ('ISDL-IOM-B', 19), ('IntMan-B-04', 18), ('ISM-PT-B', 17), ('ISDL-WAWI-B', 17), ('Wirtschaftsenglisch II', 16), ('WiPäd-B-01', 15), ('Wirtschaftsenglisch IV', 15), ('ISDL-ITCHANGE-M', 14), ('IIS-E-Biz-B', 13), ('Mathe-B-02', 12), ('EVWL', 11), ('IISM-PrakIntKon-B', 11), ('Recht-B-01', 10)]",[]
+MI-WebT-B,,,[],[]
+SEDA-DatSchu-B,,,[],[]
+Francais B2,,,[],[]
+Business English IV,,,[],[]
+IT English 2 - Debating Legal Issues,,,[],[]
+Wirtschaftsfranzösisch II (inkl. Modulprüfung),,,[],[]
+SNA-Sem-B,,,[],[]
+Wirtschaftsspanisch II,,,[],[]
+Schwedisch,,,[],[]
+WI-Seminar-B,,,[],[]
+DSG-AJP-B,,,[],[]
+ISM-MDI-M,,,[],[]
+Wirtschaftsfranzösisch I,,,[],[]
+Business English III,,,[],[]
+Stat-B-02,3,,"[('Bachelorarbeit', 14), ('WI-Projekt-B', 13), ('BaIISM-Sem1-B', 11), ('Con-B-01', 10), ('ISPL-FIISM-B', 10)]","[('Stat-B-01', 10)]"
+ISDL-ECM-B,5,,"[('Bachelorarbeit', 52), ('BaIISM-Sem2-B', 37), ('BaIISM-Sem1-B', 28), ('ISM-LCR-B', 25), ('EESYS-IITP-B', 22), ('ISDL-Start-B', 21), ('ISDL-ITCHANGE-M', 17), ('MOBI-DBS-B', 16), ('ISM-PT-B', 15), ('SEDA-WI-Proj-B', 15), ('IISM-PrakIntKon-B', 14), ('IIS-EAM-B', 14), ('ISDL-IOM-B', 14), ('WiPäd-B-01', 13), ('Con-B-01', 13), ('SNA-ITSM-B', 12), ('SNA-IWM-B', 12), ('DSG-EiAPS-B', 12), ('ISDL-MED-B', 12), ('ISM-SaaS-B', 11), ('IIS-E-Biz-B', 10), ('ISDL-SOA', 10), ('SEDA-DatSchu-B', 10)]","[('BSL-B-00', 50), ('SEDA-GbIS-B', 49), ('IIS-EBAS-B', 48), ('ETH', 47), ('IntMan-B-01', 46), ('IRWP-B-01', 45), ('Stat-B-01', 44), ('Mathe-B-01', 42), ('SNA-IWM-B', 42), ('Mathe-B-02', 41), ('Wirtschaftsenglisch I', 38), ('MOBI-DBS-B', 35), ('IIS-EAM-B', 34), ('ISDL-MED-B', 33), ('ISDL-ITCon-B', 32), ('Wirtschaftsenglisch II', 32), ('EESYS-IITP-B', 30), ('Con-B-01', 28), ('DSG-EiAPS-B', 26), ('SEDA-WI-Proj-B', 23), ('Recht-B-02', 22), ('SNA-ITSM-B', 22), ('ISM-PT-B', 21), ('Inno-B-01', 20), ('BaIISM-Sem1-B', 17), ('ISDL-IOM-B', 17), ('Recht-B-01', 17), ('Wirtschaftsenglisch IV', 16), ('ISDL-WAWI-B', 16), ('ISM-LCR-B', 15), ('EVWL', 13), ('PM-B-01', 13), ('ISM-SaaS-B', 13), ('WiPäd-B-01', 12), ('IntMan-B-04', 12), ('DSG-EidI-B', 11)]"
+ISM-SaaS-B,5-6,,"[('Bachelorarbeit', 22), ('BaIISM-Sem2-B', 10)]","[('BSL-B-00', 20), ('IIS-EBAS-B', 19), ('MOBI-DBS-B', 19), ('SEDA-GbIS-B', 19), ('IRWP-B-01', 18), ('Stat-B-01', 18), ('ISDL-ITCon-B', 17), ('EESYS-IITP-B', 16), ('ETH', 16), ('IntMan-B-01', 16), ('Mathe-B-01', 16), ('ISDL-MED-B', 15), ('Mathe-B-02', 15), ('SNA-IWM-B', 15), ('DSG-EiAPS-B', 13), ('Con-B-01', 12), ('IIS-EAM-B', 12), ('Wirtschaftsenglisch I', 12), ('SNA-ITSM-B', 11), ('Wirtschaftsenglisch II', 10), ('BaIISM-Sem1-B', 10)]"
+IT English I (Security 1),,,[],[]
+Abschlussklausur,,,[],[]
+ISDL-ISS2-M,,,[],[]
+IntWi-B-02,,,[],[]
+EESYS-ES1-M,,,[],[]
+SNA-IWM-B,4,,"[('Bachelorarbeit', 41), ('BaIISM-Sem2-B', 33), ('BaIISM-Sem1-B', 29), ('SNA-ITSM-B', 22), ('ISDL-ECM-B', 22), ('ISM-LCR-B', 21), ('ISDL-Start-B', 21), ('EESYS-IITP-B', 21), ('IIS-E-Biz-B', 20), ('Con-B-01', 20), ('ISM-SaaS-B', 19), ('ISDL-SOA', 19), ('SEDA-WI-Proj-B', 18), ('ISDL-ITCon-B', 18), ('ISDL-MED-B', 17), ('ISDL-IOM-B', 16), ('DSG-EiAPS-B', 15), ('IIS-EAM-B', 15), ('IISM-PrakIntKon-B', 14), ('MOBI-DBS-B', 13), ('IntMan-B-04', 12), ('WiPäd-B-01', 12), ('ISDL-ITCHANGE-M', 11), ('ISM-PT-B', 11), ('Inno-B-01', 11), ('ISDL-WAWI-B', 10)]","[('SEDA-GbIS-B', 36), ('BSL-B-00', 35), ('IRWP-B-01', 34), ('IIS-EBAS-B', 30), ('Mathe-B-01', 30), ('Wirtschaftsenglisch I', 30), ('Mathe-B-02', 27), ('ETH', 26), ('Stat-B-01', 25), ('ISDL-ITCon-B', 24), ('Wirtschaftsenglisch II', 19), ('IntMan-B-01', 17), ('Con-B-01', 16), ('MOBI-DBS-B', 14), ('DSG-EiAPS-B', 14), ('SNA-ITSM-B', 14), ('Recht-B-02', 14), ('ISDL-MED-B', 12), ('SEDA-WI-Proj-B', 12), ('ISDL-ECM-B', 11), ('Inno-B-01', 11), ('Recht-B-01', 11), ('IntMan-B-04', 11), ('ISDL-IOM-B', 11), ('IIS-EAM-B', 10)]"
+Wirtschaftsenglisch IV,3-4,,"[('Bachelorarbeit', 13), ('BaIISM-Sem1-B', 10), ('BaIISM-Sem2-B', 10)]","[('SEDA-GbIS-B', 10)]"
+IntWi-B-01,,,[],[]
+EVWL,5,,"[('Bachelorarbeit', 11)]","[('SEDA-GbIS-B', 11), ('IIS-EBAS-B', 10), ('IRWP-B-01', 10), ('Mathe-B-01', 10), ('Mathe-B-02', 10), ('BSL-B-00', 10)]"
+Wirtschaftsenglisch V,,,[],[]
+PSI-DatSchu-B,,,[],[]
+IAWS-SaaS,,,[],[]
+IAWS-EBAS-B,,,[],[]
+Wirtschaftsfranzösisch I (inkl. Modulprüfung),,,[],[]
+Mündliche Abschlussprüfung,,,[],[]
+DSG-EiAPS-B,4,2.0,"[('Bachelorarbeit', 40), ('BaIISM-Sem2-B', 30), ('BaIISM-Sem1-B', 28), ('SNA-ITSM-B', 25), ('ISDL-Start-B', 25), ('ISM-SaaS-B', 23), ('SEDA-WI-Proj-B', 21), ('EESYS-IITP-B', 20), ('ISDL-ECM-B', 20), ('MOBI-DBS-B', 20), ('IIS-EAM-B', 19), ('ISM-LCR-B', 19), ('ISDL-MED-B', 18), ('ISDL-SOA', 18), ('Con-B-01', 17), ('ISDL-ITCon-B', 17), ('SNA-IWM-B', 16), ('IntMan-B-01', 15), ('IISM-PrakIntKon-B', 15), ('IIS-E-Biz-B', 14), ('WiPäd-B-01', 14), ('ISDL-IOM-B', 12), ('IIS-EBAS-B', 11), ('Stat-B-01', 11), ('Inno-B-01', 10), ('ISDL-ITCHANGE-M', 10), ('EVWL', 10)]","[('SEDA-GbIS-B', 32), ('BSL-B-00', 31), ('IIS-EBAS-B', 29), ('IRWP-B-01', 27), ('Mathe-B-01', 25), ('Mathe-B-02', 23), ('SNA-IWM-B', 23), ('Stat-B-01', 23), ('Wirtschaftsenglisch I', 23), ('IntMan-B-01', 22), ('ETH', 21), ('MOBI-DBS-B', 20), ('EESYS-IITP-B', 19), ('Wirtschaftsenglisch II', 18), ('Con-B-01', 17), ('ISDL-ITCon-B', 17), ('IIS-EAM-B', 15), ('SNA-ITSM-B', 15), ('ISDL-MED-B', 13), ('Inno-B-01', 12), ('WiPäd-B-01', 12), ('Wirtschaftsenglisch IV', 12), ('ISM-SaaS-B', 11), ('Recht-B-02', 11), ('ISDL-ECM-B', 11), ('ISDL-IOM-B', 10)]"
+Französisch,,,[],[]
+Wirtschaftsfranzösisch III,,,[],[]
+ISDL-KIP-B,,,[],[]
+Italienisch,,,[],[]
+Wirtschaftsrussisch I (60min schriftl.),,,[],[]
+ISM-MDT-M,,,[],[]
+BAEES1.3,,,[],[]
+IIS-EAM-B,4-5,,"[('Bachelorarbeit', 33), ('BaIISM-Sem2-B', 24), ('BaIISM-Sem1-B', 20), ('ISDL-Start-B', 19), ('SNA-ITSM-B', 19), ('ISDL-ECM-B', 19), ('ISM-LCR-B', 17), ('IIS-E-Biz-B', 14), ('ISM-SaaS-B', 14), ('ISDL-SOA', 14), ('SEDA-WI-Proj-B', 14), ('EESYS-IITP-B', 13), ('ISDL-IOM-B', 12), ('ISDL-ITCon-B', 12), ('ISDL-MED-B', 11), ('DSG-EiAPS-B', 10), ('MOBI-DBS-B', 10)]","[('BSL-B-00', 27), ('SEDA-GbIS-B', 27), ('IRWP-B-01', 26), ('IntMan-B-01', 25), ('Mathe-B-01', 25), ('Stat-B-01', 25), ('Con-B-01', 23), ('IIS-EBAS-B', 23), ('Mathe-B-02', 23), ('Wirtschaftsenglisch I', 22), ('ISDL-ITCon-B', 20), ('ETH', 20), ('Wirtschaftsenglisch II', 16), ('Recht-B-02', 15), ('SNA-ITSM-B', 14), ('SNA-IWM-B', 14), ('SEDA-WI-Proj-B', 13), ('DSG-EiAPS-B', 12), ('ISDL-IOM-B', 12), ('PM-B-01', 12), ('MOBI-DBS-B', 11), ('ISDL-WAWI-B', 11), ('EESYS-IITP-B', 10)]"
+BaIISM-Sem2-B,6-7,,"[('Bachelorarbeit', 18)]","[('BSL-B-00', 26), ('IntMan-B-01', 25), ('ISDL-ITCon-B', 23), ('SNA-IWM-B', 23), ('MOBI-DBS-B', 23), ('Con-B-01', 22), ('IIS-EAM-B', 22), ('IIS-EBAS-B', 22), ('SEDA-GbIS-B', 22), ('IRWP-B-01', 21), ('ETH', 21), ('ISDL-MED-B', 21), ('BaIISM-Sem1-B', 20), ('Stat-B-01', 20), ('Wirtschaftsenglisch I', 20), ('Mathe-B-02', 19), ('SNA-ITSM-B', 19), ('Mathe-B-01', 18), ('SEDA-WI-Proj-B', 18), ('ISM-SaaS-B', 17), ('EESYS-IITP-B', 16), ('ISDL-IOM-B', 16), ('ISDL-ECM-B', 16), ('DSG-EiAPS-B', 15), ('Wirtschaftsenglisch II', 15), ('Recht-B-02', 14), ('WiPäd-B-01', 14), ('Inno-B-01', 14), ('ISM-PT-B', 14), ('ISM-LCR-B', 13), ('ISDL-Start-B', 12), ('IntMan-B-04', 11), ('ISDL-WAWI-B', 11), ('ISDL-SOA', 10), ('Wirtschaftsenglisch IV', 10)]"
+Wirtschaftsenglisch III (10min mdl.),,,[],[]
+Wirtschaftsfranzösisch III (inkl. Modulprüfung),,,[],[]
+IIS-IBS-M,,,[],[]
+Mathe-B-02,1,1.0,"[('Bachelorarbeit', 48), ('BaIISM-Sem1-B', 41), ('ISDL-ITCon-B', 40), ('MOBI-DBS-B', 40), ('BaIISM-Sem2-B', 39), ('SEDA-WI-Proj-B', 38), ('ISDL-MED-B', 37), ('IIS-EAM-B', 36), ('IntMan-B-01', 35), ('Con-B-01', 34), ('EESYS-IITP-B', 34), ('ISDL-ECM-B', 34), ('ISM-LCR-B', 34), ('ISM-SaaS-B', 34), ('ETH', 33), ('SNA-IWM-B', 31), ('Stat-B-01', 31), ('SNA-ITSM-B', 30), ('ISDL-SOA', 28), ('IIS-EBAS-B', 27), ('ISDL-IOM-B', 25), ('DSG-EiAPS-B', 25), ('Inno-B-01', 23), ('WiPäd-B-01', 22), ('ISDL-Start-B', 22), ('ISM-PT-B', 20), ('Recht-B-02', 20), ('Wirtschaftsenglisch II', 20), ('IntMan-B-04', 18), ('IISM-PrakIntKon-B', 17), ('Wirtschaftsenglisch IV', 15), ('Recht-B-01', 14), ('SEDA-GbIS-B', 13), ('IIS-E-Biz-B', 13), ('ISDL-WAWI-B', 13), ('ISDL-ITCHANGE-M', 13), ('BSL-B-00', 11), ('PM-B-01', 11), ('EVWL', 11)]","[('Mathe-B-01', 15), ('IRWP-B-01', 14), ('Wirtschaftsenglisch I', 14), ('BSL-B-00', 13), ('SEDA-GbIS-B', 11)]"
+ISDL-Start-B,6,,"[('Bachelorarbeit', 16)]","[('SEDA-GbIS-B', 20), ('IIS-EBAS-B', 19), ('Stat-B-01', 19), ('ETH', 18), ('IRWP-B-01', 18), ('MOBI-DBS-B', 18), ('BSL-B-00', 17), ('IIS-EAM-B', 16), ('IntMan-B-01', 16), ('Mathe-B-01', 16), ('Mathe-B-02', 15), ('SNA-IWM-B', 15), ('DSG-EiAPS-B', 14), ('EESYS-IITP-B', 14), ('ISDL-ITCon-B', 14), ('Con-B-01', 13), ('Wirtschaftsenglisch I', 13), ('Wirtschaftsenglisch II', 13), ('ISDL-MED-B', 12), ('SNA-ITSM-B', 11)]"
+Français économique II (inkl. Modulteilprüfung),,,[],[]
+IntMan-B-08,,,[],[]
+Market-B-04,,,[],[]
+WiPäd-B-01,5,,"[('Bachelorarbeit', 21), ('BaIISM-Sem2-B', 18), ('ISDL-Start-B', 12), ('BaIISM-Sem1-B', 11), ('SEDA-WI-Proj-B', 11), ('ISDL-ECM-B', 11), ('IIS-E-Biz-B', 10), ('ISM-LCR-B', 10), ('SNA-ITSM-B', 10)]","[('BSL-B-00', 17), ('SEDA-GbIS-B', 16), ('IIS-EBAS-B', 16), ('Stat-B-01', 15), ('ETH', 15), ('IRWP-B-01', 15), ('IntMan-B-01', 13), ('Wirtschaftsenglisch I', 13), ('Mathe-B-01', 12), ('ISDL-ITCon-B', 12), ('SNA-IWM-B', 12), ('DSG-EiAPS-B', 11), ('Con-B-01', 10), ('MOBI-DBS-B', 10), ('Mathe-B-02', 10)]"
+IIS-E-Biz-B,7,,"[('Bachelorarbeit', 15)]","[('ISDL-ITCon-B', 24), ('MOBI-DBS-B', 23), ('IIS-EBAS-B', 22), ('SEDA-GbIS-B', 21), ('SNA-IWM-B', 20), ('BSL-B-00', 20), ('IIS-EAM-B', 20), ('IntMan-B-01', 19), ('Con-B-01', 19), ('IRWP-B-01', 19), ('DSG-EiAPS-B', 18), ('ETH', 18), ('Stat-B-01', 18), ('BaIISM-Sem1-B', 17), ('EESYS-IITP-B', 17), ('Mathe-B-01', 16), ('Mathe-B-02', 16), ('ISDL-MED-B', 15), ('WiPäd-B-01', 14), ('SEDA-WI-Proj-B', 14), ('Wirtschaftsenglisch II', 14), ('SNA-ITSM-B', 13), ('Wirtschaftsenglisch I', 13), ('ISM-LCR-B', 12), ('ISDL-SOA', 11), ('ISDL-IOM-B', 11), ('Inno-B-01', 11)]"
+ISDL-SOA,5,,"[('Bachelorarbeit', 25), ('BaIISM-Sem2-B', 14)]","[('ETH', 22), ('IntMan-B-01', 20), ('IIS-EBAS-B', 20), ('IRWP-B-01', 20), ('Stat-B-01', 19), ('SEDA-GbIS-B', 18), ('BSL-B-00', 18), ('Mathe-B-01', 17), ('Mathe-B-02', 17), ('MOBI-DBS-B', 17), ('Wirtschaftsenglisch I', 17), ('ISDL-ITCon-B', 16), ('ISDL-MED-B', 15), ('SNA-IWM-B', 15), ('EESYS-IITP-B', 14), ('SNA-ITSM-B', 13), ('Con-B-01', 12), ('IIS-EAM-B', 12), ('Wirtschaftsenglisch II', 11), ('ISDL-IOM-B', 11), ('SEDA-WI-Proj-B', 11), ('Recht-B-01', 10), ('DSG-EiAPS-B', 10)]"
+IRWP-B-02,,,[],[]
+Bachelorarbeit,7,,[],"[('ISDL-ITCon-B', 41), ('IntMan-B-01', 37), ('SEDA-WI-Proj-B', 37), ('ISDL-MED-B', 36), ('BaIISM-Sem1-B', 35), ('EESYS-IITP-B', 35), ('MOBI-DBS-B', 35), ('SNA-IWM-B', 35), ('IIS-EAM-B', 35), ('SNA-ITSM-B', 35), ('ETH', 34), ('SEDA-GbIS-B', 34), ('Con-B-01', 34), ('IIS-EBAS-B', 33), ('ISM-LCR-B', 33), ('Stat-B-01', 33), ('ISDL-ECM-B', 31), ('BSL-B-00', 31), ('BaIISM-Sem2-B', 28), ('ISDL-IOM-B', 27), ('IRWP-B-01', 27), ('Mathe-B-01', 27), ('Mathe-B-02', 27), ('ISDL-SOA', 26), ('Wirtschaftsenglisch I', 26), ('Wirtschaftsenglisch II', 25), ('DSG-EiAPS-B', 23), ('ISM-SaaS-B', 23), ('ISDL-Start-B', 21), ('Inno-B-01', 20), ('ISM-PT-B', 20), ('IntMan-B-04', 20), ('Recht-B-02', 19), ('WiPäd-B-01', 18), ('ISDL-WAWI-B', 18), ('DSG-EidI-B', 15), ('PM-B-01', 15), ('Recht-B-01', 14), ('Wirtschaftsenglisch IV', 13), ('EVWL', 12), ('PuL-B-101', 11), ('IIS-E-Biz-B', 10)]"
+EESYS-GEI-B,,,[],[]
+Français économique I (inkl. Modulteilprüfung),,,[],[]
+IT English I  ,,,[],[]
+EESYS-ES-M,,,[],[]
+Business English V,,,[],[]
+MI-EMI-B,,,[],[]
+Business English I,,,[],[]
+Chinesisch,,,[],[]
+IntMan-B-01,3,2.0,"[('Bachelorarbeit', 43), ('BaIISM-Sem2-B', 35), ('SEDA-WI-Proj-B', 33), ('BaIISM-Sem1-B', 32), ('EESYS-IITP-B', 30), ('ISM-LCR-B', 30), ('ISDL-ECM-B', 29), ('ISDL-ITCon-B', 29), ('ISM-SaaS-B', 29), ('SNA-ITSM-B', 29), ('IIS-EAM-B', 27), ('ISDL-Start-B', 25), ('ISDL-MED-B', 25), ('ISDL-IOM-B', 24), ('Con-B-01', 24), ('SNA-IWM-B', 23), ('ISDL-SOA', 22), ('WiPäd-B-01', 21), ('DSG-EiAPS-B', 20), ('MOBI-DBS-B', 19), ('IIS-E-Biz-B', 18), ('IntMan-B-04', 18), ('ISM-PT-B', 17), ('IIS-EBAS-B', 16), ('ISDL-ITCHANGE-M', 16), ('IISM-PrakIntKon-B', 15), ('Stat-B-01', 13), ('Inno-B-01', 12), ('ISDL-ICM-B', 11), ('Recht-B-02', 11), ('Recht-B-01', 11), ('ISDL-WAWI-B', 10)]","[('IRWP-B-01', 27), ('BSL-B-00', 26), ('Mathe-B-01', 26), ('Mathe-B-02', 26), ('SEDA-GbIS-B', 25), ('Wirtschaftsenglisch I', 21), ('Stat-B-01', 18), ('ETH', 13), ('IIS-EBAS-B', 12), ('ISDL-ITCon-B', 12), ('Wirtschaftsenglisch II', 10), ('DSG-EiAPS-B', 10)]"
+Wirtschaftsfranzösisch IV (inkl. Modulprüfung),,,[],[]
+Wirtschaftsspanisch I,,,[],[]
+EESYS-DDS-M,,,[],[]
+EESYS-IITP-B,4,,"[('Bachelorarbeit', 42), ('BaIISM-Sem2-B', 28), ('ISDL-Start-B', 23), ('BaIISM-Sem1-B', 22), ('ISM-LCR-B', 22), ('ISDL-ECM-B', 22), ('ISDL-SOA', 19), ('SNA-ITSM-B', 19), ('IIS-E-Biz-B', 18), ('ISDL-ITCon-B', 17), ('ISM-SaaS-B', 17), ('Con-B-01', 16), ('SEDA-WI-Proj-B', 16), ('ISDL-IOM-B', 15), ('ISDL-MED-B', 14), ('ISDL-ITCHANGE-M', 12), ('DSG-EiAPS-B', 11), ('MOBI-DBS-B', 11), ('EVWL', 10)]","[('SEDA-GbIS-B', 32), ('BSL-B-00', 30), ('Con-B-01', 27), ('IRWP-B-01', 27), ('ISDL-ITCon-B', 27), ('Mathe-B-01', 26), ('IntMan-B-01', 25), ('Mathe-B-02', 25), ('ETH', 24), ('IIS-EBAS-B', 24), ('Wirtschaftsenglisch I', 24), ('Stat-B-01', 23), ('SNA-IWM-B', 20), ('MOBI-DBS-B', 17), ('SEDA-WI-Proj-B', 17), ('SNA-ITSM-B', 17), ('DSG-EiAPS-B', 17), ('ISDL-ECM-B', 14), ('Recht-B-02', 14), ('Inno-B-01', 14), ('Recht-B-01', 13), ('Wirtschaftsenglisch II', 13), ('ISDL-MED-B', 11), ('ISDL-WAWI-B', 11), ('IIS-EAM-B', 10)]"
+Org-B-02,,,[],[]
+Latein,,,[],[]
+Recht-B-01,3,,"[('Bachelorarbeit', 17), ('SNA-ITSM-B', 12), ('EESYS-IITP-B', 11), ('ISM-SaaS-B', 11), ('BaIISM-Sem2-B', 11), ('ISDL-MED-B', 10), ('ISM-LCR-B', 10)]","[('BSL-B-00', 12), ('IRWP-B-01', 12), ('Mathe-B-01', 10), ('SEDA-GbIS-B', 10), ('Wirtschaftsenglisch I', 10)]"
+SNA-ITSM-B,5,,"[('Bachelorarbeit', 49), ('BaIISM-Sem2-B', 31), ('BaIISM-Sem1-B', 25), ('ISM-LCR-B', 23), ('EESYS-IITP-B', 21), ('IIS-EAM-B', 20), ('ISDL-SOA', 18), ('ISDL-MED-B', 18), ('ISM-SaaS-B', 18), ('ISDL-ECM-B', 16), ('SNA-IWM-B', 16), ('ISDL-Start-B', 15), ('SEDA-WI-Proj-B', 14), ('IIS-E-Biz-B', 14), ('ISDL-ITCHANGE-M', 14), ('IISM-PrakIntKon-B', 14), ('MOBI-DBS-B', 12), ('ISM-PT-B', 12), ('WiPäd-B-01', 11), ('IntMan-B-01', 11), ('ISDL-IOM-B', 10)]","[('BSL-B-00', 33), ('IIS-EBAS-B', 33), ('ETH', 32), ('IRWP-B-01', 31), ('SEDA-GbIS-B', 31), ('IntMan-B-01', 30), ('MOBI-DBS-B', 29), ('SNA-IWM-B', 28), ('Mathe-B-01', 28), ('Stat-B-01', 27), ('Mathe-B-02', 27), ('Wirtschaftsenglisch I', 25), ('DSG-EiAPS-B', 24), ('ISDL-ITCon-B', 23), ('ISDL-MED-B', 22), ('IIS-EAM-B', 22), ('Recht-B-02', 20), ('Con-B-01', 20), ('EESYS-IITP-B', 18), ('SEDA-WI-Proj-B', 18), ('Wirtschaftsenglisch II', 18), ('ISM-PT-B', 14), ('ISDL-IOM-B', 14), ('Inno-B-01', 13), ('WiPäd-B-01', 12), ('ISM-LCR-B', 12), ('DSG-EidI-B', 11), ('ISDL-ECM-B', 10)]"
+Spanisch,,,[],[]
+SNA-NET-M,,,[],[]
+Français économique IV (inkl. Modulteilprüfung),,,[],[]
+SNA-ASN-M,,,[],[]
+Mathe-B-01,1,1.0,"[('ISDL-ITCon-B', 37), ('Bachelorarbeit', 36), ('Con-B-01', 35), ('MOBI-DBS-B', 35), ('BaIISM-Sem1-B', 34), ('BaIISM-Sem2-B', 33), ('IIS-EAM-B', 33), ('SEDA-WI-Proj-B', 33), ('Stat-B-01', 33), ('ISDL-ECM-B', 33), ('ETH', 32), ('SNA-ITSM-B', 32), ('SNA-IWM-B', 32), ('EESYS-IITP-B', 31), ('IntMan-B-01', 30), ('IIS-EBAS-B', 29), ('ISDL-MED-B', 29), ('ISM-LCR-B', 27), ('ISM-SaaS-B', 27), ('DSG-EiAPS-B', 26), ('ISDL-SOA', 26), ('Wirtschaftsenglisch II', 25), ('ISDL-Start-B', 24), ('Inno-B-01', 23), ('ISDL-IOM-B', 21), ('Recht-B-02', 21), ('IntMan-B-04', 20), ('WiPäd-B-01', 20), ('ISM-PT-B', 20), ('Wirtschaftsenglisch IV', 19), ('ISDL-ITCHANGE-M', 18), ('IIS-E-Biz-B', 14), ('Mathe-B-02', 14), ('ISDL-WAWI-B', 14), ('EVWL', 13), ('PuL-B-101', 13), ('SEDA-GbIS-B', 12), ('IISM-PrakIntKon-B', 12), ('Recht-B-01', 12), ('PM-B-01', 11), ('ISDL-ICM-B', 10)]",[]
+ISM-ITC-B,,,[],[]
+ISM-TA-B,,,[],[]
+SWT-SSP-B,,,[],[]
+EESYS-P-SGDA-M,,,[],[]
+MOBI-DBS-B,4,,"[('Bachelorarbeit', 38), ('BaIISM-Sem2-B', 30), ('BaIISM-Sem1-B', 28), ('ISM-LCR-B', 23), ('SNA-ITSM-B', 23), ('SEDA-WI-Proj-B', 23), ('ISDL-ECM-B', 22), ('ISM-SaaS-B', 21), ('ISDL-ITCon-B', 20), ('ISDL-MED-B', 19), ('ISDL-Start-B', 19), ('EESYS-IITP-B', 18), ('ISDL-SOA', 17), ('IIS-E-Biz-B', 16), ('IISM-PrakIntKon-B', 15), ('ISDL-IOM-B', 15), ('DSG-EiAPS-B', 14), ('Con-B-01', 14), ('IIS-EAM-B', 13), ('ISM-PT-B', 12), ('ISDL-eFin-B', 12), ('SNA-IWM-B', 11), ('WiPäd-B-01', 10), ('ISDL-WAWI-B', 10)]","[('BSL-B-00', 34), ('SEDA-GbIS-B', 34), ('IRWP-B-01', 32), ('Mathe-B-01', 28), ('Mathe-B-02', 27), ('Wirtschaftsenglisch I', 25), ('Stat-B-01', 23), ('Con-B-01', 21), ('IIS-EBAS-B', 21), ('ETH', 20), ('ISDL-ITCon-B', 20), ('IntMan-B-01', 18), ('Recht-B-02', 15), ('Wirtschaftsenglisch II', 13), ('SNA-IWM-B', 13), ('SNA-ITSM-B', 12), ('DSG-EiAPS-B', 12), ('ISDL-IOM-B', 11), ('Inno-B-01', 11), ('SEDA-WI-Proj-B', 11), ('PM-B-01', 11), ('EESYS-IITP-B', 10)]"
+SEDA-MobIS-B,,,[],[]
+VM-B-01,,,[],[]
+EESYS-DSES-M,,,[],[]
+"English for IT 2, Controversial Issues Module",,,[],[]
+Russisch I,,,[],[]
+SEDA-WI-Proj-B,5,,"[('Bachelorarbeit', 48), ('BaIISM-Sem2-B', 28), ('ISM-LCR-B', 24), ('BaIISM-Sem1-B', 23), ('ISDL-Start-B', 21), ('ISDL-SOA', 19), ('ISDL-MED-B', 18), ('ISM-SaaS-B', 17), ('ISDL-ECM-B', 16), ('SNA-ITSM-B', 15), ('ISDL-IOM-B', 14), ('EESYS-IITP-B', 13), ('ISDL-ITCon-B', 12), ('Con-B-01', 12), ('IIS-E-Biz-B', 11), ('IIS-EAM-B', 11), ('IISM-PrakIntKon-B', 11), ('ISDL-ITCHANGE-M', 10), ('MOBI-DBS-B', 10), ('SNA-IWM-B', 10)]","[('IIS-EBAS-B', 36), ('ETH', 35), ('BSL-B-00', 34), ('SEDA-GbIS-B', 34), ('IRWP-B-01', 32), ('IntMan-B-01', 32), ('Mathe-B-01', 30), ('Stat-B-01', 30), ('Mathe-B-02', 29), ('Wirtschaftsenglisch I', 28), ('MOBI-DBS-B', 28), ('IIS-EAM-B', 24), ('EESYS-IITP-B', 23), ('ISDL-ITCon-B', 23), ('Wirtschaftsenglisch II', 23), ('Con-B-01', 22), ('SNA-IWM-B', 22), ('ISDL-MED-B', 20), ('DSG-EiAPS-B', 18), ('IntMan-B-04', 18), ('SNA-ITSM-B', 18), ('ISDL-IOM-B', 16), ('Recht-B-02', 16), ('Inno-B-01', 13), ('WiPäd-B-01', 13), ('ISM-LCR-B', 13), ('PM-B-01', 12), ('Wirtschaftsenglisch IV', 12), ('DSG-EidI-B', 11), ('ISDL-ECM-B', 10), ('ISDL-SOA', 10), ('Recht-B-01', 10), ('ISDL-WAWI-B', 10)]"
+EESYS-ADAML-M,,,[],[]
+Recht-B-02,3,,"[('Bachelorarbeit', 29), ('BaIISM-Sem1-B', 19), ('BaIISM-Sem2-B', 19), ('SNA-ITSM-B', 19), ('ISDL-Start-B', 18), ('Con-B-01', 17), ('ISDL-ITCon-B', 17), ('ISDL-MED-B', 17), ('SEDA-WI-Proj-B', 16), ('ISDL-ECM-B', 16), ('ISM-LCR-B', 15), ('ISM-SaaS-B', 14), ('SNA-IWM-B', 14), ('EESYS-IITP-B', 14), ('MOBI-DBS-B', 13), ('WiPäd-B-01', 13), ('IIS-EAM-B', 12), ('ISDL-SOA', 12), ('ISDL-IOM-B', 11), ('DSG-EiAPS-B', 10), ('IntMan-B-01', 10)]","[('BSL-B-00', 21), ('SEDA-GbIS-B', 20), ('IRWP-B-01', 19), ('Mathe-B-01', 19), ('Wirtschaftsenglisch I', 17), ('Mathe-B-02', 17), ('Wirtschaftsenglisch II', 12), ('ETH', 11), ('IIS-EBAS-B', 11), ('Stat-B-01', 11), ('IntMan-B-01', 10)]"
+MI-LA-DatSchu-B,,,[],[]
+Finanz-B-01,,,[],[]
+IIS-MODS-M,,,[],[]
+ISDL-WAWI-B,3,,"[('Bachelorarbeit', 24), ('ISDL-MED-B', 16), ('BaIISM-Sem2-B', 15), ('BaIISM-Sem1-B', 13), ('IIS-EAM-B', 12), ('ISM-SaaS-B', 12), ('EESYS-IITP-B', 12), ('ISM-LCR-B', 12)]","[('IRWP-B-01', 17), ('BSL-B-00', 16), ('IIS-EBAS-B', 16), ('IntMan-B-01', 15), ('Wirtschaftsenglisch I', 15), ('MOBI-DBS-B', 14), ('SEDA-GbIS-B', 14), ('Mathe-B-01', 13), ('ETH', 12), ('DSG-EidI-B', 11), ('Mathe-B-02', 11), ('Stat-B-01', 10), ('Wirtschaftsenglisch II', 10)]"
+Japanisch,,,[],[]
+SEDA-EuU-B,,,[],[]
+IIS-WI-Proj-B,,,[],[]
+ISDL-ICM-B,5,,"[('Bachelorarbeit', 10)]",[]
+BSL-B-02,,,[],[]
+DSG-EidI-B,3,,"[('Bachelorarbeit', 10), ('BaIISM-Sem1-B', 10)]","[('Mathe-B-02', 10)]"
+IT Englisch,,,[],[]
+Russisch 3,,,[],[]
+HCI-IS-B,,,[],[]
+IIS-EBAS-B,3,2.0,"[('Bachelorarbeit', 33), ('ISDL-ITCon-B', 30), ('BaIISM-Sem2-B', 28), ('BaIISM-Sem1-B', 27), ('ISDL-ECM-B', 26), ('SEDA-WI-Proj-B', 25), ('Con-B-01', 24), ('ISM-LCR-B', 23), ('ISM-SaaS-B', 23), ('SNA-ITSM-B', 22), ('ISDL-Start-B', 21), ('SNA-IWM-B', 20), ('EESYS-IITP-B', 20), ('ISDL-MED-B', 20), ('IIS-EAM-B', 18), ('DSG-EiAPS-B', 16), ('MOBI-DBS-B', 16), ('ISDL-WAWI-B', 15), ('IIS-E-Biz-B', 14), ('ISDL-SOA', 14), ('Stat-B-01', 13), ('ISDL-IOM-B', 12), ('WiPäd-B-01', 12), ('ISM-PT-B', 11), ('Inno-B-01', 11), ('IntMan-B-01', 11), ('IntMan-B-04', 10)]","[('BSL-B-00', 25), ('IRWP-B-01', 23), ('SEDA-GbIS-B', 23), ('Wirtschaftsenglisch I', 22), ('Mathe-B-01', 21), ('Mathe-B-02', 21), ('Stat-B-01', 13), ('IntMan-B-01', 10), ('ETH', 10)]"
+SEDA-GbIS-B,2,1.0,"[('Bachelorarbeit', 45), ('BaIISM-Sem1-B', 41), ('ISDL-ITCon-B', 41), ('MOBI-DBS-B', 41), ('BaIISM-Sem2-B', 39), ('SEDA-WI-Proj-B', 39), ('Con-B-01', 38), ('SNA-IWM-B', 37), ('ISDL-ECM-B', 37), ('IIS-EBAS-B', 36), ('IIS-EAM-B', 35), ('ISDL-MED-B', 35), ('EESYS-IITP-B', 34), ('SNA-ITSM-B', 33), ('ETH', 32), ('DSG-EiAPS-B', 30), ('ISDL-Start-B', 30), ('ISM-LCR-B', 30), ('ISM-SaaS-B', 30), ('ISDL-SOA', 29), ('Stat-B-01', 28), ('IntMan-B-01', 27), ('Inno-B-01', 23), ('WiPäd-B-01', 22), ('ISDL-IOM-B', 21), ('ISM-PT-B', 21), ('Recht-B-02', 21), ('IntMan-B-04', 20), ('Wirtschaftsenglisch II', 20), ('ISDL-ITCHANGE-M', 18), ('ISDL-WAWI-B', 17), ('IIS-E-Biz-B', 16), ('EVWL', 15), ('IISM-PrakIntKon-B', 14), ('Wirtschaftsenglisch IV', 14), ('BSL-B-00', 11), ('ISDL-ICM-B', 11), ('Mathe-B-02', 11), ('Recht-B-01', 11), ('IRWP-B-01', 10), ('Wirtschaftsenglisch I', 10)]","[('IRWP-B-01', 16), ('Mathe-B-01', 14), ('BSL-B-00', 12), ('IntMan-B-01', 11), ('Mathe-B-02', 11), ('IIS-EBAS-B', 10)]"
+ISDL-ITCHANGE-M,7,,[],"[('ETH', 14), ('IIS-EBAS-B', 14), ('IRWP-B-01', 14), ('ISDL-ITCon-B', 14), ('IntMan-B-01', 14), ('BSL-B-00', 13), ('Con-B-01', 13), ('SEDA-GbIS-B', 13), ('SEDA-WI-Proj-B', 13), ('Mathe-B-01', 12), ('Mathe-B-02', 12), ('SNA-ITSM-B', 12), ('Stat-B-01', 11), ('Wirtschaftsenglisch I', 11), ('ISDL-MED-B', 11), ('BaIISM-Sem1-B', 11), ('ISDL-ECM-B', 11), ('IIS-EAM-B', 10), ('SNA-IWM-B', 10), ('Wirtschaftsenglisch II', 10)]"
+Wirtschaftsfranzösisch VII,,,[],[]
+DSG-PKS-B,,,[],[]
+IRWP-B-01,1,1.0,"[('Con-B-01', 36), ('ISDL-ITCon-B', 36), ('Bachelorarbeit', 35), ('MOBI-DBS-B', 34), ('BaIISM-Sem2-B', 33), ('IIS-EAM-B', 33), ('SNA-ITSM-B', 33), ('EESYS-IITP-B', 32), ('SNA-IWM-B', 32), ('BaIISM-Sem1-B', 32), ('IIS-EBAS-B', 30), ('ISDL-MED-B', 30), ('Stat-B-01', 30), ('ISM-SaaS-B', 29), ('SEDA-WI-Proj-B', 29), ('IntMan-B-01', 28), ('ETH', 27), ('ISDL-ECM-B', 27), ('ISDL-Start-B', 27), ('WiPäd-B-01', 25), ('ISM-LCR-B', 23), ('DSG-EiAPS-B', 23), ('ISDL-SOA', 20), ('Wirtschaftsenglisch II', 20), ('ISDL-IOM-B', 19), ('IntMan-B-04', 19), ('Inno-B-01', 19), ('IIS-E-Biz-B', 18), ('EVWL', 18), ('ISM-PT-B', 18), ('Recht-B-02', 17), ('Recht-B-01', 15), ('IISM-PrakIntKon-B', 14), ('ISDL-ITCHANGE-M', 11), ('Wirtschaftsenglisch IV', 11), ('ISDL-WAWI-B', 11), ('SEDA-GbIS-B', 10), ('Mathe-B-02', 10)]",[]
+Russisch,,,[],[]
+WI-Projekt-B,,,[],[]
+IISM-PrakIntKon-B,,,[],[]
+ISM-LCR-B,6,,"[('Bachelorarbeit', 33), ('BaIISM-Sem1-B', 15), ('BaIISM-Sem2-B', 15), ('ISM-SaaS-B', 11), ('SNA-ITSM-B', 11), ('ISDL-ECM-B', 11), ('IISM-PrakIntKon-B', 11)]","[('IntMan-B-01', 28), ('IRWP-B-01', 26), ('IIS-EBAS-B', 26), ('BSL-B-00', 25), ('SEDA-GbIS-B', 25), ('ISDL-ITCon-B', 25), ('SEDA-WI-Proj-B', 25), ('ETH', 25), ('Stat-B-01', 23), ('Con-B-01', 23), ('SNA-IWM-B', 23), ('MOBI-DBS-B', 22), ('Mathe-B-02', 22), ('SNA-ITSM-B', 21), ('Mathe-B-01', 20), ('EESYS-IITP-B', 18), ('Wirtschaftsenglisch I', 18), ('ISDL-IOM-B', 17), ('Recht-B-02', 17), ('DSG-EiAPS-B', 16), ('ISDL-ECM-B', 16), ('Inno-B-01', 16), ('IIS-EAM-B', 15), ('ISDL-MED-B', 15), ('ISDL-WAWI-B', 15), ('PM-B-01', 14), ('BaIISM-Sem1-B', 13), ('ISM-PT-B', 12), ('ISDL-SOA', 12), ('Wirtschaftsenglisch II', 12), ('Recht-B-01', 11), ('ISDL-Start-B', 10), ('ISM-SaaS-B', 10)]"
+IAWS-IWM-B,,,[],[]
+UFC-B2,,,[],[]
+Wirtschaftsenglisch III (LVP),,,[],[]
+IIS-MobIS-B,,,[],[]
+Wirtschaftsenglisch III/IV,,,[],[]
+Wirtschaftsrussisch II (60min schriftl.),,,[],[]
+Wirtschaftsenglisch I,1,1.0,"[('Bachelorarbeit', 34), ('ISDL-MED-B', 28), ('SEDA-WI-Proj-B', 28), ('SNA-IWM-B', 28), ('BaIISM-Sem1-B', 28), ('ISDL-ITCon-B', 28), ('IntMan-B-01', 28), ('BaIISM-Sem2-B', 27), ('MOBI-DBS-B', 27), ('ETH', 26), ('IIS-EAM-B', 26), ('IIS-EBAS-B', 25), ('Con-B-01', 24), ('EESYS-IITP-B', 24), ('ISDL-ECM-B', 24), ('Stat-B-01', 22), ('SNA-ITSM-B', 22), ('ISM-LCR-B', 21), ('DSG-EiAPS-B', 19), ('ISM-SaaS-B', 19), ('ISDL-SOA', 19), ('ISM-PT-B', 18), ('Wirtschaftsenglisch II', 18), ('ISDL-Start-B', 17), ('Inno-B-01', 16), ('IntMan-B-04', 16), ('WiPäd-B-01', 15), ('Wirtschaftsenglisch IV', 14), ('BSL-B-00', 14), ('ISDL-IOM-B', 13), ('IISM-PrakIntKon-B', 13), ('Mathe-B-02', 12), ('Recht-B-02', 12), ('ISDL-WAWI-B', 12), ('EVWL', 11), ('Recht-B-01', 11), ('ISDL-ITCHANGE-M', 10)]",[]
+Wirtschaftsenglisch II,2,2.0,"[('BaIISM-Sem1-B', 14), ('Bachelorarbeit', 14), ('Con-B-01', 13), ('ISDL-ITCon-B', 13), ('SEDA-WI-Proj-B', 12), ('IIS-EAM-B', 11), ('ISDL-ECM-B', 11), ('ISDL-MED-B', 11), ('ISM-LCR-B', 11), ('BaIISM-Sem2-B', 11), ('ISDL-Start-B', 11), ('EESYS-IITP-B', 10), ('ISDL-SOA', 10)]","[('Mathe-B-01', 13), ('BSL-B-00', 12), ('SEDA-GbIS-B', 12), ('Mathe-B-02', 10)]"
+WiMa-B-02a,,,[],[]
+FiWi-001-B,,,[],[]
+EESYS-BIA-M,,,[],[]
+SCM-M-08,,,[],[]
+AI-AuD-B,,,[],[]

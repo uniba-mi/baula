@@ -1,0 +1,51 @@
+<header id="top-nav">
+  <div class="px-3 bg-blue text-white">
+    <div class="row align-items-end d-flex justify-content-between">
+      <div class="col-auto header-logo d-flex align-items-center" role="button" tabindex="0" aria-label="Logo">
+        <a [href]="homeUrl">
+          <img src="../assets/UB_Logo.png" alt="Logo der Universität Bamberg" />
+        </a>
+        <span class="header-heading mb-0 pt-1 ms-2 d-none d-lg-inline">
+          <a class="link text-white" [href]="homeUrl"> Baula test</a>
+        </span>
+      </div>
+      <div class="col-auto d-flex align-items-center">
+        <app-nav *ngIf="user$ | async as user" [user]="user"></app-nav>
+      </div>
+      <div class="col-auto d-flex align-items-center">
+        <app-profile-menu *ngIf="user$ | async as user" [user]="user">
+        </app-profile-menu>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Bootstrap Container -->
+<main class="container-fluid vh-100-min px-0">
+  <router-outlet></router-outlet>
+  <!-- <app-home></app-home> -->
+</main>
+
+<!-- Footer -->
+<footer class="bg-blue d-flex justify-content-center justify-content-sm-end">
+  <ul class="d-flex flex-column flex-sm-row">
+    <li class="my-1 mx-4 text-center">
+      <a class="link text-white" tabindex="0" routerLink="/hilfe">Hilfe & Kontakt
+      </a>
+    </li>
+    <li class="my-1 mx-4 text-center">
+      <a class="link text-white" tabindex="0" routerLink="/ueber-uns">Über BAULA
+      </a>
+    </li>
+    <li class="my-1 mx-4 text-center">
+      <a class="link text-white" tabindex="0" routerLink="/publikationen">Publikationen
+      </a>
+    </li>
+    <li class="my-1 mx-4 text-center">
+      <a class="link text-white" tabindex="0" routerLink="/datenschutz">Datenschutz</a>
+    </li>
+    <li class="my-1 mx-4 text-center">
+      <a class="link text-white" tabindex="0" href="https://www.uni-bamberg.de/impressum/" target="_blank">Impressum</a>
+    </li>
+  </ul>
+</footer>

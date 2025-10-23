@@ -1,0 +1,25 @@
+<!-- dynamicHeight removes the scrollbar when switching tabs-->
+<mat-tab-group mat-align-tabs="center" dynamicHeight *ngIf="courses$ | async as courses">
+  <mat-tab label="Alle Lehrveranstaltungen">
+    <app-all-courses
+      [courses]="courses"
+    ></app-all-courses>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span>Empfehlungen</span>
+    </ng-template>
+    <app-recommendations
+      [courses]="courses"
+      [selectedStandard]="selectedStandard$ | async"
+    ></app-recommendations>
+  </mat-tab>
+  <!-- <mat-tab>
+    <ng-template mat-tab-label>
+      <span>Lehrveranstaltungen suchen</span>
+    </ng-template>
+    <app-search-courses
+      [courses]="courses"
+    ></app-search-courses>
+  </mat-tab> -->
+</mat-tab-group>

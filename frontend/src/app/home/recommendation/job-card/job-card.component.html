@@ -1,0 +1,51 @@
+<mat-card appearance="raised" class="h-100">
+    <mat-card-content>
+        <ng-container *ngIf="job; else JobLoading">
+            <div class="d-flex flex-row justify-content-between">
+                <h3 class="mt-0">{{job.title}}</h3>
+                <button [matMenuTriggerFor]="jobmenu" class="btn-icon" role="button" aria-haspopup="true"
+                    aria-expanded="false" tabindex="0" aria-label="Kontextmenu für weitere Aktionen öffnen">
+                    <i class="icon bi bi-three-dots-vertical text-gray"></i>
+                </button>
+                <mat-menu #jobmenu="matMenu">
+                    <button mat-menu-item class="btn-icon" (click)="editJob(job)" (keyup.enter)="editJob(job)" [disabled]="job.inputMode === 'mock'" matTooltip ="Diesen Job kannst du nicht bearbeiten, da es sich um ein vordefiniertes Jobprofil handelt."
+                    [matTooltipDisabled]="job.inputMode !== 'mock'" matTooltipPosition="right">
+                        <i class="text-gray ms-0 icon bi bi-pencil"></i>
+                        Bearbeiten
+                    </button>
+                    <button mat-menu-item class="btn-icon text-danger" (click)="openDeleteConfirmationDialog(job)"
+                        (keyup.enter)="openDeleteConfirmationDialog(job)">
+                        <i class="ms-0 icon bi bi-trash3"></i>
+                        Löschen
+                    </button>
+                </mat-menu>
+            </div>
+            <div>
+                <div class="fw-bold me-2">Schlagworte: </div>
+                <div class="d-flex flex-wrap">
+                    {{ job.keywords.join(', ') }}
+                </div>
+            </div>
+            <div class="mt-2" *ngIf="recModules$ | async as recModules">
+                <div class="fw-bold me-2">Beispiele für passende Module <i class="bi bi-info-circle"
+                        matTooltip="Dies sind Module, die dir in deinem Studienverlaufsplan auf Basis des hochgeladenen Jobs vorgeschlagen werden können."
+                        matTooltipClass="custom-tooltip"></i></div>
+                <div class="d-flex flex-row flex-wrap"
+                    *ngIf="!job.loading || recModules.length > 0; else JobLoading">
+                    <mat-chip-set>
+                        <mat-chip *ngFor="let module of recModules" (click)="openModule(module.acronym)" matTooltip="{{ module.name }}">
+                            <span role="button"><i class="me-1 bi bi-box-arrow-in-up-right"></i> {{
+                                module.acronym }}</span>
+                        </mat-chip>
+                    </mat-chip-set>
+                </div>
+            </div>
+        </ng-container>
+    </mat-card-content>
+</mat-card>
+
+<ng-template #JobLoading>
+    <div class="d-flex align-items-center justify-content-center">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

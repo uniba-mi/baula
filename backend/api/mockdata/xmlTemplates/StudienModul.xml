@@ -1,0 +1,102 @@
+<StudienModul Version="1" StudienModul="" Role="StudienModul">
+    <KurzBez></KurzBez>
+    <Bez></Bez>
+    <EctsPunkte></EctsPunkte>
+    <Dauer></Dauer>
+    <Sws/>
+    <Haeufigkeit></Haeufigkeit>
+    <Minfachsem></Minfachsem>
+    <Inhalte>
+        <html xmlns="http://www.w3.org/1999/xhtml">
+            <head />
+            <body>
+            </body>
+        </html>
+    </Inhalte>
+    <Voraussetzungen>
+        <html xmlns="http://www.w3.org/1999/xhtml">
+            <head />
+            <body>
+            </body>
+        </html>
+    </Voraussetzungen>
+    <Lernziele>
+        <html xmlns="http://www.w3.org/1999/xhtml">
+            <head />
+            <body>
+            </body>
+        </html>
+    </Lernziele>
+    <Sprache Role="Sprache1">
+        <Bez>Deutsch</Bez>
+    </Sprache>
+    <Haeufigkeit Role="HaeufigkeitID">
+        <Bez>WS, jährlich</Bez>
+    </Haeufigkeit>
+    <Person Personid="" Role="Verantwortlich">
+        <Email></Email>
+        <Vorname></Vorname>
+        <Nachname></Nachname>
+        <Akadgrad></Akadgrad>
+    </Person>
+    <Workloads>
+        <Arbeitsaufwand Version="1" Modullv="-1" Studienmodul="" AufwandArt="2">
+            <Praesenz>-1</Praesenz>
+            <Arbeitsaufwand>45</Arbeitsaufwand>
+            <AufwandArt AufwandArt="2" Role="AufwandArt">
+                <Bez>Präsenzsstudium</Bez>
+            </AufwandArt>
+        </Arbeitsaufwand>
+        <Arbeitsaufwand Version="2" Modullv="-1" Studienmodul="" AufwandArt="1">
+            <Praesenz>-1</Praesenz>
+            <Arbeitsaufwand>135</Arbeitsaufwand>
+            <AufwandArt AufwandArt="1" Role="AufwandArt">
+                <Bez>Selbststudium</Bez>
+            </AufwandArt>
+        </Arbeitsaufwand>
+    </Workloads>
+    <Orgeinheit Orgeinheit="" Role="Owner">
+        <Bez></Bez>
+    </Orgeinheit>
+    <ModulLvs>
+        <!-- hier sind ModulLv Elemente enthalten -->
+    </ModulLvs>
+    <ModulPrfs>
+        <ModulPrf ModulPrf="">
+            <KurzBez />
+            <Bez></Bez>
+            <Pruefdauer></Pruefdauer>
+            <Unbenotet>0</Unbenotet>
+            <OrgaZentral>1</OrgaZentral>
+            <AnteilNote></AnteilNote>
+            <Beschreibung />
+            <Typ />
+            <Dauer />
+            <Benotet />
+            <SchlKomp />
+            <Vorbereitung />
+            <VorlesungDauer />
+            <Frist />
+            <GewichtFrist />
+            <Zeiteinheit Zeiteinheit="1" Role="Zeiteinheit">
+                <Bez>Minuten</Bez>
+                <Kurz>Min.</Kurz>
+            </Zeiteinheit>
+            <Zeiteinheit Zeiteinheit="0" Role="ZeiteinheitFrist">
+                <Bez>keine Einheit gewählt</Bez>
+                <Kurz>&lt;Ohne&gt;</Kurz>
+            </Zeiteinheit>
+            <Orgeinheit Orgeinheit="116" Role="PrfOrgeinheit">
+                <Bez></Bez>
+                <Kurzbez></Kurzbez>
+            </Orgeinheit>
+            <Sprache Role="Sprache">
+                <Bez>Deutsch</Bez>
+            </Sprache>
+            <ModulLvPrfs>
+                <ModulLvPrf ModulPrf="31958" ModulLv="31959" />
+                <ModulLvPrf ModulPrf="31958" ModulLv="31960" />
+            </ModulLvPrfs>
+        </ModulPrf>
+    </ModulPrfs>
+</StudienModul>

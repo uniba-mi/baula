@@ -1,0 +1,4205 @@
+{
+  "jobs": [
+    {
+      "title": "Webentwickler:in",
+      "recModules": [
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-SOA-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-DistrSys-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DT-DBCPU-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "MOBI-Proj-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "DSG-AJP-B",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-ID-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "AIC-WPRO-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "MOBI-DBS-B",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "Inf-Einf-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "MI-Proj-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "MOBI-Proj-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "DS-Proj-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AISE-Proj-M",
+          "score": 0.4,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-LKR-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-SemCP-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-FTAIP-B",
+          "score": 0.4,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "MI-Projekt-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "MOBI-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "DSG-AJP-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "DSG-PKS-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "MOBI-Sem-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "MOBI-DBS-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "MI-Proj-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "MOBI-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "GdI-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        }
+      ]
+    },
+    {
+      "title": "Softwareentwickler:in",
+      "recModules": [
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MOBI-DSC-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DT-CPP-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DT-DB42-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "CG-ProjCGA-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DT-CPP-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "AlgoK-Algo",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "DSG-EiAPS-B",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-ID-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-DFM-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "CTRL-M-01",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "CTRL-M-02",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "Inf-Einf-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "Inf-GRABS-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "MOBI-DBS-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "DT-CPP-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "SWT-PR1-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AISE-Sem-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.4,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "DT-CPP-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "DSG-AJP-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "CG-CGA-B",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.4,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "DT-CPP-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AlgoK-AK-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "MOBI-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "DT-CPP-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AlgoK-AK-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "GdI-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "DSG-AJP-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "MOBI-DBS-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "Inf-GRABS-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "DT-CPP-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "DSG-Sem-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "AlgoK-AK-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "HCI-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        }
+      ]
+    },
+    {
+      "title": "UI/UX Designer:in",
+      "recModules": [
+        {
+          "acronym": "UxD-Proj-M",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "UxD-Sem-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "HCI-KS-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "HCI-Proj-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "HCI-Usab-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "HCI-Usab-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "HCI-Proj-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "UxD-Proj-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "VIS-IVVA-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "HCI-Sem-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "HCI-Prop-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "HCI-US-B",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "VIS-IVVA-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "HCI-ID-M",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-DFM-M",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "UxD-G-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "VIS-IVVA-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "ISHANDS-Change-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "ISM-MDI-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "ISM-MDT-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "HCI-Usab-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "UxD-Proj-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "UxD-Sem-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "VIS-Proj-M",
+          "score": 0.4,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "UxD-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "UxD-Sem-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "HCI-KS-B",
+          "score": 0.4,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "UxD-Proj-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "HCI-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "HCI-Sem-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "UxD-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "UxD-Sem-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "VIS-Sem-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "UxD-Proj-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "UxD-Sem-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "HCI-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "HCI-Sem-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "VIS-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "HCI-KS-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "HCI-US-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        }
+      ]
+    },
+    {
+      "title": "UI-Entwickler:in",
+      "recModules": [
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "UxD-Proj-M",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "CG-CGA-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "DS-Proj-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "HCI-Proj-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "HCI-Usab-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "CTRL-M-01",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "HCI-Usab-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "HCI-Proj-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "CG-ProjCGA-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "HCI-Sem-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "HCI-Prop-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "VIS-IVVA-M",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "VIS-Sem-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "HCI-ID-M",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "CG-CGA-B",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "UxD-UIxD-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "ISHANDS-Change-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "HCI-Usab-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "UxD-Proj-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "CG-ProjCGA-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "CG-ProjVRAR-M",
+          "score": 0.4,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "HCI-KS-B",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "CG-CGA-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "HCI-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "CG-CGA-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "UxD-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AlgoK-Sem-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "CG-CGA-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "HCI-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "UxD-Proj-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "HCI-Proj-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "HCI-Sem-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "VIS-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "CG-ProjVRAR-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "MI-WebT-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        }
+      ]
+    },
+    {
+      "title": "Softwarearchitekt:in",
+      "recModules": [
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MOBI-DSC-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DT-CPP-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DT-DB42-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "CG-ProjCGA-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DT-CPP-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "AlgoK-Algo",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "DSG-EiAPS-B",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-ID-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-DFM-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "CTRL-M-01",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "CTRL-M-02",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "Inf-Einf-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "Inf-GRABS-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "MOBI-DBS-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "DT-CPP-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "SWT-PR1-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AISE-Sem-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.4,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "DT-CPP-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "DSG-AJP-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "CG-CGA-B",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.4,
+          "studyprogramme": "BAWIn"
+        },
+
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-SWL-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "DSG-IDistrSys-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-SEM-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "DSG-PKS-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "DSG-IDistrSys-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "MOBI-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "IIS-MobIS-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISDL-PTDT-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "SWT-Sem-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "PSI-Sem-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "MOBI-Sem-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        }
+      ]
+    },
+    {
+      "title": "DevOps Engineer",
+      "recModules": [
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-DistrSys-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-SOA-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MOBI-DSC-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "CTRL-M-01",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DS-Proj-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SYSNAP-OSE-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "PSI-AdvaSP-M",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "xAI-Sem-M1",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "IIS-IBS-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "ISM-MDI-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "IIS-IBS-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "IIS-MODS-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "ISHANDS-Change-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-FTAIP-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-PLM-V",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-SemCP-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-ETH-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "PSI-ProjectSP-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "SYSNAP-OSE-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "MOBI-DSC-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AISE-Sem-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-FTAIP-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-SemCP-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-UL",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-SWL-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "DT-DB4MLKD-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "PSI-ProjectPAD",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "MOBI-DE-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "MOBI-DE-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "PSI-ProjectPAD",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "IISM-PrakIntKon-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "DSG-AJP-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "Digital-Work-EDW-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        }
+      ]
+    },
+    {
+      "title": "Embedded Systems Entwickler:in",
+      "recModules": [
+        {
+          "acronym": "SCM-M-08",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-DistrSys-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "CTRL-M-01",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DT-CPP-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-P-RES-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "SYSNAP-OSE-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SYSNAP-Project-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "MOBI-Proj-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "AlgoK-Algo",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "Inf-Einf-B",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "DSG-AJP-B",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-ID-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "IIS-IBS-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "Inf-Einf-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "Inf-GRABS-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "SYSNAP-OSE-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "DT-CPP-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AI-Proj1-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AI-Proj2-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "MOBI-Proj-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "DT-CPP-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "Inf-GRABS-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "Inf-Prog-C-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AlgoK-AK-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "DT-CPP-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "Inf-Prog-C-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "DT-SNAP-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "DT-DB4MLKD-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "EESYS-GEI-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "DT-CPP-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "DT-CPP-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "Inf-Prog-C-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "MII-ROB-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "MII-SemHRI-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        }
+      ]
+    },
+    {
+      "title": "IT-Consultant",
+      "recModules": [
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-DistrSys-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "ISM-MDI-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "ISHANDS-Change-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "ISM-MDT-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "AIC-SPRO-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "PSI-AdvaSP-M",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "ISM-MDI-M",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "IIS-IBS-M",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-ID-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "ISHANDS-Change-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "ISM-MDT-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "IIS-IBS-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-LKR-B",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-ETH-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "PSI-ProjectSP-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "PSI-DiffPriv-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "NLProc-ILT-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "NLProc-ANLP-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "MOBI-Proj-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "ISM-ITC-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-SemCP-B",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-FTAIP-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "ISDL-ITCon-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AISE-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-LKR-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE Proj B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "SWT SWP B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "ISM-ITC-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "IIS-MobIS-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "MOBI-DE-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "SWT-SEM-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "GdI-MTL-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        }
+      ]
+    },
+    {
+      "title": "Projektmanager:in für IT-Projekte",
+      "recModules": [
+        {
+          "acronym": "CTRL-M-01",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-Project-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "PM-M-10",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-P-RES-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-P-DINU-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "ISHANDS-Change-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "PM-M-02",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "MOBI-Proj-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "PSI-ProjectSP-M",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "AlgoK-Sem-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "ISM-MDI-M",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "IIS-IBS-M",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-ID-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "ISHANDS-Change-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "PM-M-02",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "CTRL-M-01",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "CTRL-M-04",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "PM-M-03",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "HCI-KS-B",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-Proj-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-LKR-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "SWT-PR1-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "GdI-Proj-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "MOBI-Proj-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "DS-Proj-M",
+          "score": 0.4,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-Proj-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-FTAIP-B",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-ETH",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-SemCP-B",
+          "score": 0.4,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AIC-IITP-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "ISDL-ITCon-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "AIC-IITP-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "HCI-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "MOBI-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "PSI-Sem-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "PM-B-01",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "PM-B-02",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "Org-B-08",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISM-ITC-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "SCM-B-03",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "SWT-SWL-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AIC-IITP-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "MOBI-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        }
+      ]
+    },
+    {
+      "title": "Business Analyst",
+      "recModules": [
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "CTRL-M-01",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "CTRL-M-01",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "AIC-SPRO-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SWT-ASV-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "IIS-IBS-M",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "ISM-MDI-M",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-DISTP-B",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "HCI-DFM-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "IIS-IBS-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "ISHANDS-Change-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "CTRL-M-01",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-LKR-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-FTAIP-B",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-ETH-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-Proj-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-Proj-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "DT-DB42",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "NLProc.ANLP",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "SWT-ASV",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "ISM-ITC-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "BAEES1.3",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "BFC-B-01",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "CTRL-B-02",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "BFC-B-03",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "WI-Projekt-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "WI-Seminar-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "SWT-SWP-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "WI-Seminar-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "WI-Projekt-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AIC-IITP-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-LKR-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "ISM-ITC-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "IIS-MobIS-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "CTRL-B-02",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "WI-Seminar-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "MOBI-DE-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "GdI-MTL-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "xAI Proj B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        }
+      ]
+    },
+    {
+      "title": "Data Scientist",
+      "recModules": [
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DS-ConvAI-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "xAI-Sem-M1",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "VIS-IVVA-M",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "xAI-Sem-M1",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "DS-Sem-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-ADAML",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "AIC-HYIN-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "AIC-SPRO-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "NLProc-ANLP-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "VIS-GIV-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "NLProc-ANLP-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "DS-ConvAI-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AISE-Sem-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "MOBI-DSC-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "xAI-MML-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-FTAIP-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "NLProc-IRTM-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "xAI-MML-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "Stat-B-01",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "Stat-B-02",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "xAI-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "MOBI-DE-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "SuStat-071-M",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "VIS-Sem-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISDL-MED-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISDL-PTDT-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "MOBI-DBS-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "MOBI-DE-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "xAI-MML-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "xAI-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "DT-CPP-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        }
+      ]
+    },
+    {
+      "title": "Data Engineer",
+      "recModules": [
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "MOBI-DSC-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-ES-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-P-DINU-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "MOBI-DSC-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "MOBI-Proj-M",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "DT-DB42-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "DSG-AJP-B",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "Inf-Einf-B",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "IIS-IBS-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "CTRL-M-02",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "AIC-HYIN-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "MOBI-DBS-B",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "DT-Proj-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "MOBI-DSC-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "MOBI-ADM-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "DT-DB42-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "xAI-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "DT-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "DT-Proj-B",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "DT DB4MLKD B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "DSG-AJP-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "xAI-MML-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "MOBI-DE-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "DT DB4MLKD B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "MOBI-DBS-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "DSG-JaP-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISDL-PTDT-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "MOBI-DE-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "DT-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "MOBI-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "DT-DB4MLKD-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        }
+      ]
+    },
+    {
+      "title": "KI-Entwickler:in",
+      "recModules": [
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-DistrSys-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "HCI-MCI-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "DS-ConvAI-M",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "AIC-HYIN-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "AIC-SPRO-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "xAI-Sem-M1",
+          "score": 0.7,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.6,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "GdI-CSNL-M",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "PSI-AdvaSP-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "NLProc-Sem1-M",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "KogSys-Sem-M1",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "DS-Sem-M",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "AIC-HYIN-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "AIC-SPRO-M",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "NLProc-ANLP-M",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-ETH-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.8,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "NLProc-ANLP-M",
+          "score": 0.7,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AISE-ETH-M",
+          "score": 0.6,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "AISE-Proj-M",
+          "score": 0.5,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "DS-ConvAI-M",
+          "score": 0.4,
+          "studyprogramme": "MAAng"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-ETH",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-FTAIP-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.4,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "NLProc-ALV-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AISE-SemCP-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AISE-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "xAI-MML-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "NLProc ALV B",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "KogSys-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-LKR-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISDL-MED-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISDL-DEXP-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "PSI EDS B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "KogSys-KI-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "xAI-MML-B",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "xAI-Proj-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "AISE-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "KogSys-Proj-B",
+          "score": 0.4,
+          "studyprogramme": "BAInf"
+        }
+      ]
+    },
+    {
+      "title": "IT-Security-Spezialist:in",
+      "recModules": [
+        {
+          "acronym": "PSI-AdvaSP-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "PSI-ProjectPAD",
+          "score": 0.7,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "DSG-DSAM-M",
+          "score": 0.6,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.5,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "EESYS-ADAML-M",
+          "score": 0.8,
+          "studyprogramme": "MWpWi"
+        },
+        {
+          "acronym": "PSI-AdvaSP-M",
+          "score": 0.8,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "PSI-ProjectPAD",
+          "score": 0.7,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.6,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "CTRL-M-02",
+          "score": 0.5,
+          "studyprogramme": "MAWin"
+        },
+        {
+          "acronym": "IIS-IBS-M",
+          "score": 0.8,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "ISM-MDI-M",
+          "score": 0.7,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "SWT-FSE-B",
+          "score": 0.6,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "xAI-Sem-M1",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "KogSys-ML-B",
+          "score": 0.5,
+          "studyprogramme": "MAIRD"
+        },
+        {
+          "acronym": "EESYS-DDS-M",
+          "score": 0.8,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "EESYS-BIA-M",
+          "score": 0.7,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "ISHANDS-Change-M",
+          "score": 0.6,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "CTRL-M-02",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "CTRL-M-03",
+          "score": 0.5,
+          "studyprogramme": "MIISM"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.8,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "PSI-IntroSP-B",
+          "score": 0.7,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.6,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "xAI-DL-M",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "AISE-LKR-B",
+          "score": 0.5,
+          "studyprogramme": "MaCiH"
+        },
+        {
+          "acronym": "PSI-AdvaSP-M",
+          "score": 0.8,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "PSI-ProjectSP-M",
+          "score": 0.5,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "PSI-Sem-M",
+          "score": 0.4,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "SYSNAP-OSE-M",
+          "score": 0.3,
+          "studyprogramme": "MASSS"
+        },
+        {
+          "acronym": "PSI-IntroSP",
+          "score": 0.8,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "PSI-DatSchu",
+          "score": 0.7,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "PSI-EDS",
+          "score": 0.6,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "PSI-Sem-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "AISE-LKR-B",
+          "score": 0.5,
+          "studyprogramme": "BAWIn"
+        },
+        {
+          "acronym": "PSI-ProjectPAD",
+          "score": 0.8,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "PSI-Sem-B",
+          "score": 0.7,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AISE-SemCP-B",
+          "score": 0.6,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "AISE-Proj-B",
+          "score": 0.5,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "ISDL-ITCon-B",
+          "score": 0.4,
+          "studyprogramme": "BKIDS"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.8,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "PSI-IntroSP-B",
+          "score": 0.7,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "ISDL-KIP-B",
+          "score": 0.6,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "HCI-IS-B",
+          "score": 0.5,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "IIS-EBAS-B",
+          "score": 0.4,
+          "studyprogramme": "BIISM"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.8,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "PSI-ProjectPAD",
+          "score": 0.7,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "PSI-Sem-B",
+          "score": 0.6,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "PSI-ProjectCAD",
+          "score": 0.5,
+          "studyprogramme": "BAInf"
+        },
+        {
+          "acronym": "PSI-DatSchu-B",
+          "score": 0.8,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "PSI ProjectPAD",
+          "score": 0.7,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "PSI Sem B",
+          "score": 0.6,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-DO-B",
+          "score": 0.5,
+          "studyprogramme": "BAAng"
+        },
+        {
+          "acronym": "AISE-LKR-B",
+          "score": 0.4,
+          "studyprogramme": "BAAng"
+        }
+      ]
+    }
+  ]
+}

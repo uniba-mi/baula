@@ -1,0 +1,4 @@
+<div *ngIf="showHint$ | async" class="text-center" [ngClass]="alertClass">
+    <p [innerHTML]="hintMessage | linkify"></p>
+    <button class="btn btn-outline" (click)="confirmHint()">Verstanden</button>
+</div>

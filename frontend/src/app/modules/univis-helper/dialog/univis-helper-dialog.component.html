@@ -1,0 +1,37 @@
+<div class="mx-4 mb-4">
+  <h2 mat-dialog-title>Bestehende Lehrveranstaltung aus BilApp übernehmen:</h2>
+  <mat-dialog-content class="mat-typography">
+    <!-- Select Semester -->
+    <p>Wählen Sie ein Semester aus, aus dem Sie einen bestehende Lehrveranstaltung übernehmen möchten:</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Semester</mat-label>
+      <mat-select [(value)]="selectedSemester" (selectionChange)="getCourses()"> 
+        <mat-option *ngFor="let semester of semesters" [value]="semester.key">
+          {{ semester.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- Select concrete Course -->
+    <div *ngIf="selectedSemester">
+      <p>Wählen Sie nun eine Lehrveranstaltung aus, dessen Daten Sie übernehmen möchten:</p>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Lehrveranstaltung</mat-label>
+        <!-- <mat-select [(value)]="selectedCourse">
+          <mat-option *ngFor="let course of courses$ | async" [value]="course.id">
+            {{ course.name }}
+          </mat-option>
+        </mat-select> -->
+        <input type="text" matInput [matAutocomplete]="auto" [formControl]="selectedCourse">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let course of filteredCourseNames$ | async" [value]="course">
+            {{ course }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-dialog-close class="btn btn-outline me-2">Abbrechen</button>
+    <button [mat-dialog-close]="getCourseId()" class="btn btn-success" [disabled]="!(selectedCourse.value !== '')">Auswahl übernehmen</button>
+  </mat-dialog-actions>
+</div>

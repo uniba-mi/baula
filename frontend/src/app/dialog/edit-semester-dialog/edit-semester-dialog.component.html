@@ -1,0 +1,23 @@
+<ng-container role="Dialoginhalt" *ngIf="semesters$ | async as semesters">
+  <div class="content-wrapper">
+    <mat-form-field appearance="outline">
+      <mat-label>Wähle das Semester aus:</mat-label>
+      <mat-select #semester [formControl]="selectedSemester" aria-label="Dropdown zur Semesterauswahl"
+        (selectionChange)="updateSemester()" required>
+        <mat-option *ngFor="let semester of semesters" [value]="semester.name">
+          {{ semester.name | Semester }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-dialog-actions>
+      <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="cancel()">
+        Abbrechen
+      </button>
+      <button mat-raised-button class="btn btn-primary" (click)="saveSemester()"
+        [mat-dialog-close]="{ semester: selectedSemester.value }"
+        [disabled]="!hasDefinedTeachingPeriod || !selectedSemester.value">
+        Ändern
+      </button>
+    </mat-dialog-actions>
+  </div>
+</ng-container>

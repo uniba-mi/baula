@@ -1,0 +1,34 @@
+<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+    <form [formGroup]="mgForm">
+        <div class="content-wrapper">
+            <div class="input-field-wrapper">
+                <mat-form-field *ngIf="structuredModuleGroups$ | async as structuredModuleGroups" appearance="outline">
+                    <mat-label>Modulgruppe</mat-label>
+                    <mat-select formControlName="mgId" [value]="mgId" placeholder="Bitte wählen">
+                        <mat-option *ngFor="let group of structuredModuleGroups" [value]="group.mgId"
+                            [ngStyle]="{'padding-left': ((group.level ?? 0) * 10 + 10) + 'px'}"> {{ group.path }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- show mg wizard -->
+        <div class="wrapper w-90 mt-0">
+            <app-module-group-wizard *ngIf="showMgWizard" [mgId]="mgId"
+                [structuredModuleGroups$]="structuredModuleGroups$" (groupSelected)="selectSimilarGroup($event)">
+            </app-module-group-wizard>
+        </div>
+
+        <mat-dialog-actions>
+            <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
+                (keyup)="close('noData')">
+                Abbrechen
+            </button>
+            <button mat-raised-button class="btn btn-primary" [disabled]="!mgForm.valid"
+                [mat-dialog-close]="mgForm.controls.mgId.value" (click)="close('data')" (keyup)="close('data')">
+                Speichern
+            </button>
+        </mat-dialog-actions>
+    </form>
+</ng-container>

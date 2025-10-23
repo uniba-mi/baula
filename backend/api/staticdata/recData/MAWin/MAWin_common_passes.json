@@ -1,0 +1,210 @@
+[
+    {
+        "Module": "Masterarbeit",
+        "Frequency": 191
+    },
+    {
+        "Module": "ISDL-ISS1-M",
+        "Frequency": 130
+    },
+    {
+        "Module": "ISDL-ISS2-M",
+        "Frequency": 120
+    },
+    {
+        "Module": "MaWI-Sem1-M",
+        "Frequency": 107
+    },
+    {
+        "Module": "MaWI-Sem2-M",
+        "Frequency": 94
+    },
+    {
+        "Module": "IIS-IBS-M",
+        "Frequency": 93
+    },
+    {
+        "Module": "ISDL-ISS3-M",
+        "Frequency": 79
+    },
+    {
+        "Module": "ISDL-ITCHANGE-M",
+        "Frequency": 71
+    },
+    {
+        "Module": " WI-Thesis-M",
+        "Frequency": 70
+    },
+    {
+        "Module": "IIS-MODS-M",
+        "Frequency": 63
+    },
+    {
+        "Module": "SNA-NET-M",
+        "Frequency": 58
+    },
+    {
+        "Module": "SNA-ASN-M",
+        "Frequency": 58
+    },
+    {
+        "Module": "SCM-M-08",
+        "Frequency": 44
+    },
+    {
+        "Module": "SEDA-EbIS-1-M",
+        "Frequency": 34
+    },
+    {
+        "Module": "IIS-EBAS-B",
+        "Frequency": 33
+    },
+    {
+        "Module": "KogSys-ML-B",
+        "Frequency": 33
+    },
+    {
+        "Module": "SCM-B-01",
+        "Frequency": 32
+    },
+    {
+        "Module": "MOBI-ADM-M",
+        "Frequency": 32
+    },
+    {
+        "Module": "HCI-MCI-M",
+        "Frequency": 31
+    },
+    {
+        "Module": "EESYS-BIA-M",
+        "Frequency": 29
+    },
+    {
+        "Module": "SCM-M-09",
+        "Frequency": 29
+    },
+    {
+        "Module": "EESYS-ADAML-M",
+        "Frequency": 28
+    },
+    {
+        "Module": "SEDA-GbIS-B",
+        "Frequency": 28
+    },
+    {
+        "Module": "MI-IR-M",
+        "Frequency": 26
+    },
+    {
+        "Module": "EESYS-P-SGDA-M",
+        "Frequency": 24
+    },
+    {
+        "Module": "ISDL-ITCon-B",
+        "Frequency": 24
+    },
+    {
+        "Module": "EESYS-ES1-M",
+        "Frequency": 22
+    },
+    {
+        "Module": "EESYS-ES-M",
+        "Frequency": 21
+    },
+    {
+        "Module": "DSG-EiAPS-B",
+        "Frequency": 20
+    },
+    {
+        "Module": "EESYS-P-BIRES-M",
+        "Frequency": 19
+    },
+    {
+        "Module": "SCM-B-03",
+        "Frequency": 19
+    },
+    {
+        "Module": "MOBI-DSC-M",
+        "Frequency": 18
+    },
+    {
+        "Module": "SNA-IWM-B",
+        "Frequency": 18
+    },
+    {
+        "Module": "ISDL-Sem-M",
+        "Frequency": 18
+    },
+    {
+        "Module": "SEDA-EbIS-2-M",
+        "Frequency": 18
+    },
+    {
+        "Module": "PSI-EiRBS-B",
+        "Frequency": 18
+    },
+    {
+        "Module": "GdI-MfI-1",
+        "Frequency": 17
+    },
+    {
+        "Module": "EESYS-DSES-M",
+        "Frequency": 16
+    },
+    {
+        "Module": "IIS-E-Biz-B",
+        "Frequency": 16
+    },
+    {
+        "Module": "DSG-SOA-M",
+        "Frequency": 16
+    },
+    {
+        "Module": "ISDL-SOA",
+        "Frequency": 15
+    },
+    {
+        "Module": "HCI-US-B",
+        "Frequency": 15
+    },
+    {
+        "Module": "PuL-B-103",
+        "Frequency": 14
+    },
+    {
+        "Module": "IAWS-E-COM-M",
+        "Frequency": 12
+    },
+    {
+        "Module": "SEDA-EbIS-3-M",
+        "Frequency": 12
+    },
+    {
+        "Module": "SNA-OSN-M",
+        "Frequency": 11
+    },
+    {
+        "Module": "PuL-B-102",
+        "Frequency": 11
+    },
+    {
+        "Module": "PuL-M-02",
+        "Frequency": 11
+    },
+    {
+        "Module": "HCI-IS-B",
+        "Frequency": 11
+    },
+    {
+        "Module": "DSG-DSAM-M",
+        "Frequency": 11
+    },
+    {
+        "Module": "ISDL-eFin-B",
+        "Frequency": 11
+    },
+    {
+        "Module": "IAWS-MSS-M",
+        "Frequency": 10
+    }
+]

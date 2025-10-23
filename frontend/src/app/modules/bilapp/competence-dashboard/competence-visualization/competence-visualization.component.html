@@ -1,0 +1,28 @@
+<!-- Navigation -->
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-lg-8">
+    <h4 class="nav-header text-center">Zielperspektiven / Kompetenzstandards</h4>
+    <nav>
+      <ul class="nav">
+        <!-- Standards to select -->
+        <app-standard></app-standard>
+      </ul>
+    </nav>
+  </div>
+</div>
+<!-- Section for the charts / structure -->
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-lg-12">
+    <div class="alert alert-primary" *ngIf="!(this.selectedStandard$ | async); else chartSection">
+      Bitte wählen Sie einen Standard aus!
+    </div>
+    <ng-template #chartSection>
+      <ng-container *ngIf="this.competences$ | async as comp">
+        <ng-container *ngIf="this.courses$ | async as courses">
+          <!-- Chart section -->
+          <compvis-chart [competences]="comp" [selectedCourses]="courses"> </compvis-chart>
+        </ng-container>
+      </ng-container>
+    </ng-template>
+  </div>
+</div>

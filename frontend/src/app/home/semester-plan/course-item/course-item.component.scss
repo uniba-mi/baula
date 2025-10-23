@@ -1,0 +1,77 @@
+.sign-disabled {
+    opacity: 0.5;
+}
+
+.person-link {
+    color: #217178;
+    background: #ddf3f5;
+    line-height: 0.8rem;
+}
+
+.course-list-item:hover {
+    transform: scale(0.995);
+    transition: all .2s ease-in-out;
+}
+
+.truncate {
+    display: flex;
+    overflow: hidden;
+    align-items: flex-start;
+}
+
+.truncate .truncate-text {
+    -webkit-line-clamp: 3;
+}
+
+.truncate-icon {
+    padding-right: 5px;
+    flex: 0 0 auto;
+}
+
+.placeholder-chip {
+    width: 100%;
+}
+
+.last-updated {
+    font-size: xx-small;
+}
+
+.selection-indicator {
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    position: absolute;
+    padding: 0;
+    opacity: 0;  // initially hidden
+    visibility: hidden;  // initially hidden
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.course-list-item:hover .selection-indicator:not(.selected) {
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (hover: none) and (pointer: coarse), (max-width: 767px) {
+    .selection-indicator {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.selection-indicator.selected {
+    opacity: 1;
+    visibility: visible;
+}
+
+.selected {
+    color: var(--ub-green);
+    opacity: 1;
+    visibility: visible;
+}
+
+.not-selected {
+    color: #ccc;
+    background-color: #fff;
+}

@@ -1,0 +1,27 @@
+// svg {
+//   height: 16px;
+//   width: 16px;
+//   fill: #217178;
+//   stroke: #217178;
+// }
+
+.compulsory-icon {
+  background-color: #ffe0d5;
+  border-radius: 50rem;
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  width: 24px;
+  height: 24px;
+
+  i {
+    color: #ff5958;
+    font-weight: strong;
+    font-style: normal;
+    font-size: 0.8rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+  }
+}

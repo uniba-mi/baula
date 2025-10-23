@@ -1,0 +1,12 @@
+/* this file is the central styles entry point */
+
+/* import styles files */
+@use './variables';
+@use "./bootstrap";
+@use './mat-theme/mat_core';
+@use './shared/global';
+@use './shared/ui_elements';
+@use './shared/components/search_panel';
+@use './shared/components/dialog';
+@use './shared/components/fullcalendar';
+@use './mat-theme/mat_override';

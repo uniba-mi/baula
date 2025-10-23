@@ -1,0 +1,965 @@
+{
+    "IntMan-B-02": {
+        "Module": "IntMan-B-02",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-Proj-M": {
+        "Module": "MI-Proj-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Inno-B-04": {
+        "Module": "Inno-B-04",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISDL-ISS3-M": {
+        "Module": "ISDL-ISS3-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 14
+            }
+        ],
+        "Precursors": []
+    },
+    "ISDL-ITCon-B": {
+        "Module": "ISDL-ITCon-B",
+        "Avg_Pass_Semester": "2-3",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "UFC-M-06": {
+        "Module": "UFC-M-06",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-MCI-M": {
+        "Module": "HCI-MCI-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SEDA-EbIS-1-M": {
+        "Module": "SEDA-EbIS-1-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ETH": {
+        "Module": "ETH",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IAWS-MSS-M": {
+        "Module": "IAWS-MSS-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-B-04": {
+        "Module": "WiPäd-B-04",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-M-01": {
+        "Module": "WiPäd-M-01",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "1.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 20
+            },
+            {
+                "Module": "WiPäd-M-06",
+                "Frequency": 13
+            }
+        ],
+        "Precursors": []
+    },
+    "Inno-B-01": {
+        "Module": "Inno-B-01",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "UFC-M6": {
+        "Module": "UFC-M6",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Market-M-01": {
+        "Module": "Market-M-01",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-M-07": {
+        "Module": "WiPäd-M-07",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Informations- und Wissensmanagement": {
+        "Module": "Informations- und Wissensmanagement",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SEDA-EbIS-3-M": {
+        "Module": "SEDA-EbIS-3-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Forschungsseminar": {
+        "Module": "Forschungsseminar",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "GdI-MfI-1": {
+        "Module": "GdI-MfI-1",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-B-03": {
+        "Module": "WiPäd-B-03",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISDL-eFin-B": {
+        "Module": "ISDL-eFin-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 13
+            }
+        ],
+        "Precursors": []
+    },
+    "WiPäd-M-04": {
+        "Module": "WiPäd-M-04",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 19
+            },
+            {
+                "Module": "WiPäd-M-06",
+                "Frequency": 14
+            }
+        ],
+        "Precursors": []
+    },
+    "ISDL-ISS1-M": {
+        "Module": "ISDL-ISS1-M",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 13
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "WiPäd-M-03",
+                "Frequency": 10
+            },
+            {
+                "Module": "WiPäd-M-04",
+                "Frequency": 10
+            }
+        ]
+    },
+    "SNA-OSN-M": {
+        "Module": "SNA-OSN-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "PSI-EiRBS-B": {
+        "Module": "PSI-EiRBS-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": []
+    },
+    "BSL-M-01": {
+        "Module": "BSL-M-01",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "PM-B-04": {
+        "Module": "PM-B-04",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SCM-M-09": {
+        "Module": "SCM-M-09",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "PM-B-02": {
+        "Module": "PM-B-02",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "BSL-B-00": {
+        "Module": "BSL-B-00",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-WebT-B": {
+        "Module": "MI-WebT-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IAWS-E-COM-M": {
+        "Module": "IAWS-E-COM-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WI-Projekt zu SAP©-Standardsoftware": {
+        "Module": "WI-Projekt zu SAP©-Standardsoftware",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "UFC-M-01": {
+        "Module": "UFC-M-01",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-AJP-B": {
+        "Module": "DSG-AJP-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISM-MDI-M": {
+        "Module": "ISM-MDI-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Multimediale Lernumgebungen": {
+        "Module": "Multimediale Lernumgebungen",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IntMan-M-04": {
+        "Module": "IntMan-M-04",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISM-SaaS-B": {
+        "Module": "ISM-SaaS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISDL-ISS2-M": {
+        "Module": "ISDL-ISS2-M",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SNA-IWM-B": {
+        "Module": "SNA-IWM-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "EESYS-ES1-M": {
+        "Module": "EESYS-ES1-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IAWS-EBAS-B": {
+        "Module": "IAWS-EBAS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IntMan-B-06": {
+        "Module": "IntMan-B-06",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "PM-B-03": {
+        "Module": "PM-B-03",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Con-M-01": {
+        "Module": "Con-M-01",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-EiAPS-B": {
+        "Module": "DSG-EiAPS-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 16
+            },
+            {
+                "Module": "WiPäd-M-06",
+                "Frequency": 12
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "WiPäd-M-03",
+                "Frequency": 10
+            }
+        ]
+    },
+    "WiPäd-B-02": {
+        "Module": "WiPäd-B-02",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IAWS-ERP-M": {
+        "Module": "IAWS-ERP-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IRWP-M-07": {
+        "Module": "IRWP-M-07",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISM-MDT-M": {
+        "Module": "ISM-MDT-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SCM-B-03": {
+        "Module": "SCM-B-03",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IntMan-M-02": {
+        "Module": "IntMan-M-02",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IIS-IBS-M": {
+        "Module": "IIS-IBS-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Inno-B-03": {
+        "Module": "Inno-B-03",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Grundlagen des Lernens und Arbeitens ": {
+        "Module": "Grundlagen des Lernens und Arbeitens ",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-B-06": {
+        "Module": "WiPäd-B-06",
+        "Avg_Pass_Semester": "1",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-M-06": {
+        "Module": "WiPäd-M-06",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 23
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "WiPäd-M-03",
+                "Frequency": 17
+            },
+            {
+                "Module": "WiPäd-M-04",
+                "Frequency": 17
+            },
+            {
+                "Module": "WiPäd-M-01",
+                "Frequency": 16
+            },
+            {
+                "Module": "WiPäd-M-02",
+                "Frequency": 11
+            }
+        ]
+    },
+    "ISDL-SOA": {
+        "Module": "ISDL-SOA",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "GdI-IaS-M": {
+        "Module": "GdI-IaS-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "BSL-B-06": {
+        "Module": "BSL-B-06",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Market-B-02": {
+        "Module": "Market-B-02",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Inno-M-01": {
+        "Module": "Inno-M-01",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "EESYS-ES-M": {
+        "Module": "EESYS-ES-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-EMI-B": {
+        "Module": "MI-EMI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-M-11": {
+        "Module": "WiPäd-M-11",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "PuL-B-103": {
+        "Module": "PuL-B-103",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Con-M-03": {
+        "Module": "Con-M-03",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Schulpraktische Übungen": {
+        "Module": "Schulpraktische Übungen",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "BSL-B-03": {
+        "Module": "BSL-B-03",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "EESYS-DDS-M": {
+        "Module": "EESYS-DDS-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IRWP-B-03": {
+        "Module": "IRWP-B-03",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-M-02": {
+        "Module": "WiPäd-M-02",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IRWP-M-03": {
+        "Module": "IRWP-M-03",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SNA-NET-M": {
+        "Module": "SNA-NET-M",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Modellierung betrieblicher Informationssysteme": {
+        "Module": "Modellierung betrieblicher Informationssysteme",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Multimediale Lernumgebungen I": {
+        "Module": "Multimediale Lernumgebungen I",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SNA-ASN-M": {
+        "Module": "SNA-ASN-M",
+        "Avg_Pass_Semester": "2-3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 13
+            }
+        ],
+        "Precursors": []
+    },
+    "WiPäd-M-03": {
+        "Module": "WiPäd-M-03",
+        "Avg_Pass_Semester": "1",
+        "Success_Pass_Semester": "1.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 18
+            },
+            {
+                "Module": "WiPäd-M-06",
+                "Frequency": 13
+            },
+            {
+                "Module": "WiPäd-M-01",
+                "Frequency": 11
+            }
+        ],
+        "Precursors": []
+    },
+    "MOBI-DBS-B": {
+        "Module": "MOBI-DBS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "CG-CGA-B": {
+        "Module": "CG-CGA-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IRWP-M-01": {
+        "Module": "IRWP-M-01",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SEDA-MobIS-B": {
+        "Module": "SEDA-MobIS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-IR-M": {
+        "Module": "MI-IR-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SEDA-WI-Proj-B": {
+        "Module": "SEDA-WI-Proj-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "EESYS-ADAML-M": {
+        "Module": "EESYS-ADAML-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IIS-MODS-M": {
+        "Module": "IIS-MODS-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-M-05": {
+        "Module": "WiPäd-M-05",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IIS-WI-Proj-B": {
+        "Module": "IIS-WI-Proj-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SEDA-EbIS-2-M": {
+        "Module": "SEDA-EbIS-2-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    " WipädWI-Thesis-M": {
+        "Module": " WipädWI-Thesis-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-EidI-B": {
+        "Module": "DSG-EidI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IntMan-M-06": {
+        "Module": "IntMan-M-06",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-B-07": {
+        "Module": "WiPäd-B-07",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WipädWI-Thesis-M": {
+        "Module": "WipädWI-Thesis-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-KogMod-M": {
+        "Module": "KogSys-KogMod-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IIS-EBAS-B": {
+        "Module": "IIS-EBAS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IntMan-M-08": {
+        "Module": "IntMan-M-08",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SEDA-GbIS-B": {
+        "Module": "SEDA-GbIS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Entscheidungstheorie": {
+        "Module": "Entscheidungstheorie",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-B-05": {
+        "Module": "WiPäd-B-05",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISDL-ITCHANGE-M": {
+        "Module": "ISDL-ITCHANGE-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "GdI-NPP-B": {
+        "Module": "GdI-NPP-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-IR2-M": {
+        "Module": "MI-IR2-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IAWS-IWM-B": {
+        "Module": "IAWS-IWM-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiPäd-M-09": {
+        "Module": "WiPäd-M-09",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Operations Research ": {
+        "Module": "Operations Research ",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "EESYS-BIA-M": {
+        "Module": "EESYS-BIA-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "PuL-B-102": {
+        "Module": "PuL-B-102",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "PuL-M-02": {
+        "Module": "PuL-M-02",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Masterarbeit": {
+        "Module": "Masterarbeit",
+        "Avg_Pass_Semester": "4",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": [
+            {
+                "Module": "WiPäd-M-01",
+                "Frequency": 25
+            },
+            {
+                "Module": "WiPäd-M-04",
+                "Frequency": 24
+            },
+            {
+                "Module": "WiPäd-M-03",
+                "Frequency": 23
+            },
+            {
+                "Module": "WiPäd-M-06",
+                "Frequency": 22
+            },
+            {
+                "Module": "SNA-ASN-M",
+                "Frequency": 15
+            },
+            {
+                "Module": "WiPäd-M-07",
+                "Frequency": 14
+            },
+            {
+                "Module": "WiPäd-B-06",
+                "Frequency": 14
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "WiPäd-M-02",
+                "Frequency": 12
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "ISDL-ISS3-M",
+                "Frequency": 11
+            },
+            {
+                "Module": "ISDL-ISS1-M",
+                "Frequency": 10
+            },
+            {
+                "Module": "WiPäd-B-04",
+                "Frequency": 10
+            },
+            {
+                "Module": "WiPäd-B-02",
+                "Frequency": 10
+            }
+        ]
+    },
+    "SCM-M-08": {
+        "Module": "SCM-M-08",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "AI-AuD-B": {
+        "Module": "AI-AuD-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "EESYS-P-BIRES-M": {
+        "Module": "EESYS-P-BIRES-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    }
+}

@@ -1,0 +1,70 @@
+[
+    {
+        "Module": "Masterarbeit",
+        "Frequency": 44
+    },
+    {
+        "Module": "HCI-MCI-M",
+        "Frequency": 33
+    },
+    {
+        "Module": "AI-Sem2-M",
+        "Frequency": 29
+    },
+    {
+        "Module": "KogSys-ML-B",
+        "Frequency": 29
+    },
+    {
+        "Module": "AI-Sem1-M",
+        "Frequency": 27
+    },
+    {
+        "Module": "MOBI-DSC-M",
+        "Frequency": 24
+    },
+    {
+        "Module": "MOBI-ADM-M",
+        "Frequency": 22
+    },
+    {
+        "Module": "HCI-US-B",
+        "Frequency": 20
+    },
+    {
+        "Module": "KogSys-KogMod-M",
+        "Frequency": 16
+    },
+    {
+        "Module": "AI-Thesis-M",
+        "Frequency": 16
+    },
+    {
+        "Module": "CG-CGA-B",
+        "Frequency": 16
+    },
+    {
+        "Module": "KInf-SemInf-M",
+        "Frequency": 15
+    },
+    {
+        "Module": "MI-IR-M",
+        "Frequency": 15
+    },
+    {
+        "Module": "DSG-DSAM-M",
+        "Frequency": 12
+    },
+    {
+        "Module": "SME-STE-M",
+        "Frequency": 11
+    },
+    {
+        "Module": "KogSys-Proj-M",
+        "Frequency": 11
+    },
+    {
+        "Module": "DSG-SOA-M",
+        "Frequency": 11
+    }
+]

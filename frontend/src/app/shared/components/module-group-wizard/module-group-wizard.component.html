@@ -1,0 +1,28 @@
+<div class="wizard-box w-100 d-flex">
+    <div class="input-field-wrapper">
+        <div class="meta-box recommendations-box w-100 mt-0">
+            <!-- flex container for header -->
+            <div class="header-container">
+                <button mat-button (click)="toggleRecommendations()" class="show-recs-button btn btn-link text-left">
+                    <i class="bi bi-magic"></i> Vorschläge für Modulgruppen
+                    <i class="bi" [ngClass]="showRecommendations ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+                </button>
+                <i class="bi bi-info-circle"
+                    matTooltip="Modulgruppen aus dem aktuellen Modulhandbuch, die zu mindestens 90% mit der Modulgruppe aus deinem FlexNow-Auszug übereinstimmen."
+                    matTooltipClass="custom-tooltip" appTooltip></i>
+            </div>
+            <!-- recommendations content that can expand -->
+            <div *ngIf="showRecommendations" class="recommendations-content">
+                <div *ngIf="similarGroups && similarGroups.length > 0; else noData" class="similar-groups">
+                    <button *ngFor="let group of similarGroups" mat-button
+                        (click)="selectSimilarGroup(group.mgId.toString())" class="module-link mb-1">
+                        {{ group.path }}
+                    </button>
+                </div>
+                <ng-template #noData>
+                    <span>Keine Vorschläge vorhanden</span>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

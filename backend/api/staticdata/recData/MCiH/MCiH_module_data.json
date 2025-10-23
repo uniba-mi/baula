@@ -1,0 +1,1468 @@
+{
+    "EESYS-ADAML-M": {
+        "Module": "EESYS-ADAML-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-Proj-M": {
+        "Module": "MI-Proj-M",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 23
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 14
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 25
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 23
+            },
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 23
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 22
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 20
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 17
+            },
+            {
+                "Module": "HCI-IS-B",
+                "Frequency": 12
+            },
+            {
+                "Module": "MI-EMI-B",
+                "Frequency": 12
+            },
+            {
+                "Module": "WiMa-B-02a",
+                "Frequency": 11
+            },
+            {
+                "Module": "DSG-AJP-B",
+                "Frequency": 10
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 10
+            },
+            {
+                "Module": "MI-WebT-B",
+                "Frequency": 10
+            }
+        ]
+    },
+    "AI-KI-B": {
+        "Module": "AI-KI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Mathe-B-02": {
+        "Module": "Mathe-B-02",
+        "Avg_Pass_Semester": "1-2",
+        "Success_Pass_Semester": "1.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 28
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 25
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 23
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 18
+            },
+            {
+                "Module": "MI-Proj-M",
+                "Frequency": 17
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 14
+            },
+            {
+                "Module": "KInf-DigBib-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "MI-WebT-B",
+                "Frequency": 10
+            },
+            {
+                "Module": "HCI-IS-B",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 12
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 11
+            }
+        ]
+    },
+    "Hilfswissenschaften und Informationstechnologie": {
+        "Module": "Hilfswissenschaften und Informationstechnologie",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-Seminar-M": {
+        "Module": "KInf-Seminar-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-ML-B": {
+        "Module": "KogSys-ML-B",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 15
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 14
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 15
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 13
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 11
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 10
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 10
+            }
+        ]
+    },
+    "HCI-Sem-M": {
+        "Module": "HCI-Sem-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-IPKult-E": {
+        "Module": "KInf-IPKult-E",
+        "Avg_Pass_Semester": "1",
+        "Success_Pass_Semester": "1.0",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-MCI-M": {
+        "Module": "HCI-MCI-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-WebT-B": {
+        "Module": "MI-WebT-B",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 17
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 15
+            },
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 14
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 11
+            }
+        ]
+    },
+    "MI-EMI-B": {
+        "Module": "MI-EMI-B",
+        "Avg_Pass_Semester": "1",
+        "Success_Pass_Semester": "1.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 23
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 19
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 19
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 17
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 17
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 15
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 14
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 14
+            },
+            {
+                "Module": "DSG-AJP-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "MI-WebT-B",
+                "Frequency": 12
+            },
+            {
+                "Module": "MI-Proj-M",
+                "Frequency": 11
+            }
+        ],
+        "Precursors": []
+    },
+    "SWT-PMS-B": {
+        "Module": "SWT-PMS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SWT-SWE-B": {
+        "Module": "SWT-SWE-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-EidI-B": {
+        "Module": "DSG-EidI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-Sem-M1": {
+        "Module": "KogSys-Sem-M1",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SWT-FSE-B": {
+        "Module": "SWT-FSE-B",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 22
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 15
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 12
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 21
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 20
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 19
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 15
+            },
+            {
+                "Module": "HCI-IS-B",
+                "Frequency": 14
+            },
+            {
+                "Module": "MI-EMI-B",
+                "Frequency": 14
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "Mathe-B-02",
+                "Frequency": 10
+            }
+        ]
+    },
+    "SME-Projekt-M": {
+        "Module": "SME-Projekt-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SWT-PMI-B": {
+        "Module": "SWT-PMI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-KogMod-M": {
+        "Module": "KogSys-KogMod-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 11
+            }
+        ],
+        "Precursors": []
+    },
+    "HCI-KS-B": {
+        "Module": "HCI-KS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-IS-B": {
+        "Module": "HCI-IS-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "1.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 31
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 21
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 17
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 16
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 15
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 15
+            },
+            {
+                "Module": "MI-Proj-M",
+                "Frequency": 13
+            },
+            {
+                "Module": "KInf-Projekt-M",
+                "Frequency": 13
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 12
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 15
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 14
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "Mathe-B-02",
+                "Frequency": 12
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 10
+            }
+        ]
+    },
+    "HCI-Sem-HCC-M": {
+        "Module": "HCI-Sem-HCC-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-AJP-B": {
+        "Module": "DSG-AJP-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 20
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 12
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 11
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 11
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 20
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 18
+            },
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 18
+            },
+            {
+                "Module": "MI-EMI-B",
+                "Frequency": 10
+            }
+        ]
+    },
+    "ISM-MDI-M": {
+        "Module": "ISM-MDI-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "EESYS-IITP-B": {
+        "Module": "EESYS-IITP-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISDL-ECM-B": {
+        "Module": "ISDL-ECM-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KTR-MfI-2": {
+        "Module": "KTR-MfI-2",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Masterarbeit": {
+        "Module": "Masterarbeit",
+        "Avg_Pass_Semester": "5",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": [
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 47
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 45
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 44
+            },
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 38
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 38
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 37
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 35
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 33
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 29
+            },
+            {
+                "Module": "HCI-IS-B",
+                "Frequency": 27
+            },
+            {
+                "Module": "MI-WebT-B",
+                "Frequency": 25
+            },
+            {
+                "Module": "MI-Proj-M",
+                "Frequency": 24
+            },
+            {
+                "Module": "DSG-AJP-B",
+                "Frequency": 23
+            },
+            {
+                "Module": "MI-EMI-B",
+                "Frequency": 22
+            },
+            {
+                "Module": "Mathe-B-02",
+                "Frequency": 22
+            },
+            {
+                "Module": "KogSys-ML-B",
+                "Frequency": 18
+            },
+            {
+                "Module": "KInf-Projekt-M",
+                "Frequency": 17
+            },
+            {
+                "Module": "WiMa-B-02a",
+                "Frequency": 17
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 15
+            },
+            {
+                "Module": "KInf-DigBib-B",
+                "Frequency": 14
+            },
+            {
+                "Module": "KInf-SemInf-M",
+                "Frequency": 11
+            }
+        ]
+    },
+    "IT English I (Security 1)": {
+        "Module": "IT English I (Security 1)",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-MMT-B": {
+        "Module": "MI-MMT-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-BuS-M": {
+        "Module": "KInf-BuS-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-Sem-M2": {
+        "Module": "KogSys-Sem-M2",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SNA-IWM-B": {
+        "Module": "SNA-IWM-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-PKS-B": {
+        "Module": "DSG-PKS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SNA-NET-M": {
+        "Module": "SNA-NET-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-Proj-M": {
+        "Module": "KInf-Proj-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-IR2-M": {
+        "Module": "MI-IR2-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SEDA-EbIS-3-M": {
+        "Module": "SEDA-EbIS-3-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-Proj-M": {
+        "Module": "KogSys-Proj-M",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 15
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 13
+            },
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 11
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 10
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 10
+            }
+        ]
+    },
+    "HCI-Usab": {
+        "Module": "HCI-Usab",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "AI-Sem1-CitH-M": {
+        "Module": "AI-Sem1-CitH-M",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 24
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 14
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 21
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 20
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 18
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 18
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 16
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "Mathe-B-02",
+                "Frequency": 11
+            },
+            {
+                "Module": "MI-WebT-B",
+                "Frequency": 10
+            }
+        ]
+    },
+    "DSG-EiAPS-B": {
+        "Module": "DSG-EiAPS-B",
+        "Avg_Pass_Semester": "1",
+        "Success_Pass_Semester": "1.0",
+        "Successors": [
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 26
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 25
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 23
+            },
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 23
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 23
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 20
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 19
+            },
+            {
+                "Module": "DSG-AJP-B",
+                "Frequency": 14
+            },
+            {
+                "Module": "MI-Proj-M",
+                "Frequency": 11
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 10
+            }
+        ]
+    },
+    "HCI-Proj-M": {
+        "Module": "HCI-Proj-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "AI-Sem2-CitH-M": {
+        "Module": "AI-Sem2-CitH-M",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 25
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 14
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 22
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 22
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 22
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 20
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 20
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 19
+            },
+            {
+                "Module": "MI-EMI-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 12
+            },
+            {
+                "Module": "HCI-IS-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "Mathe-B-02",
+                "Frequency": 11
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 10
+            }
+        ]
+    },
+    "GdI-MfI-1": {
+        "Module": "GdI-MfI-1",
+        "Avg_Pass_Semester": "1",
+        "Success_Pass_Semester": "1.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 33
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 26
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 24
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 23
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 21
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 19
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 17
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 17
+            },
+            {
+                "Module": "MI-WebT-B",
+                "Frequency": 16
+            },
+            {
+                "Module": "MI-Proj-M",
+                "Frequency": 15
+            },
+            {
+                "Module": "DSG-AJP-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "KInf-Projekt-M",
+                "Frequency": 11
+            },
+            {
+                "Module": "KInf-DigBib-B",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": []
+    },
+    "MI-Sem-M": {
+        "Module": "MI-Sem-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SWT-SSP-B": {
+        "Module": "SWT-SSP-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-SemInf-M": {
+        "Module": "KInf-SemInf-M",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 10
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 10
+            }
+        ]
+    },
+    "KInf-DigBib-B": {
+        "Module": "KInf-DigBib-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-GeoInf-B": {
+        "Module": "KInf-GeoInf-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-Sem-M": {
+        "Module": "KInf-Sem-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MOBI-DBS-B": {
+        "Module": "MOBI-DBS-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 28
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 19
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 18
+            },
+            {
+                "Module": "MI-Proj-M",
+                "Frequency": 18
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 13
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 12
+            },
+            {
+                "Module": "KInf-Projekt-M",
+                "Frequency": 10
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 19
+            },
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 17
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 13
+            }
+        ]
+    },
+    "CG-CGA-B": {
+        "Module": "CG-CGA-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "WiMa-B-02a": {
+        "Module": "WiMa-B-02a",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "1.0",
+        "Successors": [
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 23
+            },
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 23
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 14
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 13
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "MI-Proj-M",
+                "Frequency": 10
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 14
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 10
+            }
+        ]
+    },
+    "ISM-MDT-M": {
+        "Module": "ISM-MDT-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-Projekt-M": {
+        "Module": "KInf-Projekt-M",
+        "Avg_Pass_Semester": "2-3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 13
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 13
+            }
+        ]
+    },
+    "CitH-Thesis-M": {
+        "Module": "CitH-Thesis-M",
+        "Avg_Pass_Semester": "5",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 14
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 20
+            },
+            {
+                "Module": "AI-AuD-B",
+                "Frequency": 18
+            },
+            {
+                "Module": "PSI-EiRBS-B",
+                "Frequency": 18
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 17
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 17
+            },
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 17
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 17
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 16
+            },
+            {
+                "Module": "WiMa-B-02a",
+                "Frequency": 14
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 14
+            },
+            {
+                "Module": "MI-EMI-B",
+                "Frequency": 12
+            },
+            {
+                "Module": "KogSys-ML-B",
+                "Frequency": 12
+            },
+            {
+                "Module": "KInf-Projekt-M",
+                "Frequency": 10
+            },
+            {
+                "Module": "DSG-AJP-B",
+                "Frequency": 10
+            }
+        ]
+    },
+    "KInf-MobAss-M": {
+        "Module": "KInf-MobAss-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SWT-SEI-B": {
+        "Module": "SWT-SEI-B",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": []
+    },
+    "Gdl-Mfl-1": {
+        "Module": "Gdl-Mfl-1",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-IR-M": {
+        "Module": "MI-IR-M",
+        "Avg_Pass_Semester": "3",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 13
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 10
+            }
+        ]
+    },
+    "PSI-EiRBS-B": {
+        "Module": "PSI-EiRBS-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 28
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 20
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 19
+            },
+            {
+                "Module": "MI-Proj-M",
+                "Frequency": 14
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "MI-EMI-B",
+                "Frequency": 11
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 11
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 10
+            },
+            {
+                "Module": "KogSys-ML-B",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 20
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 19
+            },
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 18
+            },
+            {
+                "Module": "Mathe-B-02",
+                "Frequency": 10
+            }
+        ]
+    },
+    "AI-AuD-B": {
+        "Module": "AI-AuD-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2.0",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 41
+            },
+            {
+                "Module": "AI-Sem2-CitH-M",
+                "Frequency": 28
+            },
+            {
+                "Module": "AI-Sem1-CitH-M",
+                "Frequency": 25
+            },
+            {
+                "Module": "CitH-Thesis-M",
+                "Frequency": 21
+            },
+            {
+                "Module": "MI-Proj-M",
+                "Frequency": 17
+            },
+            {
+                "Module": "KogSys-ML-B",
+                "Frequency": 13
+            },
+            {
+                "Module": "KInf-SemInf-M",
+                "Frequency": 13
+            },
+            {
+                "Module": "SWT-FSE-B",
+                "Frequency": 12
+            },
+            {
+                "Module": "KInf-Projekt-M",
+                "Frequency": 11
+            },
+            {
+                "Module": "WiMa-B-02a",
+                "Frequency": 10
+            },
+            {
+                "Module": "HCI-IS-B",
+                "Frequency": 10
+            },
+            {
+                "Module": "MI-WebT-B",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "GdI-MfI-1",
+                "Frequency": 36
+            },
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 34
+            },
+            {
+                "Module": "DSG-EiAPS-B",
+                "Frequency": 26
+            },
+            {
+                "Module": "MI-EMI-B",
+                "Frequency": 17
+            },
+            {
+                "Module": "Mathe-B-02",
+                "Frequency": 11
+            },
+            {
+                "Module": "HCI-IS-B",
+                "Frequency": 10
+            },
+            {
+                "Module": "MOBI-DBS-B",
+                "Frequency": 10
+            }
+        ]
+    },
+    "HCI-US-B": {
+        "Module": "HCI-US-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    }
+}

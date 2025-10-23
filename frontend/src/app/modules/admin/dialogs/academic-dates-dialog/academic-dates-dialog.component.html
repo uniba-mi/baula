@@ -1,0 +1,50 @@
+<form [formGroup]="academicDateForm">
+    <mat-form-field>
+        <mat-label>Beginn und Ende des Zeitraums</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Beginn" formControlName="startdate">
+            <input matEndDate placeholder="Ende" formControlName="enddate">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <div>
+        <mat-form-field>
+            <mat-label>Startzeit</mat-label>
+            <input type="time" matInput formControlName="starttime">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Endzeit</mat-label>
+            <input type="time" matInput formControlName="endtime">
+        </mat-form-field>
+    </div>
+
+    <mat-form-field>
+        <mat-label>Beschreibung</mat-label>
+        <input type="text" matInput formControlName="desc">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Semester</mat-label>
+        <mat-select formControlName="semester" name="semester">
+            <mat-option *ngFor="let sem of semesterlist"  [value]="sem.name">{{ sem.fullName }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field formGroupName="dateType" *ngIf="dateTypes$ | async as dateTypes">
+        <mat-label>DateType</mat-label>
+        <mat-select formControlName="typeId" name="typeId">
+            <mat-option *ngFor="let dateType of dateTypes" [value]="dateType.typeId">{{ dateType.name }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>
+
+<mat-dialog-actions>
+    <button mat-raised-button class="btn btn-outline" mat-dialog-close>Abbrechen</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="this.academicDateForm.value"
+        [disabled]="!this.academicDateForm.valid">Speichern</button>
+
+</mat-dialog-actions>

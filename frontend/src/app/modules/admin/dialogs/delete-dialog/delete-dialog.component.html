@@ -1,0 +1,19 @@
+<p>
+    Möchtest du
+
+    <span *ngIf="
+                dialogContentId.endsWith('academic-date-dialog')
+              ">
+        den ausgewählten Zeitraum
+    </span>
+    wirklich löschen?
+</p>
+<p class="fw-semibold">
+    Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.
+</p>
+
+<mat-dialog-actions>
+    <button mat-raised-button class="btn btn-outline" mat-dialog-close>Abbrechen</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-raised-button class="btn btn-danger" [mat-dialog-close]="'delete'">Löschen</button>
+</mat-dialog-actions>

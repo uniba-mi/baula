@@ -1,0 +1,95 @@
+.module-information .card-title {
+    font-weight: 800;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.module-information-priorKnowledge a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.module-information-priorKnowledge a:not(:last-child)::after,
+.module-information-action-hint-terms:not(:last-child)::after {
+    content: ", ";
+}
+
+.module-information-priorKnowledge a:first-child {
+    margin-left: 0px;
+}
+
+.module-information-content>.row,
+.module-information-classes-content>.row,
+.module-information-exam>.row:not(:last-of-type) {
+    padding-bottom: 1rem;
+}
+
+.module-information-classes-header {
+    padding-bottom: 0.75rem;
+}
+
+.module-information-classes-header .fw-bold span:not(:last-of-type)::after {
+    content: ", ";
+}
+
+.module-information-classes-deadlines,
+.module-information-classes-studentnumbers {
+    padding-bottom: 0.25rem;
+}
+
+.module-information-classes-content:not(:last-of-type) {
+    margin-bottom: 1.25rem;
+}
+
+.module-information-classes-content:not(:last-of-type) {
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.module-information-classes-titleCol,
+.module-information-action-hint {
+    font-size: 0.85em;
+}
+
+.module-information-classes-literature-row .module-information-classes-literatureItem:last-of-type {
+    display: inline;
+}
+
+.meta-box {
+    font-size: 0.8rem;
+    background: var(--cus-bg-100);
+    margin: 1rem 0 2rem 0;
+    padding: 1rem;
+    border: 1px solid #ddf3f5;
+    border-radius: 4px;
+    background-color: #f3feff;
+}
+
+.module-information-classes-content {
+    font-size: 0.8rem;
+    background: var(--cus-bg-100);
+    margin: 1rem 0 2rem 0;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.active-option {
+    color: #217178;
+    background: #ddf3f5;
+}
+
+.module-planning-notification {
+    background-color: var(--cus-bg-100);
+    border-left: 4px solid text-success;
+    padding: 10px;
+    font-size: 0.9em;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.prev-chip {
+    background-color: #f3feff !important;
+    border: 1px solid #ddf3f5 !important;
+}

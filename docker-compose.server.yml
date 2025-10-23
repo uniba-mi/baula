@@ -1,0 +1,20 @@
+services:
+  server:
+    build:
+      context: ./server/
+      dockerfile: Dockerfile
+    restart: always   
+    environment:
+      - HOST_URL=${HOST_URL}
+      - HOSTNAME=${HOSTNAME} 
+    expose:   
+      - 80
+      - 443
+    ports:    
+      - "141.13.235.13:${SERVER_PORT}:80"
+      - "141.13.235.13:${SERVER_PORT_SSL}:443"
+    volumes:
+      - ./server/app:/var/www   
+      - ./server/apache2/sites-available:/etc/apache2/sites-available   
+      - ./server/apache2/apache2.conf:/etc/apache2/apache2.conf
+      - /etc/acme/rsa-certs:/etc/acme/rsa-certs

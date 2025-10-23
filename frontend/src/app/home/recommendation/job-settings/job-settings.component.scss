@@ -1,0 +1,8 @@
+.new-job-box {
+    border: 2px solid gray;
+    box-shadow: none;
+
+    &:hover {
+        background: var(--cus-bg-50) !important;
+    }
+}

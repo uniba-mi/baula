@@ -1,0 +1,33 @@
+#cyModuleDetails {
+    height: 40vh;
+    padding-bottom: 5vh;
+}
+
+.legend .arrow-symbol {
+    font-size: 1.5rem;
+    line-height: calc(var(--bs-body-line-height) / 2);
+}
+
+.legend .circle-symbols {
+    display: flex;
+    height: calc(1.2 * var(--bs-body-font-size));
+}
+
+.color-red {
+    color: var(--ub-red);
+}
+
+.color-orange {
+    color: rgb(255, 180, 0);
+}
+
+.color-green {
+    color: var(--ub-green);
+}
+
+.custom-tooltip {
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}

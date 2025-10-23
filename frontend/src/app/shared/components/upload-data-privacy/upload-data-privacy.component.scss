@@ -1,0 +1,27 @@
+table {
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid var(--ub-gray);
+    padding: 10px;
+    text-align: left;
+}
+
+.scrollable-content {
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.contact-card {
+    background-color: var(--cus-bg-100)!important;
+}
+
+@media(max-width: 575.98px) {
+    .scrollable-content {
+        max-height: 90%;
+        padding: 0;
+    }
+}

@@ -1,0 +1,22 @@
+/* individualize some properties of accordion */
+.mat-expansion-panel-header {
+    background-color: var(--ub-blue-20);
+    padding: 1.25rem;
+    font-size: 1.1rem;
+}
+
+.mat-expansion-panel-header:hover {
+    background-color: var(--ub-blue-40) !important;
+}
+
+.mat-expansion-panel-header.mat-expanded:focus {
+    background-color: var(--ub-blue-20);
+}
+
+/* substitute default text-color of disabled element for accordion */
+.mat-expansion-panel-header[aria-disabled="true"], 
+.mat-expansion-panel-header:hover[aria-disabled="true"] {
+    color: black !important;
+    background-color: var(--ub-blue-20) !important;
+    cursor: default;
+}

@@ -1,0 +1,833 @@
+{
+    "MI-Proj-M": {
+        "Module": "MI-Proj-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISDL-ISS3-M": {
+        "Module": "ISDL-ISS3-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-Sem-M": {
+        "Module": "HCI-Sem-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-MCI-M": {
+        "Module": "HCI-MCI-M",
+        "Avg_Pass_Semester": "1",
+        "Success_Pass_Semester": "1",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 29
+            },
+            {
+                "Module": "AI-Sem1-M",
+                "Frequency": 13
+            },
+            {
+                "Module": "HCI-US-B",
+                "Frequency": 12
+            },
+            {
+                "Module": "MOBI-DSC-M",
+                "Frequency": 12
+            }
+        ],
+        "Precursors": []
+    },
+    "MOBI-SDA-M": {
+        "Module": "MOBI-SDA-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SEDA-EbIS-1-M": {
+        "Module": "SEDA-EbIS-1-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SME-Projekt-M": {
+        "Module": "SME-Projekt-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-Sem-HCC-M": {
+        "Module": "HCI-Sem-HCC-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SWT-TPL-M": {
+        "Module": "SWT-TPL-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-Project-M": {
+        "Module": "DSG-Project-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Persönlichkeitspsychologie": {
+        "Module": "Persönlichkeitspsychologie",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SEDA-EbIS-3-M": {
+        "Module": "SEDA-EbIS-3-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-Proj-M": {
+        "Module": "KogSys-Proj-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": []
+    },
+    "GdI-GTI-B": {
+        "Module": "GdI-GTI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-IDistrSys-B": {
+        "Module": "DSG-IDistrSys-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-Usab-M": {
+        "Module": "HCI-Usab-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-DistrSys-M": {
+        "Module": "DSG-DistrSys-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-DigBib-B": {
+        "Module": "KInf-DigBib-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-GeoInf-B": {
+        "Module": "KInf-GeoInf-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISDL-ISS1-M": {
+        "Module": "ISDL-ISS1-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "AI-Seminar2-M": {
+        "Module": "AI-Seminar2-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SWT-PCC-M": {
+        "Module": "SWT-PCC-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "GdI-Sem-M": {
+        "Module": "GdI-Sem-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Einführung in die Psychologie": {
+        "Module": "Einführung in die Psychologie",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-WebT-B": {
+        "Module": "MI-WebT-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SWT-CCP-M": {
+        "Module": "SWT-CCP-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SWT-SWE-B": {
+        "Module": "SWT-SWE-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SWT-FSE-B": {
+        "Module": "SWT-FSE-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MOBI-ADM-M": {
+        "Module": "MOBI-ADM-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "1",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 20
+            },
+            {
+                "Module": "AI-Thesis-M",
+                "Frequency": 13
+            }
+        ],
+        "Precursors": []
+    },
+    "AI-Sem2-M": {
+        "Module": "AI-Sem2-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 23
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "AI-Sem1-M",
+                "Frequency": 17
+            }
+        ]
+    },
+    "GdI-CaC-M": {
+        "Module": "GdI-CaC-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-AJP-B": {
+        "Module": "DSG-AJP-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Stat-B-02": {
+        "Module": "Stat-B-02",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "GdI-CaS-M": {
+        "Module": "GdI-CaS-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-BuS-M": {
+        "Module": "KInf-BuS-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Entwicklungsprojekt Kommunikationsnetze und -dienste ": {
+        "Module": "Entwicklungsprojekt Kommunikationsnetze und -dienste ",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISDL-ISS2-M": {
+        "Module": "ISDL-ISS2-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "EESYS-ES1-M": {
+        "Module": "EESYS-ES1-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-Sem-M": {
+        "Module": "MI-Sem-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-Proj-M": {
+        "Module": "HCI-Proj-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-Projekt-M": {
+        "Module": "KInf-Projekt-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-MobAss-M": {
+        "Module": "KInf-MobAss-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MOBI-DSC-M": {
+        "Module": "MOBI-DSC-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 18
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "HCI-MCI-M",
+                "Frequency": 12
+            },
+            {
+                "Module": "MOBI-ADM-M",
+                "Frequency": 11
+            }
+        ]
+    },
+    "AI-Proj1-M": {
+        "Module": "AI-Proj1-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-US-B": {
+        "Module": "HCI-US-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 15
+            }
+        ],
+        "Precursors": [
+            {
+                "Module": "HCI-MCI-M",
+                "Frequency": 14
+            }
+        ]
+    },
+    "SWT-ASV-M": {
+        "Module": "SWT-ASV-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "IIS-IBS-M": {
+        "Module": "IIS-IBS-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "AI-Sem1-M": {
+        "Module": "AI-Sem1-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 21
+            }
+        ],
+        "Precursors": []
+    },
+    "SME-STE-M": {
+        "Module": "SME-STE-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "GdI-IaS-M": {
+        "Module": "GdI-IaS-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "EESYS-ES-M": {
+        "Module": "EESYS-ES-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-EMI-B": {
+        "Module": "MI-EMI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-Sem-M1": {
+        "Module": "KogSys-Sem-M1",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-KS-B": {
+        "Module": "HCI-KS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-Sem-M": {
+        "Module": "DSG-Sem-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-MMT-B": {
+        "Module": "MI-MMT-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SNA-NET-M": {
+        "Module": "SNA-NET-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MOBI-Proj-M": {
+        "Module": "MOBI-Proj-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SNA-ASN-M": {
+        "Module": "SNA-ASN-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-DSAM-M": {
+        "Module": "DSG-DSAM-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KTR-MAKV-M": {
+        "Module": "KTR-MAKV-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "AI-Seminar3-M": {
+        "Module": "AI-Seminar3-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "AI-Thesis-M": {
+        "Module": "AI-Thesis-M",
+        "Avg_Pass_Semester": "4",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": [
+            {
+                "Module": "MOBI-ADM-M",
+                "Frequency": 10
+            }
+        ]
+    },
+    "KInf-SemInf-M": {
+        "Module": "KInf-SemInf-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "1-2",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 15
+            }
+        ],
+        "Precursors": []
+    },
+    "MOBI-DBS-B": {
+        "Module": "MOBI-DBS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-Sem-M": {
+        "Module": "KInf-Sem-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "CG-CGA-B": {
+        "Module": "CG-CGA-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "1",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 16
+            },
+            {
+                "Module": "AI-Thesis-M",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": []
+    },
+    "EESYS-DSES-M": {
+        "Module": "EESYS-DSES-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KTR-Mobi-M": {
+        "Module": "KTR-Mobi-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-IR-M": {
+        "Module": "MI-IR-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "1",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 14
+            }
+        ],
+        "Precursors": []
+    },
+    "AI-KI-B": {
+        "Module": "AI-KI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-EiDistrSys": {
+        "Module": "DSG-EiDistrSys",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-SOA-M": {
+        "Module": "DSG-SOA-M",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 10
+            }
+        ],
+        "Precursors": []
+    },
+    "KInf-Seminar-M": {
+        "Module": "KInf-Seminar-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-ML-B": {
+        "Module": "KogSys-ML-B",
+        "Avg_Pass_Semester": "2",
+        "Success_Pass_Semester": "2",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 24
+            }
+        ],
+        "Precursors": []
+    },
+    "KTR-Proj": {
+        "Module": "KTR-Proj",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KTR-GIK-M": {
+        "Module": "KTR-GIK-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SEDA-EbIS-2-M": {
+        "Module": "SEDA-EbIS-2-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "GdI-MTL": {
+        "Module": "GdI-MTL",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-EidI-B": {
+        "Module": "DSG-EidI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-US": {
+        "Module": "HCI-US",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-KogMod-M": {
+        "Module": "KogSys-KogMod-M",
+        "Avg_Pass_Semester": "1-2",
+        "Success_Pass_Semester": "1",
+        "Successors": [
+            {
+                "Module": "Masterarbeit",
+                "Frequency": 13
+            }
+        ],
+        "Precursors": []
+    },
+    "HCI-IS-B": {
+        "Module": "HCI-IS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "ISDL-ITCHANGE-M": {
+        "Module": "ISDL-ITCHANGE-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-Sem-M2": {
+        "Module": "KogSys-Sem-M2",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-IR2-M": {
+        "Module": "MI-IR2-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "PSI-Sem-M": {
+        "Module": "PSI-Sem-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "AI-EinfAI-B": {
+        "Module": "AI-EinfAI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KTR-MMK-M": {
+        "Module": "KTR-MMK-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "SME-Phy-B": {
+        "Module": "SME-Phy-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "AI-Seminar1-M": {
+        "Module": "AI-Seminar1-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "GdI-SaV-B": {
+        "Module": "GdI-SaV-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KTR-Sem-M": {
+        "Module": "KTR-Sem-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "EESYS-BIA-M": {
+        "Module": "EESYS-BIA-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "Masterarbeit": {
+        "Module": "Masterarbeit",
+        "Avg_Pass_Semester": "4",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": [
+            {
+                "Module": "AI-Sem1-M",
+                "Frequency": 28
+            },
+            {
+                "Module": "AI-Sem2-M",
+                "Frequency": 23
+            },
+            {
+                "Module": "HCI-MCI-M",
+                "Frequency": 23
+            },
+            {
+                "Module": "KogSys-ML-B",
+                "Frequency": 19
+            },
+            {
+                "Module": "MOBI-ADM-M",
+                "Frequency": 18
+            },
+            {
+                "Module": "MI-IR-M",
+                "Frequency": 16
+            },
+            {
+                "Module": "CG-CGA-B",
+                "Frequency": 15
+            },
+            {
+                "Module": "HCI-US-B",
+                "Frequency": 14
+            },
+            {
+                "Module": "GdI-IaS-M",
+                "Frequency": 14
+            },
+            {
+                "Module": "DSG-DSAM-M",
+                "Frequency": 13
+            },
+            {
+                "Module": "MOBI-DSC-M",
+                "Frequency": 13
+            },
+            {
+                "Module": "KInf-SemInf-M",
+                "Frequency": 12
+            },
+            {
+                "Module": "KogSys-KogMod-M",
+                "Frequency": 12
+            },
+            {
+                "Module": "KInf-MobAss-M",
+                "Frequency": 11
+            }
+        ]
+    }
+}

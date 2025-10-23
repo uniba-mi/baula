@@ -1,0 +1,76 @@
+<div *ngIf="user$ | async as user" class="container mx-auto my-3 my-md-5">
+    <div class="row">
+        <div class="col-12 col-md text-center text-md-start">
+            <h1>Nutzer&shy;einstellungen</h1>
+        </div>
+        <div class="col-12 col-md text-center text-md-end mt-0" *ngIf="studyplans$ | async as studyplans">
+            <button class="btn btn-danger me-2 mb-2 mb-md-0" (click)="openDeleteDialog(user)"
+                (keyup.enter)="openDeleteDialog(user)">
+                <i class="bi bi-trash me-1"></i> Account löschen
+            </button>
+            <button class="btn btn-secondary me-2 mb-2 mb-md-0" (click)="importUserData(user)">
+                <i class="bi bi-upload me-1"></i>
+                <span class="d-md-inline d-none">Nutzerdaten wiederherstellen</span>
+            </button>
+            <button class="btn btn-secondary me-2 mb-2 mb-md-0" [matMenuTriggerFor]="menu">
+                <i class="bi bi-download me-1"></i>
+                <span class="d-md-inline d-none">Nutzerdaten sichern</span>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="downloadUserdata(user, studyplans, 'pdf')" [disabled]="disableDownload">
+                    <span>Als PDF herunterladen</span>
+                    <span class="spinner-border spinner-border-sm ms-1" role="status" *ngIf="disableDownload">
+                        <span class="visually-hidden">Nutzerdaten werden heruntergeladen</span>
+                    </span>
+                </button>
+                <button mat-menu-item (click)="downloadUserdata(user, studyplans, 'json')" [disabled]="disableDownload">
+                    <span>Als JSON herunterladen</span>
+                    <span class="spinner-border spinner-border-sm ms-1" role="status" *ngIf="disableDownload">
+                        <span class="visually-hidden">Nutzerdaten werden heruntergeladen</span>
+                    </span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+    <div class="row mb-4 mt-4 mt-lg-0">
+        <p>Hier kannst du deine Nutzerdaten verwalten und deine Angaben konkretisieren, indem du
+            beispielsweise Interessen angibst.
+            Diese Daten helfen uns passende Module für dich herauszufinden und dir vorzuschlagen.</p>
+    </div>
+    <hr class="text-gray">
+    <div class="row">
+        <nav class="col-12 col-md-3 d-flex flex-md-column flex-row mb-3 mb-md-0">
+            <div class="m-2 m-sm-0 link" role="button" tabindex="0" aria-haspopup="false"
+                aria-label="Nutzerdaten bearbeiten" (click)="navigate('daten')">
+                <h4 id="user-data" class="mb-0" [class.selected]="activeRoute == 'daten'"><span><i
+                            class="bi bi-person-circle text-gray"></i></span> Nutzerdaten bearbeiten
+                </h4>
+            </div>
+            <hr />
+            <div class="m-2 m-sm-0 link" role="button" tabindex="0" aria-haspopup="false"
+                aria-label="Studienverlauf verwalten" (click)="navigate('verlauf-verwalten')">
+                <h4 id="upload-fn-studypath" class="mb-0" [class.selected]="activeRoute == 'verlauf-verwalten'"><span><i
+                            class="bi bi-database-up"></i></span> Studienverlauf verwalten
+                </h4>
+            </div>
+            <hr />
+            <div class="m-2 m-sm-0 link" role="button" tabindex="0" aria-haspopup="false"
+                aria-label="Einwilligung und Datenschutz" (click)="navigate('datenschutz-einwilligung')">
+                <h4 id="user-consents" class="mb-0" [class.selected]="activeRoute == 'datenschutz-einwilligung'">
+                    <span><i class="bi bi-shield-check"></i></span> Einwilligung & Datenschutz
+                </h4>
+            </div>
+            <hr />
+            <div *ngIf="(recsAvailable$ | async)" class="m-2 m-sm-0 link" role="button" tabindex="0"
+                aria-haspopup="false" aria-label="Einstellungen zu Empfehlungen"
+                (click)="navigate('einstellung-empfehlungen')">
+                <h4 id="recs-settings" class="mb-0" [class.selected]="activeRoute == 'einstellung-empfehlungen'">
+                    <span><i class="bi bi-hand-thumbs-up"></i></span> Einstellungen zu Empfehlungen
+                </h4>
+            </div>
+        </nav>
+        <div class="col-12 col-md-9">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

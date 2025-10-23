@@ -1,0 +1,310 @@
+[
+    {
+        "Module": "Stat-B-02",
+        "Frequency": 107
+    },
+    {
+        "Module": "ISDL-ITCon-B",
+        "Frequency": 107
+    },
+    {
+        "Module": "Bachelorarbeit",
+        "Frequency": 105
+    },
+    {
+        "Module": "BSL-B-00",
+        "Frequency": 103
+    },
+    {
+        "Module": "Stat-B-01",
+        "Frequency": 102
+    },
+    {
+        "Module": "IIS-EBAS-B",
+        "Frequency": 93
+    },
+    {
+        "Module": "Mathe-B-02",
+        "Frequency": 92
+    },
+    {
+        "Module": "SEDA-GbIS-B",
+        "Frequency": 92
+    },
+    {
+        "Module": "AI-AuD-B",
+        "Frequency": 91
+    },
+    {
+        "Module": "IIS-E-Biz-B",
+        "Frequency": 91
+    },
+    {
+        "Module": "GdI-MfI-1",
+        "Frequency": 89
+    },
+    {
+        "Module": "SNA-IWM-B",
+        "Frequency": 88
+    },
+    {
+        "Module": "Recht-B-02",
+        "Frequency": 88
+    },
+    {
+        "Module": "ETH",
+        "Frequency": 86
+    },
+    {
+        "Module": "MOBI-DBS-B",
+        "Frequency": 83
+    },
+    {
+        "Module": "BaWI-Sem-B",
+        "Frequency": 83
+    },
+    {
+        "Module": "Mathe-B-01",
+        "Frequency": 83
+    },
+    {
+        "Module": "DSG-EiAPS-B",
+        "Frequency": 82
+    },
+    {
+        "Module": "MI-EMI-B",
+        "Frequency": 80
+    },
+    {
+        "Module": "EVWL",
+        "Frequency": 77
+    },
+    {
+        "Module": "IRWP-B-01",
+        "Frequency": 73
+    },
+    {
+        "Module": "ISDL-eFin-B",
+        "Frequency": 73
+    },
+    {
+        "Module": "WiPäd-B-01",
+        "Frequency": 70
+    },
+    {
+        "Module": "Inno-B-01",
+        "Frequency": 68
+    },
+    {
+        "Module": "HCI-IS-B",
+        "Frequency": 67
+    },
+    {
+        "Module": "PuL-B-101",
+        "Frequency": 66
+    },
+    {
+        "Module": "GdI-GTI-B",
+        "Frequency": 65
+    },
+    {
+        "Module": "PSI-EiRBS-B",
+        "Frequency": 65
+    },
+    {
+        "Module": "SEDA-MobIS-B",
+        "Frequency": 59
+    },
+    {
+        "Module": "ISDL-WAWI-B",
+        "Frequency": 59
+    },
+    {
+        "Module": "PuL-M-03",
+        "Frequency": 50
+    },
+    {
+        "Module": "PM-B-01",
+        "Frequency": 45
+    },
+    {
+        "Module": "MI-WebT-B",
+        "Frequency": 45
+    },
+    {
+        "Module": "WI-Projekt-B",
+        "Frequency": 40
+    },
+    {
+        "Module": "Con-B-01",
+        "Frequency": 40
+    },
+    {
+        "Module": "DSG-EidI-B",
+        "Frequency": 39
+    },
+    {
+        "Module": "IIS-WI-Proj-B",
+        "Frequency": 38
+    },
+    {
+        "Module": "DSG-AJP-B",
+        "Frequency": 35
+    },
+    {
+        "Module": "Wirtschaftsenglisch I",
+        "Frequency": 35
+    },
+    {
+        "Module": "IIS-EAM-B",
+        "Frequency": 34
+    },
+    {
+        "Module": "SWT-SEI-B",
+        "Frequency": 30
+    },
+    {
+        "Module": "KTR-Datkomm-B",
+        "Frequency": 29
+    },
+    {
+        "Module": "BSL-B-01",
+        "Frequency": 28
+    },
+    {
+        "Module": "EESYS-GEI-B",
+        "Frequency": 28
+    },
+    {
+        "Module": "IntMan-B-01",
+        "Frequency": 28
+    },
+    {
+        "Module": "EESYS-IITP-B",
+        "Frequency": 27
+    },
+    {
+        "Module": "ISM-PT-B",
+        "Frequency": 27
+    },
+    {
+        "Module": "BFC-B-01",
+        "Frequency": 26
+    },
+    {
+        "Module": "KInf-GeoInf-B",
+        "Frequency": 26
+    },
+    {
+        "Module": "SWT-FSE-B",
+        "Frequency": 26
+    },
+    {
+        "Module": "SEDA-WI-Proj-B",
+        "Frequency": 24
+    },
+    {
+        "Module": "Recht-B-01",
+        "Frequency": 24
+    },
+    {
+        "Module": "ISDL-ECM-B",
+        "Frequency": 24
+    },
+    {
+        "Module": "Wirtschaftsenglisch II",
+        "Frequency": 21
+    },
+    {
+        "Module": "IIS-MobIS-B",
+        "Frequency": 20
+    },
+    {
+        "Module": "SWT-SSP-B",
+        "Frequency": 18
+    },
+    {
+        "Module": "WiMa-B-02a",
+        "Frequency": 18
+    },
+    {
+        "Module": "Market-B-01",
+        "Frequency": 18
+    },
+    {
+        "Module": "DSG-JaP-B",
+        "Frequency": 18
+    },
+    {
+        "Module": "ISDL-Start-B",
+        "Frequency": 17
+    },
+    {
+        "Module": "SWT-SWE-B",
+        "Frequency": 16
+    },
+    {
+        "Module": "ISM-TA-B",
+        "Frequency": 16
+    },
+    {
+        "Module": "SNA-ITSM-B",
+        "Frequency": 15
+    },
+    {
+        "Module": "GdI-NPP-B",
+        "Frequency": 15
+    },
+    {
+        "Module": "IAWS-IWM-B",
+        "Frequency": 15
+    },
+    {
+        "Module": "AI-KI-B",
+        "Frequency": 15
+    },
+    {
+        "Module": "Gdl-GTI-B",
+        "Frequency": 14
+    },
+    {
+        "Module": "UFC-B2",
+        "Frequency": 13
+    },
+    {
+        "Module": "IAWS-EBAS-B",
+        "Frequency": 13
+    },
+    {
+        "Module": "DSG-PKS-B",
+        "Frequency": 13
+    },
+    {
+        "Module": "SNA-WIM-B",
+        "Frequency": 13
+    },
+    {
+        "Module": "BAEES1.3",
+        "Frequency": 12
+    },
+    {
+        "Module": "IIS-IBS-M",
+        "Frequency": 10
+    },
+    {
+        "Module": "SEDA-WI-Prakt-B",
+        "Frequency": 10
+    },
+    {
+        "Module": "MOBI-MSS-B",
+        "Frequency": 10
+    },
+    {
+        "Module": "IT English - Debating Legal Issues",
+        "Frequency": 10
+    },
+    {
+        "Module": "DSG-IDistrSys-B",
+        "Frequency": 10
+    }
+]

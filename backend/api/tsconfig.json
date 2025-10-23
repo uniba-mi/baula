@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "target": "ES2019",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "module": "CommonJS",                                /* Specify what module code is generated. */
+    "lib": ["ES2019"],
+    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+    "resolveJsonModule": false,
+    "outDir": "./dist",   
+    "rootDirs": ["./src", "../../interfaces"],                                
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */                                /* Type declaration files to be included in compilation. */
+    /* Type Checking */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+
+    /* Completeness */
+    "skipLibCheck": true                                       /* Enable all strict type-checking options. */
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["./node_modules", "./dist", "../../interfaces/*.ts"]
+}

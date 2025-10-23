@@ -1,0 +1,129 @@
+{
+    "name": "Musterplan B. Sc. International Information Systems Management (SS24)",
+    "status": true,
+    "semesterPlans": [
+        {
+            "modules": [
+                "WiMa-B-001",
+                "WiMa-B-002",
+                "ISM-EidWI-B",
+                "SNA-WIM-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fremdsprache",
+                    "ects": 3,
+                    "notes": "Fremdsprache",
+                    "status": "open",
+                    "_id": "66c74c9bb8cafbecb3a137c6"
+                }
+            ],
+            "courses": [],
+            "semester": "2024s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 27
+        },
+        {
+            "modules": [
+                "MOBI-DBS-B",
+                "Stat-B-01",
+                "DSG-EiAPS-B",
+                "BSL-B-00",
+                "IRWP-B-01"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2024w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "IIS-EBAS-B",
+                "ISPL-FIISM-B",
+                "EVWL"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Con-B-01",
+                    "ects": 6,
+                    "notes": "Kosten-, Erlös- und Ergebniscontrolling",
+                    "status": "open",
+                    "_id": "66c74d45b8cafbecb3a13a63"
+                },
+                {
+                    "name": "Weiteres Modul",
+                    "ects": 6,
+                    "notes": "Weiteres Modul",
+                    "status": "open",
+                    "_id": "66c74e05b8cafbecb3a13b22"
+                }
+            ],
+            "courses": [],
+            "semester": "2025s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "ISDL-ITCon-B",
+                "WI-Projekt-B",
+                "Stat-B-02",
+                "ISDL-WAWI-B",
+                "PSI-EDS-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2025w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 27
+        },
+        {
+            "modules": [],
+            "userGeneratedModules": [
+                {
+                    "name": "Weitere Module",
+                    "ects": 30,
+                    "notes": "Weitere Module / Praktikum",
+                    "status": "open",
+                    "_id": "66c74e31b8cafbecb3a13ba1"
+                },
+                {
+                    "name": "Weitere Module",
+                    "ects": 3,
+                    "notes": "Weitere Module",
+                    "status": "open",
+                    "_id": "66c74f7eb8cafbecb3a13d79"
+                }
+            ],
+            "courses": [],
+            "semester": "2026s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 33
+        },
+        {
+            "modules": [
+                "WI-Thesis-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Weitere Module",
+                    "ects": 21,
+                    "notes": "Weitere Module / Praktikum",
+                    "status": "open",
+                    "_id": "66c74e60b8cafbecb3a13bf2"
+                }
+            ],
+            "courses": [],
+            "semester": "2026w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 33
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+[
+    {
+        "Module": "KogSys-KogInf-Psy",
+        "Frequency": 13
+    },
+    {
+        "Module": "MI-EMI-B",
+        "Frequency": 9
+    },
+    {
+        "Module": "HCI-IS-B",
+        "Frequency": 5
+    }
+]

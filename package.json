@@ -1,0 +1,22 @@
+{
+  "name": "baula",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/uniba-mi/baula#readme",
+  "bugs": {
+    "url": "https://github.com/uniba-mi/baula/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uniba-mi/baula.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "scripts": {
+    "startProdDocker": "docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build --force-recreate",
+    "startLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml up -d --build --force-recreate",
+    "stopDocker": "docker compose down -v",
+    "startBackend": "cd backend/api && npm run startApi",
+    "startFrontend": "cd frontend && ng serve --open --no-hmr"
+  }
+}

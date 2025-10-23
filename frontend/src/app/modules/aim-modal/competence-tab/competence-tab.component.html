@@ -1,0 +1,7 @@
+<mat-accordion *ngIf="compGroups$ | async as compGroups">
+    <!-- one separate panel for each competence group -->
+    <ng-container *ngFor="let cg of compGroups">
+        <!-- own component handles content of expansion panels -->
+        <app-competence-group-panel [cg]="cg" [competences$]="competences$" (updateCompetenceGroup)="updateForm($event)"></app-competence-group-panel>
+    </ng-container>
+</mat-accordion>

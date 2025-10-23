@@ -1,0 +1,64 @@
+<div class="competence-sum border">
+    Ihre aktuellen Zuordnungen:
+    <div *ngFor="let standard of standards$ | async; index as i" [style.color]="sumColor[i]">
+        <span class="font-weight-bold w-25">{{ standard.stId }}: </span>
+        <span class="ml-2">{{ competenceSums[i] }} %</span>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <h3>Ordnen Sie Ihrer Veranstaltung die Kompetenzen zu:</h3>
+        <p class="description">
+            Hier können Sie Ihrer Veranstaltung für jeden hinterlegten
+            Kompetenzstandard die entsprechenden Kompetenzen zuordnen. Bitte ordnen
+            Sie jeden Kompetenzstandard zu. Achten Sie darauf
+            <strong>für jeden Standard Daten anzugeben</strong>. Die eingegebenen
+            Prozentwerte dürfen pro Standard in der
+            <strong>Summe nicht über 100%</strong> werden.
+        </p>
+    </div>
+    <div class="row">
+        <mat-tab-group mat-stretch-tabs class="w-100 col-12">
+            <mat-tab *ngFor="let standard of standards$ | async">
+                <ng-template mat-tab-label>
+                    <div class="competence-label">{{ standard.stId }}</div>
+                </ng-template>
+                <div class="row font-weight-bold border-bottom my-2 py-2">
+                    <div class="col-2">Kompetenzkürzel</div>
+                    <div class="col-6">Beschreibung</div>
+                    <div class="col-4 text-center">Zeitanteil (in %)</div>
+                </div>
+                <ng-container *ngFor="let competence of competences$ | async; index as i">
+                    <div class="row" *ngIf="competence.stId === standard.stId">
+                        <div class="col-2">
+                            {{ competence.compId | formatCompetence }}
+                        </div>
+                        <div class="col-6">
+                            <p>{{ competence.name }}</p>
+                            <p *ngIf="competence.desc && competence.desc !== '-'">{{ competence.desc }}</p>
+                        </div>
+                        <div class="col-4" *ngIf="fulfillments[i]">
+                            <mat-slider class="w-60" min="0" max="100" step="1" #ngSlider>
+                                <input matSliderThumb (change)="changeData()" #ngSliderThumb="matSliderThumb" [(ngModel)]="fulfillments[i].fulfillment"/>
+                            </mat-slider>
+                            <mat-form-field class="ms-2 w-30" appearance="fill">
+                                <input matInput type="number" step="1" min="0" max="100"
+                                    [(ngModel)]="fulfillments[i].fulfillment" (change)="changeData()" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </ng-container>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div class="row" *ngIf="errors.length !== 0">
+        <div class="alert alert-danger my-2" *ngFor="let err of errors" role="alert">
+            <div class="fw-bolder">{{err.name}}!</div>
+            <div>{{ err.desc }}</div>
+            <button *ngIf="err.name == 'Fehlende Eingaben'" class="btn button my-2" (click)="removeAlert()">Ich möchte
+                keine weiteren Kompetenzangaben machen</button>
+            <button *ngIf="err.name == 'Summe größer als 100%'" class="btn button my-2"
+                (click)="standardizeFulfillments()">Normiere meine Angaben auf 100%</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+{
+    "name": "Musterplan B. Sc. Angewandte Informatik (WS23/24)",
+    "status": true,
+    "semesterPlans": [
+        {
+            "semester": "2023w",
+            "isPastSemester": true,
+            "modules": [
+                "WiMa-B-002",
+                "GdI-MfI-1",
+                "DSG-EiAPS-B",
+                "DSG-JaP-B",
+                "MI-EMI-B",
+                "HCI-IS-B"
+            ],
+            "courses": [],
+            "summedEcts": 33,
+            "aimedEcts": 30,
+            "userGeneratedModules": []
+        },
+        {
+            "modules": [
+                "KTR-MfI-2",
+                "Stat-B-01",
+                "DSG-AJP-B",
+                "AI-AuD-B",
+                "PSI-EiRBS-B",
+                "MI-WAIAI-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2024s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "Stat-B-02",
+                "PSI-IntroSP-B",
+                "KInf-DigBib-B",
+                "PSI-EDS-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "BA Soz A.1.1",
+                    "ects": 5,
+                    "notes": "Allgemeine Soziologie I",
+                    "status": "open",
+                    "_id": "66c5e7b3d2b293d98e9c98bc"
+                },
+                {
+                    "name": "BA Soz D.1.1 A 1",
+                    "ects": 5,
+                    "notes": "Bildung im Lebenslauf 1",
+                    "status": "open",
+                    "_id": "66c5e7c0d2b293d98e9c98df"
+                }
+            ],
+            "courses": [],
+            "semester": "2024w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 31
+        },
+        {
+            "modules": [
+                "GdI-GTI-B",
+                "SWT-FSE-B",
+                "MOBI-DBS-B",
+                "KInf-GeoInf-B",
+                "AI-KI-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2025s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "DSG-PKS-B",
+                "GdI-IFP-B",
+                "GdI-Sem-B",
+                "KogSys-Proj-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "B1 Physische Geographie I",
+                    "ects": 10,
+                    "notes": "Vorlesung Ia (Geomorphologie), Seminar Ib (Bodengeographie) und Vertiefende Übung zur Physischen Geographie I",
+                    "status": "open",
+                    "_id": "66c5e85ed2b293d98e9c9adb"
+                },
+                {
+                    "name": "IT English - Security",
+                    "ects": 3,
+                    "notes": "Sprachpraktische Übung",
+                    "status": "open",
+                    "_id": "66c5e876d2b293d98e9c9b00"
+                }
+            ],
+            "courses": [],
+            "semester": "2025w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 31
+        },
+        {
+            "modules": [
+                "MI-WebT-B",
+                "KogSys-Sem-B",
+                "DSG-Project-B",
+                "AI-Thesis-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2026s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 27
+        }
+    ]
+}

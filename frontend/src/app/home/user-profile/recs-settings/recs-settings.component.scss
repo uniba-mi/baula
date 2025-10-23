@@ -1,0 +1,23 @@
+.module-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.module-card {
+    width: 30%;
+    cursor: pointer;
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+}
+
+.module-card:hover {
+    transform: scale(0.995);
+    transition: all .2s ease-in-out;
+}
+
+@media (max-width: 575.98px) {
+    .module-card {
+        width: 100%;
+    }
+}

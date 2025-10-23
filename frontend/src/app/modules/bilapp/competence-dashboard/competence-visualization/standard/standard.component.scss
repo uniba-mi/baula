@@ -1,0 +1,36 @@
+.btn-std {
+    border-radius: 0;
+    border-bottom: 2px solid var(--ub-blue);
+    border-collapse: collapse;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.btn-std:hover {
+    background-color: #c8d6e4;
+    opacity: 0.8;
+}
+
+.btn-std:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.activeTab {
+    background-color: var(--ub-blue-0);
+    border-bottom: 2px solid var(--ub-blue);
+}
+
+@media screen and (max-width: 500px) {
+    .btn-std {
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 1141px) {
+    .btn-std {
+        font-size: 0.9em;
+    }
+}
+
+

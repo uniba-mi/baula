@@ -1,0 +1,46 @@
+<ng-container role="Dialoginhalt">
+  <form *ngIf="changeStatusForm" [formGroup]="changeStatusForm">
+    <div class="content-wrapper">
+      <mat-form-field class="study-course-field" appearance="outline">
+        <mat-label>Status des Moduls</mat-label>
+        <mat-select #moduleStatus [formControl]="selectedModuleStatus" aria-label="Dropdown zur Statuswahl" required>
+          <mat-option *ngFor="let statusOption of statusOptions" [value]="statusOption.status"><i
+              class="{{ statusOption.iconClass }}"></i>
+            {{ statusOption.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-container *ngIf="selectedModuleStatus.value === 'passed' || selectedModuleStatus.value === 'failed'">
+        <mat-form-field appearance="outline">
+          <mat-label>Note:</mat-label>
+          <input matInput formControlName="grade" type="text" pattern="^[1-5]((\.|,)[0-9])?$"/>
+          <mat-error *ngIf="changeStatusForm.get('grade')?.errors">
+            <span *ngIf="changeStatusForm.get('grade')?.errors?.min || changeStatusForm.get('grade')?.errors?.max">
+              Die Zahl muss zwischen {{minGrade}}.0 und {{maxGrade}}.0 liegen.
+            </span>
+            <span *ngIf="changeStatusForm.get('grade')?.errors?.required">
+              Das ist ein Pflichtfeld.
+            </span>
+            <span *ngIf="changeStatusForm.get('grade')?.errors?.pattern">
+              Bitte gib eine gültige Zahl ein (z. B. 2, 2.5).
+            </span>
+          </mat-error>
+          <mat-hint *ngIf="showNoEditHint" class="text-gray">
+            <span> <i class="bi bi-exclamation-triangle ms-2 text-red"></i> Da das Modul als "nicht bestanden" markiert
+              ist, kannst du die Note nicht ändern.</span>
+          </mat-hint>
+        </mat-form-field>
+      </ng-container>
+      <mat-dialog-actions>
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
+          (keyup)="close('noData')">
+          Abbrechen
+        </button>
+        <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="getModuleStatus()"
+          [disabled]="!changeStatusForm.valid" (click)="close('data')" (keyup)="close('data')">
+          Speichern
+        </button>
+      </mat-dialog-actions>
+    </div>
+  </form>
+</ng-container>

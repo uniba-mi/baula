@@ -1,0 +1,44 @@
+<div class="m-2">
+    <div>
+        Hier siehst du die beiden Lehrveranstaltungen, welche sich überschneiden. Entscheide dich, welche der beiden Lehrveranstaltungen du ausplanen möchtest. 
+        Klicke am Ende auf 'Anwenden', um die markierte Lehrveranstaltung auszuplanen.
+    </div>
+    <div class="d-flex flex-row flex-wrap">
+        <div *ngFor="let course of courses" class="d-flex flex-column p-2 w-50">
+            <div class="my-2">
+                <div class="d-flex align-items-center text-success"
+                    *ngIf="!coursesToDelete.includes(course.id)" tabindex="0"
+                    (click)="setCourseToDelete(course.id)" (keyup.enter)="setCourseToDelete(course.id)">
+                    <i class="fs-4 icon bi bi-toggle-on"></i>
+                    <span class="px-2 py-1 rounded keep-info">Behalten</span>
+                </div>
+                <div class="d-flex align-items-center text-danger"
+                    *ngIf="coursesToDelete.includes(course.id)" tabindex="0"
+                    (click)="setCourseToDelete(course.id)" (keyup.enter)="setCourseToDelete(course.id)">
+                    <i class="fs-4 icon bi bi-toggle-off"></i>
+                    <span class="px-2 py-1 rounded remove-info">Ausplanen</span>
+                </div>
+            </div>
+            <div class="h-100">
+                <mat-card appearance="outlined" class="h-100">
+                    <mat-card-content>
+                        <div class="d-flex flex-row justify-content-between">
+                            <h6>{{course.name}} ({{course.type}})</h6>
+                            <div role="button" class="px-2" (click)="expandedCourseDetails = !expandedCourseDetails"
+                                (keyup.enter)="expandedCourseDetails = !expandedCourseDetails">
+                                <i *ngIf="!expandedCourseDetails" class="bi bi-chevron-down show-more-icon" matTooltip="Zeige die Detailinformationen zu beiden Kursen"></i>
+                                <i *ngIf="expandedCourseDetails" class="bi bi-chevron-up" matTooltip="Verstecke die Detailinformationen zu beiden Kursen"></i>
+                            </div>
+                        </div>
+                        <app-course-details *ngIf="expandedCourseDetails" [course]="course"
+                            [context]="'comparison'"></app-course-details>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-row mt-2">
+        <button class="btn btn-secondary me-2" role="button" mat-dialog-close>Abbrechen</button>
+        <button class="btn btn-primary" role="button" [mat-dialog-close]="coursesToDelete">Anwenden</button>
+    </div>
+</div>

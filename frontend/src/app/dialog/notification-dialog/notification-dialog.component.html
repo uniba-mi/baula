@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- displays title if there is one -->
+        <div>
+            <p mat-dialog-title class="pl-0 text-gray">🔔 Teste ein neues Feature vor allen anderen – WIAI-Studierende
+                für Baula-Laborstudie gesucht!</p>
+        </div>
+        <p>📌 <span class="fw-bold">Du möchtest Baula aktiv mitgestalten?</span> Dann sei dabei, wenn wir unser <span class="fw-bold">neues Modulempfehlungssystem</span> erstmals im
+            Rahmen einer Laborstudie testen – noch <span class="fw-bold">vor dem offiziellen Release!</span> <br>
+            Als Teilnehmer*in bekommst du <span class="fw-bold">exklusive Einblicke</span> in ein kommendes Feature und hast die Chance, direktes
+            Feedback zu geben, das in die Weiterentwicklung einfließt.</p>
+        <p>
+            Melde dich bis <span class="fst-italic">5. Mai um 10 Uhr</span> über das verlinkte Formular in unserem VC-Kurs an und teile uns kurz deinen Studiengang und deine
+            Verfügbarkeiten mit, damit wir besser planen können. Vielen Dank!
+            Bitte beachte, dass die Pilotstudie zunächst nur mit Studierenden der WIAI durchgeführt werden kann.
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+            <button class="btn btn-primary" (click)="openLink()">
+                Hier zur Studie anmelden!
+            </button>
+        </div>
+        <div class="col-12 col-md-6 col-lg-7 col-xl-8 mt-2 mt-md-0">
+            <mat-checkbox [(ngModel)]="disableDialog">Nicht mehr anzeigen</mat-checkbox>
+            <button class="btn btn-outline ms-2" [mat-dialog-close]="disableDialog">
+                Schließen
+            </button>
+        </div>
+    </div>
+</div>

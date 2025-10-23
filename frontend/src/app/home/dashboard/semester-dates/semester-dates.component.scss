@@ -1,0 +1,26 @@
+.btn-outline-primary,
+.btn-outline-secondary {
+    border-radius: 20px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.period-btn-disabled {
+    font-size: 0.8rem;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    color: #6c757d;
+    border-color: #ced4da;
+
+    &:hover,
+    &:focus {
+        color: #6c757d;
+        background-color: #fff;
+        border-color: #ced4da;
+    }
+}
+
+.toggle-text {
+    cursor: pointer;
+}

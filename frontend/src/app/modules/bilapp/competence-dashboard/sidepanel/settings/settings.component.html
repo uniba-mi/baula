@@ -1,0 +1,35 @@
+
+    <div class="my-3">
+        <span>In welcher Einheit sollen Ihre Kompetenzdaten dargestellt werden?</span>
+        <button #ects type="button" [id]="(this.unit$ | async) === 'ects'? 'unitSelected' : 'nounitSelected'"
+            class="btn unitButton" value="ects" (click)="updateUnit(ects.value)">ECTS (Zeit)</button>
+        <button #sws type="button" [id]="(this.unit$ | async) === 'sws'? 'unitSelected' : 'nounitSelected'"
+            class="btn unitButton" value="sws" (click)="updateUnit(sws.value)">SWS (Zeit)</button>
+    </div>
+    <hr />
+    <div>
+        <div class="my-3">Die Veranstaltungen aus welchem Semester möchten Sie auswählen?</div>
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Semester</mat-label>
+            <mat-select [formControl]="semesterSelection" *ngIf="semesters$ | async as semesters"
+                (selectionChange)="selectSemester()" [(value)]="selectedSemester">
+                <mat-option *ngFor="let semester of semesters" [value]="semester.name">{{ semester.fullName
+                    }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <hr />
+    <div class="my-3">
+        <span>Möchten Sie die Kompetenzdaten für Ihr gesamtes Studium oder für jedes Semester separat anzeigen?</span>
+        <button #studium type="button"
+            [id]="(this.selectedView$ | async) === 'studium'? 'viewSelected' : 'noviewSelected'" class="btn unitButton"
+            value="studium" (click)="changeView(studium.value)">Studium</button>
+        <button #semester type="button"
+            [id]="(this.selectedView$ | async) === 'semester'? 'viewSelected' : 'noviewSelected'" class="btn unitButton"
+            value="semester" (click)="changeView(semester.value)">Semester</button>
+    </div>
+    <hr />
+    <div class="my-3">
+        <button type="button" class="w-75 unitButton" (click)="openAimDialog()"><i class="me-2 bi bi-list-check"></i>Eigene Ziele bearbeiten</button>
+    </div>
+    

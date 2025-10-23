@@ -1,0 +1,66 @@
+[
+    {
+        "Module": "SSS-Thesis-M",
+        "Frequency": 34
+    },
+    {
+        "Module": "MOBI-DSC-M",
+        "Frequency": 30
+    },
+    {
+        "Module": "MOBI-ADM-M",
+        "Frequency": 29
+    },
+    {
+        "Module": "Masterarbeit",
+        "Frequency": 23
+    },
+    {
+        "Module": "DSG-IDistrSys-B",
+        "Frequency": 23
+    },
+    {
+        "Module": "KogSys-ML-B",
+        "Frequency": 22
+    },
+    {
+        "Module": "DSG-SOA-M",
+        "Frequency": 20
+    },
+    {
+        "Module": "MOBI-PRS-M",
+        "Frequency": 19
+    },
+    {
+        "Module": "DSG-DSAM-M",
+        "Frequency": 17
+    },
+    {
+        "Module": "HCI-US-B",
+        "Frequency": 15
+    },
+    {
+        "Module": "Deutsch als Fremdsprache",
+        "Frequency": 14
+    },
+    {
+        "Module": "SSS-SEM-M",
+        "Frequency": 14
+    },
+    {
+        "Module": "EESYS-ES-M",
+        "Frequency": 12
+    },
+    {
+        "Module": "HCI-MCI-M",
+        "Frequency": 11
+    },
+    {
+        "Module": "Deutsch als Fremdsprache intensiv 2 (A2) (inkl. Modulprüfung",
+        "Frequency": 10
+    },
+    {
+        "Module": "GdI-IaS-M",
+        "Frequency": 10
+    }
+]

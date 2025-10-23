@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row">
+        <h2>
+            Generator für Kompetenz- und Modulzuordnungsangabe in UnivIS
+        </h2>
+        <button class="btn btn-primary m-4" (click)="openModal()">
+            Daten aus bestehender Lehrveranstaltung übernehmen
+        </button>
+    </div>
+    <div class="row">
+        <p>
+            Das folgende Formular soll als Hilfestellung dienen, um die Kompetenz- und Modulzuordnungen im
+            UnivIS-Eintrag Ihrer Lehrveranstaltung im für den Studienassistenten passenden Format einzufügen.
+            Gehen Sie das Formular Schritt für Schritt durch und klicken Sie am Ende auf den Button "Generieren".
+            Anschließend wird in dem dafür vorgesehen Bereich ein Text erzeugt. Diesen können Sie in UnivIS in das Feld
+            "Voraussetzungen / Organisatorisches" einfügen.
+        </p>
+    </div>
+    <!-- select modules in which course can be used -->
+    <div class="row my-4">
+        <uh-module-form (submitModules)="getModules($event)" [moduleAcronyms]="moduleAcronyms"></uh-module-form>         
+    </div>
+
+    <!-- ask if competences should be assigned too -->
+    <!-- <div class="row my-2">
+        <p>Ist die Lehrveranstaltung in einem EWS-Modul im Lehramtsstudium belegbar?</p>
+        <mat-radio-group aria-label="Ist die Lehrveranstaltung in einem EWS-Modul im Lehramtsstudium belegbar?" [(ngModel)]="showCompetences">
+            <mat-radio-button [value]="true">Ja</mat-radio-button>
+            <mat-radio-button [value]="false">Nein</mat-radio-button>
+        </mat-radio-group>
+    </div> -->
+
+    <!-- show competence form here in case user asks for it -->
+    <div class="row my-4">
+        <uh-competence-form (submitCompetences)="getFulfillments($event)" [fulfillments]="fulfillments"></uh-competence-form>
+    </div>
+
+    <!-- button for generation of textsnippet -->
+    <div class="row my-2">
+        <button class="btn btn-primary py-3" aria-label="Button zum erzeugen des Textes" (click)="generateSnippet()" [disabled]="invalid">Text erzeugen</button>
+    </div>
+
+    <!-- area for snippet -->
+    <div class="row my-2">
+        <mat-form-field class="col-10" appearence="fill">
+            <textarea #area matInput [readonly]="true" (click)="selectText(area)" [value]="snippet" cdkTextareaAutosize></textarea>
+            <i matSuffix class="bi bi-clipboard-check btn" aria-label="In die Zwischenablage kopieren" (click)="copyToClipboard(area)"></i>
+        </mat-form-field>
+    </div>
+</div>

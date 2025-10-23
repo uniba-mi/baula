@@ -1,0 +1,11 @@
+<div *ngIf="standards$ | async as standards">
+    <ng-container *ngIf="selectedStandard$ | async as selectedStandard">
+        <ng-container *ngFor="let standard of standards">
+            <button [id]="standard.stId" [ngClass]="selectedStandard.stId == standard.stId ? 'activeTab' : ''"
+                class="btn btn-std mb-3 px-4 py-2" (click)="selectStandard(standard)">
+                {{ standard.stId }}
+                <a><i class="bi bi-info-circle icon" (click)="openDialog(standard)"></i></a>
+            </button>
+        </ng-container>
+    </ng-container>
+</div>

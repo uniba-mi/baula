@@ -1,0 +1,126 @@
+{
+    "name": "Musterplan B. Sc. Angewandte Informatik (SS24)",
+    "status": true,
+    "semesterPlans": [
+        {
+            "modules": [
+                "WiMa-B-002",
+                "KTR-MfI-2",
+                "Stat-B-01",
+                "PSI-EiRBS-B",
+                "MOBI-DBS-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "IT English - Debating Legal Issues",
+                    "ects": 3,
+                    "notes": "Sprachpraktische Übung IT English - Debating Legal Issues",
+                    "status": "open",
+                    "_id": "66c2e59805a6d176f9cbfc51"
+                }
+            ],
+            "courses": [],
+            "semester": "2024s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 33
+        },
+        {
+            "modules": [
+                "GdI-MfI-1",
+                "Stat-B-02",
+                "DSG-EiAPS-B",
+                "DSG-JaP-B",
+                "MI-EMI-B",
+                "PSI-EDS-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2024w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "DSG-AJP-B",
+                "GdI-GTI-B",
+                "AI-AuD-B",
+                "KInf-GeoInf-B",
+                "AI-KI-B",
+                "MI-WAIAI-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2025s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "PSI-IntroSP-B",
+                "GdI-IFP-B",
+                "HCI-IS-B",
+                "KogSys-Sem-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "B1 Physische Geographie I",
+                    "ects": 10,
+                    "notes": "Vorlesung Ia (Geomorphologie), Seminar Ib (Bodengeographie) und Vertiefende Übung zur Physischen Geographie I",
+                    "status": "open",
+                    "_id": "66c2e68d05a6d176f9cbfcd3"
+                }
+            ],
+            "courses": [],
+            "semester": "2025w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 31
+        },
+        {
+            "modules": [
+                "SWT-FSE-B",
+                "MI-WebT-B",
+                "GdI-Sem-B",
+                "DSG-Project-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "BA Soz A.1.1",
+                    "ects": 5,
+                    "notes": "Vorlesung Algemeine Soziologie I",
+                    "status": "open",
+                    "_id": "66c2e87405a6d176f9cbfd47"
+                },
+                {
+                    "name": "BA Soz D.1.1 A 1",
+                    "ects": 5,
+                    "notes": "Bildung im Lebenslauf 1",
+                    "status": "open",
+                    "_id": "66c2e8a605a6d176f9cbfd55"
+                }
+            ],
+            "courses": [],
+            "semester": "2026s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 31
+        },
+        {
+            "modules": [
+                "DSG-PKS-B",
+                "KInf-DigBib-B",
+                "KogSys-Proj-B",
+                "AI-Thesis-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2026w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 27
+        }
+    ]
+}

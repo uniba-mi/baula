@@ -1,0 +1,145 @@
+{
+    "AI-KI-B": {
+        "Module": "AI-KI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-Sem-B": {
+        "Module": "KInf-Sem-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-IPKult-E": {
+        "Module": "KInf-IPKult-E",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-WebT-B": {
+        "Module": "MI-WebT-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-EMI-B": {
+        "Module": "MI-EMI-B",
+        "Avg_Pass_Semester": "4.0",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 7
+            }
+        ]
+    },
+    "HCI-Sem-B": {
+        "Module": "HCI-Sem-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-EidI-B": {
+        "Module": "DSG-EidI-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-Seminar-B": {
+        "Module": "KInf-Seminar-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-KogMod-M": {
+        "Module": "KogSys-KogMod-M",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-KS-B": {
+        "Module": "HCI-KS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "HCI-IS-B": {
+        "Module": "HCI-IS-B",
+        "Avg_Pass_Semester": "3.0",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "MI-MMT-B": {
+        "Module": "MI-MMT-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "DSG-EiAPS-B": {
+        "Module": "DSG-EiAPS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-DigBib-B": {
+        "Module": "KInf-DigBib-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KInf-GeoInf-B": {
+        "Module": "KInf-GeoInf-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "KogSys-KogInf-Psy": {
+        "Module": "KogSys-KogInf-Psy",
+        "Avg_Pass_Semester": "4.0",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": [
+            {
+                "Module": "KInf-IPKult-E",
+                "Frequency": 8
+            }
+        ]
+    },
+    "MI-Sem-B": {
+        "Module": "MI-Sem-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "PSI-EiRBS-B": {
+        "Module": "PSI-EiRBS-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    },
+    "AI-AuD-B": {
+        "Module": "AI-AuD-B",
+        "Avg_Pass_Semester": "",
+        "Success_Pass_Semester": "",
+        "Successors": [],
+        "Precursors": []
+    }
+}

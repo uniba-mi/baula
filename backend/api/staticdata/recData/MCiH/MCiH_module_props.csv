@@ -1,0 +1,66 @@
+Module,Avg_Pass_Semester,Success_Pass_Semester,Successors,Precursors
+EESYS-ADAML-M,,,[],[]
+MI-Proj-M,3,,"[('Masterarbeit', 23), ('CitH-Thesis-M', 14)]","[('MOBI-DBS-B', 25), ('GdI-MfI-1', 23), ('KInf-IPKult-E', 23), ('PSI-EiRBS-B', 22), ('AI-AuD-B', 20), ('DSG-EiAPS-B', 17), ('HCI-IS-B', 12), ('MI-EMI-B', 12), ('WiMa-B-02a', 11), ('DSG-AJP-B', 10), ('SWT-FSE-B', 10), ('MI-WebT-B', 10)]"
+AI-KI-B,,,[],[]
+Mathe-B-02,1-2,1.0,"[('Masterarbeit', 28), ('AI-Sem2-CitH-M', 25), ('AI-Sem1-CitH-M', 23), ('AI-AuD-B', 18), ('MI-Proj-M', 17), ('MOBI-DBS-B', 14), ('KInf-DigBib-B', 13), ('PSI-EiRBS-B', 11), ('MI-WebT-B', 10), ('HCI-IS-B', 10)]","[('KInf-IPKult-E', 12), ('GdI-MfI-1', 11)]"
+Hilfswissenschaften und Informationstechnologie,,,[],[]
+KInf-Seminar-M,,,[],[]
+KogSys-ML-B,3,,"[('Masterarbeit', 15), ('CitH-Thesis-M', 14)]","[('MOBI-DBS-B', 15), ('AI-AuD-B', 13), ('PSI-EiRBS-B', 13), ('KInf-IPKult-E', 13), ('GdI-MfI-1', 11), ('SWT-FSE-B', 10), ('DSG-EiAPS-B', 10)]"
+HCI-Sem-M,,,[],[]
+KInf-IPKult-E,1,1.0,[],[]
+HCI-MCI-M,,,[],[]
+MI-WebT-B,3,,"[('Masterarbeit', 17)]","[('GdI-MfI-1', 15), ('KInf-IPKult-E', 14), ('DSG-EiAPS-B', 11), ('MOBI-DBS-B', 11)]"
+MI-EMI-B,1,1.0,"[('Masterarbeit', 23), ('AI-AuD-B', 19), ('SWT-FSE-B', 19), ('AI-Sem2-CitH-M', 17), ('MOBI-DBS-B', 17), ('CitH-Thesis-M', 15), ('AI-Sem1-CitH-M', 14), ('PSI-EiRBS-B', 14), ('DSG-AJP-B', 13), ('MI-WebT-B', 12), ('MI-Proj-M', 11)]",[]
+SWT-PMS-B,,,[],[]
+SWT-SWE-B,,,[],[]
+DSG-EidI-B,,,[],[]
+KogSys-Sem-M1,,,[],[]
+SWT-FSE-B,3,,"[('Masterarbeit', 22), ('CitH-Thesis-M', 15), ('AI-Sem2-CitH-M', 12)]","[('KInf-IPKult-E', 21), ('GdI-MfI-1', 20), ('DSG-EiAPS-B', 19), ('PSI-EiRBS-B', 15), ('HCI-IS-B', 14), ('MI-EMI-B', 14), ('MOBI-DBS-B', 13), ('AI-AuD-B', 11), ('Mathe-B-02', 10)]"
+SME-Projekt-M,,,[],[]
+SWT-PMI-B,,,[],[]
+KogSys-KogMod-M,2,2.0,"[('Masterarbeit', 11)]",[]
+HCI-KS-B,,,[],[]
+HCI-IS-B,2,1.0,"[('Masterarbeit', 31), ('AI-AuD-B', 21), ('MOBI-DBS-B', 17), ('AI-Sem1-CitH-M', 16), ('CitH-Thesis-M', 15), ('SWT-FSE-B', 15), ('MI-Proj-M', 13), ('KInf-Projekt-M', 13), ('AI-Sem2-CitH-M', 12), ('PSI-EiRBS-B', 10)]","[('KInf-IPKult-E', 15), ('MOBI-DBS-B', 14), ('PSI-EiRBS-B', 13), ('Mathe-B-02', 12), ('AI-AuD-B', 11), ('GdI-MfI-1', 10)]"
+HCI-Sem-HCC-M,,,[],[]
+DSG-AJP-B,2,2.0,"[('Masterarbeit', 20), ('AI-Sem2-CitH-M', 12), ('AI-Sem1-CitH-M', 11), ('CitH-Thesis-M', 11)]","[('GdI-MfI-1', 20), ('DSG-EiAPS-B', 18), ('KInf-IPKult-E', 18), ('MI-EMI-B', 10)]"
+ISM-MDI-M,,,[],[]
+EESYS-IITP-B,,,[],[]
+ISDL-ECM-B,,,[],[]
+KTR-MfI-2,,,[],[]
+Masterarbeit,5,,[],"[('AI-AuD-B', 47), ('GdI-MfI-1', 45), ('MOBI-DBS-B', 44), ('KInf-IPKult-E', 38), ('AI-Sem1-CitH-M', 38), ('AI-Sem2-CitH-M', 37), ('PSI-EiRBS-B', 35), ('DSG-EiAPS-B', 33), ('SWT-FSE-B', 29), ('HCI-IS-B', 27), ('MI-WebT-B', 25), ('MI-Proj-M', 24), ('DSG-AJP-B', 23), ('MI-EMI-B', 22), ('Mathe-B-02', 22), ('KogSys-ML-B', 18), ('KInf-Projekt-M', 17), ('WiMa-B-02a', 17), ('CitH-Thesis-M', 15), ('KInf-DigBib-B', 14), ('KInf-SemInf-M', 11)]"
+IT English I (Security 1),,,[],[]
+MI-MMT-B,,,[],[]
+KInf-BuS-M,,,[],[]
+KogSys-Sem-M2,,,[],[]
+SNA-IWM-B,,,[],[]
+DSG-PKS-B,,,[],[]
+SNA-NET-M,,,[],[]
+KInf-Proj-M,,,[],[]
+MI-IR2-M,,,[],[]
+SEDA-EbIS-3-M,,,[],[]
+KogSys-Proj-M,3,,"[('Masterarbeit', 15)]","[('GdI-MfI-1', 13), ('KInf-IPKult-E', 11), ('MOBI-DBS-B', 11), ('AI-AuD-B', 10), ('DSG-EiAPS-B', 10)]"
+HCI-Usab,,,[],[]
+AI-Sem1-CitH-M,3,,"[('Masterarbeit', 24), ('CitH-Thesis-M', 14)]","[('KInf-IPKult-E', 21), ('MOBI-DBS-B', 20), ('AI-AuD-B', 18), ('GdI-MfI-1', 18), ('PSI-EiRBS-B', 16), ('DSG-EiAPS-B', 13), ('Mathe-B-02', 11), ('MI-WebT-B', 10)]"
+DSG-EiAPS-B,1,1.0,"[('AI-AuD-B', 26), ('AI-Sem1-CitH-M', 25), ('MOBI-DBS-B', 23), ('Masterarbeit', 23), ('PSI-EiRBS-B', 23), ('SWT-FSE-B', 20), ('AI-Sem2-CitH-M', 19), ('DSG-AJP-B', 14), ('MI-Proj-M', 11), ('CitH-Thesis-M', 10)]","[('KInf-IPKult-E', 10)]"
+HCI-Proj-M,,,[],[]
+AI-Sem2-CitH-M,3,,"[('Masterarbeit', 25), ('CitH-Thesis-M', 14)]","[('KInf-IPKult-E', 22), ('MOBI-DBS-B', 22), ('AI-AuD-B', 22), ('GdI-MfI-1', 20), ('PSI-EiRBS-B', 20), ('DSG-EiAPS-B', 19), ('MI-EMI-B', 13), ('SWT-FSE-B', 12), ('HCI-IS-B', 11), ('Mathe-B-02', 11), ('AI-Sem1-CitH-M', 10)]"
+GdI-MfI-1,1,1.0,"[('Masterarbeit', 33), ('AI-AuD-B', 26), ('MOBI-DBS-B', 24), ('AI-Sem1-CitH-M', 23), ('AI-Sem2-CitH-M', 21), ('PSI-EiRBS-B', 19), ('CitH-Thesis-M', 17), ('SWT-FSE-B', 17), ('MI-WebT-B', 16), ('MI-Proj-M', 15), ('DSG-AJP-B', 11), ('KInf-Projekt-M', 11), ('KInf-DigBib-B', 10)]",[]
+MI-Sem-M,,,[],[]
+SWT-SSP-B,,,[],[]
+KInf-SemInf-M,3,,"[('Masterarbeit', 10)]","[('AI-AuD-B', 10), ('MOBI-DBS-B', 10)]"
+KInf-DigBib-B,,,[],[]
+KInf-GeoInf-B,,,[],[]
+KInf-Sem-M,,,[],[]
+MOBI-DBS-B,2,2.0,"[('Masterarbeit', 28), ('AI-Sem1-CitH-M', 19), ('AI-Sem2-CitH-M', 18), ('MI-Proj-M', 18), ('AI-AuD-B', 13), ('CitH-Thesis-M', 13), ('SWT-FSE-B', 12), ('KInf-Projekt-M', 10), ('DSG-EiAPS-B', 10)]","[('GdI-MfI-1', 19), ('KInf-IPKult-E', 17), ('DSG-EiAPS-B', 13)]"
+CG-CGA-B,,,[],[]
+WiMa-B-02a,2,1.0,"[('CitH-Thesis-M', 23), ('Masterarbeit', 23), ('AI-Sem1-CitH-M', 14), ('AI-Sem2-CitH-M', 13), ('SWT-FSE-B', 13), ('MI-Proj-M', 10), ('AI-AuD-B', 10)]","[('KInf-IPKult-E', 14), ('MOBI-DBS-B', 13), ('PSI-EiRBS-B', 13), ('AI-AuD-B', 11), ('DSG-EiAPS-B', 11), ('GdI-MfI-1', 10)]"
+ISM-MDT-M,,,[],[]
+KInf-Projekt-M,2-3,,"[('Masterarbeit', 13)]","[('KInf-IPKult-E', 13)]"
+CitH-Thesis-M,5,,"[('Masterarbeit', 14)]","[('SWT-FSE-B', 20), ('AI-AuD-B', 18), ('PSI-EiRBS-B', 18), ('AI-Sem1-CitH-M', 17), ('GdI-MfI-1', 17), ('KInf-IPKult-E', 17), ('MOBI-DBS-B', 17), ('DSG-EiAPS-B', 16), ('WiMa-B-02a', 14), ('AI-Sem2-CitH-M', 14), ('MI-EMI-B', 12), ('KogSys-ML-B', 12), ('KInf-Projekt-M', 10), ('DSG-AJP-B', 10)]"
+KInf-MobAss-M,,,[],[]
+SWT-SEI-B,3,,"[('Masterarbeit', 10)]",[]
+Gdl-Mfl-1,,,[],[]
+MI-IR-M,3,,"[('Masterarbeit', 13)]","[('MOBI-DBS-B', 10)]"
+PSI-EiRBS-B,2,2.0,"[('Masterarbeit', 28), ('AI-Sem1-CitH-M', 20), ('AI-Sem2-CitH-M', 19), ('MI-Proj-M', 14), ('SWT-FSE-B', 11), ('MI-EMI-B', 11), ('CitH-Thesis-M', 11), ('GdI-MfI-1', 10), ('KogSys-ML-B', 10)]","[('KInf-IPKult-E', 20), ('DSG-EiAPS-B', 19), ('GdI-MfI-1', 18), ('Mathe-B-02', 10)]"
+AI-AuD-B,2,2.0,"[('Masterarbeit', 41), ('AI-Sem2-CitH-M', 28), ('AI-Sem1-CitH-M', 25), ('CitH-Thesis-M', 21), ('MI-Proj-M', 17), ('KogSys-ML-B', 13), ('KInf-SemInf-M', 13), ('SWT-FSE-B', 12), ('KInf-Projekt-M', 11), ('WiMa-B-02a', 10), ('HCI-IS-B', 10), ('MI-WebT-B', 10)]","[('GdI-MfI-1', 36), ('KInf-IPKult-E', 34), ('DSG-EiAPS-B', 26), ('MI-EMI-B', 17), ('Mathe-B-02', 11), ('HCI-IS-B', 10), ('MOBI-DBS-B', 10)]"
+HCI-US-B,,,[],[]

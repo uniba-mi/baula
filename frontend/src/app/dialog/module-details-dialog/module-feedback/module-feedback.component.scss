@@ -1,0 +1,6 @@
+label.star-label {
+    cursor: pointer;
+    &:hover, &:hover ~ label.star-label {
+        color: var(--ub-blue);
+    }
+}

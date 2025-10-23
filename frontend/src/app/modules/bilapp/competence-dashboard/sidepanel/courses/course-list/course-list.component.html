@@ -1,0 +1,35 @@
+<mat-accordion class="moduleGroup" multi>
+  <!-- iterate over the modules and display all modules that are children from the higher modulegroup -->
+  <mat-expansion-panel class="my-3 shadow-none border-bottom pb-2" *ngFor="let module of structure; index as i">
+    <!-- display the name of the modulegroup -->
+    <mat-expansion-panel-header>
+      <span class="moduleGroupHeader">{{ module.containerName }}</span>
+    </mat-expansion-panel-header>
+    <!-- display all courses of this modulegroup-->
+    <div id="collapse" *ngIf="module.courses">
+      <div>
+        <ng-container 
+          *ngIf="module.courses.length > 0;then coursesExist; else coursesDoesntExist">
+        </ng-container>
+
+        <ng-template #coursesExist>
+          <ng-container *ngIf="selectedCourses$ | async as selectedCourses">
+            <div *ngFor="let course of module.courses" class="mb-3">
+              <app-course-item
+                [course]="course"
+                [selectedCourses]="selectedCourses"
+                [moduleId]="module.containerId"
+              >
+              </app-course-item>
+            </div>
+          </ng-container>
+        </ng-template>
+        <!--TODO Better Message? Maybe give a possible message as prop from parent component-->
+        <ng-template #coursesDoesntExist>
+          <div> Derzeit keine Lehrveranstaltungen vorhanden!</div>
+        </ng-template>
+
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

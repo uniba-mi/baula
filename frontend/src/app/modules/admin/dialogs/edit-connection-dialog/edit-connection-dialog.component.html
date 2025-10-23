@@ -1,0 +1,66 @@
+<!-- Content -->
+<div class="container">
+    <h3>{{ mCourse.name }} ({{ mCourse.type }})</h3>
+    <div class="d-flex flex-row my-4">
+        <!-- left side where search is located -->
+        <div class="w-50">
+            <h4 class="text-center">Lehrveranstaltungen suchen</h4>
+            <div>
+                <mat-form-field class="w-100 my-2 search-input-field">
+                    <mat-label>Suchfeld</mat-label>
+                    <input matInput type="text" placeholder="Gib hier einen Suchbegriff ein"
+                        (keyup.enter)="emitSearch()" [(ngModel)]="searchTerm">
+                    <span class="btn-icon d-inline" (click)="clearInput()" (keyup.enter)="clearInput()">
+                        <i class="bi bi-x-lg text-gray"></i>
+                    </span>
+                </mat-form-field>
+            </div>
+            <!-- additional filter options -->
+            <div class="d-flex flex-row justify-content-around align-items-center">
+                <div>
+                    <mat-checkbox [(ngModel)]="filterByChair">Nach Lehrstuhl filtern</mat-checkbox>
+                </div>
+                <div class="icon" (click)="copyToClipboard()">
+                    <i class="bi bi-clipboard"></i>
+                    <span class="ms-2">Lehrstuhl kopieren</span>
+                </div>
+            </div>
+            <button class="btn btn-primary w-100" (click)="emitSearch()">Suchen</button>
+            <div class="mt-4" *ngIf="courseResults">
+                <ng-container *ngIf="courseResults.length !== 0; else NoCoursesFound">
+                    <!-- Display section of searchResults -->
+                    <div *ngFor="let course of viewResult">
+                        <admin-course-connection-card [course]="course" [mCourse]="mCourse"
+                            (connect)="connectModule($event)"
+                            (disconnect)="disconnectModule($event)"></admin-course-connection-card>
+                    </div>
+                    <mat-paginator #paginator hidePageSize [length]="courseResults.length"
+                        [pageSize]="pageSize" (page)="handlePageEvent($event)"
+                        aria-label="Wähle eine Ergebnisseite aus">
+                    </mat-paginator>
+                    <!-- End of section for search Results -->
+                </ng-container>
+            </div>
+        </div>
+        <!-- verticale rule for separation -->
+        <div class="mx-2 vr"></div>
+        <!-- right side where connected courses are displayed -->
+        <div class="w-50">
+            <h4 class="text-center mb-4">Zugeordnete Lehrveranstaltungen</h4>
+            <div *ngFor="let connectedCourse of connectedCourses">
+                <admin-course-connection-card [course]="connectedCourse" [mCourse]="mCourse"
+                    (connect)="connectModule($event)"
+                    (disconnect)="disconnectModule($event)"></admin-course-connection-card>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-actions>
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close>Abbrechen</button>
+    </mat-dialog-actions>
+</div>
+
+<ng-template #NoCoursesFound>
+    <div class="alert alert-primary" role="alert">
+        Es konnten keine Kurse gefunden werden.
+    </div>
+</ng-template>

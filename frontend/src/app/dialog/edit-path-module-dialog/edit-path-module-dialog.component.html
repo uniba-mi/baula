@@ -1,0 +1,131 @@
+<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+  <form [formGroup]="pathModuleForm">
+    <div class="content-wrapper">
+      <div class="input-field-wrapper">
+        <mat-form-field appearance="outline" class="mt-1">
+          <mat-label>Kürzel</mat-label>
+          <input matInput formControlName="acronym" #acronym required>
+          <mat-error *ngIf="pathModuleForm.controls['acronym'].touched && pathModuleForm.controls['acronym'].invalid">
+            <span *ngIf="pathModuleForm.controls['acronym'].errors?.required">Das ist ein
+              Pflichtfeld.</span>
+          </mat-error>
+        </mat-form-field>
+        <i class="bi bi-info-circle"
+          matTooltip="Hier kannst du ein Kürzel eingeben, um dein Modul wiederzuerkennen. Am besten verwendest du eine übliche Modulbezeichnung."
+          matTooltipClass="custom-tooltip" appTooltip></i>
+      </div>
+      <div class="input-field-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" #name required>
+          <mat-error *ngIf="pathModuleForm.controls['name'].touched && pathModuleForm.controls['name'].invalid">
+            <span *ngIf="pathModuleForm.controls['name'].errors?.required">Das ist ein
+              Pflichtfeld.</span>
+          </mat-error>
+        </mat-form-field>
+        <i class="bi bi-info-circle" matTooltip="Lege einen Namen für das Modul fest." matTooltipClass="custom-tooltip"
+          appTooltip></i>
+      </div>
+      <div class="input-field-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status" #status required>
+            <mat-option value="passed">Bestanden</mat-option>
+            <mat-option value="failed">Nicht bestanden</mat-option>
+            <mat-option value="taken">Belegt</mat-option>
+          </mat-select>
+          <mat-error *ngIf="pathModuleForm.controls['status'].touched && pathModuleForm.controls['status'].invalid">
+            <span *ngIf="pathModuleForm.controls['status'].errors?.required">Das ist ein
+              Pflichtfeld.</span>
+          </mat-error>
+        </mat-form-field>
+        <i class="bi bi-info-circle" matTooltip="Gib hier den letzten Status des Moduls an."
+          matTooltipClass="custom-tooltip" appTooltip></i>
+      </div>
+      <!-- <div class="input-field-wrapper">
+        <mat-form-field *ngIf="semesters$ | async as semesters" appearance="outline">
+          <mat-label>Semester</mat-label>
+          <mat-select formControlName="semester" #semester placeholder="Bitte Semester wählen" required>
+            <mat-option *ngFor="let semester of semesters" [value]="semester.name">
+              {{ semester.name | Semester }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="pathModuleForm.controls['semester'].touched && pathModuleForm.controls['semester'].invalid">
+            <span *ngIf="pathModuleForm.controls['semester'].errors?.required">Das ist ein
+              Pflichtfeld.</span>
+          </mat-error>
+        </mat-form-field>
+        <i class="bi bi-info-circle"
+          matTooltip="Gib hier das Semester ein, in dem der zuvor angegebene Status des Moduls erreicht wurde."
+          matTooltipClass="custom-tooltip" appTooltip></i>
+      </div> -->
+      <div class="input-field-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>ECTS</mat-label>
+          <input matInput formControlName="ects" #ects type="number" min="1" max="30" required>
+          <mat-error *ngIf="pathModuleForm.controls['ects'].touched && pathModuleForm.controls['ects'].invalid"><span
+              *ngIf="
+              pathModuleForm.controls['ects'].errors?.min ||
+              pathModuleForm.controls['ects'].errors?.max
+                            ">Die ECTS müssen mindestens 1 und maximal 30 sein.</span><span
+              *ngIf="pathModuleForm.controls['ects'].errors?.required">Das ist ein
+              Pflichtfeld.</span>
+          </mat-error>
+        </mat-form-field>
+        <i class="bi bi-info-circle" matTooltip="Gib hier die ECTS ein. Der Wert darf zwischen 1 und 30 liegen."
+          matTooltipClass="custom-tooltip" appTooltip></i>
+      </div>
+      <div class="input-field-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Note</mat-label>
+          <input matInput formControlName="grade" #grade type="text" required pattern="^[1-5]((\.|,)[0-9])?$">
+          <mat-error *ngIf="pathModuleForm.controls['grade'].touched && pathModuleForm.controls['grade'].invalid">
+            <span *ngIf="pathModuleForm.controls['grade'].errors?.required">Das ist ein
+              Pflichtfeld.
+            </span>
+            <span
+              *ngIf="pathModuleForm.controls['grade'].errors?.min || pathModuleForm.controls['grade'].errors?.max">Die
+              Note muss zwischen 1,0 und 4,0 liegen.
+            </span>
+            <span *ngIf="pathModuleForm.controls['grade'].errors?.pattern">
+              Bitte gib eine gültige Zahl ein (z. B. 2, 2.5).
+            </span>
+          </mat-error>
+          <mat-hint *ngIf="showNoEditHint || showNoGradeHint" class="text-gray">
+            <span *ngIf="showNoEditHint"> <i class="bi bi-exclamation-triangle ms-2 text-red"></i>
+              Da das Modul als "nicht
+              bestanden"
+              markiert ist, kannst du die Note nicht ändern.</span>
+            <span *ngIf="showNoGradeHint">
+              <i class="bi bi-exclamation-triangle ms-2 text-red"></i> Da das Modul als "belegt"
+              markiert ist, gibt es noch keine Note.
+            </span>
+          </mat-hint>
+        </mat-form-field>
+        <i class="bi bi-info-circle" matTooltip="Gib hier deine Note an. Sie kann zwischen 1,0 und 5,0 liegen."
+          matTooltipClass="custom-tooltip" appTooltip></i>
+      </div>
+      <div class="input-field-wrapper">
+        <mat-form-field *ngIf="structuredModuleGroups$ | async as structuredModuleGroups" appearance="outline">
+          <mat-label>Modulgruppe</mat-label>
+          <mat-select formControlName="mgId" #mgId>
+            <mat-option *ngFor="let group of structuredModuleGroups" [value]="group.mgId"
+              [ngStyle]="{'padding-left': ((group.level ?? 0) * 10 + 10) + 'px'}"> {{ group.path
+              }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  <mat-dialog-actions>
+    <!-- Save button only on the last step -->
+    <button mat-raised-button class="save-btn btn btn-primary" [disabled]="!pathModuleForm.valid"
+      [mat-dialog-close]="getData()" (click)="close('data')" (keyup.enter)="close('noData')">
+      Speichern
+    </button>
+    <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+      Abbrechen
+    </button>
+  </mat-dialog-actions>
+</ng-container>

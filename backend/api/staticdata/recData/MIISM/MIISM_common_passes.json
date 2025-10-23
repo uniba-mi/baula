@@ -1,0 +1,62 @@
+[
+    {
+        "Module": "IISM-PrakIntKon-M",
+        "Frequency": 91
+    },
+    {
+        "Module": "Masterarbeit",
+        "Frequency": 50
+    },
+    {
+        "Module": "MaIISM-Sem2-M",
+        "Frequency": 48
+    },
+    {
+        "Module": " WI-Thesis-M",
+        "Frequency": 37
+    },
+    {
+        "Module": "ISDL-ISS3-M",
+        "Frequency": 35
+    },
+    {
+        "Module": "MaIISM-Sem1-M",
+        "Frequency": 33
+    },
+    {
+        "Module": "ISDL-ITCHANGE-M",
+        "Frequency": 33
+    },
+    {
+        "Module": "ISDL-ISS1-M",
+        "Frequency": 33
+    },
+    {
+        "Module": "ISDL-ISS2-M",
+        "Frequency": 30
+    },
+    {
+        "Module": "IIS-IBS-M",
+        "Frequency": 26
+    },
+    {
+        "Module": "SNA-ASN-M",
+        "Frequency": 23
+    },
+    {
+        "Module": "SNA-NET-M",
+        "Frequency": 16
+    },
+    {
+        "Module": "SCM-M-08",
+        "Frequency": 13
+    },
+    {
+        "Module": "EESYS-BIA-M",
+        "Frequency": 12
+    },
+    {
+        "Module": "DSG-EiAPS-B",
+        "Frequency": 10
+    }
+]

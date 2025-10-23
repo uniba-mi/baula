@@ -1,0 +1,198 @@
+[
+    {
+        "Module": "Mathe-B-01",
+        "Frequency": 58
+    },
+    {
+        "Module": "HCI-IS-B",
+        "Frequency": 56
+    },
+    {
+        "Module": "Stat-B-02",
+        "Frequency": 56
+    },
+    {
+        "Module": "Bachelorarbeit",
+        "Frequency": 56
+    },
+    {
+        "Module": "KTR-MfI-2",
+        "Frequency": 55
+    },
+    {
+        "Module": "MI-WebT-B",
+        "Frequency": 49
+    },
+    {
+        "Module": "AI-AuD-B",
+        "Frequency": 48
+    },
+    {
+        "Module": "DSG-AJP-B",
+        "Frequency": 48
+    },
+    {
+        "Module": "Stat-B-01",
+        "Frequency": 48
+    },
+    {
+        "Module": "MI-EMI-B",
+        "Frequency": 46
+    },
+    {
+        "Module": "GdI-MfI-1",
+        "Frequency": 44
+    },
+    {
+        "Module": "GdI-GTI-B",
+        "Frequency": 43
+    },
+    {
+        "Module": "SWT-FSE-B",
+        "Frequency": 42
+    },
+    {
+        "Module": "AI-EinfAI-B",
+        "Frequency": 41
+    },
+    {
+        "Module": "DSG-EiAPS-B",
+        "Frequency": 38
+    },
+    {
+        "Module": "MI-Proj-B",
+        "Frequency": 37
+    },
+    {
+        "Module": "PSI-EiRBS-B",
+        "Frequency": 33
+    },
+    {
+        "Module": "AI-KI-B",
+        "Frequency": 33
+    },
+    {
+        "Module": "DSG-PKS-B",
+        "Frequency": 30
+    },
+    {
+        "Module": "SWT-SWL-B",
+        "Frequency": 30
+    },
+    {
+        "Module": "AI-Seminar1-B",
+        "Frequency": 29
+    },
+    {
+        "Module": "HCI-US-B",
+        "Frequency": 29
+    },
+    {
+        "Module": "MOBI-DBS-B",
+        "Frequency": 29
+    },
+    {
+        "Module": "HCI-KS-B",
+        "Frequency": 29
+    },
+    {
+        "Module": "KInf-GeoInf-B",
+        "Frequency": 25
+    },
+    {
+        "Module": "MI-IR-M",
+        "Frequency": 25
+    },
+    {
+        "Module": "AI-Sem2-B",
+        "Frequency": 24
+    },
+    {
+        "Module": "AI-Sem1-B",
+        "Frequency": 23
+    },
+    {
+        "Module": "EESYS-GEI-B",
+        "Frequency": 21
+    },
+    {
+        "Module": "KTR-Datkomm-B",
+        "Frequency": 19
+    },
+    {
+        "Module": "GdI-NPP-B",
+        "Frequency": 19
+    },
+    {
+        "Module": "AI-Seminar2-B",
+        "Frequency": 18
+    },
+    {
+        "Module": "IT English I (Security 1)",
+        "Frequency": 17
+    },
+    {
+        "Module": "SME-Projekt-B",
+        "Frequency": 16
+    },
+    {
+        "Module": "MOBI-Proj-B",
+        "Frequency": 15
+    },
+    {
+        "Module": "ISM-PT-B",
+        "Frequency": 14
+    },
+    {
+        "Module": "EESYS-IITP-B",
+        "Frequency": 14
+    },
+    {
+        "Module": "DSG-IDistrSys-B",
+        "Frequency": 14
+    },
+    {
+        "Module": "GdI-SaV-B",
+        "Frequency": 14
+    },
+    {
+        "Module": "HCI-Proj-B",
+        "Frequency": 12
+    },
+    {
+        "Module": "KInf-DigBib-B",
+        "Frequency": 11
+    },
+    {
+        "Module": "DSG-EidI-B",
+        "Frequency": 11
+    },
+    {
+        "Module": "SME-Phy-B",
+        "Frequency": 11
+    },
+    {
+        "Module": "SWT-SSP-B",
+        "Frequency": 10
+    },
+    {
+        "Module": "WiMa-B-01a",
+        "Frequency": 10
+    },
+    {
+        "Module": "BSL-B-00",
+        "Frequency": 10
+    },
+    {
+        "Module": "KogSys-Proj-B",
+        "Frequency": 10
+    },
+    {
+        "Module": "MI-MMT-B",
+        "Frequency": 10
+    },
+    {
+        "Module": "BA I-a",
+        "Frequency": 10
+    }
+]

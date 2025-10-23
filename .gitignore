@@ -1,0 +1,4 @@
+.env*
+data/mongodb
+data/redis
+data/mariadb
