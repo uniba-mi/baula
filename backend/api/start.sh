@@ -5,7 +5,7 @@ npx puppeteer browsers install chrome
 
 npm run generateDB
 
-pm2 start pm2.config.js --only api-test
+pm2 start pm2.config.js --only api
 cd /api/src/cron
 pm2 start cron-job.js
 

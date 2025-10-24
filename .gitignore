@@ -5,3 +5,5 @@ data/mariadb
 package-lock.json
 logs/*
 *.pem
+000-default.conf
+backups/mongodb/*
