@@ -39,9 +39,7 @@ COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 # Apache-Template & Entrypoint
-COPY .apache2/sites-available/000-default.conf.template /etc/apache2/sites-available/000-default.conf.template
-COPY .start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
+COPY apache2/sites-available/000-default.conf.template /etc/apache2/sites-available/000-default.conf.template
 
 # Starten Sie das Start-Skript
 ENTRYPOINT ["/usr/local/bin/start.sh"]

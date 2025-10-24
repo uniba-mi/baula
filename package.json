@@ -13,7 +13,7 @@
   "license": "ISC",
   "author": "",
   "scripts": {
-    "startProdDocker": "docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build --force-recreate",
+    "startProdDocker": "docker compose -f docker-compose.yml -f docker-compose.server.yml up -d --build --force-recreate",
     "startLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml up -d --build --force-recreate",
     "stopDocker": "docker compose down -v",
     "startBackend": "cd backend/api && npm run startApi",
