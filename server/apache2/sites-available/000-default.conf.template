@@ -11,7 +11,7 @@
 	ServerAdmin webmaster@localhost
 	DocumentRoot /var/www/
 
-	Redirect "/" "https://baula-test.minf.uni-bamberg.de"
+	Redirect "/" ${HOST_URL}
 
 	# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
 	# error, crit, alert, emerg.
@@ -31,12 +31,14 @@
 </VirtualHost>
 
 <VirtualHost *:443>
-    DocumentRoot /var/www/
-    ServerName baula-test.minf.uni-bamberg.de
+    DocumentRoot /var/www/browser
+    ServerName ${HOSTNAME}
 
     SSLEngine on
-    SSLCertificateFile /etc/acme/rsa-certs/certfullchain_baula-test.minf.uni-bamberg.de.pem
-    SSLCertificateKeyFile /etc/acme/rsa-certs/key_baula-test.minf.uni-bamberg.de.pem
+    SSLCertificateFile /etc/acme/rsa-certs/certfullchain_${HOSTNAME}.pem
+    SSLCertificateKeyFile /etc/acme/rsa-certs/key_${HOSTNAME}.pem
+
+    Alias /3rdpartylicence.txt /var/www/browser/3rdpartylicence.txt
 
     # Sicherheitsheader hinzufügen
     <IfModule mod_headers.c>
@@ -56,24 +58,24 @@
 
     <IfModule mod_proxy.c>
         # Proxy für Routing-API
-        ProxyPass "/api" "http://141.13.235.13:3000/api"
-        ProxyPassReverse "/api" "http://141.13.235.13:3000/api"
+        ProxyPass "/api" "http://141.13.235.13:${API_PORT}/api"
+        ProxyPassReverse "/api" "http://141.13.235.13:${API_PORT}/api"
 
         # Proxy für Shibboleth
-        ProxyPass "/Shibboleth.sso" "http://141.13.235.13:3000/Shibboleth.sso"
-        ProxyPassReverse "/Shibboleth.sso" "http://141.13.235.13:3000/Shibboleth.sso"
+        ProxyPass "/Shibboleth.sso" "http://141.13.235.13:${API_PORT}/Shibboleth.sso"
+        ProxyPassReverse "/Shibboleth.sso" "http://141.13.235.13:${API_PORT}/Shibboleth.sso"
 
         # Proxy für öffentliche Ressourcen
-        ProxyPass "/public" "http://141.13.235.13:3000/public"
-        ProxyPassReverse "/public" "http://141.13.235.13:3000/public"
+        ProxyPass "/public" "http://141.13.235.13:${API_PORT}/public"
+        ProxyPassReverse "/public" "http://141.13.235.13:${API_PORT}/public"
 
         # Proxy für lokale Anmeldung
-        ProxyPass "/login/local" "http://141.13.235.13:3000/login/local"
-        ProxyPassReverse "/login/local" "http://141.13.235.13:3000/login/local"
+        ProxyPass "/login/local" "http://141.13.235.13:${API_PORT}/login/local"
+        ProxyPassReverse "/login/local" "http://141.13.235.13:${API_PORT}/login/local"
 
         # Proxy für den Logout
-        ProxyPass "/logout" "http://141.13.235.13:3000/logout"
-        ProxyPassReverse "/logout" "http://141.13.235.13:3000/logout"
+        ProxyPass "/logout" "http://141.13.235.13:${API_PORT}/logout"
+        ProxyPassReverse "/logout" "http://141.13.235.13:${API_PORT}/logout"
     </IfModule>
 
     <IfModule mod_rewrite.c>
@@ -89,6 +91,7 @@
         RewriteCond %{REQUEST_URI} !^/public
         RewriteCond %{REQUEST_URI} !^/login/local
         RewriteCond %{REQUEST_URI} !^/logout
+        RewriteCond %{REQUEST_URI} !^/3rdpartylicence
         RewriteRule ^ /index.html [L]
     </IfModule>
 

@@ -17,6 +17,9 @@
     "startLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml up -d --build --force-recreate",
     "stopDocker": "docker compose down -v",
     "startBackend": "cd backend/api && npm run startApi",
-    "startFrontend": "cd frontend && ng serve --open --no-hmr"
+    "startFrontend": "cd frontend && ng serve --open --no-hmr",
+    "buildFrontendProd": "cd frontend && ng build --configuration=production",
+    "buildFrontendTest": "cd frontend && ng build --configuration=test",
+    "buildBackend": "cd backend/api && npm run build"
   }
 }

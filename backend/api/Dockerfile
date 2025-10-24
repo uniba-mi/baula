@@ -1,25 +1,57 @@
-# Stage 1: Build TypeScript
-FROM node AS build
-WORKDIR /app
-COPY package*.json ./
-RUN rm -rf node_modules && npm ci
-COPY . .
-RUN npm run build
+# Use an official Node.js runtime as a parent image
+FROM node:24
 
-# Stage 2: Production Image
-FROM node
-WORKDIR /app
+# Install dependencies
+RUN apt update && apt install -y \
+  vim \
+  ca-certificates \
+  fonts-liberation\
+  libasound2 \
+  libatk-bridge2.0-0 \
+  libatk1.0-0 \
+  libc6 \
+  libcairo2 \
+  libcups2 \
+  libdbus-1-3 \
+  libexpat1 \ 
+  libfontconfig1 \
+  libgbm1 \
+  libgcc1 \
+  libglib2.0-0 \
+  libgtk-3-0 \
+  libnspr4 \
+  libnss3 \
+  libpango-1.0-0 \
+  libpangocairo-1.0-0 \
+  libstdc++6 \
+  libx11-6 \
+  libx11-xcb1 \
+  libxcb1 \
+  libxcomposite1 \
+  libxcursor1 \
+  libxdamage1 \
+  libxext6 \
+  libxfixes3 \
+  libxi6 \
+  libxrandr2 \
+  libxrender1 \
+  libxss1 \
+  libxtst6 \
+  lsb-release \
+  xdg-utils \
+  wget \
+  && rm -rf /var/lib/apt/lists/*
 
-# Nur notwendige Pakete installieren (keine DevDeps)
-COPY package*.json ./
-RUN npm ci --omit=dev
-RUN npm run generateDB
+# Add Google Chrome repository and install Chrome
+#RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
+#  && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' \
+#  && apt update \
+#  && apt install -y google-chrome-stable
 
-# PM2 global installieren
-RUN npm install -g pm2
+RUN npm install -g pm2@latest
 
-# Kopiere nur das gebaute JS
-COPY --from=build /app/dist ./dist
+ADD start.sh /start
+RUN chmod +x /start
 
-# Starte über PM2
-CMD ["pm2-runtime", "dist/backend/src/app.js"]
+# Start the application using pm2
+CMD ["/start", "-D"]

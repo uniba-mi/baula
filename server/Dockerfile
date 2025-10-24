@@ -38,5 +38,10 @@ COPY start.sh /usr/local/bin/start.sh
 # Stellen Sie sicher, dass das Skript ausführbar ist
 RUN chmod +x /usr/local/bin/start.sh
 
+# Apache-Template & Entrypoint
+COPY .apache2/sites-available/000-default.conf.template /etc/apache2/sites-available/000-default.conf.template
+COPY ../docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Starten Sie das Start-Skript
-CMD ["/usr/local/bin/start.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
