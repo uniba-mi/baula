@@ -50,8 +50,12 @@ RUN apt update && apt install -y \
 
 RUN npm install -g pm2@latest
 
-ADD start.sh /start
-RUN chmod +x /start
+
+WORKDIR /api
+RUN npm install
+RUN npm run generateDB
+RUN pm2 start pm2.config.js --only api-test
+RUN cd /api/backend/src/cron && pm2 start cron-job.js
 
 # Start the application using pm2
-CMD ["/start", "-D"]
+CMD ["tail", "-f" "null"]

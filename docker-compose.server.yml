@@ -20,15 +20,14 @@ services:
     build: ./backend/api
     restart: always
     volumes:
-      #- ./backend/api/Dockerfile:/api
-      #- ./backend/api/start.sh:/api
-      - ./backend/api:/api/backend
-      - ./backend/api/dist/interfaces:/api/interfaces
-      - ./backend/api/dist/backend/api/src:/api/backend/src
-      #- ./backend/api/staticdata:/api/backend/staticdata
-      #- ./backend/api/package.json:/api/backend/package.json
-      #- ./backend/api/pm2.config.js:/api/backend/pm2.config.js
-      #- ./backend/api/environment:/api/backend/environment
+      - ./backend/api/staticdata:/api/staticdata
+      - ./backend/api/package.json:/api/package.json
+      - ./backend/api/pm2.config.js:/api/pm2.config.js
+      - ./backend/api/environment:/api/environment
+      - ./backend/api/src/certs:/api/src/certs
+      - ./backend/api/src/database:/api/src/database
+      - ./backend/api/dist/backend/api/src:/api/src
+      - ./backend/api/dist/interfaces:./
 
     ports:    
       - "141.13.235.13:${API_PORT}:3305"
