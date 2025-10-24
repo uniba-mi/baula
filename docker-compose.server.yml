@@ -27,7 +27,7 @@ services:
       - ./backend/api/src/certs:/api/src/certs
       - ./backend/api/src/database:/api/src/database
       - ./backend/api/dist/backend/api/src:/api/src
-      - ./backend/api/dist/interfaces:./
+      - ./backend/api/dist/interfaces:/interfaces
 
     ports:    
       - "141.13.235.13:${API_PORT}:3305"
