@@ -50,12 +50,11 @@ RUN apt update && apt install -y \
 
 RUN npm install -g pm2@latest
 
+# Kopieren Sie das Start-Skript in das Container-Dateisystem
+COPY start.sh /usr/local/bin/start.sh
 
-WORKDIR /api
-RUN npm install
-RUN npm run generateDB
-RUN pm2 start pm2.config.js --only api-test
-RUN cd /api/backend/src/cron && pm2 start cron-job.js
+# Stellen Sie sicher, dass das Skript ausführbar ist
+RUN chmod +x /usr/local/bin/start.sh
 
-# Start the application using pm2
-CMD ["tail", "-f" "null"]
+# Starten Sie das Start-Skript
+ENTRYPOINT ["/usr/local/bin/start.sh"]
