@@ -3,7 +3,7 @@ data/mongodb
 data/redis
 data/mariadb
 package-lock.json
-logs/*
+*.log
 *.pem
 000-default.conf
 backups/mongodb/*
