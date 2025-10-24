@@ -91,7 +91,7 @@
         RewriteCond %{REQUEST_URI} !^/public
         RewriteCond %{REQUEST_URI} !^/login/local
         RewriteCond %{REQUEST_URI} !^/logout
-        RewriteCond %{REQUEST_URI} !^/3rdpartylicence
+        RewriteCond %{REQUEST_URI} !^/3rdpartylicenses
         RewriteRule ^ /index.html [L]
     </IfModule>
 

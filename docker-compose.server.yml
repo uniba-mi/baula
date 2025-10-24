@@ -20,6 +20,11 @@ services:
     build: ./backend/api
     restart: always
     volumes:
-      - ./backend/api/dist:/api
+      - ./backend/api/dist/interfaces:/api/interfaces
+      - ./backend/api/dist/backend/api/src:/api/backend/src
+      - ./backend/api/staticdata:/api/backend/staticdata
+      - ./backend/api/package.json:/api/backend/package.json
+      - ./backend/api/pm2.config.js:/api/backend/pm2.config.js
+
     ports:    
       - "141.13.235.13:3000:3305"
