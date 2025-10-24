@@ -1,3 +1,4 @@
+#!/bin/sh
 cd /api/backend
 npm install
 npx puppeteer browsers install chrome
