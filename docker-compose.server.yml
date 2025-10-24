@@ -26,6 +26,8 @@ services:
       - ./backend/api/package.json:/api/backend/package.json
       - ./backend/api/pm2.config.js:/api/backend/pm2.config.js
       - ./backend/api/environment:/api/backend/environment
+      - ./backend/api/Dockerfile:/api
+      - ./backend/api/start.sh:/api
 
     ports:    
       - "141.13.235.13:${API_PORT}:3305"
