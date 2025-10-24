@@ -22,13 +22,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - ./backend/api/staticdata:/api/staticdata
-      - ./backend/api/package.json:/api/package.json
-      - ./backend/api/pm2.config.js:/api/pm2.config.js
-      - ./backend/api/environment:/api/environment
-      - ./backend/api/src/certs:/api/src/certs
-      - ./backend/api/src/database:/api/src/database
-      - ./backend/api/dist/backend/api/src:/api/src
+      - ./backend/api/dist/backend/api:/api
       - ./backend/api/dist/interfaces:/interfaces
     ports:    
       - "141.13.235.13:${API_PORT}:3305"

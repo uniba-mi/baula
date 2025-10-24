@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && npm run copyFiles",
+    "copyFiles": "copyfiles pm2.config.js package.json dist/backend/api && copyfiles -u 1 staticdata/* dist/backend/api/staticdata && copyfiles -u 1 src/certs/* dist/backend/api/src && copyfiles -u 1 -e '**/*.ts' src/database/* dist/backend/api/src/",
     "startApi": "nodemon ./src/app.ts",
     "startCronjob": "nodemon ./src/cron/cron-job.ts",
     "generateDB": "npx prisma generate --schema ./src/database/schema.prisma",
@@ -54,6 +55,7 @@
     "@types/passport-local": "^1.0.38",
     "@types/passport-saml": "^1.1.7",
     "@types/validator": "^13.7.12",
+    "copyfiles": "^2.4.1",
     "prisma": "^5.8.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.3"
