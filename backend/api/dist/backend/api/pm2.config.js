@@ -4,7 +4,7 @@ module.exports = {
         name: 'api',
         script: 'src/app.js',
         env: {
-          DOTENV_PATH: '.env.backend'
+          DOTENV_PATH: '.env'
         }
       }
     ]

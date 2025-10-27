@@ -18,9 +18,7 @@ import { UserServer as IUser } from "../../../../interfaces/user";
 import * as dotenv from "dotenv";
 import path from 'path';
 
-//dotenv.config({ path: "./database/.env" });
-const envFile = `.env.${process.env.NODE_ENV || 'local'}`;
-dotenv.config({ path: path.resolve(__dirname, '../../', 'environment', envFile) });
+dotenv.config({ path: path.resolve(__dirname, '../../', 'environment', '.env.backend') });
 const uri = process.env.MONGO_DATABASE_URL
   ? process.env.MONGO_DATABASE_URL.toString()
   : "";

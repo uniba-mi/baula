@@ -1,0 +1,1 @@
+# Stundenplan-Fehlermeldungen erklärt

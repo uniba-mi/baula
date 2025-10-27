@@ -76,6 +76,10 @@
         # Proxy für den Logout
         ProxyPass "/logout" "http://141.13.235.13:${API_PORT}/logout"
         ProxyPassReverse "/logout" "http://141.13.235.13:${API_PORT}/logout"
+
+        # Proxy für Dokumentation
+        ProxyPass "/docs" "http://141.13.235.13:${API_PORT}/logout"
+        ProxyPassReverse "/docs" "http://141.13.235.13:${API_PORT}/logout"
     </IfModule>
 
     <IfModule mod_rewrite.c>

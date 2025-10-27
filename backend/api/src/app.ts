@@ -30,7 +30,6 @@ import { ensureAuthenticated } from "./shared/middleware/authenticationMiddlewar
  *  --- Initializing constants --
  *  -----------------------------*/
 const envFile = `.env.backend`;
-console.log(envFile); // for testing to check if correct env file is loaded
 dotenv.config({ path: path.resolve(__dirname, "../", "environment", envFile) });
 
 const app: Express = express();
