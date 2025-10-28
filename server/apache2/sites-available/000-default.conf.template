@@ -78,8 +78,8 @@
         ProxyPassReverse "/logout" "http://141.13.235.13:${API_PORT}/logout"
 
         # Proxy für Dokumentation
-        ProxyPass "/docs" "http://141.13.235.13:${API_PORT}/logout"
-        ProxyPassReverse "/docs" "http://141.13.235.13:${API_PORT}/logout"
+        ProxyPass "/docs" "http://141.13.235.13:${DOCS_PORT}"
+        ProxyPassReverse "/docs" "http://141.13.235.13:${DOCS_PORT}"
     </IfModule>
 
     <IfModule mod_rewrite.c>
@@ -95,6 +95,7 @@
         RewriteCond %{REQUEST_URI} !^/public
         RewriteCond %{REQUEST_URI} !^/login/local
         RewriteCond %{REQUEST_URI} !^/logout
+        RewriteCond %{REQUEST_URI} !^/docs
         RewriteCond %{REQUEST_URI} !^/3rdpartylicenses
         RewriteRule ^ /index.html [L]
     </IfModule>
