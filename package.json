@@ -16,7 +16,7 @@
     "startServerDocker": "docker-compose -f docker-compose.yml -f docker-compose.server.yml up -d --build --force-recreate",
     "startLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml up -d --build --force-recreate",
     "stopLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml down -v",
-    "stopServerDocker": "docker-compose -f docker-compose.yml -f docker-compose.override.yml down -v",
+    "stopServerDocker": "docker-compose -f docker-compose.yml -f docker-compose.server.yml down -v",
     "startBackend": "cd backend/api && npm run startApi",
     "startFrontend": "cd frontend && ng serve --open --no-hmr",
     "buildFrontendProd": "cd frontend && ng build --configuration=production",
