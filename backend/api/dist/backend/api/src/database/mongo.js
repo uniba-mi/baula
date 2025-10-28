@@ -42,10 +42,8 @@ const mongodb_1 = require("mongodb");
 //dotenv for custom environment variables
 const dotenv = __importStar(require("dotenv"));
 const path_1 = __importDefault(require("path"));
-//dotenv.config({ path: "./database/.env" });
-const envFile = `.env.${process.env.NODE_ENV || "local"}`;
 dotenv.config({
-    path: path_1.default.resolve(__dirname, "../../", "environment", envFile),
+    path: path_1.default.resolve(__dirname, "../../", "environment", '.env.backend'),
 });
 const uri = process.env.MONGO_DATABASE_URL
     ? process.env.MONGO_DATABASE_URL.toString()

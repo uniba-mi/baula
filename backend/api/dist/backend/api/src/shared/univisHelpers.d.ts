@@ -28,7 +28,7 @@ export declare function addCourse(entry: Course): Prisma.Prisma__CourseClient<{
     organizationalEn: string | null;
     descEn: string | null;
     lastUpdated: Date | null;
-}, never, import("@prisma/client/runtime/library").DefaultArgs>;
+}, never, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
 export declare function addConnectionToPersons(entry: Course): Prisma.PrismaPromise<Prisma.BatchPayload>;
 export declare function addCompetences(entry: Course): Prisma.PrismaPromise<Prisma.BatchPayload>;
 export declare function addRooms(rooms: Room[]): Promise<Prisma.BatchPayload>;

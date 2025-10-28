@@ -65,9 +65,7 @@ const authenticationMiddleware_1 = require("./shared/middleware/authenticationMi
 /** -----------------------------
  *  --- Initializing constants --
  *  -----------------------------*/
-const envFile = `.env.${process.env.NODE_ENV || "local"}`;
-console.log(envFile); // for testing to check if correct env file is loaded
-dotenv.config({ path: path_1.default.resolve(__dirname, "../", "environment", envFile) });
+dotenv.config({ path: path_1.default.resolve(__dirname, "../", "environment", '.env.backend') });
 const app = (0, express_1.default)();
 const port = 3305;
 const spCert = fs_1.default.readFileSync(path_1.default.join(__dirname, "certs", "sp_cert.pem"), "utf-8");
