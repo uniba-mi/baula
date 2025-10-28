@@ -36,6 +36,29 @@
   }
 }
 
+.btn-blue-outline {
+  background-color: var(--cus-bg-100) !important;
+  border-color: var(--ub-blue-40) !important;
+  color: var(--ub-blue) !important;
+
+  &:hover {
+    background-color: var(--ub-gray-20) !important;
+  }
+}
+
+.btn-link {
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: var(--ub-blue);
+  text-decoration-color: var(--ub-blue);
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--ub-gray-20);
+  }
+}
+
 .btn-ghost {
   background-color: none !important;
   border-color: none !important;
@@ -213,6 +236,17 @@
   background-color: #e3f6fd !important;
 }
 
+.feedback-chip {
+  background: #d4edda !important;
+  color: #155724 !important;
+  cursor: auto;
+}
+
+.feedback-chip-light {
+  background-color: #e6f1e9 !important;
+  color: #155724 !important;
+}
+
 .success-chip {
   background-color: var(--ub-green-20) !important;
   padding: 0 5px !important;
@@ -274,7 +308,7 @@
 
 /* CHIPS */
 .mat-mdc-standard-chip.mat-primary.mat-mdc-chip-selected {
-  --mdc-chip-elevated-container-color: var(--ub-blue);
+  --mat-chip-elevated-container-color: var(--ub-blue);
 }
 
 /* sticky reset button */

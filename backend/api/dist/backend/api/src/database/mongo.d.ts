@@ -4,8 +4,11 @@ import { Studyplan as IStudyplan } from "../../../../interfaces/studyplan";
 import { Recommendation as IRecommendation } from "../../../../interfaces/recommendation";
 import { Embedding as IEmbedding } from "../../../../interfaces/embedding";
 import { ModuleEmbedding as IModEmbedding } from "../../../../interfaces/embedding";
+import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/longTermEvaluation";
 import { Topic as ITopic } from "../../../../interfaces/topic";
 import { UserServer as IUser } from "../../../../interfaces/user";
+import { Evaluation as IEvaluation } from "../../../../interfaces/evaluation";
+export declare const connection: Promise<typeof mongoose>;
 type UserModelType = Model<IUser, UserQueryHelpers>;
 type UserModelQuery = Query<any, HydratedDocument<IUser>, UserQueryHelpers> & UserQueryHelpers;
 interface UserQueryHelpers {
@@ -40,6 +43,16 @@ export declare const Embedding: mongoose.Model<IEmbedding, {}, {}, {}, mongoose.
 export declare const ModEmbedding: mongoose.Model<IModEmbedding, {}, {}, {}, mongoose.Document<unknown, {}, IModEmbedding, {}, {}> & IModEmbedding & Required<{
     _id: string;
 }> & {
+    __v: number;
+}, any>;
+export declare const Evaluation: mongoose.Model<IEvaluation, {}, {}, {}, mongoose.Document<unknown, {}, IEvaluation, {}, {}> & IEvaluation & {
+    _id: mongoose.Types.ObjectId;
+} & {
+    __v: number;
+}, any>;
+export declare const LongTermEvaluation: mongoose.Model<ILongTermEvaluation, {}, {}, {}, mongoose.Document<unknown, {}, ILongTermEvaluation, {}, {}> & ILongTermEvaluation & {
+    _id: mongoose.Types.ObjectId;
+} & {
     __v: number;
 }, any>;
 export {};

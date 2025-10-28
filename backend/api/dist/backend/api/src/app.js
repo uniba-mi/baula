@@ -65,7 +65,7 @@ const authenticationMiddleware_1 = require("./shared/middleware/authenticationMi
 /** -----------------------------
  *  --- Initializing constants --
  *  -----------------------------*/
-const envFile = `.env.backend`;
+const envFile = `.env.${process.env.NODE_ENV || "local"}`;
 console.log(envFile); // for testing to check if correct env file is loaded
 dotenv.config({ path: path_1.default.resolve(__dirname, "../", "environment", envFile) });
 const app = (0, express_1.default)();
@@ -96,7 +96,7 @@ app.use((0, helmet_1.default)({
 if (process.env.NODE_ENV === "local") {
     app.use((0, cors_1.default)({
         origin: [
-            process.env.ORIGIN ? process.env.ORIGIN : "http://localhost:4200",
+            process.env.ORIGIN ? process.env.ORIGIN : "",
             "https://idp.iam.uni-bamberg.de/idp",
         ],
         credentials: true,
@@ -164,7 +164,7 @@ passport_1.default.use(new passport_local_1.Strategy(async (username, password, 
                 });
             }
         }
-        return done(null, { user: dbUser, baId: (0, crypto_1.encrypt)('ba031941') });
+        return done(null, { user: dbUser, baId: (0, crypto_1.encrypt)('test') });
     }
     else {
         return done(new error_1.BadRequestError());
@@ -197,7 +197,8 @@ const samlStrategy = new passport_saml_1.Strategy({
     wantAuthnResponseSigned: true,
 }, async (profile, done) => {
     let user = await mongo_1.User.findOne().byShibId(profile.nameID).exec();
-    const id = 'test'; //encrypt(profile['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'].split("@")[0]);
+    const baId = profile['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'];
+    const id = baId ? (0, crypto_1.encrypt)(profile['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'].split("@")[0]) : 'not set';
     if (!user) {
         const shibId = profile.nameID;
         const roles = profile["urn:oid:1.3.6.1.4.1.5923.1.1.1.9"].map((role) => role.split("@")[0]);
@@ -402,6 +403,10 @@ app.use((err, req, res, next) => {
 // creates and starts server on port 3305
 app.listen(port, () => {
     console.log(`Server listens on port ${port}`);
+    const connectionMongoDB = mongoose_1.default.connection.readyState == 2
+        ? "MongoDB connected!"
+        : "Connection to MongoDB failed!";
+    console.log(connectionMongoDB);
     redisClient.connect().then(() => console.log('Redis connected!')).catch(console.error);
 });
 exports.default = app;

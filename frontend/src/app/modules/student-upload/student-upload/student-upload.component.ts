@@ -108,7 +108,7 @@ export class StudentUploadComponent {
                     this.saveModulesToStudypath(moduleList);
 
                     // update consent for uploading exam data
-                    this.store.dispatch(UserActions.updateConsent({ ctype: 'upload-exam-data', hasConfirmed: true, hasResponded: true, timestamp: new Date() }));
+                    this.store.dispatch(UserActions.addConsent({ ctype: 'upload-exam-data', hasConfirmed: true, hasResponded: true, timestamp: new Date() }));
 
                 } catch (error) {
                     console.error(error);
@@ -602,7 +602,7 @@ export class StudentUploadComponent {
             })
         ).subscribe();
 
-        this.store.dispatch(UserActions.updateConsent({ ctype: 'flexnow-api', hasConfirmed: false, hasResponded: true, timestamp: new Date() }))
+        this.store.dispatch(UserActions.addConsent({ ctype: 'flexnow-api', hasConfirmed: false, hasResponded: true, timestamp: new Date() }))
         this.dialog.closeAll();
     }
 

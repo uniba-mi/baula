@@ -9,6 +9,7 @@ import { StudyplanTemplate } from "../studyplan";
 import { Hint, UserServer } from "../user";
 import validator from "validator";
 import { Jobtemplate } from "../job";
+import { LongTermEvaluation } from "../longTermEvaluation";
 
 const {
   Types: { ObjectId },
@@ -154,15 +155,42 @@ export const validateAndReturnJobtemplate = (
     job.title &&
     job.description &&
     job.inputMode &&
-    (job.inputMode === "url" || job.inputMode === 'mock') &&
+    (job.inputMode === "url" || job.inputMode === "mock") &&
     job.keywords &&
     Array.isArray(job.keywords) &&
-    job.keywords.every((keyword: string) => validator.isAlphanumeric(keyword, undefined, { ignore: " .#+|()&:/ß _-äöü" }))
+    job.keywords.every((keyword: string) =>
+      validator.isAlphanumeric(keyword, undefined, {
+        ignore: " .#+|()&:/ß _-äöü",
+      })
+    )
     ? {
-      ...job,
-      title: job.title,
-      description: job.description,
-      inputMode: job.inputMode
-    }
+        ...job,
+        title: job.title,
+        description: job.description,
+        inputMode: job.inputMode,
+      }
+    : undefined;
+};
+
+export const validateAndReturnSurveyResult = (
+  result: any
+): LongTermEvaluation | undefined => {
+  return result &&
+    result.personalCode &&
+    result.personalCode.length == 8 &&
+    result.evaluationCode &&
+    validator.matches(result.evaluationCode, /\d{1,2}-20\d{2}/) &&
+    result.spName &&
+    validator.isAscii(result.spName) &&
+    result.semester &&
+    validator.isInt(String(result.semester), { min: 0, max: 20 }) &&
+    result.pu &&
+    Array.isArray(result.pu) &&
+    result.peou &&
+    Array.isArray(result.peou) &&
+    typeof result.bi == 'number' &&
+    typeof result.use == 'string' &&
+    typeof result.nps == 'number'
+    ? result
     : undefined;
 };

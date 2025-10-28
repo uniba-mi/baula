@@ -29,8 +29,7 @@ import { ensureAuthenticated } from "./shared/middleware/authenticationMiddlewar
 /** -----------------------------
  *  --- Initializing constants --
  *  -----------------------------*/
-const envFile = `.env.backend`;
-dotenv.config({ path: path.resolve(__dirname, "../", "environment", envFile) });
+dotenv.config({ path: path.resolve(__dirname, "../", "environment", '.env.backend') });
 
 const app: Express = express();
 const port = 3305;
@@ -75,7 +74,7 @@ if (process.env.NODE_ENV === "local") {
   app.use(
     cors({
       origin: [
-        process.env.ORIGIN ? process.env.ORIGIN : "http://localhost:4200",
+        process.env.ORIGIN ? process.env.ORIGIN : "",
         "https://idp.iam.uni-bamberg.de/idp",
       ],
       credentials: true,
@@ -153,7 +152,7 @@ passport.use(
           })
         }
       }
-      return done(null, { user: dbUser, baId: encrypt('ba031941') });
+      return done(null, { user: dbUser, baId: encrypt('test') });
     } else {
       return done(new BadRequestError());
     }
@@ -189,7 +188,8 @@ const samlStrategy = new SamlStrategy(
   },
   async (profile: any, done: any) => {
     let user = await User.findOne().byShibId(profile.nameID).exec();
-    const id = 'test'; //encrypt(profile['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'].split("@")[0]);
+    const baId = profile['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'];
+    const id = baId ? encrypt(profile['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'].split("@")[0]) : 'not set';
     if (!user) {
       const shibId = profile.nameID;
       const roles = profile["urn:oid:1.3.6.1.4.1.5923.1.1.1.9"].map(
@@ -432,6 +432,11 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 // creates and starts server on port 3305
 app.listen(port, () => {
   console.log(`Server listens on port ${port}`);
+  const connectionMongoDB =
+    mongoose.connection.readyState == 2
+      ? "MongoDB connected!"
+      : "Connection to MongoDB failed!";
+  console.log(connectionMongoDB);
   redisClient.connect().then(() => console.log('Redis connected!')).catch(console.error);
 });
 

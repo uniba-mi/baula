@@ -17,7 +17,7 @@ import {
   updateNotInterestingModule,
   updateFavouriteModules,
   deleteFavouriteModules,
-  updateConsents,
+  addConsents,
   getAcademicDateByTypeAndSemester,
   getAcademicDatesBySemester,
   getDateTypes,
@@ -28,6 +28,7 @@ import {
   toggleTopic,
   updateModuleFeedback,
   crawlStudentDataViaFlexNow,
+  deleteModuleFeedback,
 } from "./user.controller";
 
 const router: Router = express.Router();
@@ -71,7 +72,7 @@ router.put("/topic", toggleTopic)
 
 router.put("/hint", updateHint);
 
-router.put("/consents", updateConsents);
+router.put("/consents", addConsents);
 
 router.put("/module-feedback", updateModuleFeedback);
 
@@ -86,6 +87,8 @@ router.delete("/not-interesting-module/:acronym", deleteNotInterestingModule);
 router.delete("/studypath/module", deleteModuleFromStudypath);
 
 router.delete("/studypath", deleteStudypath);
+
+router.delete("/module-feedback", deleteModuleFeedback)
 
 router.post("/interest", addInterest);
 

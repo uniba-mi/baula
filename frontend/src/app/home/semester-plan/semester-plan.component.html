@@ -57,25 +57,12 @@
         </mat-sidenav-content>
 
         <!-- Sidenav for hints -->
-        <mat-sidenav #hintsSidenav id="hints-sidenav" mode="over" position="end" [opened]="hintsOpened">
-          <div class="d-flex justify-content-between mt-4 mb-2">
-            <i class="fs-3 bi bi-x-lg icon" (click)="toggleHints()"></i>
-            <h3 class="mx-auto my-2 text-start">Hinweise</h3>
-          </div>
-          <div class="mx-2">
-            <div *ngFor="let hint of hints" class="alert alert-sm" [class.alert-warning]="hint.type === 'warning'"
-              [class.alert-danger]="hint.type === 'collision'" role="alert">
-              <div>
-                <span>{{ hint.begin }}</span>
-                <span class="mx-1 link" *ngIf="hint.acronym" role="button"
-                  (click)="openModuleDetails(hint.acronym)">{{hint.acronym}}</span>
-                <span>{{ hint.end }}</span>
-              </div>
-              <div role="button" class="my-1 link" *ngIf="hint.type === 'collision'" (click)="openResolveDialog(hint)">
-                Überschneidung auflösen</div>
-            </div>
-          </div>
+        <mat-sidenav class="hints-sidenav" mode="over" position="end" [opened]="hintsOpened">
+          <app-hints-sidenav [hints]="hints" (close)="toggleHints()" (acronymClick)="openModuleDetails($event)"
+            (resolveCollision)="openResolveDialog($event)">
+          </app-hints-sidenav>
         </mat-sidenav>
+
       </mat-sidenav-container>
     </ng-container>
   </ng-container>

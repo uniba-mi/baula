@@ -20,7 +20,8 @@
       </button>
     </div>
     <app-search-panel [searchSettings]="searchSettings$ | async" [filterOptions]="filterList" [customStyle]="true"
-      (search)="searchModules($event)" (filter)="filterModules($event)" (clear)="showAllModules()">
+      [horizontalFilters]="false" (search)="searchModules($event)" (filter)="filterModules($event)"
+      (clear)="showAllModules()">
     </app-search-panel>
 
     <!-- Tab 1: Personal modules -->

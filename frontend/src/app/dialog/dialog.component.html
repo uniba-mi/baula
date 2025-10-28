@@ -146,6 +146,10 @@
         <div *ngIf="data.dialogContentId === 'force-reload'">
           <app-reload-dialog></app-reload-dialog>
         </div>
+        <!-- Dialog for evaluation -->
+        <div *ngIf="data.dialogContentId === 'evaluation'">
+          <app-evaluation-dialog [content]="data.content"></app-evaluation-dialog>
+        </div>
 
         <!-- Dialog to show important notifications -->
         <div *ngIf="data.dialogContentId === 'notification-dialog'">

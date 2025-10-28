@@ -21,6 +21,7 @@ import {
 import {
   Semesterplan,
   MetaSemester,
+  PlanningHints,
 } from '../../../../../../interfaces/semesterplan';
 import { Semester } from '../../../../../../interfaces/semester';
 import {
@@ -30,6 +31,7 @@ import {
 import {
   getActiveStudyplanId,
   getPlannedModulesOfActiveStudyplan,
+  getPlanningHints,
   getSelectedStudyplan,
   getSelectedStudyplanId,
   getSemesterplansOfSelectedStudyplan,
@@ -40,6 +42,7 @@ import {
   shareReplay,
   switchMap,
   take,
+  takeUntil,
 } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
@@ -53,6 +56,8 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { ScreenSizeService } from 'src/app/shared/services/screen-size.service';
 import { getCloseDialogMode } from 'src/app/selectors/dialog.selectors';
 import { FlexnowService } from 'src/app/shared/services/flexnow.service';
+import { ModService } from 'src/app/shared/services/module.service';
+import { PlanningValidationService } from 'src/app/shared/services/planning-validation.service';
 
 @Component({
   selector: 'app-study-plan-detail',
@@ -92,6 +97,11 @@ export class StudyPlanDetailComponent implements OnInit {
   @ViewChild('semesterContainer', { static: false }) semesterContainer!: ElementRef;
 
   displayProgressBar: boolean = false;
+  hintsOpened = false;
+  hints: PlanningHints[] = [];
+  hintsIconColor: string = 'standard';
+
+  private destroy$ = new Subject<void>();
 
   eligibleSemesterId: string | null = null; // semester id that can be finished
   isSmallScreen: boolean = false;
@@ -101,7 +111,6 @@ export class StudyPlanDetailComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private transform: TransformationService,
@@ -109,6 +118,8 @@ export class StudyPlanDetailComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private screenSizeService: ScreenSizeService,
     private flexnowService: FlexnowService,
+    private modService: ModService,
+    private validation: PlanningValidationService,
   ) { }
 
   ngOnInit(): void {
@@ -195,19 +206,19 @@ export class StudyPlanDetailComponent implements OnInit {
         this.studyplanService.updateStudyplans(studyplans);
       });
 
+    this.isActivePlan$ = combineLatest([
+      this.store.select(getSelectedStudyplanId),
+      this.store.select(getActiveStudyplanId),
+    ]).pipe(
+      map(
+        ([selectedStudyplanId, activeStudyplanId]) =>
+          selectedStudyplanId === activeStudyplanId
+      )
+    );
+
     this.store.select(getUserStudyprogrammes).subscribe((studyprogrammes) => {
       if (studyprogrammes && studyprogrammes.length > 0) {
         this.spId = studyprogrammes[0].spId;
-        // Render sidenav only if recs are available for the study program
-        this.isActivePlan$ = combineLatest([
-          this.store.select(getSelectedStudyplanId),
-          this.store.select(getActiveStudyplanId),
-        ]).pipe(
-          map(
-            ([selectedStudyplanId, activeStudyplanId]) =>
-              selectedStudyplanId === activeStudyplanId
-          )
-        );
       }
     });
 
@@ -218,6 +229,30 @@ export class StudyPlanDetailComponent implements OnInit {
     this.screenSizeService.isSmallScreen$.pipe(take(1)).subscribe(isSmall => {
       this.isSmallScreen = isSmall;
     });
+
+    combineLatest([
+      this.selectedStudyplan$,
+      this.isActivePlan$
+    ]).pipe(
+      takeUntil(this.destroy$),
+      filter(([plan, isActive]) => !!plan && isActive === true)
+    ).subscribe(([studyplan]) => {
+      if (studyplan) {
+        this.validation.checkForModulePlanningHints(studyplan);
+      }
+    });
+
+    this.store
+      .select(getPlanningHints)
+      .pipe(
+        takeUntil(this.destroy$),
+        map(hints => hints.filter(h => h.context === 'module-planning'))
+      )
+      .subscribe((hints) => {
+        this.hints = hints;
+        this.updateHintsIconColor(hints);
+        this.cdr.detectChanges();
+      });
   }
 
   ngAfterViewInit(): void {
@@ -232,14 +267,39 @@ export class StudyPlanDetailComponent implements OnInit {
     });
   }
 
-    onSemesterToggled(semesterName: string): void {
+  updateHintsIconColor(hints: PlanningHints[]) {
+    if (hints.length === 0) {
+      this.hintsIconColor = 'standard';
+    } else {
+      const hasDangerOrCollision = hints.some(
+        hint => hint.type === 'collision' || hint.type === 'risk'
+      );
+
+      const hasWarning = hints.some(hint => hint.type === 'warning');
+
+      if (hasDangerOrCollision) {
+        this.hintsIconColor = 'danger';
+      } else if (hasWarning) {
+        this.hintsIconColor = 'warning';
+      } else {
+        this.hintsIconColor = 'standard';
+      }
+    }
+  }
+
+  onSemesterToggled(semesterName: string): void {
     this.expandedSemesters[semesterName] = !this.expandedSemesters[semesterName];
     this.saveExpandedState(semesterName);
     setTimeout(() => {
       this.updateScrollState();
     }, 0);
   }
-  
+
+  toggleHints() {
+    this.hintsOpened = !this.hintsOpened;
+    this.cdr.detectChanges();
+  }
+
   private loadAllExpandedStates(): void {
     const key = `semester-expanded-${this.studyplanId}`;
     const savedState = JSON.parse(localStorage.getItem(key) || '{}');
@@ -413,6 +473,10 @@ export class StudyPlanDetailComponent implements OnInit {
     this.dialog.open(ConfirmationDialogComponent, {
       data: confirmationDialogInterface,
     });
+  }
+
+  openModuleDetails(acronym: string) {
+    this.modService.selectModuleFromAcronymString(acronym);
   }
 
   addSemester() {

@@ -62,14 +62,12 @@ export class NavComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.user && this.user.sps && this.user.sps.length > 0) {
-      this.bilappAvailable = this.checkStudyprogramme(this.user.sps);
-      if (this.user.sps[0].faculty === 'WIAI') {
-        this.isWIAIStudent = true;
-      }
+      this.bilappAvailable = this.checkForTeacherStudyprogramme(this.user.sps);
+      this.isWIAIStudent = this.checkForWIAIStudyprogramme(this.user.sps);
     }
   }
 
-  checkStudyprogramme(sps: MStudyprogramme[]): boolean {
+  checkForTeacherStudyprogramme(sps: MStudyprogramme[]): boolean {
     for (let sp of sps) {
       // assumption that teacher education sps start with LA and if EWS part is referenced ends with EWS
       if (sp.spId.startsWith('LA') && sp.spId.endsWith('EWS')) {
@@ -78,4 +76,12 @@ export class NavComponent implements OnInit, OnChanges {
     }
     return false;
   }
+
+  checkForWIAIStudyprogramme(sps: MStudyprogramme[]): boolean {
+    if (sps[0].faculty === 'WIAI') { // checking for first programme only
+      return true;
+    }
+    return false;
+  }
+
 }

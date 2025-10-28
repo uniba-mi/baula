@@ -1,0 +1,20 @@
+.data-wrapper {
+    min-height: 300px;
+
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .empty-state {
+        min-height: 300px;
+    }
+}
+
+.item-name {
+    font-size: 0.8rem;
+}
+
+.card-title {
+    color: var(--ub-blue)
+}

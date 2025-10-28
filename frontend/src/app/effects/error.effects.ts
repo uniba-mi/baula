@@ -38,7 +38,7 @@ export class ErrorEffects {
         UserActions.checkUserDataFailure,
         UserActions.updateUserFailure,
         UserActions.updateHintFailure,
-        UserActions.updateConsentFailure,
+        UserActions.addConsentFailure,
         StudypathActions.updateModuleInStudypathFailure,
         StudypathActions.updateStudypathFailure,
         StudypathActions.deleteModuleFromStudypathFailure,

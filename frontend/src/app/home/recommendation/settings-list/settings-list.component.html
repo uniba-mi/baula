@@ -1,0 +1,118 @@
+<div class="card shadow-sm">
+    <div class="card-body">
+        <p class="card-title fw-bold mb-3">
+            <i class="bi bi-bookmark-fill me-2 fw-bold" *ngIf="type === 'merkliste'"></i>
+            <i class="bi bi-shield-fill-x me-2 fw-bold" *ngIf="type === 'blacklist'"></i>
+            <i class="bi bi-chat-dots-fill me-2 fw-bold" *ngIf="type === 'feedback'"></i>
+            <span class="me-2">{{ getTitle() }}</span>
+            <i class="bi bi-info-circle" [matTooltip]="tooltipText" matTooltipClass="custom-tooltip" appTooltip>
+            </i>
+        </p>
+
+        <ng-container *ngIf="getCurrentItems$() | async as items">
+            <ng-container *ngIf="items.length > 0; else noData">
+
+                <!-- preview mode -->
+                <ul class="list-group list-group-flush mb-3" *ngIf="preview">
+                    <ng-container *ngFor="let item of getCurrentItems$() | async | slice:0:3">
+                        <ng-container *ngIf="recommendations$ | async as recommendations">
+                            <li class="list-group-item d-flex justify-content-between align-items-center"
+                                *ngIf="type !== 'feedback' || getRecommendedModulesForFeedback(getItemAcronym(item), recommendations).length > 0">
+                                <div class="d-flex align-items-center w-100">
+
+                                    <ng-container *ngIf="type === 'feedback'">
+                                        <div class="d-flex flex-column gap-1">
+                                            <span class="fw-bold text-gray small-text">{{ getItemAcronym(item)
+                                                }}:</span>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                <ng-container
+                                                    *ngFor="let recMod of getRecommendedModulesForFeedback(getItemAcronym(item), recommendations) | slice:0:3">
+                                                    <button class="chip feedback-chip"
+                                                        [ngClass]="getFeedbackChipClass(recMod.score)"> <i class="bi"
+                                                            [ngClass]="getFeedbackIcon(recMod.score)"></i>
+                                                        {{ recMod.acronym
+                                                        }}
+                                                    </button>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="getRecommendedModulesForFeedback(getItemAcronym(item), recommendations).length > 3">
+                                                    <span class="chip more-chip">+{{
+                                                        getRecommendedModulesForFeedback(getItemAcronym(item),
+                                                        recommendations).length - 3 }}</span>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="type === 'merkliste' || type === 'blacklist'">
+                                        <span><span class="fw-bold text-gray">{{ getItemAcronym(item) }}:</span> {{
+                                            getItemName(item) }}</span>
+                                    </ng-container>
+                                </div>
+                            </li>
+                        </ng-container>
+                    </ng-container>
+                </ul>
+
+                <!-- standard mode -->
+                <ul class="list-group mb-3" *ngIf="!preview">
+                    <ng-container *ngFor="let item of getCurrentItems$() | async">
+                        <ng-container *ngIf="recommendations$ | async as recommendations">
+                            <li class="list-group-item rounded mb-2 border"
+                                *ngIf="type !== 'feedback' || getRecommendedModulesForFeedback(getItemAcronym(item), recommendations).length > 0">
+                                <div class="row align-items-center">
+                                    <div class="col-3">
+                                        <div class="fw-bold">{{ getItemAcronym(item) }}</div>
+                                    </div>
+
+                                    <div class="col-7">
+
+                                        <ng-container *ngIf="type === 'feedback'">
+                                            <div class="d-flex flex-wrap gap-1 align-items-center">
+                                                <span class="small-text text-gray">Empfehlungen:</span>
+                                                <ng-container
+                                                    *ngFor="let recMod of getRecommendedModulesForFeedback(getItemAcronym(item), recommendations)">
+                                                    <button class="chip feedback-chip"
+                                                        [ngClass]="getFeedbackChipClass(recMod.score)"> <i class="bi"
+                                                            [ngClass]="getFeedbackIcon(recMod.score)"></i>
+                                                        {{ recMod.acronym
+                                                        }}</button>
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="type !== 'feedback'">
+                                            <div>{{ getItemName(item) }}</div>
+                                        </ng-container>
+                                    </div>
+
+                                    <!-- Buttons -->
+                                    <div class="col-2 text-end">
+                                        <button *ngIf="type === 'feedback'"
+                                            class="btn btn-outline-secondary btn-sm me-1" (click)="editFeedback(item)"
+                                            title="Bearbeiten">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-outline-danger btn-sm" (click)="deleteItem(item)"
+                                            title="Löschen">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ng-container>
+                    </ng-container>
+                </ul>
+
+                <div *ngIf="items.length > 0 && preview" class="btn-link w-100 text-center" [routerLink]="routeLink"><i
+                        class="bi bi-arrow-up-right-square me-2"></i>
+                    Alle verwalten
+                </div>
+            </ng-container>
+        </ng-container>
+
+        <ng-template #noData>
+            <app-no-data [noDataMessage]="noDataMessage" [diagram]="false"></app-no-data>
+        </ng-template>
+    </div>
+</div>

@@ -57,7 +57,7 @@ export class FlexnowService {
     return dialogRef.afterClosed().pipe(
       tap(result => {
         if (result) {
-          this.store.dispatch(UserActions.updateConsent({
+          this.store.dispatch(UserActions.addConsent({
             ctype: 'flexnow-api',
             hasConfirmed: true,
             hasResponded: true,

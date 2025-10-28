@@ -305,10 +305,11 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   async selectStudyprogramme(version: string) {
     this.userForm.controls['spVersion'].addValidators([Validators.required]);
+    const spName = this.userForm.controls['spName'].value;
     const studyprogrammes = await firstValueFrom(this.studyprogrammes$);
     // find studyprogramme
     this.selectedStudyprogramme = studyprogrammes.find(
-      (el) => el.desc == version
+      (el) => el.desc == version && el.name == spName
     );
     if (this.selectedStudyprogramme) {
       this.user.sps = [

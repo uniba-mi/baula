@@ -37,12 +37,12 @@ export class UserUpdateService {
         { key: 'module-group-progress', visible: false },
         { key: 'semester-dates', visible: true },
         { key: 'calendar', visible: true },
-        { key: 'gpa', visible: true }
+        { key: 'gpa', visible: true },
+        { key: 'personalisation', visible: true }
     ]
 
     private availableConsents: Consent[] = [
         { ctype: 'upload-exam-data', hasConfirmed: false, hasResponded: false, timestamp: new Date() },
-        { ctype: '2512-privacy-change', hasConfirmed: false, hasResponded: false, timestamp: new Date() },
         { ctype: 'flexnow-api', hasConfirmed: false, hasResponded: false, timestamp: new Date() }
     ]
 
@@ -72,12 +72,6 @@ export class UserUpdateService {
         // if fulltime information for legacy users does not exist, set to true by default
         if (user.fulltime === undefined) {
             user.fulltime = true;
-        }
-
-        // add privacy change consent to legacy users
-        const holdsPrivacyChangeConsent = user.consents.find((consent) => consent.ctype === '2512-privacy-change');
-        if (holdsPrivacyChangeConsent === undefined) {
-            this.store.dispatch(UserActions.updateConsent({ ctype: '2512-privacy-change', hasConfirmed: false, hasResponded: false, timestamp: new Date() }));
         }
 
         const updatedHints = this.updateUserHints(user);

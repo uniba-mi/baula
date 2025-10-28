@@ -55,7 +55,6 @@ import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
 })
 export class SemesterPlanComponent implements OnInit, OnDestroy {
   @ViewChild('coursesearch') coursesearch: MatSidenav;
-  @ViewChild('hintsSidenav') hintsSidenav: MatSidenav;
 
   maintenance = false; // Variable to disable features and make maintenance message visible
   private destroy$ = new Subject<void>();

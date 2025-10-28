@@ -188,4 +188,52 @@ exports.USERS = [
         password: process.env.TEST_8_PW,
         roles: ["student", "member"],
     },
+    {
+        shibId: "Fachstudienberatung_Ba_KI_und_DS",
+        username: process.env.FSB_BKIDS,
+        password: process.env.FSB_BKIDS_PW,
+        roles: ["employee", "member", "advisor"]
+    },
+    {
+        shibId: "Fachstudienberatung_Ba_Angew_Inf",
+        username: process.env.FSB_BAI,
+        password: process.env.FSB_BAI_PW,
+        roles: ["employee", "member", "advisor"]
+    },
+    {
+        shibId: "Fachstudienberatung_BaInformatik",
+        username: process.env.FSB_BINF,
+        password: process.env.FSB_BINF_PW,
+        roles: ["employee", "member", "advisor"]
+    },
+    {
+        shibId: "Fachstudienberatung_BaWirtInform",
+        username: process.env.FSB_BWI,
+        password: process.env.FSB_BWI_PW,
+        roles: ["employee", "member", "advisor"]
+    },
+    {
+        shibId: "Fachstudienberatung_Ma_Angew_Inf",
+        username: process.env.FSB_MAI,
+        password: process.env.FSB_MAI_PW,
+        roles: ["employee", "member", "advisor"]
+    },
+    {
+        shibId: "Fachstudienberatung_Ma_CompHuman",
+        username: process.env.FSB_MCITH,
+        password: process.env.FSB_MCITH_PW,
+        roles: ["employee", "member", "advisor"]
+    },
+    {
+        shibId: "Fachstudienberatung_Ma_IntSoSySc",
+        username: process.env.FSB_MISOSYSC,
+        password: process.env.FSB_MISOSYSC_PW,
+        roles: ["employee", "member", "advisor"]
+    },
+    {
+        shibId: "Fachstudienberatung_MaWirtInform",
+        username: process.env.FSB_MWI,
+        password: process.env.FSB_MWI_PW,
+        roles: ["employee", "member", "advisor"]
+    },
 ];

@@ -104,7 +104,17 @@ router.get("/topic/children", recs_controller_1.getTopicChildren);
  *  ------------------------------------ */
 router.post("/topic/recommendation", recs_controller_1.recommendModulesByTopicsPreGenerated);
 /** ------------------------------------
- *  gets a list of module recommendations for the user (topics, jobs, ...)
+ *  Gets a list of module recommendations for the user (topics, jobs, ...)
  *  @returns a recommendation for the user
  *  ------------------------------------ */
 router.get("/personal", recs_controller_1.getPersonalRecommendations);
+/** ------------------------------------
+ *  Updates personal recommendations based on user feedback
+ *  @returns updated recommendation for the user
+ *  ------------------------------------ */
+router.put("/personal", recs_controller_1.updatePersonalRecommendationsByFeedback);
+/** ------------------------------------
+ *  Deletes feedback for given acronym from personal recommendations
+ *  @returns updated recommendation for the user
+ *  ------------------------------------ */
+router.delete('/personal/feedback/:acronym', recs_controller_1.deletePersonalRecommendationsByFeedback);

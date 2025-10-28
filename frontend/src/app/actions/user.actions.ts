@@ -18,15 +18,18 @@ export const UserActions = createActionGroup({
     'Update Hint': props<{ key: string; hasConfirmed: boolean }>(),
     'Update Hint Success': props<{ hints: Hint[] }>(),
     'Update Hint Failure': props<{ error: HttpErrorResponse }>(),
-    'Update Consent': props<{ ctype: ConsentType, hasConfirmed: boolean, hasResponded: boolean, timestamp: Date }>(),
-    'Update Consent Success': props<{ consents: Consent[] }>(),
-    'Update Consent Failure': props<{ error: HttpErrorResponse }>(),
+    'Add Consent': props<{ ctype: ConsentType, hasConfirmed: boolean, hasResponded: boolean, timestamp: Date }>(),
+    'Add Consent Success': props<{ consents: Consent[] }>(),
+    'Add Consent Failure': props<{ error: HttpErrorResponse }>(),
     'Toggle Topic': props<{ topic: string }>(),
     'Toggle Topic Success': props<{ topics: string[] }>(),
     'Toggle Topic Failure': props<{ error: HttpErrorResponse }>(),
     'Update Module Feedback': props<{ moduleFeedback: ModuleFeedback }>(),
     'Update Module Feedback Success': props<{ moduleFeedback: ModuleFeedback }>(),
     'Update Module Feedback Failure': props<{ error: HttpErrorResponse }>(),
+    'Delete Module Feedback': props<{ moduleFeedback: ModuleFeedback }>(),
+    'Delete Module Feedback Success': props<{ moduleFeedback: ModuleFeedback[] }>(),
+    'Delete Module Feedback Failure': props<{ error: HttpErrorResponse }>(),
   }
 });
 

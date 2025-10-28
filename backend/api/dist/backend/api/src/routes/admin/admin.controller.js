@@ -674,7 +674,6 @@ async function updateModuleEmbeddings(req, res, next) {
         });
     }
     catch (error) {
-        console.log(error);
         next(new error_1.BadRequestError("Modulembeddings konnte nicht aktualisiert werden."));
     }
 }
@@ -761,13 +760,21 @@ async function getReporting(req, res, next) {
         oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
         // request variables for report
         // count all users
-        const allUsers = await mongo_1.User.countDocuments({});
+        const allUsers = await mongo_1.User.countDocuments({
+            authType: 'saml'
+        });
         // count active users in the last month
         const activeUsers = await mongo_1.User.countDocuments({
+            authType: 'saml',
             updatedAt: { $gte: oneMonthAgo },
         });
         // get cluster when users where last active
         const lastActiveUsersHistory = await mongo_1.User.aggregate([
+            {
+                $match: {
+                    authType: 'saml'
+                }
+            },
             {
                 $group: {
                     _id: {
@@ -783,26 +790,51 @@ async function getReporting(req, res, next) {
         ]);
         // count frequency of module status
         const frequencyModuleStatus = await mongo_1.User.aggregate([
+            {
+                $match: {
+                    authType: 'saml'
+                }
+            },
             { $unwind: "$completedModules" },
             { $group: { _id: "$completedModules.status", count: { $sum: 1 } } },
         ]);
         // count frequency of studyprogrammes
         const frequencyStudyProgrammes = await mongo_1.User.aggregate([
+            {
+                $match: {
+                    authType: 'saml'
+                }
+            },
             { $unwind: "$sps" },
             { $group: { _id: "$sps.name", count: { $sum: 1 } } },
             { $sort: { count: -1 } },
         ]);
         // count frequency of study duration
         const frequencyDuration = await mongo_1.User.aggregate([
+            {
+                $match: {
+                    authType: 'saml'
+                }
+            },
             { $group: { _id: "$duration", count: { $sum: 1 } } },
         ]);
         // count frequency of startsemester
         const frequencyStartSemester = await mongo_1.User.aggregate([
+            {
+                $match: {
+                    authType: 'saml'
+                }
+            },
             { $group: { _id: "$startSemester", count: { $sum: 1 } } },
             { $sort: { count: -1 } },
         ]);
         // count number of completed modules (clustered by 0, 1-5, 6-10 and 11+)
         const frequencyCompletedModules = await mongo_1.User.aggregate([
+            {
+                $match: {
+                    authType: 'saml'
+                }
+            },
             {
                 $addFields: {
                     moduleCount: { $size: { $ifNull: ["$completedModules", []] } },
@@ -844,6 +876,11 @@ async function getReporting(req, res, next) {
         ]);
         // frequency of modules as completed module
         const frequencyModulesAsCompleted = await mongo_1.User.aggregate([
+            {
+                $match: {
+                    authType: 'saml'
+                }
+            },
             { $unwind: "$completedModules" },
             { $group: { _id: "$completedModules.acronym", count: { $sum: 1 } } },
             { $sort: { count: -1 } },

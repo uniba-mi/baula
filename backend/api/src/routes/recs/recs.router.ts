@@ -15,6 +15,8 @@ import {
     getTopNCommonPasses,
     getTopNSuccessors,
     recommendModulesByTopicsPreGenerated,
+    updatePersonalRecommendationsByFeedback,
+    deletePersonalRecommendationsByFeedback,
 } from "./recs.controller";
 
 const router: Router = express.Router();
@@ -129,9 +131,21 @@ router.get("/topic/children", getTopicChildren);
 router.post("/topic/recommendation", recommendModulesByTopicsPreGenerated);
 
 /** ------------------------------------
- *  gets a list of module recommendations for the user (topics, jobs, ...)
+ *  Gets a list of module recommendations for the user (topics, jobs, ...)
  *  @returns a recommendation for the user
  *  ------------------------------------ */
 router.get("/personal", getPersonalRecommendations);
+
+/** ------------------------------------
+ *  Updates personal recommendations based on user feedback
+ *  @returns updated recommendation for the user
+ *  ------------------------------------ */
+router.put("/personal", updatePersonalRecommendationsByFeedback);
+
+/** ------------------------------------
+ *  Deletes feedback for given acronym from personal recommendations
+ *  @returns updated recommendation for the user
+ *  ------------------------------------ */
+router.delete('/personal/feedback/:acronym', deletePersonalRecommendationsByFeedback);
 
 export { router as recs };

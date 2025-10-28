@@ -28,6 +28,8 @@ import { RestService } from '../rest.service';
 import { SemesterplanTemplate } from '../../../../interfaces/semesterplan';
 import { IndexedDbService } from '../shared/services/indexed-db.service';
 import { Router } from '@angular/router';
+import { SurveyComponent } from '../modules/long-term-evaluation/survey/survey.component';
+import { LongTermEvaluation } from '../../../../interfaces/longTermEvaluation';
 
 @Component({
   selector: 'app-home',
@@ -45,7 +47,7 @@ export class HomeComponent implements OnInit {
   studyplanTemplate$: Observable<Studyplan | undefined>;
   templatesAvailable: boolean = false;
   notificationActive: boolean = false;
-  privacyDialogShown: boolean = false;
+  privacyDialogActive: boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -54,8 +56,8 @@ export class HomeComponent implements OnInit {
     private userUpdateService: UserUpdateService,
     private api: RestService,
     private indexedDB: IndexedDbService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);
@@ -69,7 +71,7 @@ export class HomeComponent implements OnInit {
       .catch((error) =>
         console.error(
           'Beim Laden der Lehrveranstaltungen ist ein Fehler aufgetreten! ' +
-          error
+            error
         )
       );
   }
@@ -87,8 +89,8 @@ export class HomeComponent implements OnInit {
         if (notificationEnabled && isWIAI && this.notificationActive) {
           this.openNotificationDialog();
         }
-        if(this.router.url.endsWith('app')) {
-          this.router.navigate(['app', 'dashboard'])
+        if (this.router.url.endsWith('app')) {
+          this.router.navigate(['app', 'dashboard']);
         }
       } else {
         this.user = user;
@@ -121,25 +123,34 @@ export class HomeComponent implements OnInit {
     }
 
     // update user settings like dashboardsetting and hints
-    this.userUpdateService.updateUserSettings(user).subscribe((updatedUser) => {
-      // update privacy change consent
-      const privacyConsents =
-        updatedUser.consents?.filter(
-          (consent) => consent.ctype === '2512-privacy-change'
-        ) || [];
+    this.userUpdateService
+      .updateUserSettings(user)
+      .pipe(take(1))
+      .subscribe((updatedUser) => {
+        // update privacy change consent
+        const privacyConsents =
+          updatedUser.consents?.filter(
+            (consent) => consent.ctype === '2512-privacy-change'
+          ) || [];
 
-      const latestPrivacyConsent = privacyConsents[privacyConsents.length - 1];
+        const latestPrivacyConsent =
+          privacyConsents[privacyConsents.length - 1];
 
-      if (
-        latestPrivacyConsent &&
-        !latestPrivacyConsent.hasResponded &&
-        !this.privacyDialogShown &&
-        !user.roles.includes('demo')
-      ) {
-        this.privacyDialogShown = true;
-        this.openPrivacyChangeDialog();
-      }
-    });
+        if (
+          ((latestPrivacyConsent && !latestPrivacyConsent.hasResponded) ||
+            !latestPrivacyConsent) &&
+          this.privacyDialogActive &&
+          !user.roles.includes('demo')
+        ) {
+          this.openPrivacyChangeDialog();
+        } else if (
+          !user.roles.includes('demo') &&
+          this.isTimestampOlderThanAWeek(user.createdAt ?? new Date())
+        ) {
+          // only opens bakule survey, when privacy dialog is not opened, user is not demo user and is created more than one week ago
+          this.openBaKuLeSurveyDialog();
+        }
+      });
 
     this.store
       .select(getModules)
@@ -201,10 +212,12 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((user) => {
       // set user values
-      this.user = user
-      this.store.dispatch(UserActions.setUserData({ user }))
+      this.user = user;
+      this.store.dispatch(UserActions.setUserData({ user }));
       // dispatch change of sp and mhb to store
-      this.store.dispatch(selectStudyProgramme({ studyProgramme: user.sps[0].spId }));
+      this.store.dispatch(
+        selectStudyProgramme({ studyProgramme: user.sps[0].spId })
+      );
 
       // set first semester info and load studyplan uni template
       const currentSemester = Semester.getCurrentSemesterName();
@@ -241,7 +254,7 @@ export class HomeComponent implements OnInit {
       } else {
         this.createDefaultStudyplan();
       }
-      this.router.navigate(['app', 'dashboard'])
+      this.router.navigate(['app', 'dashboard']);
     });
   }
 
@@ -336,6 +349,68 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  openBaKuLeSurveyDialog() {
+    // Sort by timestamp in descending order
+    const surveyConsent = this.user.consents.filter(
+      (el) => el.ctype === 'bakule-survey'
+    ).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    const latestSurveyConsent = surveyConsent.length > 0 ? surveyConsent[0] : null;
+    
+    if (!latestSurveyConsent || !latestSurveyConsent.hasResponded) {
+      const month = new Date().getMonth();
+      const year = new Date().getFullYear();
+      const dialogRef = this.dialog.open(SurveyComponent, {
+        disableClose: true,
+        data: {
+          evaluationCode: `${month}-${year}`,
+          spName: this.user.sps
+            ? this.user.sps.map((el) => el.name).join(', ')
+            : '',
+          semester: this.findSemesterCount(
+            this.user.startSemester ?? new Semester().name,
+            this.user.duration ?? 6
+          ),
+          consentGiven: latestSurveyConsent?.hasConfirmed
+        },
+      });
+      dialogRef
+        .afterClosed()
+        .pipe(take(1))
+        .subscribe((result: boolean | LongTermEvaluation) => {
+          if (typeof result === 'boolean') {
+            // in case of true, user does not want to participate this semester update consent to false
+            if(result) {
+              this.store.dispatch(UserActions.addConsent({
+                ctype: 'bakule-survey',
+                hasConfirmed: false,
+                hasResponded: true,
+                timestamp: new Date(),
+              }))
+            }
+            // else case not exist, when false is returned user not responded this time open dialog again
+          } else {
+            // user completed survey, when latestSurveyConsent not exists or hasConfirmed is false, than add new consent
+            if(!latestSurveyConsent || !latestSurveyConsent.hasConfirmed) {
+              this.store.dispatch(UserActions.addConsent({
+                ctype: 'bakule-survey',
+                hasConfirmed: true,
+                hasResponded: true,
+                timestamp: new Date(),
+              }))
+            }
+            // else do nothing, since nothing changed
+          }
+        });
+    }
+  }
+
+  private findSemesterCount(startSemester: string, duration: number): number {
+    const semesters = new Semester(startSemester)
+      .getSemesterList(duration)
+      .map((el) => el.name);
+    return semesters.indexOf(new Semester().name)+1;
+  }
+
   openPrivacyChangeDialog() {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
@@ -348,7 +423,7 @@ export class HomeComponent implements OnInit {
       if (result) {
         if (result.choice === 'accept') {
           this.store.dispatch(
-            UserActions.updateConsent({
+            UserActions.addConsent({
               ctype: '2512-privacy-change',
               hasConfirmed: true,
               hasResponded: true,
@@ -357,7 +432,7 @@ export class HomeComponent implements OnInit {
           );
         } else if (result.choice === 'decline') {
           this.store.dispatch(
-            UserActions.updateConsent({
+            UserActions.addConsent({
               ctype: '2512-privacy-change',
               hasConfirmed: false,
               hasResponded: true,
@@ -368,4 +443,14 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+  private isTimestampOlderThanAWeek(timestamp: Date): boolean {
+    const oneWeekInMillis = 7 * 24 * 60 * 60 * 1000; // Millisekunden in einer Woche
+    const currentDate = new Date();
+    const oneWeekAgo = new Date(currentDate.getTime() - oneWeekInMillis);
+
+    const dateFromTimestamp = new Date(timestamp);
+
+    return dateFromTimestamp < oneWeekAgo;
+}
 }

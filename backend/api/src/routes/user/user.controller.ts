@@ -910,7 +910,7 @@ export async function updateHint(
   }
 }
 
-export async function updateConsents(
+export async function addConsents(
   req: Request,
   res: Response,
   next: NextFunction
@@ -1012,6 +1012,42 @@ export async function updateModuleFeedback(
     res.status(200).send(user.moduleFeedback);
   } catch (error) {
     console.error("Error updating module feedback:", error);
+    next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
+  }
+}
+
+export async function deleteModuleFeedback(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+
+  const userReq = req.user as UserServer;
+  const feedback: ModuleFeedback = req.body.feedback;
+
+  if (!userReq._id || !feedback?.acronym) {
+    return next(new BadRequestError("Ungültige Eingabedaten."));
+  }
+
+  try {
+    const user = await User.findById(userReq._id);
+
+    if (!user) {
+      return res.status(404).send("Nutzer wurde nicht gefunden.");
+    }
+
+    if (!user.moduleFeedback) {
+      user.moduleFeedback = [];
+    }
+
+    // remove feedback for the given acronym
+    user.moduleFeedback = user.moduleFeedback.filter(
+      (mf: ModuleFeedback) => mf.acronym !== feedback.acronym
+    );
+
+    await user.save();
+    res.status(200).send(user.moduleFeedback);
+  } catch (error) {
     next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
   }
 }
@@ -1286,7 +1322,7 @@ export async function crawlStudentDataViaFlexNow(
     if (url) {
       // read test xml file
       /* const result = fs.readFileSync(
-        __dirname + "../../../../staticData/dummy_student.xml",
+        __dirname + "../../../../staticdata/dummy_student.xml",
         "utf8"
       ); */
 

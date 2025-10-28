@@ -34,7 +34,7 @@ router.put("/favourite-modules-acronyms", user_controller_1.updateFavouriteModul
 router.put("/not-interesting-module-id", user_controller_1.updateNotInterestingModule);
 router.put("/topic", user_controller_1.toggleTopic);
 router.put("/hint", user_controller_1.updateHint);
-router.put("/consents", user_controller_1.updateConsents);
+router.put("/consents", user_controller_1.addConsents);
 router.put("/module-feedback", user_controller_1.updateModuleFeedback);
 router.post("/aims", user_controller_1.updateCompetenceAims);
 router.delete("/favourite-modules", user_controller_1.deleteFavouriteModules);
@@ -42,6 +42,7 @@ router.delete("/not-interesting-modules", user_controller_1.deleteNotInteresting
 router.delete("/not-interesting-module/:acronym", user_controller_1.deleteNotInterestingModule);
 router.delete("/studypath/module", user_controller_1.deleteModuleFromStudypath);
 router.delete("/studypath", user_controller_1.deleteStudypath);
+router.delete("/module-feedback", user_controller_1.deleteModuleFeedback);
 router.post("/interest", user_controller_1.addInterest);
 router.delete("/interest", user_controller_1.deleteInterest);
 router.post("/fn2student", user_controller_1.crawlStudentDataViaFlexNow);

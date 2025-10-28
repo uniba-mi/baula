@@ -1,0 +1,8 @@
+<div *ngIf="words.length">
+    <div class="word-cloud d-flex flex-wrap gap-2 align-items-center justify-content-center p-3">
+        <span *ngFor="let word of processedWords" [style.fontSize.em]="word.size" [style.color]="word.color"
+            class="word" [class.clickable]="clickable" (click)="onClicked(word.text, $event)">
+            {{ word.text }}
+        </span>
+    </div>
+</div>

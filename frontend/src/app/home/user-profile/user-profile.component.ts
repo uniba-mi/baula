@@ -20,7 +20,6 @@ import { config } from 'src/environments/config.local';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { Studypath } from '../../../../../interfaces/studypath';
-import { RecsRestService } from 'src/app/modules/recs/recs-rest.service';
 import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
 
 import type { DownloadService } from 'src/app/shared/services/download.service';
@@ -37,7 +36,6 @@ export class UserProfileComponent implements OnInit {
   studyplans$: Observable<Studyplan[]>;
   disableDownload: boolean = false;
   activeRoute: string;
-  recsAvailable$: Observable<boolean>;
 
   constructor(
     private snackbar: SnackbarService,
@@ -46,7 +44,6 @@ export class UserProfileComponent implements OnInit {
     private dialog: MatDialog,
     private auth: AuthService,
     private router: Router,
-    private recsApi: RecsRestService,
     private lazyInject: LazyInjectService
   ) { }
 
@@ -55,28 +52,11 @@ export class UserProfileComponent implements OnInit {
     this.studyplans$ = this.store.select(getStudyplans);
     const lastEntry = this.router.url.split('/').pop();
     this.activeRoute = lastEntry ? lastEntry : 'ueberblick';
-
-    // used to hide the tab, TODO will be removed with personalisation merge
-    this.recsAvailable$ = this.store.select(getUserStudyprogrammes).pipe(
-      take(1),
-      switchMap((sps) => {
-        if (sps && sps.length > 0) {
-          return this.recsApi.getCohortRecsAvailabilityInfo(sps[0].spId);
-        } else {
-          return of(false);
-        }
-      }),
-      catchError((error) => {
-        this.auth.forceReload(error);
-        return of(false);
-      }),
-      shareReplay(1)
-    );
   }
 
   async downloadUserdata(user: User, studyplans: Studyplan[], format: string) {
     this.disableDownload = true;
-    const download = await this.lazyInject.get<DownloadService>(() => 
+    const download = await this.lazyInject.get<DownloadService>(() =>
       import('../../shared/services/download.service').then((m) => m.DownloadService)
     )
     if (format === 'pdf') {

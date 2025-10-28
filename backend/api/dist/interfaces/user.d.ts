@@ -75,5 +75,5 @@ export interface Feedback {
 export interface ModuleFeedback extends Feedback {
     acronym: string;
 }
-export type ConsentType = 'upload-exam-data' | '2512-privacy-change' | 'flexnow-api' | 'terms-of-use';
+export type ConsentType = 'upload-exam-data' | '2512-privacy-change' | 'flexnow-api' | 'terms-of-use' | 'bakule-survey';
 export declare function convertUserRole(userRole: string | string[]): string[];

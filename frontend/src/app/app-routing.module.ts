@@ -19,9 +19,12 @@ import { UserDataComponent } from './home/user-profile/user-data/user-data.compo
 import { StudypathUpdateComponent } from './home/user-profile/studypath-update/studypath-update.component';
 import { RecommendationComponent } from './home/recommendation/recommendation.component';
 import { TopicSettingsComponent } from './home/recommendation/topic-settings/topic-settings.component';
-import { RecsSettingsComponent } from './home/user-profile/recs-settings/recs-settings.component';
 import { JobSettingsComponent } from './home/recommendation/job-settings/job-settings.component';
+import { RecommendationsListComponent } from './home/recommendation/recommendations-list/recommendations-list.component';
+import { SettingsListComponent } from './home/recommendation/settings-list/settings-list.component';
 import { UserConsentsComponent } from './home/user-profile/user-consents/user-consents.component';
+import { NotFoundComponent } from './public/not-found/not-found.component';
+import { advisorGuard } from './guards/advisor.guard';
 
 const routes: Routes = [
   {
@@ -68,6 +71,15 @@ const routes: Routes = [
         component: SemesterPlanComponent,
       },
       {
+        path: 'evaluation',
+        loadChildren: () =>
+          import('./modules/evaluation/evaluation.module').then(
+            (m) => m.EvaluationModule
+          ),
+        canActivate: [advisorGuard],
+      },
+
+      {
         path: 'studium',
         children: [
           {
@@ -85,17 +97,31 @@ const routes: Routes = [
         component: RecommendationComponent,
         children: [
           {
-            path: '',
-            redirectTo: 'topics',
-            pathMatch: 'full',
-          },
-          {
             path: 'topics',
             component: TopicSettingsComponent,
           },
           {
             path: 'jobs',
             component: JobSettingsComponent,
+          },
+          {
+            path: 'feedback',
+            component: SettingsListComponent,
+            data: { type: 'feedback' }
+          },
+          {
+            path: 'modulliste',
+            component: RecommendationsListComponent,
+          },
+          {
+            path: 'merkliste',
+            component: SettingsListComponent,
+            data: { type: 'merkliste' }
+          },
+          {
+            path: 'blacklist',
+            component: SettingsListComponent,
+            data: { type: 'blacklist' }
           },
         ]
       },
@@ -119,10 +145,6 @@ const routes: Routes = [
           {
             path: 'datenschutz-einwilligung',
             component: UserConsentsComponent,
-          },
-          {
-            path: 'einstellung-empfehlungen',
-            component: RecsSettingsComponent,
           },
         ],
       },
@@ -159,6 +181,8 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/admin/admin.module').then((m) => m.AdminModule),
   },
+  { path: '404', component: NotFoundComponent},
+  { path: '**', redirectTo: '404'}
 ];
 
 @NgModule({

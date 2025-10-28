@@ -202,6 +202,13 @@
                     </div>
                 </form>
             </mat-step>
+            <!-- force stepper to use proper icons, default state is numbers.. -->
+            <ng-template matStepperIcon="edit">
+                <i class="bi bi-check-lg"></i>
+            </ng-template>
+            <ng-template matStepperIcon="done">
+                <i class="bi bi-check-lg"></i>
+            </ng-template>
         </mat-horizontal-stepper>
     </ng-container>
     <mat-dialog-actions>

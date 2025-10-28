@@ -251,4 +251,52 @@ export class RecModuleCardComponent implements OnInit, OnChanges {
       this.droppedModules.add(acronym);
     }
   }
+
+  getFeedbackSources(): Source[] {
+    if (!this.hasMetadata(this.module)) {
+      return [];
+    }
+    const moduleWithMeta = this.module;
+    return moduleWithMeta.metadata?.source?.filter(
+      (source: Source) => source.type === 'feedback_similarmods'
+    ) || [];
+  }
+
+  hasFeedbackSource(): boolean {
+    return this.getFeedbackSources().length > 0;
+  }
+
+  getFeedbackScore(): number | null {
+    const feedbackSources = this.getFeedbackSources();
+    if (feedbackSources.length === 0) return null;
+
+    // chip styling uses highest score
+    return Math.max(...feedbackSources.map(s => s.score || 0));
+  }
+
+  getFeedbackIcon(): string {
+    const score = this.getFeedbackScore();
+    if (score === 1.0) {
+      return 'bi-emoji-heart-eyes'; // 5 stars
+    }
+    return 'bi-emoji-laughing'; // 4 stars
+  }
+
+  getFeedbackChipClass(): string {
+    const score = this.getFeedbackScore();
+    if (score !== 1.0) {
+      return 'feedback-chip-light';
+    }
+    return 'feedback-chip'
+  }
+
+  // identifier is rated acronym
+  getFeedbackTooltip(): string {
+    const feedbackSources = this.getFeedbackSources();
+    if (feedbackSources.length === 1) {
+      return `Könnte dir aufgrund deines Feedbacks zu ${feedbackSources[0].identifier} gefallen`;
+    }
+    const identifiers = feedbackSources.map(s => s.identifier).join(' und ');
+    return `Könnte dir aufgrund deines Feedbacks zu ${identifiers} gefallen`;
+  }
 }

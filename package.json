@@ -21,6 +21,8 @@
     "startFrontend": "cd frontend && ng serve --open --no-hmr",
     "buildFrontendProd": "cd frontend && ng build --configuration=production",
     "buildFrontendTest": "cd frontend && ng build --configuration=test",
-    "buildBackend": "cd backend/api && npm run build"
+    "buildBackend": "cd backend/api && npm run build",
+    "buildTest": "npm run buildBackend && npm run buildFrontendTest",
+    "buildProd": "npm run buildBackend && npm run buildFrontendProd"
   }
 }

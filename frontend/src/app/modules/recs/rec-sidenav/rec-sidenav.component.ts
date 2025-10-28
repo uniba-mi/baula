@@ -45,7 +45,7 @@ export class RecSidenavComponent implements OnInit, OnChanges {
     { label: 'Neu', icon: 'bi bi-stars text-gray', infoText: 'Module, die neu im Angebot sind.' },
     { label: 'Beliebt', icon: 'bi bi-people-fill text-gray', infoText: 'Module, die Studierende deines Studiengangs häufig belegen.' },
     { label: 'Entdecken', icon: 'bi bi-binoculars-fill text-gray', infoText: 'Verschiedene Module, die du interessant finden könntest.' },
-    { label: 'Gemerkt', icon: 'bi bi-star-fill text-gray', infoText: 'Module, die du dir gemerkt hast.' }
+    { label: 'Gemerkt', icon: 'bi bi-bookmark-fill text-gray', infoText: 'Module, die du dir gemerkt hast.' }
   ];
   selectedTabIndex: number = 0;
   favouriteModulesTabIndex: number = 4;
@@ -105,7 +105,8 @@ export class RecSidenavComponent implements OnInit, OnChanges {
     name: 'Passt zu:',
     options: [
       { value: 'Jobs', name: 'Jobs', key: 'source', selected: false, metadata: true },
-      { value: 'Interesse', name: 'Interesse', key: 'source', selected: false, metadata: true }
+      { value: 'Interesse', name: 'Interesse', key: 'source', selected: false, metadata: true },
+      { value: 'Feedback', name: 'Feedback', key: 'source', selected: false, metadata: true },
     ],
   };
 
@@ -306,7 +307,7 @@ export class RecSidenavComponent implements OnInit, OnChanges {
 
   openDeleteFavouritesDialog(): void {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Alle Favouriten löschen?',
+      dialogTitle: 'Merkliste löschen?',
       actionType: 'delete',
       confirmationItem: 'deine gemerkten Module',
       confirmButtonLabel: 'Löschen',

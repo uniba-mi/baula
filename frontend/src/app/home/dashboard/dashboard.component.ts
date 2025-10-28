@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import {
   catchError,
   Observable,
@@ -75,6 +75,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   finishSemesterHintMessage: string =
     'Es ist Zeit, dein Semester abzuschließen. Navigiere über "Studienverlaufsplan" zu deinem Plan und schließe das Semester ab, indem du auf "Jetzt Semester abschließen" klickst. Nur so können deine Module und Platzhalter aus dem vergangenen Semester zum Studienverlauf hinzugefügt und deine aktuellen Leistungen berücksichtigt werden.';
   showFinishSemesterHint$: Observable<boolean>;
+  isPersonalisationComplete = false;
 
   constructor(
     private store: Store,
@@ -149,5 +150,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     window.open(
       'https://vc.uni-bamberg.de/course/view.php?id=71480'
     );
+  }
+
+  onPersonalisationComplete(isComplete: boolean) {
+    this.isPersonalisationComplete = isComplete;
   }
 }

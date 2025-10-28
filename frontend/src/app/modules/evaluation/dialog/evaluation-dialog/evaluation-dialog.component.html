@@ -1,0 +1,26 @@
+<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+    <div class="header d-flex justify-content-between">
+        <h4 class="fw-bold" [innerHtml]="content.acronym + ': ' + content.name"></h4>
+        <button mat-dialog-close class="btn btn-outline text-gray" tabindex="0" aria-label="Schließen"> <i
+                class="bi bi-x-lg text-gray fs-4"></i>
+        </button>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3 fw-bold">Inhalte</div>
+        <div class="col-12 col-md-9">
+            <span [innerHtml]="content.content"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3 fw-bold">Lernziele</div>
+        <div class="col-12 col-md-9">
+            <span [innerHtml]="content.skills"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3 fw-bold">Lehrstuhl</div>
+        <div class="col-12 col-md-9">
+            <span [innerHtml]="content.chair"></span>
+        </div>
+    </div>
+</ng-container>

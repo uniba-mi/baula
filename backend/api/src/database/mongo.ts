@@ -12,31 +12,96 @@ import { Recommendation as IRecommendation } from "../../../../interfaces/recomm
 import { Embedding as IEmbedding } from "../../../../interfaces/embedding";
 import { ModuleEmbedding as IModEmbedding } from "../../../../interfaces/embedding";
 import { Exam as IExam } from "../../../../interfaces/studypath";
+import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/longTermEvaluation";
 import { Topic as ITopic } from "../../../../interfaces/topic";
 import { UserServer as IUser } from "../../../../interfaces/user";
+import { Evaluation as IEvaluation } from "../../../../interfaces/evaluation";
 //dotenv for custom environment variables
 import * as dotenv from "dotenv";
-import path from 'path';
+import path from "path";
 
-dotenv.config({ path: path.resolve(__dirname, '../../', 'environment', '.env.backend') });
+dotenv.config({
+  path: path.resolve(__dirname, "../../", "environment", '.env.backend'),
+});
 const uri = process.env.MONGO_DATABASE_URL
   ? process.env.MONGO_DATABASE_URL.toString()
   : "";
 
-const connectWithRetry = () => {
-  return mongoose.connect(uri)
-    .then(() => {
-      console.log('MongoDB connected!');
-    })
-    .catch(err => {
-      console.error('MongoDB connection unsuccessful, retrying in 5 seconds...');
-      setTimeout(connectWithRetry, 5000);
-    });
-};
-
-connectWithRetry();
+export const connection = mongoose.connect(uri);
 
 // MongoDB Schemas -> Structure of the models
+// longterm evaluation schema
+const LongTermEvaluationSchema: Schema = new Schema<ILongTermEvaluation>(
+  {
+    personalCode: { type: String, required: true },
+    evaluationCode: {
+      type: String,
+      required: true,
+    },
+    spName: String,
+    semester: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 20,
+    },
+    pu: {
+      type: [Number],
+      required: true,
+      validate: {
+        validator: (v) => {
+          return (
+            v.length === 4 && v.every((num: number) => num >= 0 && num <= 7)
+          );
+        },
+        message: (props) =>
+          `${props.value} muss genau 4 Werte zwischen 0 und 7 enthalten!`,
+      },
+    },
+    peou: {
+      type: [Number],
+      required: true,
+      validate: {
+        validator: (v) => {
+          return (
+            v.length === 4 && v.every((num: number) => num >= 0 && num <= 7)
+          );
+        },
+        message: (props) =>
+          `${props.value} muss genau 4 Werte zwischen 0 und 7 enthalten!`,
+      },
+    },
+    bi: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 7,
+    },
+    use: {
+      type: String,
+      enum: [
+        "täglich",
+        "mehrmals pro Woche",
+        "einmal pro Woche",
+        "seltener",
+        "undefined",
+      ],
+      required: true,
+    },
+    nps: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 10,
+    },
+    feedback: {
+      type: String,
+      maxlength: 1000,
+    },
+  },
+  { timestamps: true }
+);
+
 // Semesterplan
 const SemesterplanSchema: Schema = new Schema<ISemesterplan>(
   {
@@ -86,7 +151,7 @@ const SemesterplanSchema: Schema = new Schema<ISemesterplan>(
         ects: Number,
         sws: Number,
         contributeTo: String,
-        contributeAs: String
+        contributeAs: String,
       },
     ],
     aimedEcts: {
@@ -129,41 +194,46 @@ const StudyplanSchema: Schema = new Schema<IStudyplan>(
 // Recommendation
 const RecommendationSchema: Schema = new Schema<IRecommendation>(
   {
-    recommendedMods: [ // holds ranked list of module recommendations from different sources
+    recommendedMods: [
+      // holds ranked list of module recommendations from different sources
       {
         acronym: {
           type: String,
           required: true,
           maxlength: 100,
         },
-        source: [ // where does recommended module come from?
+        source: [
+          // where does recommended module come from?
           {
             type: {
               type: String,
-              match: /(job)|(topic)|(interest)|(cohort)/g, // or others
+              match: /(job)|(topic)|(interest)|(cohort)|(feedback_similarmods)/g, // or others
               required: true
             },
             identifier: {
               type: String,
-              required: true
+              required: true,
             },
-            score: { // similarity score
+            score: {
+              // similarity score
               type: Number,
               min: 0,
               max: 1,
-            }
-          }
+            },
+          },
         ],
-        weight: { // optional weighting factor
+        weight: {
+          // optional weighting factor
           type: Number,
           min: 0,
           max: 10,
         },
-        position: { // position in ranking
+        position: {
+          // position in ranking
           type: Number,
           min: 0,
           max: 100,
-        }
+        },
       },
     ],
     userId: {
@@ -181,7 +251,7 @@ const TopicSchema: Schema = new Schema<ITopic>(
       type: String,
       required: true,
       unique: true,
-      default: () => new mongoose.Types.ObjectId().toString()
+      default: () => new mongoose.Types.ObjectId().toString(),
     },
     name: {
       type: String,
@@ -190,18 +260,18 @@ const TopicSchema: Schema = new Schema<ITopic>(
       match: /[a-zA-Z0-9\s?.,&:]*/g,
     },
     keywords: {
-      type: [String]
+      type: [String],
     },
     description: {
       type: String,
       match: /[a-zA-Z0-9\s?.,&:]*/g,
     },
     parentId: {
-      type: String
+      type: String,
     },
     embeddingId: {
-      type: String
-    }
+      type: String,
+    },
   },
   { timestamps: true }
 );
@@ -212,7 +282,7 @@ const EmbeddingSchema: Schema = new Schema<IEmbedding>(
     _id: {
       type: String,
       required: true,
-      default: () => new mongoose.Types.ObjectId().toString()
+      default: () => new mongoose.Types.ObjectId().toString(),
     },
     identifier: {
       type: String,
@@ -222,8 +292,8 @@ const EmbeddingSchema: Schema = new Schema<IEmbedding>(
       type: [Number],
       required: true,
       min: -1.0,
-      max: 1.0
-    }
+      max: 1.0,
+    },
   },
   { timestamps: true }
 );
@@ -243,10 +313,9 @@ const ModEmbeddingSchema: Schema = new Schema<IModEmbedding>(
       required: true,
       min: -1.0,
       max: 1.0,
-    }
+    },
   },
   { timestamps: true }
-
 );
 
 // const ExamSchema: Schema = new Schema<IExam>(
@@ -273,7 +342,6 @@ const ModEmbeddingSchema: Schema = new Schema<IModEmbedding>(
 //   }
 // );
 
-
 // Query helpers for UserSchema
 type UserModelType = Model<IUser, UserQueryHelpers>;
 type UserModelQuery = Query<any, HydratedDocument<IUser>, UserQueryHelpers> &
@@ -291,19 +359,27 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
       trim: true,
       minLength: 32,
       maxLength: 32,
-      uppercase: true,
       required: true,
     },
     roles: [
       {
         type: String,
-        enum: ["admin", "student", "employee", "staff", "member", "faculty", "demo"],
+        enum: [
+          "admin",
+          "student",
+          "employee",
+          "staff",
+          "member",
+          "faculty",
+          "demo",
+          "advisor",
+        ],
         required: true,
       },
     ],
     authType: {
       type: String,
-      enum: ['local', 'saml'],
+      enum: ["local", "saml"],
       required: true,
     },
     interests: [String],
@@ -321,8 +397,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         // exams: [ExamSchema],
         semester: {
           type: String,
-          match:
-            /(\d{4}((w)|(s)))/g,
+          match: /(\d{4}((w)|(s)))/g,
         },
         notes: {
           type: String,
@@ -331,7 +406,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         },
         isUserGenerated: Boolean,
         flexNowImported: Boolean,
-      }
+      },
     ],
     startSemester: {
       type: String,
@@ -359,24 +434,22 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
     ],
     fulltime: {
       type: Boolean,
-      required: true
+      required: true,
     },
     dashboardSettings: [
       {
         key: String,
-        visible: Boolean
-      }
+        visible: Boolean,
+      },
     ],
-    timetableSettings: [
-      { showWeekends: Boolean },
-    ],
+    timetableSettings: [{ showWeekends: Boolean }],
     favouriteModulesAcronyms: [String],
     notInterestingModulesAcronyms: [String],
     hints: [
       {
         key: String,
         hasConfirmed: Boolean,
-      }
+      },
     ],
     // timestamps in-built does not work for nested structures
     consents: [
@@ -396,10 +469,11 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
           type: Date,
           required: true,
         },
-      }
+      },
     ],
     topics: [String],
-    jobs: [ // save jobs for user
+    jobs: [
+      // save jobs for user
       {
         title: {
           type: String,
@@ -422,7 +496,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         },
         embeddingId: {
           type: String,
-        }
+        },
       },
     ],
     moduleFeedback: [
@@ -442,8 +516,8 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         },
         contentmatch: {
           type: Number,
-        }
-      }
+        },
+      },
     ],
     // competence aims
     compAims: {
@@ -455,11 +529,11 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
           parent: {
             type: String,
             required: false,
-          }
-        }
+          },
+        },
       ],
-      default: undefined
-    }
+      default: undefined,
+    },
   },
   {
     timestamps: true,
@@ -469,11 +543,61 @@ UserSchema.query.byShibId = function (shibId: String): UserModelQuery {
   return this.findOne({ shibId: shibId });
 };
 
+// Evaluation
+const EvaluationSchema: Schema = new Schema<IEvaluation>(
+  {
+    spId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    jobEvaluations: [
+      {
+        job: {
+          jobId: { type: String, required: true },
+        },
+        candidates: [
+          {
+            acronym: { type: String, required: true },
+          },
+        ],
+        rankedModules: [
+          {
+            acronym: { type: String, required: true },
+            ranking: { type: Number, min: 0, max: 100, required: true },
+          },
+        ],
+        comment: { type: String, default: "" },
+        createdAt: { type: Date, default: Date.now },
+        updatedAt: { type: Date, default: Date.now },
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
 // Create models
-export const Semesterplan = model<ISemesterplan>("Semesterplan", SemesterplanSchema);
+export const Semesterplan = model<ISemesterplan>(
+  "Semesterplan",
+  SemesterplanSchema
+);
 export const Studyplan = model<IStudyplan>("Studyplan", StudyplanSchema);
 export const User = model<IUser, UserModelType>("User", UserSchema);
 export const TopicM = model<ITopic>("Topic", TopicSchema);
-export const Recommendation = model<IRecommendation>("Recommendation", RecommendationSchema);
-export const Embedding = model<IEmbedding>("Embedding", EmbeddingSchema)
-export const ModEmbedding = model<IModEmbedding>("ModEmbedding", ModEmbeddingSchema)
+export const Recommendation = model<IRecommendation>(
+  "Recommendation",
+  RecommendationSchema
+);
+export const Embedding = model<IEmbedding>("Embedding", EmbeddingSchema);
+export const ModEmbedding = model<IModEmbedding>(
+  "ModEmbedding",
+  ModEmbeddingSchema
+);
+export const Evaluation = mongoose.model<IEvaluation>(
+  "Evaluation",
+  EvaluationSchema
+);
+export const LongTermEvaluation = model<ILongTermEvaluation>(
+  "LongTermEvaluation",
+  LongTermEvaluationSchema
+);

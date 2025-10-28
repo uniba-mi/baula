@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, skipWhile, take } from 'rxjs/operators';
-import { getModulehandbook } from 'src/app/selectors/module-overview.selectors';
+import { getModulehandbook, getModules } from 'src/app/selectors/module-overview.selectors';
 import { getStudyplans } from 'src/app/selectors/study-planning.selectors';
-import { getHints, getUserStudypath } from 'src/app/selectors/user.selectors';
+import { getUser, getUserStudypath } from 'src/app/selectors/user.selectors';
 import { Module } from '../../../../../interfaces/module';
 import { ModuleGroup } from '../../../../../interfaces/module-group';
 import { Modulehandbook } from '../../../../../interfaces/modulehandbook';
@@ -22,6 +22,7 @@ import { AcademicDate } from '../../../../../interfaces/academicDate';
 import { datetime, RRule, RRuleSet } from 'rrule';
 import { Studyplan } from '../../../../../interfaces/studyplan';
 import { AnalyticsService } from './analytics.service';
+import { Semester } from '../../../../../interfaces/semester';
 
 @Injectable({
   providedIn: 'root',
@@ -216,6 +217,156 @@ export class PlanningValidationService {
 
     this.status = undefined;
     return returnResult;
+  }
+
+  /**
+ * Check for module planning hints in studyplan
+ * @param studyplan The active studyplan to check
+ */
+  checkForModulePlanningHints(studyplan: Studyplan) {
+
+    let hints: PlanningHints[] = [];
+
+    const allModuleAcronyms = studyplan.semesterPlans.flatMap(sp => sp.modules);
+    const uniqueAcronyms = Array.from(new Set(allModuleAcronyms));
+
+    if (uniqueAcronyms.length === 0) {
+      this.store.dispatch(TimetableActions.updatePlanningHints({ hints }));
+      return;
+    }
+
+    this.store.select(getUser).pipe(take(1)).subscribe(user => {
+
+      if (user && user.sps && user.sps.length > 0) {
+        const spName = user.sps[0].name;
+        const startSemester = user.startSemester;
+        const fulltime = user.fulltime;
+
+        if (startSemester && spName && fulltime && fulltime === true) {
+
+          // get full module data for planned modules
+          this.mod
+            .getFullModulesByAcronyms(uniqueAcronyms)
+            .pipe(
+              skipWhile((modules) => modules.length === 0),
+              take(1)
+            )
+            .subscribe((modules) => {
+
+              for (const semesterPlan of studyplan.semesterPlans) {
+                const semester = new Semester(semesterPlan.semester);
+
+                for (const moduleAcronym of semesterPlan.modules) {
+                  const module = modules.find(m => m.acronym === moduleAcronym);
+
+                  if (module) {
+
+                    // wrong semester type
+                    const wrongSemesterHint = this.checkModuleSemesterType(module, semester);
+                    if (wrongSemesterHint) {
+                      hints.push(wrongSemesterHint);
+                    }
+
+                    // differs from recTerm
+                    const recTermHint = this.checkWithRecommendedSemester(
+                      module,
+                      semesterPlan.semester,
+                      startSemester
+                    );
+                    if (recTermHint) {
+                      hints.push(recTermHint);
+                    }
+                  }
+                }
+              }
+
+              // save all hints
+              this.store.dispatch(TimetableActions.updatePlanningHints({ hints }));
+            });
+        }
+      }
+    })
+  }
+
+  /**
+   * Check if module is planned too far from recommended semester
+   * @param module The module to check
+   * @param plannedSemesterName The semester name where module is planned (e.g., "2025w")
+   * @param startSemesterName The user's start semester
+   */
+  private checkWithRecommendedSemester(
+    module: Module,
+    plannedSemesterName: string,
+    startSemesterName: string
+  ): PlanningHints | null {
+
+    // Skip if module has no recommended term
+    if (!module.recTerm || module.recTerm === "0") {
+      return null;
+    }
+
+    const startSemester = new Semester(startSemesterName);
+
+    const allSemesters = startSemester.getSemesterList(20);
+
+    const plannedSemesterIndex = allSemesters.findIndex(
+      sem => sem.name === plannedSemesterName
+    );
+
+    if (plannedSemesterIndex === -1) {
+      return null;
+    }
+
+    const plannedSemesterNumber = plannedSemesterIndex + 1; // first sem is 1 not 0
+
+    const deviation = Math.abs(plannedSemesterNumber - Number(module.recTerm));
+    if (deviation >= 2) { // hint if deviation is min. 2
+
+      return {
+        type: 'warning',
+        context: 'module-planning',
+        begin: 'Das Modul',
+        end: `wird im Modulhandbuch für das ${module.recTerm}. Semester empfohlen. Du hast es für das ${plannedSemesterNumber}. Semester eingeplant.`,
+        acronym: module.acronym,
+      };
+    }
+
+    return null;
+  }
+
+  /**
+   * Check if module is planned in wrong semester type
+   * @param module The module to check
+   * @param semester The Semester instance where the module is planned
+   */
+  private checkModuleSemesterType(
+    module: Module,
+    semester: Semester
+  ): PlanningHints | null {
+    const isWinterSemester = semester.type === 'w';
+    const isSummerSemester = semester.type === 's';
+
+    if (isWinterSemester && !module.term.includes('WS')) {
+      return {
+        type: 'risk',
+        context: 'module-planning',
+        begin: 'Das Modul',
+        end: `ist im ${semester.fullName} nicht verfügbar. Es wird nur im Sommersemester angeboten.`,
+        acronym: module.acronym,
+      };
+    }
+
+    if (isSummerSemester && !module.term.includes('SS')) {
+      return {
+        type: 'risk',
+        context: 'module-planning',
+        begin: 'Das Modul',
+        end: `ist im ${semester.fullName} nicht verfügbar. Es wird nur im Wintersemester angeboten.`,
+        acronym: module.acronym,
+      };
+    }
+
+    return null;
   }
 
   /** ---------------------------------------
@@ -555,6 +706,7 @@ export class PlanningValidationService {
       for (let module of notAdressedModules) {
         hints.push({
           type: 'warning',
+          context: 'course-planning',
           begin: 'Zum Modul',
           end: 'wurden noch keine Lehrveranstaltungen eingeplant!',
           acronym: module.acronym,
@@ -585,6 +737,7 @@ export class PlanningValidationService {
           fullyplanned = false;
           hints.push({
             type: 'warning',
+            context: 'course-planning',
             begin: 'Zum Modul',
             end: `fehlt noch folgende Lehrveranstaltung: ${moduleCourse.name} (${moduleCourse.type})`,
             acronym: module.acronym,
@@ -651,6 +804,7 @@ export class PlanningValidationService {
         const courseString2 = `${course2.name} (${course2.type})`;
         hints.push({
           type: 'collision',
+          context: 'course-planning',
           begin: 'Die beiden Lehrveranstaltungen ',
           end:
             `"${courseString1}" & ${courseString2} überschneiden sich an ` +

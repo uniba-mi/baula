@@ -40,6 +40,16 @@
                   (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
                 <app-grade-point-average [studypath]="studypath"></app-grade-point-average>
               </mat-card>
+              <!-- Card with personalisation status -->
+              <ng-container *ngIf="user.sps?.[0]?.faculty === 'WIAI'">
+                <mat-card appearance="outlined" *ngSwitchCase="'personalisation'"
+                  class="dashboard-tile small-tile order-1">
+                  <app-dashboard-card-header [key]="chart.key" [showCompletionBadge]="isPersonalisationComplete"
+                    (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                  <app-personalisation-status
+                    (allComplete)="onPersonalisationComplete($event)"></app-personalisation-status>
+                </mat-card>
+              </ng-container>
               <!-- Card with semester dates-->
               <mat-card appearance="outlined" *ngSwitchCase="'semester-dates'"
                 class="dashboard-tile medium-tile order-1">

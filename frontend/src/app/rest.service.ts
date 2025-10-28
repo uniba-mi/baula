@@ -104,7 +104,7 @@ export class RestService {
     );
   }
 
-  updateConsent(
+  addConsent(
     ctype: ConsentType,
     hasConfirmed: boolean,
     hasResponded: boolean,
@@ -199,6 +199,15 @@ export class RestService {
     return this.http.delete<string[]>(`${this.urlBase}user/interest`, {
       body: {
         interest,
+      },
+      headers: httpOptions.headers,
+    });
+  }
+
+  deleteModuleFeedback(feedback: ModuleFeedback): Observable<ModuleFeedback[]> {
+    return this.http.delete<ModuleFeedback[]>(`${this.urlBase}user/module-feedback`, {
+      body: {
+        feedback,
       },
       headers: httpOptions.headers,
     });

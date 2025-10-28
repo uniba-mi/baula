@@ -74,7 +74,7 @@ export class RecTabService {
         map(recommendations => recommendations[0]?.recommendedMods || []),
         map(modules => modules.map(module => ({
           acronym: module.acronym,
-          frequency: module.source.length,
+          frequency: module.source.filter((s: any) => !s.type?.includes('feedback')).length,
           source: module.source,
         }))),
         switchMap(modules => {
@@ -91,9 +91,17 @@ export class RecTabService {
                   },
                 } as ModuleWithMetadata;
               });
-              return modulesWithMetadata.sort((a, b) =>
-                b.metadata!.frequency - a.metadata!.frequency
-              );
+
+              const sorted = modulesWithMetadata.sort((a, b) => {
+
+                const freqDiff = b.metadata!.frequency - a.metadata!.frequency;
+                if (freqDiff !== 0) return freqDiff;
+
+                // alphabetical sort (ties)
+                return a.acronym.localeCompare(b.acronym);
+              });
+
+              return sorted;
             })
           );
         })
@@ -186,6 +194,7 @@ export class RecTabService {
             const filterValueToSourceTypeMap: { [key: string]: string } = {
               Jobs: 'job',
               Interesse: 'topic',
+              Feedback: 'feedback_similarmods'
             };
             const mappedSourceType = filterValueToSourceTypeMap[filter.value as string];
             return (module as ModuleWithMetadata).metadata!.source.some(

@@ -24,8 +24,9 @@ exports.updateFavouriteModules = updateFavouriteModules;
 exports.updateNotInterestingModule = updateNotInterestingModule;
 exports.toggleTopic = toggleTopic;
 exports.updateHint = updateHint;
-exports.updateConsents = updateConsents;
+exports.addConsents = addConsents;
 exports.updateModuleFeedback = updateModuleFeedback;
+exports.deleteModuleFeedback = deleteModuleFeedback;
 exports.addInterest = addInterest;
 exports.deleteInterest = deleteInterest;
 exports.deleteJob = deleteJob;
@@ -727,7 +728,7 @@ async function updateHint(req, res, next) {
         next(new error_1.BadRequestError());
     }
 }
-async function updateConsents(req, res, next) {
+async function addConsents(req, res, next) {
     const userReq = req.user;
     const ctype = typeof req.body.ctype === "string" ? req.body.ctype.trim() : undefined;
     const hasConfirmed = Boolean(req.body.hasConfirmed);
@@ -805,6 +806,29 @@ async function updateModuleFeedback(req, res, next) {
     }
     catch (error) {
         console.error("Error updating module feedback:", error);
+        next(new error_1.BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
+    }
+}
+async function deleteModuleFeedback(req, res, next) {
+    const userReq = req.user;
+    const feedback = req.body.feedback;
+    if (!userReq._id || !(feedback === null || feedback === void 0 ? void 0 : feedback.acronym)) {
+        return next(new error_1.BadRequestError("Ungültige Eingabedaten."));
+    }
+    try {
+        const user = await mongo_1.User.findById(userReq._id);
+        if (!user) {
+            return res.status(404).send("Nutzer wurde nicht gefunden.");
+        }
+        if (!user.moduleFeedback) {
+            user.moduleFeedback = [];
+        }
+        // remove feedback for the given acronym
+        user.moduleFeedback = user.moduleFeedback.filter((mf) => mf.acronym !== feedback.acronym);
+        await user.save();
+        res.status(200).send(user.moduleFeedback);
+    }
+    catch (error) {
         next(new error_1.BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
     }
 }
@@ -1035,7 +1059,7 @@ async function crawlStudentDataViaFlexNow(req, res, next) {
         if (url) {
             // read test xml file
             /* const result = fs.readFileSync(
-              __dirname + "../../../../staticData/dummy_student.xml",
+              __dirname + "../../../../staticdata/dummy_student.xml",
               "utf8"
             ); */
             const result = await new Promise((resolve, reject) => {

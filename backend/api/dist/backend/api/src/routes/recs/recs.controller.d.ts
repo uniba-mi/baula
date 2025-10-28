@@ -19,3 +19,5 @@ export declare function getTopicTree(req: Request, res: Response, next: NextFunc
 export declare function getTopicChildren(req: Request, res: Response, next: NextFunction): Promise<void>;
 export declare function recommendModulesByTopicsPreGenerated(req: Request, res: Response, next: NextFunction): Promise<void | express.Response<any, Record<string, any>>>;
 export declare function getPersonalRecommendations(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function updatePersonalRecommendationsByFeedback(req: Request, res: Response, next: NextFunction): Promise<void | express.Response<any, Record<string, any>>>;
+export declare function deletePersonalRecommendationsByFeedback(req: Request, res: Response, next: NextFunction): Promise<void | express.Response<any, Record<string, any>>>;

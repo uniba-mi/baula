@@ -48,6 +48,7 @@ export interface TimetableSettings {
 
 export interface PlanningHints {
     type: string;
+    context: 'course-planning' | 'module-planning';
     begin: string; // start sequence of hint string
     end: string; // end sequence of hint string
     acronym?: string; // contains reference like module acronym

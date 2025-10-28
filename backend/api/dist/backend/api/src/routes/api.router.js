@@ -43,3 +43,7 @@ const adminMiddleware_1 = require("../shared/middleware/adminMiddleware");
 router.use('/admin', adminMiddleware_1.checkAndReturnAdminUser, admin_router_1.admin);
 const jobproposal_router_1 = require("./jobproposal/jobproposal.router");
 router.use('/job-proposal', jobproposal_router_1.jobproposal);
+const evaluation_router_1 = require("./evaluation/evaluation.router");
+router.use('/evaluation', evaluation_router_1.evaluation);
+const survey_router_1 = require("./survey/survey.router");
+router.use('/survey', survey_router_1.survey);

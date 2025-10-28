@@ -6,6 +6,7 @@ import { State } from 'src/app/reducers';
 import { config } from 'src/environments/config.local';
 import { ModulePasses, Recommendation } from '../../../../../interfaces/recommendation';
 import { Topic, TopicTree } from '../../../../../interfaces/topic';
+import { ModuleFeedback } from '../../../../../interfaces/user';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -180,6 +181,29 @@ export class RecsRestService {
   getPersonalRecommendations(): Observable<Recommendation[]> {
     return this.http.get<Recommendation[]>(
       `${this.urlBase}recs/personal`,
+      httpOptions
+    );
+  }
+
+  /**
+ * Updates or creates personal recommendations based on user feedback.
+ * @returns observable of updated recommendation.
+ */
+  updatePersonalRecommendations(moduleFeedback: ModuleFeedback): Observable<Recommendation> {
+    return this.http.put<Recommendation>(
+      `${this.urlBase}recs/personal`,
+      { moduleFeedback },
+      httpOptions
+    );
+  }
+
+  /**
+ * Deletes feedback source from personal recommendations based on deleted user feedback.
+ * @returns observable of updated recommendation.
+ */
+  deletePersonalRecommendationsByFeedback(acronym: string): Observable<Recommendation> {
+    return this.http.delete<Recommendation>(
+      `${this.urlBase}recs/personal/feedback/${acronym}`,
       httpOptions
     );
   }

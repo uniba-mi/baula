@@ -10,6 +10,7 @@ exports.keywordRequest = keywordRequest;
 exports.generateEmbeddings = generateEmbeddings;
 exports.generateTopicModuleRecommendations = generateTopicModuleRecommendations;
 exports.generateTopicModuleRecommendationsPreGenerated = generateTopicModuleRecommendationsPreGenerated;
+exports.generateFeedbackBasedRecommendations = generateFeedbackBasedRecommendations;
 const jobScraping_1 = require("./jobScraping");
 const error_1 = require("../error");
 const validator_1 = __importDefault(require("validator"));
@@ -29,6 +30,7 @@ const pathgetKeyWords = "/job-keywords";
 const pathEmbeddingsForTopics = "/topic-embeddings";
 const pathTopicModuleRecommendation = "/topic-module-recommendations";
 const pathTopicModuleRecommendationPreGenerated = "/topic-module-recommendations-pre-generated";
+const pathFeedbackModuleRecommendation = "/feedback-module-recommendations";
 /** ---------------------------------------------
  *  ---- POST Fetch Data Function --------
  *  @param path - The endpoint path for the fetch request.
@@ -45,10 +47,8 @@ async function postFetchData(path, params) {
             },
             body: JSON.stringify(params),
         });
-        console.log("Python API response status:", response.status);
         if (!response.ok) {
             const errorText = await response.text();
-            console.log("Python API error:", errorText);
             if (response.status >= 400 && response.status < 500) {
                 throw new error_1.BadRequestError(`Fehlerhafte Anfrage: ${response.status}`);
             }
@@ -314,5 +314,39 @@ async function generateTopicModuleRecommendationsPreGenerated(topics, modules) {
     }
     catch (error) {
         throw new Error("Failed to fetch topic-module recommendations with pre-generated embeddings.");
+    }
+}
+/**
+ * Fetch similar module recommendations based on user feedback using pre-generated embeddings.
+ * @param feedbackModule - The module with positive feedback including its embedding.
+ * @param candidateModules - Array of all available modules with their embeddings.
+ * @param threshold - Minimum similarity score (default 0.65).
+ * @returns Promise resolving to recommendations from the Python API.
+ */
+async function generateFeedbackBasedRecommendations(feedbackModule, candidateModules, threshold = 0.65) {
+    if (!feedbackModule.vector || feedbackModule.vector.length === 0) {
+        throw new Error("Invalid feedback module embedding.");
+    }
+    if (!Array.isArray(candidateModules) || candidateModules.length === 0) {
+        throw new Error("Invalid candidate modules data.");
+    }
+    const data = {
+        feedbackModule: {
+            acronym: feedbackModule.acronym,
+            vector: feedbackModule.vector,
+            rating: feedbackModule.similarmodsRating,
+        },
+        candidateModules: candidateModules.map((module) => ({
+            acronym: module.acronym,
+            vector: module.vector,
+        })),
+        threshold: threshold,
+    };
+    try {
+        const result = await postFetchData(pathFeedbackModuleRecommendation, data);
+        return result;
+    }
+    catch (error) {
+        throw new Error("Failed to fetch feedback-based recommendations.");
     }
 }

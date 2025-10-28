@@ -25,8 +25,9 @@ export declare function updateFavouriteModules(req: Request, res: Response, next
 export declare function updateNotInterestingModule(req: Request, res: Response, next: NextFunction): Promise<void>;
 export declare function toggleTopic(req: Request, res: Response, next: NextFunction): Promise<void>;
 export declare function updateHint(req: Request, res: Response, next: NextFunction): Promise<void>;
-export declare function updateConsents(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function addConsents(req: Request, res: Response, next: NextFunction): Promise<void>;
 export declare function updateModuleFeedback(req: Request, res: Response, next: NextFunction): Promise<void | express.Response<any, Record<string, any>>>;
+export declare function deleteModuleFeedback(req: Request, res: Response, next: NextFunction): Promise<void | express.Response<any, Record<string, any>>>;
 export declare function addInterest(req: Request, res: Response, next: NextFunction): Promise<void>;
 export declare function deleteInterest(req: Request, res: Response, next: NextFunction): Promise<void>;
 export declare function deleteJob(req: Request, res: Response, next: NextFunction): Promise<express.Response<any, Record<string, any>> | undefined>;

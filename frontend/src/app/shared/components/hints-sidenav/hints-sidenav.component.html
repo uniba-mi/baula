@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-between mt-4 mb-2">
+    <i class="fs-3 bi bi-x-lg icon" (click)="onClose()"></i>
+    <h3 class="mx-auto my-2 text-start">Hinweise</h3>
+</div>
+<div class="mx-2">
+
+    <div *ngIf="hints.length === 0" class="alert alert-info alert-sm" role="alert">
+        <div class="d-flex align-items-center">
+            <span>Keine Hinweise gefunden.</span>
+        </div>
+    </div>
+
+    <div *ngFor="let hint of hints" class="alert alert-sm" [class.alert-warning]="hint.type === 'warning'"
+        [class.alert-danger]="hint.type === 'collision' || hint.type === 'risk'" role="alert">
+        <div>
+            <span>{{ hint.begin }}</span>
+            <span class="mx-1 link" *ngIf="hint.acronym" role="button"
+                (click)="onAcronymClick(hint.acronym)">{{hint.acronym}}</span>
+            <span>{{ hint.end }}</span>
+        </div>
+        <div role="button" class="my-1 link" *ngIf="hint.type === 'collision'" (click)="onResolveClick(hint)">
+            Überschneidung auflösen
+        </div>
+    </div>
+</div>

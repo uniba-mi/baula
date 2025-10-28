@@ -8,6 +8,7 @@ import { Observable, map } from 'rxjs';
 export class ScreenSizeService {
 
     isSmallScreen$: Observable<boolean>;
+    isLargeScreen$: Observable<boolean>;
     isSidenavFullScreen$: Observable<boolean>;
     isXXLScreen$: Observable<boolean>;
 
@@ -15,6 +16,9 @@ export class ScreenSizeService {
 
         // detect small screens for mobile add courses btn in timetable
         this.isSmallScreen$ = this.breakpointObserver.observe([Breakpoints.Handset])
+            .pipe(map(result => result.matches));
+
+        this.isLargeScreen$ = this.breakpointObserver.observe(['(min-width: 992px)'])
             .pipe(map(result => result.matches));
 
         // detect course sidenav fullscreen mode (below 1200px)

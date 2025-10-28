@@ -212,8 +212,8 @@ export class TopicSettingsComponent {
 
         // sort by frequency (number of sources)
         filtered = filtered.sort((a, b) => {
-          const freqA = a.source ? a.source.length : 0;
-          const freqB = b.source ? b.source.length : 0;
+          const freqA = a.source ? a.source.filter(src => src.type === 'topic').length : 0;
+          const freqB = b.source ? b.source.filter(src => src.type === 'topic').length : 0;
           return freqB - freqA;
         });
 
@@ -279,30 +279,6 @@ export class TopicSettingsComponent {
     this.loading$.next(true);
     this.store.dispatch(UserActions.toggleTopic({ topic: tId }));
     this.topicToggle$.next(tId);
-  }
-
-  toggleTakenAndPassed(): void {
-
-    this.hideTakenAndPassed = !this.hideTakenAndPassed;
-
-    this.store.dispatch(SearchActions.updateSearchSettings({
-      context: 'personalisation-search',
-      searchSettings: {
-        term: '',
-        searchIn: [],
-        filter: [{
-          key: 'hideTakenAndPassed',
-          name: 'Belegte und bestandene verstecken',
-          value: true,
-          selected: this.hideTakenAndPassed,
-          metadata: false,
-        }]
-      }
-    }));
-
-    if (this.moduleRecommendations) {
-      this.processRecommendations(this.moduleRecommendations);
-    }
   }
 
   isSelected(tId: string): boolean {

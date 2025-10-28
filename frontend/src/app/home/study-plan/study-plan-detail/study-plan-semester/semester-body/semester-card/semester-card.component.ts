@@ -39,7 +39,7 @@ export class SemesterCardComponent {
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
 
   actionConfig: Record<ItemActionName, ActionConfig> = {
-    'feedback': { icon: 'bi-chat-heart', text: 'Feedback', showInMenu: true },
+    'feedback': { icon: 'bi-chat-dots', text: 'Feedback', showInMenu: true },
     'edit': { icon: 'bi-pencil', text: 'Bearbeiten', showInMenu: true },
     'delete': { icon: 'bi-trash3', text: 'Löschen', showInMenu: true },
     'changeMG': { icon: 'bi-pencil', text: 'Modulgruppe bearbeiten', showInMenu: false },

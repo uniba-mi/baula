@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateAndReturnJobtemplate = exports.validateAndReturnSemester = exports.validateAndReturnHints = exports.validateAndReturnStudyplan = exports.validateAndReturnUser = exports.validateAndReturnSemesterplan = exports.validateAndReturnUserGeneratedModule = exports.validateAndReturnCourse = exports.validateAndReturnSemesterplanTemplate = exports.validateObjectId = void 0;
+exports.validateAndReturnSurveyResult = exports.validateAndReturnJobtemplate = exports.validateAndReturnSemester = exports.validateAndReturnHints = exports.validateAndReturnStudyplan = exports.validateAndReturnUser = exports.validateAndReturnSemesterplan = exports.validateAndReturnUserGeneratedModule = exports.validateAndReturnCourse = exports.validateAndReturnSemesterplanTemplate = exports.validateObjectId = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const validator_1 = __importDefault(require("validator"));
 const { Types: { ObjectId }, } = mongoose_1.default;
@@ -130,16 +130,39 @@ const validateAndReturnJobtemplate = (job) => {
         job.title &&
         job.description &&
         job.inputMode &&
-        (job.inputMode === "url" || job.inputMode === 'mock') &&
+        (job.inputMode === "url" || job.inputMode === "mock") &&
         job.keywords &&
         Array.isArray(job.keywords) &&
-        job.keywords.every((keyword) => validator_1.default.isAlphanumeric(keyword, undefined, { ignore: " .#+|()&:/ß _-äöü" }))
+        job.keywords.every((keyword) => validator_1.default.isAlphanumeric(keyword, undefined, {
+            ignore: " .#+|()&:/ß _-äöü",
+        }))
         ? {
             ...job,
             title: job.title,
             description: job.description,
-            inputMode: job.inputMode
+            inputMode: job.inputMode,
         }
         : undefined;
 };
 exports.validateAndReturnJobtemplate = validateAndReturnJobtemplate;
+const validateAndReturnSurveyResult = (result) => {
+    return result &&
+        result.personalCode &&
+        result.personalCode.length == 8 &&
+        result.evaluationCode &&
+        validator_1.default.matches(result.evaluationCode, /\d{1,2}-20\d{2}/) &&
+        result.spName &&
+        validator_1.default.isAscii(result.spName) &&
+        result.semester &&
+        validator_1.default.isInt(String(result.semester), { min: 0, max: 20 }) &&
+        result.pu &&
+        Array.isArray(result.pu) &&
+        result.peou &&
+        Array.isArray(result.peou) &&
+        typeof result.bi == 'number' &&
+        typeof result.use == 'string' &&
+        typeof result.nps == 'number'
+        ? result
+        : undefined;
+};
+exports.validateAndReturnSurveyResult = validateAndReturnSurveyResult;

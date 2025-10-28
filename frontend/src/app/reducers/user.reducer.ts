@@ -235,7 +235,7 @@ export const reducer = createReducer(
     };
   }),
 
-  on(UserActions.updateConsentSuccess, (state, props) => {
+  on(UserActions.addConsentSuccess, (state, props) => {
     return {
       ...state,
       currentUser: {
@@ -273,6 +273,16 @@ export const reducer = createReducer(
         interests: props.interests
       }
     }
+  }),
+
+  on(UserActions.deleteModuleFeedbackSuccess, (state, props) => {
+    return {
+      ...state,
+      currentUser: {
+        ...state.currentUser,
+        moduleFeedback: props.moduleFeedback
+      }
+    };
   }),
 
   on(JobActions.upsertJob, (state, props) => {

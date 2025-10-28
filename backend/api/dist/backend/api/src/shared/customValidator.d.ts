@@ -3,6 +3,7 @@ import { PlanCourse, Semesterplan, SemesterplanTemplate } from "../semesterplan"
 import { StudyplanTemplate } from "../studyplan";
 import { Hint, UserServer } from "../user";
 import { Jobtemplate } from "../job";
+import { LongTermEvaluation } from "../longTermEvaluation";
 export declare const validateObjectId: (id: string) => boolean;
 export declare const validateAndReturnSemesterplanTemplate: (sp: any) => SemesterplanTemplate | undefined;
 export declare const validateAndReturnCourse: (course: any) => PlanCourse | undefined;
@@ -13,3 +14,4 @@ export declare const validateAndReturnStudyplan: (studyplan: any) => StudyplanTe
 export declare const validateAndReturnHints: (hints: any[]) => Hint[] | undefined;
 export declare const validateAndReturnSemester: (semester: string) => string | undefined;
 export declare const validateAndReturnJobtemplate: (job: any) => Jobtemplate | undefined;
+export declare const validateAndReturnSurveyResult: (result: any) => LongTermEvaluation | undefined;

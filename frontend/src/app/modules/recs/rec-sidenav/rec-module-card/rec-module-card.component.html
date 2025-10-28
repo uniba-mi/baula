@@ -37,13 +37,13 @@
                 <ng-container *ngIf="(isFavourite(module.acronym) | async); else notFavouriteTemplate">
                     <button mat-menu-item (click)="onToggleFavourite($event, module.acronym)"
                         (keyup.enter)="onToggleFavourite($event, module.acronym)">
-                        <i class="bi bi-star-fill text-gray"></i> <span> Nicht mehr merken</span>
+                        <i class="bi bi-bookmark-fill text-gray"></i> <span> Nicht mehr merken</span>
                     </button>
                 </ng-container>
                 <ng-template #notFavouriteTemplate>
                     <button mat-menu-item (click)="onToggleFavourite($event, module.acronym)"
                         (keyup.enter)="onToggleFavourite($event, module.acronym)">
-                        <i class="bi bi-star"></i> <span> Merken</span>
+                        <i class="bi bi-bookmark"></i> <span> Merken</span>
                     </button>
                 </ng-template>
                 <button mat-menu-item (click)="markAsNotInteresting($event, module.acronym)"
@@ -88,7 +88,18 @@
         </div>
 
         <!-- Fourth Row - Job and Topic Chips -->
-        <div *ngIf="hasMetadata(module)" class="d-flex align-items-center mb-2" style="gap: 0.25rem;">
+        <div *ngIf="hasMetadata(module) || hasFeedbackSource()" class="d-flex align-items-center mb-2"
+            style="gap: 0.25rem;">
+
+            <!-- Feedback chip -->
+            <ng-container *ngIf="hasFeedbackSource()">
+                <button class="chip feedback-chip" [ngClass]="getFeedbackChipClass()"
+                    [matTooltip]="getFeedbackTooltip()" matTooltipClass="custom-tooltip">
+                    <i class="bi" [ngClass]="getFeedbackIcon()"></i>
+                </button>
+            </ng-container>
+
+            <!-- First Job/Topic chip -->
             <ng-container *ngIf="getFirstChip() as firstChip">
                 <button class="chip truncated-chip" [ngClass]="firstChip.type === 'job' ? 'job-chip' : 'topic-chip'"
                     [matTooltip]="getFirstChipTooltip(firstChip)">

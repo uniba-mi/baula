@@ -31,6 +31,7 @@ export class SearchPanelComponent implements OnInit {
   @Input() searchSettings: SearchSettings | undefined | null;
   @Input() filterOptions: OptionGroup[];
   @Input() customStyle: boolean = false; // for reuse with different style
+  @Input() horizontalFilters: boolean = true; // for reuse with different style, default horizontal
   @Input() hideTakenAndPassed: boolean;
   @Output() search = new EventEmitter<SearchSettings>();
   @Output() filter = new EventEmitter<Option[]>();

@@ -50,6 +50,7 @@ import { UserEffects } from './effects/user.effects';
 import * as fromModuleOverview from './reducers/module-overview.reducer';
 import * as fromDialog from './reducers/dialog.reducer';
 import * as fromSearchSettings from './reducers/search-settings.reducer';
+import * as fromEvaluation from './reducers/evaluation.reducer'
 import { ModuleOverviewEffects } from './effects/module-overview.effects';
 import { environment } from '../environments/environment';
 import * as fromStudyPlanning from './reducers/study-planning.reducers';
@@ -152,15 +153,21 @@ import { EditJobDialogComponent } from './dialog/edit-job-dialog/edit-job-dialog
 import { RecModuleListComponent } from './modules/recs/rec-sidenav/rec-module-list/rec-module-list.component';
 import { RecommendationComponent } from './home/recommendation/recommendation.component';
 import { TopicSettingsComponent } from './home/recommendation/topic-settings/topic-settings.component';
-import { RecsSettingsComponent } from './home/user-profile/recs-settings/recs-settings.component';
 import { TopicChipComponent } from './home/recommendation/topic-settings/topic-chip/topic-chip.component';
-import { JobCardComponent } from './home/recommendation/job-card/job-card.component';
+import { JobCardComponent } from './home/recommendation/job-settings/job-card/job-card.component';
 import { JobSettingsComponent } from './home/recommendation/job-settings/job-settings.component';
 import { NotificationDialogComponent } from './dialog/notification-dialog/notification-dialog.component';
 import { DependencyGraphComponent } from './dialog/module-details-dialog/dependency-graph/dependency-graph.component';
 import { DemoUserDialogComponent } from './dialog/demo-user-dialog/demo-user-dialog.component';
 import { PrivacyChangeDialogComponent } from './dialog/privacy-change-dialog/privacy-change-dialog.component';
 import { UserConsentsComponent } from './home/user-profile/user-consents/user-consents.component';
+import { RecommendationsListComponent } from './home/recommendation/recommendations-list/recommendations-list.component';
+import { PersonalisationStatusComponent } from './home/dashboard/personalisation-status/personalisation-status.component';
+import { WordCloudComponent } from './shared/components/word-cloud/word-cloud.component';
+import { DataPreviewComponent } from './home/recommendation/data-preview/data-preview.component';
+import { SettingsListComponent } from './home/recommendation/settings-list/settings-list.component';
+import { HintsSidenavComponent } from './shared/components/hints-sidenav/hints-sidenav.component';import { NotFoundComponent } from './public/not-found/not-found.component';
+import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluation-dialog/evaluation-dialog.component';
 
 
 @NgModule({
@@ -229,6 +236,7 @@ import { UserConsentsComponent } from './home/user-profile/user-consents/user-co
     EditGradeDialogComponent,
     UploadStudentDataStepperComponent,
     ChangeModuleGroupDialogComponent,
+    EvaluationDialogComponent,
     ModuleGroupWizardComponent,
     SemesterDatesComponent,
     FullCalendarComponent,
@@ -247,7 +255,6 @@ import { UserConsentsComponent } from './home/user-profile/user-consents/user-co
     GroupNavigationComponent,
     UserDataComponent,
     StudypathUpdateComponent,
-    RecsSettingsComponent,
     ResolveCollisionDialogComponent,
     CourseDetailsComponent,
     FinishSemesterStepperComponent,
@@ -261,12 +268,18 @@ import { UserConsentsComponent } from './home/user-profile/user-consents/user-co
     TopicChipComponent,
     RecommendationComponent,
     TopicSettingsComponent,
-    RecsSettingsComponent,
     JobCardComponent,
     JobSettingsComponent,
     NotificationDialogComponent,
     DependencyGraphComponent,
-    DemoUserDialogComponent
+    DemoUserDialogComponent,
+    HintsSidenavComponent,
+    NotFoundComponent,
+    RecommendationsListComponent,
+    PersonalisationStatusComponent,
+    WordCloudComponent,
+    DataPreviewComponent,
+    SettingsListComponent
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -311,6 +324,10 @@ import { UserConsentsComponent } from './home/user-profile/user-consents/user-co
     StoreModule.forFeature(
       fromSearchSettings.searchSettingsFeatureKey,
       fromSearchSettings.reducer
+    ),
+    StoreModule.forFeature(
+      fromEvaluation.evaluationFeatureKey,
+      fromEvaluation.reducer
     ),
     MatExpansionModule,
     MatSnackBarModule,

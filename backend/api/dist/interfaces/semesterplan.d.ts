@@ -39,6 +39,7 @@ export interface TimetableSettings {
 }
 export interface PlanningHints {
     type: string;
+    context: 'course-planning' | 'module-planning';
     begin: string;
     end: string;
     acronym?: string;

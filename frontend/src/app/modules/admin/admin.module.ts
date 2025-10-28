@@ -39,8 +39,8 @@ import { AdminRecsComponent } from './admin-recs/admin-recs.component';
 import { ReportingComponent } from './reporting/reporting.component';
 import { BaseChartDirective } from 'ng2-charts';
 import { SharedModule } from '../shared/shared.module';
-import { SemesterPipe } from '../shared/pipes/semester.pipe';
 import { SemesterSelectionFormComponent } from './shared/semester-selection-form/semester-selection-form.component';
+import { ResultPageComponent } from '../long-term-evaluation/result-page/result-page.component';
 
 
 @NgModule({
@@ -86,7 +86,8 @@ import { SemesterSelectionFormComponent } from './shared/semester-selection-form
     MatCheckboxModule,
     MatAutocompleteModule,
     BaseChartDirective,
-    SharedModule
+    SharedModule, 
+    ResultPageComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

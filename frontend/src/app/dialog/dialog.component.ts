@@ -52,6 +52,7 @@ export interface DialogData {
   studyplanTemplate$?: Observable<Studyplan>;
   options?: { value: string, label: string }[]; // for generic choose option dialog
   isFirstSemesterStudent?: boolean;
+  content?: any; // just for evaluation
 }
 
 @Component({

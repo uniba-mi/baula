@@ -4,7 +4,7 @@
   <!-- Hinweis Modulerklärung -->
   <app-hint [key]="moduleHint" [hintMessage]="moduleHintMessage"></app-hint>
 
-  <app-search-panel [searchSettings]="searchSettings$ | async" [filterOptions]="filterList"
+  <app-search-panel [searchSettings]="searchSettings$ | async" [filterOptions]="filterList" [horizontalFilters]="true"
     (search)="searchModules($event)">
   </app-search-panel>
 

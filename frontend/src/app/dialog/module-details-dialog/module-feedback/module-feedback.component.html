@@ -1,7 +1,7 @@
 <div class="feedback-form-wrapper p-4">
     <div class="feedback-form py-4">
         <p class="fw-bold">Hier kannst du Feedback zum Modul geben und bearbeiten. Dein Feedback trägt dazu bei,
-            Modulempfehlungen zu verbessern.</p>
+            deine Modulempfehlungen zu verbessern.</p>
         <hr />
         <form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
             <div *ngFor="let question of questions" class="mb-3">

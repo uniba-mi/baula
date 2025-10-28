@@ -1,6 +1,7 @@
 <ng-container *ngIf="!maintenance; else MaintenanceStudyplan">
   <ng-container *ngIf="selectedStudyplan$ | async as selectedPlan; else NoStudyplan">
-    <mat-sidenav-container class="mat-drawer-container" cdkDropListGroup *ngIf="user$ | async as user">
+    <mat-sidenav-container class="mat-drawer-container" [hasBackdrop]="false" cdkDropListGroup
+      *ngIf="user$ | async as user">
       <mat-sidenav class="studyplan-sidenav" #sidenav mode="side" [ngClass]="{
     'd-none': isSmallScreen, 
     'd-flex': !isSmallScreen, 
@@ -33,7 +34,7 @@
               ">
                 <i class="edit-pencil icon bi bi-pencil-square d-inline text-gray"></i></button>
             </div>
-            <button class="btn btn-outline btn-sm manage-studyplans" tabindex="0" aria-label="Alle Studienpläne ansehen"
+            <button class="btn btn-blue-outline manage-studyplans" tabindex="0" aria-label="Alle Studienpläne ansehen"
               routerLink="/app/studium/ueberblick">
               <i class="bi bi-arrow-up-right-square"></i> Studienpläne verwalten
             </button>
@@ -46,6 +47,13 @@
             </div>
           </div>
           <!-- Intro End -->
+
+          <!-- Sidenav for hints -->
+          <mat-sidenav *ngIf="(isActivePlan$ | async)" class=" hints-sidenav" mode="over" position="end"
+            [opened]="hintsOpened"><app-hints-sidenav [hints]="hints" (close)="toggleHints()"
+              (acronymClick)="openModuleDetails($event)">
+            </app-hints-sidenav>
+          </mat-sidenav>
 
           <!-- Adding semesters option -->
           <ng-container *ngIf="activeSemesters$ | async as activeSemesters">
@@ -63,6 +71,11 @@
                   (click)="openAddSemesterDialog()" (keyup.enter)="openAddSemesterDialog()"
                   matTooltip="Studiendauer verlängern" matTooltipClass="custom-tooltip">
                   <i class="bi bi-plus-lg me-2"> Semester hinzufügen</i>
+                </button>
+                <button *ngIf="(isActivePlan$ | async)" class="btn-icon" (click)="toggleHints()"
+                  matTooltip="Klicke hier, um Planungshinweise anzuzeigen." matTooltipClass="custom-tooltip">
+                  <i class="bi bi-exclamation-triangle-fill fs-5"
+                    [ngClass]="{'text-warning': hintsIconColor === 'warning', 'text-danger': hintsIconColor === 'danger', 'text-secondary': hintsIconColor === 'standard'}"></i>
                 </button>
                 <!-- TODO comment back in as soon as API is there -->
                 <!-- <button class="sync-with-fn btn btn-primary btn-sm" matTooltip="FlexNow-Auszug laden"

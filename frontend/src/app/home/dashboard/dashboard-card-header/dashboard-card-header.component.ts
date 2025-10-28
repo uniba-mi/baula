@@ -9,6 +9,7 @@ import { ChartMetadata, chartMetadata } from 'src/app/shared/constants/chartMeta
 })
 export class DashboardCardHeaderComponent implements OnInit {
   @Input() key: string;
+  @Input() showCompletionBadge = false;
   @Output() changeVisibility = new EventEmitter<string>()
 
   chartMetadata = chartMetadata

@@ -22,6 +22,7 @@ import { User } from '../../../../interfaces/user';
 import { getStudyplans } from '../selectors/study-planning.selectors';
 import { Store } from '@ngrx/store';
 import { SemesterplanActions } from '../actions/study-planning.actions';
+import { RecsRestService } from '../modules/recs/recs-rest.service';
 
 @Injectable()
 export class UserEffects {
@@ -176,16 +177,16 @@ export class UserEffects {
     )
   );
 
-  updateConsent$ = createEffect(() =>
+  addConsent$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(UserActions.updateConsent),
+      ofType(UserActions.addConsent),
       switchMap((props) =>
         this.rest
-          .updateConsent(props.ctype, props.hasConfirmed, props.hasResponded, props.timestamp)
+          .addConsent(props.ctype, props.hasConfirmed, props.hasResponded, props.timestamp)
           .pipe(
-            map((consents) => UserActions.updateConsentSuccess({ consents })),
+            map((consents) => UserActions.addConsentSuccess({ consents })),
             catchError((error) =>
-              of(UserActions.updateConsentFailure({ error }))
+              of(UserActions.addConsentFailure({ error }))
             )
           )
       )
@@ -205,6 +206,19 @@ export class UserEffects {
                 type: AlertType.SUCCESS,
                 message: 'Feedback wurde aktualisiert.',
               });
+
+              // use feedback
+              const { similarmods, similarchair } = props.moduleFeedback;
+
+              // update feedback_similarmods in recommendations
+              if (similarmods) {
+                this.recsApi.updatePersonalRecommendations(props.moduleFeedback).subscribe();
+              }
+
+              // TODO update chair in user and use for recommendations
+              if (similarchair) {
+                // TODO 
+              }
             }),
             catchError((error) =>
               of(UserActions.updateModuleFeedbackFailure({ error }))
@@ -281,9 +295,9 @@ export class UserEffects {
                 type: AlertType.SUCCESS,
                 message: 'Modul wird nicht mehr vorgeschlagen.',
               },
-              'In den Einstellungen rückgängig machen',
+              'Unter Personalisierung rückgängig machen',
               () =>
-                this.router.navigate(['/app/profil/einstellung-empfehlungen'])
+                this.router.navigate(['/app/personalisierung/blacklist'])
             );
           }),
           catchError((error) => {
@@ -307,7 +321,7 @@ export class UserEffects {
       ofType(UserActions.toggleTopic),
       switchMap((props) =>
         this.rest.toggleTopic(props.topic).pipe(
-          map((topics) => 
+          map((topics) =>
             UserActions.toggleTopicSuccess({ topics })
           ),
           catchError((error) =>
@@ -367,6 +381,35 @@ export class UserEffects {
             of(StudypathActions.deleteModuleFromStudypathFailure({ error }))
           )
         )
+      )
+    )
+  );
+
+  deleteModuleFeedback$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.deleteModuleFeedback),
+      mergeMap((props) =>
+        this.rest
+          .deleteModuleFeedback(props.moduleFeedback)
+          .pipe(
+            map((moduleFeedback) => UserActions.deleteModuleFeedbackSuccess({ moduleFeedback })),
+            tap(() => {
+              this.snackbar.openSnackBar({
+                type: AlertType.SUCCESS,
+                message: 'Feedback wurde gelöscht.',
+              });
+
+              // delete corresponding recommendations
+              this.recsApi.deletePersonalRecommendationsByFeedback(props.moduleFeedback.acronym).subscribe();
+            }),
+            catchError((error) => {
+              this.snackbar.openSnackBar({
+                type: AlertType.DANGER,
+                message: 'Feedback konnte nicht gelöscht werden.',
+              });
+              return of(UserActions.deleteModuleFeedbackFailure({ error }));
+            })
+          )
       )
     )
   );
@@ -497,10 +540,10 @@ export class UserEffects {
     )
   );
 
-  upsertJob$ = createEffect(() => 
+  upsertJob$ = createEffect(() =>
     this.actions$.pipe(
       ofType(JobActions.upsertJob),
-      mergeMap((props) => 
+      mergeMap((props) =>
         this.rest.recommendModulesToJob(props.job, props.id).pipe(
           map((job) => JobActions.upsertJobSuccess({ job })),
           tap(() =>
@@ -540,8 +583,9 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private rest: RestService,
+    private recsApi: RecsRestService,
     private snackbar: SnackbarService,
     private router: Router,
     private store: Store,
-  ) {  }
+  ) { }
 }

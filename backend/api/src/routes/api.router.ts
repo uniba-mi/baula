@@ -50,4 +50,10 @@ router.use('/admin', checkAndReturnAdminUser, admin);
 import { jobproposal } from './jobproposal/jobproposal.router';
 router.use('/job-proposal', jobproposal);
 
+import { evaluation } from './evaluation/evaluation.router';
+router.use('/evaluation', evaluation);
+
+import { survey } from "./survey/survey.router";
+router.use('/survey', survey);
+
 export { router as api };

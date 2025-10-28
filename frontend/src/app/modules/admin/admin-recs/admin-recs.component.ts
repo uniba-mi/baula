@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
+import { EvaluationRestService } from '../../evaluation/evaluation-rest.service';
 
 @Component({
   selector: 'admin-recs',
@@ -9,9 +10,7 @@ import { AdminRestService } from '../admin-rest.service';
 })
 export class AdminRecsComponent {
 
-  constructor(private adminService: AdminRestService) {
-
-  }
+  constructor(private adminService: AdminRestService, private evalService: EvaluationRestService) { }
 
   getModuleEmbeddings() {
     this.adminService.updateModuleEmbeddings().subscribe({
@@ -31,6 +30,17 @@ export class AdminRecsComponent {
       },
       error: (error) => {
         console.error('Topics konnten nicht initialisiert werden', error);
+      }
+    });
+  }
+
+  initEvaluationData() {
+    this.evalService.initEvaluationData().subscribe({
+      next: (response) => {
+        console.log('Evaluationsdaten wurden initialisiert', response);
+      },
+      error: (error) => {
+        console.error('Evaluationsdaten konnten nicht initialisiert werden', error);
       }
     });
   }

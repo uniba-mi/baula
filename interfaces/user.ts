@@ -95,7 +95,7 @@ export interface ModuleFeedback extends Feedback {
   acronym: string,
 }
 
-export type ConsentType = 'upload-exam-data' | '2512-privacy-change' | 'flexnow-api' | 'terms-of-use'; // add further options with |
+export type ConsentType = 'upload-exam-data' | '2512-privacy-change' | 'flexnow-api' | 'terms-of-use' | 'bakule-survey'; // add further options with |
 
 export function convertUserRole(userRole: string | string[]): string[] {
   // Konvertierer @ in eindeutige Nutzerrollen (z.B. employee, student usw.) und trenne vorher beim ; oder ,

@@ -11,7 +11,7 @@ import { RecHelperService } from 'src/app/modules/recs/rec-helper.service';
 
 
 @Component({
-  selector: 'job-settings',
+  selector: 'app-job-settings',
   standalone: false,
   templateUrl: './job-settings.component.html',
   styleUrl: './job-settings.component.scss',
