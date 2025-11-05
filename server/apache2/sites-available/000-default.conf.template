@@ -39,6 +39,7 @@
     SSLCertificateKeyFile /etc/acme/rsa-certs/key_${HOSTNAME}.pem
 
     Alias /3rdpartylicence.txt /var/www/browser/3rdpartylicence.txt
+    Alias /docs /var/www/docs
 
     # Sicherheitsheader hinzufügen
     <IfModule mod_headers.c>
@@ -76,10 +77,6 @@
         # Proxy für den Logout
         ProxyPass "/logout" "http://141.13.235.13:${API_PORT}/logout"
         ProxyPassReverse "/logout" "http://141.13.235.13:${API_PORT}/logout"
-
-        # Proxy für Dokumentation
-        ProxyPass "/docs" "http://141.13.235.13:${DOCS_PORT}"
-        ProxyPassReverse "/docs" "http://141.13.235.13:${DOCS_PORT}"
     </IfModule>
 
     <IfModule mod_rewrite.c>

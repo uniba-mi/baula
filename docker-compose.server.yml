@@ -14,6 +14,7 @@ services:
       - "141.13.235.13:${SERVER_PORT_SSL}:443"
     volumes:
       - ./server/app:/var/www   
+      - ./documentation/.retype:/var/www/docs
       - ./server/apache2/sites-available:/etc/apache2/sites-available   
       - ./server/apache2/apache2.conf:/etc/apache2/apache2.conf
       - /etc/acme/rsa-certs:/etc/acme/rsa-certs

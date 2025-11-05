@@ -45,11 +45,3 @@ services:
     depends_on:
       - mongodb
       - mariadb
-
-  retype:
-    image: retypeapp/retype:latest
-    restart: always
-    volumes:
-      - ./documentation/.retype:/usr/share/nginx/html:ro
-    ports:
-      - ${DOCS_PORT}:80
