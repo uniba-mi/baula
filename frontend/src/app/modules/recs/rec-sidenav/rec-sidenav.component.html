@@ -43,17 +43,8 @@
       </app-rec-module-list>
     </div>
 
-    <!-- Tab 3: Commonly Passed Modules -->
-    <div *ngIf="selectedTabIndex === 2">
-      <app-hint [key]="hints.serendipity.key" [hintMessage]="hints.serendipity.message"></app-hint>
-      <app-rec-module-list [modules]="(commonlyPassedModules$ | async) ?? []" [listType]="'common'"
-        [droppedModules]="droppedModules" [isDragDisabled]="isSmallScreen"
-        (moduleFavouriteToggled)="updateFavouriteModules($event)">
-      </app-rec-module-list>
-    </div>
-
     <!-- Tab 4: Serendipitous modules -->
-    <div *ngIf="selectedTabIndex === 3">
+    <div *ngIf="selectedTabIndex === 2">
       <app-hint [key]="hints.serendipitousModules.key" [hintMessage]="hints.serendipitousModules.message"></app-hint>
       <app-rec-module-list [modules]="(serendipitousModules$ | async) ?? []" [listType]="'serendipitous'"
         [droppedModules]="droppedModules" [isDragDisabled]="isSmallScreen"

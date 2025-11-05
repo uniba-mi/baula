@@ -7,25 +7,22 @@ import {
 } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { map, startWith, switchMap, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { getSelectedSemesterplanSemesterById } from 'src/app/selectors/study-planning.selectors';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { PlanningValidationService } from 'src/app/shared/services/planning-validation.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Module } from '../../../../../interfaces/module';
-import { getUserStudyprogrammes } from 'src/app/selectors/user.selectors';
 import { RecHelperService } from 'src/app/modules/recs/rec-helper.service';
 import { PathModule } from '../../../../../interfaces/studypath';
-import { ModulePasses } from '../../../../../interfaces/recommendation';
 import { ModService } from 'src/app/shared/services/module.service';
-import { RecsRestService } from 'src/app/modules/recs/recs-rest.service';
 
 @Component({
-    selector: 'app-add-module-dialog',
-    templateUrl: './add-module-dialog.component.html',
-    styleUrls: ['./add-module-dialog.component.scss'],
-    standalone: false
+  selector: 'app-add-module-dialog',
+  templateUrl: './add-module-dialog.component.html',
+  styleUrls: ['./add-module-dialog.component.scss'],
+  standalone: false
 })
 export class AddModuleDialogComponent implements OnInit {
   @Input() modules: Module[];
@@ -40,11 +37,8 @@ export class AddModuleDialogComponent implements OnInit {
   addModuleForm: FormGroup;
 
   spId: string;
-  displayKeyDriverWarning: boolean;
   priorModuleWarningMessage: string;
-  successors$: Observable<ModulePasses[]>;
   passedOrTakenModules: PathModule[];
-  cohortRecsAvailable: boolean;
 
   constructor(
     private store: Store,
@@ -53,8 +47,7 @@ export class AddModuleDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private recHelperService: RecHelperService,
     private modService: ModService,
-    private recsApi: RecsRestService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.addModuleForm = this.formBuilder.group({
@@ -66,24 +59,6 @@ export class AddModuleDialogComponent implements OnInit {
       startWith(''),
       map((value) => this._filter(value || ''))
     );
-
-    /* check if recommendations are available for the user's study program */
-    this.store
-      .select(getUserStudyprogrammes)
-      .pipe(take(1))
-      .pipe(
-        switchMap((sps) => {
-          if (sps) {
-            this.spId = sps[0].spId;
-            return this.recsApi.getCohortRecsAvailabilityInfo(this.spId);
-          } else {
-            return of(false);
-          }
-        })
-      )
-      .subscribe((cohortRecsAvailable) => {
-        this.cohortRecsAvailable = cohortRecsAvailable;
-      });
 
     // get passed modules from studypath
     this.recHelperService
@@ -118,7 +93,6 @@ export class AddModuleDialogComponent implements OnInit {
 
     // set prior module warning to false
     this.displayPriorModuleWarning = false;
-    this.displayKeyDriverWarning = false;
 
     this.store
       .select(getSelectedSemesterplanSemesterById(this.semesterplanId))
@@ -138,28 +112,16 @@ export class AddModuleDialogComponent implements OnInit {
       }
     }
 
-    if (this.cohortRecsAvailable) {
-      // display warning if priorModules have not been taken or passed
-      if (this.selectedModule) {
-        if (this.selectedModule.allPriorModules.length > 0) {
-          let priorModuleCheck = this.planningValidation.priorModulesTaken(
-            this.selectedModule
-          );
-          if (!priorModuleCheck.success) {
-            this.displayPriorModuleWarning = true;
-            this.warningMessage = priorModuleCheck.message;
-          }
+    // display warning if priorModules have not been taken or passed
+    if (this.selectedModule) {
+      if (this.selectedModule.allPriorModules.length > 0) {
+        let priorModuleCheck = this.planningValidation.priorModulesTaken(
+          this.selectedModule
+        );
+        if (!priorModuleCheck.success) {
+          this.displayPriorModuleWarning = true;
+          this.warningMessage = priorModuleCheck.message;
         }
-      }
-
-      // Fetch and display filtered recommendable successor modules
-      if (this.selectedModule) {
-        this.successors$ =
-          this.recHelperService.getFilteredRecommendableSuccessors(
-            this.spId,
-            this.selectedModule.acronym,
-            10 // number of desired results
-          );
       }
     }
   }

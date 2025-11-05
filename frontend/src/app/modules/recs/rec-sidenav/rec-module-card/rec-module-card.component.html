@@ -14,7 +14,7 @@
 
             <!-- Status Column -->
             <div class="d-flex align-items-center">
-                <div *ngIf="studypath$ | async as studypath">
+                <div *ngIf="studypath$ | async as studypath" class="status-box-not-clickable">
                     <app-module-status [studypath$]="studypath$" [module]="module" [modType]="modType"
                         [openedFromModuleCatalog]="true"></app-module-status>
                 </div>

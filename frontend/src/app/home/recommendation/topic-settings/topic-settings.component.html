@@ -19,7 +19,7 @@
                 <mat-autocomplete #autoTopic="matAutocomplete" class="chip-style-autocomplete">
                     <ng-container *ngIf="filteredChildTopics$ | async as filteredTopics">
                         <ng-container *ngIf="filteredTopics.length > 0">
-                            <mat-option *ngFor="let topic of filteredTopics" [value]="topic.name"
+                            <mat-option *ngFor="let topic of filteredTopics" [value]="''"
                                 (onSelectionChange)="selectTopicFromSearch(topic)" class="option-with-chip">
                                 <div class="topic-option-container">
                                     <div class="topic-chip-wrapper">
@@ -28,7 +28,7 @@
                                             (topicToggled)="topicToggle$.next($event)"></app-topic-chip>
                                     </div>
                                     <span *ngIf="topic.description" class="topic-description text-gray">
-                                        {{ topic.description | slice:0:100 }}{{topic.description.length > 100 ? '...'
+                                        {{ topic.description | slice:0:120 }}{{topic.description.length > 120 ? '...'
                                         :
                                         ''}}
                                     </span>
@@ -140,7 +140,7 @@
                     </div>
                 </ng-container>
 
-                <div
+                <div class="loading-container"
                     *ngIf="!(isLoading$ | async) && (!filteredRecommendations || filteredRecommendations.length === 0)">
                     <p>Keine Modulbespiele verfügbar. Bitte wähle oben Themenfelder aus, um Vorschläge zu erhalten.</p>
                 </div>

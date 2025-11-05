@@ -55,22 +55,19 @@ exports.addModuleStructureToDatabase = addModuleStructureToDatabase;
 exports.updateModuleEmbeddings = updateModuleEmbeddings;
 exports.initTopicsFromJSON = initTopicsFromJSON;
 exports.getReporting = getReporting;
-const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const error_1 = require("../../shared/error");
 const validator_1 = __importDefault(require("validator"));
-const customValidator_1 = require("../../shared/customValidator");
+const customValidator_1 = require("../../shared/helpers/customValidator");
 const path_1 = __importDefault(require("path"));
 const fs = __importStar(require("fs"));
-const univisHelpers_1 = require("../../shared/univisHelpers");
-const univisCrawler_1 = require("../../shared/univisCrawler");
+const univisHelpers_1 = require("../../shared/helpers/univisHelpers");
+const univisCrawler_1 = require("../../shared/helpers/univisCrawler");
 const camaro_1 = require("camaro");
 const mhb_fn2mod_1 = require("../../templates/mhb_fn2mod");
 const mongo_1 = require("../../database/mongo");
 const https_1 = __importDefault(require("https"));
-const fn2modHelper_1 = require("../../shared/fn2modHelper");
-const router = express_1.default.Router();
-router.use(express_1.default.json());
+const fn2modHelper_1 = require("../../shared/helpers/fn2modHelper");
 const prisma = new client_1.PrismaClient();
 // request to get the logs of the cronjob
 async function getCronjobLogs(req, res, next) {

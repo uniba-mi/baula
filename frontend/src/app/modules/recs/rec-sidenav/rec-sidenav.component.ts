@@ -43,7 +43,7 @@ export class RecSidenavComponent implements OnInit, OnChanges {
   tabs = [
     { label: 'Passend', icon: 'bi bi-person-circle text-gray', infoText: 'Module, die laut deinen Einstellungen unter "Personalisierung" zu dir passen.' },
     { label: 'Neu', icon: 'bi bi-stars text-gray', infoText: 'Module, die neu im Angebot sind.' },
-    { label: 'Beliebt', icon: 'bi bi-people-fill text-gray', infoText: 'Module, die Studierende deines Studiengangs häufig belegen.' },
+    // { label: 'Beliebt', icon: 'bi bi-people-fill text-gray', infoText: 'Module, die Studierende deines Studiengangs häufig belegen.' },
     { label: 'Entdecken', icon: 'bi bi-binoculars-fill text-gray', infoText: 'Verschiedene Module, die du interessant finden könntest.' },
     { label: 'Gemerkt', icon: 'bi bi-bookmark-fill text-gray', infoText: 'Module, die du dir gemerkt hast.' }
   ];
@@ -51,7 +51,6 @@ export class RecSidenavComponent implements OnInit, OnChanges {
   favouriteModulesTabIndex: number = 4;
 
   // data for module lists
-  commonlyPassedModules$: Observable<Module[]>;
   newModules$: Observable<Module[]>;
   personalModules$: Observable<ModuleWithMetadata[]>;
   serendipitousModules$: Observable<Module[]>;
@@ -114,8 +113,6 @@ export class RecSidenavComponent implements OnInit, OnChanges {
   allTopics$: Observable<Topic[] | undefined>;
   topicsArray: Topic[] = [];
   jobsArray: Job[] = [];
-  cohortRecsAvailable: boolean = false;
-  showNoCohortDataWidget: boolean = false;
   isWIAIStudent: boolean = false;
 
   constructor(
@@ -129,7 +126,6 @@ export class RecSidenavComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.initializeBasicSettings();
-    this.initializeCohortData();
     this.initializePassedModules();
     this.initializeModuleStreams();
 
@@ -166,18 +162,10 @@ export class RecSidenavComponent implements OnInit, OnChanges {
     this.favouriteModulesTabIndex = this.tabs.findIndex(tab => tab.label === 'Gemerkt');
   }
 
-  private initializeCohortData() {
-    this.recsService.getCohortRecsAvailabilityInfo(this.spId).pipe(take(1)).subscribe((cohortRecsAvailable) => {
-      this.cohortRecsAvailable = cohortRecsAvailable;
-      this.showNoCohortDataWidget = !this.cohortRecsAvailable;
-    });
-  }
-
   private initializeModuleStreams() {
     this.allTopics$ = this.recsService.getTopicChildren();
     this.allJobs$ = this.store.select(getJobs);
 
-    this.commonlyPassedModules$ = this.recTabService.initializeCommonModules(this.spId);
     this.newModules$ = this.recTabService.initializeNewModules();
     this.serendipitousModules$ = this.recTabService.initializeSerendipitousModules(this.spId);
     this.personalModules$ = this.recTabService.initializePersonalModules(this.allTopics$, this.allJobs$);

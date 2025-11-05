@@ -5,7 +5,7 @@ import {
   validateAndReturnSemester,
   validateAndReturnUser,
   validateObjectId,
-} from "../../shared/customValidator";
+} from "../../shared/helpers/customValidator";
 import { Types } from "mongoose";
 import { PathCourse, PathModule } from "../../../../../interfaces/studypath";
 import { BadRequestError, logError, NotFoundError } from "../../shared/error";
@@ -25,14 +25,11 @@ import {
   metaDataTemplate
 } from "../../templates/student_fn2api";
 import https from "https";
-import { decrypt } from "../../shared/crypto";
+import { decrypt } from "../../shared/utils/crypto";
 import { SemesterplanTemplate } from "../../../../../interfaces/semesterplan";
 import { Semester } from "../../../../../interfaces/semester";
 
 const prisma = new PrismaClient();
-
-const router = express.Router();
-router.use(express.json());
 
 // Get Userdata via ShibId
 export async function getUser(req: Request, res: Response, next: NextFunction) {

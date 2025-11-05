@@ -1,15 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDistinctDepartments = getDistinctDepartments;
 exports.getDistinctCourseTypes = getDistinctCourseTypes;
-const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const error_1 = require("../../shared/error");
-const router = express_1.default.Router();
-router.use(express_1.default.json());
 const prisma = new client_1.PrismaClient();
 // get distinct departements of Courses
 async function getDistinctDepartments(req, res, next) {
@@ -33,7 +27,7 @@ async function getDistinctDepartments(req, res, next) {
             res.status(200).json(depAsStringArray);
         }
         else {
-            next(new error_1.NotFoundError());
+            next(new error_1.NotFoundError("Keine Einrichtungen gefunden."));
         }
     }
     catch (error) {
@@ -63,7 +57,7 @@ async function getDistinctCourseTypes(req, res, next) {
             res.status(200).json(typesAsStringArray);
         }
         else {
-            next(new error_1.NotFoundError());
+            next(new error_1.NotFoundError("Keine Kurstypen gefunden."));
         }
     }
     catch (error) {

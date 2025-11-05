@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.api = void 0;
 const express_1 = __importDefault(require("express"));
 const error_1 = require("../shared/error");
+const swagger_config_1 = require("../config/swagger.config");
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const authenticationMiddleware_1 = require("../shared/middleware/authenticationMiddleware");
 const router = express_1.default.Router();
 exports.api = router;
@@ -19,21 +21,23 @@ router.get("/", (req, res, next) => {
     }
 });
 router.use(authenticationMiddleware_1.ensureAuthenticated);
-//for classic routing define namespaces and include routes
-const univis_router_1 = require("./univis/univis.router");
-router.use("/univis", univis_router_1.univis);
-const studyprogramme_router_1 = require("./studyprogramme/studyprogramme.router");
-router.use("/studyprogramme", studyprogramme_router_1.studyprogramme);
+// use swagger for api docs
+router.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_config_1.swaggerConfig));
+// for classic routing define namespaces and include routes
+const courses_router_1 = require("./courses/courses.router");
+router.use("/courses", courses_router_1.courses);
+const studyprogrammes_router_1 = require("./studyprogrammes/studyprogrammes.router");
+router.use("/studyprogrammes", studyprogrammes_router_1.studyprogrammes);
 const studyplans_router_1 = require("./studyplans/studyplans.router");
 router.use("/studyplan", studyplans_router_1.studyplan);
-const mhb_router_1 = require("./mhb/mhb.router");
-router.use("/mhb", mhb_router_1.mhb);
+const mhbs_router_1 = require("./mhbs/mhbs.router");
+router.use("/mhbs", mhbs_router_1.mhbs);
 const competences_router_1 = require("./competences/competences.router");
 router.use('/competences', competences_router_1.competences);
 const user_router_1 = require("./user/user.router");
 router.use("/user", user_router_1.user);
-const semesterplan_router_1 = require("./semesterplan/semesterplan.router");
-router.use("/semesterplan", semesterplan_router_1.semesterplan);
+const semesterplans_router_1 = require("./semesterplans/semesterplans.router");
+router.use("/semesterplan", semesterplans_router_1.semesterplans); // TODO semesterplans + in RestService too
 const meta_router_1 = require("./meta/meta.router");
 router.use("/meta", meta_router_1.meta);
 const recs_router_1 = require("./recs/recs.router");

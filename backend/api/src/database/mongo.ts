@@ -16,13 +16,7 @@ import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interface
 import { Topic as ITopic } from "../../../../interfaces/topic";
 import { UserServer as IUser } from "../../../../interfaces/user";
 import { Evaluation as IEvaluation } from "../../../../interfaces/evaluation";
-//dotenv for custom environment variables
-import * as dotenv from "dotenv";
-import path from "path";
 
-dotenv.config({
-  path: path.resolve(__dirname, "../../", "environment", '.env.backend'),
-});
 const uri = process.env.MONGO_DATABASE_URL
   ? process.env.MONGO_DATABASE_URL.toString()
   : "";

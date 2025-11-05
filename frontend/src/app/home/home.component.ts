@@ -144,7 +144,7 @@ export class HomeComponent implements OnInit {
         ) {
           this.openPrivacyChangeDialog();
         } else if (
-          !user.roles.includes('demo') &&
+          user.authType === 'saml' &&
           this.isTimestampOlderThanAWeek(user.createdAt ?? new Date())
         ) {
           // only opens bakule survey, when privacy dialog is not opened, user is not demo user and is created more than one week ago
@@ -357,7 +357,7 @@ export class HomeComponent implements OnInit {
     const latestSurveyConsent = surveyConsent.length > 0 ? surveyConsent[0] : null;
     
     if (!latestSurveyConsent || !latestSurveyConsent.hasResponded) {
-      const month = new Date().getMonth();
+      const month = new Date().getMonth()+1;
       const year = new Date().getFullYear();
       const dialogRef = this.dialog.open(SurveyComponent, {
         disableClose: true,

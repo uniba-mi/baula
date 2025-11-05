@@ -113,33 +113,6 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
       });
     this.activePlan$ = this.store.select(getSemesterPlan);
     this.ectsSum$ = this.store.select(getEctsSumOfSemesterPlan);
-    /* this.courses$ = this.store.select(getPlanCourses).pipe(
-      takeUntil(this.destroy$),
-      switchMap(planCourses => {
-        if (planCourses.length === 0) return of([]); // Handle case where there are no courses
-        const courseDetailsObservables = planCourses.map(course =>
-          this.rest.getCourseDetails(course.id, this.activeSemester).pipe(
-            // if error occurs e.g. 404 then set this course to null
-            // TODO: here we should add only the planCourse information with an additional value for deletedCourse
-            catchError((error) => {
-              console.warn(`Course with ID ${course.id} could not be loaded`, error);
-              // Return `null` to handle the error and allow filtering later
-              return of({
-                ...course,
-                isDeleted: true,
-              });
-            })
-          )
-        );
-        return forkJoin(courseDetailsObservables);/* .pipe(
-          // filter is currently needed to filter out all null values (not existing courses)
-          map((courses): Course[] => {
-            // Type guard to filter out null values and let TypeScript know
-            return courses.filter((course): course is Course => course !== null);
-          })
-        );; 
-      })
-    ); */
     this.store
       .select(getPlanningHints)
       .pipe(takeUntil(this.destroy$))
@@ -181,32 +154,6 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
     if (this.searchOpened && !query) {
       // reset route
       this.router.navigate(['app', 'semester']);
-      // reset filter and search settings
-      /* this.store.dispatch(updateSearchSettings({ 
-        context: 'course-search',
-        searchSettings: {
-          term: '',
-          searchIn: ['mId', 'name'],
-          advancedSearch: {
-            searchInFields: ['mId', 'name'],
-            detailSearch: [{
-              term: '',
-              searchIn: ''
-            }],
-            filter: {
-              time: {
-                day: '',
-                timeStart: '',
-                timeEnd: ''
-              },
-              types: '',
-              departments: '',
-              onlyModuleCourses: false,
-              onlySelectedCourses: false
-            }
-          },
-        }
-      })) */
     }
 
     if (query && this.searchOpened) {
@@ -242,10 +189,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
     for (const course of plan.courses) {
       this.timetable.addCourse(course.id);
     }
-
-    if (this.timetable.courses.length !== 0) {
-      window.open(this.timetable.getUnivisLink(), '_blank');
-    }
+    window.open(this.timetable.getUnivisLink(), '_blank');
   }
 
   openTimetable(plan: Semesterplan) {
@@ -256,6 +200,12 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
 
     if (this.timetable.courses.length !== 0) {
       window.open(this.timetable.getTimetableLink(), '_blank');
+    } else {
+      this.snackbar.openSnackBar({
+        type: AlertType.DANGER,
+        message:
+          'Du hast keine Lehrveranstaltungen ausgewählt, es kann daher kein PDF angezeigt werden.',
+      });
     }
   }
 

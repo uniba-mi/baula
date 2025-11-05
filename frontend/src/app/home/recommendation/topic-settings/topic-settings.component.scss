@@ -101,4 +101,11 @@ mat-chip-listbox {
 
 .recommendations-content {
   transition: all 0.3s ease;
+  min-height: 400px;
+}
+
+// min width for loading box to avoid footer jumping up entirely
+.loading-container {
+  min-height: 400px;
+  background: green !important;
 }

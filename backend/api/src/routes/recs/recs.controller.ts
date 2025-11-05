@@ -1,206 +1,17 @@
 import express, { NextFunction, Request, Response } from "express";
 import fs from "fs";
-import path from 'path';
-import { moduleChanges } from "../../shared/moduleMapping";
-import { programmeChanges } from "../../shared/programmeMapping";
-import { SingleModuleData, ModulePasses, RecommendedModule, Source } from '../../../../../interfaces/recommendation';
-import { Recommendation as IRecommendation } from '../../../../../interfaces/recommendation';
+import { RecommendedModule, Source, Recommendation as IRecommendation } from '../../../../../interfaces/recommendation';
 import { Embedding, ModEmbedding, Recommendation, TopicM } from "../../database/mongo";
 import { BadRequestError, NotFoundError } from "../../shared/error";
-import { Topic } from "../../topic";
-import { generateFeedbackBasedRecommendations, generateTopicModuleRecommendationsPreGenerated } from "../../shared/job/request";
-import { UserServer } from "../../user";
+import { Topic } from "../../../../../interfaces/topic";
+import { generateTopicModuleRecommendationsPreGenerated } from "../../services/topicService";
+import { generateFeedbackBasedRecommendations } from "../../services/feedbackService";
+import { UserServer } from "../../../../../interfaces/user";
 import validator from "validator";
-import { extractModules } from "../../shared/moduleHelpers";
+import { extractModules } from "../../shared/helpers/moduleHelpers";
 
 const router = express.Router();
 router.use(express.json());
-const recDataFolderPath = path.join(__dirname, '../../..', 'staticdata', 'recData');
-
-export async function getCohortRecsAvailableInfo(req: Request, res: Response) {
-
-  const { spId } = req.params;
-
-  const updatedSpId = mapOldProgramToNewProgram(spId);
-
-  const subfolderPath = path.join(recDataFolderPath, updatedSpId);
-
-  try {
-    await fs.promises.access(subfolderPath, fs.constants.F_OK);
-
-    const stats = await fs.promises.stat(subfolderPath);
-    if (stats.isDirectory()) {
-      res.status(200).json(true);
-    } else {
-      res.status(200).json(false);
-    }
-  } catch (err) {
-    res.status(200).json(false)
-  }
-}
-
-export async function getAvgRecSemester(req: Request, res: Response) {
-  const { spId, modAcr } = req.params;
-
-  const updatedSpId = mapOldProgramToNewProgram(spId);
-
-  try {
-    const moduleData = await readJsonFile<{ [key: string]: SingleModuleData }>(`${recDataFolderPath}/${updatedSpId}/${updatedSpId}_module_data.json`);
-    const avgRecSemester = moduleData[modAcr]?.Avg_Pass_Semester || 0;
-    res.status(200).json(Number(avgRecSemester));
-  } catch (err) {
-    if (err instanceof Error && (err.message.includes('ENOENT') || err.message.includes('no such file'))) {
-      res.status(200).json(0);
-    } else {
-      console.error(err);
-      res.status(500).send("JSON Datei nicht lesbar");
-    }
-  }
-}
-
-export async function getSucRecSemester(req: Request, res: Response) {
-  const { spId, modAcr } = req.params;
-
-  const updatedSpId = mapOldProgramToNewProgram(spId);
-
-  try {
-    const moduleData = await readJsonFile<{ [key: string]: SingleModuleData }>(`${recDataFolderPath}/${updatedSpId}/${updatedSpId}_module_data.json`);
-    const sucRecSemester = moduleData[modAcr]?.Success_Pass_Semester || 0;
-    res.status(200).json(Number(sucRecSemester));
-  } catch (err) {
-    if (err instanceof Error && (err.message.includes('ENOENT') || err.message.includes('no such file'))) {
-      res.status(200).json(0);
-    } else {
-      console.error(err);
-      res.status(500).send("JSON Datei nicht lesbar");
-    }
-  }
-}
-
-export async function getSuccessors(req: Request, res: Response) {
-  const { spId, modAcr } = req.params;
-
-  const updatedSpId = mapOldProgramToNewProgram(spId);
-
-  try {
-    const moduleData = await readJsonFile<{ [key: string]: SingleModuleData }>(`${recDataFolderPath}/${updatedSpId}/${updatedSpId}_module_data.json`);
-    let successors = moduleData[modAcr]?.Successors || [];
-    // Map old module acronyms to new equivalents
-    successors = successors.map(s => ({ ...s, Module: mapOldModuleToEquivalentModules([s.Module])[0] }));
-    res.status(200).json(successors);
-  } catch (err) {
-    if (err instanceof Error && (err.message.includes('ENOENT') || err.message.includes('no such file'))) {
-      res.status(200).json(0);
-    } else {
-      console.error(err);
-      res.status(500).send("JSON Datei nicht lesbar");
-    }
-  }
-}
-
-export async function getTopNSuccessors(req: Request, res: Response) {
-  const { spId, modAcr, n } = req.params;
-  const updatedSpId = mapOldProgramToNewProgram(spId);
-
-  try {
-    const moduleData = await readJsonFile<{ [key: string]: SingleModuleData }>(`${recDataFolderPath}/${updatedSpId}/${updatedSpId}_module_data.json`);
-    let successors = moduleData[modAcr]?.Successors || [];
-    // Map old module acronyms to new equivalents
-    successors = successors.map(s => ({ ...s, Module: mapOldModuleToEquivalentModules([s.Module])[0] }));
-    const topNSuccessors = successors.slice(0, Number(n));
-    res.status(200).json(topNSuccessors);
-  } catch (err) {
-    if (err instanceof Error && (err.message.includes('ENOENT') || err.message.includes('no such file'))) {
-      res.status(200).json(0);
-    } else {
-      console.error(err);
-      res.status(500).send("JSON Datei nicht lesbar");
-    }
-  }
-}
-
-export async function getCommonlyPassedModules(req: Request, res: Response) {
-  const { spId } = req.params;
-  const updatedSpId = mapOldProgramToNewProgram(spId);
-
-  try {
-    let commonPassesData = await readJsonFile<ModulePasses[]>(`${recDataFolderPath}/${updatedSpId}/${updatedSpId}_common_passes.json`);
-    // Map old module acronyms to new equivalents
-    commonPassesData = commonPassesData.map(cp => ({ ...cp, Module: mapOldModuleToEquivalentModules([cp.Module])[0] }));
-    res.status(200).json(commonPassesData);
-  } catch (err) {
-    if (err instanceof Error && (err.message.includes('ENOENT') || err.message.includes('no such file'))) {
-      res.status(200).json(0);
-    } else {
-      console.error(err);
-      res.status(500).send("JSON Datei nicht lesbar");
-    }
-  }
-}
-
-export async function getTopNCommonPasses(req: Request, res: Response) {
-  const { spId, n } = req.params;
-  const updatedSpId = mapOldProgramToNewProgram(spId);
-
-  try {
-    let commonPassesData = await readJsonFile<ModulePasses[]>(`${recDataFolderPath}/${updatedSpId}/${updatedSpId}_common_passes.json`);
-    // Map old module acronyms to new equivalents
-    commonPassesData = commonPassesData.map(cp => ({ ...cp, Module: mapOldModuleToEquivalentModules([cp.Module])[0] }));
-    // Return only the top N common passes
-    const topNCommonPasses = commonPassesData.slice(0, Number(n));
-    res.status(200).json(topNCommonPasses);
-  } catch (err) {
-    if (err instanceof Error && (err.message.includes('ENOENT') || err.message.includes('no such file'))) {
-      res.status(200).json(0);
-    } else {
-      console.error(err);
-      res.status(500).send("JSON Datei nicht lesbar");
-    }
-  }
-}
-
-export async function getBottomNCommonPasses(req: Request, res: Response) {
-  const { spId, n } = req.params;
-  const updatedSpId = mapOldProgramToNewProgram(spId);
-
-  try {
-    let commonPassesData = await readJsonFile<ModulePasses[]>(`${recDataFolderPath}/${updatedSpId}/${updatedSpId}_common_passes.json`);
-    // Map old module acronyms to new equivalents
-    commonPassesData = commonPassesData.map(cp => ({ ...cp, Module: mapOldModuleToEquivalentModules([cp.Module])[0] }));
-
-    // Get the modules with the lowest frequency of passes
-    const sortedByLowestFrequency = commonPassesData.sort((a, b) => a.Frequency - b.Frequency);
-
-    // Return only the bottom N common passes
-    const bottomNCommonPasses = sortedByLowestFrequency.slice(0, Number(n));
-    res.status(200).json(bottomNCommonPasses);
-  } catch (err) {
-    if (err instanceof Error && (err.message.includes('ENOENT') || err.message.includes('no such file'))) {
-      res.status(200).json(0);
-    } else {
-      console.error(err);
-      res.status(500).send("JSON Datei nicht lesbar");
-    }
-  }
-}
-
-export async function getPrecursors(req: Request, res: Response) {
-  const { spId, modAcr } = req.params;
-  const updatedSpId = mapOldProgramToNewProgram(spId);
-
-  try {
-    const moduleData = await readJsonFile<{ [key: string]: SingleModuleData }>(`${recDataFolderPath}/${updatedSpId}/${updatedSpId}_module_data.json`);
-    const precursors = moduleData[modAcr]?.Precursors || [];
-    res.status(200).json(precursors);
-  } catch (err) {
-    if (err instanceof Error && (err.message.includes('ENOENT') || err.message.includes('no such file'))) {
-      res.status(200).json(0);
-    } else {
-      console.error(err);
-      res.status(500).send("JSON Datei nicht lesbar");
-    }
-  }
-}
 
 /**
  * Generic helper function. Reads a JSON file and parses it into a JS object.
@@ -223,28 +34,6 @@ export async function readJsonFile<T>(filePath: string): Promise<T> {
       }
     });
   });
-}
-
-/**
- * Maps old module acronyms to their new equivalents based on the predefined mapping.
- * @param {string[]} modules - Array of module acronyms.
- * @returns {string[]} - Array of module acronyms with old ones replaced by new equivalents.
- */
-function mapOldModuleToEquivalentModules(modules: string[]) {
-  return modules.map(moduleAcronym => {
-    const change = moduleChanges.find(change => change.oldModuleAcronym === moduleAcronym);
-    return change ? change.newModuleAcronym : moduleAcronym;
-  });
-}
-
-/**
- * Maps old program acronyms to their new equivalents based on the predefined mapping.
- * @param {string} spId - module id.
- * @returns {string} - new module id.
- */
-function mapOldProgramToNewProgram(spId: string): string {
-  const programChange = programmeChanges.find(change => change.oldProgramId === spId);
-  return programChange ? programChange.newProgramId : spId;
 }
 
 export async function getTopicTree(req: Request, res: Response, next: NextFunction) {

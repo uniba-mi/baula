@@ -26,23 +26,6 @@
       <div class="warning-box alert-sm alert-warning w-100" *ngIf="displayPriorModuleWarning">
         <i class="bi bi-exclamation-circle"></i> {{ warningMessage }}
       </div>
-      <!-- <div class="warning-box alert-secondary" *ngIf="displayKeyDriverWarning">
-        <i class="bi bi-info-circle"></i> {{ warningMessage }}
-      </div> -->
-      <div *ngIf="successors$ | async as successors" class="d-flex justify-content-center">
-        <div class="meta-box recommendations-box successor-box d-flex justify-content-center"
-          *ngIf="successors && successors.length > 0">
-          Andere Studierende deines Studiengangs belegten auch:
-          <div>
-            <span *ngFor="let successor of successors">
-              <button class="module-link mx-1 mb-1" (click)="viewModuleAcronym(successor.Module)"
-                (keyup.enter)="viewModuleAcronym(successor.Module)" matTooltip={{successor.Title}}>
-                {{ successor.Module }}
-              </button>
-            </span>
-          </div>
-        </div>
-      </div>
       <mat-dialog-actions>
         <button mat-raised-button class="btn btn-outline" mat-dialog-close>
           Abbrechen

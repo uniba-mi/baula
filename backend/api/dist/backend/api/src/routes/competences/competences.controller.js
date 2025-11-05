@@ -1,7 +1,4 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllStandards = getAllStandards;
 exports.getSingleStandard = getSingleStandard;
@@ -11,10 +8,7 @@ exports.getUppestCompetenceGroups = getUppestCompetenceGroups;
 exports.getAllUppestCompetenceGroups = getAllUppestCompetenceGroups;
 exports.getAllLowerCompetences = getAllLowerCompetences;
 exports.getLowerCompetences = getLowerCompetences;
-const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
-const router = express_1.default.Router();
-router.use(express_1.default.json());
 const prisma = new client_1.PrismaClient();
 async function getAllStandards(req, res) {
     const result = await prisma.standard.findMany();

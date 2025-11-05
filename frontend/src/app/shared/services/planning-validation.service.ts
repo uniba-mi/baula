@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, skipWhile, take } from 'rxjs/operators';
-import { getModulehandbook, getModules } from 'src/app/selectors/module-overview.selectors';
+import { getModulehandbook } from 'src/app/selectors/module-overview.selectors';
 import { getStudyplans } from 'src/app/selectors/study-planning.selectors';
 import { getUser, getUserStudypath } from 'src/app/selectors/user.selectors';
 import { Module } from '../../../../../interfaces/module';
@@ -181,39 +181,6 @@ export class PlanningValidationService {
       returnResult.success = false;
       returnResult.message = 'Du hast dieses Modul schon bestanden';
     }
-
-    // else {
-    //   // can be planned but the validity against the study structure must be checked
-    //   // for each top level module handbook module group
-    //   for (let mg of this.modulehandbook.mgs) {
-    //     // get module group that contains module
-    //     let group = this.getModuleGroupThatContainsModule(
-    //       mg,
-    //       mId,
-    //       mVersion,
-    //       ects
-    //     );
-    //     // if we have found a module group
-    //     if (group !== null) {
-    //       // check if the module can be added to the module group
-    //       let isAddible = this.canModuleBeAddedToModuleGroup(
-    //         group,
-    //         mId,
-    //         mVersion,
-    //         ects
-    //       );
-    //       // return success or failure message to the component
-    //       if (isAddible.success) {
-    //         returnResult.success = true;
-    //         returnResult.message = 'Modul wurde eingeplant';
-    //         break;
-    //       } else {
-    //         returnResult.success = false;
-    //         returnResult.message = isAddible.message;
-    //       }
-    //     }
-    //   }
-    // }
 
     this.status = undefined;
     return returnResult;

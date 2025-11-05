@@ -1,12 +1,12 @@
-import express, { NextFunction, Request, Response, Router } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { BadRequestError, logError, NotFoundError } from "../../shared/error";
 import validator from "validator";
-import { validateAndReturnSemester } from "../../shared/customValidator";
+import { validateAndReturnSemester } from "../../shared/helpers/customValidator";
 import path from "path";
 import * as fs from "fs";
-import { checkSemester } from "../../shared/univisHelpers";
-import { processUnivisData } from "../../shared/univisCrawler";
+import { checkSemester } from "../../shared/helpers/univisHelpers";
+import { processUnivisData } from "../../shared/helpers/univisCrawler";
 import { transform } from "camaro";
 import {
   mhbTemplate,
@@ -41,10 +41,8 @@ import {
   upsertModules,
   upsertPersons,
   upsertStudyprogrammes,
-} from "../../shared/fn2modHelper";
+} from "../../shared/helpers/fn2modHelper";
 
-const router: Router = express.Router();
-router.use(express.json());
 const prisma = new PrismaClient();
 
 // request to get the logs of the cronjob
@@ -426,7 +424,7 @@ export async function initConnectionModulecourse2Course(
   res: Response,
   next: NextFunction
 ) {
-  let messages = [];
+  let messages: string[] = [];
   let startTime = Date.now();
   try {
     const moduleCourses = await prisma.moduleCourse.findMany({
@@ -1247,7 +1245,7 @@ async function processFlexNowData(xml: string): Promise<string[]> {
 
   // add connection between persons and modulecourse from course starting
   // transform data, since multiple pIds are contained
-  let person2ModCourse = [];
+  let person2ModCourse: {pId: string, mcId: string}[] = [];
   for (let entry of per2mc) {
     //entry consists of pId-Array and mcId
     for (let pId of entry.pIds) {

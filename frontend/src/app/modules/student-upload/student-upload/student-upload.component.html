@@ -30,14 +30,17 @@
   </div>
 
   <ng-container *ngIf="flexnowApiConsent$ | async as flexnowApiConsent">
-    <div *ngIf="flexnowApiConsent.hasConfirmed" class="withdraw-flexnow-consent on-card-info-box">
-      <p>Einwilligung zum Abruf deines Studienverlaufs über die FlexNow-Schnittstelle akzeptiert am {{
-        flexnowApiConsent.timestamp | date: 'medium' }}</p>
-      Die Einwilligung kannst du jederzeit auf unserer <a class="link" href="/datenschutz" class="redirect link"
-        aria-label="Zur Datenschutzseite">Datenschutzseite</a> einsehen.
-      <a class="withdrawal-link" (click)="openConsentWithdrawalDialog()" (keyup.enter)="openConsentWithdrawalDialog()">
-        <u>Einwilligung widerrufen</u>
-      </a>
+    <div *ngIf="flexnowApiConsent.hasConfirmed">
+      <div class="withdraw-flexnow-consent on-card-info-box">
+        <p>Einwilligung zum Abruf deines Studienverlaufs über die FlexNow-Schnittstelle akzeptiert am {{
+          flexnowApiConsent.timestamp | date: 'medium' }}</p>
+        Die Einwilligung kannst du jederzeit auf unserer <a class="link" href="/datenschutz" class="redirect link"
+          aria-label="Zur Datenschutzseite">Datenschutzseite</a> einsehen.
+      </div>
+      <button class="btn btn-outline withdrawal-link my-1 p-2" (click)="openConsentWithdrawalDialog()"
+        (keyup.enter)="openConsentWithdrawalDialog()">
+        <span>Einwilligung widerrufen</span>
+      </button>
     </div>
   </ng-container>
 </mat-card>

@@ -1,20 +1,5 @@
 import { Module } from "./module";
 
-/** cohort data */
-export interface SingleModuleData {
-    Avg_Pass_Semester?: string;
-    Success_Pass_Semester?: string;
-    Successors?: ModulePasses[];
-    Precursors?: ModulePasses[];
-}
-
-// cohort data
-export interface ModulePasses {
-    Module: string; // acronym
-    Frequency: number;
-    Title?: string;
-}
-
 /** personal recommendation */
 export interface Recommendation {
     userId?: string,

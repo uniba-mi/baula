@@ -40,22 +40,6 @@ export class RecTabService {
     });
   }
 
-  initializeCommonModules(spId: string): Observable<Module[]> {
-    return this.recsService.getCommonPasses(spId).pipe(
-      switchMap(modulePasses => {
-
-        // make sure module passes is an array
-        if (!Array.isArray(modulePasses)) {
-          return of([]);
-        }
-
-        const acronyms = modulePasses.map(mp => mp.Module);
-        return this.modService.getFullModulesByAcronyms(acronyms);
-      }),
-      switchMap(modules => this.applyFiltersAndSearch(modules))
-    );
-  }
-
   initializeNewModules(): Observable<Module[]> {
     return this.store.select(getNewModules).pipe(
       switchMap(modules => this.applyFiltersAndSearch(modules))

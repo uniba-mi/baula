@@ -28,6 +28,11 @@
   padding: 0px !important;
 }
 
+.mat-mdc-button {
+  letter-spacing: normal !important;
+  font-family: inherit !important;
+}
+
 .mat-mdc-snack-bar-label,
 .mdc-button__label {
   color: var(--bs-alert-color) !important;

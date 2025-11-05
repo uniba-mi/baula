@@ -49,7 +49,7 @@ export class DownloadService {
       layout: 'lightHorizontalLines',
       table: {
         headerRows: 1,
-        widths: ['*', '*', '*'],
+        widths: ['*', '*', '*', '*'],
         body: [
           ['Typ', 'Eingewilligt', 'Gesehen', 'Zeitstempel'],
           ...userData.consents.map(consent => [
@@ -219,7 +219,7 @@ export class DownloadService {
           layout: 'lightHorizontalLines',
           table: {
             headerRows: 1,
-            width: ['*', '*', '*', '*', '*'],
+            width: ['*', 'auto', '*', '*', '*'],
             body: [
               [
                 'Semester',

@@ -25,7 +25,6 @@ class Module {
         this.allPriorModules = [];
         this.mCourses = [];
         this.isDropped = false;
-        this.recSource = null;
         this.offerBegin = offerBegin;
         this.offerEnd = offerEnd;
         this.workload = workload;

@@ -6,18 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.crawlJob = crawlJob;
 exports.generateJobKeywords = generateJobKeywords;
 exports.recommendModulesToJob = recommendModulesToJob;
-const express_1 = __importDefault(require("express"));
-const request_1 = require("../../shared/job/request");
+const jobService_1 = require("../../services/jobService");
 const validator_1 = __importDefault(require("validator"));
 const mongo_1 = require("../../database/mongo");
 const mongoose_1 = __importDefault(require("mongoose"));
 const error_1 = require("../../shared/error");
-const customValidator_1 = require("../../shared/customValidator");
-const moduleHelpers_1 = require("../../shared/moduleHelpers");
+const customValidator_1 = require("../../shared/helpers/customValidator");
+const moduleHelpers_1 = require("../../shared/helpers/moduleHelpers");
 const recs_controller_1 = require("../recs/recs.controller");
 const path_1 = __importDefault(require("path"));
-const router = express_1.default.Router();
-router.use(express_1.default.json());
 const jobDataFolderPath = path_1.default.join(__dirname, "../../..", "staticdata");
 // post function /crawl takes the url and returns the job information
 async function crawlJob(req, res, next) {
@@ -29,7 +26,7 @@ async function crawlJob(req, res, next) {
                   url,
                   10
                 ); */
-                const jobInformation = await (0, request_1.getJobInformation)(url);
+                const jobInformation = await (0, jobService_1.getJobInformation)(url);
                 return res.status(200).json(jobInformation);
             }
             catch (error) {
@@ -54,7 +51,7 @@ async function generateJobKeywords(req, res, next) {
         return;
     }
     try {
-        const keywords = await (0, request_1.keywordRequest)(title, description, 10);
+        const keywords = await (0, jobService_1.keywordRequest)(title, description, 10);
         return res.status(200).json(keywords);
     }
     catch (error) {
@@ -95,7 +92,7 @@ async function recommendModulesToJob(req, res, next) {
             try {
                 const proposal = job.inputMode === "mock"
                     ? await getMockedJobRecommendation(job, user.sps[0].spId)
-                    : await (0, request_1.jobModuleProposalKeyWordsRequest)(job.title, job.keywords, modules);
+                    : await (0, jobService_1.jobModuleProposalKeyWordsRequest)(job.title, job.keywords, modules);
                 if (proposal === undefined) {
                     next(new error_1.NotFoundError("Keine Modulempfehlungen gefunden."));
                     return;

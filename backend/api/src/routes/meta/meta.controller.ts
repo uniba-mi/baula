@@ -1,9 +1,7 @@
-import express, { NextFunction, Request, Response, Router } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { BadRequestError, logError, NotFoundError } from '../../shared/error';
 
-const router: Router = express.Router();
-router.use(express.json())
 const prisma = new PrismaClient();
 
 // get distinct departements of Courses
@@ -27,7 +25,7 @@ export async function getDistinctDepartments(req: Request, res: Response, next: 
             const depAsStringArray = departments.map(el => el.orgname)
             res.status(200).json(depAsStringArray);
         } else {
-            next(new NotFoundError())
+            next(new NotFoundError("Keine Einrichtungen gefunden."))
         }
     } catch (error) {
         logError(error)
@@ -56,7 +54,7 @@ export async function getDistinctCourseTypes(req: Request, res: Response, next: 
             const typesAsStringArray = types.map(el => el.type)
             res.status(200).json(typesAsStringArray);
         } else {
-            next(new NotFoundError())
+            next(new NotFoundError("Keine Kurstypen gefunden."))
         }
     } catch (error) {
         logError(error)

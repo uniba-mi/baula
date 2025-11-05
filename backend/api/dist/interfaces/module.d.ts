@@ -28,7 +28,6 @@ export declare class Module {
     allPriorModules: string[];
     mCourses: ModuleCourse[];
     isDropped: boolean;
-    recSource?: 'new-chair' | 'less-popular' | null;
     isOld?: boolean;
     constructor(mId: string, version: number, acronym: string, name: string, content: string, skills: string, addInfo: string, priorKnowledge: string, ects: number, term: string, recTerm: string, duration: string, chair: string, respPerson: Person | null, exams: Exam[], prevModules: any, offerBegin?: string | null, offerEnd?: string | null, workload?: string | null);
     addCourses(courses: ModuleCourse[]): void;

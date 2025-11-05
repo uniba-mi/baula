@@ -4,24 +4,22 @@ import {
   getJobInformationAndKeywords,
   getJobInformation,
   keywordRequest,
-} from "../../shared/job/request";
+} from "../../services/jobService";
 import validator from "validator";
 import { User, Recommendation } from "../../database/mongo";
 import mongoose from "mongoose";
 import { UserServer } from "../../../../../interfaces/user";
 import { BadRequestError, NotFoundError } from "../../shared/error";
-import { ExtendedJob, Job, Jobtemplate } from "../../job";
+import { ExtendedJob, Job, Jobtemplate } from "../../../../../interfaces/job";
 import {
   validateAndReturnJobtemplate,
   validateObjectId,
-} from "../../shared/customValidator";
-import { RecommendedModule } from "../../recommendation";
-import { extractModules } from "../../shared/moduleHelpers";
+} from "../../shared/helpers/customValidator";
+import { RecommendedModule } from "../../../../../interfaces/recommendation";
+import { extractModules } from "../../shared/helpers/moduleHelpers";
 import { readJsonFile } from "../recs/recs.controller";
 import path from "path";
 
-const router = express.Router();
-router.use(express.json());
 const jobDataFolderPath = path.join(__dirname, "../../..", "staticdata");
 
 // post function /crawl takes the url and returns the job information

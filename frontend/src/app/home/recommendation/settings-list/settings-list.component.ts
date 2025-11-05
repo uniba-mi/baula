@@ -268,7 +268,7 @@ export class SettingsListComponent {
       case 'blacklist':
         return 'Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf "Nicht mehr vorschlagen", damit hier Module angezeigt werden.';
       case 'feedback':
-        return 'Nachdem du ein Modul abgeschlossen hast, kannst du über die Moduldetails (Tab Feedback) Feedback geben.';
+        return 'Nachdem du ein Modul abgeschlossen hast, kannst du über die Moduldetails (Tab Feedback) Feedback geben. Wenn es Modulempfehlungen dazu gibt, werden diese hier angezeigt.';
       default:
         return 'Keine Daten vorhanden.';
     }

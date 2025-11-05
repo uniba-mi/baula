@@ -1,13 +1,4 @@
 import express, { NextFunction, Request, Response } from "express";
-export declare function getCohortRecsAvailableInfo(req: Request, res: Response): Promise<void>;
-export declare function getAvgRecSemester(req: Request, res: Response): Promise<void>;
-export declare function getSucRecSemester(req: Request, res: Response): Promise<void>;
-export declare function getSuccessors(req: Request, res: Response): Promise<void>;
-export declare function getTopNSuccessors(req: Request, res: Response): Promise<void>;
-export declare function getCommonlyPassedModules(req: Request, res: Response): Promise<void>;
-export declare function getTopNCommonPasses(req: Request, res: Response): Promise<void>;
-export declare function getBottomNCommonPasses(req: Request, res: Response): Promise<void>;
-export declare function getPrecursors(req: Request, res: Response): Promise<void>;
 /**
  * Generic helper function. Reads a JSON file and parses it into a JS object.
  * @param {string} filePath - The path to the JSON file to be read.

@@ -11,23 +11,25 @@
                                 href="/datenschutz" class="redirect link"
                                 aria-label="Zur Datenschutzseite">Datenschutzseite</a> einsehen.</p>
 
-                        <div class="on-card-info-box my-2 p-2 border border-warning rounded">
-                            <p *ngIf="lastPrivacyChangeConsent.hasConfirmed">
+                        <div class="on-card-info-box my-1 p-2 border border-warning rounded">
+                            <div *ngIf="lastPrivacyChangeConsent.hasConfirmed">
                                 Einwilligung zur neuen Datenschutzerklärung erteilt am {{
                                 lastPrivacyChangeConsent.timestamp | date: 'medium' }}
-                            </p>
-                            <p *ngIf="lastPrivacyChangeConsent.hasResponded && !lastPrivacyChangeConsent.hasConfirmed">
+                            </div>
+                            <div
+                                *ngIf="lastPrivacyChangeConsent.hasResponded && !lastPrivacyChangeConsent.hasConfirmed">
                                 Einwilligung zur neuen Datenschutzerklärung verweigert am {{
                                 lastPrivacyChangeConsent.timestamp | date: 'medium' }}
-                            </p>
-                            <a class="link withdrawal-link" (click)="openConsentDialog('2512-privacy-change')"
-                                (keyup.enter)="openConsentDialog('2512-privacy-change')">
-                                <u *ngIf="lastPrivacyChangeConsent.hasConfirmed">Einwilligung widerrufen</u>
-                                <u
-                                    *ngIf="lastPrivacyChangeConsent.hasResponded && !lastPrivacyChangeConsent.hasConfirmed">Einwilligung
-                                    geben</u>
-                            </a>
+                            </div>
                         </div>
+                        <button class="btn btn-outline withdrawal-link my-1 p-2"
+                            (click)="openConsentDialog('2512-privacy-change')"
+                            (keyup.enter)="openConsentDialog('2512-privacy-change')">
+                            <span *ngIf="lastPrivacyChangeConsent.hasConfirmed">Einwilligung widerrufen</span>
+                            <span
+                                *ngIf="lastPrivacyChangeConsent.hasResponded && !lastPrivacyChangeConsent.hasConfirmed">Einwilligung
+                                geben</span>
+                        </button>
                     </div>
                 </div>
             </mat-card>
@@ -35,34 +37,36 @@
     </ng-container>
 
     <ng-container *ngIf="lastBaKuLeSurveyConsent$ | async as lastBaKuLeSurveyConsent">
-            <mat-card class="p-5 mt-4">
-                <div class="withdraw-flexnow-consent">
-                    <h3 class="info-box-title">Einwilligung zum Evaluations- und Forschungsvorhaben im Kontext von
-                        BaKuLe</h3>
-                    <div class="mb-2">
-                        <p>Hier kannst du deine Einwilligung geben oder deine zuvorige Einwilligung widerrufen.</p>
-                        <p>Die Datenschutzerklärung zum Evaluations- und Forschungsvorhaben im Kontext von BaKuLe kannst du <a class="link pointer" (click)="openPrivacyStatement()">hier</a> einsehen.</p>
-                        <div class="on-card-info-box my-2 p-2 border border-warning rounded">
-                            <p *ngIf="lastBaKuLeSurveyConsent.hasConfirmed">
-                                Einwilligung zum Evaluations- und Forschungsvorhaben erteilt am {{
-                                lastBaKuLeSurveyConsent.timestamp | date: 'medium' }}
-                            </p>
-                            <p *ngIf="lastBaKuLeSurveyConsent.hasResponded && !lastBaKuLeSurveyConsent.hasConfirmed">
-                                Einwilligung zum Evaluations- und Forschungsvorhaben verweigert am {{
-                                lastBaKuLeSurveyConsent.timestamp | date: 'medium' }}
-                            </p>
-                            <a class="link pointer" (click)="openConsentDialog('bakule-survey')"
-                                (keyup.enter)="openConsentDialog('bakule-survey')">
-                                <u *ngIf="lastBaKuLeSurveyConsent.hasConfirmed">Einwilligung widerrufen</u>
-                                <u
-                                    *ngIf="lastBaKuLeSurveyConsent.hasResponded && !lastBaKuLeSurveyConsent.hasConfirmed">Einwilligung
-                                    geben</u>
-                            </a>
+        <mat-card class="p-5 mt-4" *ngIf="!(!lastBaKuLeSurveyConsent.hasConfirmed && !lastBaKuLeSurveyConsent.hasResponded)">
+            <div class="withdraw-flexnow-consent">
+                <h3 class="info-box-title">Einwilligung zum Evaluations- und Forschungsvorhaben im Kontext von
+                    BaKuLe</h3>
+                <div class="mb-2">
+                    <p>Hier kannst du deine Einwilligung geben oder deine zuvorige Einwilligung widerrufen.</p>
+                    <p>Die Datenschutzerklärung zum Evaluations- und Forschungsvorhaben im Kontext von BaKuLe kannst du
+                        <a class="link pointer" (click)="openPrivacyStatement()">hier</a> einsehen.
+                    </p>
+                    <div class="on-card-info-box my-1 p-2 border border-warning rounded">
+                        <div *ngIf="lastBaKuLeSurveyConsent.hasConfirmed">
+                            Einwilligung zum Evaluations- und Forschungsvorhaben erteilt am {{
+                            lastBaKuLeSurveyConsent.timestamp | date: 'medium' }}
+                        </div>
+                        <div *ngIf="lastBaKuLeSurveyConsent.hasResponded && !lastBaKuLeSurveyConsent.hasConfirmed">
+                            Einwilligung zum Evaluations- und Forschungsvorhaben verweigert am {{
+                            lastBaKuLeSurveyConsent.timestamp | date: 'medium' }}
                         </div>
                     </div>
+                    <button class="btn btn-outline withdrawal-link my-1 p-2"
+                        (click)="openConsentDialog('bakule-survey')" (keyup.enter)="openConsentDialog('bakule-survey')">
+                        <span *ngIf="lastBaKuLeSurveyConsent.hasConfirmed">Einwilligung widerrufen</span>
+                        <span
+                            *ngIf="lastBaKuLeSurveyConsent.hasResponded && !lastBaKuLeSurveyConsent.hasConfirmed">Einwilligung
+                            geben</span>
+                    </button>
                 </div>
-            </mat-card>
-        </ng-container>
+            </div>
+        </mat-card>
+    </ng-container>
 </ng-container>
 
 

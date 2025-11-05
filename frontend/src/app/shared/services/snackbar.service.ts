@@ -13,7 +13,7 @@ export class SnackbarService {
   openSnackBar(alert: Alert, actionButtonText?: string, actionHandler?: () => void) {
     let snackBarRef = this._snackBar.open(alert.message, actionButtonText || undefined, {
       panelClass: ['alert', 'alert-'.concat(alert.type)],
-      duration: 5000
+      duration: 100000
     });
 
     if (actionButtonText && actionHandler) {

@@ -1,7 +1,13 @@
 export declare class BadRequestError extends Error {
-    constructor(message?: string, name?: string);
+    statusCode: number;
+    constructor(message?: string);
 }
 export declare class NotFoundError extends Error {
-    constructor(message?: string, name?: string);
+    statusCode: number;
+    constructor(message?: string);
+}
+export declare class UnauthorizedError extends Error {
+    statusCode: number;
+    constructor(message?: string);
 }
 export declare function logError(value: unknown): void;

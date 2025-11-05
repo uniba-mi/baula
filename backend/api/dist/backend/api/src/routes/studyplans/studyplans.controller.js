@@ -14,7 +14,7 @@ exports.transferModule = transferModule;
 exports.transferUserGeneratedModule = transferUserGeneratedModule;
 exports.deleteStudyplan = deleteStudyplan;
 const mongo_1 = require("../../database/mongo");
-const customValidator_1 = require("../../shared/customValidator");
+const customValidator_1 = require("../../shared/helpers/customValidator");
 const error_1 = require("../../shared/error");
 const validator_1 = __importDefault(require("validator"));
 const promises_1 = __importDefault(require("fs/promises"));
@@ -33,7 +33,7 @@ async function getAllStudyplansOfUser(req, res, next) {
         }
     }
     catch (error) {
-        next(new error_1.BadRequestError("Es ist ein Fehler aufgetreten!"));
+        next(new error_1.BadRequestError());
     }
 }
 async function checkStudyplanTemplateAvailability(req, res) {
@@ -111,7 +111,7 @@ async function getActiveStudyplan(req, res, next) {
         }
     }
     catch (error) {
-        next(new error_1.BadRequestError("Es ist ein Fehler aufgetreten!"));
+        next(new error_1.BadRequestError());
     }
 }
 // CREATE REQUESTS
@@ -146,7 +146,7 @@ async function createStudyplan(req, res, next) {
         }
     }
     catch (error) {
-        next(new error_1.BadRequestError("Es ist ein Fehler aufgetreten!"));
+        next(new error_1.BadRequestError());
     }
 }
 // UPDATE REQUESTS

@@ -81,7 +81,7 @@
   position: fixed;
   top: 50%;
   left: -15px;
-  z-index: 10000000;
+  z-index: 80;
 }
 
 .expand-toggle-button .icon-wrapper i {
@@ -134,6 +134,11 @@
   background-color: #fff3cd;
   border-color: #ffeeba;
   font-size: .75rem;
+}
+
+.status-box-not-clickable .btn-icon,
+.status-box-not-clickable .btn-icon:hover {
+  cursor: default;
 }
 
 .module-link {
@@ -329,6 +334,11 @@
 .module-item:hover {
   cursor: pointer;
   background-color: var(--cus-bg-50) !important;
+}
+
+.cdk-drag-preview {
+  border: 1px solid var(--ub-gray) !important;
+  overflow: hidden !important;
 }
 
 // does not work without ng deep (parent-child thing)

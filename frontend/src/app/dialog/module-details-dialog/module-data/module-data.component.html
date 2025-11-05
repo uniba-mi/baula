@@ -100,49 +100,6 @@
                 [innerHTML]="highlightAcronyms(selectedModule.allPriorModules, selectedModule.priorKnowledge)">
             </span>
         </div>
-
-        <!-- box with module recommendations info -->
-        <div class="meta-box recommendations-box" *ngIf="
-          (avgSemester && avgSemester > 0) ||
-          (sucSemester && sucSemester > 0) ||
-          (keyDrivers && keyDrivers.length > 0)
-        ">
-            <div class="row my-2">
-                <span class="fw-bold col-12 col-md-3" *ngIf="avgSemester"><i class="bi bi-people"></i>
-                    Durchschnittliches
-                    Bestehenssemester
-                    <i class="bi bi-info-circle text-grey"
-                        matTooltip="Basierend auf Studienverläufen deines Studiengangs wird das Modul im Durchschnitt im angegebenen Semester bestanden. Dies dient nur als ungefährer Richtwert."
-                        appTooltip></i></span>
-                <span class="col-12 col-md-3" *ngIf="avgSemester"><span *ngIf="avgSemester !== 0; else noMhbInfo">{{
-                        avgSemester
-                        }}</span></span>
-                <span class="fw-bold col-12 col-md-3"><span *ngIf="sucSemester"><i class="bi bi-award"></i>
-                        Erfolgreichstes
-                        Semester
-                        <i class="bi bi-info-circle text-grey"
-                            matTooltip="Basierend auf Studienverläufen deines Studiengangs wird dieses Modul im angegebenen Semester am besten bestanden. Dies dient nur als ungefährer Richtwert."
-                            appTooltip></i></span></span>
-                <span class="col-12 col-md-3" *ngIf="sucSemester !== 0; else noMhbInfo">{{
-                    sucSemester
-                    }}</span>
-            </div>
-            <div class="row my-2">
-                <span class="fw-bold col-12 col-md-3" *ngIf="keyDrivers && keyDrivers.length > 0"><i
-                        class="bi bi-signpost-split"></i> Einflussfaktoren
-                    <i class="bi bi-info-circle text-grey"
-                        matTooltip="Basierend auf Studienverläufen deines Studiengangs haben die Ergebnisse in diesen Modulen einen Einfluss auf die voraussichtliche Note des ausgewählten Moduls."
-                        appTooltip></i></span>
-                <span class="col-12 col-md-3" *ngIf="keyDrivers && keyDrivers.length > 0">
-                    <span *ngFor="let driverAcr of keyDrivers">
-                        <button class="module-link me-2" (click)="selectModuleWithAcronym(driverAcr)"
-                            (keyup.enter)="selectModuleWithAcronym(driverAcr)">
-                            {{ driverAcr }}
-                        </button>
-                    </span>
-                </span>
-            </div>
-        </div>
         <div class="row" *ngIf="moduleClasses$ | async as moduleClasses">
             <div class="module-information-classes" *ngIf="moduleClasses.length > 0">
                 <div class="module-information-classes">

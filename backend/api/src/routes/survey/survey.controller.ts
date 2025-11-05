@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response, Router } from "express";
 import { BadRequestError, NotFoundError } from "../../shared/error";
-import { validateAndReturnSurveyResult } from "../../shared/customValidator";
+import { validateAndReturnSurveyResult } from "../../shared/helpers/customValidator";
 import { LongTermEvaluation, User } from "../../database/mongo";
 import validator from "validator";
 

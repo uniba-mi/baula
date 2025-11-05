@@ -4,7 +4,7 @@ import {
   validateObjectId,
   validateAndReturnStudyplan,
   validateAndReturnUserGeneratedModule,
-} from "../../shared/customValidator";
+} from "../../shared/helpers/customValidator";
 import { BadRequestError, NotFoundError } from "../../shared/error";
 import validator from "validator";
 import fs from "fs/promises";
@@ -28,7 +28,7 @@ export async function getAllStudyplansOfUser(
       next(new NotFoundError("Es konnten keine Studienpläne gefunden werden!"));
     }
   } catch (error) {
-    next(new BadRequestError("Es ist ein Fehler aufgetreten!"));
+    next(new BadRequestError());
   }
 }
 
@@ -138,7 +138,7 @@ export async function getActiveStudyplan(
       );
     }
   } catch (error) {
-    next(new BadRequestError("Es ist ein Fehler aufgetreten!"));
+    next(new BadRequestError());
   }
 }
 
@@ -179,7 +179,7 @@ export async function createStudyplan(
       next(new BadRequestError("Die Eingaben sind fehlerhaft."));
     }
   } catch (error) {
-    next(new BadRequestError("Es ist ein Fehler aufgetreten!"));
+    next(new BadRequestError());
   }
 }
 

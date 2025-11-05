@@ -5,8 +5,8 @@
   "main": "app.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json && npm run copyFiles",
-    "copyFiles": "copyfiles pm2.config.js package.json dist/backend/api && copyfiles -u 1 staticdata/* dist/backend/api/staticdata && copyfiles -u 1 src/certs/* dist/backend/api/src && copyfiles -u 1 -e '**/*.ts' src/database/* dist/backend/api/src/",
-    "startApi": "nodemon ./src/app.ts",
+    "copyFiles": "copyfiles package.json dist/backend/api && copyfiles -u 1 staticdata/* dist/backend/api/staticdata && copyfiles -u 1 src/certs/* dist/backend/api/src && copyfiles -u 1 -e '**/*.ts' src/database/* dist/backend/api/src/",
+    "startApi": "nodemon ./src/server.ts",
     "startCronjob": "nodemon ./src/cron/cron-job.ts",
     "generateDB": "npx prisma generate --schema ./src/database/schema.prisma",
     "updateDB": "npx prisma db push --schema ./src/database/schema.prisma",
@@ -39,6 +39,8 @@
     "puppeteer": "^24.26.0",
     "puppeteer-extra": "^3.3.6",
     "redis": "^5.8.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "validator": "^13.15.15",
     "winston": "^3.18.3"
   },
@@ -52,6 +54,8 @@
     "@types/passport": "^1.0.17",
     "@types/passport-local": "^1.0.38",
     "@types/passport-saml": "^1.1.7",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "@types/validator": "^13.15.3",
     "prisma": "^6.18.0",
     "ts-node": "^10.9.2",

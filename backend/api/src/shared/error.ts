@@ -1,20 +1,26 @@
-import { logger } from "./logger";
+import { logger } from "./utils/logger";
 
 export class BadRequestError extends Error {
-  constructor(message?: string, name?: string) {
-    super(message ? message : "Es ist ein Fehler aufgetreten.");
-    this.name = name ? name : "BadRequestError";
+  statusCode = 400;
+  constructor(message="The request was invalid or malformed.") {
+    super(message);
+    this.name = "BadRequestError";
   }
 }
 
 export class NotFoundError extends Error {
-  constructor(message?: string, name?: string) {
-    super(
-      message
-        ? message
-        : "Die angefragte Resource konnte nicht gefunden werden."
-    );
-    this.name = name ? name : "NotFoundError";
+  statusCode = 404;
+  constructor(message="The requested resource could not be found.") {
+    super(message);
+    this.name = "NotFoundError";
+  }
+}
+
+export class UnauthorizedError extends Error {
+  statusCode = 401;
+  constructor(message = "Unauthorized") {
+    super(message);
+    this.name = "UnauthorizedError";
   }
 }
 
@@ -25,10 +31,10 @@ export function logError(value: unknown) {
     let stringified = "[Unable to stringify the thrown value]";
     try {
       stringified = JSON.stringify(value);
-    } catch (error) {}
+    } catch (error) { }
 
     const error = new Error(
-      `This value was thrown as is, not through an Error: ${stringified}`
+      `This value was thrown as is, not through an error: ${stringified}`
     );
     logger.error(error.message);
   }

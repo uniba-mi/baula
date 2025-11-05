@@ -26,8 +26,7 @@ import { Router } from '@angular/router';
 import { ModService } from 'src/app/shared/services/module.service';
 import { PlanningValidationService } from 'src/app/shared/services/planning-validation.service';
 import { StudyplanService } from 'src/app/shared/services/studyplan.service';
-import { catchError, map, switchMap, take, takeUntil, takeWhile } from 'rxjs/operators';
-import { RecsRestService } from 'src/app/modules/recs/recs-rest.service';
+import { map, take, takeUntil, takeWhile } from 'rxjs/operators';
 import { StudyplanActions } from 'src/app/actions/study-planning.actions';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UnknownModulesActions } from 'src/app/actions/module-overview.actions';
@@ -85,15 +84,11 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   //recommendations
-  cohortRecsAvailable$: Observable<boolean>;
   programId: string; // CURRENT assumption: first study program
   avgSemester: number;
   sucSemester: number;
-  keyDrivers: string[];
   displayPriorModuleWarning: boolean;
-  displayKeyDriverWarning: boolean;
   priorModuleWarningMessage: string;
-  keyDriverWarningMessage: string;
 
   constructor(
     private store: Store<State>,
@@ -102,10 +97,7 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
     private planningValidation: PlanningValidationService,
     private router: Router,
     private studyplanService: StudyplanService,
-    private recsService: RecsRestService,
     private fb: FormBuilder,
-    private recsApi: RecsRestService,
-    private auth: AuthService,
   ) {
     this.form = this.fb.group({
       selectedStudyplanId: [null],
@@ -132,25 +124,6 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
     this.studyplans$ = this.store.select(getFilteredStudyplans);
     this.moduleClasses$ = this.store.select(getModuleClasses);
     this.moduleGroups$ = this.store.select(getStructuredModuleGroups);
-
-    /* check if recommendations are available for the user's study program */
-    this.store.select(getUserStudyprogrammes).pipe(take(1)).pipe(switchMap(sps => {
-      if (sps) {
-        return this.recsApi.getCohortRecsAvailabilityInfo(sps[0].spId);
-      } else {
-        return of(false);
-      }
-    })).pipe(
-      catchError((error) => {
-        this.auth.forceReload(error);
-        return of(undefined); // Return an empty array or handle the error as needed
-      })
-    ).subscribe((recsAvailable) => {
-      if (recsAvailable) {
-        this.getRecommendationData(this.selectedModule.acronym);
-      }
-    });
-
 
     // find active studyplan
     this.activeStudyplan$ = this.store.select(getActiveStudyplan);
@@ -414,27 +387,6 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
         types,
       },
     });
-  }
-
-  // get recommendations from cohort data
-  getRecommendationData(selectedModuleAcronym: string) {
-    // get average pass semester from cohort data
-    this.recsService
-      .getAvgRecSemester(this.programId, selectedModuleAcronym)
-      .subscribe((semester) => {
-        if (semester) {
-          this.avgSemester = semester;
-        }
-      });
-
-    // get success semester from cohort data
-    this.recsService
-      .getSucRecSemester(this.programId, selectedModuleAcronym)
-      .subscribe((semester) => {
-        if (semester) {
-          this.sucSemester = semester;
-        }
-      });
   }
 
   ngOnDestroy() {

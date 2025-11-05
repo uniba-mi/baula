@@ -18,9 +18,9 @@
 
 .reset-option {
     position: sticky;
-    bottom: 0;
+    bottom: -10px;
     border-radius: 3px;
-    background: var(--cus-light-petrol-100);
+    background: var(--cus-light-petrol-100) !important;
     color: var(--cus-petrol-100);
     cursor: pointer;
     text-align: center;
@@ -30,5 +30,5 @@
 }
 
 .reset-option:hover {
-    background: var(--cus-light-petrol-100);
+    background: var(--cus-light-petrol-80) !important;
 }

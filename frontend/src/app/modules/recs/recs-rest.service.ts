@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
 import { config } from 'src/environments/config.local';
-import { ModulePasses, Recommendation } from '../../../../../interfaces/recommendation';
+import { Recommendation } from '../../../../../interfaces/recommendation';
 import { Topic, TopicTree } from '../../../../../interfaces/topic';
 import { ModuleFeedback } from '../../../../../interfaces/user';
 
@@ -24,124 +24,6 @@ export class RecsRestService {
   private urlBase = config.apiUrl;
 
   constructor(private http: HttpClient, private store: Store<State>) { }
-
-
-  /** are there cohort recommendations for spId?
-   * @param spId id of current studyprogram
-   * @returns Observable of type boolean
-   */
-  getCohortRecsAvailabilityInfo(spId: string): Observable<boolean> {
-    return this.http.get<boolean>(
-      `${this.urlBase}recs/${spId}/cohort-recs-available`,
-      httpOptions
-    );
-  }
-
-  /* --------------------------------------------
-   * Recommendations related to a specific module
-  ----------------------------------------------*/
-
-  /** get the semester in which the module is passed on average for students studying a specific program
-   * @param spId id of current studyprogram
-   * @param modAcr module acronym
-   * @returns Observable of type number
-   */
-  getAvgRecSemester(spId: string, modAcr: string): Observable<number> {
-    return this.http.get<number>(
-      `${this.urlBase}recs/${spId}/${modAcr}/semester/avg`,
-      httpOptions
-    );
-  }
-
-  /** get the semester in which the module is passed on average for students studying a specific program who are good in the specific module
- * @param spId id of current studyprogram
- * @param modAcr module acronym
- * @returns Observable with type number
- */
-  getSucRecSemester(spId: string, modAcr: string): Observable<number> {
-    return this.http.get<number>(
-      `${this.urlBase}recs/${spId}/${modAcr}/semester/suc`,
-      httpOptions
-    );
-  }
-
-  /** get the modules chosen after the specific module for students studying a specific program
-   * @param spId id of current studyprogram
-   * @param modAcr module acronym
-   * @returns an array of ModulePasses (modules and the frequency of passes)
-   */
-  getSuccessors(spId: string, modAcr: string): Observable<ModulePasses[]> {
-    return this.http.get<ModulePasses[]>(
-      `${this.urlBase}recs/${spId}/${modAcr}/successors`,
-      httpOptions
-    );
-  }
-
-  /** get the modules chosen after the specific module for students studying a specific program
-   * @param spId id of current studyprogram
-   * @param modAcr module acronym
-   * @param n number of results
-   * @returns an array of top n ModulePasses (modules and the frequency of passes)
-   */
-  getTopNSuccessors(spId: string, modAcr: string, n: number): Observable<ModulePasses[]> {
-    return this.http.get<ModulePasses[]>(
-      `${this.urlBase}recs/${spId}/${modAcr}/top${n}/successors`,
-      httpOptions
-    );
-  }
-
-  /** get the most frequent modules chosen before the specific module for students studying a specific program
-   * @param spId id of current studyprogram
-   * @param modAcr module acronym
-   * @returns an array of precursors (modules and the frequency of passes)
-   */
-  getPrecursors(spId: string, modAcr: string): Observable<ModulePasses[]> {
-    return this.http.get<ModulePasses[]>(
-      `${this.urlBase}recs/${spId}/${modAcr}/successors`,
-      httpOptions
-    );
-  }
-
-  /* ----------------------------------------------------------------------
-   * Study program specific recommendations not relating to specific module
-  -------------------------------------------------------------------------*/
-
-  /** get commonly passed modules for students studying a specific program
- * @param spId id of current studyprogram
- * @returns an array of common passes (modules and the frequency of passes)
- */
-  getCommonPasses(spId: string): Observable<ModulePasses[]> {
-    return this.http.get<ModulePasses[]>(
-      `${this.urlBase}recs/${spId}/common-passes`,
-      httpOptions
-    );
-  }
-
-  /** get the most frequently chosen modules after the specific module for students studying a specific program
-   * @param spId id of current studyprogram
-   * @param modAcr module acronym
-   * @param n number of results
-   * @returns an array of top n common passes (modules and the frequency of passes)
-   */
-  getTopNCommonPasses(spId: string, n: number): Observable<ModulePasses[]> {
-    return this.http.get<ModulePasses[]>(
-      `${this.urlBase}recs/${spId}/top${n}/common-passes`,
-      httpOptions
-    );
-  }
-
-  /** get the less frequently chosen modules after the specific module for students studying a specific program
-   * @param spId id of current studyprogram
-   * @param modAcr module acronym
-   * @param n number of results
-   * @returns an array of bottom n common passes (modules and the frequency of passes)
-   */
-  getBottomNCommonPasses(spId: string, n: number): Observable<ModulePasses[]> {
-    return this.http.get<ModulePasses[]>(
-      `${this.urlBase}recs/${spId}/bottom${n}/commonPasses`,
-      httpOptions
-    );
-  }
 
   /* ----------------------------------------------------------------------
   * further recommendations

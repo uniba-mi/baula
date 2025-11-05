@@ -1,13 +1,10 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
-import { State } from 'src/app/reducers';
 import { EvaluationRestService } from './evaluation-rest.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { Evaluation, EvaluationJob, JobEvaluation, ModuleCandidate, Organisation, RankedModule } from '../../../../../interfaces/evaluation';
-import { getSelectedOrganisation } from 'src/app/selectors/evaluation.selectors';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';

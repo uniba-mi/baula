@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center" tabindex="0" aria-label="Zeile mit Modulinformationen"
     (click)="selectModule(module)" (keyup.enter)="selectModule(module)"
     [ngClass]="module.type === 'Pflichtmodul' ? 'compulsory' : ' '">
-    <div *ngIf="studypath$" class="flex-shrink-0 me-2">
+    <div *ngIf="studypath$" class="status-box-not-clickable flex-shrink-0 me-2">
       <app-module-status [studypath$]="studypath$" [module]="module" [modType]="modType"
         [openedWithSemesterSet]="openedWithSemesterSet" [openedFromModuleCatalog]="true"></app-module-status>
     </div>

@@ -33,6 +33,11 @@
             <span class="ms-1">Ansicht</span>
         </button>
         <mat-menu #viewMenu="matMenu">
+            <button mat-menu-item (click)="changeView('timeGridDay')" (keyup.enter)="changeView('timeGridDay')"
+                aria-label="Auf Tagesansicht umstellen" tabindex="0">
+                <i class="bi bi-calendar-day"></i>
+                <span class="ms-2">Tag</span>
+            </button>
             <button mat-menu-item (click)="changeView('timeGridWeek')" (keyup.enter)="changeView('timeGridWeek')"
                 aria-label="Auf Wochenansicht umstellen" tabindex="0">
                 <i class="bi bi-calendar-week"></i>
@@ -42,11 +47,6 @@
                 aria-label="Auf Monatsansicht umstellen" tabindex="0">
                 <i class="bi bi-calendar-month"></i>
                 <span class="ms-2">Monat</span>
-            </button>
-            <button mat-menu-item (click)="changeView('timeGridDay')" (keyup.enter)="changeView('timeGridDay')"
-                aria-label="Auf Tagesansicht umstellen" tabindex="0">
-                <i class="bi bi-calendar-day"></i>
-                <span class="ms-2">Tag</span>
             </button>
             <button mat-menu-item (click)="changeView('listWeek')" (keyup.enter)="changeView('listWeek')"
                 aria-label="Auf Terminübersicht umstellen" tabindex="0">

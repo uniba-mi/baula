@@ -32,19 +32,10 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LongTermEvaluation = exports.Evaluation = exports.ModEmbedding = exports.Embedding = exports.Recommendation = exports.TopicM = exports.User = exports.Studyplan = exports.Semesterplan = exports.connection = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const mongodb_1 = require("mongodb");
-//dotenv for custom environment variables
-const dotenv = __importStar(require("dotenv"));
-const path_1 = __importDefault(require("path"));
-dotenv.config({
-    path: path_1.default.resolve(__dirname, "../../", "environment", '.env.backend'),
-});
 const uri = process.env.MONGO_DATABASE_URL
     ? process.env.MONGO_DATABASE_URL.toString()
     : "";

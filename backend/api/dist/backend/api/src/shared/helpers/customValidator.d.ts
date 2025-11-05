@@ -1,0 +1,17 @@
+import { UserGeneratedModule } from "../../../../../interfaces/usergeneratedmodule";
+import { PlanCourse, Semesterplan, SemesterplanTemplate } from "../../../../../interfaces/semesterplan";
+import { StudyplanTemplate } from "../../../../../interfaces/studyplan";
+import { Hint, UserServer } from "../../../../../interfaces/user";
+import { Jobtemplate } from "../../../../../interfaces/job";
+import { LongTermEvaluation } from "../../../../../interfaces/longTermEvaluation";
+export declare const validateObjectId: (id: string) => boolean;
+export declare const validateAndReturnSemesterplanTemplate: (sp: any) => SemesterplanTemplate | undefined;
+export declare const validateAndReturnCourse: (course: any) => PlanCourse | undefined;
+export declare const validateAndReturnUserGeneratedModule: (module: any) => UserGeneratedModule | undefined;
+export declare const validateAndReturnSemesterplan: (sp: any) => Semesterplan | undefined;
+export declare const validateAndReturnUser: (user: any) => UserServer | undefined;
+export declare const validateAndReturnStudyplan: (studyplan: any) => StudyplanTemplate | undefined;
+export declare const validateAndReturnHints: (hints: any[]) => Hint[] | undefined;
+export declare const validateAndReturnSemester: (semester: string) => string | undefined;
+export declare const validateAndReturnJobtemplate: (job: any) => Jobtemplate | undefined;
+export declare const validateAndReturnSurveyResult: (result: any) => LongTermEvaluation | undefined;

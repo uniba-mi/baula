@@ -305,7 +305,7 @@ export class RestService {
 
   getStudyprogrammes(): Observable<Studyprogramme[]> {
     return this.http.get<Studyprogramme[]>(
-      `${this.urlBase}studyprogramme/all`,
+      `${this.urlBase}studyprogrammes/`,
       httpOptions
     );
   }
@@ -323,7 +323,7 @@ export class RestService {
       mhbVersion,
     };
     return this.http.put<Studyprogramme[]>(
-      `${this.urlBase}user/studyprogramme`,
+      `${this.urlBase}user/studyprogrammes`,
       body,
       httpOptions
     );
@@ -449,7 +449,7 @@ export class RestService {
     version: number
   ): Observable<Studyprogramme> {
     return this.http.get<Studyprogramme>(
-      `${this.urlBase}studyprogramme/${id}/${version}`,
+      `${this.urlBase}studyprogrammes/${id}/${version}`,
       httpOptions
     );
   }
@@ -459,7 +459,7 @@ export class RestService {
     version: number
   ): Observable<Modulehandbook> {
     return this.http.get<Modulehandbook>(
-      `${this.urlBase}mhb/${id}/${version}`,
+      `${this.urlBase}mhbs/${id}/${version}`,
       httpOptions
     );
   }
@@ -469,20 +469,13 @@ export class RestService {
     version?: number
   ): Observable<Module> {
     return this.http.get<Module>(
-      `${this.urlBase}mhb/module/${acronym}/${version}`,
+      `${this.urlBase}mhbs/modules/${acronym}/${version}`,
       httpOptions
     );
   }
 
-  getAllModules(): Observable<Module[]> {
-    return this.http.get<Module[]>(`${this.urlBase}mhb/modules`, httpOptions);
-  }
-
-  getAllCurrentModules(): Observable<Module[]> {
-    return this.http.get<Module[]>(
-      `${this.urlBase}mhb/current-modules`,
-      httpOptions
-    );
+  getModules(): Observable<Module[]> {
+    return this.http.get<Module[]>(`${this.urlBase}mhbs/modules`, httpOptions);
   }
 
   /**
@@ -774,14 +767,14 @@ export class RestService {
   -----------------------------------*/
   getCoursesBySemester(semester: string): Observable<Course[]> {
     return this.http.get<Course[]>(
-      `${this.urlBase}univis/courses/${semester}`,
+      `${this.urlBase}courses/${semester}`,
       httpOptions
     );
   }
 
   getCourseDetails(id: string, semester: string): Observable<Course> {
     return this.http.get<Course>(
-      `${this.urlBase}univis/course/${id}/${semester}`,
+      `${this.urlBase}courses/${id}/${semester}`,
       httpOptions
     );
   }

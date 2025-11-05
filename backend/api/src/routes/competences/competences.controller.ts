@@ -1,8 +1,6 @@
-import express, { Request, Response, Router } from 'express';
+import express, { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 
-const router: Router = express.Router();
-router.use(express.json())
 const prisma = new PrismaClient();
 
 export async function getAllStandards(req: Request, res: Response) {

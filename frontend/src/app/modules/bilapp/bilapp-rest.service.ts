@@ -88,14 +88,14 @@ export class BilappRestService {
    *  --- Requests for courses -----
       ------------------------------*/
   getEwsCourses(semester: string): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.urlBase}univis/courses/${semester}/LAMOD-01`, httpOptions);
+    return this.http.get<Course[]>(`${this.urlBase}courses/${semester}/LAMOD-01`, httpOptions);
   }
 
   getTop5CoursesForCompetence(semester: string, competence: string): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.urlBase}univis/courses/${semester}/${competence}/5`, httpOptions);
+    return this.http.get<Course[]>(`${this.urlBase}courses/${semester}/${competence}/5`, httpOptions);
   }
 
   getAllSavedCourses(): Observable<ExpandedCourse[]> {
-    return this.http.get<ExpandedCourse[]>(`${this.urlBase}semesterplan/courses`, httpOptions);
+    return this.http.get<ExpandedCourse[]>(`${this.urlBase}semesterplans/courses`, httpOptions);
   }
 }

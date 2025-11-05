@@ -32,9 +32,8 @@ exports.deleteInterest = deleteInterest;
 exports.deleteJob = deleteJob;
 exports.deleteUser = deleteUser;
 exports.crawlStudentDataViaFlexNow = crawlStudentDataViaFlexNow;
-const express_1 = __importDefault(require("express"));
 const mongo_1 = require("../../database/mongo");
-const customValidator_1 = require("../../shared/customValidator");
+const customValidator_1 = require("../../shared/helpers/customValidator");
 const mongoose_1 = require("mongoose");
 const error_1 = require("../../shared/error");
 const validator_1 = __importDefault(require("validator"));
@@ -44,8 +43,6 @@ const camaro_1 = require("camaro");
 const student_fn2api_1 = require("../../templates/student_fn2api");
 const https_1 = __importDefault(require("https"));
 const prisma = new client_1.PrismaClient();
-const router = express_1.default.Router();
-router.use(express_1.default.json());
 // Get Userdata via ShibId
 async function getUser(req, res, next) {
     const user = req.user; // Use the user attached by the extractUser middleware

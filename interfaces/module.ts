@@ -29,7 +29,6 @@ export class Module {
   allPriorModules: string[];
   mCourses: ModuleCourse[];
   isDropped: boolean;
-  recSource?: 'new-chair' | 'less-popular' | null; // TODO so view knows where recommendation comes from; extend if needed
   isOld?: boolean;
 
   constructor(
@@ -75,7 +74,6 @@ export class Module {
     this.allPriorModules = [];
     this.mCourses = [];
     this.isDropped = false;
-    this.recSource = null;
     this.offerBegin = offerBegin;
     this.offerEnd = offerEnd;
     this.workload = workload;
