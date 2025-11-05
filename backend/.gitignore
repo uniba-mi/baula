@@ -8,3 +8,4 @@ node_modules
 prisma/generated
 /environment/*
 /src/logs/*
+*.acl
