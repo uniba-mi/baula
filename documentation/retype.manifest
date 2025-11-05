@@ -1,0 +1,279 @@
+{
+  "version": "3.11.0",
+  "created": "2025-11-05T15:42:55Z",
+  "files": [
+    {
+      "path": ".nojekyll"
+    },
+    {
+      "path": "404.html"
+    },
+    {
+      "path": "anmeldung\\abbildung1_login_1.png"
+    },
+    {
+      "path": "anmeldung\\abbildung2_login_2.png"
+    },
+    {
+      "path": "anmeldung\\abbildung3_datenschutz.png"
+    },
+    {
+      "path": "anmeldung\\abbildung4_profil.png"
+    },
+    {
+      "path": "anmeldung\\abbildung5_musterstudienplan.png"
+    },
+    {
+      "path": "anmeldung\\abbildung6_demo-account.png"
+    },
+    {
+      "path": "anmeldung\\accounterstellung\\index.html"
+    },
+    {
+      "path": "anmeldung\\demoaccount\\index.html"
+    },
+    {
+      "path": "assets\\abbildung0_baula.png"
+    },
+    {
+      "path": "assets\\colourbox_36206811.png"
+    },
+    {
+      "path": "CNAME"
+    },
+    {
+      "path": "dashboard\\abbildung10_ectsfortschrittsemester.png"
+    },
+    {
+      "path": "dashboard\\abbildung11_modulbelegungengesamt.png"
+    },
+    {
+      "path": "dashboard\\abbildung12_modulfortschrittsemester.png"
+    },
+    {
+      "path": "dashboard\\abbildung13_notendurchschnitt.png"
+    },
+    {
+      "path": "dashboard\\abbildung14_quicklinks.png"
+    },
+    {
+      "path": "dashboard\\abbildung15_terminkalender.png"
+    },
+    {
+      "path": "dashboard\\abbildung16_dashboard.png"
+    },
+    {
+      "path": "dashboard\\abbildung7_aktuelletermine.png"
+    },
+    {
+      "path": "dashboard\\abbildung8_belegungenmodulgruppen.png"
+    },
+    {
+      "path": "dashboard\\abbildung9_ectsfortschrittgesamt.png"
+    },
+    {
+      "path": "dashboard\\aktuelletermine\\index.html"
+    },
+    {
+      "path": "dashboard\\belegungeninmodulgruppen\\index.html"
+    },
+    {
+      "path": "dashboard\\ectsfortschritt\\index.html"
+    },
+    {
+      "path": "dashboard\\ectsfortschrittsemester\\index.html"
+    },
+    {
+      "path": "dashboard\\index.html"
+    },
+    {
+      "path": "dashboard\\modulbelegung\\index.html"
+    },
+    {
+      "path": "dashboard\\modulfortschritt\\index.html"
+    },
+    {
+      "path": "dashboard\\notendurchschnitt\\index.html"
+    },
+    {
+      "path": "dashboard\\quicklinks\\index.html"
+    },
+    {
+      "path": "dashboard\\terminkalender\\index.html"
+    },
+    {
+      "path": "index.html"
+    },
+    {
+      "path": "logo.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung17_modulsuche_1.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung17_modulsuche_2.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung17_modulsuche_3.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung17_modulsuche_4.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung17_modulsuche_5.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung18_moduldetails_1.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung18_moduldetails_2.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung18_moduldetails_3.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung18_moduldetails_4.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung18_moduldetails_5.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung18_moduldetails_6.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung18_moduldetails_7.png"
+    },
+    {
+      "path": "modulkatalog\\abbildung18_moduldetails_8.png"
+    },
+    {
+      "path": "modulkatalog\\index.html"
+    },
+    {
+      "path": "modulkatalog\\moduldetails\\index.html"
+    },
+    {
+      "path": "modulkatalog\\suchleiste\\index.html"
+    },
+    {
+      "path": "personalisierung\\index.html"
+    },
+    {
+      "path": "resources\\css\\retype.css"
+    },
+    {
+      "path": "resources\\fonts\\Inter-italic-latin-var.woff2"
+    },
+    {
+      "path": "resources\\fonts\\Inter-roman-latin-var.woff2"
+    },
+    {
+      "path": "resources\\js\\config.js"
+    },
+    {
+      "path": "resources\\js\\lunr.js"
+    },
+    {
+      "path": "resources\\js\\retype.js"
+    },
+    {
+      "path": "resources\\js\\search.json"
+    },
+    {
+      "path": "resources\\lunr.js.LICENSE.txt"
+    },
+    {
+      "path": "resources\\mermaid.js.LICENSE.txt"
+    },
+    {
+      "path": "resources\\prism.js.LICENSE.txt"
+    },
+    {
+      "path": "resources\\retype.js.LICENSE.txt"
+    },
+    {
+      "path": "resources\\retype.LICENSE.txt"
+    },
+    {
+      "path": "robots.txt"
+    },
+    {
+      "path": "sitemap.xml.gz"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung19_studienplan_1.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung19_studienplan_2.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung19_studienplan_3.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung19_studienplan_4.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung19_studienplan_5.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung19_studienplan_6.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung19_studienplan_7.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung19_studienplan_8.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung19_studienverlaufsplan.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung20_studienverlaufsplan_1.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung20_studienverlaufsplan_2.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung20_studienverlaufsplan_3.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung21_studienverlaufsplan_leiste_1.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung21_studienverlaufsplan_leiste_2.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung21_studienverlaufsplan_leiste_3.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung21_studienverlaufsplan_leiste_4.png"
+    },
+    {
+      "path": "studienverlaufsplan\\abbildung21_studienverlaufsplan_leiste_5.png"
+    },
+    {
+      "path": "studienverlaufsplan\\index.html"
+    },
+    {
+      "path": "studienverlaufsplan\\modulempfehlungen\\index.html"
+    },
+    {
+      "path": "studienverlaufsplan\\semesterübersicht\\index.html"
+    },
+    {
+      "path": "studienverlaufsplan\\studienplan\\index.html"
+    },
+    {
+      "path": "stundenplan\\abbildung22_stundenplan.png"
+    },
+    {
+      "path": "stundenplan\\index.html"
+    },
+    {
+      "path": "stundenplan\\kurseinplanen\\index.html"
+    },
+    {
+      "path": "stundenplan\\stundenplanfehlermeldungen\\index.html"
+    }
+  ]
+}

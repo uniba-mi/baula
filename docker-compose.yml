@@ -47,11 +47,9 @@ services:
       - mariadb
 
   retype:
-    image: retypeapp/retype
+    image: retypeapp/retype:latest
     restart: always
-    command: >
-      retype start /docs --host 0.0.0.0 --port 4201
     volumes:
-      - ./documentation:/docs
+      - ./documentation/.retype:/usr/share/nginx/html:ro
     ports:
-      - ${DOCS_PORT}:4201
+      - ${DOCS_PORT}:80
