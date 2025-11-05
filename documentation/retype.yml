@@ -1,7 +1,8 @@
 input: .
 output: .retype
+base: /docs/
 
-url: docs.example.com # Use your website address here
+url: baula-test.minf.uni-bamberg.de # Use your website address here
 
 start:
   # Uncomment the next line to try Retype Pro features
