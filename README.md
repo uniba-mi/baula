@@ -24,6 +24,7 @@
 
 
 ### Deployment
+npm install -g retypeapp
 
 
 ### FAQ
