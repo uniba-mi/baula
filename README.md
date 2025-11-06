@@ -119,20 +119,21 @@ Hier eine mögliche Liste von Dateien, die ausgelagert werden könnten:
 - `.env` enthält wie unter [Setup und Installation](#setup-und-installation) beschrieben die Umgebungsvariablen für den Start der Docker-Umgebung.
 - `.gitignore` enthält die ausgeschlossenen Verzeichnisse und Dateien.
 - `CHANGELOG.md` hier werden die wichtigsten Neuerungen bei Versionsupdates dokumentiert.
-- `docker-compose.yml` 
-- `docker-compose.override.yml`
-- `docker-compose.server.yml`
+- `docker-compose.yml` beinhaltet die Konfiguration der notwendigsten Docker Container für lokales Development-Setting und Serverbetrieb (z. B. DB-Docker).
+- `docker-compose.override.yml` ist speziell für die lokale Entwicklung und überschreibt einzelne Aspekte der allgemeinen Konfiguration in der `docker-compose.yml`. Bspw. wird `expose` durch ein Portmapping ersetzt, da lokal Frontend und Backend nicht über das Docker-Netzwerk kommunizieren und `expose` die Container nur darin zugänglich macht. 
+- `docker-compose.server.yml` beinhaltet die Konfiguration zusätzlicher Docker Container, welche nur im Serverbetrieb nötig sind (z. B. Apache2-Docker)
 - `package.json` primär dazu da die zentralen Befehle zu dokumentierung und über `npm run` ansteuerbar zu gestalten. U.a. werden hier die Skripte zum Start der Dockerumgebung, dem Frontend und Backend sowie die Build-Prozesse hinterlegt. Die wichtigsten Befehle sind:
-    - `restartLocalDocker`: 
-    - `restartServerDocker`:
-    - `startBackend`: 
-    - `startFrontend`: 
-    - `buildTest`: 
-    - `buildProd`:
+    - `restartLocalDocker` bzw. `restartServerDocker`: wird benötigt um den Docker Container lokal bzw. auf dem Server neuzustarten
+    - `startBackend`: startet das Backend für die lokale Entwicklung
+    - `startFrontend`: startet das Frontend für die lokale Entwicklung
+    - `buildTest`: Baut Frontend, Backend und Doku für das Deployment auf einem Testsystem. 
+    - `buildProd`: Baut Frontend, Backend und Doku für das Deployment auf einem Produktivsystem. Primärer Unterschied sind die geladenen Umgebungsvariablen für das Frontend, welche u.a. auch Debugging-Tools steuern.
+    
 ### API-Dokumentation
 TBD -> Link auf Swagger Doku
 
 ### Deployment
+TBD
 Voraussetzungen:
 - npm install -g retypeapp
 - Angular (ng) installiert?
