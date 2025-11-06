@@ -95,6 +95,13 @@ Damit die Anwendung regulär verwendet werden kann, müssen die Strukturdaten in
     mysql -u root -p"$MYSQL_ROOT_PASSWORD" -D"$MYSQL_DATABASE" < test_backup.sql
 ```
 
+##### 7. Frontend und Backend starten
+Nun sollte alles eingerichtet sein, so dass man über die folgenden Befehle Baula sowie die API starten kann. Beide Befehle müssen im root-Verzeichnis ausgeführt werden.
+```bash
+    npm run startFrontend # startet Frontend auf Port 4200
+    npm run startBackend # startet Backend auf Port 3305
+```
+
 ##### n. Weitere Schritte TBD
 Hier könnten noch weitere Schritte folgen, je nachdem wie stark wir unsere .gitignore erweitern. Denkbar wäre z. B. die `constants.ts` in der die Nutzer definiert sind nicht mehr zu pushen. Diese müsste dann angelegt werden. 
 Hier eine mögliche Liste von Dateien, die ausgelagert werden könnten:
@@ -103,13 +110,41 @@ Hier eine mögliche Liste von Dateien, die ausgelagert werden könnten:
 - `./frontend/src/environments/*` wobei da eigentlich nicht wirklich sensible Informationen enthalten sind
 
 ### Projektstruktur
-
-
+- `/backend` enthält alles zum Abruf der relevanten Daten für das Frontend. Neben der mit Express.js erstellten REST-API ist hier der Python-Code verortet. Näheres ist in der spezifischen [README](./backend/README.md).
+- `/data` primär werden hier die Daten aus den DB-Containern persistiert, welche aber nicht in das Repo gepusht werden. Unter `/data/backups/mariadb` bzw. `/data/backups/mongodb` können Dump-Files hinterlegt werden, welche anschließend in den jeweiligen DB-Container gemountet werden. `/data/backups/mariadb` enthält dabei den initialen Dump, der importiert werden muss um Baula initial zu starten.
+- `/documentation` enthält alle Dateien für die Nutzer- und Developer-Dokumentation zu Baula, welche mit Retype erstellt ist. Wichtig für das Deployment ist, dass der Ordner `.retype` enthalten ist, da dort die statisch gebauten Dateien liegen, welche in den Server-Container gemountet werden.
+- `/frontend` enthält die Kern-Codebasis von Baula in Form des Angular Projekts: Näheres ist in der spezifischen [README](./frontend/README.md) erklärt
+- `/interfaces` hier sind die gemeinsamen Interfaces und Klassen, welche von Frontend und Backend genutzt werden enthalten.
+- `/server` wir nur für die Bereitstellung auf einem Server benötigt. Hier werden in `/apache2` die Servereinstellungen gesetzt, welche in den Server-Container gemountet werden. Der Ordner `/app` wird beim Build des Frontend mit der gebauten Angular-App befüllt und anschließend in das `/var/www`-Verzeichnis des Server-Containers gemountet.
+- `.env` enthält wie unter [Setup und Installation](#setup-und-installation) beschrieben die Umgebungsvariablen für den Start der Docker-Umgebung.
+- `.gitignore` enthält die ausgeschlossenen Verzeichnisse und Dateien.
+- `CHANGELOG.md` hier werden die wichtigsten Neuerungen bei Versionsupdates dokumentiert.
+- `docker-compose.yml` 
+- `docker-compose.override.yml`
+- `docker-compose.server.yml`
+- `package.json` primär dazu da die zentralen Befehle zu dokumentierung und über `npm run` ansteuerbar zu gestalten. U.a. werden hier die Skripte zum Start der Dockerumgebung, dem Frontend und Backend sowie die Build-Prozesse hinterlegt. Die wichtigsten Befehle sind:
+    - `restartLocalDocker`: 
+    - `restartServerDocker`:
+    - `startBackend`: 
+    - `startFrontend`: 
+    - `buildTest`: 
+    - `buildProd`:
 ### API-Dokumentation
-
+TBD -> Link auf Swagger Doku
 
 ### Deployment
-npm install -g retypeapp
+Voraussetzungen:
+- npm install -g retypeapp
+- Angular (ng) installiert?
+
+Vorgehen:
+- Wichtig: prod -> main | test -> develop
+- npm run buildTest bzw. npm run buildProd
+- Stand pushen und auf Server anmelden
+- auf Server pullen und docker neustarten
+- Bei Änderungen im Frontend muss nicht neu gestartet werden. Für einen Soft Restart kann auch auf dem backend-Docker nur die API neu gestartet werden (nicht möglich bei Version updates oder Datenbank-Änderungen)
+
+
 
 ### Lizenz und Credits
 [Lizenz](LICENCE.md)

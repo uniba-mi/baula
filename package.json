@@ -15,7 +15,8 @@
   "scripts": {
     "startServerDocker": "docker-compose -f docker-compose.yml -f docker-compose.server.yml up -d --build --force-recreate",
     "startLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml up -d --build --force-recreate",
-    
+    "restartLocalDocker": "npm run stopLocalDocker && npm run startLocalDocker",
+    "restartServerDocker":"npm run stopServerDocker && npm run startServerDocker",
     "stopLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml down",
     "stopServerDocker": "docker-compose -f docker-compose.yml -f docker-compose.server.yml down",
     "startBackend": "cd backend/api && npm run startApi",
