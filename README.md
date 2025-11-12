@@ -17,6 +17,12 @@ Dieses Repo dokumentiert den Quellcode des digitalen Studienplanungsassistenten 
 
 ### Setup und Installation
 Hier sind die Schritte dokumentiert um Baula lokal zu starten.
+##### 0. Requirements
+TODO
+- Node Version mindestens 24.x
+- npm Version ???
+- Angular installiert?
+
 ##### 1. Anlegen der .env-Dateien
 - im root Verzeichnis muss eine `.env` angelegt werden. Diese .env Datei ist die Basis für den Start der Docker-Container. Die gesetzen Informationen (Nutzernamen und Passwörter) sind für den späteren Zugriff relevant. Die .env sollte folgende Informationen enthalten:
     ```bash
@@ -80,6 +86,7 @@ Im Ordner `./backend/api/src/database` muss eine Datei `redis-users.acl` angeleg
     user default off
     user test on >test123 ~* +@all
 ```
+TODO: ist noch auf Repo!!!
 
 ##### 5. Dockercontainer starten
 In der lokalen Umgebung muss der Befehl `npm run startLocalDocker` ausgeführt werden.
@@ -92,7 +99,7 @@ Damit die Anwendung regulär verwendet werden kann, müssen die Strukturdaten in
     # 2. In den Backup-Ordner navigieren
     cd /backups 
     # 3. Dump einspielen
-    mysql -u root -p"$MYSQL_ROOT_PASSWORD" -D"$MYSQL_DATABASE" < test_backup.sql
+    mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -D"$MYSQL_DATABASE" < test_backup.sql
 ```
 
 ##### 7. Prisma Client bauen
