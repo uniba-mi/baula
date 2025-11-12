@@ -9,3 +9,4 @@ prisma/generated
 /environment/*
 /src/logs/*
 *.acl
+package-lock.json
