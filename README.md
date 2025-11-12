@@ -74,7 +74,7 @@ TODO
 Abhängigkeiten im `./backend/api` und `./frontend` mit Hilfe von `npm install` installieren.
 
 ##### 3. Certs-Files anlegen
-Im Ordner `./backend/api/src/certs` werden drei Dateien nötig, für ein lokales Setting können diese leer sein und müssen nur vorhanden sein. Dafür folgende Dateien anlegen: 
+Im Ordner `./backend/api/src/certs` werden drei Dateien nötig, für ein lokales Setting können die Dateien mit einem beliebigen Inhalt z. B. `test` gefüllt werden. Dafür folgende Dateien anlegen: 
 - `idp_cert.pem`
 - `sp_cert.pem`
 - `sp_key.pem`
@@ -103,7 +103,7 @@ Damit die Anwendung regulär verwendet werden kann, müssen die Strukturdaten in
 ```
 
 ##### 7. Prisma Client bauen
-TBD
+* In das Verzeichnis `/backend/api` navigieren und dort `npm run generateDB` ausführen, um den Prisma Client zu bauen.
 * Über den Befehl `npm run updateDB` wird mit Hilfe der `schema.prisma`-Datei das grundlegende Datenbankschema in die referenzierte Datenbank übertragen. 
 
 ##### 8. Frontend und Backend starten
