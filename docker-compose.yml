@@ -38,7 +38,7 @@ services:
 
   python:
     build:
-      context: ./backend/python/fastApi
+      context: ./backend/python
     restart: always
     expose:
       - 8000

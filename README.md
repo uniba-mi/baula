@@ -95,7 +95,11 @@ Damit die Anwendung regulär verwendet werden kann, müssen die Strukturdaten in
     mysql -u root -p"$MYSQL_ROOT_PASSWORD" -D"$MYSQL_DATABASE" < test_backup.sql
 ```
 
-##### 7. Frontend und Backend starten
+##### 7. Prisma Client bauen
+TBD
+* Über den Befehl `npm run updateDB` wird mit Hilfe der `schema.prisma`-Datei das grundlegende Datenbankschema in die referenzierte Datenbank übertragen. 
+
+##### 8. Frontend und Backend starten
 Nun sollte alles eingerichtet sein, so dass man über die folgenden Befehle Baula sowie die API starten kann. Beide Befehle müssen im root-Verzeichnis ausgeführt werden.
 ```bash
     npm run startFrontend # startet Frontend auf Port 4200
@@ -128,7 +132,7 @@ Hier eine mögliche Liste von Dateien, die ausgelagert werden könnten:
     - `startFrontend`: startet das Frontend für die lokale Entwicklung
     - `buildTest`: Baut Frontend, Backend und Doku für das Deployment auf einem Testsystem. 
     - `buildProd`: Baut Frontend, Backend und Doku für das Deployment auf einem Produktivsystem. Primärer Unterschied sind die geladenen Umgebungsvariablen für das Frontend, welche u.a. auch Debugging-Tools steuern.
-    
+
 ### API-Dokumentation
 TBD -> Link auf Swagger Doku
 
@@ -149,4 +153,5 @@ Vorgehen:
 
 ### Lizenz und Credits
 [Lizenz](LICENCE.md)
+
 <a class="link" href="https://storyset.com/data">Data illustrations by Storyset</a>
