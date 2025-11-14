@@ -42,7 +42,7 @@ testem.log
 Thumbs.db
 
 # Environment and config files
-config.local.ts
-config.prod.ts
-config.test.ts
-environment.**.ts
+config.**.ts
+!config.interface.ts
+environment.ts
+environment.*.ts
