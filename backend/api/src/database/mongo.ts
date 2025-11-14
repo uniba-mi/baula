@@ -5,13 +5,13 @@ import mongoose, {
   Schema,
   Model,
 } from "mongoose";
-import { Semesterplan as ISemesterplan } from "../../../../interfaces/semesterplan";
+import { Semesterplan as ISemesterPlan } from "../../../../interfaces/semesterplan";
 import { ObjectId } from "mongodb";
-import { Studyplan as IStudyplan } from "../../../../interfaces/studyplan";
+import { Studyplan as IStudyPlan } from "../../../../interfaces/studyPlan";
 import { Recommendation as IRecommendation } from "../../../../interfaces/recommendation";
 import { Embedding as IEmbedding } from "../../../../interfaces/embedding";
 import { ModuleEmbedding as IModEmbedding } from "../../../../interfaces/embedding";
-import { Exam as IExam } from "../../../../interfaces/studypath";
+import { Exam as IExam } from "../studyPath";
 import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/longTermEvaluation";
 import { Topic as ITopic } from "../../../../interfaces/topic";
 import { UserServer as IUser } from "../../../../interfaces/user";
@@ -96,8 +96,7 @@ const LongTermEvaluationSchema: Schema = new Schema<ILongTermEvaluation>(
   { timestamps: true }
 );
 
-// Semesterplan
-const SemesterplanSchema: Schema = new Schema<ISemesterplan>(
+const SemesterPlanSchema: Schema = new Schema<ISemesterPlan>(
   {
     semester: {
       type: String,
@@ -170,12 +169,11 @@ const SemesterplanSchema: Schema = new Schema<ISemesterplan>(
   { timestamps: true }
 );
 
-// Studyplan
-const StudyplanSchema: Schema = new Schema<IStudyplan>(
+const StudyPlanSchema: Schema = new Schema<IStudyPlan>(
   {
     name: String,
     status: Boolean,
-    semesterPlans: [SemesterplanSchema],
+    semesterPlans: [SemesterPlanSchema],
     userId: {
       type: ObjectId,
       reference: "UserSchema",
@@ -312,30 +310,6 @@ const ModEmbeddingSchema: Schema = new Schema<IModEmbedding>(
   { timestamps: true }
 );
 
-// const ExamSchema: Schema = new Schema<IExam>(
-//   {
-//     name: {
-//       type: String,
-//       required: true
-//     },
-//     attempts: [{
-//       semester: {
-//         type: String,
-//         required: true
-//       },
-//       status: {
-//         type: String,
-//         required: true,
-//         // match: /(taken|failed|passed|open)/
-//       },
-//       grade: {
-//         type: Number,
-//         required: true
-//       }
-//     }]
-//   }
-// );
-
 // Query helpers for UserSchema
 type UserModelType = Model<IUser, UserQueryHelpers>;
 type UserModelQuery = Query<any, HydratedDocument<IUser>, UserQueryHelpers> &
@@ -438,7 +412,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
     ],
     timetableSettings: [{ showWeekends: Boolean }],
     favouriteModulesAcronyms: [String],
-    notInterestingModulesAcronyms: [String],
+    excludedModulesAcronyms: [String],
     hints: [
       {
         key: String,
@@ -571,11 +545,11 @@ const EvaluationSchema: Schema = new Schema<IEvaluation>(
 );
 
 // Create models
-export const Semesterplan = model<ISemesterplan>(
+export const SemesterPlan = model<ISemesterPlan>(
   "Semesterplan",
-  SemesterplanSchema
+  SemesterPlanSchema
 );
-export const Studyplan = model<IStudyplan>("Studyplan", StudyplanSchema);
+export const StudyPlan = model<IStudyPlan>("Studyplan", StudyPlanSchema);
 export const User = model<IUser, UserModelType>("User", UserSchema);
 export const TopicM = model<ITopic>("Topic", TopicSchema);
 export const Recommendation = model<IRecommendation>(

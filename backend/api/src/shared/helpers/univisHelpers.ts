@@ -1,16 +1,13 @@
-import { Course, Term, UnivISCourse } from "../../../../../interfaces/course";
+import { Course, Term, UnivISCourse } from "../../course";
 import { Prisma, PrismaClient } from "@prisma/client";
-import { Room } from "../../../../../interfaces/room";
-import { Person } from "../../../../../interfaces/person";
-import { CompetenceFulfillment } from "../../../../../interfaces/competence";
+import { Room } from "../../room";
+import { Person } from "../../person";
+import { CompetenceFulfillment } from "../../competence";
 import { CompetenceReader } from "./competenceReader";
 import validator from "validator";
 
 const prisma = new PrismaClient();
 
-/* ---------------------------------------- 
-   -------- Helper functions --------------
-   ----------------------------------------*/
 export function transformUnivISCourse(
   univisCourse: UnivISCourse,
   semester: string
@@ -155,7 +152,7 @@ export function addCourse(entry: Course) {
 function transformType(type: string): string {
   // some types are concated with / -> split and set type to first type
   const types = type.split("/");
-  let newType: string[] = []
+  let newType = []
   for(let type of types) {
     newType.push(confertType(type))
   }

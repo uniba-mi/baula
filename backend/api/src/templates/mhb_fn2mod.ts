@@ -116,6 +116,13 @@ export const per2mcTemplate = ['//ModulLv', {
     mcId: '@ModulLv'
 }]
 
+export const sp2mhbTemplate = ['//MhbPo', {
+    spId: 'Po/@Studfach',
+    poVersion: 'number(Po/@Po)',
+    mhbId: '@Modulhandbuch',
+    version: 'number(@Version)',
+}]
+
 export const mhb2mgTemplate = ['//HandbuchGruppe', {
     mhbId: '@Modulhandbuch',
     mgId: '@Modulgruppe',

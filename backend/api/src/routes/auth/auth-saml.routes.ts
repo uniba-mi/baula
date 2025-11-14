@@ -10,7 +10,7 @@ import passport from "passport";
 const router: Router = express.Router();
 router.use(express.json());
 
-// login routes
+// Login routes
 router.get("/Login", passport.authenticate("saml", { failureRedirect: process.env.LOGIN_PAGE_URL }));
 router.post(
   "/SAML2/POST",

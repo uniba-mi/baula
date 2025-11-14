@@ -8,9 +8,6 @@ import helmet from "helmet";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import { api } from "./routes/api.router";
-import { formdata } from "./routes/public/public.router";
-import { denyDemoWrites } from "./shared/middleware/demoMiddleware";
-import { ensureAuthenticated } from "./shared/middleware/authenticationMiddleware";
 import { authSaml } from "./routes/auth/auth-saml.routes";
 import { localLogin, localLogout } from "./routes/auth/auth-local.routes";
 import passport from "./config/passport.config";
@@ -66,8 +63,7 @@ app.use(passport.session());
 app.use('/login', localLogin);
 app.use('/logout', localLogout);
 app.use("/Shibboleth.sso", authSaml);
-app.use("/api", ensureAuthenticated, denyDemoWrites, api);
-app.use("/public", formdata);
+app.use("/api", api);
 
 /** ------------------------------
  *  ------ Error handling --------

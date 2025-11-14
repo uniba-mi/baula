@@ -1,0 +1,126 @@
+import express, { Router } from "express";
+import { 
+    getMhbByIdAndVersion, 
+    getModByAcronymAndVersion,
+    getModules,
+} from './module-handbooks.controller';
+
+const router: Router = express.Router();
+
+/**
+ * @swagger
+ * /module-handbooks/{id}/{version}:
+ *   get:
+ *     summary: Get a specific module handbook structure by id and version
+ *     tags: [ModuleHandbook]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Module handbook id
+ *         example: 17963
+ *       - in: path
+ *         name: version
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Module handbook version
+ *         example: 8
+ *     responses:
+ *       200:
+ *         description: Module handbook
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ModuleHandbook'
+ *       400:
+ *         description: The request was invalid or malformed.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: The requested module handbook could not be found with this id and version.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/:id/:version', getMhbByIdAndVersion);
+
+/**
+ * @swagger
+ * /module-handbooks/modules/{acronym}/{version}:
+ *   get:
+ *     summary: Get a specific module from all modules by acronym and version
+ *     tags: [ModuleHandbook::Modules]
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: acronym
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Module acronym (abbreviation)
+ *         example: HCI-IS-B
+ *       - in: path
+ *         name: version
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Module version
+ *         example: 2
+ *     responses:
+ *       200:
+ *         description: Module
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Module'
+ *       400:
+ *         description: The request was invalid or malformed.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: The requested module could not be found with this acronym and version.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/modules/:acronym/:version', getModByAcronymAndVersion);
+
+/**
+ * @swagger
+ * /module-handbooks/modules:
+ *   get:
+ *     summary: Get all modules from the database
+ *     tags: [ModuleHandbook::Modules]
+ *     responses:
+ *       200:
+ *         description: Module
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Module'
+ *       400:
+ *         description: The request was invalid or malformed.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: No modules could be found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/modules', getModules);
+
+export { router as moduleHandbooks };

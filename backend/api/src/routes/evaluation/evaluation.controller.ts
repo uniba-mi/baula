@@ -1,9 +1,8 @@
-import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../shared/error";
 import { Request, Response, NextFunction } from "express";
 import { orga2code } from '../../../src/evaluationData/organisations'
 import { Evaluation } from "../../database/mongo";
-import { Evaluation as IEvaluation, Organisation } from "../../../../../interfaces/evaluation";
+import { Evaluation as IEvaluation, Organisation } from "../../evaluation";
 import { UserServer } from "../../../../../interfaces/user";
 
 export async function initEvaluationData(req: Request, res: Response, next: NextFunction) {

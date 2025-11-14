@@ -64,10 +64,38 @@ TODO
     TEST_PW=secretPassword
     ADMIN_PW=safePassword
     ```
-- zuletzt muss unter `./backend/api/src/database` eine `.env` angelegt werden. Diese ist nur für die Verbindung von Prisma mit der MariaDB nötig. Daher sind lediglich folgende Informationen nötig:
+- unter `./backend/api/src/database` eine `.env` angelegt werden. Diese ist nur für die Verbindung von Prisma mit der MariaDB nötig. Daher sind lediglich folgende Informationen nötig:
     ```bash
     # .env
     REL_DATABASE_URL=mysql://user:password@localhost:3306/dbname
+    ```
+- für das Frontend müssen Config- und Environment-Dateien im Verzeichnis `./frontend/src/environments` angelegt werden. Hier ist auch das entsprechende Interface in der `config.interface.ts` definiert. Für jede Umgebung (local, test, prod) am besten eigenständige config-Dateien anlegen, beispielsweise könnte eine `config.local.ts` wie folgt aussehen:
+    ```ts
+    import { Config } from "./config.interface";
+
+    export const config: Config = {
+        homeUrl: 'http://localhost:4200', 
+        apiUrl: 'http://localhost:3305/api/',
+        loginUrl: 'http://localhost:3305/login/',
+        shibLoginUrl: 'https://meine-domain.test/Shibboleth.sso/Login',
+        localLogoutUrl: 'http://localhost:3305/logout', 
+        shibLogoutUrl: 'https://meine-domain.test/Shibboleth.sso/Logout', 
+        dashboardUrl: 'app/',
+    }
+    ```
+    Für ein Deployment auf einem Server muss entsprechend die `ShibLoginUrl` und `ShibLogoutUrl` angepasst werden.
+    Zusätzlich muss noch für jede Umgebung ein `environment.ts` (für prod z. B. dann `environment.prod.ts`) angelegt werden. Darin kann die Verfügbarkeit des Ngrx-Stores für Development-Zwecke konfiguriert oder eine Sentry-Domain hinterlegt werden. Hier eine beispielhafte `environment.ts`:
+    ```ts
+    import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+    export const environment = {
+        production: false, // true for production
+        imports: [
+            StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true, connectInZone: true })
+        ],
+        sentryDsn: 'https://my-sentry-link.test',
+        nodeEnv: 'development', // set 'production' for public release
+    };
     ```
 
 ##### 2. Installieren der Dependencies
@@ -86,7 +114,6 @@ Im Ordner `./backend/api/src/database` muss eine Datei `redis-users.acl` angeleg
     user default off
     user test on >test123 ~* +@all
 ```
-TODO: ist noch auf Repo!!!
 
 ##### 5. Dockercontainer starten
 In der lokalen Umgebung muss der Befehl `npm run startLocalDocker` ausgeführt werden.
@@ -112,6 +139,9 @@ Nun sollte alles eingerichtet sein, so dass man über die folgenden Befehle Baul
     npm run startFrontend # startet Frontend auf Port 4200
     npm run startBackend # startet Backend auf Port 3305
 ```
+
+##### 9. Initialisierung im Admin-Bereich
+Damit der Personalisierungs-Tab funktioniert, müssen im Admin-Bereich (zugänglich über den Nutzer mit der Rolle "admin") die Modul- und Topic-Embeddings initialisiert werden. Diese finden sich im Admin-Bereich im Tab "Empfehlung". Näheres zum Admin-Tab findet sich in der Developer-Doku (TBD).
 
 ##### n. Weitere Schritte TBD
 Hier könnten noch weitere Schritte folgen, je nachdem wie stark wir unsere .gitignore erweitern. Denkbar wäre z. B. die `constants.ts` in der die Nutzer definiert sind nicht mehr zu pushen. Diese müsste dann angelegt werden. 

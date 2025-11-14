@@ -6,7 +6,7 @@ import {
 } from "@prisma/client";
 import { logError } from "../error";
 import { Person } from "../../person";
-import { Modulehandbook } from "../../../../../interfaces/modulehandbook";
+import { ModuleHandbook } from "../../../../interfaces/modulehandbook";
 
 const prisma = new PrismaClient();
 
@@ -164,8 +164,8 @@ export async function upsertStudyprogrammes(
   });
 }
 
-export async function upsertModulehandbooks(
-  mhbs: Modulehandbook[]
+export async function upsertModuleHandbooks(
+  mhbs: ModuleHandbook[]
 ): Promise<string> {
   return new Promise(async (resolve, reject) => {
     const mhbsChanges = { added: 0, updated: 0 };
@@ -194,8 +194,6 @@ export async function upsertModulehandbooks(
               name: mhb.name,
               desc: mhb.desc,
               semester: mhb.semester,
-              spId: mhb.spId,
-              poVersion: mhb.poVersion,
             },
           });
           mhbsChanges.added++;
@@ -204,9 +202,7 @@ export async function upsertModulehandbooks(
           if (
             existingMhb.name !== mhb.name ||
             existingMhb.desc !== mhb.desc ||
-            existingMhb.semester !== mhb.semester ||
-            existingMhb.spId !== mhb.spId ||
-            existingMhb.poVersion !== mhb.poVersion
+            existingMhb.semester !== mhb.semester
           ) {
             await prisma.mhb.update({
               where: {
@@ -219,8 +215,6 @@ export async function upsertModulehandbooks(
                 name: mhb.name,
                 desc: mhb.desc,
                 semester: mhb.semester,
-                spId: mhb.spId,
-                poVersion: mhb.poVersion,
               },
             });
             mhbsChanges.updated++;

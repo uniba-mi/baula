@@ -1,4 +1,4 @@
-import { StudyProgrammeChangelog } from '../../studyprogramme';
+import { StudyProgrammeChangelog } from '../../studyProgramme';
 
 // CURRENT STATE: WS2023/24
 export const programmeChanges: StudyProgrammeChangelog[] = [

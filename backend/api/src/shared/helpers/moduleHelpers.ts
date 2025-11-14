@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { moduleChanges } from "../constants/moduleMapping";
-import { Modulehandbook } from "../../../../../interfaces/modulehandbook";
-import { ModuleGroup } from "../../../../../interfaces/module-group";
-import { Module } from "../../../../../interfaces/module";
-import { ModuleCourse } from "../../../../../interfaces/module-course";
+import { ModuleGroup } from "../../../../interfaces/module-group";
+import { Module } from "../../../../interfaces/module";
+import { ModuleCourse } from "../../../../interfaces/module-course";
+import { ModuleHandbook } from "../../../../interfaces/modulehandbook";
 
 const prisma = new PrismaClient();
 
@@ -12,7 +12,7 @@ export async function extractModules(
   version: number
 ): Promise<Module[] | undefined> {
   // get mhb information
-  const mhb = await findAndBuildModulehandbookByIdAndVersion(mhbId, version);
+  const mhb = await findAndBuildModuleHandbookByIdAndVersion(mhbId, version);
   if (mhb) {
     let modules = iterateOverMgsAndReturnModules(mhb.mgs);
     // remove duplicates
@@ -24,7 +24,7 @@ export async function extractModules(
   }
 }
 
-export async function findAndBuildModulehandbookByIdAndVersion(mhbId: string, version: number): Promise<Modulehandbook | undefined> {
+export async function findAndBuildModuleHandbookByIdAndVersion(mhbId: string, version: number): Promise<ModuleHandbook | undefined> {
   // initiate result variable
       let mhbStructure = undefined;
   
@@ -35,20 +35,18 @@ export async function findAndBuildModulehandbookByIdAndVersion(mhbId: string, ve
             mhbId,
             version,
           },
-        },
+        }
       });
   
       // build own structure
       if (mhb) {
         // build initial structure
-        mhbStructure = new Modulehandbook(
+        mhbStructure = new ModuleHandbook(
           mhb.mhbId,
           mhb.version,
           mhb.name,
           mhb.desc,
-          mhb.semester,
-          mhb.spId,
-          mhb.poVersion
+          mhb.semester
         );
   
         // find and add modulegroups

@@ -15,6 +15,5 @@ export function denyDemoWrites(
     });
   }
 
-  // ansonsten weiter
   next();
 }

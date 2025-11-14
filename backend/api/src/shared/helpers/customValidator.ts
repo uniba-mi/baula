@@ -1,28 +1,28 @@
 import mongoose from "mongoose";
-import { UserGeneratedModule } from "../../../../../interfaces/usergeneratedmodule";
+import { UserGeneratedModule } from "../../userGeneratedModule";
 import {
   PlanCourse,
-  Semesterplan,
-  SemesterplanTemplate,
-} from "../../../../../interfaces/semesterplan";
-import { StudyplanTemplate } from "../../../../../interfaces/studyplan";
-import { Hint, UserServer } from "../../../../../interfaces/user";
+  SemesterPlan,
+  SemesterPlanTemplate,
+} from "../../semesterPlan";
+import { StudyPlanTemplate } from "../../studyPlan";
+import { Hint, UserServer } from "../../user";
 import validator from "validator";
-import { Jobtemplate } from "../../../../../interfaces/job";
-import { LongTermEvaluation } from "../../../../../interfaces/longTermEvaluation";
+import { Jobtemplate } from "../../job";
+import { LongTermEvaluation } from "../../longTermEvaluation";
 
 const {
   Types: { ObjectId },
 } = mongoose;
 
-// helper function to check if mongodbid is valid
+// check if mongodbid is valid
 // https://stackoverflow.com/questions/69848632/how-to-check-for-a-valid-object-id-in-mongoose
 export const validateObjectId = (id: string) =>
   ObjectId.isValid(id) && new ObjectId(id).toString() === id; //true or false
 
-export const validateAndReturnSemesterplanTemplate = (
+export const validateAndReturnSemesterPlanTemplate = (
   sp: any
-): SemesterplanTemplate | undefined => {
+): SemesterPlanTemplate | undefined => {
   return sp && sp.semester && sp.courses ? sp : undefined;
 };
 
@@ -54,9 +54,9 @@ export const validateAndReturnUserGeneratedModule = (
     : undefined;
 };
 
-export const validateAndReturnSemesterplan = (
+export const validateAndReturnSemesterPlan = (
   sp: any
-): Semesterplan | undefined => {
+): SemesterPlan | undefined => {
   return sp &&
     sp.semester &&
     typeof sp.semester == "string" &&
@@ -90,24 +90,24 @@ export const validateAndReturnUser = (user: any): UserServer | undefined => {
     Array.isArray(user.jobs) &&
     Array.isArray(user.moduleFeedback) &&
     Array.isArray(user.favouriteModulesAcronyms) &&
-    Array.isArray(user.notInterestingModulesAcronyms) &&
+    Array.isArray(user.excludedModulesAcronyms) &&
     Array.isArray(user.dashboardSettings) &&
     Array.isArray(user.timetableSettings)
     ? user
     : undefined;
 };
 
-export const validateAndReturnStudyplan = (
-  studyplan: any
-): StudyplanTemplate | undefined => {
-  return studyplan &&
-    "name" in studyplan &&
-    typeof studyplan.name == "string" &&
-    "status" in studyplan &&
-    typeof studyplan.status == "boolean" &&
-    "semesterPlans" in studyplan &&
-    Array.isArray(studyplan.semesterPlans)
-    ? studyplan
+export const validateAndReturnStudyPlan = (
+  studyPlan: any
+): StudyPlanTemplate | undefined => {
+  return studyPlan &&
+    "name" in studyPlan &&
+    typeof studyPlan.name == "string" &&
+    "status" in studyPlan &&
+    typeof studyPlan.status == "boolean" &&
+    "semesterPlans" in studyPlan &&
+    Array.isArray(studyPlan.semesterPlans)
+    ? studyPlan
     : undefined;
 };
 

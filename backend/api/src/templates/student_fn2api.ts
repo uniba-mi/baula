@@ -26,7 +26,7 @@ export const metaDataTemplate = [
   },
 ];
 
-export const studypathTemplate = {
+export const studyPathTemplate = {
   completedModules: [
     "//StudienModul",
     {

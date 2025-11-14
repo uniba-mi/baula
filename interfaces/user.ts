@@ -1,6 +1,6 @@
 import { ExtendedJob, Job } from "./job";
 import { TimetableSettings } from "./semesterplan";
-import { PathModule, Studypath } from "./studypath";
+import { PathModule, Studypath } from "./studyPath";
 
 /* MetaUser is a general interface that summarize all attributes all users have whether server or client side */
 export interface MetaUser {
@@ -19,7 +19,7 @@ export interface MetaUser {
   dashboardSettings: ChartVisibility[];
   timetableSettings: TimetableSettings[];
   favouriteModulesAcronyms: string[];
-  notInterestingModulesAcronyms: string[];
+  excludedModulesAcronyms: string[];
   moduleFeedback?: ModuleFeedback[];
   hints?: Hint[];
   consents: Consent[];
