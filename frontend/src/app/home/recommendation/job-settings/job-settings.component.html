@@ -22,7 +22,7 @@
     </div>
     <ng-container *ngIf="jobs$ | async as jobs">
         <div class="col-12 col-md-6 p-2" *ngFor="let job of jobs">
-            <app-job-card [job]="job" [studyPathModules]="studypathModules$ | async"></app-job-card>
+            <app-job-card [job]="job" [studyPathModules]="studyPathModules$ | async"></app-job-card>
         </div>
     </ng-container>
 </div>

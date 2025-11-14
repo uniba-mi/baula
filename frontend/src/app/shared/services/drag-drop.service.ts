@@ -7,9 +7,9 @@ import { AlertType } from 'src/app/shared/classes/alert';
 import { getModuleByAcronym } from 'src/app/selectors/module-overview.selectors';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { StudyplanService } from './studyplan.service';
-import { UserGeneratedModule } from '../../../../../interfaces/usergeneratedmodule';
+import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
 import { Module } from '../../../../../interfaces/module';
+import { StudyPlanService } from './study-plan.service';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +21,7 @@ export class DragDropService {
         private store: Store,
         private planningValidation: PlanningValidationService,
         private snackbar: SnackbarService,
-        private studyplanService: StudyplanService
+        private studyPlanService: StudyPlanService
     ) { }
 
     private isUserGeneratedModule(item: Module | UserGeneratedModule): item is UserGeneratedModule {
@@ -38,7 +38,7 @@ export class DragDropService {
         sourceSemester: string,
         targetContainerId: string,
         targetSemester: string,
-        studyplanId: string,
+        studyPlanId: string,
         isTargetPastSemester: boolean
     ) {
 
@@ -58,7 +58,7 @@ export class DragDropService {
                 sourceSemester,
                 targetContainerId,
                 targetSemester,
-                studyplanId
+                studyPlanId
             );
         } else if (this.isModule(item)) { // normal module (can be from sidenav or semester)
             this.updateModuleSemester(
@@ -67,7 +67,7 @@ export class DragDropService {
                 sourceSemester,
                 targetContainerId,
                 targetSemester,
-                studyplanId
+                studyPlanId
             );
         }
     }
@@ -78,7 +78,7 @@ export class DragDropService {
         originalSemesterPlanSemester: string,
         newSemesterPlanId: string,
         newSemesterPlanSemester: string,
-        studyplanId: string
+        studyPlanId: string
     ) {
 
         this.store
@@ -88,10 +88,10 @@ export class DragDropService {
                 if (module) {
                     // check if module is already in the new semester
                     this.planningValidation
-                        .isModuleInSemesterplan(
+                        .isModuleInSemesterPlan(
                             acronym,
                             newSemesterPlanId,
-                            studyplanId
+                            studyPlanId
                         )
                         .pipe(takeUntil(this.destroy$))
                         .subscribe((isModuleContainedResult) => {
@@ -100,21 +100,21 @@ export class DragDropService {
                                     // remove module from old semester
                                     this.store.dispatch(
                                         ModulePlanningActions.transferModule({
-                                            studyplanId: studyplanId,
-                                            oldSemesterplanId: originalSemesterPlanId,
-                                            oldSemesterplanSemester: originalSemesterPlanSemester,
-                                            newSemesterplanId: newSemesterPlanId,
-                                            newSemesterplanSemester: newSemesterPlanSemester,
+                                            studyPlanId: studyPlanId,
+                                            oldSemesterPlanId: originalSemesterPlanId,
+                                            oldSemesterPlanSemester: originalSemesterPlanSemester,
+                                            newSemesterPlanId: newSemesterPlanId,
+                                            newSemesterPlanSemester: newSemesterPlanSemester,
                                             acronym: module.acronym,
                                             ects: module.ects,
                                         })
                                     );
                                 } else {
                                     // add module to new semester from sidenav
-                                    this.studyplanService.addModuleToPlan(
+                                    this.studyPlanService.addModuleToPlan(
                                         module,
                                         newSemesterPlanId,
-                                        studyplanId
+                                        studyPlanId
                                     );
                                 }
 
@@ -149,15 +149,15 @@ export class DragDropService {
         originalSemesterPlanSemester: string,
         newSemesterPlanId: string,
         newSemesterPlanSemester: string,
-        studyplanId: string
+        studyPlanId: string
     ) {
         this.store.dispatch(
             UserGeneratedModuleActions.transferUserGeneratedModule({
-                studyplanId: studyplanId,
-                oldSemesterplanId: originalSemesterPlanId,
-                oldSemesterplanSemester: originalSemesterPlanSemester,
-                newSemesterplanId: newSemesterPlanId,
-                newSemesterplanSemester: newSemesterPlanSemester,
+                studyPlanId: studyPlanId,
+                oldSemesterPlanId: originalSemesterPlanId,
+                oldSemesterPlanSemester: originalSemesterPlanSemester,
+                newSemesterPlanId: newSemesterPlanId,
+                newSemesterPlanSemester: newSemesterPlanSemester,
                 module: module,
             })
         );

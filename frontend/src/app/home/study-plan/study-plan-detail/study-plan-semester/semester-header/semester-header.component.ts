@@ -6,17 +6,17 @@ import { combineLatest, concatMap, filter, Observable, of, Subject, take, takeUn
 import { getAllDistinctModules } from 'src/app/selectors/module-overview.selectors';
 import { getCloseDialogMode } from 'src/app/selectors/dialog.selectors';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
-import { Semesterplan, MetaSemester } from '../../../../../../../../interfaces/semesterplan';
+import { SemesterPlan, MetaSemester } from '../../../../../../../../interfaces/semester-plan';
 import { Semester } from '../../../../../../../../interfaces/semester';
-import { SemesterplanActions, UserGeneratedModuleActions } from 'src/app/actions/study-planning.actions';
-import { StudyplanService } from 'src/app/shared/services/studyplan.service';
-import { UserGeneratedModuleTemplate } from '../../../../../../../../interfaces/usergeneratedmodule';
-import { StudypathActions } from 'src/app/actions/user.actions';
-import { PathModule, SemesterStudyPath } from '../../../../../../../../interfaces/studypath';
-import { getActiveStudyplanId, getSelectedStudyplanId } from 'src/app/selectors/study-planning.selectors';
-import { FlexnowService } from 'src/app/shared/services/flexnow.service';
+import { SemesterPlanActions, UserGeneratedModuleActions } from 'src/app/actions/study-planning.actions';
+import { UserGeneratedModuleTemplate } from '../../../../../../../../interfaces/user-generated-module';
+import { StudyPathActions } from 'src/app/actions/user.actions';
+import { PathModule, SemesterStudyPath } from '../../../../../../../../interfaces/study-path';
+import { getActiveStudyPlanId, getSelectedStudyPlanId } from 'src/app/selectors/study-planning.selectors';
+import { FlexnowService } from 'src/app/shared/services/flex-now.service';
 import { getLastConsentByType } from 'src/app/selectors/user.selectors';
 import { Consent } from '../../../../../../../../interfaces/user';
+import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
 
 @Component({
   selector: 'app-semester-header',
@@ -28,13 +28,13 @@ import { Consent } from '../../../../../../../../interfaces/user';
 export class SemesterHeaderComponent {
   @Input() metaSemester: MetaSemester;
   @Input() semesterNumber: number;
-  @Input() studyplanId: string;
-  @Input() semesterPlan: Semesterplan;
-  @Input() semesterStudypath$: Observable<SemesterStudyPath[]>
+  @Input() studyPlanId: string;
+  @Input() semesterPlan: SemesterPlan;
+  @Input() semesterStudyPath$: Observable<SemesterStudyPath[]>
   @Input() isEligibleForFinish: boolean;
   @Input() isExpanded: boolean;
   @Output() toggleExpanded = new EventEmitter<string>(); // emits semester name
-  @Output() finishSemester = new EventEmitter<Semesterplan>();
+  @Output() finishSemester = new EventEmitter<SemesterPlan>();
 
   private unsubscribe$ = new Subject<void>();
 
@@ -50,7 +50,7 @@ export class SemesterHeaderComponent {
   constructor(
     private store: Store,
     private dialog: MatDialog,
-    private studyplanService: StudyplanService,
+    private studyPlanService: StudyPlanService,
     private flexnowService: FlexnowService,
   ) {
     this.lastFlexnowApiConsent$ = this.store.select(getLastConsentByType('flexnow-api'));
@@ -65,27 +65,27 @@ export class SemesterHeaderComponent {
     });
 
     combineLatest([
-      this.store.select(getActiveStudyplanId),
-      this.store.select(getSelectedStudyplanId)
-    ]).subscribe(([activeStudyplanId, selectedStudyplanId]) => {
+      this.store.select(getActiveStudyPlanId),
+      this.store.select(getSelectedStudyPlanId)
+    ]).subscribe(([activeStudyPlanId, selectedStudyPlanId]) => {
 
-      if (activeStudyplanId && selectedStudyplanId) {
-        this.initializeFinishSemesterLogic(activeStudyplanId, selectedStudyplanId);
+      if (activeStudyPlanId && selectedStudyPlanId) {
+        this.initializeFinishSemesterLogic(activeStudyPlanId, selectedStudyPlanId);
       }
     });
 
   }
 
-  initializeFinishSemesterLogic(activeStudyplanId: string, currentStudyplanId: string): void {
-    if (this.checkForIsPastSemesterMismatches(this.semesterPlan) && activeStudyplanId === currentStudyplanId) {
+  initializeFinishSemesterLogic(activeStudyPlanId: string, currentStudyPlanId: string): void {
+    if (this.checkForIsPastSemesterMismatches(this.semesterPlan) && activeStudyPlanId === currentStudyPlanId) {
       this.showFinishSemesterHint = true;
     } else {
       this.showFinishSemesterHint = false;
     }
   }
 
-  // generates new semester from semesterplan.semester property and compares with isPastSemester property of plan
-  checkForIsPastSemesterMismatches(semesterPlan: Semesterplan): boolean {
+  // generates new semester from semesterPlan.semester property and compares with isPastSemester property of plan
+  checkForIsPastSemesterMismatches(semesterPlan: SemesterPlan): boolean {
     const semester = new Semester(semesterPlan.semester);
     const isPast = semester.isPastSemester();
 
@@ -154,17 +154,17 @@ export class SemesterHeaderComponent {
           flexNowImported: pathModule.flexNowImported ? pathModule.flexNowImported : false,
         };
 
-        this.store.dispatch(StudypathActions.updateModuleInStudypath({ module: newPathModule }))
+        this.store.dispatch(StudyPathActions.updateModuleInStudyPath({ module: newPathModule }))
       }
     });
   }
 
-  openAimedEctsDialog(event: any, semesterplanId: string, aimedEcts: number) {
+  openAimedEctsDialog(event: any, semesterPlanId: string, aimedEcts: number) {
     event.stopPropagation();
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         dialogTitle: 'Zu erreichende ECTS bearbeiten',
-        dialogContentId: 'update-aimedEcts-dialog',
+        dialogContentId: 'update-aimed-ects-dialog',
         aimedEcts: aimedEcts,
       },
     });
@@ -174,7 +174,7 @@ export class SemesterHeaderComponent {
         .select(getCloseDialogMode)
         .subscribe((mode) => (this.closeMode = mode));
       if (this.closeMode === 'data') {
-        this.updateAimedEcts(this.studyplanId, semesterplanId, aimedEcts);
+        this.updateAimedEcts(this.studyPlanId, semesterPlanId, aimedEcts);
       } else {
         return;
       }
@@ -182,12 +182,12 @@ export class SemesterHeaderComponent {
   }
 
   updateAimedEcts(
-    studyplanId: string,
-    semesterplanId: string,
+    studyPlanId: string,
+    semesterPlanId: string,
     aimedEcts: number
   ) {
     this.store.dispatch(
-      SemesterplanActions.updateAimedEcts({ studyplanId, semesterplanId, aimedEcts })
+      SemesterPlanActions.updateAimedEcts({ studyPlanId, semesterPlanId, aimedEcts })
     );
     this.dialog.closeAll();
   }
@@ -198,7 +198,7 @@ export class SemesterHeaderComponent {
         dialogTitle: 'Modul hinzufügen',
         dialogContentId: 'add-module-dialog',
         modules: this.modules,
-        semesterplanId: ppId,
+        semesterPlanId: ppId,
       },
       maxWidth: '80vh',
       width: '80vh',
@@ -207,7 +207,7 @@ export class SemesterHeaderComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.studyplanService.addModuleToPlan(result.module, ppId, this.studyplanId);
+        this.studyPlanService.addModuleToPlan(result.module, ppId, this.studyPlanId);
       }
     });
   }
@@ -252,8 +252,8 @@ export class SemesterHeaderComponent {
         if (this.closeMode === 'data') {
           this.store.dispatch(
             UserGeneratedModuleActions.createUserGeneratedModule({
-              studyplanId: this.studyplanId,
-              semesterplanId: this.semesterPlan._id,
+              studyPlanId: this.studyPlanId,
+              semesterPlanId: this.semesterPlan._id,
               module: inputModule,
             })
           );

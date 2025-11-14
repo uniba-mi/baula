@@ -2,16 +2,16 @@ import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Module } from '../../../../../interfaces/module';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog.component';
-import { getModuleFeedback, getUserStudypath, isModuleInStudypath } from 'src/app/selectors/user.selectors';
+import { getModuleFeedback, getUserStudyPath, isModuleInStudyPath } from 'src/app/selectors/user.selectors';
 import { ModuleFeedback } from '../../../../../interfaces/user';
 import { Observable, Subject, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatTabGroup } from '@angular/material/tabs';
 import { getAllModules } from 'src/app/selectors/module-overview.selectors';
-import { Studypath } from '../../../../../interfaces/studypath';
-import { Semesterplan } from '../../../../../interfaces/semesterplan';
-import { getSemesterplansOfActiveStudyplan } from 'src/app/selectors/study-planning.selectors';
-import { ModuleDetailsDependencyVisNodeSchema } from '../../../../../interfaces/visualizationData';
+import { StudyPath } from '../../../../../interfaces/study-path';
+import { SemesterPlan } from '../../../../../interfaces/semester-plan';
+import { getSemesterPlansOfActiveStudyPlan } from 'src/app/selectors/study-planning.selectors';
+import { ModuleDetailsDependencyVisNodeSchema } from '../../../../../interfaces/visualization-data';
 import { AnalyticsService } from 'src/app/shared/services/analytics.service';
 
 @Component({
@@ -27,9 +27,9 @@ export class ModuleDetailsDialogComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   feedback$!: Observable<ModuleFeedback | null>;
-  moduleInStudypath$: Observable<Boolean>;
-  studypath$: Observable<Studypath>;
-  semesterplans$: Observable<Semesterplan[] | undefined>;
+  moduleInStudyPath$: Observable<Boolean>;
+  studyPath$: Observable<StudyPath>;
+  semesterPlans$: Observable<SemesterPlan[] | undefined>;
   activeTab!: string;
 
   // variables for visualization
@@ -46,9 +46,9 @@ export class ModuleDetailsDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.feedback$ = this.store.select(getModuleFeedback(this.selectedModule.acronym));
-    this.moduleInStudypath$ = this.store.select(isModuleInStudypath(this.selectedModule.acronym));
-    this.studypath$ = this.store.select(getUserStudypath);
-    this.semesterplans$ = this.store.select(getSemesterplansOfActiveStudyplan);
+    this.moduleInStudyPath$ = this.store.select(isModuleInStudyPath(this.selectedModule.acronym));
+    this.studyPath$ = this.store.select(getUserStudyPath);
+    this.semesterPlans$ = this.store.select(getSemesterPlansOfActiveStudyPlan);
 
     // retrieve activeTab from the dialog data
     const dialogData = this.dialog._containerInstance._config.data;
@@ -105,7 +105,7 @@ export class ModuleDetailsDialogComponent implements OnInit, OnDestroy {
           });
         }
       }
-      // TODO this currently leads to only show modules that are in the modulehandbook
+      // TODO this currently leads to only show modules that are in the module handbook
     });
 
     // set active tab

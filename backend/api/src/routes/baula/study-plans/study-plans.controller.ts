@@ -4,14 +4,14 @@ import {
   validateObjectId,
   validateAndReturnStudyPlan,
   validateAndReturnUserGeneratedModule,
-} from "../../../shared/helpers/customValidator";
+} from "../../../shared/helpers/custom-validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import validator from "validator";
 import fs from "fs/promises";
 import path from "path";
-import { UserGeneratedModule } from "../../../userGeneratedModule";
+import { UserGeneratedModule } from "../../../user-generated-module";
 import { UserServer } from "../../../user";
-import { getLatestPlanFilename } from "../../../shared/helpers/planHelper";
+import { getLatestPlanFilename } from "../../../shared/helpers/plan-helper";
 
 // GET REQUESTS
 export async function getAllStudyPlansOfUser(
@@ -47,7 +47,7 @@ export async function checkStudyPlanTemplateAvailability(
     if (programId && semesterType) {
       const directoryPath = path.join(
         __dirname,
-        "../../../staticdata/studyplan_templates"
+        "../../../../staticdata/studyplan-templates"
       );
       const files = await fs.readdir(directoryPath);
 
@@ -89,7 +89,7 @@ export async function getLatestTemplateForStudyProgram(
     if (programId && semesterType) {
       const directoryPath = path.join(
         __dirname,
-        "../../../staticdata/studyplan_templates"
+        "../../../../staticdata/studyplan-templates"
       );
       const files = await fs.readdir(directoryPath);
 

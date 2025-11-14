@@ -13,34 +13,34 @@ import {
   getDashboardSettings,
   getSemesterList,
   getUser,
-  getUserStudypath,
+  getUserStudyPath,
   getVisibleCharts,
 } from 'src/app/selectors/user.selectors';
 import {
   SemesterStudyPath,
-  Studypath,
-} from '../../../../../interfaces/studypath';
+  StudyPath,
+} from '../../../../../interfaces/study-path';
 import { Semester } from '../../../../../interfaces/semester';
 import {
-  getActiveStudyplan,
+  getActiveStudyPlan,
   getPlanCourses,
   getSemesterPlan,
   getShowFinishSemesterInfo,
-  getStudyplans,
+  getStudyPlans,
 } from 'src/app/selectors/study-planning.selectors';
-import { Studyplan } from '../../../../../interfaces/studyplan';
+import { StudyPlan } from '../../../../../interfaces/study-plan';
 import { ModuleGroup } from '../../../../../interfaces/module-group';
 import { getFirstLevelModuleGroups } from 'src/app/selectors/module-overview.selectors';
 import { combineLatest } from 'rxjs';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
 import { DashboardActions } from 'src/app/actions/user.actions';
-import { AcademicDate } from '../../../../../interfaces/academicDate';
+import { AcademicDate } from '../../../../../interfaces/academic-date';
 import { RestService } from 'src/app/rest.service';
 import {
   PlanCourse,
-  Semesterplan,
-} from '../../../../../interfaces/semesterplan';
-import { chartMetadata } from 'src/app/shared/constants/chartMetadata';
+  SemesterPlan,
+} from '../../../../../interfaces/semester-plan';
+import { chartMetadata } from 'src/app/shared/constants/chart-metadata';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { MatTooltip } from '@angular/material/tooltip';
 
@@ -55,17 +55,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   maintenance = false; // Variable to disable features and make maintenance message visible
   private destroy$ = new Subject<void>();
   user$: Observable<User>;
-  studypath$: Observable<Studypath>;
+  studyPath$: Observable<StudyPath>;
   semesters$: Observable<Semester[]>;
-  activeStudyplan$: Observable<Studyplan | undefined>;
+  activeStudyPlan$: Observable<StudyPlan | undefined>;
   maxEcts: number = 180;
   visibleCharts$: Observable<ChartVisibility[]>;
   dashboardSettings$: Observable<ChartVisibility[]>;
   modulegroups$: Observable<ModuleGroup[] | undefined>;
-  studyplans$: Observable<Studyplan[]>;
-  semesterStudypath: SemesterStudyPath[]; // variable for studypath separted by semester
+  studyPlans$: Observable<StudyPlan[]>;
+  semesterStudyPath: SemesterStudyPath[]; // variable for study path separted by semester
   splitIndex: number = 0;
-  activePlan$: Observable<Semesterplan | undefined>;
+  activePlan$: Observable<SemesterPlan | undefined>;
   planCourses$: Observable<PlanCourse[]>;
   initialView = 'timeGridDay';
   academicDates$: Observable<AcademicDate[]>;
@@ -87,24 +87,24 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);
-    this.studypath$ = this.store.select(getUserStudypath);
+    this.studyPath$ = this.store.select(getUserStudyPath);
     this.semesters$ = this.store.select(getSemesterList);
-    this.activeStudyplan$ = this.store.select(getActiveStudyplan);
+    this.activeStudyPlan$ = this.store.select(getActiveStudyPlan);
     this.visibleCharts$ = this.store.select(getVisibleCharts);
     this.dashboardSettings$ = this.store.select(getDashboardSettings);
     this.modulegroups$ = this.store.select(getFirstLevelModuleGroups);
     this.activePlan$ = this.store.select(getSemesterPlan);
-    this.studyplans$ = this.store.select(getStudyplans);
+    this.studyPlans$ = this.store.select(getStudyPlans);
     this.planCourses$ = this.store.select(getPlanCourses);
-    combineLatest([this.studypath$, this.semesters$])
+    combineLatest([this.studyPath$, this.semesters$])
       .pipe(
         switchMap(([path, semester]) =>
-          this.transform.transformStudypath(path, semester)
+          this.transform.transformStudyPath(path, semester)
         )
       )
-      .subscribe((semesterStudypath) => {
-        this.semesterStudypath = semesterStudypath;
-        this.splitIndex = this.semesterStudypath.findIndex(
+      .subscribe((semesterStudyPath) => {
+        this.semesterStudyPath = semesterStudyPath;
+        this.splitIndex = this.semesterStudyPath.findIndex(
           (el) => el.semester === new Semester().fullName
         );
       });

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Module } from '../../../../../../interfaces/module';
 import { Store } from '@ngrx/store';
-import { PathModule, Studypath } from '../../../../../../interfaces/studypath';
+import { PathModule, StudyPath } from '../../../../../../interfaces/study-path';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { getCloseDialogMode } from 'src/app/selectors/dialog.selectors';
@@ -9,10 +9,10 @@ import { Status, User } from '../../../../../../interfaces/user';
 import { Observable, Subject } from 'rxjs';
 import { Semester } from '../../../../../../interfaces/semester';
 import { getUser } from 'src/app/selectors/user.selectors';
-import { Studyplan } from '../../../../../../interfaces/studyplan';
+import { StudyPlan } from '../../../../../../interfaces/study-plan';
 import { take, takeUntil } from 'rxjs/operators';
-import { StudypathActions } from 'src/app/actions/user.actions';
-import { UserGeneratedModule } from '../../../../../../interfaces/usergeneratedmodule';
+import { StudyPathActions } from 'src/app/actions/user.actions';
+import { UserGeneratedModule } from '../../../../../../interfaces/user-generated-module';
 import { ModService } from '../../services/module.service';
 
 @Component({
@@ -22,17 +22,17 @@ import { ModService } from '../../services/module.service';
     standalone: false
 })
 export class ModuleStatusComponent implements OnInit {
-  @Input() studypath$: Observable<Studypath>;
+  @Input() studyPath$: Observable<StudyPath>;
   @Input() modType: string;
   @Input() openedFromModuleCatalog: boolean = false; // TODO rename this because this is also done in sidenav
   @Input() module: Module;
   @Input() userGeneratedModule: UserGeneratedModule;
   @Input() pathModule: PathModule;
   @Input() statusSemester: string | undefined;
-  @Input() openedWithSemesterSet: boolean; // true for opening from studyplan
+  @Input() openedWithSemesterSet: boolean; // true for opening from study plan
   status: string | undefined;
   grade: number | undefined;
-  activePlan$: Observable<Studyplan | undefined>;
+  activePlan$: Observable<StudyPlan | undefined>;
   closeMode: string;
   user: User;
   mgId: string;
@@ -50,25 +50,25 @@ export class ModuleStatusComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(getUser).pipe(take(1)).subscribe((user) => this.user = user)
 
-    this.studypath$.pipe(takeUntil(this.destroy$)).subscribe((studypath) => {
-      this.updateModuleDataFromStudypath(studypath);
+    this.studyPath$.pipe(takeUntil(this.destroy$)).subscribe((studyPath) => {
+      this.updateModuleDataFromStudyPath(studyPath);
     });
 
     this.updateDisplayStatusOnHover();
   }
 
-  private updateModuleDataFromStudypath(studypath: Studypath): void {
+  private updateModuleDataFromStudyPath(studyPath: StudyPath): void {
     const moduleToCheck = this.pathModule || this.module || this.userGeneratedModule;
     if (moduleToCheck) {
-      this.statusSemester = this.checkSemesterForModule(studypath, moduleToCheck, this.statusSemester);
-      this.status = this.checkStatusForModule(studypath, moduleToCheck, this.statusSemester);
-      this.grade = this.checkGradeForModule(studypath, moduleToCheck, this.statusSemester);
+      this.statusSemester = this.checkSemesterForModule(studyPath, moduleToCheck, this.statusSemester);
+      this.status = this.checkStatusForModule(studyPath, moduleToCheck, this.statusSemester);
+      this.grade = this.checkGradeForModule(studyPath, moduleToCheck, this.statusSemester);
       this.updateDisplayStatusOnHover();
     }
   }
 
   // get module's unique identifier (_id)
-  getModuleId(module: PathModule | UserGeneratedModule | Module, spath: Studypath, semester: string | undefined): string | undefined {
+  getModuleId(module: PathModule | UserGeneratedModule | Module, spath: StudyPath, semester: string | undefined): string | undefined {
     // identify type between UserGeneratedModules | Module | PathModule
     const moduleType = module === this.userGeneratedModule
       ? 'UserGeneratedModule'
@@ -81,7 +81,7 @@ export class ModuleStatusComponent implements OnInit {
     if (moduleType === 'UserGeneratedModule' || moduleType === 'PathModule') {
       return module._id!
     } else if (moduleType === 'Module') {
-      const matchingModule = this.findCorrespondingModuleInStudypath(spath, module.acronym, semester);
+      const matchingModule = this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
 
       return matchingModule ? matchingModule._id : undefined;
     }
@@ -89,53 +89,53 @@ export class ModuleStatusComponent implements OnInit {
   }
 
   // get current values from store
-  private checkStatusForModule(spath: Studypath, module: Module | PathModule | UserGeneratedModule, semester: string | undefined): string | undefined {
+  private checkStatusForModule(spath: StudyPath, module: Module | PathModule | UserGeneratedModule, semester: string | undefined): string | undefined {
     const moduleId = this.getModuleId(module, spath, semester);
     if (moduleId) {
       const matchingModule = semester
         ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-        : this.findCorrespondingModuleInStudypath(spath, moduleId, semester);
+        : this.findCorrespondingModuleInStudyPath(spath, moduleId, semester);
       return matchingModule?.status || 'open';
     }
     return;
   }
 
-  private checkSemesterForModule(spath: Studypath, module: Module | PathModule | UserGeneratedModule, semester: string | undefined): string | undefined {
+  private checkSemesterForModule(spath: StudyPath, module: Module | PathModule | UserGeneratedModule, semester: string | undefined): string | undefined {
     const moduleId = this.getModuleId(module, spath, semester);
     if (semester) {
       return semester;
     } else {
-      // Otherwise, find the corresponding module in the studypath
+      // Otherwise, find the corresponding module in the study path
       const matchingModule = semester
         ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-        : this.findCorrespondingModuleInStudypath(spath, module.acronym, semester);
+        : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
       return matchingModule?.semester || undefined;
     }
   }
 
-  private checkGradeForModule(spath: Studypath, module: PathModule, semester: string | undefined): number | undefined {
+  private checkGradeForModule(spath: StudyPath, module: PathModule, semester: string | undefined): number | undefined {
     const moduleId = this.getModuleId(module, spath, semester);
     const matchingModule = semester
       ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-      : this.findCorrespondingModuleInStudypath(spath, module.acronym, semester);
+      : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
     return matchingModule?.grade || undefined
   }
 
-  private findCorrespondingModuleInStudypath(
-    spath: Studypath,
+  private findCorrespondingModuleInStudyPath(
+    spath: StudyPath,
     acronym: string,
     semester: string | undefined
   ): PathModule | undefined {
 
-    // check for modules with the same acronym in the studypath
+    // check for modules with the same acronym in the study path
     const filteredModules = spath.completedModules.filter(mod => mod.acronym === acronym);
 
-    // if a semester is given (= studyplan semester), check if one of the matching modules is in the same semester
+    // if a semester is given (= study plan semester), check if one of the matching modules is in the same semester
     if (this.openedWithSemesterSet) {
       return filteredModules.find(mod => mod.semester === semester);
     }
 
-    // else (= module catalog), use the most recent occurence of the acronym in the studypath
+    // else (= module catalog), use the most recent occurence of the acronym in the study path
     return filteredModules.sort((a, b) => b.semester.localeCompare(a.semester))[0];
   }
 
@@ -187,8 +187,8 @@ export class ModuleStatusComponent implements OnInit {
         : this.module;
 
 
-    this.studypath$.pipe(take(1)).subscribe((studypath) => {
-      const moduleId = this.getModuleId(moduleData, studypath, this.statusSemester);
+    this.studyPath$.pipe(take(1)).subscribe((studyPath) => {
+      const moduleId = this.getModuleId(moduleData, studyPath, this.statusSemester);
 
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
@@ -259,16 +259,16 @@ export class ModuleStatusComponent implements OnInit {
               flexNowImported: flexNowImported,
             };
 
-            // if status is set to open, delete module from studypath
+            // if status is set to open, delete module from study path
             if (moduleId && semesterString && status === 'open') {
-              this.store.dispatch(StudypathActions.deleteModuleFromStudypath({ id: moduleId, semester: semesterString }));
+              this.store.dispatch(StudyPathActions.deleteModuleFromStudyPath({ id: moduleId, semester: semesterString }));
             } else {
-              // we do not use updateModuleInStudypath here because we do not only edit a specific module in the studypath, but need a semester-dependent update
+              // we do not use updateModuleInStudyPath here because we do not only edit a specific module in the study path, but need a semester-dependent update
               const updatedCompletedModules = [updatedModule]
-              // for other cases update module in studypath
+              // for other cases update module in study path
 
               this.store.dispatch(
-                StudypathActions.updateStudypath({
+                StudyPathActions.updateStudyPath({
                   completedModules: updatedCompletedModules
                 })
               );

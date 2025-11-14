@@ -24,13 +24,13 @@ export const getSelectedStudyprogramme = createSelector(
   (state) => state.selectedStudyProgramme
 );
 
-export const getModulehandbook = createSelector(
+export const getModuleHandbook = createSelector(
   getModuleOverviewState,
-  (state) => state.modulehandbook
+  (state) => state.moduleHandbook
 );
 
 export const getFirstLevelModuleGroups = createSelector(
-  getModulehandbook,
+  getModuleHandbook,
   (state) => state?.mgs
 );
 
@@ -125,8 +125,8 @@ export const getHoveredModule = createSelector(
 // export const getAllModuleGroups = createSelector(
 //   getModuleOverviewState,
 //   (state) => {
-//     if (state.modulehandbook && state.modulehandbook.mgs) {
-//       return getAllMgs(state.modulehandbook.mgs);
+//     if (state.moduleHandbook && state.moduleHandbook.mgs) {
+//       return getAllMgs(state.moduleHandbook.mgs);
 //     }
 //     return [];
 //   }
@@ -136,8 +136,8 @@ export const getHoveredModule = createSelector(
 export const getStructuredModuleGroups = createSelector(
   getModuleOverviewState,
   (state): ExtendedModuleGroup[] => {
-    if (state.modulehandbook && state.modulehandbook.mgs) {
-      return createStructuredModuleGroupsList(state.modulehandbook.mgs);
+    if (state.moduleHandbook && state.moduleHandbook.mgs) {
+      return createStructuredModuleGroupsList(state.moduleHandbook.mgs);
     }
     return [];
   }

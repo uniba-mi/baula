@@ -11,11 +11,11 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
-import { FuseSearchService } from 'src/app/shared/services/fusesearch.service';
+import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
 import { SearchSettings } from '../../../../../../interfaces/search';
 import { Course } from '../../../../../../interfaces/course';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { PlanCourse } from '../../../../../../interfaces/semesterplan';
+import { PlanCourse } from '../../../../../../interfaces/semester-plan';
 import { ScreenSizeService } from 'src/app/shared/services/screen-size.service';
 import { CoursePlanningActions } from 'src/app/actions/study-planning.actions';
 import { Semester } from '../../../../../../interfaces/semester';

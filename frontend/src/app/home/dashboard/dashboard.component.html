@@ -26,19 +26,19 @@
   <!-- Dashboard-Area -->
   <div class="dashboard-container" *ngIf="user$ | async as user">
     <ng-container *ngIf="visibleCharts$ | async as visibleCharts">
-      <ng-container *ngIf="studypath$ | async as studypath">
-        <ng-container *ngIf="semesterStudypath">
+      <ng-container *ngIf="studyPath$ | async as studyPath">
+        <ng-container *ngIf="semesterStudyPath">
           <ng-container *ngFor="let chart of visibleCharts">
             <ng-container [ngSwitch]="chart.key">
-              <!-- Card with Quicklinks -->
-              <mat-card appearance="outlined" *ngSwitchCase="'quicklinks'" class="dashboard-tile order-0">
-                <app-quicklinks [key]="chart.key" (changeVisibility)="changeVisibility($event)"></app-quicklinks>
+              <!-- Card with Quick Links -->
+              <mat-card appearance="outlined" *ngSwitchCase="'quick-links'" class="dashboard-tile order-0">
+                <app-quick-links [key]="chart.key" (changeVisibility)="changeVisibility($event)"></app-quick-links>
               </mat-card>
               <!-- chart with gpa -->
               <mat-card appearance="outlined" *ngSwitchCase="'gpa'" class="dashboard-tile small-tile order-1">
                 <app-dashboard-card-header [key]="chart.key"
                   (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
-                <app-grade-point-average [studypath]="studypath"></app-grade-point-average>
+                <app-grade-point-average [studyPath]="studyPath"></app-grade-point-average>
               </mat-card>
               <!-- Card with personalisation status -->
               <ng-container *ngIf="user.sps?.[0]?.faculty === 'WIAI'">
@@ -76,8 +76,8 @@
                   *ngIf="semesters$ | async as semesters">
                   <app-dashboard-card-header [key]="chart.key"
                     (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
-                  <app-total-ects-progress-chart [studypath]="semesterStudypath" [aimedEcts]="user.maxEcts"
-                    [semesters]="semesters" [studyplan]="activeStudyplan$ | async"></app-total-ects-progress-chart>
+                  <app-total-ects-progress-chart [studyPath]="semesterStudyPath" [aimedEcts]="user.maxEcts"
+                    [semesters]="semesters" [studyPlan]="activeStudyPlan$ | async"></app-total-ects-progress-chart>
                 </mat-card>
               </ng-container>
               <!-- chart with total module progress -->
@@ -85,7 +85,7 @@
                 class="dashboard-tile medium-tile order-3">
                 <app-dashboard-card-header [key]="chart.key"
                   (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
-                <app-total-module-progress-chart [studypath]="studypath"></app-total-module-progress-chart>
+                <app-total-module-progress-chart [studyPath]="studyPath"></app-total-module-progress-chart>
               </mat-card>
               <!-- card with ects progress for each semester -->
               <ng-container *ngSwitchCase="'semester-ects-progress'">
@@ -93,8 +93,8 @@
                   class="dashboard-tile large-tile order-3">
                   <app-dashboard-card-header [key]="chart.key"
                     (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
-                  <app-semester-ects-progress-chart [studypath]="studypath" [semesters]="semesters"
-                    [studyplan]="activeStudyplan$ | async"></app-semester-ects-progress-chart>
+                  <app-semester-ects-progress-chart [studyPath]="studyPath" [semesters]="semesters"
+                    [studyPlan]="activeStudyPlan$ | async"></app-semester-ects-progress-chart>
                 </mat-card>
               </ng-container>
               <!-- card with module progress for each semester -->
@@ -103,8 +103,8 @@
                   class="dashboard-tile large-tile order-3">
                   <app-dashboard-card-header [key]="chart.key"
                     (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
-                  <app-semester-module-progress-chart [studypath]="semesterStudypath" [semesters]="semesters"
-                    [studyplan]="activeStudyplan$ | async"></app-semester-module-progress-chart>
+                  <app-semester-module-progress-chart [studyPath]="semesterStudyPath" [semesters]="semesters"
+                    [studyPlan]="activeStudyPlan$ | async"></app-semester-module-progress-chart>
                 </mat-card>
               </ng-container>
               <!-- chart with total module progress -->
@@ -112,7 +112,7 @@
                 class="dashboard-tile medium-tile order-3">
                 <app-dashboard-card-header [key]="chart.key"
                   (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
-                <app-module-group-progress-chart [studypath]="studypath"
+                <app-module-group-progress-chart [studyPath]="studyPath"
                   [mgs]="modulegroups$ | async"></app-module-group-progress-chart>
               </mat-card>
             </ng-container>

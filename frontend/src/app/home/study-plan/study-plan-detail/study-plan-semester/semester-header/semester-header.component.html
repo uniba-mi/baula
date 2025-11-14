@@ -90,12 +90,12 @@
         </button>
       </ng-container>
       <!-- Make ECTS non-editable for past semesters -->
-      <ng-container *ngIf="semesterStudypath$ | async as semesterStudypath">
+      <ng-container *ngIf="semesterStudyPath$ | async as semesterStudyPath">
         <ng-container *ngIf="metaSemester.isPastSemester">
           <div class="btn btn-outline chip ects-chip" matTooltip="Du hast in diesem Semester {{
-              semesterStudypath[0].summedEcts
+              semesterStudyPath[0].summedEcts
             }} ECTS erreicht (bestandene Module).">
-            <span>{{ semesterStudypath[0].summedEcts }}</span> ECTS
+            <span>{{ semesterStudyPath[0].summedEcts }}</span> ECTS
           </div>
         </ng-container>
       </ng-container>

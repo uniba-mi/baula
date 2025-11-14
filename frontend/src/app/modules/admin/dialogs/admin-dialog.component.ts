@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { AcademicDate, DateType } from '../../../../../../interfaces/academicDate';
+import { AcademicDate, DateType } from '../../../../../../interfaces/academic-date';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ModuleCourse } from '../../../../../../interfaces/module-course';

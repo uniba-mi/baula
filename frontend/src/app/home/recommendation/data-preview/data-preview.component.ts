@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, map, Observable } from 'rxjs';
-import { RecsRestService } from 'src/app/modules/recs/recs-rest.service';
-import { getJobs, getUserTopics, getNotInterestingModulesAcronyms } from 'src/app/selectors/user.selectors';
+import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.service';
+import { getJobs, getUserTopics, getExcludedModulesAcronyms } from 'src/app/selectors/user.selectors';
 import { ExtendedJob } from '../../../../../../interfaces/job';
 import { Topic } from '../../../../../../interfaces/topic';
 import { ModService } from 'src/app/shared/services/module.service';
@@ -24,7 +24,7 @@ export class DataPreviewComponent {
   topicKeywords$: Observable<string[]>;
   recommendedAcronyms$: Observable<string[]>;
 
-  constructor(private store: Store, private recsApi: RecsRestService, private modService: ModService) { }
+  constructor(private store: Store, private recsService: RecsRestService, private modService: ModService) { }
 
 
   ngOnInit() {
@@ -35,7 +35,7 @@ export class DataPreviewComponent {
 
     this.topics$ = combineLatest([
       this.store.select(getUserTopics),
-      this.recsApi.getTopicChildren()
+      this.recsService.getTopicChildren()
     ]).pipe(
       map(([userTopicIds, allTopics]) =>
         allTopics?.filter(topic => userTopicIds?.includes(topic.tId)) || []
@@ -43,8 +43,8 @@ export class DataPreviewComponent {
     );
 
     this.recommendedAcronyms$ = combineLatest([
-      this.recsApi.getPersonalRecommendations(),
-      this.store.select(getNotInterestingModulesAcronyms)
+      this.recsService.getPersonalRecommendations(),
+      this.store.select(getExcludedModulesAcronyms)
     ]).pipe(
       map(([recs, blacklist]) => {
         if (!recs || recs.length === 0) return [];

@@ -6,8 +6,8 @@ import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { getJobs } from 'src/app/selectors/user.selectors';
 import { JobActions } from 'src/app/actions/user.actions';
-import { PathModule } from '../../../../../../interfaces/studypath';
-import { RecHelperService } from 'src/app/modules/recs/rec-helper.service';
+import { PathModule } from '../../../../../../interfaces/study-path';
+import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
 
 
 @Component({
@@ -17,14 +17,14 @@ import { RecHelperService } from 'src/app/modules/recs/rec-helper.service';
   styleUrl: './job-settings.component.scss',
 })
 export class JobSettingsComponent implements OnInit {
-  studypathModules$: Observable<PathModule[]>;
+  studyPathModules$: Observable<PathModule[]>;
   jobs$: Observable<ExtendedJob[] | undefined>;
 
-  constructor(private dialog: MatDialog, private store: Store, private recHelper: RecHelperService) { }
+  constructor(private dialog: MatDialog, private store: Store, private recsHelper: RecsHelperService) { }
 
   ngOnInit() {
     this.jobs$ = this.store.select(getJobs);
-    this.studypathModules$ = this.recHelper.getPassedOrTakenModulesFromStudypath();
+    this.studyPathModules$ = this.recsHelper.getPassedOrTakenModulesFromStudyPath();
   }
 
   openAddJobDialog() {

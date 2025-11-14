@@ -5,14 +5,14 @@ import mongoose, {
   Schema,
   Model,
 } from "mongoose";
-import { Semesterplan as ISemesterPlan } from "../../../../interfaces/semesterplan";
+import { SemesterPlan as ISemesterPlan } from "../semester-plan";
 import { ObjectId } from "mongodb";
-import { Studyplan as IStudyPlan } from "../../../../interfaces/studyPlan";
+import { StudyPlan as IStudyPlan } from "../study-plan";
 import { Recommendation as IRecommendation } from "../../../../interfaces/recommendation";
 import { Embedding as IEmbedding } from "../../../../interfaces/embedding";
 import { ModuleEmbedding as IModEmbedding } from "../../../../interfaces/embedding";
-import { Exam as IExam } from "../studyPath";
-import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/longTermEvaluation";
+import { Exam as IExam } from "../../../../interfaces/study-path";
+import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/long-term-evaluation";
 import { Topic as ITopic } from "../../../../interfaces/topic";
 import { UserServer as IUser } from "../../../../interfaces/user";
 import { Evaluation as IEvaluation } from "../../../../interfaces/evaluation";

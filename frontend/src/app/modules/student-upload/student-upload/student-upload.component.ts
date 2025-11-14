@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getModuleByAcronym, getModules, getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
-import { Exam, ExamAttempt, PathModule } from '../../../../../../interfaces/studypath'
-import { StudypathActions, UserActions } from 'src/app/actions/user.actions';
+import { Exam, ExamAttempt, PathModule } from '../../../../../../interfaces/study-path'
+import { StudyPathActions, UserActions } from 'src/app/actions/user.actions';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogData } from 'src/app/dialog/dialog.component';
@@ -14,13 +14,13 @@ import { getLastConsentByType, getSemesterList } from 'src/app/selectors/user.se
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
 import { Module } from '../../../../../../interfaces/module';
 import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
-import { UserGeneratedModuleTemplate } from '../../../../../../interfaces/usergeneratedmodule';
+import { UserGeneratedModuleTemplate } from '../../../../../../interfaces/user-generated-module';
 import { Semester } from '../../../../../../interfaces/semester';
 import { ModulePlanningActions, UserGeneratedModuleActions } from 'src/app/actions/study-planning.actions';
-import { Studyplan } from '../../../../../../interfaces/studyplan';
-import { getSemesterplansOfActiveStudyplan, getStudyplans } from 'src/app/selectors/study-planning.selectors';
-import { Semesterplan } from '../../../../../../interfaces/semesterplan';
-import { FlexnowService } from 'src/app/shared/services/flexnow.service';
+import { StudyPlan } from '../../../../../../interfaces/study-plan';
+import { getSemesterPlansOfActiveStudyPlan, getStudyPlans } from 'src/app/selectors/study-planning.selectors';
+import { SemesterPlan } from '../../../../../../interfaces/semester-plan';
+import { FlexnowService } from 'src/app/shared/services/flex-now.service';
 
 @Component({
     selector: 'app-student-upload',
@@ -37,7 +37,7 @@ export class StudentUploadComponent {
     closeMode: string;
     flexnowApiConsent$: Observable<Consent | null>;
     structuredModuleGroups$: Observable<ExtendedModuleGroup[]>
-    studyplans$: Observable<Studyplan[]>;
+    studyPlans$: Observable<StudyPlan[]>;
     semesters$: Observable<Semester[]>;
     availableSemesters$: Observable<Semester[]>;
 
@@ -56,7 +56,7 @@ export class StudentUploadComponent {
         );
     }
 
-    openDeleteStudypathDialog() {
+    openDeleteStudyPathDialog() {
         const confirmationDialogInterface: ConfirmationDialogData = {
             dialogTitle: 'Gesamte Studienhistorie löschen?',
             actionType: 'delete',
@@ -68,7 +68,7 @@ export class StudentUploadComponent {
             cancelButtonLabel: 'Abbrechen',
             confirmButtonClass: 'btn btn-danger',
             callbackMethod: () => {
-                this.deleteStudypath();
+                this.deleteStudyPath();
             },
         };
 
@@ -105,7 +105,7 @@ export class StudentUploadComponent {
                         return;
                     }
 
-                    this.saveModulesToStudypath(moduleList);
+                    this.saveModulesToStudyPath(moduleList);
 
                     // update consent for uploading exam data
                     this.store.dispatch(UserActions.addConsent({ ctype: 'upload-exam-data', hasConfirmed: true, hasResponded: true, timestamp: new Date() }));
@@ -123,7 +123,7 @@ export class StudentUploadComponent {
         });
     }
 
-    async saveModulesToStudypath(moduleList: any[]) {
+    async saveModulesToStudyPath(moduleList: any[]) {
 
         let validModules: PathModule[] = [];
         let missingModules: PathModule[] = [];
@@ -163,7 +163,7 @@ export class StudentUploadComponent {
             }
         }
 
-        // additional saving for current modules to insert them into semesterplan semester
+        // additional saving for current modules to insert them into semester plan semester
         const { currentModules, updatedSaveCurrentSemester } = this.processValidModules(validModules);
 
         if (updatedSaveCurrentSemester) {
@@ -171,12 +171,12 @@ export class StudentUploadComponent {
         }
 
         if (validModules.length > 0) {
-            this.store.dispatch(StudypathActions.updateStudypath({ completedModules: validModules }));
+            this.store.dispatch(StudyPathActions.updateStudyPath({ completedModules: validModules }));
         }
 
         if (currentModules.length > 0 && saveCurrentSemester) {
-            // need to also save the current achievements where semester is current semester (Anerkennungen, belegt) into studyplans
-            this.store.dispatch(ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyplans({ modules: currentModules, semesterName: saveCurrentSemester }));
+            // need to also save the current achievements where semester is current semester (Anerkennungen, belegt) into study plans
+            this.store.dispatch(ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyPlans({ modules: currentModules, semesterName: saveCurrentSemester }));
         }
 
         if (missingModules.length > 0) {
@@ -201,23 +201,23 @@ export class StudentUploadComponent {
         let currentModules: UserGeneratedModuleTemplate[] = [];
         let updatedSaveCurrentSemester: string | undefined;
 
-        // for all modules that are valid and in the current semester, save them in currentModules to save them into the studyplan
+        // for all modules that are valid and in the current semester, save them in currentModules to save them into the study plan
         for (const validModule of validModules) {
 
-            // save current modules in currentModules to update studyplans
+            // save current modules in currentModules to update study plans
             const modSemester = new Semester(validModule.semester)
 
-            // cannot use isCurrentSemester because semester time is different than studyplan time (user generated)
+            // cannot use isCurrentSemester because semester time is different than study plan time (user generated)
             if (!modSemester.isPastSemester()) {
                 validModule.notes = 'Importiert aus meinem FlexNow-Auszug';
                 validModule.flexNowImported = true;
                 updatedSaveCurrentSemester = modSemester.name;
                 currentModules.push(validModule)
-            } else { // special case: TLDR; we need this so "current" modules can be added to the studyplan semester in any case
-                // LONG: semester is not a current semester according to isPastSemester(), but it is in the studyplan because the semester
-                // transition was not performed yet by the user (= we upload a flexnow studypath with modules in a semester, for which 
+            } else { // special case: TLDR; we need this so "current" modules can be added to the study plan semester in any case
+                // LONG: semester is not a current semester according to isPastSemester(), but it is in the study plan because the semester
+                // transition was not performed yet by the user (= we upload a flexnow study path with modules in a semester, for which 
                 // the semester transition was not done)
-                this.store.select(getSemesterplansOfActiveStudyplan).pipe(take(1)).subscribe(semesterPlans => {
+                this.store.select(getSemesterPlansOfActiveStudyPlan).pipe(take(1)).subscribe(semesterPlans => {
                     const semesterPlan = semesterPlans!.find(sp => sp.semester === validModule.semester);
                     if (semesterPlan) {
                         if (this.checkForIsPastSemesterMismatches(semesterPlan)) {
@@ -233,8 +233,8 @@ export class StudentUploadComponent {
         return { currentModules, updatedSaveCurrentSemester };
     }
 
-    // generates new semester from semesterplan.semester property and compares with isPastSemester property of plan
-    checkForIsPastSemesterMismatches(semesterPlan: Semesterplan): boolean {
+    // generates new semester from semesterPlan.semester property and compares with isPastSemester property of plan
+    checkForIsPastSemesterMismatches(semesterPlan: SemesterPlan): boolean {
         const semester = new Semester(semesterPlan.semester);
         const isPast = semester.isPastSemester();
         return isPast !== semesterPlan.isPastSemester;
@@ -269,7 +269,7 @@ export class StudentUploadComponent {
             maxWidth: '50vw',
         });
 
-        // update modules in studypath after closing dialog
+        // update modules in study path after closing dialog
         dialogRef.afterClosed().pipe(take(1)).subscribe(updatedModule => {
             if (updatedModule) {
                 const updatedModules = missingModules.map(originalModule => {
@@ -294,12 +294,12 @@ export class StudentUploadComponent {
                 }
 
                 if (updatedModules.length > 0) {
-                    this.store.dispatch(StudypathActions.updateStudypath({ completedModules: updatedModules }));
+                    this.store.dispatch(StudyPathActions.updateStudyPath({ completedModules: updatedModules }));
                 }
 
                 if (currentModules.length > 0 && saveCurrentSemester) {
-                    // need to also save the current achievements where semester is current semester (Anerkennungen, belegt) into studyplans
-                    this.store.dispatch(ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyplans({ modules: currentModules, semesterName: saveCurrentSemester }));
+                    // need to also save the current achievements where semester is current semester (Anerkennungen, belegt) into study plans
+                    this.store.dispatch(ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyPlans({ modules: currentModules, semesterName: saveCurrentSemester }));
                 }
             }
             this.dialog.closeAll();
@@ -567,7 +567,7 @@ export class StudentUploadComponent {
             cancelButtonLabel: 'Abbrechen',
             confirmButtonClass: 'btn btn-danger',
             callbackMethod: () => {
-                this.deleteStudypath();
+                this.deleteStudyPath();
             },
         };
         this.dialog.open(ConfirmationDialogComponent, {
@@ -575,15 +575,15 @@ export class StudentUploadComponent {
         });
     }
 
-    deleteStudypath() {
-        this.store.dispatch(StudypathActions.deleteStudypath());
+    deleteStudyPath() {
+        this.store.dispatch(StudyPathActions.deleteStudyPath());
 
         // remove modules flagged with flexNowImported from all study plans
-        this.store.select(getStudyplans).pipe(
+        this.store.select(getStudyPlans).pipe(
             take(1),
-            tap(studyplans => {
-                studyplans.forEach(studyplan => {
-                    studyplan.semesterPlans.forEach(semesterPlan => {
+            tap(studyPlans => {
+                studyPlans.forEach(studyPlan => {
+                    studyPlan.semesterPlans.forEach(semesterPlan => {
                         const modulesToDelete = semesterPlan.userGeneratedModules
                             .filter(module => module.flexNowImported)
                             .map(module => module._id);
@@ -591,8 +591,8 @@ export class StudentUploadComponent {
                         if (modulesToDelete.length > 0) {
                             this.store.dispatch(
                                 UserGeneratedModuleActions.deleteUserGeneratedModules({
-                                    studyplanId: studyplan._id,
-                                    semesterplanId: semesterPlan._id,
+                                    studyPlanId: studyPlan._id,
+                                    semesterPlanId: semesterPlan._id,
                                     moduleIds: modulesToDelete,
                                 })
                             );

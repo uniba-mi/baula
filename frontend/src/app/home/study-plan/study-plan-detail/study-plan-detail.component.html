@@ -1,20 +1,20 @@
-<ng-container *ngIf="!maintenance; else MaintenanceStudyplan">
-  <ng-container *ngIf="selectedStudyplan$ | async as selectedPlan; else NoStudyplan">
+<ng-container *ngIf="!maintenance; else MaintenanceStudyPlan">
+  <ng-container *ngIf="selectedStudyPlan$ | async as selectedPlan; else NoStudyPlan">
     <mat-sidenav-container class="mat-drawer-container" [hasBackdrop]="false" cdkDropListGroup
       *ngIf="user$ | async as user">
-      <mat-sidenav class="studyplan-sidenav" #sidenav mode="side" [ngClass]="{
+      <mat-sidenav class="study-plan-sidenav" #sidenav mode="side" [ngClass]="{
     'd-none': isSmallScreen, 
     'd-flex': !isSmallScreen, 
     'zero-width': !(isActivePlan$ | async)
   }">
         <!-- Sidenav bar content -->
-        <app-rec-sidenav *ngIf="(isActivePlan$ | async) && (plannedModules$ | async) as plannedModules" [spId]="spId"
-          [plannedModules]="plannedModules" [user]="user" (tabClicked)="onRecSidenavTabClicked($event)"
-          (toggleSidenav)="onRecSidenavClosed()"></app-rec-sidenav>
+        <app-recs-sidenav *ngIf="(isActivePlan$ | async) && (plannedModules$ | async) as plannedModules" [spId]="spId"
+          [plannedModules]="plannedModules" [user]="user" (tabClicked)="onRecsSidenavTabClicked($event)"
+          (toggleSidenav)="onRecsSidenavClosed()"></app-recs-sidenav>
       </mat-sidenav>
       <mat-sidenav-content>
         <!-- Button to toggle sidenav -->
-        <button *ngIf="(isActivePlan$ | async) && !isSmallScreen" class="btn trigger-studyplan-sidenav"
+        <button *ngIf="(isActivePlan$ | async) && !isSmallScreen" class="btn trigger-study-plan-sidenav"
           [ngClass]="{'open': sidenav.opened, 'closed': !sidenav.opened}" (click)="toggleSidenav()"
           (keyup.enter)="toggleSidenav()"
           [matTooltip]="sidenav.opened ? 'Modulempfehlungen einklappen' : 'Modulempfehlungen ausklappen'">
@@ -28,13 +28,13 @@
             <div class="d-flex align-items-start justify-content-start">
               <h1>{{selectedPlan.name}}</h1>
               <button class="btn-icon" (click)="
-                openEditStudyplanDialog(selectedPlan._id, selectedPlan)
+                openEditStudyPlanDialog(selectedPlan._id, selectedPlan)
               " (keyup.enter)="
-                openEditStudyplanDialog(selectedPlan._id, selectedPlan)
+                openEditStudyPlanDialog(selectedPlan._id, selectedPlan)
               ">
                 <i class="edit-pencil icon bi bi-pencil-square d-inline text-gray"></i></button>
             </div>
-            <button class="btn btn-blue-outline manage-studyplans" tabindex="0" aria-label="Alle Studienpläne ansehen"
+            <button class="btn btn-blue-outline manage-study-plans" tabindex="0" aria-label="Alle Studienpläne ansehen"
               routerLink="/app/studium/ueberblick">
               <i class="bi bi-arrow-up-right-square"></i> Studienpläne verwalten
             </button>
@@ -42,8 +42,8 @@
           <app-hint [key]="studyPlanDetailHint" [hintMessage]="studyPlanDetailMessage"></app-hint>
           <div class="row justify-content-center mb-2">
             <div class="col-12 mb-2" *ngIf="displayProgressBar">
-              <app-progress-bar [totalCredits]="user.maxEcts ? user.maxEcts : 0" [semesterplans$]="semesterPlans$"
-                [studypath$]="semesterStudypath$"></app-progress-bar>
+              <app-progress-bar [totalCredits]="user.maxEcts ? user.maxEcts : 0" [semesterPlans$]="semesterPlans$"
+                [studyPath$]="semesterStudyPath$"></app-progress-bar>
             </div>
           </div>
           <!-- Intro End -->
@@ -125,7 +125,7 @@
   </ng-container>
 </ng-container>
 
-<ng-template #NoStudyplan>
+<ng-template #NoStudyPlan>
   <div class="container mx-auto my-3 my-md-5">
     <p>Es konnte kein Studienverlaufsplan gefunden werden.</p>
     <a class="link" href="/app/studium/ueberblick" class="btn btn-primary redirect link"
@@ -133,6 +133,6 @@
   </div>
 </ng-template>
 
-<ng-template #MaintenanceStudyplan>
+<ng-template #MaintenanceStudyPlan>
   <app-maintenance-message [feature]="'Studienplan'"></app-maintenance-message>
 </ng-template>

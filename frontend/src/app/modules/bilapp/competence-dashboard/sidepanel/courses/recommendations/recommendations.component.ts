@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { select, Store } from '@ngrx/store';
 import { Observable, firstValueFrom } from 'rxjs';
 import { BilappRestService } from 'src/app/modules/bilapp/bilapp-rest.service';
-import { CourseList } from 'src/app/modules/bilapp/interfaces/courseList';
+import { CourseList } from 'src/app/modules/bilapp/interfaces/course-list';
 import { getCompetenceGroups } from '../../../../state/selectors/standard.selectors';
 import { State } from 'src/app/reducers';
 import { Course } from '../../../../../../../../../interfaces/course';

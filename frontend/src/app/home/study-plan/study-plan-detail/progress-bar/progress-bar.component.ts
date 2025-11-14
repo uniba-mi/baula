@@ -5,8 +5,8 @@ import {
 } from '@angular/core';
 import {
   SemesterStudyPath,
-} from '../../../../../../../interfaces/studypath';
-import { Semesterplan } from '../../../../../../../interfaces/semesterplan';
+} from '../../../../../../../interfaces/study-path';
+import { SemesterPlan } from '../../../../../../../interfaces/semester-plan';
 import { combineLatest, map, Observable, startWith } from 'rxjs';
 
 @Component({
@@ -17,8 +17,8 @@ import { combineLatest, map, Observable, startWith } from 'rxjs';
 })
 export class ProgressBarComponent {
     @Input() totalCredits: number;
-    @Input() semesterplans$: Observable<Semesterplan[] | undefined>;
-    @Input() studypath$: Observable<SemesterStudyPath[]>;
+    @Input() semesterPlans$: Observable<SemesterPlan[] | undefined>;
+    @Input() studyPath$: Observable<SemesterStudyPath[]>;
     achievedCredits$: Observable<number>;
     plannedCredits$: Observable<number>;
     achievedPercentage$: Observable<number>;
@@ -31,17 +31,17 @@ export class ProgressBarComponent {
     ngOnInit(): void {
       this.totalTooltip = `Insgesamt umfasst dein Studium ${this.totalCredits} ECTS.`;
 
-      this.achievedCredits$ = this.studypath$.pipe(
+      this.achievedCredits$ = this.studyPath$.pipe(
         startWith([]),
-        map((studypath) => this.calculateAchievedCredits(studypath))
+        map((studyPath) => this.calculateAchievedCredits(studyPath))
       );
 
       this.plannedCredits$ = combineLatest([
-        this.semesterplans$.pipe(startWith(undefined)),
-        this.studypath$.pipe(startWith([]))
+        this.semesterPlans$.pipe(startWith(undefined)),
+        this.studyPath$.pipe(startWith([]))
       ]).pipe(
-        map(([semesterplans, studypath]) =>
-          this.calculatePlannedCredits(semesterplans || [], studypath)
+        map(([semesterPlans, studyPath]) =>
+          this.calculatePlannedCredits(semesterPlans || [], studyPath)
         )
       );
 
@@ -81,12 +81,12 @@ export class ProgressBarComponent {
         .reduce((pv, cv) => pv + cv, 0);
     }
 
-    calculatePlannedCredits(semesterplans: Semesterplan[],
-      studypath: SemesterStudyPath[]): number {
+    calculatePlannedCredits(semesterPlans: SemesterPlan[],
+      studyPath: SemesterStudyPath[]): number {
       const passedSemesterCredits = this.calculateAchievedCredits(
-        studypath.filter((path) => path.isPastSemester)
+        studyPath.filter((path) => path.isPastSemester)
       );
-      const futureSemesterCredits = semesterplans.filter(
+      const futureSemesterCredits = semesterPlans.filter(
         (plan) => !plan.isPastSemester
       ).map(plan => plan.summedEcts).reduce((pv, cv) => pv + cv, 0);
       return passedSemesterCredits + futureSemesterCredits;

@@ -3,10 +3,10 @@ import { User } from '../../../../../interfaces/user';
 import {
   PathCourse,
   PathModule,
-} from '../../../../../interfaces/studypath';
+} from '../../../../../interfaces/study-path';
 import { TransformationService } from './transformation.service';
-import { Studyplan } from '../../../../../interfaces/studyplan';
-import { Semesterplan } from '../../../../../interfaces/semesterplan';
+import { StudyPlan } from '../../../../../interfaces/study-plan';
+import { SemesterPlan } from '../../../../../interfaces/semester-plan';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -32,17 +32,17 @@ export class DownloadService {
   }
 
   // function for pdf export of user data
-  async downloadUserData(userData: User, studyplans: Studyplan[]) {
+  async downloadUserData(userData: User, studyPlans: StudyPlan[]) {
     // preload courses and studyprogrammes asyncronisly
     const courses = await this.generateTableOfCourses(
-      userData.studypath.completedCourses
+      userData.studyPath.completedCourses
     );
     const studprogrammes = await this.transform.transformStudyProgramme(
       userData.sps
     );
 
     const favouriteModules = this.transform.transformModuleIdsToAcronyms(userData.favouriteModulesAcronyms)
-    const notInterestingModules = this.transform.transformModuleIdsToAcronyms(userData.notInterestingModulesAcronyms)
+    const excludedModules = this.transform.transformModuleIdsToAcronyms(userData.excludedModulesAcronyms)
 
     // Consents table
     const consentsTable = {
@@ -89,13 +89,12 @@ export class DownloadService {
           `Account zuletzt aktualisiert am ${this.transform.transformDate(
             userData.updatedAt
           )}`,
-          `Deine Interessen: ${userData.interests ? userData.interests?.join(', ') : '---'}`,
           `Deine gemerkten Module: ${favouriteModules}`,
-          `Module, die nicht mehr vorgeschlagen werden: ${notInterestingModules}`,
+          `Module, die nicht mehr vorgeschlagen werden: ${excludedModules}`,
         ],
         margin: [0, 0, 0, 10],
       },
-      /* table of courses from studypath */
+      /* table of courses from study path */
       {
         text: 'Bisherige Lehrveranstaltungen',
         style: 'subheader',
@@ -109,7 +108,7 @@ export class DownloadService {
         },
         margin: [0, 0, 0, 20],
       },
-      /* table of modules from studypath */
+      /* table of modules from study path */
       {
         text: 'Bisherige Module',
         style: 'subheader',
@@ -120,17 +119,17 @@ export class DownloadService {
           headerRows: 1,
           width: ['*', '*', '*', '*'],
           body: this.generateTableOfModules(
-            userData.studypath.completedModules
+            userData.studyPath.completedModules
           ),
         },
         margin: [0, 0, 0, 20],
       },
-      /* section for studyplans, each studyplan has a small heading and a table */
+      /* section for study plans, each study plan has a small heading and a table */
       {
         text: 'Studienpläne',
         style: 'subheader',
       },
-      ...this.generateStudyplansOutput(studyplans),
+      ...this.generateStudyPlansOutput(studyPlans),
 
       /* Consents */
       {
@@ -203,15 +202,15 @@ export class DownloadService {
     });
   }
 
-  // generates the studyplan output for the pdf export
-  private generateStudyplansOutput(studyplans: Studyplan[]): any {
+  // generates the study plan output for the pdf export
+  private generateStudyPlansOutput(studyPlans: StudyPlan[]): any {
     let output = [];
-    for (let studyplan of studyplans) {
+    for (let studyPlan of studyPlans) {
       output.push(
         {
-          text: `${studyplan.name} (${studyplan.status ? 'aktiv' : 'passiv'
+          text: `${studyPlan.name} (${studyPlan.status ? 'aktiv' : 'passiv'
             }) - erstellt am ${this.transform.transformDate(
-              studyplan.createdAt
+              studyPlan.createdAt
             )}`,
           margin: [0, 0, 0, 10],
         },
@@ -228,7 +227,7 @@ export class DownloadService {
                 'Ziel ECTS',
                 'Stand ECTS',
               ],
-              ...this.generateStudyplanTable(studyplan.semesterPlans),
+              ...this.generateStudyPlanTable(studyPlan.semesterPlans),
             ],
           },
           margin: [0, 0, 0, 20],
@@ -238,16 +237,16 @@ export class DownloadService {
     return output;
   }
 
-  // generates the studyplan table for a single studyplan, is used to generate the whole output of studyplans
-  private generateStudyplanTable(semesterplans: Semesterplan[]): any[] {
+  // generates the study plan table for a single study plan, is used to generate the whole output of study plans
+  private generateStudyPlanTable(semesterPlans: SemesterPlan[]): any[] {
     let output = [];
-    for (let semesterplan of semesterplans) {
+    for (let semesterPlan of semesterPlans) {
       output.push([
-        this.transform.transformUnivIsSemester(semesterplan.semester),
-        this.transform.transformModuleIdsToAcronyms(semesterplan.modules),
-        this.transform.transformUserGeneratedModulesToString(semesterplan.userGeneratedModules),
-        semesterplan.aimedEcts,
-        semesterplan.summedEcts,
+        this.transform.transformUnivIsSemester(semesterPlan.semester),
+        this.transform.transformModuleIdsToAcronyms(semesterPlan.modules),
+        this.transform.transformUserGeneratedModulesToString(semesterPlan.userGeneratedModules),
+        semesterPlan.aimedEcts,
+        semesterPlan.summedEcts,
       ]);
     }
     return output;

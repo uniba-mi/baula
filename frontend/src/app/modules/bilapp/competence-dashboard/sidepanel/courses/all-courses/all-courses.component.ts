@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CourseList } from 'src/app/modules/bilapp/interfaces/courseList';
+import { CourseList } from 'src/app/modules/bilapp/interfaces/course-list';
 import { State } from 'src/app/reducers';
 import { Course } from '../../../../../../../../../interfaces/course';
 

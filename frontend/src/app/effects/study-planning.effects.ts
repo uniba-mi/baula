@@ -14,19 +14,19 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AlertType } from '../shared/classes/alert';
-import { UserGeneratedModule } from '../../../../interfaces/usergeneratedmodule';
+import { UserGeneratedModule } from '../../../../interfaces/user-generated-module';
 import {
   ModulePlanningActions,
   UserGeneratedModuleActions,
-  SemesterplanActions,
-  StudyplanActions,
+  SemesterPlanActions,
+  StudyPlanActions,
   CoursePlanningActions,
   TimetableActions,
 } from '../actions/study-planning.actions';
 import { Store } from '@ngrx/store';
-import { getUserStudypath } from '../selectors/user.selectors';
-import { PathModule } from '../../../../interfaces/studypath';
-import { StudypathActions } from '../actions/user.actions';
+import { getUserStudyPath } from '../selectors/user.selectors';
+import { PathModule } from '../../../../interfaces/study-path';
+import { StudyPathActions } from '../actions/user.actions';
 
 @Injectable()
 export class StudyPlanningEffects {
@@ -39,37 +39,37 @@ export class StudyPlanningEffects {
 
   /********STUDYPLANS CRUD***********/
 
-  // load studyplans
-  loadStudyplans$ = createEffect(() =>
+  // load study plans
+  loadStudyPlans$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudyplanActions.loadStudyplans),
+      ofType(StudyPlanActions.loadStudyPlans),
       exhaustMap(() =>
         this.rest.getStudyPlans().pipe(
-          map((studyplans) =>
-            StudyplanActions.loadStudyplansSuccess({ studyplans })
+          map((studyPlans) =>
+            StudyPlanActions.loadStudyPlansSuccess({ studyPlans })
           ),
           catchError((error) => {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
               message: 'Die Studienpläne konnten nicht geladen werden!',
             });
-            return of(StudyplanActions.loadStudyplansFailure({ error }));
+            return of(StudyPlanActions.loadStudyPlansFailure({ error }));
           })
         )
       )
     )
   );
 
-  loadActiveStudyplanId$ = createEffect(() =>
+  loadActiveStudyPlanId$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudyplanActions.loadActiveStudyplan),
+      ofType(StudyPlanActions.loadActiveStudyPlan),
       switchMap(() =>
-        this.rest.getActiveStudyplan().pipe(
-          map((studyplan) =>
-            StudyplanActions.loadActiveStudyplanSuccess({ studyplan })
+        this.rest.getActiveStudyPlan().pipe(
+          map((studyPlan) =>
+            StudyPlanActions.loadActiveStudyPlanSuccess({ studyPlan })
           ),
           catchError((error) =>
-            of(StudyplanActions.loadActiveStudyplanFailure(error))
+            of(StudyPlanActions.loadActiveStudyPlanFailure(error))
           )
         )
       )
@@ -78,33 +78,33 @@ export class StudyPlanningEffects {
 
   updateIsPastSemester$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SemesterplanActions.updateIsPastSemester),
+      ofType(SemesterPlanActions.updateIsPastSemester),
       mergeMap((props) =>
         this.rest
           .updateIsPastSemester(
-            props.studyplanId,
-            props.semesterplanId,
+            props.studyPlanId,
+            props.semesterPlanId,
             props.isPast
           )
           .pipe(
-            map(() => SemesterplanActions.updateIsPastSemesterSuccess(props)),
+            map(() => SemesterPlanActions.updateIsPastSemesterSuccess(props)),
             catchError((error) =>
-              of(SemesterplanActions.updateIsPastSemesterFailure({ error }))
+              of(SemesterPlanActions.updateIsPastSemesterFailure({ error }))
             )
           )
       )
     )
   );
 
-  // create studyplan
-  createStudyplan$ = createEffect(() =>
+  // create study plan
+  createStudyPlan$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudyplanActions.createStudyplan),
+      ofType(StudyPlanActions.createStudyPlan),
       switchMap((props) =>
-        this.rest.createStudyPlan(props.studyplan).pipe(
-          map((studyplan) =>
-            StudyplanActions.createStudyplanSuccess({
-              studyplan: studyplan,
+        this.rest.createStudyPlan(props.studyPlan).pipe(
+          map((studyPlan) =>
+            StudyPlanActions.createStudyPlanSuccess({
+              studyPlan: studyPlan,
               semesterPlans: props.semesterPlans,
             })
           ),
@@ -119,52 +119,52 @@ export class StudyPlanningEffects {
               type: AlertType.DANGER,
               message: 'Der Studienplan konnte nicht angelegt werden!',
             });
-            return of(StudyplanActions.createStudyplanFailure({ error }));
+            return of(StudyPlanActions.createStudyPlanFailure({ error }));
           })
         )
       )
     )
   );
 
-  // init semesterplans
-  initSemesterplans$ = createEffect(() =>
+  // init semester plans
+  initSemesterPlans$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudyplanActions.createStudyplanSuccess),
+      ofType(StudyPlanActions.createStudyPlanSuccess),
       switchMap((props) =>
         this.rest
-          .initSemesterplans(props.studyplan._id, props.semesterPlans)
+          .initSemesterPlans(props.studyPlan._id, props.semesterPlans)
           .pipe(
             map((semesterPlans) =>
-              SemesterplanActions.initSemesterplansSuccess({
-                studyplanId: props.studyplan._id,
+              SemesterPlanActions.initSemesterPlansSuccess({
+                studyPlanId: props.studyPlan._id,
                 semesterPlans: semesterPlans,
               })
             ),
             catchError((error) =>
-              of(StudyplanActions.createStudyplanFailure({ error }))
+              of(StudyPlanActions.createStudyPlanFailure({ error }))
             )
           )
       )
     )
   );
 
-  // add semesterplan to studyplan
-  addSemesterplan$ = createEffect(() =>
+  // add semester plan to study plan
+  addSemesterPlan$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SemesterplanActions.addSemesterplanToStudyplan),
+      ofType(SemesterPlanActions.addSemesterPlanToStudyPlan),
       switchMap((props) =>
         this.rest
-          .addSemesterplanToStudyplan(props.studyplanId, props.semester)
+          .addSemesterPlanToStudyPlan(props.studyPlanId, props.semester)
           .pipe(
-            map((studyplan) =>
-              SemesterplanActions.addSemesterplanToStudyplanSuccess({
-                studyplanId: props.studyplanId,
-                studyplan,
+            map((studyPlan) =>
+              SemesterPlanActions.addSemesterPlanToStudyPlanSuccess({
+                studyPlanId: props.studyPlanId,
+                studyPlan,
               })
             ),
             catchError((error) =>
               of(
-                SemesterplanActions.addSemesterplanToStudyplanFailure({ error })
+                SemesterPlanActions.addSemesterPlanToStudyPlanFailure({ error })
               )
             )
           )
@@ -172,18 +172,18 @@ export class StudyPlanningEffects {
     )
   );
 
-  // update studyplan
-  updateStudyplan$ = createEffect(() =>
+  // update study plan
+  updateStudyPlan$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudyplanActions.updateStudyplan),
+      ofType(StudyPlanActions.updateStudyPlan),
       concatMap((props) =>
         this.rest
-          .updateStudyplan(props.studyplanId, props.studyplan)
+          .updateStudyPlan(props.studyPlanId, props.studyPlan)
           .pipe(
             map(() =>
-              StudyplanActions.updateStudyplanSuccess({
-                studyplanId: props.studyplanId,
-                studyplan: props.studyplan,
+              StudyPlanActions.updateStudyPlanSuccess({
+                studyPlanId: props.studyPlanId,
+                studyPlan: props.studyPlan,
               })
             ),
             tap(() => {
@@ -197,22 +197,22 @@ export class StudyPlanningEffects {
                 type: AlertType.DANGER,
                 message: 'Der Studienplan konnte nicht aktualisiert werden!',
               });
-              return of(StudyplanActions.updateStudyplanFailure({ error }));
+              return of(StudyPlanActions.updateStudyPlanFailure({ error }));
             })
           )
       )
     )
   );
 
-  // delete studyplan
-  deleteStudyplan$ = createEffect(() =>
+  // delete study plan
+  deleteStudyPlan$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudyplanActions.deleteStudyplan),
+      ofType(StudyPlanActions.deleteStudyPlan),
       mergeMap((props) =>
-        this.rest.deleteStudyPlan(props.studyplanId).pipe(
+        this.rest.deleteStudyPlan(props.studyPlanId).pipe(
           map(() =>
-            StudyplanActions.deleteStudyplanSuccess({
-              studyplanId: props.studyplanId,
+            StudyPlanActions.deleteStudyPlanSuccess({
+              studyPlanId: props.studyPlanId,
             })
           ),
           tap(() => {
@@ -226,30 +226,30 @@ export class StudyPlanningEffects {
               message: 'Studienplan konnte nicht gelöscht werden.',
               type: AlertType.DANGER,
             });
-            return of(StudyplanActions.deleteStudyplanFailure({ error }));
+            return of(StudyPlanActions.deleteStudyPlanFailure({ error }));
           })
         )
       )
     )
   );
 
-  // add module to semesterplan
-  addModuleToSemesterplan$ = createEffect(() =>
+  // add module to semester plan
+  addModuleToSemesterPlan$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ModulePlanningActions.addModuleToSemester),
       concatMap((props) =>
         this.rest
           .addModule(
-            props.studyplanId,
-            props.semesterplanId,
+            props.studyPlanId,
+            props.semesterPlanId,
             props.acronym,
             props.ects
           )
           .pipe(
             map(() =>
               ModulePlanningActions.addModuleToSemesterSuccess({
-                studyplanId: props.studyplanId,
-                semesterplanId: props.semesterplanId,
+                studyPlanId: props.studyPlanId,
+                semesterPlanId: props.semesterPlanId,
                 acronym: props.acronym,
                 ects: props.ects,
               })
@@ -277,24 +277,24 @@ export class StudyPlanningEffects {
     )
   );
 
-  addModulesToAllStudyplans$ = createEffect(() =>
+  addModulesToAllStudyPlans$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyplans),
+      ofType(ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyPlans),
       switchMap((props) =>
         this.rest
-          .addModulesToCurrentSemesterOfAllStudyplans(
+          .addModulesToCurrentSemesterOfAllStudyPlans(
             props.modules,
             props.semesterName
           )
           .pipe(
-            map((studyplans) =>
-              ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyplansSuccess(
-                { studyplans }
+            map((studyPlans) =>
+              ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyPlansSuccess(
+                { studyPlans }
               )
             ),
             catchError((error) =>
               of(
-                ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyplansFailure(
+                ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyPlansFailure(
                   { error }
                 )
               )
@@ -304,52 +304,52 @@ export class StudyPlanningEffects {
     )
   );
 
-  // transfer module between two semesterplans
+  // transfer module between two semester plans
   transferModule$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ModulePlanningActions.transferModule),
       concatMap((props) =>
         this.rest
           .transferModule(
-            props.studyplanId,
-            props.oldSemesterplanId,
-            props.oldSemesterplanSemester,
-            props.newSemesterplanId,
-            props.newSemesterplanSemester,
+            props.studyPlanId,
+            props.oldSemesterPlanId,
+            props.oldSemesterPlanSemester,
+            props.newSemesterPlanId,
+            props.newSemesterPlanSemester,
             props.acronym,
             props.ects
           )
           .pipe(
             map((result) =>
               ModulePlanningActions.transferModuleSuccess({
-                studyplanId: props.studyplanId,
-                oldSemesterplan: result.oldSemesterplan,
-                oldSemesterplanSemester: props.oldSemesterplanSemester,
-                newSemesterplan: result.newSemesterplan,
-                newSemesterplanSemester: props.newSemesterplanSemester,
+                studyPlanId: props.studyPlanId,
+                oldSemesterPlan: result.oldSemesterPlan,
+                oldSemesterPlanSemester: props.oldSemesterPlanSemester,
+                newSemesterPlan: result.newSemesterPlan,
+                newSemesterPlanSemester: props.newSemesterPlanSemester,
               })
             ),
             tap(() => {
-              this.store.select(getUserStudypath).pipe(take(1)).subscribe((sp) => {
+              this.store.select(getUserStudyPath).pipe(take(1)).subscribe((sp) => {
                 const updatedModules: PathModule[] = [];
 
-                if (props.oldSemesterplanSemester !== '') {
+                if (props.oldSemesterPlanSemester !== '') {
                   const existingModule = sp.completedModules.find(
                     (mod) =>
                       mod.acronym === props.acronym &&
-                      mod.semester === props.oldSemesterplanSemester
+                      mod.semester === props.oldSemesterPlanSemester
                   );
 
                   if (existingModule) {
                     updatedModules.push({
                       ...existingModule,
-                      semester: props.newSemesterplanSemester
+                      semester: props.newSemesterPlanSemester
                     });
                   }
                 }
                 if (updatedModules.length > 0) {
                   this.store.dispatch(
-                    StudypathActions.updateStudypath({
+                    StudyPathActions.updateStudyPath({
                       completedModules: updatedModules,
                     })
                   );
@@ -379,29 +379,29 @@ export class StudyPlanningEffects {
     )
   );
 
-  // transfer userGeneratedModule between two semesterplans
+  // transfer userGeneratedModule between two semester plans
   transferUserGeneratedModule$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserGeneratedModuleActions.transferUserGeneratedModule),
       concatMap((props) =>
         this.rest
           .transferUserGeneratedModule(
-            props.studyplanId,
-            props.oldSemesterplanId,
-            props.newSemesterplanId,
-            props.newSemesterplanSemester,
+            props.studyPlanId,
+            props.oldSemesterPlanId,
+            props.newSemesterPlanId,
+            props.newSemesterPlanSemester,
             props.module
           )
           .pipe(
             map((result) =>
               UserGeneratedModuleActions.transferUserGeneratedModuleSuccess({
-                studyplanId: props.studyplanId,
-                oldSemesterplan: result.oldSemesterplan,
-                newSemesterplan: result.newSemesterplan,
+                studyPlanId: props.studyPlanId,
+                oldSemesterPlan: result.oldSemesterPlan,
+                newSemesterPlan: result.newSemesterPlan,
               })
             ),
             tap(() => {
-              this.store.select(getUserStudypath).pipe(take(1)).subscribe((sp) => {
+              this.store.select(getUserStudyPath).pipe(take(1)).subscribe((sp) => {
                 const updatedModules: PathModule[] = [];
 
                 const existingModule = sp.completedModules.find(
@@ -412,13 +412,13 @@ export class StudyPlanningEffects {
                 if (existingModule) {
                   updatedModules.push({
                     ...existingModule,
-                    semester: props.newSemesterplanSemester
+                    semester: props.newSemesterPlanSemester
                   });
                 }
 
                 if (updatedModules.length > 0) {
                   this.store.dispatch(
-                    StudypathActions.updateStudypath({
+                    StudyPathActions.updateStudyPath({
                       completedModules: updatedModules,
                     })
                   );
@@ -448,43 +448,43 @@ export class StudyPlanningEffects {
     )
   );
 
-  // delete module from semesterplan
-  deleteModuleFromSemesterplan$ = createEffect(() =>
+  // delete module from semester plan
+  deleteModuleFromSemesterPlan$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ModulePlanningActions.deleteModuleFromSemesterplan),
+      ofType(ModulePlanningActions.deleteModuleFromSemesterPlan),
       switchMap((props) =>
         this.rest
           .deleteModule(
-            props.studyplanId,
-            props.semesterplanId,
-            props.semesterplanSemester,
+            props.studyPlanId,
+            props.semesterPlanId,
+            props.semesterPlanSemester,
             props.acronym,
             props.ects
           )
           .pipe(
             map(() =>
-              ModulePlanningActions.deleteModuleFromSemesterplanSuccess({
-                studyplanId: props.studyplanId,
-                semesterplanId: props.semesterplanId,
-                semesterplanSemester: props.semesterplanSemester,
+              ModulePlanningActions.deleteModuleFromSemesterPlanSuccess({
+                studyPlanId: props.studyPlanId,
+                semesterPlanId: props.semesterPlanId,
+                semesterPlanSemester: props.semesterPlanSemester,
                 acronym: props.acronym,
                 ects: props.ects,
               })
             ),
-            // also remove in studypath
+            // also remove in study path
             tap(() => {
-              this.store.select(getUserStudypath).pipe(take(1)).subscribe((sp) => {
+              this.store.select(getUserStudyPath).pipe(take(1)).subscribe((sp) => {
                 const existingModule = sp.completedModules.find(
                   (mod) =>
                     mod.acronym === props.acronym &&
-                    mod.semester === props.semesterplanSemester
+                    mod.semester === props.semesterPlanSemester
                 );
 
                 if (existingModule) {
                   this.store.dispatch(
-                    StudypathActions.deleteModuleFromStudypath({
+                    StudyPathActions.deleteModuleFromStudyPath({
                       id: existingModule._id!,
-                      semester: props.semesterplanSemester,
+                      semester: props.semesterPlanSemester,
                     })
                   );
                 }
@@ -502,7 +502,7 @@ export class StudyPlanningEffects {
                 message: 'Modul konnte nicht entfernt werden!',
               });
               return of(
-                ModulePlanningActions.deleteModuleFromSemesterplanFailure({
+                ModulePlanningActions.deleteModuleFromSemesterPlanFailure({
                   error,
                 })
               );
@@ -512,22 +512,22 @@ export class StudyPlanningEffects {
     )
   );
 
-  // aimedECTS
+  // aimedEcts
   updateAimedEcts$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SemesterplanActions.updateAimedEcts),
+      ofType(SemesterPlanActions.updateAimedEcts),
       concatMap((props) =>
         this.rest
           .updateAimedEcts(
-            props.studyplanId,
-            props.semesterplanId,
+            props.studyPlanId,
+            props.semesterPlanId,
             props.aimedEcts
           )
           .pipe(
             map(() =>
-              SemesterplanActions.updateAimedEctsSuccess({
-                studyplanId: props.studyplanId,
-                semesterplanId: props.semesterplanId,
+              SemesterPlanActions.updateAimedEctsSuccess({
+                studyPlanId: props.studyPlanId,
+                semesterPlanId: props.semesterPlanId,
                 aimedEcts: props.aimedEcts,
               })
             ),
@@ -542,7 +542,7 @@ export class StudyPlanningEffects {
                 type: AlertType.DANGER,
                 message: 'ECTS konnten nicht aktualisiert werden!',
               });
-              return of(SemesterplanActions.updateAimedEctsFailure({ error }));
+              return of(SemesterPlanActions.updateAimedEctsFailure({ error }));
             })
           )
       )
@@ -556,15 +556,15 @@ export class StudyPlanningEffects {
       concatMap((props) =>
         this.rest
           .createUserGeneratedModule(
-            props.studyplanId,
-            props.semesterplanId,
+            props.studyPlanId,
+            props.semesterPlanId,
             props.module
           )
           .pipe(
             map((module) =>
               UserGeneratedModuleActions.createUserGeneratedModuleSuccess({
-                studyplanId: props.studyplanId,
-                semesterplanId: props.semesterplanId,
+                studyPlanId: props.studyPlanId,
+                semesterPlanId: props.semesterPlanId,
                 module: module,
               })
             ),
@@ -599,25 +599,25 @@ export class StudyPlanningEffects {
       concatMap((props) =>
         this.rest
           .updateUserGeneratedModule(
-            props.studyplanId,
-            props.semesterplanId,
-            props.semesterplanSemester,
+            props.studyPlanId,
+            props.semesterPlanId,
+            props.semesterPlanSemester,
             props.moduleId,
             props.module
           )
           .pipe(
             map((module: UserGeneratedModule) =>
               UserGeneratedModuleActions.updateUserGeneratedModuleSuccess({
-                studyplanId: props.studyplanId,
-                semesterplanId: props.semesterplanId,
-                semesterplanSemester: props.semesterplanSemester,
+                studyPlanId: props.studyPlanId,
+                semesterPlanId: props.semesterPlanId,
+                semesterPlanSemester: props.semesterPlanSemester,
                 moduleId: props.moduleId,
                 module: module,
               })
             ),
             tap(() => {
-              // update studypath too in case the module exists
-              this.store.select(getUserStudypath).pipe(take(1)).subscribe((sp) => {
+              // update study path too in case the module exists
+              this.store.select(getUserStudyPath).pipe(take(1)).subscribe((sp) => {
                 const existingModule = sp.completedModules.find(
                   (mod) => mod._id === props.moduleId
                 );
@@ -631,13 +631,13 @@ export class StudyPlanningEffects {
                     mgId: existingModule.mgId,
                     status: existingModule.status,
                     grade: existingModule.grade,
-                    semester: props.semesterplanSemester,
+                    semester: props.semesterPlanSemester,
                     isUserGenerated: true,
                     flexNowImported: props.module.flexNowImported,
                   };
 
                   this.store.dispatch(
-                    StudypathActions.updateModuleInStudypath({ module: updatedModule })
+                    StudyPathActions.updateModuleInStudyPath({ module: updatedModule })
                   );
                 }
               });
@@ -665,31 +665,31 @@ export class StudyPlanningEffects {
       mergeMap((props) =>
         this.rest
           .deleteUserGeneratedModule(
-            props.studyplanId,
-            props.semesterplanId,
-            props.semesterplanSemester,
+            props.studyPlanId,
+            props.semesterPlanId,
+            props.semesterPlanSemester,
             props.module
           )
           .pipe(
             map(() =>
               UserGeneratedModuleActions.deleteUserGeneratedModuleSuccess({
-                studyplanId: props.studyplanId,
-                semesterplanId: props.semesterplanId,
-                semesterplanSemester: props.semesterplanSemester,
+                studyPlanId: props.studyPlanId,
+                semesterPlanId: props.semesterPlanId,
+                semesterPlanSemester: props.semesterPlanSemester,
                 module: props.module,
               })
             ),
             tap(() => {
-              this.store.select(getUserStudypath).pipe(take(1)).subscribe((sp) => {
+              this.store.select(getUserStudyPath).pipe(take(1)).subscribe((sp) => {
                 const existingModule = sp.completedModules.find(
                   (mod) => mod._id === props.module._id
                 );
 
                 if (existingModule) {
                   this.store.dispatch(
-                    StudypathActions.deleteModuleFromStudypath({
+                    StudyPathActions.deleteModuleFromStudyPath({
                       id: existingModule._id!,
-                      semester: props.semesterplanSemester,
+                      semester: props.semesterPlanSemester,
                     })
                   );
                 }
@@ -715,12 +715,12 @@ export class StudyPlanningEffects {
   deleteUserGeneratedModules$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserGeneratedModuleActions.deleteUserGeneratedModules),
-      mergeMap(({ studyplanId, semesterplanId, moduleIds }) =>
-        this.rest.deleteUserGeneratedModules(studyplanId, semesterplanId, moduleIds).pipe(
+      mergeMap(({ studyPlanId, semesterPlanId, moduleIds }) =>
+        this.rest.deleteUserGeneratedModules(studyPlanId, semesterPlanId, moduleIds).pipe(
           map((deletedModules) =>
             UserGeneratedModuleActions.deleteUserGeneratedModulesSuccess({
-              studyplanId,
-              semesterplanId,
+              studyPlanId,
+              semesterPlanId,
               deletedModules,
             })
           ),
@@ -738,7 +738,7 @@ export class StudyPlanningEffects {
       ofType(CoursePlanningActions.selectCourse),
       switchMap((props) =>
         this.rest
-          .addCourseToSemesterplan(
+          .addCourseToSemesterPlan(
             props.course.semester,
             {
               id: props.course.id,
@@ -760,7 +760,7 @@ export class StudyPlanningEffects {
               });
             }),
             map((courses) =>
-              CoursePlanningActions.updateCoursesArrayInSemesterplan({
+              CoursePlanningActions.updateCoursesArrayInSemesterPlan({
                 courses,
               })
             ),
@@ -777,7 +777,7 @@ export class StudyPlanningEffects {
       ofType(CoursePlanningActions.deselectCourse),
       switchMap((props) =>
         this.rest
-          .deleteCourseFromSemesterplan(props.semester, props.courseId)
+          .deleteCourseFromSemesterPlan(props.semester, props.courseId)
           .pipe(
             tap(() => {
               this.snackbar.openSnackBar({
@@ -787,7 +787,7 @@ export class StudyPlanningEffects {
               });
             }),
             map((courses) =>
-              CoursePlanningActions.updateCoursesArrayInSemesterplan({
+              CoursePlanningActions.updateCoursesArrayInSemesterPlan({
                 courses,
               })
             ),
@@ -804,7 +804,7 @@ export class StudyPlanningEffects {
       ofType(CoursePlanningActions.selectCourses),
       switchMap((props) =>
         this.rest
-          .addCoursesToSemesterplan(
+          .addCoursesToSemesterPlan(
             props.semester,
             props.courses,
             props.isPastSemester
@@ -818,7 +818,7 @@ export class StudyPlanningEffects {
               });
             }),
             map((courses) =>
-              CoursePlanningActions.updateCoursesArrayInSemesterplan({
+              CoursePlanningActions.updateCoursesArrayInSemesterPlan({
                 courses,
               })
             ),
@@ -835,7 +835,7 @@ export class StudyPlanningEffects {
       ofType(CoursePlanningActions.deselectCourses),
       switchMap((props) =>
         this.rest
-          .deleteCoursesFromSemesterplan(props.semester, props.courseIds)
+          .deleteCoursesFromSemesterPlan(props.semester, props.courseIds)
           .pipe(
             tap(() => {
               this.snackbar.openSnackBar({
@@ -845,7 +845,7 @@ export class StudyPlanningEffects {
               });
             }),
             map((courses) =>
-              CoursePlanningActions.updateCoursesArrayInSemesterplan({
+              CoursePlanningActions.updateCoursesArrayInSemesterPlan({
                 courses,
               })
             ),
@@ -858,14 +858,14 @@ export class StudyPlanningEffects {
   );
 
   // timetable effects
-  importSemesterplan$ = createEffect(() =>
+  importSemesterPlan$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TimetableActions.importSemesterplan),
+      ofType(TimetableActions.importSemesterPlan),
       switchMap((props) =>
         this.rest
-          .updateSemesterplan(
-            props.newSemesterplan.semester,
-            props.newSemesterplan
+          .updateSemesterPlan(
+            props.newSemesterPlan.semester,
+            props.newSemesterPlan
           )
           .pipe(
             tap(() => {
@@ -874,13 +874,13 @@ export class StudyPlanningEffects {
                 message: 'Der Stundenplan wurde erfolgreich eingefügt!',
               });
             }),
-            map((semesterplan) =>
-              TimetableActions.importSemesterplanSuccess({
-                newSemesterplan: semesterplan,
+            map((semesterPlan) =>
+              TimetableActions.importSemesterPlanSuccess({
+                newSemesterPlan: semesterPlan,
               })
             ),
             catchError((error) =>
-              of(TimetableActions.importSemesterplanFailure({ error }))
+              of(TimetableActions.importSemesterPlanFailure({ error }))
             )
           )
       )

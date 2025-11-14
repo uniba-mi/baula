@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { BadRequestError, logError, NotFoundError } from '../../../shared/error';
-import { validateAndReturnSemester } from '../../../shared/helpers/customValidator';
+import { validateAndReturnSemester } from '../../../shared/helpers/custom-validator';
 
 const prisma = new PrismaClient();
 

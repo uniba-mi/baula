@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormatCompetencePipe } from './pipes/format-competence.pipe';
-import { MarkdownPipe } from './pipes/markdown.pipe';
+import { MarkdownPipe } from './pipes/mark-down.pipe';
 import { SemesterPipe } from './pipes/semester.pipe';
 import { SemesterShortPipe } from './pipes/semester-short.pipe';
 

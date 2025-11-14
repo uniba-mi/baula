@@ -3,14 +3,14 @@ import { Store } from '@ngrx/store';
 import { filter, map, Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
 import {
   getSemesterList,
-  getUserStudypath,
+  getUserStudyPath,
 } from 'src/app/selectors/user.selectors';
 import {
   MetaSemester,
-  Semesterplan,
-} from '../../../../../../../interfaces/semesterplan';
-import { getSelectedStudyplanId, getSemesterplansOfSelectedStudyplan } from 'src/app/selectors/study-planning.selectors';
-import { SemesterStudyPath } from '../../../../../../../interfaces/studypath';
+  SemesterPlan,
+} from '../../../../../../../interfaces/semester-plan';
+import { getSelectedStudyPlanId, getSemesterPlansOfSelectedStudyPlan } from 'src/app/selectors/study-planning.selectors';
+import { SemesterStudyPath } from '../../../../../../../interfaces/study-path';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
 import { Semester } from '../../../../../../../interfaces/semester';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
@@ -28,15 +28,15 @@ export class StudyPlanSemesterComponent {
   @Input() isPastSemester: boolean = false;
   @Input() eligibleSemesterId: string | null;
   @Input() isExpanded: boolean;
-  @Output() finishSemester = new EventEmitter<Semesterplan>();
+  @Output() finishSemester = new EventEmitter<SemesterPlan>();
   @Output() toggleExpanded = new EventEmitter<string>(); // emits semester name
 
   activeSemesters: string[];
   activeSemesters$: Observable<string[]>;
-  studyplanId: string;
-  semesterPlan: Semesterplan;
+  studyPlanId: string;
+  semesterPlan: SemesterPlan;
 
-  semesterStudypath$: Observable<SemesterStudyPath[]>;
+  semesterStudyPath$: Observable<SemesterStudyPath[]>;
 
   private destroy$ = new Subject<void>();
   connectedDropListIds: string[];
@@ -53,13 +53,13 @@ export class StudyPlanSemesterComponent {
       map((semesterList) => semesterList.map((semester) => semester.name))
     );
 
-    // fetch studyplanId for both children
-    this.store.select(getSelectedStudyplanId).pipe(take(1)).subscribe((studyplanId) => {
-      this.studyplanId = studyplanId
+    // fetch studyPlanId for both children
+    this.store.select(getSelectedStudyPlanId).pipe(take(1)).subscribe((studyPlanId) => {
+      this.studyPlanId = studyPlanId
     })
 
-    // set current semesterplan by fetching full details with MetaSemester for both children
-    this.store.select(getSemesterplansOfSelectedStudyplan)
+    // set current semester plan by fetching full details with MetaSemester for both children
+    this.store.select(getSemesterPlansOfSelectedStudyPlan)
       .pipe(
         filter(semesterPlans => !!semesterPlans && semesterPlans.length > 0),
         map(semesterPlans => {
@@ -86,15 +86,15 @@ export class StudyPlanSemesterComponent {
         this.isEligibleForFinish = (plan._id === this.eligibleSemesterId);
       });
 
-    // get studypath data for this semester for aimed ects in header and studypath cards
-    this.semesterStudypath$ = this.store.select(getUserStudypath).pipe(
-      switchMap((studypath) =>
-        this.transform.transformStudypath(studypath, [new Semester(this.metaSemester.semester)])
+    // get study path data for this semester for target ects in header and study path cards
+    this.semesterStudyPath$ = this.store.select(getUserStudyPath).pipe(
+      switchMap((studyPath) =>
+        this.transform.transformStudyPath(studyPath, [new Semester(this.metaSemester.semester)])
       )
     );
   }
 
-  handleFinishSemester(semesterPlan: Semesterplan): void {
+  handleFinishSemester(semesterPlan: SemesterPlan): void {
     this.finishSemester.emit(semesterPlan);
   }
 
@@ -126,7 +126,7 @@ export class StudyPlanSemesterComponent {
       sourceSemester,
       targetContainerId,
       targetSemester,
-      this.studyplanId,
+      this.studyPlanId,
       this.metaSemester.isPastSemester
     );
   }

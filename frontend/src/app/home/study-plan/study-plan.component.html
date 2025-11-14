@@ -7,26 +7,26 @@
     <button *ngIf="templatesAvailable" class="btn btn-secondary me-2"
       (click)="chooseImportType(user._id, user.startSemester)"
       (keyup.enter)="chooseImportType(user._id, user.startSemester)" aria-label="Studienplan importieren"
-      [disabled]="studyplans.length >= 5">
+      [disabled]="studyPlans.length >= 5">
       <i class="bi bi-upload me-1"></i> Importieren
     </button>
     <button *ngIf="!templatesAvailable" class="btn btn-secondary me-2"
-      (click)="importIndividualStudyplan(user._id, user.startSemester)"
-      (keyup.enter)="importIndividualStudyplan(user._id, user.startSemester)" aria-label="Studienplan importieren"
-      [disabled]="studyplans.length >= 5">
+      (click)="importIndividualStudyPlan(user._id, user.startSemester)"
+      (keyup.enter)="importIndividualStudyPlan(user._id, user.startSemester)" aria-label="Studienplan importieren"
+      [disabled]="studyPlans.length >= 5">
       <i class="bi bi-upload me-1"></i> Importieren
     </button>
     <button class="btn btn-primary" (click)="openAddStudyPlanDialog(user)" (keyup.enter)="openAddStudyPlanDialog(user)"
-      aria-label="Neuen Studienplan erstellen" [disabled]="studyplans.length >= 5">
+      aria-label="Neuen Studienplan erstellen" [disabled]="studyPlans.length >= 5">
       + Erstellen
     </button>
-    <i *ngIf="studyplans.length >= 5" class="text-danger bi bi-exclamation-triangle my-auto icon"
+    <i *ngIf="studyPlans.length >= 5" class="text-danger bi bi-exclamation-triangle my-auto icon"
       matTooltip="Du hast die maximale Anzahl von Studienplänen erreicht. Erstellen, Duplizieren und Importieren von weiteren Studienplänen ist erst möglich, wenn du einen alten Studienplan gelöscht hast."></i>
   </div>
 
   <!-- Intro end -->
   <!-- Table -->
-  <div class="study-plan-list mt-3 p-0 rounded bg-white" *ngIf="studyplans.length > 0; else noData">
+  <div class="study-plan-list mt-3 p-0 rounded bg-white" *ngIf="studyPlans.length > 0; else noData">
     <!-- Table Header -->
     <div class="row study-plan-list-header my-auto mx-0 py-3 px-1 d-none d-sm-flex fw-bold text-gray border">
       <div class="col-4 text-gray">Name</div>
@@ -37,28 +37,28 @@
     <!-- Table Header End -->
 
     <!-- Table Body -->
-    <div class="list-body" *ngIf="studyplans$ | async as studyplans">
+    <div class="list-body" *ngIf="studyPlans$ | async as studyPlans">
       <!-- Study Plan Item -->
-      <div class="row study-plan-list-item p-2 py-sm-4 px-sm-2 border" (click)="selectStudyplan(studyplan._id)"
-        (keyup.enter)="selectStudyplan(studyplan._id)" tabindex="0" *ngFor="let studyplan of studyplans">
-        <div class="col-12 col-sm-4 mb-1 mb-sm-0">{{ studyplan.name }}</div>
+      <div class="row study-plan-list-item p-2 py-sm-4 px-sm-2 border" (click)="selectStudyPlan(studyPlan._id)"
+        (keyup.enter)="selectStudyPlan(studyPlan._id)" tabindex="0" *ngFor="let studyPlan of studyPlans">
+        <div class="col-12 col-sm-4 mb-1 mb-sm-0">{{ studyPlan.name }}</div>
         <div class="col-6 col-sm-3 d-flex justify-content-start">
-          <button class="btn-icon" *ngIf="studyplan.status" tabindex="0"
-            (click)="toggleActiveState($event, studyplan._id)"
-            (keyup.enter)="toggleActiveState($event, studyplan._id)">
+          <button class="btn-icon" *ngIf="studyPlan.status" tabindex="0"
+            (click)="toggleActiveState($event, studyPlan._id)"
+            (keyup.enter)="toggleActiveState($event, studyPlan._id)">
             <i class="status-toggle active-toggle icon bi bi-toggle-on"></i>
           </button>
-          <button class="btn-icon" *ngIf="!studyplan.status" tabindex="0"
-            (click)="toggleActiveState($event, studyplan._id)"
-            (keyup.enter)="toggleActiveState($event, studyplan._id)">
+          <button class="btn-icon" *ngIf="!studyPlan.status" tabindex="0"
+            (click)="toggleActiveState($event, studyPlan._id)"
+            (keyup.enter)="toggleActiveState($event, studyPlan._id)">
             <i class="status-toggle icon bi bi-toggle-off text-gray"></i>
           </button>
-          <span class="status-active px-2 rounded info" *ngIf="studyplan.status">Aktiv</span>
-          <span class="text-gray" *ngIf="!studyplan.status">Archiviert</span>
+          <span class="status-active px-2 rounded info" *ngIf="studyPlan.status">Aktiv</span>
+          <span class="text-gray" *ngIf="!studyPlan.status">Archiviert</span>
         </div>
 
         <div class="col-6 col-sm-4 d-flex justify-content-end justify-content-sm-start text-gray">
-          {{ studyplan.createdAt | date }}
+          {{ studyPlan.createdAt | date }}
         </div>
         <!-- Context menu that contains actions -->
         <div class="col-12 col-sm-1 order-first order-sm-last position-relative">
@@ -70,35 +70,35 @@
           </button>
           <mat-menu #contextMenu="matMenu" class="action-menu d-flex justify-content-center">
             <button mat-menu-item class="btn-icon" (click)="
-                exportStudyplan(studyplan, user.studypath)
+                exportStudyPlan(studyPlan, user.studyPath)
               " (keyup.enter)="
-                exportStudyplan(studyplan, user.studypath)
+                exportStudyPlan(studyPlan, user.studyPath)
               ">
               <i class="icon bi bi-download d-inline text-gray"></i>
               Exportieren
             </button>
             <button mat-menu-item class="btn-icon" (click)="
-                openAddStudyPlanDialog(user, studyplan._id, studyplan)
+                openAddStudyPlanDialog(user, studyPlan._id, studyPlan)
               " (keyup.enter)="
-                openAddStudyPlanDialog(user, studyplan._id, studyplan)
+                openAddStudyPlanDialog(user, studyPlan._id, studyPlan)
               ">
               <i class="icon bi bi-pencil d-inline text-gray"></i>
               Bearbeiten
             </button>
-            <button mat-menu-item class="btn-icon" (click)="duplicateStudyplan(user, studyplan)"
-              (keyup.enter)="duplicateStudyplan(user, studyplan)" [disabled]="studyplans.length >= 5">
+            <button mat-menu-item class="btn-icon" (click)="duplicateStudyPlan(user, studyPlan)"
+              (keyup.enter)="duplicateStudyPlan(user, studyPlan)" [disabled]="studyPlans.length >= 5">
               <i class="icon bi bi-files d-inline text-gray"></i>
               Duplizieren
             </button>
-            <button *ngIf="studyplans.length > 1 && !studyplan.status" mat-menu-item class="btn-icon" (click)="
+            <button *ngIf="studyPlans.length > 1 && !studyPlan.status" mat-menu-item class="btn-icon" (click)="
                 openDeleteDialog(
-                  studyplan._id,
-                  studyplan.name
+                  studyPlan._id,
+                  studyPlan.name
                 )
               " (keyup.enter)="
                 openDeleteDialog(
-                  studyplan._id,
-                  studyplan.name
+                  studyPlan._id,
+                  studyPlan.name
                 )
               ">
               <i class="icon bi bi-trash3 d-inline text-gray"></i>

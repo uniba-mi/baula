@@ -2,25 +2,25 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, skipWhile, take } from 'rxjs/operators';
-import { getModulehandbook } from 'src/app/selectors/module-overview.selectors';
-import { getStudyplans } from 'src/app/selectors/study-planning.selectors';
-import { getUser, getUserStudypath } from 'src/app/selectors/user.selectors';
+import { getModuleHandbook } from 'src/app/selectors/module-overview.selectors';
+import { getStudyPlans } from 'src/app/selectors/study-planning.selectors';
+import { getUser, getUserStudyPath } from 'src/app/selectors/user.selectors';
 import { Module } from '../../../../../interfaces/module';
 import { ModuleGroup } from '../../../../../interfaces/module-group';
-import { Modulehandbook } from '../../../../../interfaces/modulehandbook';
-import { Studypath, PathModule } from '../../../../../interfaces/studypath';
+import { ModuleHandbook } from '../../../../../interfaces/module-handbook';
+import { StudyPath, PathModule } from '../../../../../interfaces/study-path';
 import {
   CollidingEvent,
   PlanCourse,
   PlanningHints,
-} from '../../../../../interfaces/semesterplan';
+} from '../../../../../interfaces/semester-plan';
 import { ModService } from './module.service';
 import { TimetableActions } from 'src/app/actions/study-planning.actions';
 import { Course } from '../../../../../interfaces/course';
 import { EventInput } from '@fullcalendar/core';
-import { AcademicDate } from '../../../../../interfaces/academicDate';
+import { AcademicDate } from '../../../../../interfaces/academic-date';
 import { datetime, RRule, RRuleSet } from 'rrule';
-import { Studyplan } from '../../../../../interfaces/studyplan';
+import { StudyPlan } from '../../../../../interfaces/study-plan';
 import { AnalyticsService } from './analytics.service';
 import { Semester } from '../../../../../interfaces/semester';
 
@@ -28,11 +28,11 @@ import { Semester } from '../../../../../interfaces/semester';
   providedIn: 'root',
 })
 export class PlanningValidationService {
-  studypath$: Observable<Studypath>;
-  modulehandbook$: Observable<Modulehandbook | undefined>;
-  modulehandbook: Modulehandbook;
+  studyPath$: Observable<StudyPath>;
+  moduleHandbook$: Observable<ModuleHandbook | undefined>;
+  moduleHandbook: ModuleHandbook;
   status: string | undefined;
-  selectedSemesterplan: string;
+  selectedSemesterPlan: string;
   modules$: Observable<string[] | undefined>;
   currentCollisionHints: PlanningHints[];
   currentEvents: EventInput[];
@@ -46,12 +46,12 @@ export class PlanningValidationService {
       ---------------------------------------*/
 
   constructor(private store: Store, private mod: ModService, private analytics: AnalyticsService) {
-    // reverse studypath so the latest status of the module is returned with find method
-    this.studypath$ = this.store.select(getUserStudypath);
-    this.modulehandbook$ = this.store.select(getModulehandbook);
-    this.modulehandbook$.subscribe((mhb) => {
+    // reverse study path so the latest status of the module is returned with find method
+    this.studyPath$ = this.store.select(getUserStudyPath);
+    this.moduleHandbook$ = this.store.select(getModuleHandbook);
+    this.moduleHandbook$.subscribe((mhb) => {
       if (mhb) {
-        this.modulehandbook = mhb;
+        this.moduleHandbook = mhb;
       }
     });
   }
@@ -62,7 +62,7 @@ export class PlanningValidationService {
 
   /** returns warnings if priorModules have not been taken
    * @param module module to be checked
-   * @param semesterplanId current semesterplan semester
+   * @param semesterPlanId current semester plan semester
    * @returns object with boolean and message that is returned to the component
    */
   priorModulesTaken(module: Module) {
@@ -75,7 +75,7 @@ export class PlanningValidationService {
     let priorModulesNotTaken: string[] = [];
 
     for (let priorMod of priorModules) {
-      // get latest status of module from studypath
+      // get latest status of module from study path
       this.getLatestStatusOfModuleByAcronym(priorMod).subscribe((status) => {
         this.status = status;
       });
@@ -102,23 +102,23 @@ export class PlanningValidationService {
     return returnResult;
   }
 
-  /** check if module already exists in a semesterplan
+  /** check if module already exists in a semester plan
    * @param selectedModuleId module to be checked
    * @returns object with boolean and message that is returned to the component
    */
-  isModuleInSemesterplan(
+  isModuleInSemesterPlan(
     moduleAcronym: string,
-    semesterplanId: string,
-    studyplanId: string
+    semesterPlanId: string,
+    studyPlanId: string
   ): Observable<{ alreadyContained: boolean; message: string }> {
-    return this.store.select(getStudyplans).pipe(
+    return this.store.select(getStudyPlans).pipe(
       take(1),
-      map((studyplans: Studyplan[]) => {
-        const studyplan = studyplans.find((plan) => plan._id === studyplanId);
-        const semesterplan = studyplan?.semesterPlans.find(
-          (plan) => plan._id === semesterplanId
+      map((studyPlans: StudyPlan[]) => {
+        const studyPlan = studyPlans.find((plan) => plan._id === studyPlanId);
+        const semesterPlan = studyPlan?.semesterPlans.find(
+          (plan) => plan._id === semesterPlanId
         );
-        if (semesterplan?.modules.includes(moduleAcronym)) {
+        if (semesterPlan?.modules.includes(moduleAcronym)) {
           return {
             alreadyContained: true,
             message:
@@ -135,21 +135,21 @@ export class PlanningValidationService {
 
   /** returns warnings if modules are not offered in the selected semester
    * @param module module to be checked
-   * @param semesterplanId current semesterplan semester
+   * @param semesterPlanId current semester plan semester
    * @returns object with boolean and message that is returned to the component
    */
-  isModuleOffered(module: Module, semesterplanId: string) {
+  isModuleOffered(module: Module, semesterPlanId: string) {
     let returnResult = {
       success: true,
       message: '',
     };
 
-    if (!module.term.includes('WS') && semesterplanId.includes('w')) {
+    if (!module.term.includes('WS') && semesterPlanId.includes('w')) {
       returnResult.success = false;
       returnResult.message =
         'Bitte beachte, dass dieses Modul im Wintersemester nicht angeboten wird.';
     }
-    if (!module.term.includes('SS') && semesterplanId.includes('s')) {
+    if (!module.term.includes('SS') && semesterPlanId.includes('s')) {
       returnResult.success = false;
       returnResult.message =
         'Bitte beachte, dass dieses Modul im Sommersemester nicht angeboten wird.';
@@ -157,7 +157,7 @@ export class PlanningValidationService {
     return returnResult;
   }
 
-  /** check if module can be planned into a studyplan
+  /** check if module can be planned into a study plan
    * @param acronym of module to be planned
    * @param ects ects of module to be planned
    * @returns object with boolean and message that is returned to the component
@@ -169,7 +169,7 @@ export class PlanningValidationService {
       message: 'Das Modul kann nicht eingeplant werden',
     };
 
-    // get latest status of module from studypath
+    // get latest status of module from study path
     this.getLatestStatusOfModuleByAcronym(acronym).subscribe((status) => {
       if (status) {
         this.status = status;
@@ -187,14 +187,14 @@ export class PlanningValidationService {
   }
 
   /**
- * Check for module planning hints in studyplan
- * @param studyplan The active studyplan to check
+ * Check for module planning hints in study plan
+ * @param studyPlan The active study plan to check
  */
-  checkForModulePlanningHints(studyplan: Studyplan) {
+  checkForModulePlanningHints(studyPlan: StudyPlan) {
 
     let hints: PlanningHints[] = [];
 
-    const allModuleAcronyms = studyplan.semesterPlans.flatMap(sp => sp.modules);
+    const allModuleAcronyms = studyPlan.semesterPlans.flatMap(sp => sp.modules);
     const uniqueAcronyms = Array.from(new Set(allModuleAcronyms));
 
     if (uniqueAcronyms.length === 0) {
@@ -220,7 +220,7 @@ export class PlanningValidationService {
             )
             .subscribe((modules) => {
 
-              for (const semesterPlan of studyplan.semesterPlans) {
+              for (const semesterPlan of studyPlan.semesterPlans) {
                 const semester = new Semester(semesterPlan.semester);
 
                 for (const moduleAcronym of semesterPlan.modules) {
@@ -533,11 +533,11 @@ export class PlanningValidationService {
     }
   }
 
-  // gets a module's latest status in the studypath by acronym comparison
+  // gets a module's latest status in the study path by acronym comparison
   getLatestStatusOfModuleByAcronym(moduleAcronym: string) {
     // reduce array so modules are direct items
     return (
-      this.studypath$
+      this.studyPath$
         .pipe(
           map((path) =>
             path.completedModules.reduce(
@@ -572,13 +572,13 @@ export class PlanningValidationService {
       ---------------------------------------*/
   /** Main function to check for planning hints
    * checks if planned modules are adressed in timetable and if the planned courses fully adressed the respective module
-   * @param plannedCourses array of currently planned courses -> needed to 1) check which modules are (partly) adressed and 2) to identify if modules in studyplan are not adressed
-   * @param studyplanModules array of module acronyms out of the studyplan -> needed to check if all modules of studyplan are adressed in current timetable
+   * @param plannedCourses array of currently planned courses -> needed to 1) check which modules are (partly) adressed and 2) to identify if modules in study plan are not adressed
+   * @param studyPlanModules array of module acronyms out of the study plan -> needed to check if all modules of study plan are adressed in current timetable
    */
 
   checkForPlanningHints(
     plannedCourses: PlanCourse[],
-    studyplanModules: string[],
+    studyPlanModules: string[],
     events: EventInput[],
     teachingPeriod: AcademicDate
   ) {
@@ -617,24 +617,24 @@ export class PlanningValidationService {
     this.store.dispatch(TimetableActions.updatePlanningHints({ hints }));
 
     const moduleContributions = plannedCourses.map((el) => el.contributeTo);
-    // combine all module acronyms from studyplan and from planned courses
+    // combine all module acronyms from study plan and from planned courses
     const modulesAsString = Array.from(
-      new Set(moduleContributions.concat(studyplanModules))
+      new Set(moduleContributions.concat(studyPlanModules))
     );
     this.mod
       .getFullModulesByAcronyms(modulesAsString)
       .pipe(skipWhile((modules) => modules.length == 0))
       .subscribe((modules) => {
-        const modulesForStudyplanCheck = modules.filter((mod) =>
-          studyplanModules.includes(mod.acronym)
+        const modulesForStudyPlanCheck = modules.filter((mod) =>
+          studyPlanModules.includes(mod.acronym)
         );
         const modulesForContributedModuleCheck = modules.filter((mod) =>
           moduleContributions.includes(mod.acronym)
         );
         hints = hints.concat(
-          this.checkForMissingCoursesOfStudyplan(
+          this.checkForMissingCoursesOfStudyPlan(
             moduleContributions,
-            modulesForStudyplanCheck
+            modulesForStudyPlanCheck
           )
         );
         hints = hints.concat(
@@ -659,8 +659,8 @@ export class PlanningValidationService {
     return truncated + '...';
   }
 
-  // identifies modules that are not adressed in current timetable -> gets only modules, that are in studyplan
-  private checkForMissingCoursesOfStudyplan(
+  // identifies modules that are not adressed in current timetable -> gets only modules, that are in study plan
+  private checkForMissingCoursesOfStudyPlan(
     moduleContributions: string[],
     modules: Module[]
   ): PlanningHints[] {

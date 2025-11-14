@@ -8,11 +8,12 @@ import helmet from "helmet";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import { api } from "./routes/api.router";
+
 import { authSaml } from "./routes/auth/auth-saml.routes";
 import { localLogin, localLogout } from "./routes/auth/auth-local.routes";
 import passport from "./config/passport.config";
 import { expressSession } from "./config/session.config";
-import { errorHandler, notFoundHandler } from "./shared/middleware/errorHandlerMiddleware";
+import { errorHandler, notFoundHandler } from "./shared/middleware/error-handler-middleware";
 
 const app: Express = express();
 

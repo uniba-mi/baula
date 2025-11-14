@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
-import { PlanCourse } from '../../../../../../../../../interfaces/semesterplan';
+import { PlanCourse } from '../../../../../../../../../interfaces/semester-plan';
 import { Course } from '../../../../../../../../../interfaces/course';
 import { getPlanCourses } from 'src/app/selectors/study-planning.selectors';
 

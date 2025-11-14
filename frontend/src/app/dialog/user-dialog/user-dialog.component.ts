@@ -4,14 +4,14 @@ import { catchError, Observable, of, take, throwError } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { config } from 'src/environments/config.local';
 import { RestService } from 'src/app/rest.service';
-import { PathCourse, PathModule } from '../../../../../interfaces/studypath';
+import { PathCourse, PathModule } from '../../../../../interfaces/study-path';
 import { Semester } from '../../../../../interfaces/semester';
 import {
   FlexNowCompletedModule,
   FlexNowCompletedCourse,
   FlexNowStudyprogramme,
-} from '../../../../../interfaces/flexNowUser';
-import { Studyplan } from '../../../../../interfaces/studyplan';
+} from '../../../../../interfaces/flex-now-user';
+import { StudyPlan } from '../../../../../interfaces/study-plan';
 import { UserUpdateService } from 'src/app/shared/services/user-update.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -26,11 +26,11 @@ export class UserDialogComponent {
   currentStep = 'welcome';
   readonly termsConfirmed = model(false);
   readonly flexNowImportConfirmed = model(false);
-  readonly StudypathConfirmed = model(false);
+  readonly StudyPathConfirmed = model(false);
   steps: string[] = ['welcome'];
   isFirstSemesterStudent: boolean = false;
   templatesAvailable: boolean;
-  studyplanTemplate$: Observable<Studyplan>;
+  studyPlanTemplate$: Observable<StudyPlan>;
   startSemester: Semester = new Semester();
   loadingMessage: string | undefined;
   errorMessage: string | undefined;
@@ -131,20 +131,20 @@ export class UserDialogComponent {
     this.currentStep = 'loading';
     this.loadingMessage = 'Wir laden deine Daten von FlexNow, das kann kurz dauern...'
     this.rest
-      .getStudentDataViaFlexNow(this.StudypathConfirmed())
+      .getStudentDataViaFlexNow(this.StudyPathConfirmed())
       .subscribe((result) => {
         if(result.metadata.length > 0) {
-          const completedModules: PathModule[] = result.studypath
-            ? this.extractCompletedModules(result.studypath.completedModules)
+          const completedModules: PathModule[] = result.studyPath
+            ? this.extractCompletedModules(result.studyPath.completedModules)
             : [];
-          const completedCourses: PathCourse[] = result.studypath
-            ? this.extractCompletedCourses(result.studypath.completedCourses)
+          const completedCourses: PathCourse[] = result.studyPath
+            ? this.extractCompletedCourses(result.studyPath.completedCourses)
             : [];
           const userData: User = this.extractMetadata(this.user, result.metadata);
 
           this.user = {
             ...userData,
-            studypath: {
+            studyPath: {
               completedModules,
               completedCourses,
             },
@@ -239,9 +239,9 @@ export class UserDialogComponent {
 
   // all the initialization stuff for new users
   private initializeNewUser(): Observable<User> {
-    // initialize new user with "empty" studypath
-    if (!this.user.studypath) {
-      this.user.studypath = {
+    // initialize new user with "empty" study path
+    if (!this.user.studyPath) {
+      this.user.studyPath = {
         completedModules: [],
         completedCourses: [],
       };
@@ -267,7 +267,7 @@ export class UserDialogComponent {
       },
       {
         ctype: 'upload-exam-data',
-        hasConfirmed: this.StudypathConfirmed(),
+        hasConfirmed: this.StudyPathConfirmed(),
         timestamp: new Date(),
       },
       {

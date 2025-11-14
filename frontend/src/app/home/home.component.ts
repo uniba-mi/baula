@@ -5,31 +5,31 @@ import { Observable, Subscription } from 'rxjs';
 import { Semester } from '../../../../interfaces/semester';
 import { User } from '../../../../interfaces/user';
 import {
-  StudyplanActions,
+  StudyPlanActions,
   TimetableActions,
 } from '../actions/study-planning.actions';
 import { UserActions } from '../actions/user.actions';
 import { DialogComponent } from '../dialog/dialog.component';
 import { getUser } from '../selectors/user.selectors';
 import {
-  ModulehandbookActions,
+  ModuleHandbookActions,
   selectStudyProgramme,
 } from '../actions/module-overview.actions';
-import { StudyplanService } from '../shared/services/studyplan.service';
 import {
-  getActiveStudyplanId,
-  getStudyplans,
+  getActiveStudyPlanId,
+  getStudyPlans,
 } from '../selectors/study-planning.selectors';
 import { filter, take, takeWhile, tap } from 'rxjs/operators';
-import { Studyplan } from '../../../../interfaces/studyplan';
+import { StudyPlan } from '../../../../interfaces/study-plan';
 import { UserUpdateService } from '../shared/services/user-update.service';
 import { getModules } from '../selectors/module-overview.selectors';
 import { RestService } from '../rest.service';
-import { SemesterplanTemplate } from '../../../../interfaces/semesterplan';
+import { SemesterPlanTemplate } from '../../../../interfaces/semester-plan';
 import { IndexedDbService } from '../shared/services/indexed-db.service';
 import { Router } from '@angular/router';
 import { SurveyComponent } from '../modules/long-term-evaluation/survey/survey.component';
-import { LongTermEvaluation } from '../../../../interfaces/longTermEvaluation';
+import { LongTermEvaluation } from '../../../../interfaces/long-term-evaluation';
+import { StudyPlanService } from '../shared/services/study-plan.service';
 
 @Component({
   selector: 'app-home',
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
   activeId: string;
   userSubscription: Subscription;
   isFirstSemesterStudent: boolean = false;
-  studyplanTemplate$: Observable<Studyplan | undefined>;
+  studyPlanTemplate$: Observable<StudyPlan | undefined>;
   templatesAvailable: boolean = false;
   notificationActive: boolean = false;
   privacyDialogActive: boolean = true;
@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private store: Store,
-    private studyplanService: StudyplanService,
+    private studyPlanService: StudyPlanService,
     private userUpdateService: UserUpdateService,
     private api: RestService,
     private indexedDB: IndexedDbService,
@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit {
     // load modulhandbook
     if (user.sps) {
       this.store.dispatch(
-        ModulehandbookActions.loadModulehandbook({
+        ModuleHandbookActions.loadModuleHandbook({
           id: user.sps[0].mhbId,
           version: user.sps[0].mhbVersion,
         })
@@ -157,18 +157,18 @@ export class HomeComponent implements OnInit {
       .pipe(takeWhile((modules) => modules.length === 0, true))
       .subscribe((modules) => {
         if (modules.length !== 0) {
-          // additional load studyplans
-          this.store.dispatch(StudyplanActions.loadStudyplans());
+          // additional load study plans
+          this.store.dispatch(StudyPlanActions.loadStudyPlans());
 
-          // delay the loading of active study plan until studyplans are loaded
+          // delay the loading of active study plan until study plans are loaded
           this.store
-            .select(getStudyplans)
+            .select(getStudyPlans)
             .pipe(
-              filter((studyplans) => studyplans && studyplans.length > 0),
+              filter((studyPlans) => studyPlans && studyPlans.length > 0),
               take(1),
               tap(() => {
                 this.store
-                  .select(getActiveStudyplanId)
+                  .select(getActiveStudyPlanId)
                   .pipe(
                     takeWhile((id) => id === '', true),
                     take(1)
@@ -176,9 +176,9 @@ export class HomeComponent implements OnInit {
                   .subscribe((activeId) => {
                     if (activeId === '') {
                       this.store.dispatch(
-                        StudyplanActions.loadActiveStudyplan()
+                        StudyPlanActions.loadActiveStudyPlan()
                       );
-                      // load semesterplan
+                      // load semester plan
                       const semester = new Semester().name;
                       this.store.dispatch(
                         TimetableActions.updateActiveSemester({ semester })
@@ -187,10 +187,10 @@ export class HomeComponent implements OnInit {
                   });
               })
             )
-            .subscribe((studyplans) => {
-              // legacy update of studyplans
-              this.studyplanService.updateStudyplans(studyplans);
-              this.studyplanService.checkIfSemesterIsFinished(studyplans);
+            .subscribe((studyPlans) => {
+              // legacy update of study plans
+              this.studyPlanService.updateStudyPlans(studyPlans);
+              this.studyPlanService.checkIfSemesterIsFinished(studyPlans);
             });
         }
       });
@@ -219,7 +219,7 @@ export class HomeComponent implements OnInit {
         selectStudyProgramme({ studyProgramme: user.sps[0].spId })
       );
 
-      // set first semester info and load studyplan uni template
+      // set first semester info and load study plan uni template
       const currentSemester = Semester.getCurrentSemesterName();
       const currentSemesterType = currentSemester.slice(-1) as 'w' | 's';
       // study plan loading logic for first semester students
@@ -236,29 +236,29 @@ export class HomeComponent implements OnInit {
 
             if (this.isFirstSemesterStudent && this.templatesAvailable) {
               // fetch the study plan
-              this.studyplanTemplate$ =
+              this.studyPlanTemplate$ =
                 this.api.getLatestTemplateForStudyProgram(
                   spId,
                   currentSemesterType
                 );
 
-              this.studyplanTemplate$.pipe(take(1)).subscribe({
+              this.studyPlanTemplate$.pipe(take(1)).subscribe({
                 next: () => {
                   this.openImportDialog(this.user._id);
                 },
               });
             } else {
-              this.createDefaultStudyplan();
+              this.createDefaultStudyPlan();
             }
           });
       } else {
-        this.createDefaultStudyplan();
+        this.createDefaultStudyPlan();
       }
       this.router.navigate(['app', 'dashboard']);
     });
   }
 
-  // open studyplan template import option for new first semesters
+  // open study plan template import option for new first semesters
   openImportDialog(uId: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
@@ -267,7 +267,7 @@ export class HomeComponent implements OnInit {
         importType: 'deinen Musterplan',
         isFirstSemesterStudent: this.isFirstSemesterStudent,
         startSemester: this.user.startSemester,
-        studyplanTemplate$: this.studyplanTemplate$,
+        studyPlanTemplate$: this.studyPlanTemplate$,
       },
       minWidth: '50vw',
     });
@@ -275,14 +275,14 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       // if users don't import a plan, a default plan is created and set as active
       if (!result) {
-        this.createDefaultStudyplan();
+        this.createDefaultStudyPlan();
         return;
       }
 
       // validation of the result
       if (this.isValidImportResult(result)) {
         // if users import a plan, it is saved and set as active
-        this.createImportedStudyplan(result, uId);
+        this.createImportedStudyPlan(result, uId);
       }
     });
   }
@@ -291,34 +291,34 @@ export class HomeComponent implements OnInit {
     return (
       typeof result === 'object' &&
       Array.isArray(result.semesterPlans) &&
-      this.studyplanService.checkSemesterplansStructure(result.semesterPlans) &&
+      this.studyPlanService.checkSemesterPlansStructure(result.semesterPlans) &&
       typeof result.status === 'boolean' &&
       typeof result.name === 'string'
     );
   }
 
-  createImportedStudyplan(result: any, uId: string) {
-    const semesterplans = result.semesterPlans.map(
-      (el: SemesterplanTemplate) => ({
+  createImportedStudyPlan(result: any, uId: string) {
+    const semesterPlans = result.semesterPlans.map(
+      (el: SemesterPlanTemplate) => ({
         ...el,
         expanded: true,
         userId: uId,
       })
     );
 
-    this.studyplanService.createStudyplan(
+    this.studyPlanService.createStudyPlan(
       result.name,
-      semesterplans[0].semester,
-      semesterplans.length,
-      semesterplans,
+      semesterPlans[0].semester,
+      semesterPlans.length,
+      semesterPlans,
       true
     );
 
     this.dialog.closeAll();
   }
 
-  createDefaultStudyplan() {
-    this.studyplanService.createStudyplan(
+  createDefaultStudyPlan() {
+    this.studyPlanService.createStudyPlan(
       'Mein Studienplan',
       this.user.startSemester,
       this.user.duration,

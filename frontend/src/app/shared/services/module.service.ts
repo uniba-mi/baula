@@ -5,7 +5,6 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
 import {
   getAllModules,
   getDistinctModules,
-  getModules,
 } from 'src/app/selectors/module-overview.selectors';
 import { Module } from '../../../../../interfaces/module';
 import { AlertType } from '../classes/alert';
@@ -14,8 +13,8 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ModuleInteractionActions } from 'src/app/actions/module-overview.actions';
-import { UserGeneratedModule } from '../../../../../interfaces/usergeneratedmodule';
-import { PathModule } from '../../../../../interfaces/studypath';
+import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
+import { PathModule } from '../../../../../interfaces/study-path';
 
 @Injectable({
   providedIn: 'root',

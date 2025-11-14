@@ -31,14 +31,14 @@ import {
 } from 'rxjs';
 import { RestService } from 'src/app/rest.service';
 import rrulePlugin from '@fullcalendar/rrule';
-import { AcademicDate } from '../../../../../../interfaces/academicDate';
+import { AcademicDate } from '../../../../../../interfaces/academic-date';
 import { MatDialog } from '@angular/material/dialog';
 import {
   DeletedCourse,
   PlanCourse,
   PlanningHints,
-  Semesterplan,
-} from '../../../../../../interfaces/semesterplan';
+  SemesterPlan,
+} from '../../../../../../interfaces/semester-plan';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { FullCalendarComponent as FullCalendar } from '@fullcalendar/angular';
@@ -65,7 +65,7 @@ export class FullCalendarComponent
   @ViewChild('calendar') fullCalendar: FullCalendar;
   @Input() initalView: string;
   @Input() isWidget: boolean;
-  @Input() activePlan: Semesterplan;
+  @Input() activePlan: SemesterPlan;
   @Input() academicDates: AcademicDate[];
   @Input() planCourses?: PlanCourse[] | null;
   @Input() toggle: boolean | undefined;
@@ -278,9 +278,6 @@ export class FullCalendarComponent
   isWithinTeachingPeriod(): boolean {
     const today = new Date();
 
-    // for test purposes
-    // const today = new Date('2025-01-15');
-
     if (this.teachingPeriod) {
       const startDate = new Date(this.teachingPeriod.startdate);
       const endDate = new Date(this.teachingPeriod.enddate);
@@ -334,7 +331,7 @@ export class FullCalendarComponent
   toggleWeekends() {
     this.calendarOptions.weekends = !this.calendarOptions.weekends;
 
-    // update the timetable settings inh the db
+    // update the timetable settings in the db
     this.store.dispatch(
       TimetableActions.updateTimetableSettings({
         showWeekends: this.calendarOptions.weekends,

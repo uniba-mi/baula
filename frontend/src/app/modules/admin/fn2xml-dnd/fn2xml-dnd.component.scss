@@ -1,4 +1,4 @@
-.dropzone {
+.drop-zone {
   width: 450px;
   height: 200px;
   padding: 2rem;
@@ -8,7 +8,7 @@
   margin: 0 auto;
 }
 
-.dropzone input {
+.drop-zone input {
   opacity: 0;
   position: absolute;
   z-index: 2;
@@ -18,7 +18,7 @@
   left: 0;
 }
 
-.dropzone label {
+.drop-zone label {
   color: white;
   width: 183px;
   height: 44px;
@@ -28,7 +28,7 @@
 }
 
 @media(max-width: 575.98px) {
-  .dropzone {
+  .drop-zone {
     width: 100%;
     height: auto;
     padding: 1rem;

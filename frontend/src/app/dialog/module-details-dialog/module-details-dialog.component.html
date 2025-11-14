@@ -29,12 +29,12 @@
           [priorModules]="priorModules"
           [extractedPriorModules]="extractedPriorModules"
           [advancedModules]="advancedModules" 
-          [studypath]="studypath$ | async"
-          [semesterplans]="semesterplans$ | async"
+          [studyPath]="studyPath$ | async"
+          [semesterPlans]="semesterPlans$ | async"
         ></app-dependency-graph>
       </ng-template>
     </mat-tab>
-    <mat-tab label="Feedback" *ngIf="moduleInStudypath$ | async">
+    <mat-tab label="Feedback" *ngIf="moduleInStudyPath$ | async">
       <app-module-feedback [selectedModule]="selectedModule" [feedback]="feedback$ | async"
         [dialog]="dialog"></app-module-feedback>
     </mat-tab>

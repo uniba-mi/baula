@@ -16,12 +16,12 @@ export const getUserStudyprogrammes = createSelector(
 )
 
 // get mhb version and id saved in user state (currently works for one sp)
-export const getModulehandbookVersion = createSelector(
+export const getModuleHandbookVersion = createSelector(
   getUserStudyprogrammes,
   (state) => state![0].mhbVersion
 );
 
-export const getModulehandbookId = createSelector(
+export const getModuleHandbookId = createSelector(
   getUserStudyprogrammes,
   (state) => state![0].mhbId
 );
@@ -41,9 +41,9 @@ export const getSemesterList = createSelector(getUser, (user) => {
   }
 });
 
-export const getUserStudypath = createSelector(
+export const getUserStudyPath = createSelector(
   getUserState,
-  (state) => state.currentUser.studypath
+  (state) => state.currentUser.studyPath
 );
 
 export const getDashboardSettings = createSelector(
@@ -90,12 +90,12 @@ export const getAllModuleFeedback = createSelector(
   (state) => state.moduleFeedback || []
 )
 
-// check if module is in studypath
-export const isModuleInStudypath = (acronym: string) =>
+// check if module is in study path
+export const isModuleInStudyPath = (acronym: string) =>
   createSelector(
-    getUserStudypath,
-    (studypath) => {
-      const module = studypath.completedModules.find((module) => module.acronym === acronym);
+    getUserStudyPath,
+    (studyPath) => {
+      const module = studyPath.completedModules.find((module) => module.acronym === acronym);
       return !!module;
     }
   );
@@ -118,9 +118,9 @@ export const getFavouriteModuleAcronyms = createSelector(
   (state) => state.favouriteModulesAcronyms
 )
 
-export const getNotInterestingModulesAcronyms = createSelector(
+export const getExcludedModulesAcronyms = createSelector(
   getUser,
-  (state) => state.notInterestingModulesAcronyms
+  (state) => state.excludedModulesAcronyms
 )
 
 export const getVisibleCharts = createSelector(
@@ -131,11 +131,6 @@ export const getVisibleCharts = createSelector(
 export const getUserAims = createSelector(
   getUserState,
   (state) => state.currentUser.compAims
-);
-
-export const getUserInterests = createSelector(
-  getUser,
-  (state) => state.interests ? state.interests : []
 );
 
 export const getUserTopics = createSelector(

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ChartVisibility, Consent, Hint, User } from '../../../../../interfaces/user';
 import { UserActions } from 'src/app/actions/user.actions';
 import { Store } from '@ngrx/store';
-import { PathModule } from '../../../../../interfaces/studypath';
-import { TimetableSettings } from '../../../../../interfaces/semesterplan';
+import { PathModule } from '../../../../../interfaces/study-path';
+import { TimetableSettings } from '../../../../../interfaces/semester-plan';
 import { of } from 'rxjs';
 
 @Injectable({
@@ -29,7 +29,7 @@ export class UserUpdateService {
     ];
 
     private availableDashboardSettings: ChartVisibility[] = [
-        { key: 'quicklinks', visible: true },
+        { key: 'quick-links', visible: true },
         { key: 'total-ects-progress', visible: true },
         { key: 'total-module-progress', visible: false },
         { key: 'semester-ects-progress', visible: false },
@@ -86,7 +86,7 @@ export class UserUpdateService {
                 hints: updatedHints ? updatedHints : user.hints,
                 dashboardSettings: updatedDashboardSettings ? updatedDashboardSettings : user.dashboardSettings,
                 timetableSettings: updatedTimetableSettings ? updatedTimetableSettings : user.timetableSettings,
-                studypath: updatedModules ? { ...user.studypath, completedModules: updatedModules } : user.studypath,
+                studyPath: updatedModules ? { ...user.studyPath, completedModules: updatedModules } : user.studyPath,
                 consents: updatedConsents ? updatedConsents : user.consents,
             };
             this.store.dispatch(UserActions.updateUser({ user: updatedUser }));
@@ -205,7 +205,7 @@ export class UserUpdateService {
     // helper to init mgId/flexNowImported for each module if missing
     private updateUserModulesWithMgId(user: User): PathModule[] | undefined {
         let changes = false;
-        let modules = user.studypath.completedModules.map(module => {
+        let modules = user.studyPath.completedModules.map(module => {
             if (module.mgId == undefined || module.flexNowImported == undefined) {
                 changes = true
                 return {

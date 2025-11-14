@@ -1,11 +1,11 @@
-import { generateTopicModuleRecommendationsPreGenerated } from "../../../services/topicService";
+import { generateTopicModuleRecommendationsPreGenerated } from "../../../services/topic-service";
 import { Embedding, ModEmbedding, Recommendation, TopicM } from "../../../database/mongo";
-import { Recommendation as IRecommendation, TopicRecommendationResult } from '../../../../../interfaces/recommendation';
+import { Recommendation as IRecommendation, TopicRecommendationResult } from '../../../../../../interfaces/recommendation';
 import { Topic } from "../../../topic";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import { UserServer } from "../../../user";
 import validator from "validator";
-import { extractModules } from "../../../shared/helpers/moduleHelpers";
+import { extractModules } from "../../../shared/helpers/module-helpers";
 import { RecommendedModule, Source } from "../../../recommendation";
 import { NextFunction, Request, Response } from "express";
 

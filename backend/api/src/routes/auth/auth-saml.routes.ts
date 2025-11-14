@@ -4,7 +4,7 @@ import {
   loginRedirect,
   spInitiatedLogout,
 } from "./auth.controller";
-import { ensureAuthenticated } from "../../shared/middleware/authenticationMiddleware";
+import { ensureAuthenticated } from "../../shared/middleware/authentication-middleware";
 import passport from "passport";
 
 const router: Router = express.Router();

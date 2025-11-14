@@ -11,105 +11,105 @@ export const getStudyPlanningStateFull = createSelector(
   (state) => state
 );
 
-// get studyplans
-export const getStudyplans = createSelector(
+// get study plans
+export const getStudyPlans = createSelector(
   selectStudyPlanningState,
-  (state) => state.studyplans
+  (state) => state.studyPlans
 );
 
-// active studyplan
-export const getActiveStudyplanId = createSelector(
+// active study plan
+export const getActiveStudyPlanId = createSelector(
   selectStudyPlanningState,
-  (state) => state.activeStudyplanId
+  (state) => state.activeStudyPlanId
 );
 
-export const getActiveStudyplan = createSelector(
-  getStudyplans,
-  getActiveStudyplanId,
-  (studyplans, activeStudyplanId) => {
-    return studyplans.find((studyplan) => studyplan._id === activeStudyplanId);
+export const getActiveStudyPlan = createSelector(
+  getStudyPlans,
+  getActiveStudyPlanId,
+  (studyPlans, activeStudyPlanId) => {
+    return studyPlans.find((studyPlan) => studyPlan._id === activeStudyPlanId);
   }
 );
 
-// selected studyplan
-export const getSelectedStudyplanId = createSelector(
+// selected study plan
+export const getSelectedStudyPlanId = createSelector(
   selectStudyPlanningState,
-  (state) => state.selectedStudyplanId
+  (state) => state.selectedStudyPlanId
 );
 
-export const getSelectedStudyplan = createSelector(
-  getStudyplans,
-  getSelectedStudyplanId,
-  (studyplans, selectedStudyplanId) => {
-    return studyplans.find(
-      (studyplan) => studyplan._id === selectedStudyplanId
+export const getSelectedStudyPlan = createSelector(
+  getStudyPlans,
+  getSelectedStudyPlanId,
+  (studyPlans, selectedStudyPlanId) => {
+    return studyPlans.find(
+      (studyPlan) => studyPlan._id === selectedStudyPlanId
     );
   }
 );
 
-export const getSemesterplansOfActiveStudyplan = createSelector(
-  getActiveStudyplan,
-  (studyplan) => {
-    if (studyplan) {
-      return studyplan.semesterPlans;
+export const getSemesterPlansOfActiveStudyPlan = createSelector(
+  getActiveStudyPlan,
+  (studyPlan) => {
+    if (studyPlan) {
+      return studyPlan.semesterPlans;
     } else {
       return;
     }
   }
 );
 
-export const getSemesterplansOfSelectedStudyplan = createSelector(
-  getSelectedStudyplan,
-  (studyplan) => {
-    return studyplan ? studyplan.semesterPlans : [];
+export const getSemesterPlansOfSelectedStudyPlan = createSelector(
+  getSelectedStudyPlan,
+  (studyPlan) => {
+    return studyPlan ? studyPlan.semesterPlans : [];
   }
 );
 
-export const getFilteredStudyplans = createSelector(
-  getStudyplans,
-  (studyplans) => {
-    return studyplans.map((studyplan) => ({
-      ...studyplan,
-      semesterPlans: studyplan.semesterPlans.filter((sp) => !sp.isPastSemester),
+export const getFilteredStudyPlans = createSelector(
+  getStudyPlans,
+  (studyPlans) => {
+    return studyPlans.map((studyPlan) => ({
+      ...studyPlan,
+      semesterPlans: studyPlan.semesterPlans.filter((sp) => !sp.isPastSemester),
     }));
   }
 );
 
-export const getSemesterplanOfSelectedStudyplanById = (
-  semesterplanId: string
+export const getSemesterPlanOfSelectedStudyPlanById = (
+  semesterPlanId: string
 ) =>
-  createSelector(getSemesterplansOfSelectedStudyplan, (semesterPlans) => {
+  createSelector(getSemesterPlansOfSelectedStudyPlan, (semesterPlans) => {
     if (semesterPlans) {
       return semesterPlans.find(
-        (semesterplan) => semesterplan._id === semesterplanId
+        (semesterPlan) => semesterPlan._id === semesterPlanId
       );
     } else {
       return;
     }
   });
 
-export const getModulesWithinSemesterplanOfSelectedStudyplan = (
-  semesterplanId: string
+export const getModulesWithinSemesterPlanOfSelectedStudyPlan = (
+  semesterPlanId: string
 ) =>
   createSelector(
-    getSemesterplanOfSelectedStudyplanById(semesterplanId),
-    (semesterplan) => {
-      if (semesterplan) {
-        return semesterplan.modules;
+    getSemesterPlanOfSelectedStudyPlanById(semesterPlanId),
+    (semesterPlan) => {
+      if (semesterPlan) {
+        return semesterPlan.modules;
       } else {
         return;
       }
     }
   );
 
-export const getSelectedSemesterplanSemesterById = (semesterplanId: string) =>
-  createSelector(getSemesterplansOfSelectedStudyplan, (semesterPlans) => {
+export const getSelectedSemesterPlanSemesterById = (semesterPlanId: string) =>
+  createSelector(getSemesterPlansOfSelectedStudyPlan, (semesterPlans) => {
     if (semesterPlans) {
-      let semesterplan = semesterPlans.find((item) => {
-        return item._id === semesterplanId;
+      let semesterPlan = semesterPlans.find((item) => {
+        return item._id === semesterPlanId;
       });
-      if (semesterplan) {
-        return semesterplan.semester;
+      if (semesterPlan) {
+        return semesterPlan.semester;
       } else {
         return;
       }
@@ -118,21 +118,21 @@ export const getSelectedSemesterplanSemesterById = (semesterplanId: string) =>
     }
   });
 
-export const getSemesterplanSemesterByStudyplanId = (
-  studyplanId: string,
+export const getSemesterPlanSemesterByStudyPlanId = (
+  studyPlanId: string,
   ppId: string
 ) =>
-  createSelector(getStudyplans, (studyplans) => {
-    if (studyplans) {
-      let studyplan = studyplans.find((item) => {
-        return item._id === studyplanId;
+  createSelector(getStudyPlans, (studyPlans) => {
+    if (studyPlans) {
+      let studyPlan = studyPlans.find((item) => {
+        return item._id === studyPlanId;
       });
-      if (studyplan) {
-        let semesterplan = studyplan.semesterPlans.find((item) => {
+      if (studyPlan) {
+        let semesterPlan = studyPlan.semesterPlans.find((item) => {
           return item._id === ppId;
         });
-        if (semesterplan) {
-          return semesterplan.semester;
+        if (semesterPlan) {
+          return semesterPlan.semester;
         } else {
           return;
         }
@@ -144,17 +144,17 @@ export const getSemesterplanSemesterByStudyplanId = (
     }
   });
 
-export const getStudyplanStatus = createSelector(
-  getSelectedStudyplan,
-  (selectedStudyplanId) => {
-    return selectedStudyplanId?.status;
+export const getStudyPlanStatus = createSelector(
+  getSelectedStudyPlan,
+  (selectedStudyPlanId) => {
+    return selectedStudyPlanId?.status;
   }
 );
 
 export const getSemesterPlanIdBySemester = (semester: string) =>
-  createSelector(getSelectedStudyplan, (selectedStudyplan) => {
-    if (selectedStudyplan && selectedStudyplan.semesterPlans) {
-      const matchingSemesterPlan = selectedStudyplan.semesterPlans.find(
+  createSelector(getSelectedStudyPlan, (selectedStudyPlan) => {
+    if (selectedStudyPlan && selectedStudyPlan.semesterPlans) {
+      const matchingSemesterPlan = selectedStudyPlan.semesterPlans.find(
         (sp) => sp.semester === semester
       );
       return matchingSemesterPlan ? matchingSemesterPlan._id : undefined;
@@ -163,19 +163,19 @@ export const getSemesterPlanIdBySemester = (semester: string) =>
     }
   });
 
-export const getPlannedModulesOfActiveStudyplan = createSelector(
-  getActiveStudyplan,
-  (studyplan) =>
-    studyplan?.semesterPlans
+export const getPlannedModulesOfActiveStudyPlan = createSelector(
+  getActiveStudyPlan,
+  (studyPlan) =>
+    studyPlan?.semesterPlans
       .map((plan) => plan.modules)
       .reduce((pv, cv) => pv.concat(cv), [])
 );
 
 // returns an array of semesters a module is planned in or null
 export const getPlannedSemestersForModule = (acronym: string) =>
-  createSelector(getActiveStudyplan, (activeStudyplan) => {
-    if (activeStudyplan) {
-      const plannedSemesters = activeStudyplan.semesterPlans
+  createSelector(getActiveStudyPlan, (activeStudyPlan) => {
+    if (activeStudyPlan) {
+      const plannedSemesters = activeStudyPlan.semesterPlans
         .filter((semesterPlan) => {
           const isPlanned = semesterPlan.modules.includes(acronym);
           return isPlanned;
@@ -201,7 +201,7 @@ export const getActiveSemester = createSelector(
 export const getSemesterPlan = createSelector(
   selectStudyPlanningState,
   (state) =>
-    state.studyplans
+    state.studyPlans
       .find((el) => el.status)
       ?.semesterPlans.find((el) => el.semester === state.activeSemester)
 );
@@ -209,10 +209,10 @@ export const getSemesterPlan = createSelector(
 export const getPlanCourses = createSelector(
   selectStudyPlanningState,
   (state) => {
-    const semesterplan = state.studyplans
+    const semesterPlan = state.studyPlans
       .find((el) => el.status)
       ?.semesterPlans.find((el) => el.semester === state.activeSemester)
-    return semesterplan ? semesterplan.courses : []
+    return semesterPlan ? semesterPlan.courses : []
   }
 );
 

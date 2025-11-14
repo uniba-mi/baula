@@ -20,7 +20,7 @@ import {
 import { takeUntil } from 'rxjs/operators';
 import { getModuleAcronyms } from 'src/app/selectors/module-overview.selectors';
 import { ModuleCourse } from '../../../../../../interfaces/module-course';
-import { PlanCourse, Semesterplan } from '../../../../../../interfaces/semesterplan';
+import { PlanCourse, SemesterPlan } from '../../../../../../interfaces/semester-plan';
 import { getLoadingState } from 'src/app/selectors/study-planning.selectors';
 import {
   LoadingActions,
@@ -35,7 +35,7 @@ import { SearchActions } from 'src/app/actions/search-settings.actions';
   standalone: false
 })
 export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() activePlan: Semesterplan;
+  @Input() activePlan: SemesterPlan;
   @Input() selectedCourses?: PlanCourse[] | null;
   @Input() isSticky: boolean;
   @Output() openSearch = new EventEmitter();

@@ -15,7 +15,7 @@ import {
   getAllUppestCompetenceGroups,
   getLowerCompetences
 } from "./bilapp.controller";
-import { ensureAuthenticated } from "../../shared/middleware/authenticationMiddleware";
+import { ensureAuthenticated } from "../../shared/middleware/authentication-middleware";
 
 const router: Router = express.Router();
 

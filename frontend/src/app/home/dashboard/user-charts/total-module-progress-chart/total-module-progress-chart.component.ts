@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
-import { Studypath } from '../../../../../../../interfaces/studypath';
+import { StudyPath } from '../../../../../../../interfaces/study-path';
 
 @Component({
     selector: 'app-total-module-progress-chart',
@@ -15,7 +15,7 @@ import { Studypath } from '../../../../../../../interfaces/studypath';
     standalone: false
 })
 export class TotalModuleProgressChartComponent implements OnInit, OnChanges {
-  @Input() studypath: Studypath;
+  @Input() studyPath: StudyPath;
 
   modulProgressData: ChartConfiguration<'bar'>['data'];
   moduleProgressOptions: ChartConfiguration<'bar'>['options'] = {
@@ -35,7 +35,7 @@ export class TotalModuleProgressChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.studypath) {
+    if (changes.studyPath) {
       this.noDataMessage = false;
       this.calculateDataForCharts();
     }
@@ -43,7 +43,7 @@ export class TotalModuleProgressChartComponent implements OnInit, OnChanges {
 
   private calculateDataForCharts() {
     // get passed, failed and taken modules and set module data
-    const moduleData = this.getModuleStatistics(this.studypath);
+    const moduleData = this.getModuleStatistics(this.studyPath);
     // display no data message if modules are empty
     // for each item in moduleData
     // if item is larger than 0, set noDataMessage to true
@@ -65,11 +65,11 @@ export class TotalModuleProgressChartComponent implements OnInit, OnChanges {
     };
   }
 
-  private getModuleStatistics(studypath: Studypath): number[] {
+  private getModuleStatistics(studyPath: StudyPath): number[] {
     let passed = 0;
     let failed = 0;
     let taken = 0;
-    for (let module of studypath.completedModules) {
+    for (let module of studyPath.completedModules) {
       switch (module.status) {
         case 'passed':
           passed++;

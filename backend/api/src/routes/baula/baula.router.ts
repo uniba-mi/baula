@@ -38,7 +38,7 @@ import { feedback } from "./feedback/feedback.router";
 router.use('/feedback', feedback);
 
 import { admin } from "./admin/admin.router";
-import { checkAndReturnAdminUser } from "../../shared/middleware/adminMiddleware";
+import { checkAndReturnAdminUser } from "../../shared/middleware/admin-middleware";
 router.use('/admin', checkAndReturnAdminUser, admin);
 
 import { survey } from "./survey/survey.router";

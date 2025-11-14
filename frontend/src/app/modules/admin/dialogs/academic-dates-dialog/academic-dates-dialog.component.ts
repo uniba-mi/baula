@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AcademicDate, DateType } from '../../../../../../../interfaces/academicDate';
+import { AcademicDate, DateType } from '../../../../../../../interfaces/academic-date';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Semester } from '../../../../../../../interfaces/semester';

@@ -16,7 +16,7 @@ import { HelpComponent } from './public/help/help.component';
 import { authGuard } from './shared/auth/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { UserDataComponent } from './home/user-profile/user-data/user-data.component';
-import { StudypathUpdateComponent } from './home/user-profile/studypath-update/studypath-update.component';
+import { StudyPathUpdateComponent } from './home/user-profile/study-path-update/study-path-update.component';
 import { RecommendationComponent } from './home/recommendation/recommendation.component';
 import { TopicSettingsComponent } from './home/recommendation/topic-settings/topic-settings.component';
 import { JobSettingsComponent } from './home/recommendation/job-settings/job-settings.component';
@@ -140,7 +140,7 @@ const routes: Routes = [
           },
           {
             path: 'verlauf-verwalten',
-            component: StudypathUpdateComponent,
+            component: StudyPathUpdateComponent,
           },
           {
             path: 'datenschutz-einwilligung',

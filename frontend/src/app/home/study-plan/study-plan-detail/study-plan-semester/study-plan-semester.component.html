@@ -16,8 +16,8 @@
 
 <!-- Semester box -->
 <div class="semester d-flex justify-content-start" [class.current]="isCurrentSemester()">
-  <app-semester-header class="semester-header p-2" [metaSemester]="metaSemester" [studyplanId]="studyplanId"
-    [semesterPlan]="semesterPlan" [semesterNumber]="semesterNumber" [semesterStudypath$]="semesterStudypath$"
+  <app-semester-header class="semester-header p-2" [metaSemester]="metaSemester" [studyPlanId]="studyPlanId"
+    [semesterPlan]="semesterPlan" [semesterNumber]="semesterNumber" [semesterStudyPath$]="semesterStudyPath$"
     (toggleExpanded)="onToggleExpanded()" (finishSemester)="handleFinishSemester($event)" [isExpanded]="isExpanded"
     [isEligibleForFinish]="isEligibleForFinish"></app-semester-header>
 
@@ -25,8 +25,8 @@
   <div [hidden]="!isExpanded" cdkDropList [cdkDropListData]="semesterPlan" [id]="semesterPlan._id"
     [cdkDropListConnectedTo]="connectedDropListIds" (cdkDropListDropped)="onDrop($event)"
     [cdkDropListDisabled]="metaSemester.isPastSemester" class="semester-droplist">
-    <app-semester-body [metaSemester]="metaSemester" [semesterPlan]="semesterPlan" [studyplanId]="studyplanId"
-      [semesterStudypath$]="semesterStudypath$"></app-semester-body>
+    <app-semester-body [metaSemester]="metaSemester" [semesterPlan]="semesterPlan" [studyPlanId]="studyPlanId"
+      [semesterStudyPath$]="semesterStudyPath$"></app-semester-body>
   </div>
 
   <!-- Non Expanded Semester -->

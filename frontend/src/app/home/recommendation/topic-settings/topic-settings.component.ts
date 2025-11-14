@@ -1,17 +1,17 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, catchError, combineLatest, debounceTime, filter, finalize, map, Observable, of, skip, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
-import { getFavouriteModuleAcronyms, getNotInterestingModulesAcronyms, getUser, getUserTopics } from 'src/app/selectors/user.selectors';
+import { getFavouriteModuleAcronyms, getExcludedModulesAcronyms, getUser, getUserTopics } from 'src/app/selectors/user.selectors';
 import { User } from '../../../../../../interfaces/user';
 import { FormControl } from '@angular/forms';
 import { Module } from '../../../../../../interfaces/module';
 import { FavoriteModulesActions, UserActions } from 'src/app/actions/user.actions';
-import { RecsRestService } from 'src/app/modules/recs/recs-rest.service';
+import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.service';
 import { ModService } from 'src/app/shared/services/module.service';
 import { Topic, TopicTree } from '../../../../../../interfaces/topic';
-import { FuseSearchService } from 'src/app/shared/services/fusesearch.service';
+import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
 import { Recommendation } from '../../../../../../interfaces/recommendation';
-import { RecHelperService } from 'src/app/modules/recs/rec-helper.service';
+import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
 import { SearchSettings } from '../../../../../../interfaces/search';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
@@ -45,7 +45,7 @@ export class TopicSettingsComponent {
   moduleRecommendations: any = null;
   filteredRecommendations: any[] = [];
 
-  notInterestingModules$ = this.store.select(getNotInterestingModulesAcronyms);
+  excludedModules$ = this.store.select(getExcludedModulesAcronyms);
   favouriteModuleAcronyms$ = this.store.select(getFavouriteModuleAcronyms);
   hideTakenAndPassed: boolean = false;
 
@@ -66,10 +66,10 @@ export class TopicSettingsComponent {
   constructor(
     private store: Store,
     private modService: ModService,
-    private recsApi: RecsRestService,
+    private recsService: RecsRestService,
     private cdr: ChangeDetectorRef,
     private fuseSearchService: FuseSearchService,
-    private recHelper: RecHelperService,
+    private recsHelper: RecsHelperService,
     private analytics: AnalyticsService
   ) { }
 
@@ -108,8 +108,8 @@ export class TopicSettingsComponent {
   }
 
   loadTopicData() {
-    this.topicTree$ = this.recsApi.getTopicTree();
-    this.allChildrenTopics$ = this.recsApi.getTopicChildren();
+    this.topicTree$ = this.recsService.getTopicTree();
+    this.allChildrenTopics$ = this.recsService.getTopicChildren();
 
     this.allChildrenTopics$.pipe(take(1)).subscribe(topics => {
       this.allTopics = topics || [];
@@ -127,7 +127,7 @@ export class TopicSettingsComponent {
 
   fetchTopicRecommendations(topics: string[]) {
     this.loading$.next(true);
-    this.recsApi.createTopicRecommendation(topics)
+    this.recsService.createTopicRecommendation(topics)
       .pipe(
         catchError(error => {
           console.error('Error fetching recommendations:', error);
@@ -159,8 +159,8 @@ export class TopicSettingsComponent {
       });
     });
 
-    // listen for changes in not interesting modules and favourites and update display
-    this.notInterestingModules$.pipe(
+    // listen for changes in excluded modules and favourites and update display
+    this.excludedModules$.pipe(
       takeUntil(this.destroy$),
       skip(1),
       debounceTime(500)
@@ -193,14 +193,14 @@ export class TopicSettingsComponent {
     this.moduleRecommendations = recommendation;
 
     combineLatest([
-      this.recHelper.getPassedOrTakenModulesFromStudypath(),
-      this.notInterestingModules$
+      this.recsHelper.getPassedOrTakenModulesFromStudyPath(),
+      this.excludedModules$
     ]).pipe(
       take(1)
-    ).subscribe(([passedOrTakenModules, notInterestingModules]) => {
+    ).subscribe(([passedOrTakenModules, excludedModules]) => {
       const excludeModuleAcronyms = [
         ...passedOrTakenModules.map(module => module.acronym),
-        ...notInterestingModules
+        ...excludedModules
       ];
 
       if (recommendation && recommendation.recommendedMods && recommendation.recommendedMods.length > 0) {
@@ -285,7 +285,7 @@ export class TopicSettingsComponent {
     return this.currentUserTopics.includes(tId);
   }
 
-  onModuleMarkedNotInteresting(acronym: string): void {
+  onModuleMarkedExcluded(acronym: string): void {
     this.filteredRecommendations = this.filteredRecommendations.filter(
       mod => mod.acronym !== acronym
     );

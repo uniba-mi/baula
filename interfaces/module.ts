@@ -3,7 +3,7 @@ import { ModuleCourse } from "./module-course";
 import { Person } from "./person";
 
 export class Module {
-  _id?: string; // needed for retrieval of status from studypath
+  _id?: string; // needed for retrieval of status from study path
   mId: string;
   version: number;
   acronym: string;

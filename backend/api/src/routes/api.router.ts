@@ -2,9 +2,9 @@ import express, { Router, NextFunction, Request, Response } from "express";
 import { BadRequestError } from "../shared/error";
 import { swaggerBaulaConfig, swaggerBilAppConfig } from '../config/swagger.config';
 import swaggerUi from 'swagger-ui-express';
-import { ensureAuthenticated } from "../shared/middleware/authenticationMiddleware";
+import { ensureAuthenticated } from "../shared/middleware/authentication-middleware";
 import { baula } from "./baula/baula.router";
-import { denyDemoWrites } from "../shared/middleware/demoMiddleware";
+import { denyDemoWrites } from "../shared/middleware/demo-middleware";
 import { bilapp } from "./bilapp/bilapp.router";
 import { evaluation } from './evaluation/evaluation.router';
 

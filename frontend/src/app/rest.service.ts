@@ -3,14 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Module } from '../../../interfaces/module';
 import { Course } from '../../../interfaces/course';
-import { Studyprogramme } from '../../../interfaces/studyprogramme';
-import { Modulehandbook } from '../../../interfaces/modulehandbook';
-import { Studyplan, StudyplanTemplate } from '../../../interfaces/studyplan';
+import { StudyProgramme } from '../../../interfaces/study-programme';
+import { ModuleHandbook } from '../../../interfaces/module-handbook';
+import { StudyPlan, StudyPlanTemplate } from '../../../interfaces/study-plan';
 import {
   UserGeneratedModule,
   UserGeneratedModuleTemplate,
-} from '../../../interfaces/usergeneratedmodule';
-import { Studypath, PathModule } from '../../../interfaces/studypath';
+} from '../../../interfaces/user-generated-module';
+import { StudyPath, PathModule } from '../../../interfaces/study-path';
 import {
   ChartVisibility,
   CompAim,
@@ -22,14 +22,13 @@ import {
 } from '../../../interfaces/user';
 import {
   PlanCourse,
-  Semesterplan,
-  SemesterplanTemplate,
+  SemesterPlan,
+  SemesterPlanTemplate,
   TimetableSettings,
-} from '../../../interfaces/semesterplan';
+} from '../../../interfaces/semester-plan';
 import { config } from 'src/environments/config.local';
-import { AcademicDate, DateType } from '../../../interfaces/academicDate';
-import { ExtendedJob, Jobtemplate } from '../../../interfaces/job';
-import { FlexNowUser } from '../../../interfaces/flexNowUser';
+import { AcademicDate, DateType } from '../../../interfaces/academic-date';
+import { FlexNowUser } from '../../../interfaces/flex-now-user';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -44,9 +43,9 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class RestService {
-  private urlBase = config.apiUrl;
+  private urlBase = config.apiUrl + 'baula/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   /* -----------------------------
    * All Queries regarding the User
   --------------------------------*/
@@ -75,8 +74,8 @@ export class RestService {
     const requestBody = {
       user: {
         ...user,
-        studypath: undefined,
-        completedModules: user.studypath.completedModules,
+        studyPath: undefined,
+        completedModules: user.studyPath.completedModules,
       },
     };
     return this.http.put<any>(this.urlBase + 'user/', requestBody, httpOptions);
@@ -84,21 +83,21 @@ export class RestService {
 
   getAcademicDatesOfSemester(semester: string): Observable<AcademicDate[]> {
     return this.http.get<AcademicDate[]>(
-      `${this.urlBase}user/academicdates/${semester}`,
+      `${this.urlBase}meta/academic-dates/${semester}`,
       httpOptions
     );
   }
 
   getDateTypes(): Observable<DateType[]> {
     return this.http.get<DateType[]>(
-      `${this.urlBase}user/datetypes`,
+      `${this.urlBase}meta/date-types`,
       httpOptions
     );
   }
 
   updateHint(key: string, hasConfirmed: boolean): Observable<Hint[]> {
     return this.http.put<Hint[]>(
-      this.urlBase + 'user/hint',
+      this.urlBase + 'user/hints',
       { key, hasConfirmed },
       httpOptions
     );
@@ -110,7 +109,7 @@ export class RestService {
     hasResponded: boolean,
     timestamp: Date
   ): Observable<Consent[]> {
-    return this.http.put<Consent[]>(
+    return this.http.post<Consent[]>(
       this.urlBase + 'user/consents',
       { ctype, hasConfirmed, hasResponded, timestamp },
       httpOptions
@@ -131,7 +130,7 @@ export class RestService {
     chartName: string
   ): Observable<ChartVisibility[]> {
     return this.http.put<ChartVisibility[]>(
-      this.urlBase + 'user/dashboard',
+      this.urlBase + 'user/dashboard-settings',
       { chartName },
       httpOptions
     );
@@ -141,7 +140,7 @@ export class RestService {
     showWeekends: boolean
   ): Observable<TimetableSettings[]> {
     return this.http.put<TimetableSettings[]>(
-      this.urlBase + 'user/timetable',
+      this.urlBase + 'user/timetable-settings',
       { showWeekends },
       httpOptions
     );
@@ -150,16 +149,16 @@ export class RestService {
   /** Updates the favourite module list of a user*/
   updateFavouriteModulesIds(acronym: string): Observable<string[]> {
     return this.http.put<string[]>(
-      this.urlBase + 'user/favourite-modules-acronyms',
+      this.urlBase + 'user/favourite-module',
       { acronym },
       httpOptions
     );
   }
 
-  /** Updates the list of modules the user does not find interesting */
-  updateNotInterestingModules(acronym: string): Observable<string[]> {
+  /** Updates the list of modules the user wants to exclude */
+  updateExcludedModules(acronym: string): Observable<string[]> {
     return this.http.put<string[]>(
-      this.urlBase + 'user/not-interesting-module-id',
+      this.urlBase + 'user/excluded-module',
       { acronym },
       httpOptions
     );
@@ -181,27 +180,10 @@ export class RestService {
    * @returns message to show in application */
   updateCompetenceAims(aims: CompAim[]): Observable<string> {
     return this.http.post<string>(
-      `${this.urlBase}user/aims`,
+      `${this.urlBase}user/competence-aims`,
       { aims },
       httpOptions
     );
-  }
-
-  addInterest(interest: string): Observable<string[]> {
-    return this.http.post<string[]>(
-      `${this.urlBase}user/interest`,
-      { interest },
-      httpOptions
-    );
-  }
-
-  deleteInterest(interest: string): Observable<string[]> {
-    return this.http.delete<string[]>(`${this.urlBase}user/interest`, {
-      body: {
-        interest,
-      },
-      headers: httpOptions.headers,
-    });
   }
 
   deleteModuleFeedback(feedback: ModuleFeedback): Observable<ModuleFeedback[]> {
@@ -224,24 +206,24 @@ export class RestService {
   /* -----------------------
    * Queries regarding saved courses of user
   ---------------------------*/
-  updateSemesterplan(
+  updateSemesterPlan(
     semester: string,
-    semesterplan: SemesterplanTemplate
+    semesterPlan: SemesterPlanTemplate
   ): Observable<any> {
     return this.http.put<any>(
-      `${this.urlBase}semesterplan/`,
-      { semester, semesterplan },
+      `${this.urlBase}semester-plans/`,
+      { semester, semesterPlan },
       httpOptions
     );
   }
 
-  addCourseToSemesterplan(
+  addCourseToSemesterPlan(
     semester: string,
     course: PlanCourse,
     isPastSemester: boolean
   ): Observable<PlanCourse[]> {
     return this.http.post<PlanCourse[]>(
-      `${this.urlBase}semesterplan/course`,
+      `${this.urlBase}semester-plans/plan/course`,
       {
         semester,
         course,
@@ -251,12 +233,12 @@ export class RestService {
     );
   }
 
-  deleteCourseFromSemesterplan(
+  deleteCourseFromSemesterPlan(
     semester: string,
     courseId: string
   ): Observable<PlanCourse[]> {
     return this.http.delete<PlanCourse[]>(
-      `${this.urlBase}semesterplan/course`,
+      `${this.urlBase}semester-plans/plan/course`,
       {
         body: {
           semester,
@@ -267,13 +249,13 @@ export class RestService {
     );
   }
 
-  addCoursesToSemesterplan(
+  addCoursesToSemesterPlan(
     semester: string,
     courses: PlanCourse[],
     isPastSemester: boolean
   ): Observable<PlanCourse[]> {
     return this.http.post<PlanCourse[]>(
-      `${this.urlBase}semesterplan/courses`,
+      `${this.urlBase}semester-plans/plan/courses`,
       {
         semester,
         courses,
@@ -283,12 +265,12 @@ export class RestService {
     );
   }
 
-  deleteCoursesFromSemesterplan(
+  deleteCoursesFromSemesterPlan(
     semester: string,
     courseIds: string[]
   ): Observable<PlanCourse[]> {
     return this.http.delete<PlanCourse[]>(
-      `${this.urlBase}semesterplan/courses`,
+      `${this.urlBase}semester-plans/plan/courses`,
       {
         body: {
           semester,
@@ -300,12 +282,12 @@ export class RestService {
   }
 
   /** ---------------------------------------
-   * REST Queries for Studyplanning Assistant
+   * REST Queries for Study Planning Assistant
       ---------------------------------------*/
 
-  getStudyprogrammes(): Observable<Studyprogramme[]> {
-    return this.http.get<Studyprogramme[]>(
-      `${this.urlBase}studyprogrammes/`,
+  getStudyprogrammes(): Observable<StudyProgramme[]> {
+    return this.http.get<StudyProgramme[]>(
+      `${this.urlBase}study-programmes/`,
       httpOptions
     );
   }
@@ -315,15 +297,15 @@ export class RestService {
     poVersion: number,
     mhbId: string,
     mhbVersion: number
-  ): Observable<Studyprogramme[]> {
+  ): Observable<StudyProgramme[]> {
     const body = {
       spId,
       poVersion,
       mhbId,
       mhbVersion,
     };
-    return this.http.put<Studyprogramme[]>(
-      `${this.urlBase}user/studyprogrammes`,
+    return this.http.put<StudyProgramme[]>(
+      `${this.urlBase}user/study-programmes`,
       body,
       httpOptions
     );
@@ -353,7 +335,7 @@ export class RestService {
     );
   }
 
-  updateModuleInStudypath(module: PathModule): Observable<Studypath> {
+  updateModuleInStudyPath(module: PathModule): Observable<StudyPath> {
     const body = {
       _id: module._id,
       acronym: module.acronym,
@@ -368,19 +350,19 @@ export class RestService {
       flexNowImported: module.flexNowImported
     };
 
-    return this.http.put<Studypath>(
-      `${this.urlBase}user/module`,
+    return this.http.put<StudyPath>(
+      `${this.urlBase}user/study-path/module`,
       body,
       httpOptions
     );
   }
 
-  updateStudypath(completedModules: PathModule[]): Observable<Studypath> {
+  updateStudyPath(completedModules: PathModule[]): Observable<StudyPath> {
     const body = {
       completedModules,
     };
-    return this.http.put<Studypath>(
-      `${this.urlBase}user/studypath`,
+    return this.http.put<StudyPath>(
+      `${this.urlBase}user/study-path`,
       body,
       httpOptions
     );
@@ -388,58 +370,58 @@ export class RestService {
 
   finishSemester(
     completedModules: PathModule[], droppedModules: PathModule[], semester: string,
-  ): Observable<Studypath> {
+  ): Observable<StudyPath> {
     const body = {
       completedModules,
       droppedModules,
       semester,
     };
-    return this.http.put<Studypath>(
-      `${this.urlBase}user/semester-studypath`,
+    return this.http.put<StudyPath>(
+      `${this.urlBase}user/study-path/semester`,
       body,
       httpOptions
     );
   }
 
-  deleteModuleFromStudypath(
+  deleteModuleFromStudyPath(
     id: string,
     semester: string
-  ): Observable<Studypath> {
+  ): Observable<StudyPath> {
     const body = {
       id,
       semester,
     };
 
-    return this.http.delete<Studypath>(`${this.urlBase}user/studypath/module`, {
+    return this.http.delete<StudyPath>(`${this.urlBase}user/study-path/module`, {
       body,
       headers: httpOptions.headers,
     });
   }
 
-  deleteStudypath(): Observable<any> {
-    return this.http.delete<Studypath>(
-      `${this.urlBase}user/studypath`,
+  deleteStudyPath(): Observable<any> {
+    return this.http.delete<StudyPath>(
+      `${this.urlBase}user/study-path`,
       httpOptions
     );
   }
 
   deleteFavouriteModules(): Observable<any> {
-    return this.http.delete<Studypath>(
+    return this.http.delete<StudyPath>(
       `${this.urlBase}user/favourite-modules`,
       httpOptions
     );
   }
 
-  deleteNotInterestingModules(): Observable<any> {
-    return this.http.delete<Studypath>(
-      `${this.urlBase}user/not-interesting-modules`,
+  deleteExcludedModules(): Observable<any> {
+    return this.http.delete<StudyPath>(
+      `${this.urlBase}user/excluded-modules`,
       httpOptions
     );
   }
 
-  deleteNotInterestingModule(acronym: string): Observable<any> {
-    return this.http.delete<Studypath>(
-      `${this.urlBase}user/not-interesting-module/${acronym}`,
+  deleteExcludedModule(acronym: string): Observable<any> {
+    return this.http.delete<StudyPath>(
+      `${this.urlBase}user/excluded-module/${acronym}`,
       httpOptions
     );
   }
@@ -447,9 +429,9 @@ export class RestService {
   getStudyprogrammeByIdAndVersion(
     id: string,
     version: number
-  ): Observable<Studyprogramme> {
-    return this.http.get<Studyprogramme>(
-      `${this.urlBase}studyprogrammes/${id}/${version}`,
+  ): Observable<StudyProgramme> {
+    return this.http.get<StudyProgramme>(
+      `${this.urlBase}study-programmes/${id}/${version}`,
       httpOptions
     );
   }
@@ -457,9 +439,9 @@ export class RestService {
   getModulhandbookStructure(
     id: string,
     version: number
-  ): Observable<Modulehandbook> {
-    return this.http.get<Modulehandbook>(
-      `${this.urlBase}mhbs/${id}/${version}`,
+  ): Observable<ModuleHandbook> {
+    return this.http.get<ModuleHandbook>(
+      `${this.urlBase}module-handbooks/${id}/${version}`,
       httpOptions
     );
   }
@@ -469,22 +451,22 @@ export class RestService {
     version?: number
   ): Observable<Module> {
     return this.http.get<Module>(
-      `${this.urlBase}mhbs/modules/${acronym}/${version}`,
+      `${this.urlBase}module-handbooks/modules/${acronym}/${version}`,
       httpOptions
     );
   }
 
   getModules(): Observable<Module[]> {
-    return this.http.get<Module[]>(`${this.urlBase}mhbs/modules`, httpOptions);
+    return this.http.get<Module[]>(`${this.urlBase}module-handbooks/modules`, httpOptions);
   }
 
   /**
    * STUDYPLAN Queries
    */
   // Get Requests
-  getStudyPlans(): Observable<Studyplan[]> {
-    return this.http.get<Studyplan[]>(
-      `${this.urlBase}studyplan/all`,
+  getStudyPlans(): Observable<StudyPlan[]> {
+    return this.http.get<StudyPlan[]>(
+      `${this.urlBase}study-plans`,
       httpOptions
     );
   }
@@ -494,7 +476,7 @@ export class RestService {
     semesterType: 'w' | 's'
   ): Observable<{ available: boolean }> {
     return this.http.get<{ available: boolean }>(
-      `${this.urlBase}studyplan/template-availablilty/${programId}/${semesterType}`,
+      `${this.urlBase}study-plans/template/availablilty/${programId}/${semesterType}`,
       httpOptions
     );
   }
@@ -502,113 +484,113 @@ export class RestService {
   getLatestTemplateForStudyProgram(
     programId: string,
     semesterType: 'w' | 's'
-  ): Observable<Studyplan> {
-    return this.http.get<Studyplan>(
-      `${this.urlBase}studyplan/latest-template/${programId}/${semesterType}`,
+  ): Observable<StudyPlan> {
+    return this.http.get<StudyPlan>(
+      `${this.urlBase}study-plans/template/${programId}/${semesterType}`,
       httpOptions
     );
   }
 
-  getActiveStudyplan(): Observable<Studyplan> {
-    return this.http.get<Studyplan>(
-      `${this.urlBase}studyplan/active`,
+  getActiveStudyPlan(): Observable<StudyPlan> {
+    return this.http.get<StudyPlan>(
+      `${this.urlBase}study-plans/plan/active`,
       httpOptions
     );
   }
 
   // Post Requests
-  createStudyPlan(studyplan: StudyplanTemplate): Observable<Studyplan> {
-    const requestBody = { studyplan };
-    return this.http.post<Studyplan>(
-      `${this.urlBase}studyplan/`,
+  createStudyPlan(studyPlan: StudyPlanTemplate): Observable<StudyPlan> {
+    const requestBody = { studyPlan };
+    return this.http.post<StudyPlan>(
+      `${this.urlBase}study-plans/plan`,
       requestBody,
       httpOptions
     );
   }
 
-  initSemesterplans(
-    studyplanId: string,
-    semesterPlans: SemesterplanTemplate[]
-  ): Observable<Semesterplan[]> {
-    const body = { studyplanId, semesterPlans };
-    return this.http.post<Semesterplan[]>(
-      `${this.urlBase}semesterplan/init`,
+  initSemesterPlans(
+    studyPlanId: string,
+    semesterPlans: SemesterPlanTemplate[]
+  ): Observable<SemesterPlan[]> {
+    const body = { studyPlanId, semesterPlans };
+    return this.http.post<SemesterPlan[]>(
+      `${this.urlBase}semester-plans`,
       body,
       httpOptions
     );
   }
 
-  addSemesterplanToStudyplan(
-    studyplanId: string,
+  addSemesterPlanToStudyPlan(
+    studyPlanId: string,
     semester: string
-  ): Observable<Studyplan> {
-    const body = { studyplanId, semester };
-    return this.http.post<Studyplan>(
-      `${this.urlBase}semesterplan/`,
+  ): Observable<StudyPlan> {
+    const body = { studyPlanId, semester };
+    return this.http.post<StudyPlan>(
+      `${this.urlBase}semester-plans/plan`,
       body,
       httpOptions
     );
   }
 
   addModule(
-    studyplanId: string,
-    semesterplanId: string,
+    studyPlanId: string,
+    semesterPlanId: string,
     module: string,
     ects: number
   ): Observable<string> {
-    const body = { studyplanId, semesterplanId, module, ects };
+    const body = { studyPlanId, semesterPlanId, module, ects };
     return this.http.post<string>(
-      `${this.urlBase}semesterplan/module`,
+      `${this.urlBase}semester-plans/plan/module`,
       body,
       httpOptions
     );
   }
 
-  addModulesToCurrentSemesterOfAllStudyplans(
+  addModulesToCurrentSemesterOfAllStudyPlans(
     modules: UserGeneratedModuleTemplate[],
     semesterName: string
-  ): Observable<Studyplan[]> {
+  ): Observable<StudyPlan[]> {
     const body = { modules, semesterName };
-    return this.http.post<Studyplan[]>(
-      `${this.urlBase}studyplan/all`,
+    return this.http.post<StudyPlan[]>(
+      `${this.urlBase}study-plans/modules`,
       body,
       httpOptions
     );
   }
 
   createUserGeneratedModule(
-    studyplanId: string,
-    semesterplanId: string,
+    studyPlanId: string,
+    semesterPlanId: string,
     module: UserGeneratedModuleTemplate
   ): Observable<UserGeneratedModule> {
-    const body = { studyplanId, semesterplanId, module };
+    const body = { studyPlanId, semesterPlanId, module };
     return this.http.post<UserGeneratedModule>(
-      `${this.urlBase}semesterplan/user-generated-module`,
+      `${this.urlBase}semester-plans/plan/user-generated-module`,
       body,
       httpOptions
     );
   }
 
   transferModule(
-    studyplanId: string,
-    oldSemesterplanId: string,
-    oldSemesterplanSemester: string,
+    studyPlanId: string,
+    oldSemesterPlanId: string,
+    oldSemesterPlanSemester: string,
     newSemesterPlanId: string,
     newSemesterPlanSemester: string,
     acronym: string,
     ects: number
   ): Observable<{
-    oldSemesterplan: Semesterplan;
-    newSemesterplan: Semesterplan;
+    oldSemesterPlan: SemesterPlan;
+    newSemesterPlan: SemesterPlan;
   }> {
     return this.http.put<{
-      oldSemesterplan: Semesterplan;
-      newSemesterplan: Semesterplan;
+      oldSemesterPlan: SemesterPlan;
+      newSemesterPlan: SemesterPlan;
     }>(
-      `${this.urlBase}studyplan/transfer/module`,
+      `${this.urlBase}study-plans/module/transfer`,
       {
-        studyplanId,
-        oldSemesterplanId,
+        studyPlanId,
+        oldSemesterPlanId,
         newSemesterPlanId,
         acronym,
         ects,
@@ -618,23 +600,23 @@ export class RestService {
   }
 
   transferUserGeneratedModule(
-    studyplanId: string,
-    oldSemesterplanId: string,
+    studyPlanId: string,
+    oldSemesterPlanId: string,
     newSemesterPlanId: string,
     newSemesterPlanSemester: string,
     module: UserGeneratedModule
   ): Observable<{
-    oldSemesterplan: Semesterplan;
-    newSemesterplan: Semesterplan;
+    oldSemesterPlan: SemesterPlan;
+    newSemesterPlan: SemesterPlan;
   }> {
     return this.http.put<{
-      oldSemesterplan: Semesterplan;
-      newSemesterplan: Semesterplan;
+      oldSemesterPlan: SemesterPlan;
+      newSemesterPlan: SemesterPlan;
     }>(
-      `${this.urlBase}studyplan/transfer/user-generated-module`,
+      `${this.urlBase}study-plans/user-generated-module/transfer`,
       {
-        studyplanId,
-        oldSemesterplanId,
+        studyPlanId,
+        oldSemesterPlanId,
         newSemesterPlanId,
         newSemesterPlanSemester,
         module,
@@ -643,128 +625,125 @@ export class RestService {
     );
   }
 
-  updateStudyplan(
-    studyplanId: string,
-    studyplan: StudyplanTemplate
-  ): Observable<Studyplan> {
+  updateStudyPlan(
+    studyPlanId: string,
+    studyPlan: StudyPlanTemplate
+  ): Observable<StudyPlan> {
     const body = {
-      studyplanId: studyplanId,
-      studyplan,
+      studyPlanId: studyPlanId,
+      studyPlan,
     };
-    return this.http.put<any>(`${this.urlBase}studyplan/`, body, httpOptions);
+    return this.http.put<any>(`${this.urlBase}study-plans/plan`, body, httpOptions);
   }
 
   updateIsPastSemester(
-    studyplanId: string,
-    semesterplanId: string,
+    studyPlanId: string,
+    semesterPlanId: string,
     isPast: boolean
   ): Observable<any> {
     const body = {
-      studyplanId,
-      semesterplanId,
+      studyPlanId,
+      semesterPlanId,
       isPast,
     };
     return this.http.put<any>(
-      `${this.urlBase}semesterplan/is-past-semester`,
+      `${this.urlBase}semester-plans/plan/past-semester`,
       body,
       httpOptions
     );
   }
 
   updateAimedEcts(
-    studyplanId: string,
-    semesterplanId: string,
+    studyPlanId: string,
+    semesterPlanId: string,
     aimedEcts: number
   ): Observable<any> {
     const body = {
-      studyplanId,
-      semesterplanId,
+      studyPlanId,
+      semesterPlanId,
       aimedEcts,
     };
     return this.http.put<any>(
-      `${this.urlBase}semesterplan/aimed-ects`,
+      `${this.urlBase}semester-plans/plan/aimed-ects`,
       body,
       httpOptions
     );
   }
 
   updateUserGeneratedModule(
-    studyplanId: string,
-    semesterplanId: string,
-    semesterplanSemester: string,
+    studyPlanId: string,
+    semesterPlanId: string,
+    semesterPlanSemester: string,
     moduleId: string,
     module: UserGeneratedModule
   ): Observable<UserGeneratedModule> {
     const body = {
-      studyplanId,
-      semesterplanId,
-      semesterplanSemester,
+      studyPlanId,
+      semesterPlanId,
+      semesterPlanSemester,
       moduleId,
       module,
     };
     return this.http.put<any>(
-      `${this.urlBase}semesterplan/user-generated-module`,
+      `${this.urlBase}semester-plans/plan/user-generated-module`,
       body,
       httpOptions
     );
   }
 
   // DELETE Requests
-  deleteStudyPlan(studyplanId: string): Observable<any> {
+  deleteStudyPlan(studyPlanId: string): Observable<any> {
     return this.http.delete<any>(
-      `${this.urlBase}studyplan/${studyplanId}`,
+      `${this.urlBase}study-plans/plan/${studyPlanId}`,
       httpOptions
     );
   }
 
   deleteModule(
-    studyplanId: string,
-    semesterplanId: string,
-    semesterplanSemester: string,
+    studyPlanId: string,
+    semesterPlanId: string,
+    semesterPlanSemester: string,
     module: string,
     ects: number
   ): Observable<any> {
     const body = {
-      studyplanId,
-      semesterplanId,
-      semesterplanSemester,
+      studyPlanId,
+      semesterPlanId,
+      semesterPlanSemester,
       module,
       ects,
     };
-    return this.http.delete<any>(`${this.urlBase}semesterplan/module`, {
+    return this.http.delete<any>(`${this.urlBase}semester-plans/plan/module`, {
       headers: httpOptions.headers,
       body,
     });
   }
 
   deleteUserGeneratedModule(
-    studyplanId: string,
-    semesterplanId: string,
-    semesterplanSemester: string,
+    studyPlanId: string,
+    semesterPlanId: string,
+    semesterPlanSemester: string,
     module: UserGeneratedModule
   ): Observable<any> {
-    const body = { studyplanId, semesterplanId, semesterplanSemester, module };
+    const body = { studyPlanId, semesterPlanId, semesterPlanSemester, module };
     return this.http.delete<any>(
-      `${this.urlBase}semesterplan/user-generated-module`,
+      `${this.urlBase}semester-plans/plan/user-generated-module`,
       { headers: httpOptions.headers, body }
     );
   }
 
   deleteUserGeneratedModules(
-    studyplanId: string,
-    semesterplanId: string,
+    studyPlanId: string,
+    semesterPlanId: string,
     moduleIds: string[]
   ): Observable<UserGeneratedModule[]> {
-    const body = { studyplanId, semesterplanId, moduleIds };
+    const body = { studyPlanId, semesterPlanId, moduleIds };
     return this.http.delete<UserGeneratedModule[]>(
-      `${this.urlBase}semesterplan/user-generated-modules`,
+      `${this.urlBase}semester-plans/plan/user-generated-modules`,
       { headers: httpOptions.headers, body }
     );
   }
 
-  /* --------------------------------
-  ---- Test Queries on UnivIS -------
-  -----------------------------------*/
   getCoursesBySemester(semester: string): Observable<Course[]> {
     return this.http.get<Course[]>(
       `${this.urlBase}courses/${semester}`,
@@ -796,37 +775,7 @@ export class RestService {
     );
   }
 
-  /** --------------------------------------------
-   * Queries for the job recommendation
-   *  -------------------------------------------- */
-  crawlJob(url: string): Observable<Jobtemplate> {
-    return this.http.post<Jobtemplate>(
-      `${this.urlBase}job-proposal/crawl`,
-      { url },
-      httpOptions
-    );
-  }
-
-  generateJobKeywords(job: Jobtemplate): Observable<Jobtemplate> {
-    return this.http.post<Jobtemplate>(
-      `${this.urlBase}job-proposal/keywords`,
-      job,
-      httpOptions
-    );
-  }
-
-  recommendModulesToJob(
-    job: Jobtemplate,
-    jobId?: string
-  ): Observable<ExtendedJob> {
-    return this.http.post<ExtendedJob>(
-      `${this.urlBase}job-proposal/recommend`,
-      { job, jobId },
-      httpOptions
-    );
-  }
-
-  getStudentDataViaFlexNow(importStudypath: boolean): Observable<FlexNowUser> {
-    return this.http.post<FlexNowUser>(`${this.urlBase}user/fn2student`, { importStudypath }, httpOptions);
+  getStudentDataViaFlexNow(importStudyPath: boolean): Observable<FlexNowUser> {
+    return this.http.post<FlexNowUser>(`${this.urlBase}user/fn2student`, { importStudyPath }, httpOptions);
   }
 }

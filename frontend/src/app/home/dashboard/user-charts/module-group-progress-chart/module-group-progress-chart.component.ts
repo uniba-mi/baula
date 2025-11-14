@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Module } from '../../../../../../../interfaces/module';
 import { ModuleGroup } from '../../../../../../../interfaces/module-group';
-import { Studypath } from '../../../../../../../interfaces/studypath';
+import { StudyPath } from '../../../../../../../interfaces/study-path';
 import { ChartConfiguration } from 'chart.js';
 
 @Component({
@@ -11,7 +11,7 @@ import { ChartConfiguration } from 'chart.js';
     standalone: false
 })
 export class ModuleGroupProgressChartComponent implements OnInit, OnChanges {
-  @Input() studypath: Studypath;
+  @Input() studyPath: StudyPath;
   @Input() mgs: ModuleGroup[] | undefined | null;
 
   public moduleGroupChartLabels: string[] = ['Bestanden', 'Nicht bestanden', 'Belegt', 'Nicht belegt'];
@@ -43,13 +43,13 @@ export class ModuleGroupProgressChartComponent implements OnInit, OnChanges {
         backgroundColor: ['rgba(172, 204, 61, 0.8)', 'rgba(235, 105, 114, 0.8)', 'rgba(102, 144, 177, 0.8)', 'rgb(159, 159, 156, 0.8)'],
         hoverBackgroundColor: ['rgba(172, 204, 61, 0.8)', 'rgba(235, 105, 114, 0.8)', 'rgba(102, 144, 177, 0.8)', 'rgb(159, 159, 156, 0.8)'],
         hoverBorderColor: ['#97bf0d', '#e6444f', 'rgba(102, 144, 177)', 'rgb(159, 159, 156)'],
-        data: this.calculateModuleCountsForModuleGroup(mg, this.studypath)
+        data: this.calculateModuleCountsForModuleGroup(mg, this.studyPath)
       })
     }
     this.moduleGroupChartDatasets = result;
   }
 
-  private calculateModuleCountsForModuleGroup(mg: ModuleGroup, path: Studypath): number[] {
+  private calculateModuleCountsForModuleGroup(mg: ModuleGroup, path: StudyPath): number[] {
     let modules: Module[] = [];
     // get modules of modulegroup
     if(mg.modules) {

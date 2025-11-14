@@ -3,11 +3,11 @@ import { Store } from '@ngrx/store';
 import { FavoriteModulesActions } from 'src/app/actions/user.actions';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 import { catchError, combineLatest, finalize, Observable, of, take } from 'rxjs';
-import { RecHelperService } from 'src/app/modules/recs/rec-helper.service';
+import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
 import { ModService } from 'src/app/shared/services/module.service';
-import { RecsRestService } from 'src/app/modules/recs/recs-rest.service';
-import { FuseSearchService } from 'src/app/shared/services/fusesearch.service';
-import { getJobs, getNotInterestingModulesAcronyms } from 'src/app/selectors/user.selectors';
+import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.service';
+import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
+import { getJobs, getExcludedModulesAcronyms } from 'src/app/selectors/user.selectors';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
 import { Module } from '../../../../../../interfaces/module';
 import { ModuleWithMetadata } from '../../../../../../interfaces/recommendation';
@@ -74,14 +74,14 @@ export class RecommendationsListComponent implements OnInit {
       ]
     }
   ];
-  private notInterestingModules$ = this.store.select(getNotInterestingModulesAcronyms);
+  private excludedModules$ = this.store.select(getExcludedModulesAcronyms);
 
   constructor(
     private store: Store,
-    private recHelper: RecHelperService,
+    private recsHelper: RecsHelperService,
     private fuseSearchService: FuseSearchService,
     private modService: ModService,
-    private recsApi: RecsRestService,
+    private recsService: RecsRestService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -92,7 +92,7 @@ export class RecommendationsListComponent implements OnInit {
     this.loadRecommendations();
     this.loadMetadata();
 
-    this.notInterestingModules$.subscribe(() => {
+    this.excludedModules$.subscribe(() => {
       if (this.rawRecommendations.length) {
         this.applyFilters();
       }
@@ -101,7 +101,7 @@ export class RecommendationsListComponent implements OnInit {
 
   private loadRecommendations(): void {
     this.isLoading = true;
-    this.recsApi.getPersonalRecommendations()
+    this.recsService.getPersonalRecommendations()
       .pipe(
         catchError(error => {
           console.error('Error fetching recommendations:', error);
@@ -174,7 +174,7 @@ export class RecommendationsListComponent implements OnInit {
   }
 
   private loadMetadata(): void {
-    this.recsApi.getTopicChildren().pipe(take(1)).subscribe(topics => {
+    this.recsService.getTopicChildren().pipe(take(1)).subscribe(topics => {
       this.topicsArray = topics || [];
     });
 
@@ -185,18 +185,18 @@ export class RecommendationsListComponent implements OnInit {
 
   private applyFilters(): void {
     combineLatest([
-      this.recHelper.getPassedOrTakenModulesFromStudypath(),
-      this.notInterestingModules$.pipe(take(1))
+      this.recsHelper.getPassedOrTakenModulesFromStudyPath(),
+      this.excludedModules$.pipe(take(1))
     ])
-      .subscribe(([passedOrTakenModules, notInterestingModules]) => {
+      .subscribe(([passedOrTakenModules, excludedModules]) => {
         if (!this.rawRecommendations.length) {
           this.updateRecommendations([]);
           return;
         }
 
-        const notInterestingAcronyms = notInterestingModules || [];
+        const excludedAcronyms = excludedModules || [];
         let filtered = this.rawRecommendations.filter(mod =>
-          !notInterestingAcronyms.includes(mod.acronym)
+          !excludedAcronyms.includes(mod.acronym)
         );
 
         const shouldHide = this.currentlySelectedFilters.some(f => f.key === 'hideTakenPassed');
@@ -334,7 +334,7 @@ export class RecommendationsListComponent implements OnInit {
     this.applyFilters();
   }
 
-  onModuleMarkedNotInteresting(acronym: string): void {
+  onModuleMarkedExcluded(acronym: string): void {
     this.recommendations = this.recommendations.filter(m => m.acronym !== acronym);
   }
 

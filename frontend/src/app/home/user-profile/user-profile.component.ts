@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, concatMap, map, Observable, of, shareReplay, switchMap, take } from 'rxjs';
+import { catchError, concatMap, Observable, of, take } from 'rxjs';
 import { User } from '../../../../../interfaces/user';
-import { getUser, getUserStudyprogrammes } from 'src/app/selectors/user.selectors';
-import { Studyplan } from '../../../../../interfaces/studyplan';
-import { getStudyplans } from 'src/app/selectors/study-planning.selectors';
+import { getUser } from 'src/app/selectors/user.selectors';
+import { StudyPlan } from '../../../../../interfaces/study-plan';
+import { getStudyPlans } from 'src/app/selectors/study-planning.selectors';
 import { MatDialog } from '@angular/material/dialog';
 import { UserActions } from 'src/app/actions/user.actions';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
@@ -19,21 +19,21 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { config } from 'src/environments/config.local';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { AuthService } from 'src/app/shared/auth/auth.service';
-import { Studypath } from '../../../../../interfaces/studypath';
+import { StudyPath } from '../../../../../interfaces/study-path';
 import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
 
 import type { DownloadService } from 'src/app/shared/services/download.service';
 
 @Component({
-    selector: 'app-user-profile',
-    templateUrl: './user-profile.component.html',
-    styleUrl: './user-profile.component.scss',
-    standalone: false
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrl: './user-profile.component.scss',
+  standalone: false
 })
 export class UserProfileComponent implements OnInit {
   user$: Observable<User>;
   semesters$: Observable<Semester[]>;
-  studyplans$: Observable<Studyplan[]>;
+  studyPlans$: Observable<StudyPlan[]>;
   disableDownload: boolean = false;
   activeRoute: string;
 
@@ -49,18 +49,18 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);
-    this.studyplans$ = this.store.select(getStudyplans);
+    this.studyPlans$ = this.store.select(getStudyPlans);
     const lastEntry = this.router.url.split('/').pop();
     this.activeRoute = lastEntry ? lastEntry : 'ueberblick';
   }
 
-  async downloadUserdata(user: User, studyplans: Studyplan[], format: string) {
+  async downloadUserdata(user: User, studyPlans: StudyPlan[], format: string) {
     this.disableDownload = true;
     const download = await this.lazyInject.get<DownloadService>(() =>
       import('../../shared/services/download.service').then((m) => m.DownloadService)
     )
     if (format === 'pdf') {
-      await download.downloadUserData(user, studyplans);
+      await download.downloadUserData(user, studyPlans);
     } else if (format === 'json') {
       download.downloadJSONFile(this.transformUser(user), 'user.json');
     }
@@ -135,15 +135,16 @@ export class UserProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      const studypath: Studypath = {
-        ...user.studypath,
+      const studyPath: StudyPath = {
+        ...user.studyPath,
         completedModules: result.completedModules,
       }
       if (result) {
         const updatedUser = {
           ...user,
           ...result,
-          studypath
+          excludedModulesAcronyms: result.excludedModulesAcronyms || result.notInterestingModulesAcronyms, // catch legacy cases
+          studyPath
         };
         this.store.dispatch(UserActions.updateUser({ user: updatedUser }));
       }
@@ -176,8 +177,8 @@ export class UserProfileComponent implements OnInit {
       createdAt: undefined,
       updatedAt: undefined,
       sync: undefined,
-      studypath: undefined,
-      completedModules: user.studypath.completedModules,
+      studyPath: undefined,
+      completedModules: user.studyPath.completedModules,
     };
   }
 }

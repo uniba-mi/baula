@@ -9,13 +9,13 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { getSelectedSemesterplanSemesterById } from 'src/app/selectors/study-planning.selectors';
+import { getSelectedSemesterPlanSemesterById } from 'src/app/selectors/study-planning.selectors';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { PlanningValidationService } from 'src/app/shared/services/planning-validation.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Module } from '../../../../../interfaces/module';
-import { RecHelperService } from 'src/app/modules/recs/rec-helper.service';
-import { PathModule } from '../../../../../interfaces/studypath';
+import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
+import { PathModule } from '../../../../../interfaces/study-path';
 import { ModService } from 'src/app/shared/services/module.service';
 
 @Component({
@@ -26,9 +26,9 @@ import { ModService } from 'src/app/shared/services/module.service';
 })
 export class AddModuleDialogComponent implements OnInit {
   @Input() modules: Module[];
-  @Input() semesterplanId: string;
+  @Input() semesterPlanId: string;
   selectedModule: Module | undefined;
-  semesterplanSemester: string | undefined;
+  semesterPlanSemester: string | undefined;
   displayPriorModuleWarning: boolean = false;
   warningMessage: string = '';
   moduleNames: string[] = [];
@@ -45,7 +45,7 @@ export class AddModuleDialogComponent implements OnInit {
     private planningValidation: PlanningValidationService,
     private snackbar: SnackbarService,
     private formBuilder: FormBuilder,
-    private recHelperService: RecHelperService,
+    private recsHelperService: RecsHelperService,
     private modService: ModService,
   ) { }
 
@@ -60,9 +60,9 @@ export class AddModuleDialogComponent implements OnInit {
       map((value) => this._filter(value || ''))
     );
 
-    // get passed modules from studypath
-    this.recHelperService
-      .getPassedOrTakenModulesFromStudypath()
+    // get passed modules from study path
+    this.recsHelperService
+      .getPassedOrTakenModulesFromStudyPath()
       .subscribe((mods) => {
         this.passedOrTakenModules = mods;
       });
@@ -95,14 +95,14 @@ export class AddModuleDialogComponent implements OnInit {
     this.displayPriorModuleWarning = false;
 
     this.store
-      .select(getSelectedSemesterplanSemesterById(this.semesterplanId))
-      .subscribe((semester) => (this.semesterplanSemester = semester));
+      .select(getSelectedSemesterPlanSemesterById(this.semesterPlanId))
+      .subscribe((semester) => (this.semesterPlanSemester = semester));
 
     // display warning if module not offered in the selected semester
-    if (this.selectedModule && this.semesterplanSemester) {
+    if (this.selectedModule && this.semesterPlanSemester) {
       let planningValidationResult = this.planningValidation.isModuleOffered(
         this.selectedModule,
-        this.semesterplanSemester
+        this.semesterPlanSemester
       );
       if (!planningValidationResult.success) {
         this.snackbar.openSnackBar({

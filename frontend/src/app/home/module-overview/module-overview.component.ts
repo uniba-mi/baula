@@ -13,11 +13,11 @@ import { Store } from '@ngrx/store';
 import {
   getAllModules,
   getModuleAcronyms,
-  getModulehandbook,
+  getModuleHandbook,
   getModules,
 } from 'src/app/selectors/module-overview.selectors';
 import { State } from 'src/app/reducers';
-import { Modulehandbook } from '../../../../../interfaces/modulehandbook';
+import { ModuleHandbook } from '../../../../../interfaces/module-handbook';
 import { Module } from '../../../../../interfaces/module';
 import {
   OptionGroup,
@@ -34,7 +34,7 @@ import {
   style,
   transition,
 } from '@angular/animations';
-import { RecHelperService } from 'src/app/modules/recs/rec-helper.service';
+import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
 
@@ -139,8 +139,8 @@ export class ModuleOverviewComponent
   ];
 
   // variables only for component
-  modulehandbook$: Observable<Modulehandbook | undefined>;
-  mhb: Modulehandbook;
+  moduleHandbook$: Observable<ModuleHandbook | undefined>;
+  mhb: ModuleHandbook;
   selectedGroupFilter: Option | undefined;
   searchSettings$: Observable<SearchSettings | undefined>;
   selectedModuleId: string | undefined;
@@ -163,7 +163,7 @@ export class ModuleOverviewComponent
     private modService: ModService,
     private router: Router,
     private renderer: Renderer2,
-    private recHelper: RecHelperService
+    private recsHelper: RecsHelperService
   ) { }
 
   ngOnInit(): void {
@@ -171,13 +171,13 @@ export class ModuleOverviewComponent
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // set observables
-    this.modulehandbook$ = this.store.select(getModulehandbook);
+    this.moduleHandbook$ = this.store.select(getModuleHandbook);
     this.modules$ = this.store.select(getModules);
     this.acronyms$ = this.store.select(getModuleAcronyms);
     this.searchSettings$ = this.store.select(getSearchSettingsByContext('module-overview'));
 
     // subscribe to searchSettings to preset grouping
-    const mhbSub = this.modulehandbook$.pipe(skipWhile(mhb => !mhb)).pipe(take(1))
+    const mhbSub = this.moduleHandbook$.pipe(skipWhile(mhb => !mhb)).pipe(take(1))
     const soSub = this.searchSettings$.pipe(take(1))
     const modSub = this.store
       .select(getModules)
@@ -232,8 +232,8 @@ export class ModuleOverviewComponent
     // set initial sidenav status
     this.onResize(window.innerWidth);
 
-    // get studypath information for child
-    this.recHelper.getPassedOrTakenModulesFromStudypath().pipe(
+    // get study path information for child
+    this.recsHelper.getPassedOrTakenModulesFromStudyPath().pipe(
       takeUntil(this.destroy$)
     ).subscribe(passedOrTakenModules => {
       this.passedOrTakenAcronyms = passedOrTakenModules.map(module => module.acronym);

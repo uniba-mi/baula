@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
-import { addAllPriorModules, addExtractedModules, addModuleCourses, findAndBuildModuleHandbookByIdAndVersion } from "../../../shared/helpers/moduleHelpers";
-import { Module } from "../../../../../interfaces/module";
+import { addAllPriorModules, addExtractedModules, addModuleCourses, findAndBuildModuleHandbookByIdAndVersion } from "../../../shared/helpers/module-helpers";
+import { Module } from "../../../../../../interfaces/module";
 
 const prisma = new PrismaClient();
 
@@ -12,8 +12,6 @@ export async function getMhbByIdAndVersion(req: Request, res: Response, next: Ne
   const version = validator.isInt(req.params.version)
     ? parseInt(req.params.version)
     : undefined;
-  console.log(mhbId)
-  console.log(version)
   if (mhbId && version) {
     const mhb = await findAndBuildModuleHandbookByIdAndVersion(mhbId, version);
     if (mhb) {

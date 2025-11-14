@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { State } from 'src/app/reducers';
 import { ExpandedCourse, Course } from '../../../../../interfaces/course';
 import { Competence } from '../../../../../interfaces/competence';
 import { Standard } from './interfaces/standard';
@@ -21,9 +19,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class BilappRestService {
-  private urlBase = config.apiUrl;
+  private urlBase = config.apiUrl + 'bilapp/';
   
-  constructor(private http: HttpClient, private store: Store<State>) { }
+  constructor(private http: HttpClient) { }
 
   /* -----------------------
    * Queries for Standards
@@ -31,7 +29,7 @@ export class BilappRestService {
   /** get all standards in the database
    * @returns Observable with type array of Standards */
   getStandards(): Observable<Standard[]> {
-    return this.http.get<Standard[]>(this.urlBase + 'competences/standards', httpOptions);
+    return this.http.get<Standard[]>(this.urlBase + 'standards', httpOptions);
   }
 
   /** get one specific standard via standard_id
@@ -39,7 +37,7 @@ export class BilappRestService {
    * @returns Observable with type standard
    */
   getStandard(standardID: string): Observable<Standard> {
-    return this.http.get<Standard>(this.urlBase + 'competences/standard/' + standardID, httpOptions);
+    return this.http.get<Standard>(this.urlBase + 'standard/' + standardID, httpOptions);
   }
 
   /* -----------------------
@@ -84,9 +82,6 @@ export class BilappRestService {
     return this.http.get<Competence[]>(this.urlBase + 'competences/children/uppest/' + competenceGroupID, httpOptions);
   }
 
-  /** ------------------------------
-   *  --- Requests for courses -----
-      ------------------------------*/
   getEwsCourses(semester: string): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.urlBase}courses/${semester}/LAMOD-01`, httpOptions);
   }
@@ -96,6 +91,6 @@ export class BilappRestService {
   }
 
   getAllSavedCourses(): Observable<ExpandedCourse[]> {
-    return this.http.get<ExpandedCourse[]>(`${this.urlBase}semesterplans/courses`, httpOptions);
+    return this.http.get<ExpandedCourse[]>(`${this.urlBase}courses`, httpOptions);
   }
 }

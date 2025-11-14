@@ -1,11 +1,11 @@
 <div class="module-container d-flex justify-content-start">
     <!-- Loading and No Data States -->
-    <ng-container *ngIf="semesterStudypath$ | async as semesterStudypath">
+    <ng-container *ngIf="semesterStudyPath$ | async as semesterStudyPath">
         <!-- No Modules Message -->
         <div class="text-center p-4" *ngIf="
             semesterPlan.modules.length === 0 &&
             semesterPlan.userGeneratedModules.length === 0 &&
-            (!metaSemester.isPastSemester || (metaSemester.isPastSemester && semesterStudypath[0].modules?.length === 0))
+            (!metaSemester.isPastSemester || (metaSemester.isPastSemester && semesterStudyPath[0].modules?.length === 0))
             ">
             <i class="plus-icon bi bi-plus-square-dotted text-gray"></i>
             <span *ngIf="!metaSemester.isPastSemester; else noPastModules">
@@ -50,8 +50,8 @@
         </ng-container>
 
         <!-- Path Modules -->
-        <ng-container *ngIf="metaSemester.isPastSemester && semesterStudypath[0].modules.length > 0">
-            <ng-container *ngFor="let pathModule of semesterStudypath[0].modules">
+        <ng-container *ngIf="metaSemester.isPastSemester && semesterStudyPath[0].modules.length > 0">
+            <ng-container *ngFor="let pathModule of semesterStudyPath[0].modules">
                 <app-semester-card [moduleData]="pathModule" [moduleType]="'pathModule'" [metaSemester]="metaSemester"
                     [modType]="'path'" [availableActions]="['feedback', 'edit', 'delete', 'changeMG', 'editGrade']"
                     (actionTriggered)="handleModuleAction($event)">

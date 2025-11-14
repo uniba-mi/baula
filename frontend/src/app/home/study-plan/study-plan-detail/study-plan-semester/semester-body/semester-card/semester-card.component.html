@@ -16,9 +16,9 @@
             </div>
 
             <!-- Status Column -->
-            <div *ngIf="studypath$" class="d-flex align-items-center me-3">
+            <div *ngIf="studyPath$" class="d-flex align-items-center me-3">
                 <ng-container *ngIf="!moduleData.isOld; else oldModule">
-                    <app-module-status [studypath$]="studypath$" [module]="moduleType === 'module' ? moduleData : null"
+                    <app-module-status [studyPath$]="studyPath$" [module]="moduleType === 'module' ? moduleData : null"
                         [userGeneratedModule]="moduleType === 'userGeneratedModule' ? moduleData : null"
                         [pathModule]="moduleType === 'pathModule' ? moduleData : null"
                         [statusSemester]="metaSemester.semester" [openedWithSemesterSet]="openedWithSemesterSet"

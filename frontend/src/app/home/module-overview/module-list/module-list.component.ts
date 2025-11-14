@@ -5,7 +5,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { FuseSearchService } from 'src/app/shared/services/fusesearch.service';
+import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
 import { Module } from '../../../../../../interfaces/module';
 import {
   Option,

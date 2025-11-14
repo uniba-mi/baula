@@ -7,7 +7,7 @@
         </div>
     </ng-container>
 
-    <div *ngIf="importType !== 'deinen Musterplan'" class="dropzone d-flex flex-column align-items-center" appDnd
+    <div *ngIf="importType !== 'deinen Musterplan'" class="drop-zone d-flex flex-column align-items-center" appDnd
         (fileDropped)="uploadedFile($event)">
         <input type="file" id="file" multiple (change)="uploadedFile($event)" />
         <p> Lade hier {{ importType }} über Drag'n'Drop hoch</p>
@@ -16,10 +16,10 @@
         <div *ngIf="filename">{{ filename }}</div>
     </div>
 
-    <!-- if Musterplan available -->
+    <!-- if template available -->
     <ng-template #content>
         <div *ngIf="importType === 'deinen Musterplan'">
-            <div *ngIf="studyplanTemplate$ | async; else noTemplate" class="d-flex flex-column align-items-start">
+            <div *ngIf="studyPlanTemplate$ | async; else noTemplate" class="d-flex flex-column align-items-start">
                 <p>Ein Musterstudienverlaufsplan gilt nur als Orientierung und kann nicht deine individuellen Interessen abdecken.
                     Bitte informiere dich abseits dieses Musters über die
                     vielfältigen Möglichkeiten deines Studiengangs.</p>

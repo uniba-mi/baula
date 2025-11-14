@@ -1,4 +1,3 @@
-//// Interface for Alert Messages /////
 export interface Alert {
   message: string;
   type: AlertType;

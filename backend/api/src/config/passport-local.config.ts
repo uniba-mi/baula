@@ -1,6 +1,6 @@
 import { Strategy as LocalStrategy } from "passport-local";
 import validator from "validator";
-import { USERS } from "../shared/constants/constants";
+import { USERS } from "../shared/constants/users";
 import { User } from "../database/mongo";
 import { encrypt } from "../shared/utils/crypto";
 import { BadRequestError } from "../shared/error";

@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartData } from 'chart.js';
-import { SemesterStudyPath } from '../../../../../../../interfaces/studypath';
+import { SemesterStudyPath } from '../../../../../../../interfaces/study-path';
 import { Semester } from '../../../../../../../interfaces/semester';
-import { Studyplan } from '../../../../../../../interfaces/studyplan';
+import { StudyPlan } from '../../../../../../../interfaces/study-plan';
 
 @Component({
     selector: 'app-semester-module-progress-chart',
@@ -11,9 +11,9 @@ import { Studyplan } from '../../../../../../../interfaces/studyplan';
     standalone: false
 })
 export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
-  @Input() studypath: SemesterStudyPath[];
+  @Input() studyPath: SemesterStudyPath[];
   @Input() semesters: Semester[];
-  @Input() studyplan: Studyplan | undefined | null;
+  @Input() studyPlan: StudyPlan | undefined | null;
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -54,7 +54,7 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
       labels: this.semesters.map((semester) => semester.shortName),
       datasets: [
         {
-          data: this.getNumberOfModulesFromStudypath(this.studypath, 'passed'),
+          data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'passed'),
           label: 'Bestanden',
           backgroundColor: 'rgba(172, 204, 61, 0.8)',
           borderColor: '#97bf0d',
@@ -62,7 +62,7 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
           hoverBorderColor: '#97bf0d',
         },
         {
-          data: this.getNumberOfModulesFromStudypath(this.studypath, 'taken'),
+          data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'taken'),
           label: 'Belegt',
           backgroundColor: 'rgba(102, 144, 177, 0.8)',
           borderColor: 'rgb(51, 106, 151)',
@@ -70,7 +70,7 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
           hoverBorderColor: 'rgb(51, 106, 151)',
         },
         {
-          data: this.getNumberOfModulesFromStudypath(this.studypath, 'failed'),
+          data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'failed'),
           label: 'Nicht bestanden',
           backgroundColor: 'rgba(235, 105, 114, 0.8)',
           borderColor: '#e6444f',
@@ -82,7 +82,7 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
   }
   // TODO
   // returns for the given status the number of modules for each semester
-  private getNumberOfModulesFromStudypath(
+  private getNumberOfModulesFromStudyPath(
     path: SemesterStudyPath[],
     status: string
   ): number[] {
@@ -99,14 +99,14 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
   }
 
   // TODO
-  // returns the number of modules that are not in studypath but in studyplan for each semester
-  private getNumberOfModulesFromStudyplan(
+  // returns the number of modules that are not in study path but in study plan for each semester
+  private getNumberOfModulesFromStudyPlan(
     path: SemesterStudyPath[],
-    studyplan: Studyplan
+    studyPlan: StudyPlan
   ): number[] {
-    const modulesInStudypath = path.map((el) => el.modules.length);
-    return studyplan.semesterPlans.map(
-      (el, i) => el.modules.length - modulesInStudypath[i]
+    const modulesInStudyPath = path.map((el) => el.modules.length);
+    return studyPlan.semesterPlans.map(
+      (el, i) => el.modules.length - modulesInStudyPath[i]
     );
   }
 }

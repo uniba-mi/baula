@@ -1,6 +1,6 @@
 import { User } from '../../../../interfaces/user';
 import { createReducer, on } from '@ngrx/store';
-import { CompetenceAimsActions, DashboardActions, FavoriteModulesActions, InterestsActions, JobActions, NotInterestingModuleActions, NotInterestingModulesActions, StudypathActions, TimetableActions, UserActions } from '../actions/user.actions';
+import { CompetenceAimsActions, DashboardActions, FavoriteModulesActions, JobActions, ExcludedModuleActions, ExcludedModulesActions, StudyPathActions, TimetableActions, UserActions } from '../actions/user.actions';
 
 export const userFeatureKey = 'user';
 
@@ -14,7 +14,7 @@ export const initialState: State = {
     shibId: '',
     roles: [],
     authType: '',
-    studypath: {
+    studyPath: {
       completedModules: [],
       completedCourses: [],
     },
@@ -25,7 +25,7 @@ export const initialState: State = {
     consents: [],
     moduleFeedback: [],
     favouriteModulesAcronyms: [],
-    notInterestingModulesAcronyms: [],
+    excludedModulesAcronyms: [],
     dashboardSettings: [],
     timetableSettings: [],
   },
@@ -74,40 +74,40 @@ export const reducer = createReducer(
     };
   }),
   
-  /* change status of a module in the studypath */
-  on(StudypathActions.updateModuleInStudypathSuccess, (state, props) => {
+  /* change status of a module in the study path */
+  on(StudyPathActions.updateModuleInStudyPathSuccess, (state, props) => {
     let newUser = state.currentUser;
-    newUser.studypath = props.studypath;
+    newUser.studyPath = props.studyPath;
     return {
       ...state,
       currentUser: newUser,
     };
   }),
 
-  on(StudypathActions.updateStudypathSuccess, (state, props) => {
+  on(StudyPathActions.updateStudyPathSuccess, (state, props) => {
     let newUser = state.currentUser;
-    newUser.studypath = props.studypath;
+    newUser.studyPath = props.studyPath;
     return {
       ...state,
       currentUser: newUser,
     };
   }),
 
-  on(StudypathActions.updateStudypathFailure, (state, props) => {
+  on(StudyPathActions.updateStudyPathFailure, (state, props) => {
     return state;
   }),
 
-  on(StudypathActions.finishSemesterSuccess, (state, props) => {
+  on(StudyPathActions.finishSemesterSuccess, (state, props) => {
     let newUser = state.currentUser;
-    newUser.studypath = props.studypath;
+    newUser.studyPath = props.studyPath;
     return {
       ...state,
       currentUser: newUser,
     };
   }),
 
-  on(StudypathActions.deleteModuleFromStudypathSuccess, (state, props) => {
-    state.currentUser.studypath = props.studypath;
+  on(StudyPathActions.deleteModuleFromStudyPathSuccess, (state, props) => {
+    state.currentUser.studyPath = props.studyPath;
     return { ...state };
   }),
 
@@ -121,36 +121,36 @@ export const reducer = createReducer(
     }
   }),
 
-  on(NotInterestingModulesActions.deleteNotInterestingModulesSuccess, (state, props) => {
+  on(ExcludedModulesActions.deleteExcludedModulesSuccess, (state, props) => {
     return {
       ...state,
       currentUser: {
         ...state.currentUser,
-        notInterestingModulesAcronyms: [],
+        excludedModulesAcronyms: [],
       },
     }
   }),
 
-  on(NotInterestingModuleActions.deleteNotInterestingModuleSuccess, (state, props) => {
-    if (state.currentUser && state.currentUser.notInterestingModulesAcronyms) {
+  on(ExcludedModuleActions.deleteExcludedModuleSuccess, (state, props) => {
+    if (state.currentUser && state.currentUser.excludedModulesAcronyms) {
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          notInterestingModulesAcronyms: state.currentUser.notInterestingModulesAcronyms.filter(moduleAcronym => moduleAcronym !== props.acronym),
+          excludedModulesAcronyms: state.currentUser.excludedModulesAcronyms.filter(moduleAcronym => moduleAcronym !== props.acronym),
         },
       };
     }
     return state;
   }),
 
-  on(StudypathActions.deleteStudypathSuccess, (state, props) => {
+  on(StudyPathActions.deleteStudyPathSuccess, (state, props) => {
     return {
       ...state,
       currentUser: {
         ...state.currentUser,
-        studypath: {
-          ...state.currentUser.studypath,
+        studyPath: {
+          ...state.currentUser.studyPath,
           completedModules: [],
         },
       },
@@ -191,16 +191,16 @@ export const reducer = createReducer(
     };
   }),
 
-  on(NotInterestingModuleActions.toggleNotInterestingModule, (state, props) => {
-    const isFavourite = state.currentUser.notInterestingModulesAcronyms.includes(props.acronym);
+  on(ExcludedModuleActions.toggleExcludedModule, (state, props) => {
+    const isFavourite = state.currentUser.excludedModulesAcronyms.includes(props.acronym);
 
     return {
       ...state,
       currentUser: {
         ...state.currentUser,
-        notInterestingModulesAcronyms: isFavourite
-          ? state.currentUser.notInterestingModulesAcronyms.filter(id => id !== props.acronym)
-          : [...state.currentUser.notInterestingModulesAcronyms, props.acronym]
+        excludedModulesAcronyms: isFavourite
+          ? state.currentUser.excludedModulesAcronyms.filter(id => id !== props.acronym)
+          : [...state.currentUser.excludedModulesAcronyms, props.acronym]
       },
     };
   }),
@@ -253,26 +253,6 @@ export const reducer = createReducer(
         moduleFeedback: Array.isArray(props.moduleFeedback) ? props.moduleFeedback : [props.moduleFeedback]
       }
     };
-  }),
-
-  on(InterestsActions.addInterestSuccess, (state, props) => {
-    return {
-      ...state,
-      currentUser: {
-        ...state.currentUser,
-        interests: props.interests
-      }
-    }
-  }),
-
-  on(InterestsActions.deleteInterestSuccess, (state, props) => {
-    return {
-      ...state,
-      currentUser: {
-        ...state.currentUser,
-        interests: props.interests
-      }
-    }
   }),
 
   on(UserActions.deleteModuleFeedbackSuccess, (state, props) => {

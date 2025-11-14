@@ -20,7 +20,7 @@
   overflow: hidden;
 }
 
-.studyplan-sidenav {
+.study-plan-sidenav {
   position: fixed;
   top: 51px;
   bottom: 0;
@@ -38,11 +38,11 @@
 }
 
 // hide sidenav for inactive plans
-.studyplan-sidenav.zero-width {
+.study-plan-sidenav.zero-width {
   width: 0 !important;
 }
 
-.trigger-studyplan-sidenav {
+.trigger-study-plan-sidenav {
   background: var(--ub-blue);
   color: white;
   border-radius: 50rem;
@@ -97,7 +97,7 @@
 }
 
 @media (max-width: 768px) {
-  .manage-studyplans {
+  .manage-study-plans {
     margin-bottom: 1rem;
   }
 
@@ -105,7 +105,7 @@
     width: 90vw;
   }
 
-  .trigger-studyplan-sidenav.open {
+  .trigger-study-plan-sidenav.open {
     left: calc(90vw + 15px);
   }
 }

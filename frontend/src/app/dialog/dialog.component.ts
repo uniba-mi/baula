@@ -2,21 +2,21 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Module } from '../../../../interfaces/module';
-import { UserGeneratedModule } from '../../../../interfaces/usergeneratedmodule';
+import { UserGeneratedModule } from '../../../../interfaces/user-generated-module';
 import { Semester } from '../../../../interfaces/semester';
-import { Studyplan, StudyplanTemplate } from '../../../../interfaces/studyplan';
+import { StudyPlan, StudyPlanTemplate } from '../../../../interfaces/study-plan';
 import { Status, User } from '../../../../interfaces/user';
 import { Standard } from '../modules/bilapp/interfaces/standard';
-import { PathModule, SemesterStudyPath } from '../../../../interfaces/studypath';
+import { PathModule, SemesterStudyPath } from '../../../../interfaces/study-path';
 import { ExtendedModuleGroup } from '../../../../interfaces/module-group';
-import { AcademicDate } from '../../../../interfaces/academicDate';
+import { AcademicDate } from '../../../../interfaces/academic-date';
 import { Course } from '../../../../interfaces/course';
 import { Job, Jobtemplate } from '../../../../interfaces/job';
 
 export interface DialogData {
   dialogTitle?: String; // heading
   dialogContentId: String; // for subdialog insertion
-  studyplan?: StudyplanTemplate;
+  studyPlan?: StudyPlanTemplate;
   module?: UserGeneratedModule;
   semesters$?: Observable<Semester[]>;
   statusSemester?: string;
@@ -32,14 +32,15 @@ export interface DialogData {
   modules?: Module[];
   statusOptions?: Status[];
   status?: string;
-  semesterplanId?: string;
+  semesterPlanId?: string;
   job?: Jobtemplate | Job;
   standard?: Standard;
   importType?: string;
-  studypath?: SemesterStudyPath[];
+  studyPath?: SemesterStudyPath[];
   startSemester?: Semester;
-  studyplans?: Studyplan[];
-  activeStudyplan?: Studyplan;
+  studyPlans?: StudyPlan[];
+  activeStudyPlan?: StudyPlan;
+  studyPlanTemplate$?: Observable<StudyPlan>;
   newPlanId?: string;
   missingModules?: PathModule[];
   pathModule?: PathModule;
@@ -49,7 +50,6 @@ export interface DialogData {
   course?: Course;
   courses?: Course[];
   deselectOption?: boolean;
-  studyplanTemplate$?: Observable<Studyplan>;
   options?: { value: string, label: string }[]; // for generic choose option dialog
   isFirstSemesterStudent?: boolean;
   content?: any; // just for evaluation

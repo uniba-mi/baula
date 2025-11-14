@@ -34,7 +34,7 @@ export class CourseEffects {
 
   selectCourse$ = createEffect(() => 
     this.actions$.pipe(
-      ofType(CoursePlanningActions.updateCoursesArrayInSemesterplan),
+      ofType(CoursePlanningActions.updateCoursesArrayInSemesterPlan),
       switchMap((props) => 
         [BilAppCourseActions.loadSelectedCourses()]
       )
@@ -43,7 +43,7 @@ export class CourseEffects {
 
   deselectCourse$ = createEffect(() => 
     this.actions$.pipe(
-      ofType(CoursePlanningActions.updateCoursesArrayInSemesterplan),
+      ofType(CoursePlanningActions.updateCoursesArrayInSemesterPlan),
       switchMap((props) => 
         [BilAppCourseActions.loadSelectedCourses()]
       )

@@ -13,17 +13,17 @@ import { RestService } from 'src/app/rest.service';
 import { Timetable } from 'src/app/shared/classes/timetable';
 import {
   PlanCourse,
-  Semesterplan,
+  SemesterPlan,
   PlanningHints,
   DeletedCourse,
-} from '../../../../../interfaces/semesterplan';
+} from '../../../../../interfaces/semester-plan';
 import { Course } from '../../../../../interfaces/course';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
-import { AcademicDate } from '../../../../../interfaces/academicDate';
+import { AcademicDate } from '../../../../../interfaces/academic-date';
 import { Semester } from '../../../../../interfaces/semester';
 import { getSemesterList } from 'src/app/selectors/user.selectors';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -61,8 +61,8 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
   semesters$: Observable<Semester[]>;
   activeSemester$: Observable<string>;
   activeSemester: string;
-  activePlan$: Observable<Semesterplan | undefined>;
-  activePlan: Semesterplan;
+  activePlan$: Observable<SemesterPlan | undefined>;
+  activePlan: SemesterPlan;
   planCourses$: Observable<PlanCourse[]>;
   courses$: Observable<(Course | DeletedCourse)[]>;
   ectsSum$: Observable<number | null | undefined>;
@@ -157,7 +157,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
     }
 
     if (query && this.searchOpened) {
-      // do nothing otherwise search would be closed when query starts from semesterplan
+      // do nothing otherwise search would be closed when query starts from semester plan
     } else {
       this.searchOpened = !this.searchOpened;
     }
@@ -184,7 +184,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
     });
   }
 
-  openUnivis(plan: Semesterplan) {
+  openUnivis(plan: SemesterPlan) {
     this.timetable = new Timetable(plan.semester);
     for (const course of plan.courses) {
       this.timetable.addCourse(course.id);
@@ -192,7 +192,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
     window.open(this.timetable.getUnivisLink(), '_blank');
   }
 
-  openTimetable(plan: Semesterplan) {
+  openTimetable(plan: SemesterPlan) {
     this.timetable = new Timetable(plan.semester);
     for (const course of plan.courses) {
       this.timetable.addCourse(course.id);
@@ -209,9 +209,9 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
     }
   }
 
-  exportTimetable(plan: Semesterplan) {
+  exportTimetable(plan: SemesterPlan) {
     // prepare data for export -> only select relevant attributes
-    // TODO: if semester and studyplan were merged, maybe add aditional attributes like modules and user generated modules
+    // TODO: if semester and study plan were merged, maybe add aditional attributes like modules and user generated modules
     const exportPlan = {
       semester: plan.semester,
       isPastSemester: plan.isPastSemester,
@@ -224,7 +224,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
     ).then(download => download.downloadJSONFile(exportPlan, 'stundenplan.json'));
   }
 
-  importTimetable(oldplan: Semesterplan) {
+  importTimetable(oldplan: SemesterPlan) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         dialogTitle: 'Daten importieren:',
@@ -247,8 +247,8 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
           if (result.semester === oldplan.semester) {
             // take values of old plan and rewrite values with new ones if available
             this.store.dispatch(
-              TimetableActions.importSemesterplan({
-                newSemesterplan: { ...oldplan, ...result },
+              TimetableActions.importSemesterPlan({
+                newSemesterPlan: { ...oldplan, ...result },
               })
             );
           } else {

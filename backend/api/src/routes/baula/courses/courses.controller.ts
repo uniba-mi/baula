@@ -6,7 +6,7 @@ import {
   checkSemester,
   transformCourses,
   transformDozs,
-} from "../../../shared/helpers/univisHelpers";
+} from "../../../shared/helpers/univis-helpers";
 
 const prisma = new PrismaClient();
 

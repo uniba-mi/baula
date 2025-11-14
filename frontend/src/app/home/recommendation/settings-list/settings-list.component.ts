@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { delay, map, Observable, of, switchMap, take } from 'rxjs';
-import { FavoriteModulesActions, NotInterestingModuleActions, NotInterestingModulesActions, UserActions } from 'src/app/actions/user.actions';
-import { getAllModuleFeedback, getFavouriteModuleAcronyms, getNotInterestingModulesAcronyms, getUser } from 'src/app/selectors/user.selectors';
+import { FavoriteModulesActions, ExcludedModuleActions, UserActions } from 'src/app/actions/user.actions';
+import { getAllModuleFeedback, getFavouriteModuleAcronyms, getExcludedModulesAcronyms, getUser } from 'src/app/selectors/user.selectors';
 import { Module } from '../../../../../../interfaces/module';
 import { ModuleFeedback, User } from '../../../../../../interfaces/user';
 import { ModService } from 'src/app/shared/services/module.service';
 import { select, Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { Recommendation } from '../../../../../../interfaces/recommendation';
-import { RecsRestService } from 'src/app/modules/recs/recs-rest.service';
+import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.service';
 import { ConfirmationDialogComponent, ConfirmationDialogData } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -33,7 +33,7 @@ export class SettingsListComponent {
   feedbackItems$: Observable<ModuleFeedback[]>;
   recommendations$: Observable<Recommendation[]>;
 
-  constructor(private store: Store, private modService: ModService, private recsApi: RecsRestService, private route: ActivatedRoute, private dialog: MatDialog,
+  constructor(private store: Store, private modService: ModService, private recsService: RecsRestService, private route: ActivatedRoute, private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -44,7 +44,7 @@ export class SettingsListComponent {
     }
 
     this.user$ = this.store.select(getUser);
-    this.recommendations$ = this.recsApi.getPersonalRecommendations();
+    this.recommendations$ = this.recsService.getPersonalRecommendations();
 
     this.loadData();
   }
@@ -56,7 +56,7 @@ export class SettingsListComponent {
   private loadData(): void {
 
     // get blacklist modules
-    this.blacklistItems$ = this.store.select(getNotInterestingModulesAcronyms).pipe(
+    this.blacklistItems$ = this.store.select(getExcludedModulesAcronyms).pipe(
       switchMap((modIds: string[]) =>
         modIds.length > 0
           ? this.modService.getFullModulesByAcronyms(modIds)
@@ -85,7 +85,7 @@ export class SettingsListComponent {
       case 'feedback':
         return this.feedbackItems$.pipe(
           switchMap(feedbackItems =>
-            this.store.select(getNotInterestingModulesAcronyms).pipe(
+            this.store.select(getExcludedModulesAcronyms).pipe(
               map(blacklistAcronyms =>
                 feedbackItems.filter(feedback =>
                   !blacklistAcronyms.includes(feedback.acronym)
@@ -134,7 +134,7 @@ export class SettingsListComponent {
       case 'blacklist':
         const blacklistItem = item as Module;
         this.store.dispatch(
-          NotInterestingModuleActions.deleteNotInterestingModule({
+          ExcludedModuleActions.deleteExcludedModule({
             acronym: blacklistItem.acronym
           })
         );
@@ -204,7 +204,7 @@ export class SettingsListComponent {
       take(1),
       delay(500)
     ).subscribe(() => {
-      this.recommendations$ = this.recsApi.getPersonalRecommendations();
+      this.recommendations$ = this.recsService.getPersonalRecommendations();
     });
   }
 

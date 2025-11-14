@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { PlanCourse } from '../../../../../../../interfaces/semesterplan';
+import { PlanCourse } from '../../../../../../../interfaces/semester-plan';
 import { ExpandedCourse, Course } from '../../../../../../../interfaces/course';
 import { State as CourseState } from '../reducer/course.reducers';
 

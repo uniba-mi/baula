@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import { cronjobLogger } from "./logger";
-import { processUnivisData } from "../helpers/univisCrawler";
-import { Semester } from "../../../../interfaces/semester";
+import { processUnivisData } from "../helpers/univis-crawler";
+import { Semester } from "../../semester";
 
 // CRON job: execute at 3 AM from Monday to Friday
 cron.schedule("0 3 * * 1-5", () => {

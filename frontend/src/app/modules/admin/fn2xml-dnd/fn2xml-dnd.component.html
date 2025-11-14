@@ -1,5 +1,5 @@
 <!-- TODO drag n drop currently doesnt work!!! -->
-<div class="dropzone d-flex flex-column align-items-center" appDnd (fileDropped)="handleFileInput($event)">
+<div class="drop-zone d-flex flex-column align-items-center" appDnd (fileDropped)="handleFileInput($event)">
     <input type="file" #file id="file" multiple (change)="handleFileInput($event)"/>
     <p> Laden sie hier ihre FN2XML-Datei über Drag'n'Drop hoch</p>
     <p> Oder:</p>

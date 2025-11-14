@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ChartMetadata, chartMetadata } from 'src/app/shared/constants/chartMetadata';
+import { ChartMetadata, chartMetadata } from 'src/app/shared/constants/chart-metadata';
 
 @Component({
     selector: 'app-dashboard-card-header',

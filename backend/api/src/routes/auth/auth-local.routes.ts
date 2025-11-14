@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import { localLogin, localLogout } from "./auth.controller";
-import { ensureAuthenticated } from "../../shared/middleware/authenticationMiddleware";
+import { ensureAuthenticated } from "../../shared/middleware/authentication-middleware";
 
 const loginRouter: Router = express.Router();
 const logoutRouter: Router = express.Router();

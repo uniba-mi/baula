@@ -6,23 +6,22 @@ import { RestService } from '../rest.service';
 import { AlertType } from '../shared/classes/alert';
 import { SnackbarService } from '../shared/services/snackbar.service';
 import {
-  StudypathActions,
+  StudyPathActions,
   UserActions,
   DashboardActions,
   FavoriteModulesActions,
   CompetenceAimsActions,
-  InterestsActions,
-  NotInterestingModulesActions,
-  NotInterestingModuleActions,
+  ExcludedModulesActions,
+  ExcludedModuleActions,
   TimetableActions,
   JobActions,
 } from '../actions/user.actions';
 import { Router } from '@angular/router';
 import { User } from '../../../../interfaces/user';
-import { getStudyplans } from '../selectors/study-planning.selectors';
+import { getStudyPlans } from '../selectors/study-planning.selectors';
 import { Store } from '@ngrx/store';
-import { SemesterplanActions } from '../actions/study-planning.actions';
-import { RecsRestService } from '../modules/recs/recs-rest.service';
+import { SemesterPlanActions } from '../actions/study-planning.actions';
+import { RecsRestService } from '../modules/recommendations/recs-rest.service';
 
 @Injectable()
 export class UserEffects {
@@ -66,13 +65,13 @@ export class UserEffects {
     )
   );
 
-  updateModuleInStudypath$ = createEffect(() =>
+  updateModuleInStudyPath$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudypathActions.updateModuleInStudypath),
+      ofType(StudyPathActions.updateModuleInStudyPath),
       switchMap((props) =>
-        this.rest.updateModuleInStudypath(props.module).pipe(
-          map((studypath) =>
-            StudypathActions.updateModuleInStudypathSuccess({ studypath })
+        this.rest.updateModuleInStudyPath(props.module).pipe(
+          map((studyPath) =>
+            StudyPathActions.updateModuleInStudyPathSuccess({ studyPath })
           ),
           tap(() => {
             this.snackbar.openSnackBar({
@@ -81,20 +80,20 @@ export class UserEffects {
             });
           }),
           catchError((error) =>
-            of(StudypathActions.updateModuleInStudypathFailure(error))
+            of(StudyPathActions.updateModuleInStudyPathFailure(error))
           )
         )
       )
     )
   );
 
-  updateStudypath$ = createEffect(() =>
+  updateStudyPath$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudypathActions.updateStudypath),
+      ofType(StudyPathActions.updateStudyPath),
       concatMap((props) =>
-        this.rest.updateStudypath(props.completedModules).pipe(
-          map((studypath) =>
-            StudypathActions.updateStudypathSuccess({ studypath })
+        this.rest.updateStudyPath(props.completedModules).pipe(
+          map((studyPath) =>
+            StudyPathActions.updateStudyPathSuccess({ studyPath })
           ),
           tap(() => {
             this.snackbar.openSnackBar({
@@ -107,7 +106,7 @@ export class UserEffects {
               type: AlertType.DANGER,
               message: 'Modul(e) konnten nicht aktualisiert werden.',
             });
-            return of(StudypathActions.updateStudypathFailure({ error }));
+            return of(StudyPathActions.updateStudyPathFailure({ error }));
           })
         )
       )
@@ -116,11 +115,11 @@ export class UserEffects {
 
   finishSemester$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudypathActions.finishSemester),
+      ofType(StudyPathActions.finishSemester),
       concatMap((props) =>
         this.rest.finishSemester(props.completedModules, props.droppedModules, props.semester).pipe(
-          map((studypath) =>
-            StudypathActions.finishSemesterSuccess({ studypath, semester: props.semester })
+          map((studyPath) =>
+            StudyPathActions.finishSemesterSuccess({ studyPath, semester: props.semester })
           ),
           tap(() => {
             this.snackbar.openSnackBar({
@@ -133,7 +132,7 @@ export class UserEffects {
               type: AlertType.DANGER,
               message: 'Semester konnte nicht abgeschlossen werden.',
             });
-            return of(StudypathActions.finishSemesterFailure({ error }));
+            return of(StudyPathActions.finishSemesterFailure({ error }));
           })
         )
       )
@@ -143,18 +142,18 @@ export class UserEffects {
   // updates is past property of semester plans after finish semester was successful
   updateIsPastOfAllSemesterPlans$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudypathActions.finishSemesterSuccess),
+      ofType(StudyPathActions.finishSemesterSuccess),
       concatMap(({ semester }) =>
-        this.store.select(getStudyplans).pipe(
+        this.store.select(getStudyPlans).pipe(
           take(1),
-          mergeMap((studyplans) =>
-            studyplans.flatMap((plan) =>
+          mergeMap((studyPlans) =>
+            studyPlans.flatMap((plan) =>
               plan.semesterPlans
-                .filter((semesterplan) => semesterplan.semester === semester)
-                .map((semesterplan) => {
-                  return SemesterplanActions.updateIsPastSemester({
-                    studyplanId: plan._id,
-                    semesterplanId: semesterplan._id,
+                .filter((semesterPlan) => semesterPlan.semester === semester)
+                .map((semesterPlan) => {
+                  return SemesterPlanActions.updateIsPastSemester({
+                    studyPlanId: plan._id,
+                    semesterPlanId: semesterPlan._id,
                     isPast: true,
                   });
                 })
@@ -212,7 +211,7 @@ export class UserEffects {
 
               // update feedback_similarmods in recommendations
               if (similarmods) {
-                this.recsApi.updatePersonalRecommendations(props.moduleFeedback).subscribe();
+                this.recsService.updatePersonalRecommendations(props.moduleFeedback).subscribe();
               }
 
               // TODO update chair in user and use for recommendations
@@ -279,14 +278,14 @@ export class UserEffects {
     )
   );
 
-  updateNotInterestingModules$ = createEffect(() =>
+  updateExcludedModules$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(NotInterestingModuleActions.toggleNotInterestingModule),
+      ofType(ExcludedModuleActions.toggleExcludedModule),
       switchMap((props) =>
-        this.rest.updateNotInterestingModules(props.acronym).pipe(
-          map((notInterestingModulesAcronyms) =>
-            NotInterestingModuleActions.toggleNotInterestingModuleSuccess({
-              notInterestingModulesAcronyms,
+        this.rest.updateExcludedModules(props.acronym).pipe(
+          map((excludedModulesAcronyms) =>
+            ExcludedModuleActions.toggleExcludedModuleSuccess({
+              excludedModulesAcronyms,
             })
           ),
           tap(() => {
@@ -306,7 +305,7 @@ export class UserEffects {
               message: 'Modul nicht mehr vorschlagen fehlgeschlagen.',
             });
             return of(
-              NotInterestingModuleActions.toggleNotInterestingModuleFailure({
+              ExcludedModuleActions.toggleExcludedModuleFailure({
                 error,
               })
             );
@@ -365,11 +364,11 @@ export class UserEffects {
 
   deleteModule$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudypathActions.deleteModuleFromStudypath),
+      ofType(StudyPathActions.deleteModuleFromStudyPath),
       switchMap((props) =>
-        this.rest.deleteModuleFromStudypath(props.id, props.semester).pipe(
-          map((studypath) =>
-            StudypathActions.deleteModuleFromStudypathSuccess({ studypath })
+        this.rest.deleteModuleFromStudyPath(props.id, props.semester).pipe(
+          map((studyPath) =>
+            StudyPathActions.deleteModuleFromStudyPathSuccess({ studyPath })
           ),
           tap(() => {
             this.snackbar.openSnackBar({
@@ -378,7 +377,7 @@ export class UserEffects {
             });
           }),
           catchError((error) =>
-            of(StudypathActions.deleteModuleFromStudypathFailure({ error }))
+            of(StudyPathActions.deleteModuleFromStudyPathFailure({ error }))
           )
         )
       )
@@ -400,7 +399,7 @@ export class UserEffects {
               });
 
               // delete corresponding recommendations
-              this.recsApi.deletePersonalRecommendationsByFeedback(props.moduleFeedback.acronym).subscribe();
+              this.recsService.deletePersonalRecommendationsByFeedback(props.moduleFeedback.acronym).subscribe();
             }),
             catchError((error) => {
               this.snackbar.openSnackBar({
@@ -414,12 +413,12 @@ export class UserEffects {
     )
   );
 
-  deleteStudypath$ = createEffect(() =>
+  deleteStudyPath$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(StudypathActions.deleteStudypath),
+      ofType(StudyPathActions.deleteStudyPath),
       mergeMap(() =>
-        this.rest.deleteStudypath().pipe(
-          map(() => StudypathActions.deleteStudypathSuccess()),
+        this.rest.deleteStudyPath().pipe(
+          map(() => StudyPathActions.deleteStudyPathSuccess()),
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
@@ -431,7 +430,7 @@ export class UserEffects {
               type: AlertType.DANGER,
               message: 'Dein Studienverlauf konnte nicht gelöscht werden.',
             });
-            return of(StudypathActions.deleteStudypathFailure({ error }));
+            return of(StudyPathActions.deleteStudyPathFailure({ error }));
           })
         )
       )
@@ -454,17 +453,17 @@ export class UserEffects {
     )
   );
 
-  deleteNotInterestingModules$ = createEffect(() =>
+  deleteExcludedModules$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(NotInterestingModulesActions.deleteNotInterestingModules),
+      ofType(ExcludedModulesActions.deleteExcludedModules),
       mergeMap(() =>
-        this.rest.deleteNotInterestingModules().pipe(
+        this.rest.deleteExcludedModules().pipe(
           map(() =>
-            NotInterestingModulesActions.deleteNotInterestingModulesSuccess()
+            ExcludedModulesActions.deleteExcludedModulesSuccess()
           ),
           catchError((error) => {
             return of(
-              NotInterestingModulesActions.deleteNotInterestingModulesFailure({
+              ExcludedModulesActions.deleteExcludedModulesFailure({
                 error,
               })
             );
@@ -474,66 +473,22 @@ export class UserEffects {
     )
   );
 
-  deleteNotInterestingModule$ = createEffect(() =>
+  deleteExcludedModule$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(NotInterestingModuleActions.deleteNotInterestingModule),
+      ofType(ExcludedModuleActions.deleteExcludedModule),
       mergeMap((props) =>
-        this.rest.deleteNotInterestingModule(props.acronym).pipe(
+        this.rest.deleteExcludedModule(props.acronym).pipe(
           map(() =>
-            NotInterestingModuleActions.deleteNotInterestingModuleSuccess({
+            ExcludedModuleActions.deleteExcludedModuleSuccess({
               acronym: props.acronym,
             })
           ),
           catchError((error) => {
             return of(
-              NotInterestingModuleActions.deleteNotInterestingModuleFailure({
+              ExcludedModuleActions.deleteExcludedModuleFailure({
                 error,
               })
             );
-          })
-        )
-      )
-    )
-  );
-
-  addInterest$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(InterestsActions.addInterest),
-      switchMap((props) =>
-        this.rest.addInterest(props.interest).pipe(
-          map((interests) =>
-            InterestsActions.addInterestSuccess({ interests })
-          ),
-          tap(() =>
-            this.snackbar.openSnackBar({
-              type: AlertType.SUCCESS,
-              message: `${props.interest} wurde als Interesse hinzugefügt.`,
-            })
-          ),
-          catchError((error) => {
-            return of(InterestsActions.addInterestFailure({ error }));
-          })
-        )
-      )
-    )
-  );
-
-  deleteInterest$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(InterestsActions.deleteInterest),
-      switchMap((props) =>
-        this.rest.deleteInterest(props.interest).pipe(
-          map((interests) =>
-            InterestsActions.deleteInterestSuccess({ interests })
-          ),
-          tap(() =>
-            this.snackbar.openSnackBar({
-              type: AlertType.SUCCESS,
-              message: `${props.interest} wurde als Interesse entfernt.`,
-            })
-          ),
-          catchError((error) => {
-            return of(InterestsActions.deleteInterestFailure({ error }));
           })
         )
       )
@@ -544,7 +499,7 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(JobActions.upsertJob),
       mergeMap((props) =>
-        this.rest.recommendModulesToJob(props.job, props.id).pipe(
+        this.recsService.recommendModulesToJob(props.job, props.id).pipe(
           map((job) => JobActions.upsertJobSuccess({ job })),
           tap(() =>
             this.snackbar.openSnackBar({
@@ -583,7 +538,7 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private rest: RestService,
-    private recsApi: RecsRestService,
+    private recsService: RecsRestService,
     private snackbar: SnackbarService,
     private router: Router,
     private store: Store,

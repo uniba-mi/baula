@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { PlanCourse, SemesterPlan, SemesterPlanTemplate } from "../../../semesterPlan";
+import { PlanCourse, SemesterPlan, SemesterPlanTemplate } from "../../../semester-plan";
 import { StudyPlan } from "../../../database/mongo";
 import {
   validateAndReturnCourse,
@@ -7,14 +7,14 @@ import {
   validateAndReturnSemesterPlan,
   validateAndReturnSemesterPlanTemplate,
   validateObjectId,
-} from "../../../shared/helpers/customValidator";
+} from "../../../shared/helpers/custom-validator";
 import validator from "validator";
 import { BadRequestError, logError, NotFoundError } from "../../../shared/error";
 import { PrismaClient } from "@prisma/client";
-import { UserGeneratedModule } from "../../../userGeneratedModule";
+import { UserGeneratedModule } from "../../../user-generated-module";
 import { UserServer } from "../../../user";
 import { logger } from "../../../shared/utils/logger";
-import { findActiveStudyPlan, findStudyPlan } from "../../../shared/helpers/planHelper";
+import { findActiveStudyPlan, findStudyPlan } from "../../../shared/helpers/plan-helper";
 
 const prisma = new PrismaClient();
 

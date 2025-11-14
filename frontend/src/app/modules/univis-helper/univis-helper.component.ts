@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UnivISHelperDialogComponent } from './dialog/univis-helper-dialog.component';
 import { BilAppCourse } from './interfaces/bilapp';
-import { CompetenceFormData } from './interfaces/formdata';
+import { CompetenceFormData } from './interfaces/form-data';
 import { PublicRestService } from './public-rest.service';
 import { Fulfillment } from '../../../../../interfaces/competence';
 

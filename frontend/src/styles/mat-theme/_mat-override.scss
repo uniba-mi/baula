@@ -1,0 +1,153 @@
+/* override material component's css here if globally needed */
+:root {
+  --mat-sidenav-content-background-color: var(--cus-bg-100) !important;
+}
+
+/* global style for required asterix */
+.mat-mdc-form-field-required-marker {
+  color: red;
+}
+
+// material tooltips
+.custom-tooltip * {
+  background: #616161 !important;
+  color: #fff !important;
+  transform: scale(1);
+  padding: 2px 4px !important;
+}
+
+// material cards
+.mat-mdc-card {
+  background: #fff !important;
+}
+
+/* SNACKBAR */
+.mat-mdc-snack-bar-container * {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding: 0px !important;
+}
+
+.mat-mdc-button {
+  letter-spacing: normal !important;
+  font-family: inherit !important;
+}
+
+.mat-mdc-snack-bar-label,
+.mdc-button__label {
+  color: var(--bs-alert-color) !important;
+}
+
+// in case of action, button below text
+.mat-mdc-simple-snack-bar {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+// MAT TAB
+// prevent horizontal overflow in dialog (currently only in module details)
+.mat-mdc-tab-body-content {
+  overflow-x: hidden !important;
+}
+
+/* DIALOGS */
+.mdc-dialog__title {
+  padding-left: 0px !important;
+  margin-bottom: 20px !important;
+}
+
+.mat-mdc-dialog-content {
+  max-height: 80vh !important;
+}
+
+.mat-mdc-form-field-error-wrapper {
+  min-width: 300px;
+}
+
+.mat-mdc-form-field-bottom-align::before {
+  display: none !important;
+}
+
+/* for filter reset button */
+.reset-option .mat-pseudo-checkbox {
+  display: none !important;
+}
+
+/* FOR STEPPER FORM */
+.mat-step-header {
+  background: none !important;
+}
+
+.mat-step-header:hover {
+  background: none !important;
+}
+
+.mat-step-label:hover {
+  color: var(--ub-blue) !important;
+  cursor: pointer !important;
+}
+
+.mat-step-icon {
+  background-color: var(--ub-gray-80) !important;
+}
+
+.mat-step-icon:hover {
+  cursor: pointer !important;
+}
+
+.mat-step-icon-selected {
+  background-color: var(--ub-blue) !important;
+}
+
+/* hint override */
+.mat-mdc-form-field-hint-wrapper {
+  min-width: 250px !important;
+  position: relative !important;
+}
+
+.mat-tree-node {
+  font-family: var(--app-body-font) !important;
+}
+
+// to see the sidenav also when collapsed
+.study-plan-sidenav.mat-drawer:not(.mat-drawer-opened):not(.mat-drawer-animating) .mat-drawer-inner-container {
+  display: block !important;
+}
+
+// Form field styling on global level to enable margin everywere
+.mat-mdc-form-field {
+  margin-right: 10px;
+  box-sizing: border-box;
+  width: 90%;
+  margin-bottom: 1rem;
+}
+
+// setting for sidenav overflow to make sticky possible
+div[id=module-overview]>.mat-drawer-container,
+mat-sidenav[id=structure-sidenav]>.mat-drawer-inner-container,
+.mat-drawer {
+  overflow: initial !important;
+  overflow-y: initial !important;
+}
+
+.mat-mdc-form-field {
+  flex-direction: row;
+}
+
+.mat-expansion-panel-header {
+  height: auto !important;
+}
+
+.mat-expansion-panel-header:hover {
+  background: none !important;
+}
+
+@media (max-width: 575.98px) {
+  .search-panel {
+    width: 100%;
+  }
+
+  .mat-expansion-panel-header {
+    padding: 0;
+  }
+}

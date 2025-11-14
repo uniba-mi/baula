@@ -8,13 +8,13 @@ import {
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Semester } from '../../../../interfaces/semester';
-import { Studyprogramme } from '../../../../interfaces/studyprogramme';
-import { MStudyprogramme, User } from '../../../../interfaces/user';
+import { StudyProgramme } from '../../../../interfaces/study-programme';
+import { MStudyProgramme, User } from '../../../../interfaces/user';
 import {
-  getActiveStudyplanId,
-  getStudyplans,
+  getActiveStudyPlanId,
+  getStudyPlans,
 } from '../selectors/study-planning.selectors';
-import { StudyplanActions } from '../actions/study-planning.actions';
+import { StudyPlanActions } from '../actions/study-planning.actions';
 
 @Component({
     selector: 'app-nav',
@@ -24,32 +24,32 @@ import { StudyplanActions } from '../actions/study-planning.actions';
 })
 export class NavComponent implements OnInit, OnChanges {
   @Input() user: User;
-  studyprogrammes$: Observable<Studyprogramme[]>;
+  studyprogrammes$: Observable<StudyProgramme[]>;
   semesters$: Observable<Semester[]>;
   bilappAvailable: boolean = false;
 
   // save active study plan id and insert in URL
   id$: string;
-  activeStudyplanId$: Observable<string>;
-  selectedStudyplanId$: Observable<string>;
+  activeStudyPlanId$: Observable<string>;
+  selectedStudyPlanId$: Observable<string>;
   isWIAIStudent: boolean = false;
 
   constructor(
     private store: Store,
   ) {
-    this.activeStudyplanId$ = store.select(getActiveStudyplanId);
+    this.activeStudyPlanId$ = store.select(getActiveStudyPlanId);
   }
 
   ngOnInit(): void {
-    // loading active studyplan on reload
-    this.store.select(getStudyplans).subscribe((studyplans) => {
-      if (studyplans && studyplans.length > 0) {
-        this.store.select(getActiveStudyplanId).subscribe((activeId) => {
+    // loading active study plan on reload
+    this.store.select(getStudyPlans).subscribe((studyPlans) => {
+      if (studyPlans && studyPlans.length > 0) {
+        this.store.select(getActiveStudyPlanId).subscribe((activeId) => {
           if (activeId !== '') {
             this.id$ = activeId;
           } else {
             this.store.dispatch(
-              StudyplanActions.loadActiveStudyplan()
+              StudyPlanActions.loadActiveStudyPlan()
             );
           }
           if (!activeId) {
@@ -67,7 +67,7 @@ export class NavComponent implements OnInit, OnChanges {
     }
   }
 
-  checkForTeacherStudyprogramme(sps: MStudyprogramme[]): boolean {
+  checkForTeacherStudyprogramme(sps: MStudyProgramme[]): boolean {
     for (let sp of sps) {
       // assumption that teacher education sps start with LA and if EWS part is referenced ends with EWS
       if (sp.spId.startsWith('LA') && sp.spId.endsWith('EWS')) {
@@ -77,7 +77,7 @@ export class NavComponent implements OnInit, OnChanges {
     return false;
   }
 
-  checkForWIAIStudyprogramme(sps: MStudyprogramme[]): boolean {
+  checkForWIAIStudyprogramme(sps: MStudyProgramme[]): boolean {
     if (sps[0].faculty === 'WIAI') { // checking for first programme only
       return true;
     }

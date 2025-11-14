@@ -1,6 +1,6 @@
 import { ExtendedJob, Job } from "./job";
-import { TimetableSettings } from "./semesterplan";
-import { PathModule, Studypath } from "./studyPath";
+import { TimetableSettings } from "./semester-plan";
+import { PathModule, StudyPath } from "./study-path";
 
 /* MetaUser is a general interface that summarize all attributes all users have whether server or client side */
 export interface MetaUser {
@@ -14,7 +14,7 @@ export interface MetaUser {
   startSemester?: string;
   duration?: number;
   maxEcts?: number;
-  sps?: MStudyprogramme[];
+  sps?: MStudyProgramme[];
   fulltime: boolean;
   dashboardSettings: ChartVisibility[];
   timetableSettings: TimetableSettings[];
@@ -35,10 +35,10 @@ export interface UserServer extends MetaUser {
   completedModules: PathModule[]
 }
 
-/* User adds the studypath to the MetaUser and represents the client side user structure. Studypath represents all completedModules and completedCourses and is generated on the serverside */
+/* User adds the study path to the MetaUser and represents the client side user structure. StudyPath represents all completedModules and completedCourses and is generated on the serverside */
 export interface User extends MetaUser {
   jobs?: ExtendedJob[];
-  studypath: Studypath;
+  studyPath: StudyPath;
   // additional attribute to mark if user is sync with database
   sync?: boolean;
 }
@@ -49,7 +49,7 @@ export interface ChartVisibility {
   // add addtional aspects in future
 }
 
-export interface MStudyprogramme {
+export interface MStudyProgramme {
   spId: string;
   poVersion: number;
   name: string;

@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Module } from '../../../../interfaces/module';
 import { ModuleGroup } from '../../../../interfaces/module-group';
-import { Modulehandbook } from '../../../../interfaces/modulehandbook';
-import { Studyprogramme } from '../../../../interfaces/studyprogramme';
+import { ModuleHandbook } from '../../../../interfaces/module-handbook';
+import { StudyProgramme } from '../../../../interfaces/study-programme';
 
 export const ModuleInteractionActions = createActionGroup({
     source: 'Module Interaction',
@@ -17,16 +17,16 @@ export const ModuleInteractionActions = createActionGroup({
 
 export const selectStudyProgramme = createAction(
     '[Module-Overview] Select Study Programme',
-    props<{ studyProgramme: Studyprogramme }>()
+    props<{ studyProgramme: StudyProgramme }>()
 );
 
-export const ModulehandbookActions = createActionGroup({
-    source: 'Modulehandbook',
+export const ModuleHandbookActions = createActionGroup({
+    source: 'Module Handbook',
     events: {
-        'Load Modulehandbook': props<{ id: string, version: number }>(),
-        'Load Modulehandbook Success': props<{ mhb: Modulehandbook }>(),
-        'Load Modulehandbook Failure': props<{ error: HttpErrorResponse }>(),
-        'Unload Modulehandbook': emptyProps()
+        'Load Module Handbook': props<{ id: string, version: number }>(),
+        'Load Module Handbook Success': props<{ mhb: ModuleHandbook }>(),
+        'Load Module Handbook Failure': props<{ error: HttpErrorResponse }>(),
+        'Unload Module Handbook': emptyProps()
     }
 });
 

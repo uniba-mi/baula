@@ -9,7 +9,7 @@
                 <div class="timeline-line d-flex flex-column align-items-center flex-shrink-0">
                     <span class="badge rounded-pill bg-light border mb-2 px-2 py-1">
                         <div class="flex-shrink-0 me-2">
-                            <app-module-status [studypath$]="studypath$" [module]="selectedModule" [modType]="modType"
+                            <app-module-status [studyPath$]="studyPath$" [module]="selectedModule" [modType]="modType"
                                 [openedWithSemesterSet]="openedWithSemesterSet" [openedFromModuleCatalog]="true"
                                 [showStatusText]="true"></app-module-status>
                         </div>
@@ -33,25 +33,25 @@
         <div class="table-wrapper p-3">
             <table class="table table-sm align-middle mb-0">
                 <tbody>
-                    <tr *ngFor="let studyplan of (studyplans$ | async)" class="bg-body-secondary">
-                        <ng-container *ngIf="hasModuleInPlan(studyplan)">
-                            <td class="w-25 text-gray">{{ studyplan.name }}</td>
+                    <tr *ngFor="let studyPlan of (studyPlans$ | async)" class="bg-body-secondary">
+                        <ng-container *ngIf="hasModuleInPlan(studyPlan)">
+                            <td class="w-25 text-gray">{{ studyPlan.name }}</td>
                             <td>
-                                <div *ngFor="let semesterPlan of getModuleSemesterPlans(studyplan)"
+                                <div *ngFor="let semesterPlan of getModuleSemesterPlans(studyPlan)"
                                     class="d-flex align-items-center justify-content-between bg-light border p-2 mb-2 rounded">
                                     <div class="d-flex flex-column">
                                         <span>{{ semesterPlan.semester | Semester }}</span>
                                     </div>
                                     <div class="flex-shrink-0 me-2">
-                                        <app-module-status [studypath$]="studypath$" [module]="selectedModule"
+                                        <app-module-status [studyPath$]="studyPath$" [module]="selectedModule"
                                             [modType]="modType" [statusSemester]="semesterPlan.semester"
                                             [openedWithSemesterSet]="openedWithSemesterSet"
                                             [openedFromModuleCatalog]="true"
                                             [showStatusText]="true"></app-module-status>
                                     </div>
                                     <button class="btn btn-danger btn-sm"
-                                        (click)="openDeleteDialog(studyplan._id, studyplan.name, semesterPlan._id, semesterPlan.semester)"
-                                        (keyup.enter)="openDeleteDialog(studyplan._id, studyplan.name, semesterPlan._id, semesterPlan.semester)">
+                                        (click)="openDeleteDialog(studyPlan._id, studyPlan.name, semesterPlan._id, semesterPlan.semester)"
+                                        (keyup.enter)="openDeleteDialog(studyPlan._id, studyPlan.name, semesterPlan._id, semesterPlan.semester)">
                                         <i class="bi bi-trash me-1"></i>Löschen
                                     </button>
                                 </div>

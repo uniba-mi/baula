@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Observable, map, take } from 'rxjs';
 import { Semester } from '../../../../../interfaces/semester';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -23,7 +23,7 @@ export class SelectSemesterDialogComponent {
   activeSemester: string;
   allSemesters: Semester[] = [];
 
-  constructor(private store: Store, private formBuilder: FormBuilder) { }
+  constructor(private store: Store, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -37,11 +37,13 @@ export class SelectSemesterDialogComponent {
       // for multiselect
       this.semesters$.pipe(take(1)).subscribe(semesters => {
         this.allSemesters = semesters;
+        this.cdr.detectChanges();
       });
     }
 
     this.store.select(getActiveSemester).pipe(take(1)).subscribe(semester => {
       this.activeSemester = semester;
+      this.cdr.detectChanges();
     });
   }
 

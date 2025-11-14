@@ -22,8 +22,8 @@ import { skipWhile, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { getHoveredModule } from 'src/app/selectors/module-overview.selectors';
-import { getUserStudypath } from 'src/app/selectors/user.selectors';
-import { PathModule } from '../../../../../../interfaces/studypath';
+import { getUserStudyPath } from 'src/app/selectors/user.selectors';
+import { PathModule } from '../../../../../../interfaces/study-path';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 
 @Component({
@@ -90,7 +90,7 @@ export class GroupNavigationComponent
       this.setDataSource(this.groups);
 
       this.store
-        .select(getUserStudypath)
+        .select(getUserStudyPath)
         .pipe(takeUntil(this.destroy$))
         .pipe(
           skipWhile(
@@ -99,12 +99,12 @@ export class GroupNavigationComponent
               this.dataSource.data.length == 0
           )
         )
-        .subscribe((studypath) => {
-          if (this.dataSource.data && studypath.completedModules) {
+        .subscribe((studyPath) => {
+          if (this.dataSource.data && studyPath.completedModules) {
             this.clearAchievedECTS(this.dataSource.data);
             this.dataSource.data = this.setAchievedEcts(
               this.dataSource.data,
-              studypath.completedModules
+              studyPath.completedModules
             );
           }
         });

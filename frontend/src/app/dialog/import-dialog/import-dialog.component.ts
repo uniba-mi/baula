@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Semester } from '../../../../../interfaces/semester';
-import { Studyplan } from '../../../../../interfaces/studyplan';
+import { StudyPlan } from '../../../../../interfaces/study-plan';
 import { Observable, take } from 'rxjs';
 import { AnalyticsService } from 'src/app/shared/services/analytics.service';
 
@@ -15,7 +15,7 @@ import { AnalyticsService } from 'src/app/shared/services/analytics.service';
 export class ImportDialogComponent {
   @Input() importType: string;
   @Input() startSemester: Semester | undefined;
-  @Input() studyplanTemplate$: Observable<Studyplan> | undefined;
+  @Input() studyPlanTemplate$: Observable<StudyPlan> | undefined;
   @Input() isFirstSemesterStudent: boolean | undefined;
   upload: any;
   filename: string | undefined;
@@ -32,18 +32,18 @@ export class ImportDialogComponent {
   constructor(private snackbar: SnackbarService, private analytics: AnalyticsService) { }
 
   ngOnInit() {
-    // init logic for template studyplans
+    // init logic for template study plans
     if (this.importType === 'deinen Musterplan') {
       this.loading = true;
 
-      if (this.studyplanTemplate$) {
-        this.studyplanTemplate$.pipe(take(1)).subscribe(
-          (studyplan) => {
+      if (this.studyPlanTemplate$) {
+        this.studyPlanTemplate$.pipe(take(1)).subscribe(
+          (studyPlan) => {
             this.loading = false;
 
             // info for displayal options
-            if (studyplan) {
-              this.templateFileName = studyplan.name;
+            if (studyPlan) {
+              this.templateFileName = studyPlan.name;
               const currentSemester = Semester.getCurrentSemesterName();
               const match = this.templateFileName.match(/(\d{4}[sw])/);
               if (match && match[0] !== currentSemester) {
@@ -51,8 +51,8 @@ export class ImportDialogComponent {
                 this.showRecencyWarning = true;
               }
 
-              // set studyplan template as upload
-              this.upload = studyplan;
+              // set studyPlan template as upload
+              this.upload = studyPlan;
               this.extractData(this.upload);
             }
           },

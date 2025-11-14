@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import { resetConsentResponse, saveResult } from "./survey.controller";
-import { checkAndReturnAdminUser } from "../../../shared/middleware/adminMiddleware";
+import { checkAndReturnAdminUser } from "../../../shared/middleware/admin-middleware";
 
 const router: Router = express.Router();
 router.use(express.json());

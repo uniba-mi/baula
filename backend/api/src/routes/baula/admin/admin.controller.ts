@@ -2,11 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { BadRequestError, logError, NotFoundError } from "../../../shared/error";
 import validator from "validator";
-import { validateAndReturnSemester } from "../../../shared/helpers/customValidator";
+import { validateAndReturnSemester } from "../../../shared/helpers/custom-validator";
 import path from "path";
 import * as fs from "fs";
-import { checkSemester } from "../../../shared/helpers/univisHelpers";
-import { processUnivisData } from "../../../shared/helpers/univisCrawler";
+import { checkSemester } from "../../../shared/helpers/univis-helpers";
+import { processUnivisData } from "../../../shared/helpers/univis-crawler";
 import { transform } from "camaro";
 import {
   mhbTemplate,
@@ -24,7 +24,7 @@ import {
   moduleExamTemplate,
   modDepTemplate,
   sp2mhbTemplate,
-} from "../../../templates/mhb_fn2mod";
+} from "../../../templates/mhb-fn2mod";
 import {
   Embedding,
   ModEmbedding,
@@ -42,7 +42,7 @@ import {
   upsertModules,
   upsertPersons,
   upsertStudyprogrammes,
-} from "../../../shared/helpers/fn2modHelper";
+} from "../../../shared/helpers/fn2mod-helper";
 
 const prisma = new PrismaClient();
 
@@ -714,7 +714,7 @@ export async function updateModuleEmbeddings(
       __dirname,
       "../../..",
       "staticdata",
-      "module_embeddings.json"
+      "module-embeddings.json"
     );
     const fileData = await fs.promises.readFile(embeddingsFilePath, "utf8");
     const embeddings = JSON.parse(fileData) as { [acronym: string]: number[] };
@@ -755,7 +755,7 @@ export async function initTopicsFromJSON(
       __dirname,
       "../../..",
       "staticdata",
-      "topic_embeddings.json"
+      "topic-embeddings.json"
     );
 
     // parse JSON file

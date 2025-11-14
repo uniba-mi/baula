@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ExtendedJob, Job, Jobtemplate } from '../../../../../interfaces/job';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { RestService } from 'src/app/rest.service';
 import { Observable, take } from 'rxjs';
 import { MockJob, mockJobs } from './mocked-jobs';
 import { Store } from '@ngrx/store';
 import { getJobs } from 'src/app/selectors/user.selectors';
+import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.service';
 
 @Component({
   selector: 'app-edit-job-dialog',
@@ -30,7 +30,7 @@ export class EditJobDialogComponent implements OnInit {
   readonly addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-  constructor(private rest:RestService, private store: Store) { }
+  constructor(private recsService: RecsRestService, private store: Store) { }
 
   ngOnInit() {
     this.jobs$ = this.store.select(getJobs);
@@ -59,7 +59,7 @@ export class EditJobDialogComponent implements OnInit {
     if(this.searchUrl) {
       this.loading = true;
       this.editedJob = undefined;
-      this.rest.crawlJob(this.searchUrl).pipe(take(1)).subscribe((value: any) => {
+      this.recsService.crawlJob(this.searchUrl).pipe(take(1)).subscribe((value: any) => {
         if(!value) {
           this.errorMessage = "Die Jobanzeige konnte leider nicht geladen werden."
         } else {
@@ -82,12 +82,10 @@ export class EditJobDialogComponent implements OnInit {
   addKeyword(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
 
-    // Add our fruit
     if (value && this.editedJob) {
       this.editedJob.keywords.push(value)
     }
 
-    // Clear the input value
     event.chipInput!.clear();
   }
 
@@ -95,7 +93,7 @@ export class EditJobDialogComponent implements OnInit {
     if(this.editedJob && this.editedJob.title && this.editedJob.description) {
       this.loadingKeywords = true;
       this.editedJob.keywords = [];
-      this.rest.generateJobKeywords(this.editedJob).pipe(take(1)).subscribe((value: any) => {
+      this.recsService.generateJobKeywords(this.editedJob).pipe(take(1)).subscribe((value: any) => {
         if(this.editedJob && value && value.keywords) {
           this.editedJob.keywords = value.keywords;
         } else {

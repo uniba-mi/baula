@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PathModule, Studypath } from '../../../../../../interfaces/studypath';
+import { PathModule, StudyPath } from '../../../../../../interfaces/study-path';
 
 @Component({
     selector: 'app-grade-point-average',
@@ -8,13 +8,13 @@ import { PathModule, Studypath } from '../../../../../../interfaces/studypath';
     standalone: false
 })
 export class GradePointAverageComponent implements OnInit {
-  @Input() studypath: Studypath;
+  @Input() studyPath: StudyPath;
   currentGrade: number;
 
 
   ngOnInit(): void {
-    if(this.studypath.completedModules.length !== 0) {
-      this.currentGrade = this.calculateGrade(this.studypath.completedModules);
+    if(this.studyPath.completedModules.length !== 0) {
+      this.currentGrade = this.calculateGrade(this.studyPath.completedModules);
     }
   }
 

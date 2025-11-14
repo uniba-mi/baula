@@ -20,7 +20,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PublicRestService {
-  private urlBase = config.publicUrl
+  private urlBase = config.apiUrl + 'bilapp/'
 
   constructor(private http: HttpClient) { }
   
@@ -29,7 +29,7 @@ export class PublicRestService {
   }
 
   getCompetences(): Observable<Competence[]> {
-    return this.http.get<Competence[]>(`${this.urlBase}competences`, httpOptions);
+    return this.http.get<Competence[]>(`${this.urlBase}competences/children/uppest`, httpOptions);
   }
 
   getStandards(): Observable<Standard[]> {

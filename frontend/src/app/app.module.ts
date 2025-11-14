@@ -102,11 +102,11 @@ import { PrivacyComponent } from './public/privacy/privacy.component';
 import { HintComponent } from './shared/components/hint/hint.component';
 import { ImportDialogComponent } from './dialog/import-dialog/import-dialog.component';
 import { ExportDialogComponent } from './dialog/export-dialog/export-dialog.component';
-import { RecSidenavComponent } from './modules/recs/rec-sidenav/rec-sidenav.component';
-import { RecModuleCardComponent } from './modules/recs/rec-sidenav/rec-module-card/rec-module-card.component';
+import { RecsSidenavComponent } from './modules/recommendations/recs-sidenav/recs-sidenav.component';
+import { RecsModuleCardComponent } from './modules/recommendations/recs-sidenav/recs-module-card/recs-module-card.component';
 import { StudentUploadComponent } from './modules/student-upload/student-upload/student-upload.component';
 import { CustomIconsModule } from './modules/custom-icons/custom-icons.module';
-import { ActivateStudyplanDialogComponent } from './dialog/activate-studyplan-dialog/activate-studyplan-dialog.component';
+import { ActivateStudyPlanDialogComponent } from './dialog/activate-study-plan-dialog/activate-study-plan-dialog.component';
 import { LinkifyPipe } from './shared/pipes/linkify.pipe';
 import { SelectSemesterDialogComponent } from './dialog/select-semester-dialog/select-semester-dialog.component';
 import { UserProfileComponent } from './home/user-profile/user-profile.component';
@@ -115,11 +115,11 @@ import { ProgressBarComponent } from './home/study-plan/study-plan-detail/progre
 import { SemesterDatesComponent } from './home/dashboard/semester-dates/semester-dates.component';
 import { FullCalendarComponent } from './shared/components/full-calendar/full-calendar.component';
 import { CourseDetailsDialogComponent } from './dialog/course-details-dialog/course-details-dialog.component';
-import { QuicklinksComponent } from './home/dashboard/quicklinks/quicklinks.component';
+import { QuickLinksComponent } from './home/dashboard/quick-links/quick-links.component';
 import { UploadStudentDataDialogComponent } from './modules/student-upload/dialogs/upload-student-data-dialog/upload-student-data-dialog.component';
 import { UploadDataPrivacyComponent } from './shared/components/upload-data-privacy/upload-data-privacy.component';
 import { DecimalFormatPipe } from './shared/pipes/decimal-format-pipe';
-import { DropzoneComponent } from './shared/components/dropzone/dropzone.component';
+import { DropZoneComponent } from './shared/components/drop-zone/drop-zone.component';
 import { EditGradeDialogComponent } from './dialog/edit-grade-dialog/edit-grade-dialog.component';
 import { SelectOptionDialog } from './dialog/select-option-dialog/select-option-dialog.component';
 import { UploadStudentDataStepperComponent } from './modules/student-upload/dialogs/upload-student-data-stepper/upload-student-data-stepper.component';
@@ -136,7 +136,7 @@ import { MaintenanceMessageComponent } from './shared/components/maintenance-mes
 import { ProfileMenuComponent } from './nav/profile-menu/profile-menu.component';
 import { GroupNavigationComponent } from './home/module-overview/group-navigation/group-navigation.component';
 import { UserDataComponent } from './home/user-profile/user-data/user-data.component';
-import { StudypathUpdateComponent } from './home/user-profile/studypath-update/studypath-update.component';
+import { StudyPathUpdateComponent } from './home/user-profile/study-path-update/study-path-update.component';
 import { ResolveCollisionDialogComponent } from './dialog/resolve-collision-dialog/resolve-collision-dialog.component';
 import { CourseDetailsComponent } from './shared/components/course-details/course-details.component';
 import { EditPathModuleDialogComponent } from './dialog/edit-path-module-dialog/edit-path-module-dialog.component';
@@ -150,7 +150,7 @@ import { SemesterHeaderComponent } from './home/study-plan/study-plan-detail/stu
 import { SemesterBodyComponent } from './home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-body.component';
 import { SemesterCardComponent } from './home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component';
 import { EditJobDialogComponent } from './dialog/edit-job-dialog/edit-job-dialog.component';
-import { RecModuleListComponent } from './modules/recs/rec-sidenav/rec-module-list/rec-module-list.component';
+import { RecsModuleListComponent } from './modules/recommendations/recs-sidenav/recs-module-list/recs-module-list.component';
 import { RecommendationComponent } from './home/recommendation/recommendation.component';
 import { TopicSettingsComponent } from './home/recommendation/topic-settings/topic-settings.component';
 import { TopicChipComponent } from './home/recommendation/topic-settings/topic-chip/topic-chip.component';
@@ -173,8 +173,8 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
 @NgModule({
   declarations: [
     AppComponent,
-    RecSidenavComponent,
-    RecModuleCardComponent,
+    RecsSidenavComponent,
+    RecsModuleCardComponent,
     ModuleOverviewComponent,
     HomeComponent,
     NavComponent,
@@ -224,7 +224,7 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     HintComponent,
     ImportDialogComponent,
     ExportDialogComponent,
-    ActivateStudyplanDialogComponent,
+    ActivateStudyPlanDialogComponent,
     LinkifyPipe,
     SelectSemesterDialogComponent,
     UserProfileComponent,
@@ -232,7 +232,7 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     ProgressBarComponent,
     UploadStudentDataDialogComponent,
     UploadDataPrivacyComponent,
-    DropzoneComponent,
+    DropZoneComponent,
     EditGradeDialogComponent,
     UploadStudentDataStepperComponent,
     ChangeModuleGroupDialogComponent,
@@ -242,7 +242,7 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     FullCalendarComponent,
     CourseDetailsDialogComponent,
     SelectOptionDialog,
-    QuicklinksComponent,
+    QuickLinksComponent,
     HelpComponent,
     GradePointAverageComponent,
     TooltipDirective,
@@ -254,7 +254,7 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     MaintenanceMessageComponent,
     GroupNavigationComponent,
     UserDataComponent,
-    StudypathUpdateComponent,
+    StudyPathUpdateComponent,
     ResolveCollisionDialogComponent,
     CourseDetailsComponent,
     FinishSemesterStepperComponent,
@@ -264,7 +264,7 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     SemesterHeaderComponent,
     SemesterBodyComponent,
     SemesterCardComponent,
-    RecModuleListComponent,
+    RecsModuleListComponent,
     TopicChipComponent,
     RecommendationComponent,
     TopicSettingsComponent,

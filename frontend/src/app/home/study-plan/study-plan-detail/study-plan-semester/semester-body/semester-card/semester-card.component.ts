@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ItemActionName, MetaSemester } from '../../../../../../../../../interfaces/semesterplan';
-import { Studypath } from '../../../../../../../../../interfaces/studypath';
-import { getUserStudypath, isModuleInStudypath } from 'src/app/selectors/user.selectors';
+import { ItemActionName, MetaSemester } from '../../../../../../../../../interfaces/semester-plan';
+import { StudyPath } from '../../../../../../../../../interfaces/study-path';
+import { getUserStudyPath, isModuleInStudyPath } from 'src/app/selectors/user.selectors';
 import { map, Observable, of, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
@@ -33,9 +33,9 @@ export class SemesterCardComponent {
   @Output() actionTriggered = new EventEmitter<{ action: ItemActionName, data: any }>();
 
   openedWithSemesterSet: boolean = true;
-  studypath$: Observable<Studypath>;
+  studyPath$: Observable<StudyPath>;
   isDragging: boolean = false;
-  moduleInStudypath$: Observable<boolean>;
+  moduleInStudyPath$: Observable<boolean>;
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
 
   actionConfig: Record<ItemActionName, ActionConfig> = {
@@ -56,12 +56,12 @@ export class SemesterCardComponent {
 
   ngOnInit() {
 
-    this.studypath$ = this.store.select(getUserStudypath);
+    this.studyPath$ = this.store.select(getUserStudyPath);
 
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);
 
     // for conditional displayal of feedback
-    this.moduleInStudypath$ = this.store.select(isModuleInStudypath(this.moduleData.acronym));
+    this.moduleInStudyPath$ = this.store.select(isModuleInStudyPath(this.moduleData.acronym));
   }
 
   canDrag(): boolean {
@@ -139,9 +139,9 @@ export class SemesterCardComponent {
       return false;
     }
 
-    let moduleInStudypath = false;
-    this.moduleInStudypath$.pipe(take(1)).subscribe(inPath => {
-      moduleInStudypath = inPath;
+    let moduleInStudyPath = false;
+    this.moduleInStudyPath$.pipe(take(1)).subscribe(inPath => {
+      moduleInStudyPath = inPath;
     });
 
     switch (action) {
@@ -149,7 +149,7 @@ export class SemesterCardComponent {
         return (
           ((this.moduleType === 'module' && !this.moduleData.isOld) ||
             (this.moduleType === 'pathModule' && !this.moduleData.isUserGenerated)) &&
-          moduleInStudypath
+          moduleInStudyPath
         );
       case 'edit':
         return this.moduleType === 'userGeneratedModule' ||

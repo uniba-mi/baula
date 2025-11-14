@@ -1,10 +1,10 @@
-import { Studyprogramme } from '../../../../interfaces/studyprogramme';
+import { StudyProgramme } from '../../../../interfaces/study-programme';
 import { createReducer, on } from '@ngrx/store';
 import * as ModuleOverviewActions from '../actions/module-overview.actions';
-import { Modulehandbook } from '../../../../interfaces/modulehandbook';
+import { ModuleHandbook } from '../../../../interfaces/module-handbook';
 import { Module } from '../../../../interfaces/module';
 import { ModuleGroup } from '../../../../interfaces/module-group';
-import { ModulehandbookActions, UnknownModulesActions, ModuleInteractionActions } from '../actions/module-overview.actions';
+import { ModuleHandbookActions, UnknownModulesActions, ModuleInteractionActions } from '../actions/module-overview.actions';
 
 export const moduleOverviewFeatureKey = 'module-overview';
 
@@ -12,8 +12,8 @@ export interface State {
   selectedModule: Module | undefined;
   // contains only the module group to make path en
   hoveredModule: Module | undefined;
-  selectedStudyProgramme: Studyprogramme | undefined;
-  modulehandbook: Modulehandbook | undefined;
+  selectedStudyProgramme: StudyProgramme | undefined;
+  moduleHandbook: ModuleHandbook | undefined;
   modules: Module[];
   oldModules: Module[];
 }
@@ -22,7 +22,7 @@ export const initialState: State = {
   selectedModule: undefined,
   hoveredModule: undefined,
   selectedStudyProgramme: undefined,
-  modulehandbook: undefined,
+  moduleHandbook: undefined,
   modules: [],
   oldModules: [],
 };
@@ -67,8 +67,8 @@ export const reducer = createReducer(
     };
   }),
 
-  /* load of modulehandbook */
-  on(ModulehandbookActions.loadModulehandbookSuccess, (state, props) => {
+  /* load of module handbook */
+  on(ModuleHandbookActions.loadModuleHandbookSuccess, (state, props) => {
     let modules = iterateOverMgsAndReturnModules(props.mhb.mgs);
     modules = modules.sort((a, b) => (a.acronym < b.acronym) ? -1 : (a.acronym > b.acronym) ? 1 : 0)
 
@@ -79,15 +79,15 @@ export const reducer = createReducer(
 
     return {
       ...state,
-      modulehandbook: props.mhb,
+      moduleHandbook: props.mhb,
       modules: modules,
     };
   }),
 
-  on(ModulehandbookActions.unloadModulehandbook, (state) => {
+  on(ModuleHandbookActions.unloadModuleHandbook, (state) => {
     return {
       ...state,
-      modulehandbook: undefined,
+      moduleHandbook: undefined,
     };
   }),
 

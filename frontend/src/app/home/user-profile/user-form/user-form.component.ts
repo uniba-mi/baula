@@ -15,11 +15,11 @@ import {
 } from '@angular/forms';
 import { Observable, catchError, firstValueFrom, map, of, take } from 'rxjs';
 import { Semester } from '../../../../../../interfaces/semester';
-import { Studyprogramme } from '../../../../../../interfaces/studyprogramme';
-import { Modulehandbook } from '../../../../../../interfaces/modulehandbook';
+import { StudyProgramme } from '../../../../../../interfaces/study-programme';
+import { ModuleHandbook } from '../../../../../../interfaces/module-handbook';
 import { RestService } from 'src/app/rest.service';
 import { Store } from '@ngrx/store';
-import { ModulehandbookActions } from 'src/app/actions/module-overview.actions';
+import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 
 @Component({
@@ -34,12 +34,12 @@ export class UserFormComponent implements OnInit, OnChanges {
   @Output() submitUser = new EventEmitter<User>();
 
   userForm: FormGroup;
-  selectedModulehandbook = new FormControl();
+  selectedModuleHandbook = new FormControl();
   selectedStartSemester = new FormControl();
   selectedSpName = new FormControl();
   selectedSpVersion = new FormControl();
-  selectedStudyprogramme: Studyprogramme | undefined;
-  studyprogrammes$: Observable<Studyprogramme[]>;
+  selectedStudyprogramme: StudyProgramme | undefined;
+  studyprogrammes$: Observable<StudyProgramme[]>;
   duration: string;
   maxEcts: string;
   fulltime: boolean;
@@ -51,7 +51,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   *********/
   spNames: string[];
   spVersions$: Observable<any[]>;
-  possiblePOs$: Observable<Studyprogramme[]>;
+  possiblePOs$: Observable<StudyProgramme[]>;
   bachelors: string[];
   masters: string[];
   teacherEducation: string[];
@@ -74,7 +74,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     this.userForm = this.formBuilder.group({
       spName: this.selectedSpName ? this.selectedSpName : '',
       spVersion: this.selectedSpVersion ? this.selectedSpVersion : '',
-      mhb: this.selectedModulehandbook ? this.selectedModulehandbook : '',
+      mhb: this.selectedModuleHandbook ? this.selectedModuleHandbook : '',
       semester: this.selectedStartSemester ? this.selectedStartSemester : '',
       duration: [
         this.user.duration ? this.user.duration : '',
@@ -187,7 +187,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     this.presetStudyprogramme(name);
   }
 
-  // function to preset the poversion and the modulehandbook
+  // function to preset the poversion and the module handbook
   private presetStudyprogramme(name: string) {
     // get semesterdate to preselect poVersion and mhb
     const semesterDate = this.selectedStartSemester.value
@@ -237,15 +237,15 @@ export class UserFormComponent implements OnInit, OnChanges {
         ];
         // preselect mhb
         if (this.selectedStudyprogramme.mhbs) {
-          this.preselectModulehandbook(this.selectedStudyprogramme.mhbs, name);
+          this.preselectModuleHandbook(this.selectedStudyprogramme.mhbs, name);
         }
       }
     });
   }
 
-  private preselectModulehandbook(mhbs: Modulehandbook[], spName: string) {
+  private preselectModuleHandbook(mhbs: ModuleHandbook[], spName: string) {
     // set default for selected mhb
-    let selectedModulehandbook = mhbs[0];
+    let selectedModuleHandbook = mhbs[0];
     if (mhbs.length != 1) {
       // set programmetype and semesterdate for further selection of most appropriate mhb
       const programmeType = spName.startsWith('Bachelor')
@@ -279,14 +279,14 @@ export class UserFormComponent implements OnInit, OnChanges {
 
       // if filtering leads to empty modulhandbook -> name of handbook does not start with programmeType -> if case happens, just take the first of the nearest mhbs
       if (possibleMhbs.length !== 0) {
-        selectedModulehandbook = possibleMhbs[0];
+        selectedModuleHandbook = possibleMhbs[0];
       } else if (idx.length !== 0) {
-        selectedModulehandbook = mhbs[idx[0]];
+        selectedModuleHandbook = mhbs[idx[0]];
       } else {
-        selectedModulehandbook = mhbs[0];
+        selectedModuleHandbook = mhbs[0];
       }
     }
-    this.selectModulehandbook(selectedModulehandbook);
+    this.selectModuleHandbook(selectedModuleHandbook);
   }
 
   private presetDurationAndEcts(spName: string) {
@@ -324,7 +324,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       ];
       // preselect mhb
       if (this.selectedStudyprogramme.mhbs) {
-        this.preselectModulehandbook(
+        this.preselectModuleHandbook(
           this.selectedStudyprogramme.mhbs,
           this.selectedStudyprogramme.name
         );
@@ -358,17 +358,17 @@ export class UserFormComponent implements OnInit, OnChanges {
         this.selectedSpVersion.setValue(studyprogramme.desc);
         this.userForm.controls['spVersion'].setValue(studyprogramme.desc);
         this.selectedStudyprogramme = studyprogramme;
-        const modulehandbook = studyprogramme.mhbs?.find((el) => {
+        const moduleHandbook = studyprogramme.mhbs?.find((el) => {
           return (
             el.mhbId == spFromUser.mhbId && el.version == spFromUser.mhbVersion
           );
         });
-        if (modulehandbook) {
+        if (moduleHandbook) {
           if (this.user.sps && this.user.sps.length !== 0) {
-            this.user.sps[0].mhbId = modulehandbook.mhbId;
-            this.user.sps[0].mhbVersion = modulehandbook.version;
+            this.user.sps[0].mhbId = moduleHandbook.mhbId;
+            this.user.sps[0].mhbVersion = moduleHandbook.version;
           }
-          this.selectedModulehandbook.setValue(modulehandbook);
+          this.selectedModuleHandbook.setValue(moduleHandbook);
         }
       }
     }
@@ -392,14 +392,14 @@ export class UserFormComponent implements OnInit, OnChanges {
     return idx;
   }
 
-  selectModulehandbook(mhb: Modulehandbook) {
+  selectModuleHandbook(mhb: ModuleHandbook) {
     this.userForm.controls['mhb'].addValidators([Validators.required]);
     if (this.user.sps && this.user.sps.length !== 0) {
       this.user.sps[0].mhbId = mhb.mhbId;
       this.user.sps[0].mhbVersion = mhb.version;
-      this.selectedModulehandbook.setValue(mhb);
+      this.selectedModuleHandbook.setValue(mhb);
       this.store.dispatch(
-        ModulehandbookActions.loadModulehandbook({
+        ModuleHandbookActions.loadModuleHandbook({
           id: mhb.mhbId,
           version: mhb.version,
         })

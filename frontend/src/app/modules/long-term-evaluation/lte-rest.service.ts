@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { LongTermEvaluation } from '../../../../../interfaces/longTermEvaluation';
+import { LongTermEvaluation } from '../../../../../interfaces/long-term-evaluation';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/config.local';
 
@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable()
 
 export class LteRestService {
-  private urlBase = config.apiUrl;
+  private urlBase = config.apiUrl + 'baula/';
   private http = inject(HttpClient)
   
   // query to save survey result to database

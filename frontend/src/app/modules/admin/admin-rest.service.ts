@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/config.local';
-import { AcademicDateTemplate, AcademicDate, DateType } from '../../../../../interfaces/academicDate';
+import { AcademicDateTemplate, AcademicDate, DateType } from '../../../../../interfaces/academic-date';
 import { Logmessage } from '../../../../../interfaces/logs';
 import { ModuleCourse2CourseConnection } from '../../../../../interfaces/connection';
 import { Report } from './reporting';
@@ -20,18 +20,18 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AdminRestService {
-  private urlBase = config.apiUrl + 'admin';
+  private urlBase = config.apiUrl + 'baula/admin';
 
 
   constructor(private http: HttpClient) { }
 
   crawlFlexNow(semester: string): Observable<string[]> {
-    return this.http.get<string[]>(`${this.urlBase}/crawl/fnmhbs/${semester}`, httpOptions);
+    return this.http.get<string[]>(`${this.urlBase}/crawling/fnmhbs/${semester}`, httpOptions);
   };
 
   crawlUnivIS(semester: string): Observable<string[]> {
     return this.http.post<string[]>(
-      `${this.urlBase}/crawl/univis`,
+      `${this.urlBase}/crawling/univis`,
       { semester },
       httpOptions
     );
@@ -60,7 +60,7 @@ export class AdminRestService {
   ------ Queries for admin area -----
   ----------------------------------- */
   getAllAcademicDates(): Observable<AcademicDate[]> {
-    return this.http.get<AcademicDate[]>(`${this.urlBase}/academicdates`, httpOptions)
+    return this.http.get<AcademicDate[]>(`${this.urlBase}/academic-dates`, httpOptions)
   }
 
   addAcademicDate(date: AcademicDateTemplate): Observable<AcademicDate> {
@@ -73,7 +73,7 @@ export class AdminRestService {
       semester: date.semester,
       datetypeId: date.dateType.typeId
     }
-    return this.http.post<AcademicDate>(`${this.urlBase}/academicdate`, body, httpOptions)
+    return this.http.post<AcademicDate>(`${this.urlBase}/academic-date`, body, httpOptions)
   }
 
   updateAcademicDate(date: AcademicDate): Observable<AcademicDate> {
@@ -87,22 +87,22 @@ export class AdminRestService {
       semester: date.semester,
       datetypeId: date.dateType.typeId
     }
-    return this.http.put<AcademicDate>(`${this.urlBase}/academicdate`, body, httpOptions)
+    return this.http.put<AcademicDate>(`${this.urlBase}/academic-date`, body, httpOptions)
   }
 
   deleteAcademicDate(id: number): Observable<AcademicDate> {
-    return this.http.delete<AcademicDate>(`${this.urlBase}/academicdate/${id}`, httpOptions)
+    return this.http.delete<AcademicDate>(`${this.urlBase}/academic-date/${id}`, httpOptions)
   }
 
   addDateType(name: string, desc: string): Observable<DateType> {
-    return this.http.post<DateType>(`${this.urlBase}/datetype`, {
+    return this.http.post<DateType>(`${this.urlBase}/date-type`, {
       name, 
       desc
     }, httpOptions)
   }
 
   updateDateType(dateType: DateType): Observable<DateType> {
-    return this.http.put<DateType>(`${this.urlBase}/datetype`, {
+    return this.http.put<DateType>(`${this.urlBase}/date-type`, {
       id: dateType.typeId,
       name: dateType.name,
       desc: dateType.desc
@@ -110,7 +110,7 @@ export class AdminRestService {
   }
 
   deleteDateType(id: number): Observable<DateType> {
-    return this.http.delete<DateType>(`${this.urlBase}/datetype/${id}`, httpOptions)
+    return this.http.delete<DateType>(`${this.urlBase}/date-type/${id}`, httpOptions)
   }
 
   getCronjobLog(): Observable<Logmessage[]> {

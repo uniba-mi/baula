@@ -148,7 +148,6 @@ Hier könnten noch weitere Schritte folgen, je nachdem wie stark wir unsere .git
 Hier eine mögliche Liste von Dateien, die ausgelagert werden könnten:
 - `./backend/api/src/shared/constants/*`
 - `./backend/api/src/templates/*` wobei die für ein initiales Setup nicht nötig sind, nur bei Import von XML
-- `./frontend/src/environments/*` wobei da eigentlich nicht wirklich sensible Informationen enthalten sind
 
 ### Projektstruktur
 - `/backend` enthält alles zum Abruf der relevanten Daten für das Frontend. Neben der mit Express.js erstellten REST-API ist hier der Python-Code verortet. Näheres ist in der spezifischen [README](./backend/README.md).

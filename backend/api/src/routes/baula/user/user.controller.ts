@@ -5,16 +5,16 @@ import {
   validateAndReturnSemester,
   validateAndReturnUser,
   validateObjectId,
-} from "../../../shared/helpers/customValidator";
+} from "../../../shared/helpers/custom-validator";
 import { Types } from "mongoose";
-import { PathCourse, PathModule } from "../../../studyPath";
+import { PathCourse, PathModule } from "../../../study-path";
 import { BadRequestError, logError, NotFoundError } from "../../../shared/error";
 import validator from "validator";
 import {
   ModuleFeedback,
   User as UserClient,
   UserServer,
-} from "../../../../../interfaces/user";
+} from "../../../../../../interfaces/user";
 import { PrismaClient } from "@prisma/client";
 import mongoose from "mongoose";
 import { ExtendedJob, Job } from "../../../job";
@@ -22,9 +22,9 @@ import { transform } from "camaro";
 import {
   studyPathTemplate,
   metaDataTemplate
-} from "../../../templates/student_fn2api";
+} from "../../../templates/student-fn2api";
 import https from "https";
-import { findMatchingModuleIndex } from "../../../shared/helpers/planHelper";
+import { findMatchingModuleIndex } from "../../../shared/helpers/plan-helper";
 
 const prisma = new PrismaClient();
 
@@ -1082,7 +1082,7 @@ export async function crawlStudentDataViaFlexNow(
     if (url) {
       // read test xml file
       /* const result = fs.readFileSync(
-        __dirname + "../../../../staticdata/dummy_student.xml",
+        __dirname + "../../../../staticdata/dummy-student.xml",
         "utf8"
       ); */
 

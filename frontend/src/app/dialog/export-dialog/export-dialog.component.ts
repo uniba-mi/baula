@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { StudyplanTemplate } from '../../../../../interfaces/studyplan';
-import { SemesterStudyPath } from '../../../../../interfaces/studypath';
-import { SemesterplanTemplate } from '../../../../../interfaces/semesterplan';
+import { StudyPlanTemplate } from '../../../../../interfaces/study-plan';
+import { SemesterStudyPath } from '../../../../../interfaces/study-path';
+import { SemesterPlanTemplate } from '../../../../../interfaces/semester-plan';
 
 @Component({
     selector: 'app-export-dialog',
@@ -10,16 +10,16 @@ import { SemesterplanTemplate } from '../../../../../interfaces/semesterplan';
     standalone: false
 })
 export class ExportDialogComponent {
-  @Input() studyplan: StudyplanTemplate;
-  @Input() studypath: SemesterStudyPath[];
+  @Input() studyPlan: StudyPlanTemplate;
+  @Input() studyPath: SemesterStudyPath[];
   exportFormat: string;
 
-  transformStudyplan(): any {
-    let exportPlan: SemesterplanTemplate[] = []
-    // transform studypath modules and add paths to export array
-    if(this.exportFormat === 'studypathWithFutureSemester') {
-      let pathPlans: SemesterplanTemplate[] = []
-      for(let path of this.studypath) {
+  transformStudyPlan(): any {
+    let exportPlan: SemesterPlanTemplate[] = []
+    // transform study path modules and add paths to export array
+    if(this.exportFormat === 'studyPathWithFutureSemester') {
+      let pathPlans: SemesterPlanTemplate[] = []
+      for(let path of this.studyPath) {
         const modules = path.modules.map(el => el.acronym)
         pathPlans.push({
           ...path,
@@ -30,8 +30,8 @@ export class ExportDialogComponent {
       exportPlan = pathPlans;
     }
     
-    // select studyplans for export
-    const semesterPlans = this.studyplan.semesterPlans.filter(plan => {
+    // select study plans for export
+    const semesterPlans = this.studyPlan.semesterPlans.filter(plan => {
       return plan.isPastSemester ? undefined : plan;
     }).map((el) => {
       return {
@@ -45,9 +45,9 @@ export class ExportDialogComponent {
         expanded: el.expanded
       };
     });
-    // remove db information and userId from studyplan
+    // remove db information and userId from study plan
     return {
-      ...this.studyplan,
+      ...this.studyPlan,
       __v: undefined,
       _id: undefined,
       createdAt: undefined,

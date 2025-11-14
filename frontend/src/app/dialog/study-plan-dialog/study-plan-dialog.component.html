@@ -1,27 +1,27 @@
 <ng-container role="Dialogfenster" aria-label="Dialogfenster">
-  <form [formGroup]="studyplanForm">
+  <form [formGroup]="studyPlanForm">
     <div class="content-wrapper">
       <mat-form-field appearance="outline">
         <mat-label>Name:</mat-label>
         <input
           matInput
-          #studyplanName
+          #studyPlanName
           formControlName="name"
           maxlength="50"
           type="text"
-          [value]="studyplan.name"
+          [value]="studyPlan.name"
           required
         />
         <mat-error
           *ngIf="
-            studyplanForm.controls.name.touched &&
-            studyplanForm.controls.name.invalid
+            studyPlanForm.controls.name.touched &&
+            studyPlanForm.controls.name.invalid
           "
-          ><span *ngIf="studyplanForm.controls.name.errors?.required"
+          ><span *ngIf="studyPlanForm.controls.name.errors?.required"
             >Das ist ein Pflichtfeld.</span
-          ><span *ngIf="studyplanForm.controls.name.errors?.maxlength"
+          ><span *ngIf="studyPlanForm.controls.name.errors?.maxlength"
             >Du darfst nur 50 Zeichen eingeben.</span
-          ><span *ngIf="studyplanForm.controls.name.errors?.pattern"
+          ><span *ngIf="studyPlanForm.controls.name.errors?.pattern"
             >Das Feld darf nicht leer sein.</span
           >
         </mat-error>
@@ -40,8 +40,8 @@
       <button
         mat-raised-button
         class="btn btn-primary"
-        [disabled]="!studyplanForm.valid"
-        [mat-dialog-close]="studyplanName.value"
+        [disabled]="!studyPlanForm.valid"
+        [mat-dialog-close]="studyPlanName.value"
         (click)="close('data')"
         (keyup)="close('data')"
       >

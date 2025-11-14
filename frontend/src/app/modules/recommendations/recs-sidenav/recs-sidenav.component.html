@@ -1,0 +1,64 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" opened="true" class="sidenav" disableClose>
+    <mat-nav-list>
+      <span *ngIf="isWIAIStudent" class="badge beta-badge badge-on-top">Beta</span>
+      <mat-list-item *ngFor="let tab of tabs; let i = index" (click)="onTabChange(i)" (keyup.enter)="onTabChange(i)"
+        [ngClass]="{'active': selectedTabIndex === i}" matTooltip="{{tab.infoText}}"
+        [hidden]="i === 0 && !isWIAIStudent">
+        <div class="tab-icon-container">
+          <i class="{{ tab.icon }}"></i>
+          <span class="tab-label">{{ tab.label }}</span>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="sidenav-content">
+    <div class="close-bar d-flex justify-content-end">
+      <button class="btn btn-outline text-gray" aria-label="Schließen" tabindex="0" (click)="onToggleSidenav()"> <i
+          class="bi bi-x-lg text-gray fs-4"></i>
+      </button>
+    </div>
+    <app-search-panel [searchSettings]="searchSettings$ | async" [filterOptions]="filterList" [customStyle]="true"
+      [horizontalFilters]="false" (search)="searchModules($event)" (filter)="filterModules($event)"
+      (clear)="showAllModules()">
+    </app-search-panel>
+
+    <!-- Tab 1: Personal modules -->
+    <div *ngIf="selectedTabIndex === 0 && isWIAIStudent">
+      <app-hint [key]="hints.personalModules.key" [hintMessage]="hints.personalModules.message"></app-hint>
+      <app-recs-module-list [modules]="(personalModules$ | async) ?? []" [listType]="'personal'"
+        [droppedModules]="droppedModules" [allJobs]="jobsArray" [allTopics]="topicsArray"
+        [isDragDisabled]="isSmallScreen"
+        [noDataMessage]="'Keine Vorschläge vorhanden, passe im Bereich Personalisierung deine Interessen an oder lade ein Jobziel hoch, um hier Vorschläge zu sehen.'"
+        (moduleFavouriteToggled)="updateFavouriteModules($event)">
+      </app-recs-module-list>
+    </div>
+
+    <!-- Tab 2: New modules -->
+    <div *ngIf="selectedTabIndex === 1">
+      <app-hint [key]="hints.newModules.key" [hintMessage]="hints.newModules.message"></app-hint>
+      <app-recs-module-list [modules]="(newModules$ | async) ?? []" [listType]="'new'" [droppedModules]="droppedModules"
+        [isDragDisabled]="isSmallScreen" (moduleFavouriteToggled)="updateFavouriteModules($event)">
+      </app-recs-module-list>
+    </div>
+
+    <!-- Tab 4: Serendipitous modules -->
+    <div *ngIf="selectedTabIndex === 2">
+      <app-hint [key]="hints.serendipitousModules.key" [hintMessage]="hints.serendipitousModules.message"></app-hint>
+      <app-recs-module-list [modules]="(serendipitousModules$ | async) ?? []" [listType]="'serendipitous'"
+        [droppedModules]="droppedModules" [isDragDisabled]="isSmallScreen"
+        (moduleFavouriteToggled)="updateFavouriteModules($event)">
+      </app-recs-module-list>
+    </div>
+
+    <!-- Favourite Modules Tab -->
+    <div *ngIf="selectedTabIndex === favouriteModulesTabIndex">
+      <app-recs-module-list [modules]="(favouriteModules$ | async) ?? []" [listType]="'favourite'"
+        [droppedModules]="droppedModules" [isDragDisabled]="isSmallScreen" [showClearButton]="true"
+        (moduleFavouriteToggled)="updateFavouriteModules($event)" (clearList)="openDeleteFavouritesDialog()">
+      </app-recs-module-list>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

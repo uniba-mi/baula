@@ -130,10 +130,10 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex px-2"
                                 *ngFor="let module of filteredRecommendations">
                                 <div class="card-wrapper d-flex w-100">
-                                    <app-rec-module-card class="d-flex w-100" [module]="module" [customStyle]="true"
+                                    <app-recs-module-card class="d-flex w-100" [module]="module" [customStyle]="true"
                                         [allTopics]="allTopics"
-                                        (moduleMarkedNotInteresting)="onModuleMarkedNotInteresting($event)"
-                                        (moduleFavouriteToggled)="onModuleFavouriteToggled($event)"></app-rec-module-card>
+                                        (moduleMarkedExcluded)="onModuleMarkedExcluded($event)"
+                                        (moduleFavouriteToggled)="onModuleFavouriteToggled($event)"></app-recs-module-card>
                                 </div>
                             </div>
                         </div>

@@ -42,7 +42,7 @@ In der Anwendung wird ein Mix von Angular Material und Bootstrap verwendet.
 - boostrap.scss: enthält Bootstrap Elemente
 - global.scss: enthält styles, die die ganze Anwendung betreffen (z. B. h1)
 - helpers.scss: enthält Variablen (z. B. Farbwerte)
-- ui_elements.scss: enthält (UI)-Elemente, die von mehreren Komponenten verwendet werden (z. B. Buttons, Cards, Infobox)
+- ui-elements.scss: enthält (UI)-Elemente, die von mehreren Komponenten verwendet werden (z. B. Buttons, Cards, Infobox)
 - components holds styles relating to one component (search panel, full calender etc.)
 - fonts.scss beinhaltet die aktuelle Font (Inter)
 - styles.scss: führt alle diese Dateien zusammen und ist der Styling-Einstiegspunkt

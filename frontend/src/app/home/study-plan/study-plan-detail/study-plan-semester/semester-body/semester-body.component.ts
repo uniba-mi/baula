@@ -21,7 +21,7 @@ import {
 } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
 import {
   UserGeneratedModule,
-} from '../../../../../../../../interfaces/usergeneratedmodule';
+} from '../../../../../../../../interfaces/user-generated-module';
 import {
   closeUserGeneratedModuleDialog,
   openUserGeneratedModuleDialog,
@@ -30,18 +30,18 @@ import { User } from '../../../../../../../../interfaces/user';
 import {
   PathModule,
   SemesterStudyPath,
-  Studypath,
-} from '../../../../../../../../interfaces/studypath';
-import { Semesterplan, MetaSemester, ItemActionName } from '../../../../../../../../interfaces/semesterplan';
+  StudyPath,
+} from '../../../../../../../../interfaces/study-path';
+import { SemesterPlan, MetaSemester, ItemActionName } from '../../../../../../../../interfaces/semester-plan';
 import {
   getSemesterList,
   getUser,
-  getUserStudypath,
+  getUserStudyPath,
 } from 'src/app/selectors/user.selectors';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { ScreenSizeService } from 'src/app/shared/services/screen-size.service';
-import { StudypathActions } from 'src/app/actions/user.actions';
+import { StudyPathActions } from 'src/app/actions/user.actions';
 import { ExtendedModuleGroup } from '../../../../../../../../interfaces/module-group';
 import { UnknownModulesActions } from 'src/app/actions/module-overview.actions';
 import { Semester } from '../../../../../../../../interfaces/semester';
@@ -58,9 +58,9 @@ import { DragDropService } from 'src/app/shared/services/drag-drop.service';
 export class SemesterBodyComponent {
 
   @Input() metaSemester: MetaSemester;
-  @Input() studyplanId: string;
-  @Input() semesterPlan: Semesterplan;
-  @Input() semesterStudypath$: Observable<SemesterStudyPath[]>;
+  @Input() studyPlanId: string;
+  @Input() semesterPlan: SemesterPlan;
+  @Input() semesterStudyPath$: Observable<SemesterStudyPath[]>;
   @Input() connectedDropListIds: string[];
 
   user$: Observable<User>;
@@ -68,8 +68,8 @@ export class SemesterBodyComponent {
   closeMode: string;
   isSmallScreen: boolean = false;
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>
-  semesterPlan$: Observable<Semesterplan>;
-  studypath$: Observable<Studypath>;
+  semesterPlan$: Observable<SemesterPlan>;
+  studyPath$: Observable<StudyPath>;
 
   modules$: Observable<Module[]>;
   modules: Module[];
@@ -92,7 +92,7 @@ export class SemesterBodyComponent {
     this.user$.subscribe((user) => {
       this.user = user;
     })
-    this.studypath$ = this.store.select(getUserStudypath);
+    this.studyPath$ = this.store.select(getUserStudyPath);
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);
 
     this.modules$ = this.store.select(getAllDistinctModules);
@@ -213,7 +213,7 @@ export class SemesterBodyComponent {
             this.closeMode = mode;
             if (this.closeMode === 'data') {
               module.mgId = mgId === undefined ? 'open' : mgId;
-              this.store.dispatch(StudypathActions.updateModuleInStudypath({ module }));
+              this.store.dispatch(StudyPathActions.updateModuleInStudyPath({ module }));
             }
           });
         }
@@ -267,7 +267,7 @@ export class SemesterBodyComponent {
                     this.semesterPlan.semester,
                     targetSemesterPlanId,
                     targetSemester,
-                    this.studyplanId,
+                    this.studyPlanId,
                     isTargetPastSemester
                   );
                 });
@@ -336,7 +336,7 @@ export class SemesterBodyComponent {
     }
 
     this.store.dispatch(
-      StudypathActions.updateModuleInStudypath({ module })
+      StudyPathActions.updateModuleInStudyPath({ module })
     );
 
     this.dialog.closeAll();
@@ -378,7 +378,7 @@ export class SemesterBodyComponent {
           flexNowImported: pathModule.flexNowImported ? pathModule.flexNowImported : false,
         };
 
-        this.store.dispatch(StudypathActions.updateModuleInStudypath({ module: newPathModule }))
+        this.store.dispatch(StudyPathActions.updateModuleInStudyPath({ module: newPathModule }))
       }
     });
   }
@@ -413,9 +413,9 @@ export class SemesterBodyComponent {
 
             this.store.dispatch(
               UserGeneratedModuleActions.updateUserGeneratedModule({
-                studyplanId: this.studyplanId,
-                semesterplanId: ppId,
-                semesterplanSemester: ppSem,
+                studyPlanId: this.studyPlanId,
+                semesterPlanId: ppId,
+                semesterPlanSemester: ppSem,
                 moduleId: moduleId,
                 module: module,
               })
@@ -429,8 +429,8 @@ export class SemesterBodyComponent {
   }
 
   openDeleteModuleDialog(
-    semesterplanId: string,
-    semesterplanSemester: string,
+    semesterPlanId: string,
+    semesterPlanSemester: string,
     moduleAcronym: string,
     moduleName: string,
     ects: number
@@ -444,10 +444,10 @@ export class SemesterBodyComponent {
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.store.dispatch(
-          ModulePlanningActions.deleteModuleFromSemesterplan({
-            studyplanId: this.studyplanId,
-            semesterplanId,
-            semesterplanSemester,
+          ModulePlanningActions.deleteModuleFromSemesterPlan({
+            studyPlanId: this.studyPlanId,
+            semesterPlanId,
+            semesterPlanSemester,
             acronym: moduleAcronym,
             ects,
           })
@@ -461,8 +461,8 @@ export class SemesterBodyComponent {
   }
 
   openDeleteUserGeneratedModuleDialog(
-    semesterplanId: string,
-    semesterplanSemester: string,
+    semesterPlanId: string,
+    semesterPlanSemester: string,
     module: UserGeneratedModule
   ) {
     const confirmationDialogInterface: ConfirmationDialogData = {
@@ -475,9 +475,9 @@ export class SemesterBodyComponent {
       callbackMethod: () => {
         this.store.dispatch(
           UserGeneratedModuleActions.deleteUserGeneratedModule({
-            studyplanId: this.studyplanId,
-            semesterplanId,
-            semesterplanSemester,
+            studyPlanId: this.studyPlanId,
+            semesterPlanId,
+            semesterPlanSemester,
             module
           })
         );
@@ -504,7 +504,7 @@ export class SemesterBodyComponent {
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         if (pathModuleId) {
-          this.store.dispatch(StudypathActions.deleteModuleFromStudypath({
+          this.store.dispatch(StudyPathActions.deleteModuleFromStudyPath({
             id: pathModuleId,
             semester
           }));

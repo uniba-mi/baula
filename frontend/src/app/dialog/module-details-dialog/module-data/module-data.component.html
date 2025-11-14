@@ -241,11 +241,11 @@
             </div>
             <div class="row">
                 <!-- add module to study plan -->
-                <!-- only show if user does not study teacher education TODO: change when studyplanning is available for teacher education! -->
+                <!-- only show if user does not study teacher education TODO: change when study planning is available for teacher education! -->
                 <ng-container *ngIf="!userStudiesLA && !selectedModule.isOld">
-                    <div class="row module-information-studyplan justify-content-between"
-                        *ngIf="studyplans$ | async as studyplans">
-                        <div *ngIf="studyplans.length > 0">
+                    <div class="row module-information-studyPlan justify-content-between"
+                        *ngIf="studyPlans$ | async as studyPlans">
+                        <div *ngIf="studyPlans.length > 0">
                             <div class="row d-flex flex-row align-items-center justify-content-center"
                                 *ngIf="user$ | async as user">
                                 <div class="col-12 fw-bold">Einplanen</div>
@@ -254,7 +254,7 @@
                                         class="module-planning-notification mt-2 d-flex flex-wrap align-items-center">
                                         <i class="bi bi-check-lg me-2 text-success"></i>
                                         <span class="text-break">
-                                            Das Modul ist im aktiven Plan "{{ activeStudyplan?.name }}" eingeplant:
+                                            Das Modul ist im aktiven Plan "{{ activeStudyPlan?.name }}" eingeplant:
                                             <span *ngFor="let semester of plannedSemesters; let last = last">
                                                 <strong>{{ semester | Semester }}</strong><span *ngIf="!last">, </span>
                                             </span>
@@ -266,14 +266,14 @@
                                         <div class="col-12 col-md-4">
                                             <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>Studienplan</mat-label>
-                                                <mat-select formControlName="selectedStudyplanId"
+                                                <mat-select formControlName="selectedStudyPlanId"
                                                     (selectionChange)="checkConstraints()"
                                                     aria-label="Dropdown zur Studienplanwahl" required>
-                                                    <mat-option *ngFor="let studyplan of studyplans"
-                                                        [value]="studyplan._id" [ngClass]="{
-                                    'active-option': studyplan?._id === activeStudyplan?._id
+                                                    <mat-option *ngFor="let studyPlan of studyPlans"
+                                                        [value]="studyPlan._id" [ngClass]="{
+                                    'active-option': studyPlan?._id === activeStudyPlan?._id
                                   }">
-                                                        {{ studyplan.name }}
+                                                        {{ studyPlan.name }}
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>
@@ -282,11 +282,11 @@
                                             <span>
                                                 <mat-form-field appearance="outline" class="w-100">
                                                     <mat-label>Semester</mat-label>
-                                                    <mat-select formControlName="selectedSemesterplanId"
+                                                    <mat-select formControlName="selectedSemesterPlanId"
                                                         (selectionChange)="checkConstraints()"
                                                         aria-label="Dropdown zur Semesterwahl" required>
                                                         <mat-option
-                                                            *ngFor="let plan of (selectedStudyplan?.semesterPlans ||[])"
+                                                            *ngFor="let plan of (selectedStudyPlan?.semesterPlans ||[])"
                                                             [value]="plan._id" [ngClass]="{
                               'active-option': plan._id === activeSemesterId
                             }">
@@ -298,7 +298,7 @@
                                         </div>
 
                                         <div class="col-12 col-md-4 d-flex align-items-start align-items-md-center">
-                                            <button class="btn btn-primary module-information-studyplan-btn"
+                                            <button class="btn btn-primary module-information-study-plan-btn"
                                                 (click)="addModuleToPlan(selectedModule)"
                                                 (keyup.enter)="addModuleToPlan(selectedModule)"
                                                 aria-label="In den Studienplan einplanen">

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CourseList } from 'src/app/modules/bilapp/interfaces/courseList';
+import { CourseList } from 'src/app/modules/bilapp/interfaces/course-list';
 import { State } from 'src/app/reducers';
-import { PlanCourse } from '../../../../../../../../../interfaces/semesterplan';
+import { PlanCourse } from '../../../../../../../../../interfaces/semester-plan';
 import { getPlanCourses } from 'src/app/selectors/study-planning.selectors';
 
 @Component({

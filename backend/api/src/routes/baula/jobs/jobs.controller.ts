@@ -3,23 +3,23 @@ import {
   jobModuleProposalKeyWordsRequest,
   getJobInformation,
   keywordRequest,
-} from "../../../services/jobService";
+} from "../../../services/job-service";
 import validator from "validator";
 import { User, Recommendation } from "../../../database/mongo";
 import mongoose from "mongoose";
-import { UserServer } from "../../../../../interfaces/user";
+import { UserServer } from "../../../../../../interfaces/user";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
-import { ExtendedJob, Job, Jobtemplate } from "../../../../../interfaces/job";
+import { ExtendedJob, Job, Jobtemplate } from "../../../../../../interfaces/job";
 import {
   validateAndReturnJobtemplate,
   validateObjectId,
-} from "../../../shared/helpers/customValidator";
-import { RecommendedModule } from "../../../../../interfaces/recommendation";
-import { extractModules } from "../../../shared/helpers/moduleHelpers";
+} from "../../../shared/helpers/custom-validator";
+import { RecommendedModule } from "../../../../../../interfaces/recommendation";
+import { extractModules } from "../../../shared/helpers/module-helpers";
 import path from "path";
-import { readJsonFile } from "../../../shared/helpers/processDataHelper";
+import { readJsonFile } from "../../../shared/helpers/process-data-helper";
 
-const jobDataFolderPath = path.join(__dirname, "../../..", "staticdata");
+const jobDataFolderPath = path.join(__dirname, "../../../..", "staticdata");
 
 // post function /crawling takes the url and returns the job information
 export async function crawlJob(
@@ -339,7 +339,7 @@ async function getMockedJobRecommendation(
       title: string;
       recModules: { acronym: string; score: number; studyprogramme: string }[];
     }[];
-  }>(`${jobDataFolderPath}/module_recommendations.json`);
+  }>(`${jobDataFolderPath}/module-recommendations.json`);
   return new Promise((resolve, reject) => {
     if (result.jobs) {
       const jobData = result.jobs.find((j) => j.title === job.title);

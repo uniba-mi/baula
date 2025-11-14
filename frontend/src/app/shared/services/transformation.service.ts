@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import {
-  Studypath,
+  StudyPath,
   SemesterStudyPath,
-} from '../../../../../interfaces/studypath';
+} from '../../../../../interfaces/study-path';
 import { Semester } from '../../../../../interfaces/semester';
-import { MStudyprogramme } from '../../../../../interfaces/user';
-import { UserGeneratedModule } from '../../../../../interfaces/usergeneratedmodule';
+import { MStudyProgramme } from '../../../../../interfaces/user';
+import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
 import { Store } from '@ngrx/store';
 import { getModuleById } from 'src/app/selectors/module-overview.selectors';
 import { filter, map, take } from 'rxjs/operators';
 import { RestService } from 'src/app/rest.service';
 import { combineLatest, firstValueFrom, Observable, of } from 'rxjs';
-import { Studyplan } from '../../../../../interfaces/studyplan';
+import { StudyPlan } from '../../../../../interfaces/study-plan';
 import { EventInput } from '@fullcalendar/core';
-import { AcademicDate } from '../../../../../interfaces/academicDate';
+import { AcademicDate } from '../../../../../interfaces/academic-date';
 import { Course, Term } from '../../../../../interfaces/course';
 import { RRule, Weekday } from 'rrule';
-import { getSemesterplansOfActiveStudyplan } from 'src/app/selectors/study-planning.selectors';
+import { getSemesterPlansOfActiveStudyPlan } from 'src/app/selectors/study-planning.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -24,18 +24,18 @@ import { getSemesterplansOfActiveStudyplan } from 'src/app/selectors/study-plann
 /*############################################################## 
   This Service is used for functions, that transform data for the 
   usage in components (ts-files). An example is the transformation
-  of the studypath, that needs to be transformed in some components
+  of the study path, that needs to be transformed in some components
   from a complete list into a list by semester 
   ##############################################################*/
 export class TransformationService {
   constructor(private store: Store, private rest: RestService) { }
 
-  transformStudypath(path: Studypath, semesters: Semester[]): Observable<SemesterStudyPath[]> {
+  transformStudyPath(path: StudyPath, semesters: Semester[]): Observable<SemesterStudyPath[]> {
 
-    // NOTE: we use the past semester information of the user (past semesters are set by user's active semesterplan, not the objective date)
+    // NOTE: we use the past semester information of the user (past semesters are set by user's active semester plan, not the objective date)
     return combineLatest([
-      this.store.select(getSemesterplansOfActiveStudyplan).pipe(
-        filter((semesterPlans) => !!semesterPlans), // wait until semesterplans is defined
+      this.store.select(getSemesterPlansOfActiveStudyPlan).pipe(
+        filter((semesterPlans) => !!semesterPlans), // wait until semester plans is defined
         //take(1)
       ),
       of(path),
@@ -118,7 +118,7 @@ export class TransformationService {
   /* takes studyprogrammes as input and returns a string, 
   containing the name of the studyprogramme as well as the 
   desc which contains a desc of the poVersion */
-  async transformStudyProgramme(sps?: MStudyprogramme[]): Promise<string> {
+  async transformStudyProgramme(sps?: MStudyProgramme[]): Promise<string> {
     return new Promise(async (resolve) => {
       if (sps) {
         let output: string[] = [];
@@ -196,12 +196,12 @@ export class TransformationService {
     );
   }
 
-  // gets two studyplans and a semester and updates the plan of the given semester from the first to the second studyplan and returns the target studyplan with the updated plan
-  transferPlanToAnotherStudyplan(
-    base: Studyplan,
-    target: Studyplan,
+  // gets two study plans and a semester and updates the plan of the given semester from the first to the second study plan and returns the target study plan with the updated plan
+  transferPlanToAnotherStudyPlan(
+    base: StudyPlan,
+    target: StudyPlan,
     semester: string
-  ): Studyplan {
+  ): StudyPlan {
     const basePlan = base.semesterPlans.find(
       (plan) => plan.semester === semester
     );

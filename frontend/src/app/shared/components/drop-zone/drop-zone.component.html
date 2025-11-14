@@ -1,0 +1,7 @@
+<div class="drop-zone my-2" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)"
+    [class.dragover]="isFileOver" (click)="fileInput.click()" (keyup.enter)="fileInput.click()">
+    <p>Ziehe eine Datei auf diese Fläche oder klicke hier, um eine Datei hochzuladen.</p>
+    <input type="file" accept=".html, .htm" (change)="onFileChange($event)" hidden #fileInput>
+    <div *ngIf="uploadedFileName" class="uploaded-file-name"> <i class="bi bi-check-lg text-success"></i>
+        Datei: {{ uploadedFileName }}</div>
+</div>

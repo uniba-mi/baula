@@ -10,7 +10,7 @@ import {
   ConfirmationDialogComponent,
   ConfirmationDialogData,
 } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
-import { PathModule } from '../../../../../../../interfaces/studypath';
+import { PathModule } from '../../../../../../../interfaces/study-path';
 import { Module } from '../../../../../../../interfaces/module';
 
 @Component({

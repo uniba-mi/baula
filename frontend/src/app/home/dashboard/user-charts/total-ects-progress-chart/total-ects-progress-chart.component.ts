@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ChartData, ChartConfiguration } from 'chart.js';
-import { SemesterStudyPath, Studypath } from '../../../../../../../interfaces/studypath';
+import { SemesterStudyPath, StudyPath } from '../../../../../../../interfaces/study-path';
 import { Semester } from '../../../../../../../interfaces/semester';
-import { Studyplan } from '../../../../../../../interfaces/studyplan';
+import { StudyPlan } from '../../../../../../../interfaces/study-plan';
 
 @Component({
     selector: 'app-total-ects-progress-chart',
@@ -11,8 +11,8 @@ import { Studyplan } from '../../../../../../../interfaces/studyplan';
     standalone: false
 })
 export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
-  @Input() studypath: SemesterStudyPath[];
-  @Input() studyplan: Studyplan | undefined | null;
+  @Input() studyPath: SemesterStudyPath[];
+  @Input() studyPlan: StudyPlan | undefined | null;
   @Input() semesters: Semester[];
   @Input() aimedEcts: number | undefined;
 
@@ -53,10 +53,10 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
     };
 
     // add aimed and planned ects to dataset
-    if(this.studyplan) {
-      // if studyplan exists add aimed and summed ects as data for chart
-      let aimedEctsOverSemesters = this.getSummedValues(this.studyplan.semesterPlans.map(el => el.aimedEcts));
-      let summedEcteOverSemesters = this.getSummedValues(this.studyplan.semesterPlans.map(el => el.summedEcts));
+    if(this.studyPlan) {
+      // if study plan exists add aimed and summed ects as data for chart
+      let aimedEctsOverSemesters = this.getSummedValues(this.studyPlan.semesterPlans.map(el => el.aimedEcts));
+      let summedEcteOverSemesters = this.getSummedValues(this.studyPlan.semesterPlans.map(el => el.summedEcts));
       
       this.studyProgressData.datasets = this.studyProgressData.datasets.concat([
         {
@@ -83,8 +83,8 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
         }
       ]);
     } else {
-      // case if no active studyplan exists, approximate aimed ects, planned ects are ignored
-      // push values for aimedEcts, if no studyplan is active assume student want to achieve same ects in each semester to get final aimedEcts
+      // case if no active study plan exists, approximate aimed ects, planned ects are ignored
+      // push values for aimedEcts, if no study plan is active assume student want to achieve same ects in each semester to get final aimedEcts
       const step = (this.aimedEcts ? this.aimedEcts : 180) / this.semesters.length;
       // initialize empty array for aimed ects
       let aimedEctsOverSemesters: number[] = [];
@@ -109,7 +109,7 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
 
     // TODO
     // add current passed ects to dataset
-    const passedEctsOverSemester = this.getSummedValues(this.studypath.map(el => {
+    const passedEctsOverSemester = this.getSummedValues(this.studyPath.map(el => {
       const passedModulesEcts = el.modules.filter(mod => mod.status == 'passed').map(module => module.ects).reduce(
         (accumulator, currentValue) => accumulator + currentValue, 0
       );

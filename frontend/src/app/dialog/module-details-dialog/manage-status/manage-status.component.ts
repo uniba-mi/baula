@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { Module } from '../../../../../../interfaces/module';
-import { Studyplan } from '../../../../../../interfaces/studyplan';
+import { StudyPlan } from '../../../../../../interfaces/study-plan';
 import { Observable } from 'rxjs';
-import { getStudyplans } from 'src/app/selectors/study-planning.selectors';
-import { Studypath } from '../../../../../../interfaces/studypath';
-import { getUserStudypath } from 'src/app/selectors/user.selectors';
+import { getStudyPlans } from 'src/app/selectors/study-planning.selectors';
+import { StudyPath } from '../../../../../../interfaces/study-path';
+import { getUserStudyPath } from 'src/app/selectors/user.selectors';
 import { Semester } from '../../../../../../interfaces/semester';
 import { ConfirmationDialogComponent, ConfirmationDialogData } from '../../confirmation-dialog/confirmation-dialog.component';
 import { ModulePlanningActions } from 'src/app/actions/study-planning.actions';
@@ -25,8 +25,8 @@ export class ManageStatusComponent {
   @Input() openedFromModuleCatalog: boolean;
   @Input() modType: string = 'notPath';
 
-  studyplans$: Observable<Studyplan[]>;
-  studypath$: Observable<Studypath>;
+  studyPlans$: Observable<StudyPlan[]>;
+  studyPath$: Observable<StudyPath>;
 
   history = [ // mocking this for now
     { semester: 'SoSe 2025', attempt: 2, grade: '', note: 'Ausstehend' },
@@ -40,31 +40,30 @@ export class ManageStatusComponent {
 
   ngOnInit() {
 
-    this.studyplans$ = this.store.select(getStudyplans);
-    this.studypath$ = this.store.select(getUserStudypath);
+    this.studyPlans$ = this.store.select(getStudyPlans);
+    this.studyPath$ = this.store.select(getUserStudyPath);
   }
 
-  hasModuleInPlan(studyplan: Studyplan): boolean {
-    return studyplan.semesterPlans?.some(sp =>
+  hasModuleInPlan(studyPlan: StudyPlan): boolean {
+    return studyPlan.semesterPlans?.some(sp =>
       sp.modules?.includes(this.selectedModule.acronym) &&
       !new Semester(sp.semester).isPastSemester()
     ) || false;
   }
 
-  getModuleSemesterPlans(studyplan: Studyplan) {
-    if (!studyplan.semesterPlans) return [];
+  getModuleSemesterPlans(studyPlan: StudyPlan) {
+    if (!studyPlan.semesterPlans) return [];
 
-    return studyplan.semesterPlans.filter(semesterPlan =>
+    return studyPlan.semesterPlans.filter(semesterPlan =>
       semesterPlan.modules?.includes(this.selectedModule.acronym) &&
       !new Semester(semesterPlan.semester).isPastSemester()
     );
   }
 
-  openDeleteDialog(studyplanId: string, studyplanName: string, semesterplanId: string, semester: string) {
-
+  openDeleteDialog(studyPlanId: string, studyPlanName: string, semesterPlanId: string, semester: string) {
 
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: `Modul wirklich aus dem Studienplan "${studyplanName}" löschen?`,
+      dialogTitle: `Modul wirklich aus dem Studienplan "${studyPlanName}" löschen?`,
       actionType: 'delete',
       confirmationItem: this.selectedModule.name,
       confirmButtonLabel: 'Löschen',
@@ -72,10 +71,10 @@ export class ManageStatusComponent {
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.store.dispatch(
-          ModulePlanningActions.deleteModuleFromSemesterplan({
-            studyplanId,
-            semesterplanId,
-            semesterplanSemester: semester,
+          ModulePlanningActions.deleteModuleFromSemesterPlan({
+            studyPlanId,
+            semesterPlanId,
+            semesterPlanSemester: semester,
             acronym: this.selectedModule.acronym,
             ects: this.selectedModule.ects,
           })

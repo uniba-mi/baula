@@ -1,0 +1,19 @@
+.drop-zone {
+    border: 2px dashed var(--ub-blue);
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    background: #f3feff;
+}
+
+.drop-zone.dragover {
+    border: 2px solid var(--ub-blue);
+}
+
+.uploaded-file-name {
+    margin-top: 10px;
+    color: var(--ub-gray);
+    font-size: 0.75rem;
+}

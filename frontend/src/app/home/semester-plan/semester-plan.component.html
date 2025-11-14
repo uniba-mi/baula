@@ -1,5 +1,5 @@
 <div *ngIf="activePlan$ | async as plan; else NoPlanAvailable">
-  <ng-container *ngIf="!maintenance; else MaintenanceSemesterplan">
+  <ng-container *ngIf="!maintenance; else MaintenanceSemesterPlan">
     <ng-container>
       <mat-sidenav-container hasBackdrop="false">
         <mat-sidenav #coursesearch mode="side" [opened]="searchOpened">
@@ -79,6 +79,6 @@
   </div>
 </ng-template>
 
-<ng-template #MaintenanceSemesterplan>
+<ng-template #MaintenanceSemesterPlan>
   <app-maintenance-message [feature]="'Stundenplan'"></app-maintenance-message>
 </ng-template>

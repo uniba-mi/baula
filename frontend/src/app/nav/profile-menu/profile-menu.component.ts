@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { MStudyprogramme, User } from '../../../../../interfaces/user';
+import { MStudyProgramme, User } from '../../../../../interfaces/user';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { take } from 'rxjs';
 import { config } from 'src/environments/config.local';
@@ -52,7 +52,7 @@ export class ProfileMenuComponent {
     }
   }
 
-  checkStudyprogramme(sps: MStudyprogramme[]): boolean {
+  checkStudyprogramme(sps: MStudyProgramme[]): boolean {
     for (let sp of sps) {
       // assumption that teacher education sps start with LA and if EWS part is referenced ends with EWS
       if (sp.spId.startsWith('LA') && sp.spId.endsWith('EWS')) {

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { User } from '../../../../../../interfaces/user';
 import { Semester } from '../../../../../../interfaces/semester';
-import { Studyplan } from '../../../../../../interfaces/studyplan';
+import { StudyPlan } from '../../../../../../interfaces/study-plan';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
@@ -10,9 +10,9 @@ import { AlertType } from 'src/app/shared/classes/alert';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { getUser, getUserStudyprogrammes } from 'src/app/selectors/user.selectors';
 import {
-  getSemesterplanSemesterByStudyplanId,
-  getActiveStudyplan,
-  getFilteredStudyplans,
+  getSemesterPlanSemesterByStudyPlanId,
+  getActiveStudyPlan,
+  getFilteredStudyPlans,
   getPlannedSemestersForModule,
   getActiveSemester,
 } from 'src/app/selectors/study-planning.selectors';
@@ -25,19 +25,19 @@ import {
 import { Router } from '@angular/router';
 import { ModService } from 'src/app/shared/services/module.service';
 import { PlanningValidationService } from 'src/app/shared/services/planning-validation.service';
-import { StudyplanService } from 'src/app/shared/services/studyplan.service';
 import { map, take, takeUntil, takeWhile } from 'rxjs/operators';
-import { StudyplanActions } from 'src/app/actions/study-planning.actions';
+import { StudyPlanActions } from 'src/app/actions/study-planning.actions';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UnknownModulesActions } from 'src/app/actions/module-overview.actions';
 import { ModuleCourse } from '../../../../../../interfaces/module-course';
-import { Semesterplan } from '../../../../../../interfaces/semesterplan';
+import { SemesterPlan } from '../../../../../../interfaces/semester-plan';
 import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Module } from '../../../../../../interfaces/module';
 import { Exam } from '../../../../../../interfaces/exam';
 import { DialogComponent } from '../../dialog.component';
 import { AuthService } from 'src/app/shared/auth/auth.service';
+import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
 
 @Component({
   selector: 'app-module-data',
@@ -61,21 +61,21 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
 
   semesters$: Observable<Semester[]>;
   user$: Observable<User>;
-  studyplans$: Observable<Studyplan[]>;
-  selectedSemesterplanId: string;
-  selectedStudyplan: Studyplan;
+  studyPlans$: Observable<StudyPlan[]>;
+  selectedSemesterPlanId: string;
+  selectedStudyPlan: StudyPlan;
 
   moduleClasses: ModuleCourse[];
-  semesterplanSemester$: Observable<string | undefined>;
-  semesterplanSemester: string | undefined;
-  semesterplan$: Observable<Semesterplan | undefined>;
+  semesterPlanSemester$: Observable<string | undefined>;
+  semesterPlanSemester: string | undefined;
+  semesterPlan$: Observable<SemesterPlan | undefined>;
   allModules: string[] | undefined;
 
   warningMessage: string;
   moduleClasses$: Observable<ModuleCourse[] | undefined>;
   moduleGroups$: Observable<ExtendedModuleGroup[] | undefined>;
-  activeStudyplan$: Observable<Studyplan | undefined>;
-  activeStudyplan: Studyplan | undefined;
+  activeStudyPlan$: Observable<StudyPlan | undefined>;
+  activeStudyPlan: StudyPlan | undefined;
   activeSemester: string | undefined;
   activeSemesterId: string;
   plannedSemesters$: Observable<string[] | null>;
@@ -84,7 +84,7 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   //recommendations
-  programId: string; // CURRENT assumption: first study program
+  programId: string; // CURRENT assumption: first study programme
   avgSemester: number;
   sucSemester: number;
   displayPriorModuleWarning: boolean;
@@ -96,12 +96,12 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
     private modService: ModService,
     private planningValidation: PlanningValidationService,
     private router: Router,
-    private studyplanService: StudyplanService,
+    private studyPlanService: StudyPlanService,
     private fb: FormBuilder,
   ) {
     this.form = this.fb.group({
-      selectedStudyplanId: [null],
-      selectedSemesterplanId: [null]
+      selectedStudyPlanId: [null],
+      selectedSemesterPlanId: [null]
     });
   }
 
@@ -115,28 +115,28 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
             this.userStudiesLA = true;
           }
         }
-        // Currently, only the first program is used
+        // Currently, only the first programme is used
         this.programId = user.sps[0].spId;
       }
     });
 
-    // studyplans without past semesters
-    this.studyplans$ = this.store.select(getFilteredStudyplans);
+    // study plans without past semesters
+    this.studyPlans$ = this.store.select(getFilteredStudyPlans);
     this.moduleClasses$ = this.store.select(getModuleClasses);
     this.moduleGroups$ = this.store.select(getStructuredModuleGroups);
 
-    // find active studyplan
-    this.activeStudyplan$ = this.store.select(getActiveStudyplan);
+    // find active study plan
+    this.activeStudyPlan$ = this.store.select(getActiveStudyPlan);
 
     // retrieve and set active plan
-    this.activeStudyplan$
+    this.activeStudyPlan$
       .pipe(takeWhile((activePlan) => !!activePlan))
       .subscribe((activePlan) => {
         if (activePlan) {
-          this.activeStudyplan = activePlan;
-          this.selectedStudyplan = activePlan;
+          this.activeStudyPlan = activePlan;
+          this.selectedStudyPlan = activePlan;
           this.form.patchValue({
-            selectedStudyplanId: activePlan._id,
+            selectedStudyPlanId: activePlan._id,
           });
 
           // display semesters where module has already been planned to user
@@ -163,8 +163,8 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
   }
 
   updateHighlightingOptions() {
-    if (this.selectedStudyplan && this.selectedStudyplan.semesterPlans) {
-      const matchingPlan = this.selectedStudyplan.semesterPlans.find(plan => plan.semester === this.activeSemester);
+    if (this.selectedStudyPlan && this.selectedStudyPlan.semesterPlans) {
+      const matchingPlan = this.selectedStudyPlan.semesterPlans.find(plan => plan.semester === this.activeSemester);
       if (matchingPlan) {
 
         // for highlighting option in dropdown
@@ -259,17 +259,17 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
     });
   }
 
-  // check if module is offered in the selected studyplan semester
+  // check if module is offered in the selected study plan semester
   checkConstraints() {
 
-    const selectedStudyplanId = this.form.get('selectedStudyplanId')?.value;
-    const selectedSemesterplanId = this.form.get('selectedSemesterplanId')?.value;
+    const selectedStudyPlanId = this.form.get('selectedStudyPlanId')?.value;
+    const selectedSemesterPlanId = this.form.get('selectedSemesterPlanId')?.value;
 
-    // set selected studyplan
-    this.studyplans$.pipe(take(1)).subscribe((studyplans) => {
-      const selectedStudyplan = studyplans.find(plan => plan._id === selectedStudyplanId);
-      if (selectedStudyplan) {
-        this.selectedStudyplan = selectedStudyplan;
+    // set selected study plan
+    this.studyPlans$.pipe(take(1)).subscribe((studyPlans) => {
+      const selectedStudyPlan = studyPlans.find(plan => plan._id === selectedStudyPlanId);
+      if (selectedStudyPlan) {
+        this.selectedStudyPlan = selectedStudyPlan;
       }
     });
 
@@ -277,28 +277,28 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
     this.updateHighlightingOptions();
 
     this.store.dispatch(
-      StudyplanActions.selectStudyplan({ studyplanId: selectedStudyplanId })
+      StudyPlanActions.selectStudyPlan({ studyPlanId: selectedStudyPlanId })
     );
 
-    // get selected semesterplan semester
-    this.semesterplanSemester$ = this.store.select(
-      getSemesterplanSemesterByStudyplanId(
-        selectedStudyplanId,
-        selectedSemesterplanId
+    // get selected semester plan semester
+    this.semesterPlanSemester$ = this.store.select(
+      getSemesterPlanSemesterByStudyPlanId(
+        selectedStudyPlanId,
+        selectedSemesterPlanId
       )
     );
-    this.semesterplanSemester$.subscribe(
-      (semester) => (this.semesterplanSemester = semester)
+    this.semesterPlanSemester$.subscribe(
+      (semester) => (this.semesterPlanSemester = semester)
     );
 
-    // if both studyplan and semester are selected
-    if (selectedSemesterplanId && selectedStudyplanId) {
+    // if both study plan and semester are selected
+    if (selectedSemesterPlanId && selectedStudyPlanId) {
       // display warnings if modules are not offered in the selected semester
 
-      if (this.semesterplanSemester != undefined) {
+      if (this.semesterPlanSemester != undefined) {
         let planningValidationResult = this.planningValidation.isModuleOffered(
           this.selectedModule,
-          this.semesterplanSemester
+          this.semesterPlanSemester
         );
 
         if (!planningValidationResult.success) {
@@ -345,10 +345,10 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
   }
 
   addModuleToPlan(selectedModule: Module): void {
-    const selectedStudyplanId = this.form.get('selectedStudyplanId')?.value;
-    const selectedSemesterplanId = this.form.get('selectedSemesterplanId')?.value;
-    if (selectedStudyplanId && selectedSemesterplanId) {
-      this.studyplanService.addModuleToPlan(selectedModule, selectedSemesterplanId, selectedStudyplanId);
+    const selectedStudyPlanId = this.form.get('selectedStudyPlanId')?.value;
+    const selectedSemesterPlanId = this.form.get('selectedSemesterPlanId')?.value;
+    if (selectedStudyPlanId && selectedSemesterPlanId) {
+      this.studyPlanService.addModuleToPlan(selectedModule, selectedSemesterPlanId, selectedStudyPlanId);
     }
   }
 

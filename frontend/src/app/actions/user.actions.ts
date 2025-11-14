@@ -1,8 +1,8 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChartVisibility, CompAim, Hint, Consent, User, ConsentType, UserServer, ModuleFeedback } from '../../../../interfaces/user';
-import { Studypath, PathModule } from '../../../../interfaces/studypath';
-import { TimetableSettings } from '../../../../interfaces/semesterplan';
+import { StudyPath, PathModule } from '../../../../interfaces/study-path';
+import { TimetableSettings } from '../../../../interfaces/semester-plan';
 import { ExtendedJob, Jobtemplate } from '../../../../interfaces/job';
 
 export const UserActions = createActionGroup({
@@ -33,24 +33,24 @@ export const UserActions = createActionGroup({
   }
 });
 
-export const StudypathActions = createActionGroup({
-  source: 'Studypath',
+export const StudyPathActions = createActionGroup({
+  source: 'Study Path',
   events: {
-    'Update Module In Studypath': props<{ module: PathModule }>(),
-    'Update Module In Studypath Success': props<{ studypath: Studypath }>(),
-    'Update Module In Studypath Failure': props<{ error: any }>(),
-    'Update Studypath': props<{ completedModules: PathModule[] }>(),
-    'Update Studypath Success': props<{ studypath: Studypath }>(),
-    'Update Studypath Failure': props<{ error: any }>(),
+    'Update Module In Study Path': props<{ module: PathModule }>(),
+    'Update Module In Study Path Success': props<{ studyPath: StudyPath }>(),
+    'Update Module In Study Path Failure': props<{ error: any }>(),
+    'Update Study Path': props<{ completedModules: PathModule[] }>(),
+    'Update Study Path Success': props<{ studyPath: StudyPath }>(),
+    'Update Study Path Failure': props<{ error: any }>(),
     'Finish Semester': props<{ completedModules: PathModule[], droppedModules: PathModule[], semester: string }>(),
-    'Finish Semester Success': props<{ studypath: Studypath, semester: string }>(),
+    'Finish Semester Success': props<{ studyPath: StudyPath, semester: string }>(),
     'Finish Semester Failure': props<{ error: any }>(),
-    'Delete Module From Studypath': props<{ id: string; semester: string }>(),
-    'Delete Module From Studypath Success': props<{ studypath: Studypath }>(),
-    'Delete Module From Studypath Failure': props<{ error: any }>(),
-    'Delete Studypath': emptyProps(),
-    'Delete Studypath Success': emptyProps(),
-    'Delete Studypath Failure': props<{ error: any }>(),
+    'Delete Module From Study Path': props<{ id: string; semester: string }>(),
+    'Delete Module From Study Path Success': props<{ studyPath: StudyPath }>(),
+    'Delete Module From Study Path Failure': props<{ error: any }>(),
+    'Delete Study Path': emptyProps(),
+    'Delete Study Path Success': emptyProps(),
+    'Delete Study Path Failure': props<{ error: any }>(),
   },
 });
 
@@ -84,24 +84,24 @@ export const FavoriteModulesActions = createActionGroup({
   }
 })
 
-export const NotInterestingModulesActions = createActionGroup({
-  source: 'Not Interesting Modules',
+export const ExcludedModulesActions = createActionGroup({
+  source: 'Excluded Modules',
   events: {
-    'Delete not interesting modules': emptyProps(),
-    'Delete not interesting modules success': emptyProps(),
-    'Delete not interesting modules failure': props<{ error: HttpErrorResponse }>(),
+    'Delete excluded modules': emptyProps(),
+    'Delete excluded modules success': emptyProps(),
+    'Delete excluded modules failure': props<{ error: HttpErrorResponse }>(),
   }
 })
 
-export const NotInterestingModuleActions = createActionGroup({
-  source: 'Not Interesting Module',
+export const ExcludedModuleActions = createActionGroup({
+  source: 'Excluded Module',
   events: {
-    'Toggle not interesting module': props<{ acronym: string }>(),
-    'Toggle not interesting module success': props<{ notInterestingModulesAcronyms: string[] }>(),
-    'Toggle not interesting module failure': props<{ error: HttpErrorResponse }>(),
-    'Delete not interesting module': props<{ acronym: string }>(),
-    'Delete not interesting module success': props<{ acronym: string }>(),
-    'Delete not interesting module failure': props<{ error: HttpErrorResponse }>()
+    'Toggle excluded module': props<{ acronym: string }>(),
+    'Toggle excluded module success': props<{ excludedModulesAcronyms: string[] }>(),
+    'Toggle excluded module failure': props<{ error: HttpErrorResponse }>(),
+    'Delete excluded module': props<{ acronym: string }>(),
+    'Delete excluded module success': props<{ acronym: string }>(),
+    'Delete excluded module failure': props<{ error: HttpErrorResponse }>()
   }
 })
 
@@ -113,18 +113,6 @@ export const CompetenceAimsActions = createActionGroup({
     'Update Competence Aims Failure': props<{ error: HttpErrorResponse }>()
   }
 });
-
-export const InterestsActions = createActionGroup({
-  source: 'Interests',
-  events: {
-    'Add Interest': props<{ interest: string }>(),
-    'Add Interest Success': props<{ interests: string[] }>(),
-    'Add Interest Failure': props<{ error: HttpErrorResponse }>(),
-    'Delete Interest': props<{ interest: string }>(),
-    'Delete Interest Success': props<{ interests: string[] }>(),
-    'Delete Interest Failure': props<{ error: HttpErrorResponse }>(),
-  }
-})
 
 export const JobActions = createActionGroup({
   source: 'Job',

@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { RestService } from 'src/app/rest.service';
-import { AcademicDate } from '../../../../../interfaces/academicDate';
+import { AcademicDate } from '../../../../../interfaces/academic-date';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { TimetableActions } from 'src/app/actions/study-planning.actions';

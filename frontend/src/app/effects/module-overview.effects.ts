@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RestService } from '../rest.service';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { ModulehandbookActions, UnknownModulesActions } from '../actions/module-overview.actions';
+import { ModuleHandbookActions, UnknownModulesActions } from '../actions/module-overview.actions';
 
 
 
@@ -11,11 +11,11 @@ import { ModulehandbookActions, UnknownModulesActions } from '../actions/module-
 export class ModuleOverviewEffects {
 
   loadModules$ = createEffect(() => this.actions$.pipe(
-    ofType(ModulehandbookActions.loadModulehandbook),
+    ofType(ModuleHandbookActions.loadModuleHandbook),
     switchMap((props) => 
       this.rest.getModulhandbookStructure(props.id, props.version).pipe(
-        map( mhb => ModulehandbookActions.loadModulehandbookSuccess({ mhb })),
-        catchError(error => of(ModulehandbookActions.loadModulehandbookFailure({ error })))
+        map( mhb => ModuleHandbookActions.loadModuleHandbookSuccess({ mhb })),
+        catchError(error => of(ModuleHandbookActions.loadModuleHandbookFailure({ error })))
       )
     )
   ));

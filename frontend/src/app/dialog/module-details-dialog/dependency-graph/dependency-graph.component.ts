@@ -8,12 +8,12 @@ import {
 import cytoscape, { NodeSingular } from 'cytoscape';
 import dagre from 'cytoscape-dagre';
 import { style } from 'src/app/shared/classes/style';
-import { Studypath } from '../../../../../../interfaces/studypath';
-import { Semesterplan } from '../../../../../../interfaces/semesterplan';
+import { StudyPath } from '../../../../../../interfaces/study-path';
+import { SemesterPlan } from '../../../../../../interfaces/semester-plan';
 import {
   ModuleDetailsDependencyVisNodeSchema,
   ModuleStatusSchema,
-} from '../../../../../../interfaces/visualizationData';
+} from '../../../../../../interfaces/visualization-data';
 import { ModService } from 'src/app/shared/services/module.service';
 import { Semester } from '../../../../../../interfaces/semester';
 
@@ -28,8 +28,8 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
   @Input() priorModules: ModuleDetailsDependencyVisNodeSchema[];
   @Input() extractedPriorModules: ModuleDetailsDependencyVisNodeSchema[];
   @Input() advancedModules: ModuleDetailsDependencyVisNodeSchema[];
-  @Input() studypath: Studypath | null;
-  @Input() semesterplans: Semesterplan[] | null | undefined;
+  @Input() studyPath: StudyPath | null;
+  @Input() semesterPlans: SemesterPlan[] | null | undefined;
   @ViewChild('cyModuleDetails') cyContainer: any;
   elements: cytoscape.ElementDefinition[] = [];
   cytoscapeInstance: cytoscape.Core;
@@ -341,28 +341,28 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
   createStatus(
     node: ModuleDetailsDependencyVisNodeSchema | undefined
   ): ModuleStatusSchema | undefined {
-    if (this.studypath) {
-      const studypathModule = this.studypath.completedModules.find(
+    if (this.studyPath) {
+      const studyPathModule = this.studyPath.completedModules.find(
         (module) => module.acronym === node?.acronym
       );
-      if (studypathModule) {
+      if (studyPathModule) {
         return {
-          statusText: studypathModule.status ? studypathModule.status : '',
-          semester: studypathModule.semester,
-          grade: studypathModule.grade,
+          statusText: studyPathModule.status ? studyPathModule.status : '',
+          semester: studyPathModule.semester,
+          grade: studyPathModule.grade,
         };
       }
     }
 
-    if (this.semesterplans) {
-      for (const semesterplan of this.semesterplans) {
-        const semesterplanModule = semesterplan.modules.find(
+    if (this.semesterPlans) {
+      for (const semesterPlan of this.semesterPlans) {
+        const semesterPlanModule = semesterPlan.modules.find(
           (module) => module === node?.acronym
         );
-        if (semesterplanModule) {
+        if (semesterPlanModule) {
           return {
             statusText: 'planned',
-            semester: semesterplan.semester,
+            semester: semesterPlan.semester,
           };
         }
       }

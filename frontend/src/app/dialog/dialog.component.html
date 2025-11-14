@@ -9,12 +9,12 @@
 
         <!-- displays subdialog according to id -->
         <div *ngIf="
-            data.studyplan && data.dialogContentId === 'add-studyplan-dialog'
+            data.studyPlan && data.dialogContentId === 'add-study-plan-dialog'
           ">
-          <app-study-plan-dialog [studyplan]="data.studyplan"></app-study-plan-dialog>
+          <app-study-plan-dialog [studyPlan]="data.studyPlan"></app-study-plan-dialog>
         </div>
         <div *ngIf="
-            data.aimedEcts !== undefined && data.dialogContentId === 'update-aimedEcts-dialog'
+            data.aimedEcts !== undefined && data.dialogContentId === 'update-aimed-ects-dialog'
           ">
           <app-aimed-ects-dialog [aimedEcts]="data.aimedEcts"></app-aimed-ects-dialog>
         </div>
@@ -78,11 +78,11 @@
         </div>
         <div *ngIf="
             data.modules &&
-            data.semesterplanId &&
+            data.semesterPlanId &&
             data.dialogContentId === 'add-module-dialog'
           ">
           <app-add-module-dialog [modules]="data.modules"
-            [semesterplanId]="data.semesterplanId"></app-add-module-dialog>
+            [semesterPlanId]="data.semesterPlanId"></app-add-module-dialog>
         </div>
         <div *ngIf="
           data.semesters$ &&
@@ -119,20 +119,20 @@
         <!-- Dialog for Import and Export -->
         <div *ngIf="data.dialogContentId === 'import-dialog' && data.importType">
           <app-import-dialog [importType]="data.importType" [startSemester]="data.startSemester"
-            [studyplanTemplate$]="data.studyplanTemplate$"
+            [studyPlanTemplate$]="data.studyPlanTemplate$"
             [isFirstSemesterStudent]="data.isFirstSemesterStudent"></app-import-dialog>
         </div>
-        <div *ngIf="data.dialogContentId === 'export-dialog' && data.studyplan && data.studypath">
-          <app-export-dialog [studyplan]="data.studyplan" [studypath]="data.studypath"></app-export-dialog>
+        <div *ngIf="data.dialogContentId === 'export-dialog' && data.studyPlan && data.studyPath">
+          <app-export-dialog [studyPlan]="data.studyPlan" [studyPath]="data.studyPath"></app-export-dialog>
         </div>
         <!-- Generischer Dialog für die Wahl zwischen Optionen -->
         <div *ngIf="data.dialogContentId === 'select-option-dialog' && data.options">
           <app-select-option-dialog [options]="data.options"></app-select-option-dialog>
         </div>
-        <!-- Dialog for Activation of Studyplan -->
-        <div *ngIf="data.dialogContentId === 'activate-studyplan' && data.activeStudyplan">
-          <app-activate-studyplan-dialog [studyplans]="data.studyplans" [activePlan]="data.activeStudyplan"
-            [newPlanId]="data.newPlanId"></app-activate-studyplan-dialog>
+        <!-- Dialog for Activation of Study plan -->
+        <div *ngIf="data.dialogContentId === 'activate-study-plan' && data.activeStudyPlan">
+          <app-activate-study-plan-dialog [studyPlans]="data.studyPlans" [activePlan]="data.activeStudyPlan"
+            [newPlanId]="data.newPlanId"></app-activate-study-plan-dialog>
         </div>
         <!-- Dialog for resolving collisions of courses -->
         <div *ngIf="data.dialogContentId === 'resolve-collision' && data.courses">

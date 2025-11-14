@@ -3,11 +3,11 @@
 /* import styles files */
 @use './variables';
 @use "./bootstrap";
-@use './mat-theme/mat_core';
+@use './mat-theme/mat-core';
 @use './shared/global';
-@use './shared/ui_elements';
-@use './shared/components/search_panel';
+@use './shared/ui-elements';
+@use './shared/components/search-panel';
 @use './shared/components/dialog';
-@use './shared/components/fullcalendar';
-@use './shared/components/slider_arrows';
-@use './mat-theme/mat_override';
+@use './shared/components/full-calendar';
+@use './shared/components/slider-arrows';
+@use './mat-theme/mat-override';
