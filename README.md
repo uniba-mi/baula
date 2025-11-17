@@ -18,8 +18,11 @@ Dieses Repo dokumentiert den Quellcode des digitalen Studienplanungsassistenten 
 ### Setup und Installation
 Hier sind die Schritte dokumentiert um Baula lokal zu starten.
 ##### 0. Requirements
-Um Baula lokal starten zu können ist die Installation von [Node.js](https://nodejs.org/en) inklusive des Node-Package-Manager (npm) nötig. 
-Funktionsfähig sollte das Repo mit den Versionen ab 24.10.0 (Node.js) und ab 11.6.2 (npm) sein.
+Um Baula lokal starten zu können ist die Installation von [Node.js](https://nodejs.org/en) inklusive des Node-Package-Manager (npm) sowie die [Angular CLI](https://angular.dev/tools/cli). 
+Folgende Versionen sind die Minimalvoraussetzungen:
+- Node.js >= 24.10.0 
+- npm >= 11.6.2
+- Angular CLI >= 20.3.6
 
 ##### 1. Anlegen der .env-Dateien
 - im root Verzeichnis muss eine `.env` angelegt werden. Diese .env Datei ist die Basis für den Start der Docker-Container. Die gesetzen Informationen (Nutzernamen und Passwörter) sind für den späteren Zugriff relevant. Die .env sollte folgende Informationen enthalten:
@@ -175,7 +178,7 @@ Nähere zum benötigten Datenschema ist in der [Backend-README](./backend/README
 ### Projektstruktur
 - `/backend` enthält alles zum Abruf der relevanten Daten für das Frontend. Neben der mit Express.js erstellten REST-API ist hier der Python-Code verortet. Näheres ist in der spezifischen [README](./backend/README.md).
 - `/data` primär werden hier die Daten aus den DB-Containern persistiert, welche aber nicht in das Repo gepusht werden. Unter `/data/backups/mariadb` bzw. `/data/backups/mongodb` können Dump-Files hinterlegt werden, welche anschließend in den jeweiligen DB-Container gemountet werden. `/data/backups/mariadb` enthält dabei den initialen Dump, der importiert werden muss um Baula initial zu starten.
-- `/documentation` enthält alle Dateien für die Nutzer- und Developer-Dokumentation zu Baula, welche mit Retype erstellt ist. Wichtig für das Deployment ist, dass der Ordner `.retype` enthalten ist, da dort die statisch gebauten Dateien liegen, welche in den Server-Container gemountet werden.
+- `/documentation` enthält alle Dateien für die Nutzer- und Developer-Dokumentation zu Baula, welche mit Retype erstellt ist. Wichtig für das Deployment ist, dass der Ordner `.retype` im jeweilgen Dokumentationsordner enthalten ist, da dort die statisch gebauten Dateien liegen, welche in den Server-Container gemountet werden. Die Nutzer-Dokumentation befindet sich im Ordner `/documentation/user-docs` und die Developer-Dokumentation im Ordner `/documentation/developer-docs`.
 - `/frontend` enthält die Kern-Codebasis von Baula in Form des Angular Projekts: Näheres ist in der spezifischen [README](./frontend/README.md) erklärt
 - `/interfaces` hier sind die gemeinsamen Interfaces und Klassen, welche von Frontend und Backend genutzt werden enthalten.
 - `/server` wir nur für die Bereitstellung auf einem Server benötigt. Hier werden in `/apache2` die Servereinstellungen gesetzt, welche in den Server-Container gemountet werden. Der Ordner `/app` wird beim Build des Frontend mit der gebauten Angular-App befüllt und anschließend in das `/var/www`-Verzeichnis des Server-Containers gemountet.
@@ -193,14 +196,10 @@ Nähere zum benötigten Datenschema ist in der [Backend-README](./backend/README
     - `buildProd`: Baut Frontend, Backend und Doku für das Deployment auf einem Produktivsystem. Primärer Unterschied sind die geladenen Umgebungsvariablen für das Frontend, welche u.a. auch Debugging-Tools steuern.
 
 ### API-Dokumentation
-TBD -> Link auf Swagger Doku
+Die Dokumentation der API ist nach Start des API-Servers unter der Route `/api/docs/baula` erreichbar.
 
 ### Deployment
 TBD
-Voraussetzungen:
-- npm install -g retypeapp
-- Angular (ng) installiert?
-
 Vorgehen:
 - Wichtig: prod -> main | test -> develop
 - npm run buildTest bzw. npm run buildProd
