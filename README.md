@@ -35,7 +35,6 @@ Folgende Versionen sind die Minimalvoraussetzungen:
     RELDB_USER=user # additional user for accessing the mariadb
     RELDB_PASSWORD=password # password for additional user
     RELDB_DATABASE=dbname # database name in mariadb
-    DOCS_PORT=4201 # port where docs should be available
 
     # only for deployment on server
     SERVER_PORT_SSL=443 # ssl port on the server
@@ -123,25 +122,40 @@ Im Ordner `./backend/api/src/database` muss eine Datei `redis-users.acl` angeleg
     user test on >test123 ~* +@all
 ```
 
-##### 5. Dockercontainer starten
-In der lokalen Umgebung muss der Befehl `npm run startLocalDocker` ausgeführt werden.
+##### 5. Template-Dateien anlegen
+Baula bietet Schnittstellen zu verschiedenen universitären Systemen. Konkret umgesetzt sind derzeit FlexNow und UnivIS. Diese Schnittstellen werden angesteuert und die empfangenen Daten in unser Baula-Datenformat transformiert. Hierzu nutzen wir das npm-Paket `camaro`, welches mit Hilfe von XPath aus den XML-Eingaben definierte JSON-Ausgaben erzeugt. 
+Nähere zum benötigten Datenschema ist in der [Backend-README](./backend/README.md). Ein Beispiel, wie eine solche Transformation aussieht findet sich in `/backend/api/src/templates/univis-template.ts`, welches dazu dient, die eingehenden XML-Daten der UnivIS-PRG-Schnittstelle in das Baula-Format zu transformieren.
 
-##### 6. Dump in MariaDB laden
-Damit die Anwendung regulär verwendet werden kann, müssen die Strukturdaten in der MariaDB initial über einen Dump importiert werden. Der im Repo hinterlegte Dump wird dabei in den MariaDB-Container in das Verzeichnis `/backups` gemountet. Zum Import des Containers also folgende Befehle ausführen:
-```bash
-    # 1. Zugriff auf MariaDB-Dockercontainer
-    docker exec -it baula-mariadb-1 bash
-    # 2. In den Backup-Ordner navigieren
-    cd /backups 
-    # 3. Dump einspielen
-    mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -D"$MYSQL_DATABASE" < test_backup.sql
-```
+Damit Baula lokal läuft, müssen die Template-Dateien alle verfügbar sein. Neben der `univis-template.ts` müssen noch folgende Dateien angelegt werden:
+- `student-fn2api.ts`: Wird benötigt, um die Studenten-API von FlexNow anzusteuern. Näheres zu den benötigten Eigenschaften findet sich in der [Backend-Readme](./backend/README.md).
+    ```ts
+    // student-fn2api.ts
+    export const studyPathTemplate = [];
+    export const metaDataTemplate = [];
+    ```
+- `mhb-fn2mod.ts`: Wird benötigt, um die Modulhandbücher aus FlexNow zu importieren. Die nötigen Eigenschaften orientieren sich hier an den Schema-Definitionen in der `/backend/api/src/database/schema.prisma`.
+    ```ts
+    // mhb-fn2mod.ts
+    export const depTemplate = [];
+    export const personTemplate = [];
+    export const spTemplate = [];
+    export const mhbTemplate = [];
+    export const mgTemplate = [];
+    export const mcTemplate = [];
+    export const modTemplate = [];
+    export const modDepTemplate = [];
+    export const moduleExamTemplate = [];
+    export const sp2mhbTemplate = [];
+    export const per2mcTemplate = [];
+    export const mhb2mgTemplate = [];
+    export const mg2mgTemplate = [];
+    export const mg2modTemplate = [];
+    export const m2mcTemplate = [];
+    ```
 
-##### 7. Prisma Client bauen
-* In das Verzeichnis `/backend/api` navigieren und dort `npm run generateDB` ausführen, um den Prisma Client zu bauen.
-* Über den Befehl `npm run updateDB` wird mit Hilfe der `schema.prisma`-Datei das grundlegende Datenbankschema in die referenzierte Datenbank übertragen. 
+Beide Dateien dürfen nicht leer sein und müssen die nötigen Templates exportieren, daher empfiehlt es sich für die lokale Entwicklung jeweiligen Beispiele einzufügen. Wichtig: Die zugehörigen Funktionen im Admin-Bereich funktionieren mit diesen nicht und müssen an die eingehende XML angepasst werden!
 
-##### 8. Lokale Nutzer anlegen
+##### 6. Lokale Nutzer anlegen
 In Baula gibt es zwei Möglichkeiten sich einzuloggen: 
 1. Über Shibboleth. Benötigt wird ein Identity Provider (idp) sowie ein dort registrierter Service Provider (sp).
 2. Über ein lokales Nutzerkonto. In Baula können beliebige lokale Nutzer angelegt und mit Rollen (student, demo, admin) versehen werden. Diese müssen in der Datei `users.ts` in `/backend/api/src/shared/constants` angelegt und die Zugangsdaten in der `.env.backend` hinterlegt werden (siehe Schritt 1). Hier eine beispielhafte `users.ts`:
@@ -162,18 +176,34 @@ In Baula gibt es zwei Möglichkeiten sich einzuloggen:
     ]
     ```
 
-##### 9. Frontend und Backend starten
+##### 7. Dockercontainer starten
+In der lokalen Umgebung muss der Befehl `npm run startLocalDocker` ausgeführt werden.
+
+##### 8. Dump in MariaDB laden
+Damit die Anwendung regulär verwendet werden kann, müssen die Strukturdaten in der MariaDB initial über einen Dump importiert werden. Der im Repo hinterlegte Dump wird dabei in den MariaDB-Container in das Verzeichnis `/backups` gemountet. Zum Import des Containers also folgende Befehle ausführen:
+```bash
+    # 1. Zugriff auf MariaDB-Dockercontainer
+    docker exec -it baula-mariadb-1 bash
+    # 2. In den Backup-Ordner navigieren
+    cd /backups 
+    # 3. Dump einspielen
+    mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -D"$MYSQL_DATABASE" < initial_backup.sql
+```
+
+##### 9. Prisma Client bauen
+* In das Verzeichnis `/backend/api` navigieren und dort `npm run generateDB` ausführen, um den Prisma Client zu bauen.
+* Über den Befehl `npm run updateDB` wird mit Hilfe der `schema.prisma`-Datei das grundlegende Datenbankschema in die referenzierte Datenbank übertragen. 
+
+##### 10. Frontend und Backend starten
 Nun sollte alles eingerichtet sein, so dass man über die folgenden Befehle Baula sowie die API starten kann. Beide Befehle müssen im root-Verzeichnis ausgeführt werden.
 ```bash
     npm run startFrontend # startet Frontend auf Port 4200
     npm run startBackend # startet Backend auf Port 3305
 ```
 
-##### 10. Initialisierung im Admin-Bereich
+##### 11. Initialisierung im Admin-Bereich
 Damit der Personalisierungs-Tab funktioniert, müssen im Admin-Bereich (zugänglich über den Nutzer mit der Rolle "admin") die Modul- und Topic-Embeddings initialisiert werden. Diese finden sich im Admin-Bereich im Tab "Empfehlung". Näheres zum Admin-Tab findet sich in der [Backend-README](./backend/README.md).
 
-Baula bietet Schnittstellen zu verschiedenen universitären Systemen. Konkret umgesetzt sind derzeit FlexNow und UnivIS. Diese Schnittstellen werden angesteuert und die empfangenen Daten in unser Baula-Datenformat transformiert. Hierzu nutzen wir das npm-Paket `camaro`, welches mit Hilfe von XPath aus den XML-Eingaben definierte JSON-Ausgaben erzeugt. 
-Nähere zum benötigten Datenschema ist in der [Backend-README](./backend/README.md). Ein Beispiel, wie eine solche Transformation aussieht findet sich in `/backend/api/src/templates/univis-template.ts`, welches dazu dient, die eingehenden XML-Daten der UnivIS-PRG-Schnittstelle in das Baula-Format zu transformieren.
 
 ### Projektstruktur
 - `/backend` enthält alles zum Abruf der relevanten Daten für das Frontend. Neben der mit Express.js erstellten REST-API ist hier der Python-Code verortet. Näheres ist in der spezifischen [README](./backend/README.md).
