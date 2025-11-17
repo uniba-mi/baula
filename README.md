@@ -18,10 +18,8 @@ Dieses Repo dokumentiert den Quellcode des digitalen Studienplanungsassistenten 
 ### Setup und Installation
 Hier sind die Schritte dokumentiert um Baula lokal zu starten.
 ##### 0. Requirements
-TODO
-- Node Version mindestens 24.x
-- npm Version ???
-- Angular installiert?
+Um Baula lokal starten zu können ist die Installation von [Node.js](https://nodejs.org/en) inklusive des Node-Package-Manager (npm) nötig. 
+Funktionsfähig sollte das Repo mit den Versionen ab 24.10.0 (Node.js) und ab 11.6.2 (npm) sein.
 
 ##### 1. Anlegen der .env-Dateien
 - im root Verzeichnis muss eine `.env` angelegt werden. Diese .env Datei ist die Basis für den Start der Docker-Container. Die gesetzen Informationen (Nutzernamen und Passwörter) sind für den späteren Zugriff relevant. Die .env sollte folgende Informationen enthalten:
@@ -63,6 +61,13 @@ TODO
     ADMIN_USER=admin
     TEST_PW=secretPassword
     ADMIN_PW=safePassword
+    #Additional variables required for server environment when FlexNow integration is needed
+    FLEXNOW_LOGIN=user
+    FLEXNOW_PW=superSecret123
+    FN_MHBS_URL=https://your-fn2-url.de/api/mhbs
+    FN_STUDENT_URL=https://your-fn2-url.de/api/student
+    FN_EXAM_URL_BASE=https://your-fn2-url.de/api/enroll
+
     ```
 - unter `./backend/api/src/database` eine `.env` angelegt werden. Diese ist nur für die Verbindung von Prisma mit der MariaDB nötig. Daher sind lediglich folgende Informationen nötig:
     ```bash
@@ -133,21 +138,39 @@ Damit die Anwendung regulär verwendet werden kann, müssen die Strukturdaten in
 * In das Verzeichnis `/backend/api` navigieren und dort `npm run generateDB` ausführen, um den Prisma Client zu bauen.
 * Über den Befehl `npm run updateDB` wird mit Hilfe der `schema.prisma`-Datei das grundlegende Datenbankschema in die referenzierte Datenbank übertragen. 
 
-##### 8. Frontend und Backend starten
+##### 8. Lokale Nutzer anlegen
+In Baula gibt es zwei Möglichkeiten sich einzuloggen: 
+1. Über Shibboleth. Benötigt wird ein Identity Provider (idp) sowie ein dort registrierter Service Provider (sp).
+2. Über ein lokales Nutzerkonto. In Baula können beliebige lokale Nutzer angelegt und mit Rollen (student, demo, admin) versehen werden. Diese müssen in der Datei `users.ts` in `/backend/api/src/shared/constants` angelegt und die Zugangsdaten in der `.env.backend` hinterlegt werden (siehe Schritt 1). Hier eine beispielhafte `users.ts`:
+    ```ts
+    export const USERS = [
+        {
+            shibId: "10101010101010101010101010101010", // muss exakt 32 Zeichen lang sein
+            username: process.env.USER,
+            password: process.env.USER_PW,
+            roles: ["student"], // die Rolle 'demo' würde dem Nutzer jegliche Schreibrechte nehmen
+        },
+        {
+            shibId: "11010101010101010101010101010101",
+            username: process.env.ADMIN_USER,
+            password: process.env.ADMIN_PW,
+            roles: ["student", "admin"],
+        }
+    ]
+    ```
+
+##### 9. Frontend und Backend starten
 Nun sollte alles eingerichtet sein, so dass man über die folgenden Befehle Baula sowie die API starten kann. Beide Befehle müssen im root-Verzeichnis ausgeführt werden.
 ```bash
     npm run startFrontend # startet Frontend auf Port 4200
     npm run startBackend # startet Backend auf Port 3305
 ```
 
-##### 9. Initialisierung im Admin-Bereich
-Damit der Personalisierungs-Tab funktioniert, müssen im Admin-Bereich (zugänglich über den Nutzer mit der Rolle "admin") die Modul- und Topic-Embeddings initialisiert werden. Diese finden sich im Admin-Bereich im Tab "Empfehlung". Näheres zum Admin-Tab findet sich in der Developer-Doku (TBD).
+##### 10. Initialisierung im Admin-Bereich
+Damit der Personalisierungs-Tab funktioniert, müssen im Admin-Bereich (zugänglich über den Nutzer mit der Rolle "admin") die Modul- und Topic-Embeddings initialisiert werden. Diese finden sich im Admin-Bereich im Tab "Empfehlung". Näheres zum Admin-Tab findet sich in der [Backend-README](./backend/README.md).
 
-##### n. Weitere Schritte TBD
-Hier könnten noch weitere Schritte folgen, je nachdem wie stark wir unsere .gitignore erweitern. Denkbar wäre z. B. die `constants.ts` in der die Nutzer definiert sind nicht mehr zu pushen. Diese müsste dann angelegt werden. 
-Hier eine mögliche Liste von Dateien, die ausgelagert werden könnten:
-- `./backend/api/src/shared/constants/*`
-- `./backend/api/src/templates/*` wobei die für ein initiales Setup nicht nötig sind, nur bei Import von XML
+Baula bietet Schnittstellen zu verschiedenen universitären Systemen. Konkret umgesetzt sind derzeit FlexNow und UnivIS. Diese Schnittstellen werden angesteuert und die empfangenen Daten in unser Baula-Datenformat transformiert. Hierzu nutzen wir das npm-Paket `camaro`, welches mit Hilfe von XPath aus den XML-Eingaben definierte JSON-Ausgaben erzeugt. 
+Nähere zum benötigten Datenschema ist in der [Backend-README](./backend/README.md). Ein Beispiel, wie eine solche Transformation aussieht findet sich in `/backend/api/src/templates/univis-template.ts`, welches dazu dient, die eingehenden XML-Daten der UnivIS-PRG-Schnittstelle in das Baula-Format zu transformieren.
 
 ### Projektstruktur
 - `/backend` enthält alles zum Abruf der relevanten Daten für das Frontend. Neben der mit Express.js erstellten REST-API ist hier der Python-Code verortet. Näheres ist in der spezifischen [README](./backend/README.md).

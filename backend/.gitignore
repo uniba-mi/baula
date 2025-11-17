@@ -6,7 +6,8 @@ node_modules
 .gz
 .csv
 prisma/generated
-/environment/*
-/src/logs/*
 *.acl
 package-lock.json
+/api/src/templates/*
+!univis-template.ts
+users.ts
