@@ -1,10 +1,10 @@
 import mongoose, { HydratedDocument, Query, Model } from "mongoose";
-import { Semesterplan as ISemesterplan } from "../../../../interfaces/semesterplan";
-import { Studyplan as IStudyplan } from "../../../../interfaces/studyplan";
+import { SemesterPlan as ISemesterPlan } from "../semester-plan";
+import { StudyPlan as IStudyPlan } from "../study-plan";
 import { Recommendation as IRecommendation } from "../../../../interfaces/recommendation";
 import { Embedding as IEmbedding } from "../../../../interfaces/embedding";
 import { ModuleEmbedding as IModEmbedding } from "../../../../interfaces/embedding";
-import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/longTermEvaluation";
+import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/long-term-evaluation";
 import { Topic as ITopic } from "../../../../interfaces/topic";
 import { UserServer as IUser } from "../../../../interfaces/user";
 import { Evaluation as IEvaluation } from "../../../../interfaces/evaluation";
@@ -14,12 +14,12 @@ type UserModelQuery = Query<any, HydratedDocument<IUser>, UserQueryHelpers> & Us
 interface UserQueryHelpers {
     byShibId(this: UserModelQuery, shibId: String): UserModelQuery;
 }
-export declare const Semesterplan: mongoose.Model<ISemesterplan, {}, {}, {}, mongoose.Document<unknown, {}, ISemesterplan, {}, {}> & ISemesterplan & Required<{
+export declare const SemesterPlan: mongoose.Model<ISemesterPlan, {}, {}, {}, mongoose.Document<unknown, {}, ISemesterPlan, {}, {}> & ISemesterPlan & Required<{
     _id: string;
 }> & {
     __v: number;
 }, any>;
-export declare const Studyplan: mongoose.Model<IStudyplan, {}, {}, {}, mongoose.Document<unknown, {}, IStudyplan, {}, {}> & IStudyplan & Required<{
+export declare const StudyPlan: mongoose.Model<IStudyPlan, {}, {}, {}, mongoose.Document<unknown, {}, IStudyPlan, {}, {}> & IStudyPlan & Required<{
     _id: string;
 }> & {
     __v: number;

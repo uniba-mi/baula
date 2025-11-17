@@ -26,3 +26,20 @@ export type ModuleWithMetadata = Module & {
         source: Source[];
     };
 };
+export interface FeedbackRecommendationResult {
+    recModules: Array<{
+        acronym: string;
+        score: number;
+    }>;
+}
+export interface TopicRecommendationResult {
+    recModules: Array<{
+        acronym: string;
+        score: number;
+        frequency?: number;
+        sources: Array<{
+            identifier: string;
+            score: number;
+        }>;
+    }>;
+}

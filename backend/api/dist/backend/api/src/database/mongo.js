@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LongTermEvaluation = exports.Evaluation = exports.ModEmbedding = exports.Embedding = exports.Recommendation = exports.TopicM = exports.User = exports.Studyplan = exports.Semesterplan = exports.connection = void 0;
+exports.LongTermEvaluation = exports.Evaluation = exports.ModEmbedding = exports.Embedding = exports.Recommendation = exports.TopicM = exports.User = exports.StudyPlan = exports.SemesterPlan = exports.connection = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const mongodb_1 = require("mongodb");
 const uri = process.env.MONGO_DATABASE_URL
@@ -103,8 +103,7 @@ const LongTermEvaluationSchema = new mongoose_1.Schema({
         maxlength: 1000,
     },
 }, { timestamps: true });
-// Semesterplan
-const SemesterplanSchema = new mongoose_1.Schema({
+const SemesterPlanSchema = new mongoose_1.Schema({
     semester: {
         type: String,
         match: /\d{4}((w)|(s))/g,
@@ -173,11 +172,10 @@ const SemesterplanSchema = new mongoose_1.Schema({
         required: true,
     },
 }, { timestamps: true });
-// Studyplan
-const StudyplanSchema = new mongoose_1.Schema({
+const StudyPlanSchema = new mongoose_1.Schema({
     name: String,
     status: Boolean,
-    semesterPlans: [SemesterplanSchema],
+    semesterPlans: [SemesterPlanSchema],
     userId: {
         type: mongodb_1.ObjectId,
         reference: "UserSchema",
@@ -388,7 +386,7 @@ const UserSchema = new mongoose_1.Schema({
     ],
     timetableSettings: [{ showWeekends: Boolean }],
     favouriteModulesAcronyms: [String],
-    notInterestingModulesAcronyms: [String],
+    excludedModulesAcronyms: [String],
     hints: [
         {
             key: String,
@@ -514,8 +512,8 @@ const EvaluationSchema = new mongoose_1.Schema({
     ],
 }, { timestamps: true });
 // Create models
-exports.Semesterplan = (0, mongoose_1.model)("Semesterplan", SemesterplanSchema);
-exports.Studyplan = (0, mongoose_1.model)("Studyplan", StudyplanSchema);
+exports.SemesterPlan = (0, mongoose_1.model)("Semesterplan", SemesterPlanSchema);
+exports.StudyPlan = (0, mongoose_1.model)("Studyplan", StudyPlanSchema);
 exports.User = (0, mongoose_1.model)("User", UserSchema);
 exports.TopicM = (0, mongoose_1.model)("Topic", TopicSchema);
 exports.Recommendation = (0, mongoose_1.model)("Recommendation", RecommendationSchema);

@@ -1,0 +1,11 @@
+import { Department, Prisma, StudyProgramme } from "@prisma/client";
+import { Person } from "../../person";
+import { ModuleHandbook } from "../../module-handbook";
+export declare function upsertDeparmtents(departments: Department[]): Promise<string>;
+export declare function upsertPersons(persons: Person[]): Promise<string>;
+export declare function upsertStudyprogrammes(sps: StudyProgramme[]): Promise<string>;
+export declare function upsertModuleHandbooks(mhbs: ModuleHandbook[]): Promise<string>;
+export declare function upsertModuleGroups(mgs: Prisma.ModuleGroupCreateInput[]): Promise<string>;
+export declare function upsertModules(modules: any[]): Promise<string>;
+export declare function upsertModuleExams(exams: Prisma.ModuleExamCreateInput[]): Promise<string>;
+export declare function upsertModuleCourses(mcs: Prisma.ModuleCourseCreateInput[]): Promise<string>;

@@ -1,0 +1,38 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.baula = void 0;
+const express_1 = __importDefault(require("express"));
+const router = express_1.default.Router();
+exports.baula = router;
+router.use(express_1.default.json());
+// for classic routing define namespaces and include routes
+const courses_router_1 = require("./courses/courses.router");
+router.use("/courses", courses_router_1.courses);
+const study_programmes_router_1 = require("./study-programmes/study-programmes.router");
+router.use("/study-programmes", study_programmes_router_1.studyProgrammes);
+const study_plans_router_1 = require("./study-plans/study-plans.router");
+router.use("/study-plans", study_plans_router_1.studyPlans);
+const module_handbooks_router_1 = require("./module-handbooks/module-handbooks.router");
+router.use("/module-handbooks", module_handbooks_router_1.moduleHandbooks);
+const user_router_1 = require("./user/user.router");
+router.use("/user", user_router_1.user);
+const semester_plans_router_1 = require("./semester-plans/semester-plans.router");
+router.use("/semester-plans", semester_plans_router_1.semesterPlans);
+const meta_router_1 = require("./meta/meta.router");
+router.use("/meta", meta_router_1.meta);
+const recommendations_router_1 = require("./recommendations/recommendations.router");
+router.use('/recommendations', recommendations_router_1.recommendations);
+const jobs_router_1 = require("./jobs/jobs.router");
+router.use('/jobs', jobs_router_1.jobs);
+const topics_router_1 = require("./topics/topics.router");
+router.use('/topics', topics_router_1.topics);
+const feedback_router_1 = require("./feedback/feedback.router");
+router.use('/feedback', feedback_router_1.feedback);
+const admin_router_1 = require("./admin/admin.router");
+const admin_middleware_1 = require("../../shared/middleware/admin-middleware");
+router.use('/admin', admin_middleware_1.checkAndReturnAdminUser, admin_router_1.admin);
+const survey_router_1 = require("./survey/survey.router");
+router.use('/survey', survey_router_1.survey);

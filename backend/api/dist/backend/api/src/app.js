@@ -13,14 +13,11 @@ const helmet_1 = __importDefault(require("helmet"));
 const morgan_1 = __importDefault(require("morgan"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const api_router_1 = require("./routes/api.router");
-const public_router_1 = require("./routes/public/public.router");
-const demoMiddleware_1 = require("./shared/middleware/demoMiddleware");
-const authenticationMiddleware_1 = require("./shared/middleware/authenticationMiddleware");
 const auth_saml_routes_1 = require("./routes/auth/auth-saml.routes");
 const auth_local_routes_1 = require("./routes/auth/auth-local.routes");
 const passport_config_1 = __importDefault(require("./config/passport.config"));
 const session_config_1 = require("./config/session.config");
-const errorHandlerMiddleware_1 = require("./shared/middleware/errorHandlerMiddleware");
+const error_handler_middleware_1 = require("./shared/middleware/error-handler-middleware");
 const app = (0, express_1.default)();
 // cors for local setting
 if (process.env.NODE_ENV === "local") {
@@ -61,11 +58,10 @@ app.use(passport_config_1.default.session());
 app.use('/login', auth_local_routes_1.localLogin);
 app.use('/logout', auth_local_routes_1.localLogout);
 app.use("/Shibboleth.sso", auth_saml_routes_1.authSaml);
-app.use("/api", authenticationMiddleware_1.ensureAuthenticated, demoMiddleware_1.denyDemoWrites, api_router_1.api);
-app.use("/public", public_router_1.formdata);
+app.use("/api", api_router_1.api);
 /** ------------------------------
  *  ------ Error handling --------
  *  -----------------------------*/
-app.use(errorHandlerMiddleware_1.notFoundHandler);
-app.use(errorHandlerMiddleware_1.errorHandler);
+app.use(error_handler_middleware_1.notFoundHandler);
+app.use(error_handler_middleware_1.errorHandler);
 exports.default = app;

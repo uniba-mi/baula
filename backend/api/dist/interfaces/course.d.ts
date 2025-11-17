@@ -2,7 +2,7 @@ import { CompetenceFulfillment } from './competence';
 import { ModuleCourse } from './module-course';
 import { Person } from './person';
 import { Room } from './room';
-import { PlanCourse } from './semesterplan';
+import { PlanCourse } from './semester-plan';
 export interface Term {
     startdate: string;
     enddate?: string | null;

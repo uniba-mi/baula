@@ -110,7 +110,7 @@ class Semester {
     }
     currentSemester() {
         const today = new Date();
-        // const today = new Date(2026, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const year = today.getFullYear();
         // get month starts from 0 (january) to 11 (december)
         // current WS: Sept (8) - Feb (1)
@@ -137,7 +137,7 @@ class Semester {
     // is a semester a past semester
     isPastSemester() {
         const today = new Date();
-        // const today = new Date(2026, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth();
         if (!this.isCurrentSemester()) {
@@ -154,7 +154,7 @@ class Semester {
     // is a semester a future semester
     isFutureSemester() {
         const today = new Date();
-        // const today = new Date(2026, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth();
         if (!this.isCurrentSemester()) {
@@ -171,7 +171,7 @@ class Semester {
     // current semester based on date
     isCurrentSemester() {
         const today = new Date();
-        // const today = new Date(2026, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth();
         if (currentMonth < 2 && this.year === currentYear - 1 && this.type === 'w') {

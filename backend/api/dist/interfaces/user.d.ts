@@ -1,6 +1,6 @@
 import { ExtendedJob, Job } from "./job";
-import { TimetableSettings } from "./semesterplan";
-import { PathModule, Studypath } from "./studypath";
+import { TimetableSettings } from "./semester-plan";
+import { PathModule, StudyPath } from "./study-path";
 export interface MetaUser {
     _id: string;
     shibId: string;
@@ -12,12 +12,12 @@ export interface MetaUser {
     startSemester?: string;
     duration?: number;
     maxEcts?: number;
-    sps?: MStudyprogramme[];
+    sps?: MStudyProgramme[];
     fulltime: boolean;
     dashboardSettings: ChartVisibility[];
     timetableSettings: TimetableSettings[];
     favouriteModulesAcronyms: string[];
-    notInterestingModulesAcronyms: string[];
+    excludedModulesAcronyms: string[];
     moduleFeedback?: ModuleFeedback[];
     hints?: Hint[];
     consents: Consent[];
@@ -30,14 +30,14 @@ export interface UserServer extends MetaUser {
 }
 export interface User extends MetaUser {
     jobs?: ExtendedJob[];
-    studypath: Studypath;
+    studyPath: StudyPath;
     sync?: boolean;
 }
 export interface ChartVisibility {
     key: string;
     visible: boolean;
 }
-export interface MStudyprogramme {
+export interface MStudyProgramme {
     spId: string;
     poVersion: number;
     name: string;

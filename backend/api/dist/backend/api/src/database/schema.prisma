@@ -15,15 +15,26 @@ model Department {
 
 model StudyProgramme {
   spId      String     @map("sp_id")
-  poVersion Int
+  poVersion Int        @map("po_version")
   name      String     @db.Text
   desc      String
   faculty   String
   date      String
   dep       Department @relation(fields: [faculty], references: [shortName], onDelete: Restrict, onUpdate: Cascade)
-  mhbs      Mhb[]
+  mhbs      Sp2Mhb[]
 
   @@id(fields: [spId, poVersion], name: "spId_poVersion")
+}
+
+model Sp2Mhb {
+  spId      String         @map("sp_id")
+  poVersion Int            @map("po_version")
+  mhbId     String         @map("mhb_id")
+  version   Int
+  mhb       Mhb            @relation(fields: [mhbId, version], references: [mhbId, version], onDelete: Cascade, onUpdate: Cascade)
+  sp        StudyProgramme @relation(fields: [spId, poVersion], references: [spId, poVersion], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([spId, poVersion, mhbId, version])
 }
 
 model Mhb {
@@ -32,9 +43,7 @@ model Mhb {
   desc      String         @db.Text
   version   Int
   semester  String
-  spId      String         @map("sp_id")
-  poVersion Int
-  sp        StudyProgramme @relation(fields: [spId, poVersion], references: [spId, poVersion], onDelete: Cascade, onUpdate: Cascade)
+  sps       Sp2Mhb[]
   mgs       Mhb2Mg[]
 
   @@id([mhbId, version])

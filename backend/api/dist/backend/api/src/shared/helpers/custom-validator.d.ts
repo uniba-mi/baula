@@ -1,0 +1,17 @@
+import { UserGeneratedModule } from "../../user-generated-module";
+import { PlanCourse, SemesterPlan, SemesterPlanTemplate } from "../../semester-plan";
+import { StudyPlanTemplate } from "../../study-plan";
+import { Hint, UserServer } from "../../user";
+import { Jobtemplate } from "../../job";
+import { LongTermEvaluation } from "../../long-term-evaluation";
+export declare const validateObjectId: (id: string) => boolean;
+export declare const validateAndReturnSemesterPlanTemplate: (sp: any) => SemesterPlanTemplate | undefined;
+export declare const validateAndReturnCourse: (course: any) => PlanCourse | undefined;
+export declare const validateAndReturnUserGeneratedModule: (module: any) => UserGeneratedModule | undefined;
+export declare const validateAndReturnSemesterPlan: (sp: any) => SemesterPlan | undefined;
+export declare const validateAndReturnUser: (user: any) => UserServer | undefined;
+export declare const validateAndReturnStudyPlan: (studyPlan: any) => StudyPlanTemplate | undefined;
+export declare const validateAndReturnHints: (hints: any[]) => Hint[] | undefined;
+export declare const validateAndReturnSemester: (semester: string) => string | undefined;
+export declare const validateAndReturnJobtemplate: (job: any) => Jobtemplate | undefined;
+export declare const validateAndReturnSurveyResult: (result: any) => LongTermEvaluation | undefined;

@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.localStrategy = void 0;
 const passport_local_1 = require("passport-local");
 const validator_1 = __importDefault(require("validator"));
-const constants_1 = require("../shared/constants/constants");
+const users_1 = require("../shared/constants/users");
 const mongo_1 = require("../database/mongo");
 const crypto_1 = require("../shared/utils/crypto");
 const error_1 = require("../shared/error");
 // Dummy user database
-const users = constants_1.USERS;
+const users = users_1.USERS;
 // Passport local strategy configuration
 exports.localStrategy = new passport_local_1.Strategy(async (username, password, done) => {
     const name = validator_1.default.isAlphanumeric(username, "de-DE", { ignore: "." })

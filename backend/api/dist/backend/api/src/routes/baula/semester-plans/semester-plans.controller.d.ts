@@ -1,0 +1,16 @@
+import { Request, Response, NextFunction } from "express";
+export declare function createUserGeneratedModule(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function addModule(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function updateUserGeneratedModule(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function initSemesterPlans(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function addSemesterPlanToStudyPlan(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function updateSemesterPlanAimedEcts(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function updateIsPastSemester(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function deleteModule(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function deleteUserGeneratedModule(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function deleteUserGeneratedModules(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function addCourse(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function deleteCourse(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function addCourses(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function deleteCourses(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function importSemesterPlan(req: Request, res: Response, next: NextFunction): Promise<void>;

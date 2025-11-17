@@ -1,0 +1,11 @@
+import { NextFunction, Request, Response } from "express";
+export declare function getAllStudyPlansOfUser(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function checkStudyPlanTemplateAvailability(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+export declare function getLatestTemplateForStudyProgram(req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+export declare function getActiveStudyPlan(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function createStudyPlan(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function updateStudyPlan(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function addModulesToCurrentSemesterOfAllStudyPlans(req: Request, res: Response, next: NextFunction): Promise<void | Response<any, Record<string, any>>>;
+export declare function transferModule(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function transferUserGeneratedModule(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function deleteStudyPlan(req: Request, res: Response, next: NextFunction): Promise<void>;
