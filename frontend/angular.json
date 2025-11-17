@@ -22,7 +22,7 @@
           "builder": "@angular/build:application",
           "options": {
             "outputPath": {
-              "base": "dist/baula"
+              "base": "../server/app"
             },
             "index": "src/index.html",
             "polyfills": [
