@@ -54,6 +54,7 @@ Folgende Versionen sind die Minimalvoraussetzungen:
     SAML_CALLBACK_URL=https://sp.test.de/Shibboleth.sso/SAML2/POST # callback url of your sp
     MONGO_DATABASE_URL=mongodb://root:password@localhost:27017/Baula?authSource=admin&retryWrites=true&w=majority
     REDIS_URL=redis://test:test123@localhost:6379
+    PYTHON_URL=http://localhost
     SESSION_ENC_KEY=OYgZjzXvk1dVmLSGE41ziK5jNhyoXxTFC2SEa3+hWTo= #key size must be 32 bytes in base64
     LOGIN_PAGE_URL=http://localhost:4200/login
     DASHBOARD_URL=https://test.de/app/
