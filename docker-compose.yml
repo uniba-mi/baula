@@ -23,7 +23,7 @@ services:
       - 3306
     volumes:
       - ./data/backups/mariadb:/backups
-      #- ./data/mariadb:/var/lib/mysql
+      - ./data/mariadb:/var/lib/mysql
 
   redis:
     image: redis:alpine

@@ -712,7 +712,7 @@ export async function updateModuleEmbeddings(
   try {
     const embeddingsFilePath = path.join(
       __dirname,
-      "../../..",
+      "../../../..",
       "staticdata",
       "module-embeddings.json"
     );
@@ -753,7 +753,7 @@ export async function initTopicsFromJSON(
   try {
     const topicsFilePath = path.join(
       __dirname,
-      "../../..",
+      "../../../..",
       "staticdata",
       "topic-embeddings.json"
     );
