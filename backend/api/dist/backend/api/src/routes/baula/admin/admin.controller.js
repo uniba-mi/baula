@@ -655,7 +655,7 @@ async function addModuleStructureToDatabase(req, res, next) {
 async function updateModuleEmbeddings(req, res, next) {
     var _a, _b;
     try {
-        const embeddingsFilePath = path_1.default.join(__dirname, "../../..", "staticdata", "module-embeddings.json");
+        const embeddingsFilePath = path_1.default.join(__dirname, "../../../..", "staticdata", "module-embeddings.json");
         const fileData = await fs.promises.readFile(embeddingsFilePath, "utf8");
         const embeddings = JSON.parse(fileData);
         const promises = Object.entries(embeddings).map(async ([acronym, vector]) => {
@@ -680,7 +680,7 @@ async function updateModuleEmbeddings(req, res, next) {
 async function initTopicsFromJSON(req, res, next) {
     var _a;
     try {
-        const topicsFilePath = path_1.default.join(__dirname, "../../..", "staticdata", "topic-embeddings.json");
+        const topicsFilePath = path_1.default.join(__dirname, "../../../..", "staticdata", "topic-embeddings.json");
         // parse JSON file
         const fileData = await fs.promises.readFile(topicsFilePath, "utf8");
         const topicsData = JSON.parse(fileData);

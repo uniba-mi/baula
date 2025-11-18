@@ -102,12 +102,6 @@ export declare const per2mcTemplate: (string | {
     pIds: string[];
     mcId: string;
 })[];
-export declare const sp2mhbTemplate: (string | {
-    spId: string;
-    poVersion: string;
-    mhbId: string;
-    version: string;
-})[];
 export declare const mhb2mgTemplate: (string | {
     mhbId: string;
     mgId: string;
@@ -133,4 +127,10 @@ export declare const m2mcTemplate: (string | {
     ects: string;
     compulsory: string;
     acronym: string;
+})[];
+export declare const sp2mhbTemplate: (string | {
+    spId: string;
+    poVersion: string;
+    mhbId: string;
+    version: string;
 })[];
