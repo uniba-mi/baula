@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const node_cron_1 = __importDefault(require("node-cron"));
 const logger_1 = require("./logger");
 const univis_crawler_1 = require("../helpers/univis-crawler");
-const semester_1 = require("../../semester");
+const semester_1 = require("../../../../../interfaces/semester");
 // CRON job: execute at 3 AM from Monday to Friday
 node_cron_1.default.schedule("0 3 * * 1-5", () => {
     const message = `CRON job is running: ${new Date().toLocaleString()}`;
