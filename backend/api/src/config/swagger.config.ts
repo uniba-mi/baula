@@ -1,7 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 import { swaggerBaulaSchema, swaggerBilAppSchema } from '../shared/constants/swagger-schemas';
 
-const baulaOptions = {
+const baulaSwaggerConfig = {
     definition: {
         openapi: '3.1.1',
         info: {
@@ -9,36 +9,22 @@ const baulaOptions = {
             version: '1.0.0',
             description: 'API documentation for Baula',
         },
-        // TODO: License
-        // license: {
-        //   name: "MIT",
-        //   url: "https://spdx.org/licenses/MIT.html",
-        // },
+        license: {
+          name: "MIT License",
+          url: "https://opensource.org/license/mit",
+        },
         contact: {
             name: "Baula",
             email: "baula.minf@uni-bamberg.de",
         },
-        servers: [
-            {
-                url: '/api/baula', // TODO test if this works for test + prod too                
-            },
-        ],
         components: {
-            securitySchemes: {
-                bearerAuth: {
-                    type: 'http',
-                    scheme: 'bearer',
-                    bearerFormat: 'JWT',
-                    description: 'Enter your JWT token from the login endpoint'
-                }
-            },
-        schemas: swaggerBaulaSchema
+            schemas: swaggerBaulaSchema
         },
     },
     apis: ['./src/routes/baula/**/*.ts', './src/routes/baula/**/*.js'],
 };
 
-const bilappOptions = {
+const bilappSwaggerConfig = {
     definition: {
         openapi: '3.1.1',
         info: {
@@ -46,34 +32,27 @@ const bilappOptions = {
             version: '1.0.0',
             description: 'API documentation for BilApp',
         },
-        // TODO: License
-        // license: {
-        //   name: "MIT",
-        //   url: "https://spdx.org/licenses/MIT.html",
-        // },
+        license: {
+          name: "MIT License",
+          url: "https://opensource.org/license/mit",
+        },
         contact: {
             name: "BilApp",
             email: "baula.minf@uni-bamberg.de",
         },
-        servers: [
-            {
-                url: '/api/bilapp', // TODO test if this works for test + prod too                
-            },
-        ],
         components: {
-            securitySchemes: {
-                bearerAuth: {
-                    type: 'http',
-                    scheme: 'bearer',
-                    bearerFormat: 'JWT',
-                    description: 'Enter your JWT token from the login endpoint'
-                }
-            },
-        schemas: swaggerBilAppSchema
+            schemas: swaggerBilAppSchema
         },
     },
     apis: ['./src/routes/bilapp/**/*.ts', './src/routes/bilapp/**/*.js'],
 };
 
-export const swaggerBaulaConfig = swaggerJsdoc(baulaOptions);
-export const swaggerBilAppConfig = swaggerJsdoc(bilappOptions);
+export const swaggerOptions = {
+    swaggerOptions: { // disable interactivity
+        tryItOutEnabled: false, 
+        supportedSubmitMethods: []
+    }
+};
+
+export const swaggerBaulaConfig = swaggerJsdoc(baulaSwaggerConfig);
+export const swaggerBilAppConfig = swaggerJsdoc(bilappSwaggerConfig);

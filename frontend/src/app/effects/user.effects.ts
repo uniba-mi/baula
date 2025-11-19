@@ -214,10 +214,9 @@ export class UserEffects {
                 this.recsService.updatePersonalRecommendations(props.moduleFeedback).subscribe();
               }
 
-              // TODO update chair in user and use for recommendations
-              if (similarchair) {
-                // TODO 
-              }
+              // if (similarchair) {
+                // TODO update chair in user and use for recommendations
+              // }
             }),
             catchError((error) =>
               of(UserActions.updateModuleFeedbackFailure({ error }))

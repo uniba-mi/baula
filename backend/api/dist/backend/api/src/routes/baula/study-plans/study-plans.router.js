@@ -17,8 +17,6 @@ router.use(express_1.default.json());
  *     tags: [Study Plans]
  *     summary: Get all study plans of user
  *     description: Retrieves all study plans belonging to the authenticated user
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Study plans retrieved successfully
@@ -33,13 +31,13 @@ router.use(express_1.default.json());
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: No study plans found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get("/", study_plans_controller_1.getAllStudyPlansOfUser);
 /**
@@ -49,8 +47,6 @@ router.get("/", study_plans_controller_1.getAllStudyPlansOfUser);
  *     tags: [Study Plans::Plan]
  *     summary: Get active study plan
  *     description: Retrieves the currently active study plan of the authenticated user
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Active study plan retrieved successfully
@@ -63,13 +59,13 @@ router.get("/", study_plans_controller_1.getAllStudyPlansOfUser);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: No active study plan found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get("/plan/active", study_plans_controller_1.getActiveStudyPlan);
 /**
@@ -109,6 +105,7 @@ router.get("/plan/active", study_plans_controller_1.getActiveStudyPlan);
  *             schema:
  *               type: string
  *               example: 'Musterstudienverlaufsplan nicht gefunden.'
+ *               $ref: '#/components/schemas/NotFoundError'
  *       500:
  *         description: Error retrieving template
  *         content:
@@ -162,8 +159,6 @@ router.get("/template/availablilty/:programId/:semesterType", study_plans_contro
  *     tags: [Study Plans::Plan]
  *     summary: Create new study plan
  *     description: Creates a new study plan for the authenticated user
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -205,13 +200,13 @@ router.get("/template/availablilty/:programId/:semesterType", study_plans_contro
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Could not create valid study plan
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.post("/plan", study_plans_controller_1.createStudyPlan);
 /**
@@ -221,8 +216,6 @@ router.post("/plan", study_plans_controller_1.createStudyPlan);
  *     tags: [Study Plans::Modules]
  *     summary: Add modules to all study plans
  *     description: Adds specified modules to the current semester of all existing study plans for the user
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -257,7 +250,7 @@ router.post("/plan", study_plans_controller_1.createStudyPlan);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.post("/modules", study_plans_controller_1.addModulesToCurrentSemesterOfAllStudyPlans);
 /**
@@ -267,8 +260,6 @@ router.post("/modules", study_plans_controller_1.addModulesToCurrentSemesterOfAl
  *     tags: [Study Plans::Plan]
  *     summary: Update study plan
  *     description: Updates the name and/or status of a study plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -317,13 +308,13 @@ router.post("/modules", study_plans_controller_1.addModulesToCurrentSemesterOfAl
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/plan", study_plans_controller_1.updateStudyPlan);
 /**
@@ -333,8 +324,6 @@ router.put("/plan", study_plans_controller_1.updateStudyPlan);
  *     tags: [Study Plans::Modules]
  *     summary: Transfer module between semesters
  *     description: Moves a module from one semester plan to another within the same study plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -385,13 +374,13 @@ router.put("/plan", study_plans_controller_1.updateStudyPlan);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan or semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/module/transfer", study_plans_controller_1.transferModule);
 /**
@@ -401,8 +390,6 @@ router.put("/module/transfer", study_plans_controller_1.transferModule);
  *     tags: [Study Plans::Modules]
  *     summary: Transfer user-generated module between semesters
  *     description: Moves a user-generated module from one semester plan to another within the same study plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -446,13 +433,13 @@ router.put("/module/transfer", study_plans_controller_1.transferModule);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan or semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/user-generated-module/transfer", study_plans_controller_1.transferUserGeneratedModule);
 /**
@@ -462,8 +449,6 @@ router.put("/user-generated-module/transfer", study_plans_controller_1.transferU
  *     tags: [Study Plans::Plan]
  *     summary: Delete study plan
  *     description: Deletes a specific study plan belonging to the authenticated user
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -489,12 +474,12 @@ router.put("/user-generated-module/transfer", study_plans_controller_1.transferU
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan not found or could not be deleted
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/plan/:id", study_plans_controller_1.deleteStudyPlan);

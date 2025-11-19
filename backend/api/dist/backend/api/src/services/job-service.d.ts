@@ -1,4 +1,4 @@
-import { Module } from "../module";
+import { Module } from "../../../../interfaces/module";
 /** ---------------------------------------------
  *  ---- Create Keyword Request Function --------
  *  @param jobUrl - The URL of the job to be scraped for keywords.

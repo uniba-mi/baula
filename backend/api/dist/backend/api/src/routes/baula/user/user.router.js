@@ -16,8 +16,6 @@ router.use(express_1.default.json());
  *     tags: [User]
  *     summary: Get user data via Shibboleth
  *     description: Retrieves the authenticated user's complete profile including study path
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User data retrieved successfully
@@ -30,9 +28,13 @@ router.use(express_1.default.json());
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       401:
  *         description: Unauthorized - invalid or missing authentication
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UnauthorizedError'
  */
 router.get("/", user_controller_1.getUser);
 /**
@@ -42,8 +44,6 @@ router.get("/", user_controller_1.getUser);
  *     tags: [User]
  *     summary: Create new user
  *     description: Creates a new user account with initial study path data
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -115,7 +115,7 @@ router.get("/", user_controller_1.getUser);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.post("/", user_controller_1.createUser);
 /**
@@ -125,8 +125,6 @@ router.post("/", user_controller_1.createUser);
  *     tags: [User::Preferences]
  *     summary: Update competence aims
  *     description: Updates user's competence learning goals/aims
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -175,10 +173,9 @@ router.post("/", user_controller_1.createUser);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.post("/competence-aims", user_controller_1.updateCompetenceAims);
-// TODO deal with this
 router.post("/fn2student", user_controller_1.crawlStudentDataViaFlexNow);
 /**
  * @swagger
@@ -187,8 +184,6 @@ router.post("/fn2student", user_controller_1.crawlStudentDataViaFlexNow);
  *     tags: [User]
  *     summary: Update user profile
  *     description: Updates user profile information including preferences, settings, and study programme data
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -216,13 +211,13 @@ router.post("/fn2student", user_controller_1.crawlStudentDataViaFlexNow);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/", user_controller_1.updateUser);
 // for updating via acronym (potentially across several semesters) use this
@@ -233,8 +228,6 @@ router.put("/", user_controller_1.updateUser);
  *     tags: [User::Study Path]
  *     summary: Update multiple modules in study path
  *     description: Updates several modules at once in the user's study path. Matches modules by acronym and semester, or by _id for user-generated modules
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -269,13 +262,13 @@ router.put("/", user_controller_1.updateUser);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/study-path", user_controller_1.updateStudyPath);
 // for semester transition
@@ -286,8 +279,6 @@ router.put("/study-path", user_controller_1.updateStudyPath);
  *     tags: [User::Study Path]
  *     summary: Finish semester and transition modules
  *     description: Completes a semester by moving planned modules to completed modules, handling dropped modules, and preventing duplicates of already passed modules
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -329,13 +320,13 @@ router.put("/study-path", user_controller_1.updateStudyPath);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/study-path/semester", user_controller_1.finishSemester);
 // for editing a specific PathModule in the STUDYPATH by _id not acronym use this
@@ -346,8 +337,6 @@ router.put("/study-path/semester", user_controller_1.finishSemester);
  *     tags: [User::Study Path]
  *     summary: Update or add a single module in study path
  *     description: Updates a specific module in the study path by _id, or adds it if it doesn't exist
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -420,13 +409,13 @@ router.put("/study-path/semester", user_controller_1.finishSemester);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found or parameters missing
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/study-path/module", user_controller_1.updateModuleInStudyPath);
 /**
@@ -436,8 +425,6 @@ router.put("/study-path/module", user_controller_1.updateModuleInStudyPath);
  *     tags: [User::Settings]
  *     summary: Toggle dashboard widget visibility
  *     description: Toggles the visibility of a specific dashboard chart/widget
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -470,13 +457,13 @@ router.put("/study-path/module", user_controller_1.updateModuleInStudyPath);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User or chart not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/dashboard-settings", user_controller_1.updateDashboardView);
 /**
@@ -486,8 +473,6 @@ router.put("/dashboard-settings", user_controller_1.updateDashboardView);
  *     tags: [User::Settings]
  *     summary: Update timetable settings
  *     description: Updates user's timetable display settings
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -518,13 +503,13 @@ router.put("/dashboard-settings", user_controller_1.updateDashboardView);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/timetable-settings", user_controller_1.updateTimetableSettings);
 /**
@@ -534,8 +519,6 @@ router.put("/timetable-settings", user_controller_1.updateTimetableSettings);
  *     tags: [User::Preferences]
  *     summary: Toggle favorite module
  *     description: Adds or removes a module from user's favourites list
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -564,7 +547,7 @@ router.put("/timetable-settings", user_controller_1.updateTimetableSettings);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/favourite-module", user_controller_1.updateFavouriteModule);
 /**
@@ -574,8 +557,6 @@ router.put("/favourite-module", user_controller_1.updateFavouriteModule);
  *     tags: [User::Preferences]
  *     summary: Toggle excluded module
  *     description: Adds or removes a module from user's excluded list
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -604,7 +585,7 @@ router.put("/favourite-module", user_controller_1.updateFavouriteModule);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/excluded-module", user_controller_1.updateExcludedModule);
 /**
@@ -614,8 +595,6 @@ router.put("/excluded-module", user_controller_1.updateExcludedModule);
  *     tags: [User::Preferences]
  *     summary: Toggle user topic
  *     description: Adds or removes a topic from user's selected topics
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -647,7 +626,7 @@ router.put("/excluded-module", user_controller_1.updateExcludedModule);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.put("/topic", user_controller_1.toggleTopic);
 /**
@@ -657,8 +636,6 @@ router.put("/topic", user_controller_1.toggleTopic);
  *     tags: [User::Settings]
  *     summary: Update UI hint status
  *     description: Marks a UI hint/tip as confirmed by the user
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -696,13 +673,13 @@ router.put("/topic", user_controller_1.toggleTopic);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User or hint not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/hints", user_controller_1.updateHint);
 /**
@@ -712,8 +689,6 @@ router.put("/hints", user_controller_1.updateHint);
  *     tags: [User::Settings]
  *     summary: Add user consent entry
  *     description: Records a new user consent
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -766,13 +741,13 @@ router.put("/hints", user_controller_1.updateHint);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.post("/consents", user_controller_1.addConsents);
 /**
@@ -782,8 +757,6 @@ router.post("/consents", user_controller_1.addConsents);
  *     tags: [User::Preferences]
  *     summary: Update module feedback
  *     description: Adds or updates user feedback for a specific module (ratings for similarity, prior knowledge, content match)
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -850,13 +823,13 @@ router.post("/consents", user_controller_1.addConsents);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/module-feedback", user_controller_1.updateModuleFeedback);
 /**
@@ -866,8 +839,6 @@ router.put("/module-feedback", user_controller_1.updateModuleFeedback);
  *     tags: [User::Study Path]
  *     summary: Delete entire study path
  *     description: Removes all completed modules from the user's study path
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Study path deleted successfully
@@ -885,13 +856,13 @@ router.put("/module-feedback", user_controller_1.updateModuleFeedback);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/study-path", user_controller_1.deleteStudyPath);
 /**
@@ -901,8 +872,6 @@ router.delete("/study-path", user_controller_1.deleteStudyPath);
  *     tags: [User::Preferences]
  *     summary: Clear all favorite modules
  *     description: Removes all modules from user's favourites list
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: All favourites cleared successfully
@@ -920,13 +889,13 @@ router.delete("/study-path", user_controller_1.deleteStudyPath);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/favourite-modules", user_controller_1.deleteFavouriteModules);
 /**
@@ -936,8 +905,6 @@ router.delete("/favourite-modules", user_controller_1.deleteFavouriteModules);
  *     tags: [User::Preferences]
  *     summary: Clear all excluded modules
  *     description: Removes all modules from user's excluded list
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Excluded list cleared successfully
@@ -955,13 +922,13 @@ router.delete("/favourite-modules", user_controller_1.deleteFavouriteModules);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/excluded-modules", user_controller_1.deleteExcludedModules);
 /**
@@ -971,8 +938,6 @@ router.delete("/excluded-modules", user_controller_1.deleteExcludedModules);
  *     tags: [User::Preferences]
  *     summary: Remove specific excluded module
  *     description: Removes a specific module from user's excluded list
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: acronym
@@ -998,7 +963,7 @@ router.delete("/excluded-modules", user_controller_1.deleteExcludedModules);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.delete("/excluded-module/:acronym", user_controller_1.deleteExcludedModule);
 /**
@@ -1008,8 +973,6 @@ router.delete("/excluded-module/:acronym", user_controller_1.deleteExcludedModul
  *     tags: [User::Study Path]
  *     summary: Delete module from study path
  *     description: Removes a specific module from the user's study path
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -1045,13 +1008,13 @@ router.delete("/excluded-module/:acronym", user_controller_1.deleteExcludedModul
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Semester or module not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/study-path/module", user_controller_1.deleteModuleFromStudyPath);
 /**
@@ -1061,8 +1024,6 @@ router.delete("/study-path/module", user_controller_1.deleteModuleFromStudyPath)
  *     tags: [User::Preferences]
  *     summary: Delete module feedback
  *     description: Removes all feedback for a specific module
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -1095,13 +1056,13 @@ router.delete("/study-path/module", user_controller_1.deleteModuleFromStudyPath)
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/module-feedback", user_controller_1.deleteModuleFeedback);
 /**
@@ -1111,8 +1072,6 @@ router.delete("/module-feedback", user_controller_1.deleteModuleFeedback);
  *     tags: [User::Preferences]
  *     summary: Delete job profile
  *     description: Deletes a job profile and removes its associated module recommendations
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -1139,13 +1098,13 @@ router.delete("/module-feedback", user_controller_1.deleteModuleFeedback);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: No valid job ID found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/job", user_controller_1.deleteJob);
 /**
@@ -1155,8 +1114,6 @@ router.delete("/job", user_controller_1.deleteJob);
  *     tags: [User]
  *     summary: Delete user account
  *     description: Permanently deletes the user account and all associated data including study plans, semester plans, and recommendations
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User deleted successfully
@@ -1173,12 +1130,12 @@ router.delete("/job", user_controller_1.deleteJob);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: User not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/", user_controller_1.deleteUser);

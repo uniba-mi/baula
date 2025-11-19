@@ -36,7 +36,7 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
   studyPath$: Observable<StudyPath>;
   semesters$: Observable<Semester[]>;
   activePlanId: string;
-  openedFromModuleCatalog: boolean;
+  openedFromModuleOffer: boolean;
   isDragging: boolean = false;
   isSmallScreen: boolean;
 

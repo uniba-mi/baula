@@ -1,9 +1,9 @@
-import { UserGeneratedModule } from "../../user-generated-module";
-import { PlanCourse, SemesterPlan, SemesterPlanTemplate } from "../../semester-plan";
-import { StudyPlanTemplate } from "../../study-plan";
-import { Hint, UserServer } from "../../user";
-import { Jobtemplate } from "../../job";
-import { LongTermEvaluation } from "../../long-term-evaluation";
+import { UserGeneratedModule } from "../../../../../interfaces/user-generated-module";
+import { PlanCourse, SemesterPlan, SemesterPlanTemplate } from "../../../../../interfaces/semester-plan";
+import { StudyPlanTemplate } from "../../../../../interfaces/study-plan";
+import { Hint, UserServer } from "../../../../../interfaces/user";
+import { Jobtemplate } from "../../../../../interfaces/job";
+import { LongTermEvaluation } from "../../../../../interfaces/long-term-evaluation";
 export declare const validateObjectId: (id: string) => boolean;
 export declare const validateAndReturnSemesterPlanTemplate: (sp: any) => SemesterPlanTemplate | undefined;
 export declare const validateAndReturnCourse: (course: any) => PlanCourse | undefined;

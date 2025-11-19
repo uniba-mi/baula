@@ -1,8 +1,8 @@
-import { Course, Term, UnivISCourse } from "../../course";
+import { Course, Term, UnivISCourse } from "../../../../../interfaces/course";
 import { Prisma, PrismaClient } from "@prisma/client";
-import { Room } from "../../room";
-import { Person } from "../../person";
-import { CompetenceFulfillment } from "../../competence";
+import { Room } from "../../../../../interfaces/room";
+import { Person } from "../../../../../interfaces/person";
+import { CompetenceFulfillment } from "../../../../../interfaces/competence";
 import { CompetenceReader } from "./competence-reader";
 import validator from "validator";
 

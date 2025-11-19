@@ -22,7 +22,7 @@ export class ModuleCardComponent implements OnInit {
   @Input() structure: ExtendedModuleGroup[] | null;
   studyPath$: Observable<StudyPath>;
   openedWithSemesterSet: boolean = false;
-  openedFromModuleCatalog: boolean;
+  openedFromModuleOffer: boolean;
   modType: string = 'notPath';
   path: string;
 

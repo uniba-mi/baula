@@ -35,7 +35,7 @@ const router: Router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get("/tree", getTopicTree);
 
@@ -60,7 +60,7 @@ router.get("/tree", getTopicTree);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get("/children", getTopicChildren);
 
@@ -71,8 +71,6 @@ router.get("/children", getTopicChildren);
  *     tags: [Topics]
  *     summary: Generate module recommendations from topics
  *     description: Creates or updates module recommendations based on selected topic IDs using pre-generated embeddings. Supports clearing recommendations by sending an empty array.
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -100,13 +98,13 @@ router.get("/children", getTopicChildren);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: No topics, modules, or embeddings found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.post("/recommendation", recommendModulesByTopicsPreGenerated);
 

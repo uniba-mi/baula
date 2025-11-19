@@ -1,6 +1,6 @@
 import { Department, Prisma, StudyProgramme } from "@prisma/client";
-import { Person } from "../../person";
-import { ModuleHandbook } from "../../module-handbook";
+import { Person } from "../../../../../interfaces/person";
+import { ModuleHandbook } from "../../../../../interfaces/module-handbook";
 export declare function upsertDeparmtents(departments: Department[]): Promise<string>;
 export declare function upsertPersons(persons: Person[]): Promise<string>;
 export declare function upsertStudyprogrammes(sps: StudyProgramme[]): Promise<string>;

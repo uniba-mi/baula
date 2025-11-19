@@ -11,3 +11,4 @@ package-lock.json
 /api/src/templates/*
 !univis-template.ts
 users.ts
+prisma/*

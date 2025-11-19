@@ -4,7 +4,7 @@
     [ngClass]="module.type === 'Pflichtmodul' ? 'compulsory' : ' '">
     <div *ngIf="studyPath$" class="status-box-not-clickable flex-shrink-0 me-2">
       <app-module-status [studyPath$]="studyPath$" [module]="module" [modType]="modType"
-        [openedWithSemesterSet]="openedWithSemesterSet" [openedFromModuleCatalog]="true"></app-module-status>
+        [openedWithSemesterSet]="openedWithSemesterSet" [openedFromModuleOffer]="true"></app-module-status>
     </div>
     <div class="d-flex align-items-start w-100">
       <div class="flex-grow-1 min-width-0">

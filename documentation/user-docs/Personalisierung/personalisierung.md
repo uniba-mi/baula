@@ -1,3 +1,0 @@
-# Personalisierung
-
-<!-- TODO: Dokumentation hinzufügen -->

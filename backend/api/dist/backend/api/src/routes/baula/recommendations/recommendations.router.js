@@ -16,8 +16,6 @@ router.use(express_1.default.json());
  *     tags: [Recommendations]
  *     summary: Get personal module recommendations
  *     description: Retrieves personalized module recommendations for the authenticated user based on topics, jobs, and other factors
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Recommendations retrieved successfully
@@ -32,7 +30,7 @@ router.use(express_1.default.json());
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *             example:
  *               message: 'Fehler beim Abruf der Empfehlung'
  *               code: 'BAD_REQUEST'

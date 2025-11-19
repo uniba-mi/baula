@@ -1,9 +1,8 @@
 import mongoose, { HydratedDocument, Query, Model } from "mongoose";
-import { SemesterPlan as ISemesterPlan } from "../semester-plan";
-import { StudyPlan as IStudyPlan } from "../study-plan";
+import { SemesterPlan as ISemesterPlan } from "../../../../interfaces/semester-plan";
+import { StudyPlan as IStudyPlan } from "../../../../interfaces/study-plan";
 import { Recommendation as IRecommendation } from "../../../../interfaces/recommendation";
-import { Embedding as IEmbedding } from "../../../../interfaces/embedding";
-import { ModuleEmbedding as IModEmbedding } from "../../../../interfaces/embedding";
+import { Embedding as IEmbedding, ModuleEmbedding as IModEmbedding } from "../../../../interfaces/embedding";
 import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/long-term-evaluation";
 import { Topic as ITopic } from "../../../../interfaces/topic";
 import { UserServer as IUser } from "../../../../interfaces/user";

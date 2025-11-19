@@ -1,4 +1,4 @@
-import { Fulfillment } from "../../competence";
+import { Fulfillment } from "../../../../../interfaces/competence";
 
 export class CompetenceReader {
     constructor() {}

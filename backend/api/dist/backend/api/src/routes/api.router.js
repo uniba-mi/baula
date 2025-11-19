@@ -25,8 +25,8 @@ router.get("/", authentication_middleware_1.ensureAuthenticated, (req, res, next
     }
 });
 // use swagger for api docs
-router.use('/docs/baula', swagger_ui_express_1.default.serveFiles(swagger_config_1.swaggerBaulaConfig), swagger_ui_express_1.default.setup(swagger_config_1.swaggerBaulaConfig));
-router.use('/docs/bilapp', swagger_ui_express_1.default.serveFiles(swagger_config_1.swaggerBilAppConfig), swagger_ui_express_1.default.setup(swagger_config_1.swaggerBilAppConfig));
+router.use('/docs/baula', swagger_ui_express_1.default.serveFiles(swagger_config_1.swaggerBaulaConfig, swagger_config_1.swaggerOptions), swagger_ui_express_1.default.setup(swagger_config_1.swaggerBaulaConfig));
+router.use('/docs/bilapp', swagger_ui_express_1.default.serveFiles(swagger_config_1.swaggerBilAppConfig, swagger_config_1.swaggerOptions), swagger_ui_express_1.default.setup(swagger_config_1.swaggerBilAppConfig));
 router.use('/baula', authentication_middleware_1.ensureAuthenticated, demo_middleware_1.denyDemoWrites, baula_router_1.baula);
 router.use('/bilapp', bilapp_router_1.bilapp);
 router.use('/evaluation', authentication_middleware_1.ensureAuthenticated, demo_middleware_1.denyDemoWrites, evaluation_router_1.evaluation);

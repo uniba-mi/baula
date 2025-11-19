@@ -24,8 +24,7 @@ async function updatePersonalRecommendationsByFeedback(req, res, next) {
             if (recommendations && recommendations.recommendedMods) {
                 recommendations.recommendedMods.forEach((mod) => {
                     if (mod.source) {
-                        mod.source = mod.source.filter((s) => !(s.type === "feedback_similarmods" &&
-                            s.identifier === moduleFeedback.acronym));
+                        mod.source = mod.source.filter((s) => !(s.type === 'feedback_similarmods' && s.identifier === moduleFeedback.acronym));
                         mod.frequency = mod.source.length;
                         if (mod.source.length > 0) {
                             const totalScore = mod.source.reduce((sum, s) => sum + (s.score || 0), 0);
@@ -33,14 +32,11 @@ async function updatePersonalRecommendationsByFeedback(req, res, next) {
                         }
                     }
                 });
-                recommendations.recommendedMods =
-                    recommendations.recommendedMods.filter((mod) => mod.source && mod.source.length > 0);
+                recommendations.recommendedMods = recommendations.recommendedMods.filter((mod) => mod.source && mod.source.length > 0);
                 await recommendations.save();
                 return res.status(200).json(recommendations);
             }
-            return res
-                .status(200)
-                .json({ message: "No existing recommendations to update" });
+            return res.status(200).json({ message: "No existing recommendations to update" });
         }
         const mhbId = (_b = (_a = user.sps) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.mhbId;
         const mhbVersion = (_d = (_c = user.sps) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.mhbVersion;
@@ -60,7 +56,7 @@ async function updatePersonalRecommendationsByFeedback(req, res, next) {
         });
         if (!feedbackModuleEmbedding || !feedbackModuleEmbedding.vector) {
             return res.status(200).json({
-                message: "No embedding found for feedback module",
+                message: "No embedding found for feedback module"
             });
         }
         // embeddings for all available modules in MHB
@@ -95,13 +91,13 @@ async function updatePersonalRecommendationsByFeedback(req, res, next) {
         if (!recommendations || !recommendations.recModules) {
             return res.status(200).json({
                 message: "No similar modules found above threshold",
-                recommendations: { recommendedMods: [] },
+                recommendations: { recommendedMods: [] }
             });
         }
         if (recommendations.recModules.length === 0) {
             return res.status(200).json({
                 message: "No similar modules found above threshold",
-                recommendations: { recommendedMods: [] },
+                recommendations: { recommendedMods: [] }
             });
         }
         // Save recommendations
@@ -181,7 +177,7 @@ async function deletePersonalRecommendationsByFeedback(req, res, next) {
         if (!user || !user._id) {
             return next(new error_1.BadRequestError("User not authenticated"));
         }
-        if (!acronym || typeof acronym !== "string") {
+        if (!acronym || typeof acronym !== 'string') {
             return next(new error_1.BadRequestError("Invalid module acronym"));
         }
         let recommendations = await mongo_1.Recommendation.findOne({
@@ -197,16 +193,20 @@ async function deletePersonalRecommendationsByFeedback(req, res, next) {
                 continue;
             }
             // filter out sources that are feedback-related and match the acronym
-            recModule.source = recModule.source.filter((source) => { var _a; return !(((_a = source.type) === null || _a === void 0 ? void 0 : _a.includes("feedback")) && source.identifier === acronym); });
+            recModule.source = recModule.source.filter(source => {
+                var _a;
+                return !(((_a = source.type) === null || _a === void 0 ? void 0 : _a.includes('feedback')) &&
+                    source.identifier === acronym);
+            });
             // update frequency and score
             if (recModule.source.length > 0) {
                 recModule.frequency = recModule.source.length;
-                const totalScore = recModule.source.reduce((sum, source) => sum + (typeof source.score === "number" ? source.score : 0), 0);
+                const totalScore = recModule.source.reduce((sum, source) => sum + (typeof source.score === 'number' ? source.score : 0), 0);
                 recModule.score = totalScore / recModule.source.length;
             }
         }
         // remove modules that no longer have any sources
-        recommendations.recommendedMods = recommendations.recommendedMods.filter((recModule) => Array.isArray(recModule.source) && recModule.source.length > 0);
+        recommendations.recommendedMods = recommendations.recommendedMods.filter(recModule => Array.isArray(recModule.source) && recModule.source.length > 0);
         await recommendations.save();
         res.status(200).json(recommendations);
     }

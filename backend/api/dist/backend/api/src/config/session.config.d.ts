@@ -512,6 +512,26 @@ export declare const redisClient: import("@redis/client").RedisClientType<{
             readonly parseCommand: (this: void, parser: import("redis").CommandParser, index: import("redis").RedisArgument, query: import("redis").RedisArgument, options?: import("@redis/search/dist/lib/commands/EXPLAINCLI").FtExplainCLIOptions | undefined) => void;
             readonly transformReply: () => import("@redis/client/dist/lib/RESP/types").ArrayReply<import("@redis/client/dist/lib/RESP/types").BlobStringReply<string>>;
         };
+        HYBRID: {
+            readonly NOT_KEYED_COMMAND: true;
+            readonly IS_READ_ONLY: true;
+            readonly parseCommand: (this: void, parser: import("redis").CommandParser, index: import("redis").RedisArgument, options?: import("@redis/search/dist/lib/commands/HYBRID").FtHybridOptions | undefined) => void;
+            readonly transformReply: {
+                readonly 2: (reply: any) => any;
+                readonly 3: () => import("@redis/client/dist/lib/RESP/types").ReplyUnion;
+            };
+            readonly unstableResp3: true;
+        };
+        hybrid: {
+            readonly NOT_KEYED_COMMAND: true;
+            readonly IS_READ_ONLY: true;
+            readonly parseCommand: (this: void, parser: import("redis").CommandParser, index: import("redis").RedisArgument, options?: import("@redis/search/dist/lib/commands/HYBRID").FtHybridOptions | undefined) => void;
+            readonly transformReply: {
+                readonly 2: (reply: any) => any;
+                readonly 3: () => import("@redis/client/dist/lib/RESP/types").ReplyUnion;
+            };
+            readonly unstableResp3: true;
+        };
         INFO: {
             readonly NOT_KEYED_COMMAND: true;
             readonly IS_READ_ONLY: true;

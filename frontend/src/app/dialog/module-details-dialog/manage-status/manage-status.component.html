@@ -10,7 +10,7 @@
                     <span class="badge rounded-pill bg-light border mb-2 px-2 py-1">
                         <div class="flex-shrink-0 me-2">
                             <app-module-status [studyPath$]="studyPath$" [module]="selectedModule" [modType]="modType"
-                                [openedWithSemesterSet]="openedWithSemesterSet" [openedFromModuleCatalog]="true"
+                                [openedWithSemesterSet]="openedWithSemesterSet" [openedFromModuleOffer]="true"
                                 [showStatusText]="true"></app-module-status>
                         </div>
                     </span>
@@ -46,7 +46,7 @@
                                         <app-module-status [studyPath$]="studyPath$" [module]="selectedModule"
                                             [modType]="modType" [statusSemester]="semesterPlan.semester"
                                             [openedWithSemesterSet]="openedWithSemesterSet"
-                                            [openedFromModuleCatalog]="true"
+                                            [openedFromModuleOffer]="true"
                                             [showStatusText]="true"></app-module-status>
                                     </div>
                                     <button class="btn btn-danger btn-sm"

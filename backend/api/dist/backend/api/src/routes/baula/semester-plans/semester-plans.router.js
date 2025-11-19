@@ -20,8 +20,6 @@ router.use(express_1.default.json());
  *     tags: [Semester Plans]
  *     summary: Initialize semester plans
  *     description: Creates multiple semester plans for a specific study plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -81,7 +79,7 @@ router.use(express_1.default.json());
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.post("/", semester_plans_controller_1.initSemesterPlans);
 /**
@@ -91,8 +89,6 @@ router.post("/", semester_plans_controller_1.initSemesterPlans);
  *     tags: [Semester Plans]
  *     summary: Add semester plan to study plan
  *     description: Creates a new empty semester plan and adds it to the specified study plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -124,13 +120,13 @@ router.post("/", semester_plans_controller_1.initSemesterPlans);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.post("/plan", semester_plans_controller_1.addSemesterPlanToStudyPlan);
 /**
@@ -140,8 +136,6 @@ router.post("/plan", semester_plans_controller_1.addSemesterPlanToStudyPlan);
  *     tags: [Semester Plans::Meta]
  *     summary: Update aimed (target) ECTS
  *     description: Updates the target ECTS credits for a semester plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -177,13 +171,13 @@ router.post("/plan", semester_plans_controller_1.addSemesterPlanToStudyPlan);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/plan/aimed-ects", semester_plans_controller_1.updateSemesterPlanAimedEcts);
 /**
@@ -193,8 +187,6 @@ router.put("/plan/aimed-ects", semester_plans_controller_1.updateSemesterPlanAim
  *     tags: [Semester Plans::Meta]
  *     summary: Update past semester status
  *     description: Updates the isPastSemester property of a semester plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -228,13 +220,13 @@ router.put("/plan/aimed-ects", semester_plans_controller_1.updateSemesterPlanAim
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/plan/past-semester", semester_plans_controller_1.updateIsPastSemester);
 /**
@@ -244,8 +236,6 @@ router.put("/plan/past-semester", semester_plans_controller_1.updateIsPastSemest
  *     tags: [Semester Plans::Courses (Stundenplanung)]
  *     summary: Add multiple courses to semester plan
  *     description: Adds multiple courses to the semester plan at once, filtering out duplicates
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -297,13 +287,13 @@ router.put("/plan/past-semester", semester_plans_controller_1.updateIsPastSemest
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan or semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.post("/plan/courses", semester_plans_controller_1.addCourses);
 /**
@@ -313,8 +303,6 @@ router.post("/plan/courses", semester_plans_controller_1.addCourses);
  *     tags: [Semester Plans::Courses (Stundenplanung)]
  *     summary: Add course to semester plan
  *     description: Adds a single course to the semester plan of the user's active study plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -376,13 +364,13 @@ router.post("/plan/courses", semester_plans_controller_1.addCourses);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan or semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.post("/plan/course", semester_plans_controller_1.addCourse);
 /**
@@ -392,8 +380,6 @@ router.post("/plan/course", semester_plans_controller_1.addCourse);
  *     tags: [Semester Plans]
  *     summary: Import semester plan
  *     description: Replaces an existing semester plan with an imported semester plan template
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -432,13 +418,13 @@ router.post("/plan/course", semester_plans_controller_1.addCourse);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan not found or semester mismatch
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/", semester_plans_controller_1.importSemesterPlan);
 /**
@@ -448,8 +434,6 @@ router.put("/", semester_plans_controller_1.importSemesterPlan);
  *     tags: [Semester Plans::Courses (Stundenplanung)]
  *     summary: Delete multiple courses from semester plan
  *     description: Removes multiple courses from a semester plan at once
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -485,13 +469,13 @@ router.put("/", semester_plans_controller_1.importSemesterPlan);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan or semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/plan/courses", semester_plans_controller_1.deleteCourses);
 /**
@@ -501,8 +485,6 @@ router.delete("/plan/courses", semester_plans_controller_1.deleteCourses);
  *     tags: [Semester Plans::Courses (Stundenplanung)]
  *     summary: Delete course from semester plan
  *     description: Removes a single course from a semester plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -536,13 +518,13 @@ router.delete("/plan/courses", semester_plans_controller_1.deleteCourses);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan or semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/plan/course", semester_plans_controller_1.deleteCourse);
 /**
@@ -552,8 +534,6 @@ router.delete("/plan/course", semester_plans_controller_1.deleteCourse);
  *     tags: [Semester Plans::Modules (Studienplanung)]
  *     summary: Add module to semester (plan)
  *     description: Adds a module (by acronym) to a specific semester (plan)
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -592,13 +572,13 @@ router.delete("/plan/course", semester_plans_controller_1.deleteCourse);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.post("/plan/module", semester_plans_controller_1.addModule);
 /**
@@ -608,8 +588,6 @@ router.post("/plan/module", semester_plans_controller_1.addModule);
  *     tags: [Semester Plans::Modules (Studienplanung)]
  *     summary: Create user-generated module
  *     description: Creates and adds a user-generated (custom) module to a semester plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -641,13 +619,13 @@ router.post("/plan/module", semester_plans_controller_1.addModule);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.post("/plan/user-generated-module", semester_plans_controller_1.createUserGeneratedModule);
 /**
@@ -657,8 +635,6 @@ router.post("/plan/user-generated-module", semester_plans_controller_1.createUse
  *     tags: [Semester Plans::Modules (Studienplanung)]
  *     summary: Update user-generated module
  *     description: Updates properties of a user-generated module in a semester plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -695,13 +671,13 @@ router.post("/plan/user-generated-module", semester_plans_controller_1.createUse
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Study plan, semester plan, or module not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/plan/user-generated-module", semester_plans_controller_1.updateUserGeneratedModule);
 /**
@@ -711,8 +687,6 @@ router.put("/plan/user-generated-module", semester_plans_controller_1.updateUser
  *     tags: [Semester Plans::Modules (Studienplanung)]
  *     summary: Delete module from semester plan
  *     description: Removes a module (by acronym) from a semester plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -753,13 +727,13 @@ router.put("/plan/user-generated-module", semester_plans_controller_1.updateUser
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Module or semester plan not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/plan/module", semester_plans_controller_1.deleteModule);
 /**
@@ -769,8 +743,6 @@ router.delete("/plan/module", semester_plans_controller_1.deleteModule);
  *     tags: [Semester Plans::Modules (Studienplanung)]
  *     summary: Delete multiple user-generated modules
  *     description: Removes multiple user-generated modules from a semester plan at once
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -809,13 +781,13 @@ router.delete("/plan/module", semester_plans_controller_1.deleteModule);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Semester plan or modules not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/plan/user-generated-modules", semester_plans_controller_1.deleteUserGeneratedModules);
 /**
@@ -825,8 +797,6 @@ router.delete("/plan/user-generated-modules", semester_plans_controller_1.delete
  *     tags: [Semester Plans::Modules (Studienplanung)]
  *     summary: Delete user-generated module
  *     description: Removes a user-generated module from a semester plan
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -860,12 +830,12 @@ router.delete("/plan/user-generated-modules", semester_plans_controller_1.delete
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Semester plan or module not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.delete("/plan/user-generated-module", semester_plans_controller_1.deleteUserGeneratedModule);

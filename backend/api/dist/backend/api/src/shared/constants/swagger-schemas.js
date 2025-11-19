@@ -8,19 +8,62 @@ const swaggerSchemas = {
     // ==========================================
     // Shared Schemas
     // ==========================================
-    Error: {
+    BadRequestError: {
         type: 'object',
         properties: {
             message: {
                 type: 'string',
-                example: 'An error occurred'
+                example: 'The request was invalid or malformed.'
             },
             code: {
                 type: 'string',
-                example: 'ERROR_CODE'
+                example: 'BAD_REQUEST'
             }
-        }
+        },
+        required: ['message']
     },
+    UnauthorizedError: {
+        type: 'object',
+        properties: {
+            message: {
+                type: 'string',
+                example: 'Unauthorized'
+            },
+            code: {
+                type: 'string',
+                example: 'UNAUTHORIZED'
+            }
+        },
+        required: ['message']
+    },
+    NotFoundError: {
+        type: 'object',
+        properties: {
+            message: {
+                type: 'string',
+                example: 'The requested resource could not be found.'
+            },
+            code: {
+                type: 'string',
+                example: 'NOT_FOUND'
+            }
+        },
+        required: ['message']
+    },
+    InternalServerError: {
+        type: 'object',
+        properties: {
+            message: {
+                type: 'string',
+                example: 'An internal server error occurred.'
+            },
+            code: {
+                type: 'string',
+                example: 'INTERNAL_SERVER_ERROR'
+            }
+        },
+        required: ['message']
+    }
 };
 exports.swaggerBaulaSchema = {
     ...swaggerSchemas,
@@ -427,22 +470,22 @@ exports.swaggerBaulaSchema = {
     },
     Course: {
         type: 'object',
-        description: 'University course (from UnivIS)',
+        description: 'Course (Lecture from UnivIS)',
         properties: {
             id: {
                 type: 'string',
                 description: 'Course ID',
-                example: 'C_2024w_001'
+                example: 'Lecture.wiai.berei...'
             },
             name: {
                 type: 'string',
                 description: 'Course name',
-                example: 'Softwaretechnik-Praktikum'
+                example: 'AlgoK-AK-B: Algorithmen und Komplexität'
             },
             short: {
                 type: 'string',
                 description: 'Short name',
-                example: 'SWT-Praktikum'
+                example: ''
             },
             organizational: {
                 type: 'string',
@@ -467,7 +510,7 @@ exports.swaggerBaulaSchema = {
             orgname: {
                 type: 'string',
                 description: 'Organizing unit',
-                example: 'Lehrstuhl für Softwaretechnik'
+                example: 'Lehrstuhl für ...'
             },
             chair: {
                 type: 'string',
@@ -697,7 +740,7 @@ exports.swaggerBaulaSchema = {
             _id: {
                 type: 'string',
                 description: 'MongoDB ObjectId',
-                example: '507f1f77bcf86cd799439011'
+                example: '1234'
             },
             shibId: {
                 type: 'string',
@@ -841,7 +884,7 @@ exports.swaggerBaulaSchema = {
                 items: {
                     type: 'object',
                     properties: {
-                        acronym: { type: 'string', example: 'SE1' },
+                        acronym: { type: 'string', example: 'MI-WebT-B' },
                         similarmods: { type: 'integer', minimum: 0, maximum: 5, example: 4 },
                         similarchair: { type: 'integer', minimum: 0, maximum: 5, example: 3 },
                         priorknowledge: { type: 'integer', minimum: 0, maximum: 5, example: 5 },
@@ -956,52 +999,52 @@ exports.swaggerBaulaSchema = {
             }
         }
     },
-    // UserJob: {
-    //     type: 'object',
-    //     description: 'User job profile (subdocument)',
-    //     properties: {
-    //         _id: {
-    //             type: 'string',
-    //             description: 'Subdocument ID',
-    //             example: '507f1f77bcf86cd799439012'
-    //         },
-    //         title: {
-    //             type: 'string',
-    //             maxLength: 1000,
-    //             example: 'Full-Stack Developer'
-    //         },
-    //         description: {
-    //             type: 'string',
-    //             maxLength: 2000,
-    //             example: 'Entwicklung von Web-Anwendungen mit React und Node.js'
-    //         },
-    //         keywords: {
-    //             type: 'array',
-    //             items: {
-    //                 type: 'string'
-    //             },
-    //             example: ['JavaScript', 'React', 'Node.js', 'MongoDB']
-    //         },
-    //         inputMode: {
-    //             type: 'string',
-    //             enum: ['url', 'mock'],
-    //             example: 'mock'
-    //         },
-    //         embeddingId: {
-    //             type: 'string',
-    //             description: 'Associated embedding ID',
-    //             example: 'EMB_001'
-    //         },
-    //         createdAt: {
-    //             type: 'string',
-    //             format: 'date-time'
-    //         },
-    //         updatedAt: {
-    //             type: 'string',
-    //             format: 'date-time'
-    //         }
-    //     }
-    // },
+    UserJob: {
+        type: 'object',
+        description: 'User job profile (subdocument)',
+        properties: {
+            _id: {
+                type: 'string',
+                description: 'Subdocument ID',
+                example: '1234'
+            },
+            title: {
+                type: 'string',
+                maxLength: 1000,
+                example: 'Full-Stack Developer'
+            },
+            description: {
+                type: 'string',
+                maxLength: 2000,
+                example: 'Entwicklung von Web-Anwendungen mit React und Node.js'
+            },
+            keywords: {
+                type: 'array',
+                items: {
+                    type: 'string'
+                },
+                example: ['JavaScript', 'React', 'Node.js', 'MongoDB']
+            },
+            inputMode: {
+                type: 'string',
+                enum: ['url', 'mock'],
+                example: 'mock'
+            },
+            embeddingId: {
+                type: 'string',
+                description: 'Associated embedding ID',
+                example: 'EMB_001'
+            },
+            createdAt: {
+                type: 'string',
+                format: 'date-time'
+            },
+            updatedAt: {
+                type: 'string',
+                format: 'date-time'
+            }
+        }
+    },
     Job: {
         type: 'object',
         description: 'Job profile (complete with user reference)',
@@ -1037,7 +1080,7 @@ exports.swaggerBaulaSchema = {
             userId: {
                 type: 'string',
                 description: 'Owner user ID',
-                example: '507f1f77bcf86cd799439011'
+                example: '1234'
             },
             createdAt: {
                 type: 'string',
@@ -1051,33 +1094,6 @@ exports.swaggerBaulaSchema = {
             }
         }
     },
-    // Jobtemplate: {
-    //     type: 'object',
-    //     description: 'Job creation template',
-    //     required: ['title', 'inputMode', 'keywords'],
-    //     properties: {
-    //         title: {
-    //             type: 'string',
-    //             example: 'Full-Stack Developer'
-    //         },
-    //         description: {
-    //             type: 'string',
-    //             example: 'Entwicklung von Web-Anwendungen'
-    //         },
-    //         inputMode: {
-    //             type: 'string',
-    //             enum: ['url', 'mock'],
-    //             example: 'mock'
-    //         },
-    //         keywords: {
-    //             type: 'array',
-    //             items: {
-    //                 type: 'string'
-    //             },
-    //             example: ['JavaScript', 'React', 'Node.js']
-    //         }
-    //     }
-    // },
     ExtendedJob: {
         type: 'object',
         description: 'Job with recommendations',
@@ -1126,7 +1142,7 @@ exports.swaggerBaulaSchema = {
             },
             userId: {
                 type: 'string',
-                example: '507f1f77bcf86cd799439011'
+                example: '1234'
             },
             createdAt: {
                 type: 'string',
@@ -1207,7 +1223,7 @@ exports.swaggerBaulaSchema = {
             },
             userId: {
                 type: 'string',
-                example: '507f1f77bcf86cd799439011'
+                example: '1234'
             }
         }
     },
@@ -1253,7 +1269,7 @@ exports.swaggerBaulaSchema = {
         properties: {
             _id: {
                 type: 'string',
-                example: '507f1f77bcf86cd799439014'
+                example: '1234'
             },
             recommendedMods: {
                 type: 'array',
@@ -1264,7 +1280,7 @@ exports.swaggerBaulaSchema = {
             },
             userId: {
                 type: 'string',
-                example: '507f1f77bcf86cd799439011'
+                example: '1234'
             },
             createdAt: {
                 type: 'string',
@@ -1385,7 +1401,7 @@ exports.swaggerBaulaSchema = {
             identifier: {
                 type: 'string',
                 description: 'Identifier (e.g., job ID, topic ID)',
-                example: '507f1f77bcf86cd799439012'
+                example: '1234'
             },
             vector: {
                 type: 'array',
@@ -1442,170 +1458,6 @@ exports.swaggerBaulaSchema = {
             }
         }
     },
-    // Evaluation: {
-    //     type: 'object',
-    //     description: 'Job-based module evaluation',
-    //     properties: {
-    //         _id: {
-    //             type: 'string',
-    //             example: '507f1f77bcf86cd799439015'
-    //         },
-    //         spId: {
-    //             type: 'string',
-    //             description: 'Study plan ID',
-    //             example: '507f1f77bcf86cd799439013'
-    //         },
-    //         jobEvaluations: {
-    //             type: 'array',
-    //             items: {
-    //                 type: 'object',
-    //                 properties: {
-    //                     job: {
-    //                         type: 'object',
-    //                         properties: {
-    //                             jobId: { type: 'string', example: '507f1f77bcf86cd799439012' }
-    //                         }
-    //                     },
-    //                     candidates: {
-    //                         type: 'array',
-    //                         description: 'Candidate modules',
-    //                         items: {
-    //                             type: 'object',
-    //                             properties: {
-    //                                 acronym: { type: 'string', example: 'ML1' }
-    //                             }
-    //                         }
-    //                     },
-    //                     rankedModules: {
-    //                         type: 'array',
-    //                         description: 'Ranked module list',
-    //                         items: {
-    //                             type: 'object',
-    //                             properties: {
-    //                                 acronym: { type: 'string', example: 'ML1' },
-    //                                 ranking: { type: 'integer', minimum: 0, maximum: 100, example: 95 }
-    //                             }
-    //                         }
-    //                     },
-    //                     comment: {
-    //                         type: 'string',
-    //                         example: 'Good match for job profile'
-    //                     },
-    //                     createdAt: {
-    //                         type: 'string',
-    //                         format: 'date-time'
-    //                     },
-    //                     updatedAt: {
-    //                         type: 'string',
-    //                         format: 'date-time'
-    //                     }
-    //                 }
-    //             }
-    //         },
-    //         createdAt: {
-    //             type: 'string',
-    //             format: 'date-time',
-    //             example: '2024-11-01T10:00:00Z'
-    //         },
-    //         updatedAt: {
-    //             type: 'string',
-    //             format: 'date-time',
-    //             example: '2024-11-05T14:30:00Z'
-    //         }
-    //     }
-    // },
-    // LongTermEvaluation: {
-    //     type: 'object',
-    //     description: 'Long-term user evaluation/survey',
-    //     properties: {
-    //         _id: {
-    //             type: 'string',
-    //             example: '507f1f77bcf86cd799439016'
-    //         },
-    //         personalCode: {
-    //             type: 'string',
-    //             description: 'Personal evaluation code',
-    //             example: 'EVAL_ABC123'
-    //         },
-    //         evaluationCode: {
-    //             type: 'string',
-    //             description: 'Evaluation identifier',
-    //             example: 'LONGTERM_2024W'
-    //         },
-    //         spName: {
-    //             type: 'string',
-    //             description: 'Study programme name',
-    //             example: 'Angewandte Informatik'
-    //         },
-    //         semester: {
-    //             type: 'integer',
-    //             description: 'Current semester',
-    //             minimum: 0,
-    //             maximum: 20,
-    //             example: 5
-    //         },
-    //         pu: {
-    //             type: 'array',
-    //             description: 'Perceived Usefulness (4 items, 0-7)',
-    //             items: {
-    //                 type: 'integer',
-    //                 minimum: 0,
-    //                 maximum: 7
-    //             },
-    //             minItems: 4,
-    //             maxItems: 4,
-    //             example: [6, 5, 7, 6]
-    //         },
-    //         peou: {
-    //             type: 'array',
-    //             description: 'Perceived Ease of Use (4 items, 0-7)',
-    //             items: {
-    //                 type: 'integer',
-    //                 minimum: 0,
-    //                 maximum: 7
-    //             },
-    //             minItems: 4,
-    //             maxItems: 4,
-    //             example: [6, 6, 5, 7]
-    //         },
-    //         bi: {
-    //             type: 'integer',
-    //             description: 'Behavioral Intention (0-7)',
-    //             minimum: 0,
-    //             maximum: 7,
-    //             example: 6
-    //         },
-    //         use: {
-    //             type: 'string',
-    //             description: 'Usage frequency',
-    //             enum: ['täglich', 'mehrmals pro Woche', 'einmal pro Woche', 'seltener', 'undefined'],
-    //             example: 'mehrmals pro Woche'
-    //         },
-    //         nps: {
-    //             type: 'integer',
-    //             description: 'Net Promoter Score (0-10)',
-    //             minimum: 0,
-    //             maximum: 10,
-    //             example: 8
-    //         },
-    //         feedback: {
-    //             type: 'string',
-    //             description: 'Free text feedback',
-    //             maxLength: 1000,
-    //             example: 'Die Empfehlungen waren sehr hilfreich bei der Studienplanung.'
-    //         },
-    //         createdAt: {
-    //             type: 'string',
-    //             format: 'date-time',
-    //             example: '2024-11-05T10:00:00Z'
-    //         },
-    //         updatedAt: {
-    //             type: 'string',
-    //             format: 'date-time',
-    //             example: '2024-11-05T10:00:00Z'
-    //         }
-    //     }
-    // }
 };
 exports.swaggerBilAppSchema = {
     ...swaggerSchemas,

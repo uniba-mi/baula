@@ -9,6 +9,7 @@ const bilapp_controller_1 = require("./bilapp.controller");
 const authentication_middleware_1 = require("../../shared/middleware/authentication-middleware");
 const router = express_1.default.Router();
 exports.bilapp = router;
+// TODO: document remaining BilApp routes too and check for best practices in naming
 // get all standards
 router.get("/standards", bilapp_controller_1.getAllStandards);
 // get one standard
@@ -94,7 +95,7 @@ router.get("/competences/children/uppest/:id", bilapp_controller_1.getLowerCompe
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *             example:
  *               message: 'Die übergebenen Daten sind nicht valide.'
  *               code: 'BAD_REQUEST'
@@ -107,8 +108,6 @@ router.get("/course/:id", bilapp_controller_1.getCompetenceAndModulesOfCourse);
  *     tags: [BilApp]
  *     summary: Get all saved courses from all semester plans
  *     description: Retrieves all courses from all semester plans of the user's active study plan with full details
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Courses retrieved successfully
@@ -135,7 +134,7 @@ router.get("/course/:id", bilapp_controller_1.getCompetenceAndModulesOfCourse);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get("/courses/", authentication_middleware_1.ensureAuthenticated, bilapp_controller_1.getAllSavedCourses);
 /**
@@ -177,7 +176,7 @@ router.get("/courses/", authentication_middleware_1.ensureAuthenticated, bilapp_
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *             example:
  *               message: 'Die übergebenen Daten sind nicht valide.'
  *               code: 'BAD_REQUEST'
@@ -203,7 +202,7 @@ router.get("/courses/:semester", bilapp_controller_1.getBilAppCourses);
  *         schema:
  *           type: string
  *         description: Semester
- *         example: TODO
+ *         example: 2024s
  *     responses:
  *       200:
  *         description: Module handbook
@@ -216,13 +215,13 @@ router.get("/courses/:semester", bilapp_controller_1.getBilAppCourses);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: The requested resource could not be found.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get("/courses/:semester/:searchTerm", authentication_middleware_1.ensureAuthenticated, bilapp_controller_1.getSpecificCourses);
 /**
@@ -261,11 +260,11 @@ router.get("/courses/:semester/:searchTerm", authentication_middleware_1.ensureA
  *             schema:
  *               $ref: '#/components/schemas/Course'
  *       400:
- *         description: TODO - 2x Bad Request.
+ *         description: Fehlgeschlagen.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get("/courses/:semester/:competence/:topN", authentication_middleware_1.ensureAuthenticated, bilapp_controller_1.getTopNCoursesForCompetence);
 /**
@@ -298,9 +297,8 @@ router.get("/courses/:semester/:competence/:topN", authentication_middleware_1.e
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  *             example:
  *               message: 'Keine Module gefunden!'
- *               code: 'NOT_FOUND'
  */
 router.get("/modules", bilapp_controller_1.getUniqueModules);

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { StudyPlan } from "../../database/mongo";
-import { PathModule } from "../../study-path";
+import { PathModule } from "../../../../../interfaces/study-path";
 import { Semester } from "../../../../../interfaces/semester";
 import { validateObjectId } from "./custom-validator";
 

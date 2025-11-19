@@ -1,9 +1,8 @@
 import { Strategy as SamlStrategy } from "@node-saml/passport-saml";
 import fs from "fs";
 import path from "path";
-import { User } from '../database/mongo';
-import { encrypt } from '../shared/utils/crypto';
-
+import { User } from "../database/mongo";
+import { encrypt } from "../shared/utils/crypto";
 
 const spCert = fs.readFileSync(
   path.join(__dirname, "../certs", "sp_cert.pem"),
@@ -21,13 +20,9 @@ const idpCert = fs.readFileSync(
 // Passport shib strategy configuration
 export const samlStrategy = new SamlStrategy(
   {
-    callbackUrl: process.env.SAML_CALLBACK_URL
-      ? process.env.SAML_CALLBACK_URL
-      : "",
-    entryPoint: process.env.SAML_ENTRY_POINT
-      ? process.env.SAML_ENTRY_POINT
-      : "",
-    issuer: process.env.SAML_ISSUER ? process.env.SAML_ISSUER : "",
+    callbackUrl: process.env.SAML_CALLBACK_URL ?? "",
+    entryPoint: process.env.SAML_ENTRY_POINT ?? "",
+    issuer: process.env.SAML_ISSUER ?? "",
     decryptionPvk: spKey,
     publicCert: spCert,
     idpCert: idpCert,
@@ -47,8 +42,10 @@ export const samlStrategy = new SamlStrategy(
   },
   async (profile: any, done: any) => {
     let user = await User.findOne().byShibId(profile.nameID).exec();
-    const baId = profile['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'];
-    const id = baId ? encrypt(profile['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'].split("@")[0]) : 'not set';
+    const baId = profile["urn:oid:1.3.6.1.4.1.5923.1.1.1.6"];
+    const id = baId
+      ? encrypt(profile["urn:oid:1.3.6.1.4.1.5923.1.1.1.6"].split("@")[0])
+      : "not set";
     if (!user) {
       const shibId = profile.nameID;
       const roles = profile["urn:oid:1.3.6.1.4.1.5923.1.1.1.9"].map(

@@ -1,8 +1,8 @@
-import { Course, UnivISCourse } from "../../course";
+import { Course, UnivISCourse } from "../../../../../interfaces/course";
 import { Prisma } from "@prisma/client";
-import { Room } from "../../room";
-import { Person } from "../../person";
-import { CompetenceFulfillment } from "../../competence";
+import { Room } from "../../../../../interfaces/room";
+import { Person } from "../../../../../interfaces/person";
+import { CompetenceFulfillment } from "../../../../../interfaces/competence";
 export declare function transformUnivISCourse(univisCourse: UnivISCourse, semester: string): Course;
 export declare function transformCourses(courses: any[]): Course[];
 export declare function addCourse(entry: Course): Prisma.Prisma__CourseClient<{

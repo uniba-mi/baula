@@ -15,8 +15,6 @@ router.use(express.json())
  *   get:
  *     summary: Get all departments
  *     tags: [Meta::Departments]
- *     security:
- *     - bearerAuth: []
  *     responses:
  *       200:
  *         description: String array of departments
@@ -31,13 +29,13 @@ router.use(express.json())
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  *       400:
  *         description: Es ist ein Fehler aufgetreten.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get('/departments', getDistinctDepartments);
 
@@ -61,13 +59,13 @@ router.get('/departments', getDistinctDepartments);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  *       400:
  *         description: Es ist ein Fehler aufgetreten.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get('/course-types', getDistinctCourseTypes);
 
@@ -101,7 +99,7 @@ router.get('/course-types', getDistinctCourseTypes);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get("/academic-dates/:semester", getAcademicDatesBySemester);
 
@@ -126,7 +124,7 @@ router.get("/academic-dates/:semester", getAcademicDatesBySemester);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get("/date-types", getDateTypes);
 

@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
-import { UserGeneratedModule } from "../../user-generated-module";
+import { UserGeneratedModule } from "../../../../../interfaces/user-generated-module";
 import {
   PlanCourse,
   SemesterPlan,
   SemesterPlanTemplate,
-} from "../../semester-plan";
-import { StudyPlanTemplate } from "../../study-plan";
-import { Hint, UserServer } from "../../user";
+} from "../../../../../interfaces/semester-plan";
+import { StudyPlanTemplate } from "../../../../../interfaces/study-plan";
+import { Hint, UserServer } from "../../../../../interfaces/user";
 import validator from "validator";
-import { Jobtemplate } from "../../job";
-import { LongTermEvaluation } from "../../long-term-evaluation";
+import { Jobtemplate } from "../../../../../interfaces/job";
+import { LongTermEvaluation } from "../../../../../interfaces/long-term-evaluation";
 
 const {
   Types: { ObjectId },

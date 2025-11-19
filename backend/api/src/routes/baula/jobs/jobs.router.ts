@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { crawlJob, generateJobKeywords, recommendModulesToJob} from "./jobs.controller";
+import { crawlJob, generateJobKeywords, recommendModulesToJob } from "./jobs.controller";
 
 const router: Router = express.Router();
 
@@ -9,9 +9,7 @@ const router: Router = express.Router();
  *   post:
  *     tags: [Jobs]
  *     summary: Crawl job posting from URL
- *     description: Extracts job information (title and description) from a provided job posting URL
- *     security:
- *       - bearerAuth: []
+ *     description: Extracts job information (title and description) from a provided job posting URL (currently "arbeitsagentur" or stepstone)
  *     requestBody:
  *       required: true
  *       content:
@@ -24,7 +22,7 @@ const router: Router = express.Router();
  *               url:
  *                 type: string
  *                 format: uri
- *                 example: 'https://www.example-jobs.com/software-engineer-position'
+ *                 example: 'https://www.arbeitsagentur.de/jobsuche/*'
  *                 description: URL of the job posting to crawl
  *     responses:
  *       200:
@@ -57,13 +55,13 @@ const router: Router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: URL not provided
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.post("/crawling", crawlJob);
 
@@ -73,9 +71,7 @@ router.post("/crawling", crawlJob);
  *   post:
  *     tags: [Jobs]
  *     summary: Generate keywords from job information
- *     description: Extracts relevant keywords from job title and description using AI/ML processing
- *     security:
- *       - bearerAuth: []
+ *     description: Extracts relevant keywords from job title and description using Python API
  *     requestBody:
  *       required: true
  *       content:
@@ -110,30 +106,20 @@ router.post("/crawling", crawlJob);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *             example:
  *               message: 'Job title or description is missing!'
  *               code: 'BAD_REQUEST'
  */
 router.post("/keywords", generateJobKeywords);
 
-/** ---------------------------------------------
- *  ---- Jobinformation to the best Modules --------
- *  @param {String} title - The title related to the keywords
- *  @param {String} description - The description related to the keywords
- *  @param {Array} keywords - List of keywords
- *  @body {Object} - The request body containing module request data
- *  @returns {Object} - JSON list of modules
- *  ---------------------------------------------*/
 /**
  * @swagger
  * /jobs/recommendation:
  *   post:
  *     tags: [Jobs]
- *     summary: Get module recommendations for job profile
- *     description: Generates personalized module recommendations based on job requirements. Saves the job profile and updates user's recommendations. Supports both real API calls and mocked recommendations for testing.
- *     security:
- *       - bearerAuth: []
+ *     summary: Get module recommendations for job
+ *     description: Generates personalized module recommendations based on job information. Saves the job and updates user's recommendations. Supports both real API calls and mocked recommendations for job profiles.
  *     requestBody:
  *       required: true
  *       content:
@@ -145,7 +131,7 @@ router.post("/keywords", generateJobKeywords);
  *             properties:
  *               jobId:
  *                 type: string
- *                 example: '507f1f77bcf86cd799439011'
+ *                 example: '1234'
  *                 description: Optional - Job ID for updating existing job (if omitted, creates new job)
  *               job:
  *                 type: object
@@ -194,7 +180,7 @@ router.post("/keywords", generateJobKeywords);
  *                         properties:
  *                           acronym:
  *                             type: string
- *                             example: 'WEB1'
+ *                             example: 'MI-WebT-B'
  *                             description: Module acronym
  *                           score:
  *                             type: number
@@ -208,7 +194,7 @@ router.post("/keywords", generateJobKeywords);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *             examples:
  *               noMhb:
  *                 value:
@@ -223,7 +209,7 @@ router.post("/keywords", generateJobKeywords);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  *             example:
  *               message: 'Keine Modulempfehlungen gefunden.'
  *               code: 'NOT_FOUND'

@@ -85,7 +85,7 @@ async function scrapAfaSsWebsite(url) {
                 }
             }
             catch (error) {
-                console.log("Stellenanzeige von Stebstone nicht gefunden!:", error);
+                console.log("Stellenanzeige von Stepstone nicht gefunden!:", error);
             }
         }
         else {

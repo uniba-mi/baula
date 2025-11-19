@@ -1,6 +1,6 @@
 {
   "version": "3.11.0",
-  "created": "2025-11-17T14:04:16Z",
+  "created": "2025-11-19T19:56:09Z",
   "files": [
     {
       "path": ".nojekyll"
@@ -102,6 +102,27 @@
       "path": "dashboard\\terminkalender\\index.html"
     },
     {
+      "path": "einstellungen\\abbildung1_einstellungen_1.png"
+    },
+    {
+      "path": "einstellungen\\abbildung1_einstellungen_2.png"
+    },
+    {
+      "path": "einstellungen\\abbildung2_einstellungen.png"
+    },
+    {
+      "path": "einstellungen\\abbildung3_einstellungen.png"
+    },
+    {
+      "path": "einstellungen\\abbildung4_einstellungen.png"
+    },
+    {
+      "path": "einstellungen\\abbildung5_einstellungen.png"
+    },
+    {
+      "path": "einstellungen\\index.html"
+    },
+    {
       "path": "index.html"
     },
     {
@@ -154,9 +175,6 @@
     },
     {
       "path": "modulkatalog\\suchleiste\\index.html"
-    },
-    {
-      "path": "personalisierung\\index.html"
     },
     {
       "path": "resources\\css\\retype.css"
@@ -255,16 +273,28 @@
       "path": "studienverlaufsplan\\index.html"
     },
     {
-      "path": "studienverlaufsplan\\modulempfehlungen\\index.html"
-    },
-    {
       "path": "studienverlaufsplan\\semesterübersicht\\index.html"
     },
     {
       "path": "studienverlaufsplan\\studienplan\\index.html"
     },
     {
-      "path": "stundenplan\\abbildung22_stundenplan.png"
+      "path": "stundenplan\\abbildung1_stundenplan_2.png"
+    },
+    {
+      "path": "stundenplan\\abbildung1_stundenplan.png"
+    },
+    {
+      "path": "stundenplan\\abbildung2_lv_1.png"
+    },
+    {
+      "path": "stundenplan\\abbildung2_lv_2.png"
+    },
+    {
+      "path": "stundenplan\\abbildung2_lv_3.png"
+    },
+    {
+      "path": "stundenplan\\abbildung2_lv_4.png"
     },
     {
       "path": "stundenplan\\index.html"

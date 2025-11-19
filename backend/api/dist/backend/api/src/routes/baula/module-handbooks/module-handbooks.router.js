@@ -41,13 +41,13 @@ exports.moduleHandbooks = router;
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: The requested module handbook could not be found with this id and version.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get('/:id/:version', module_handbooks_controller_1.getMhbByIdAndVersion);
 /**
@@ -56,8 +56,6 @@ router.get('/:id/:version', module_handbooks_controller_1.getMhbByIdAndVersion);
  *   get:
  *     summary: Get a specific module from all modules by acronym and version
  *     tags: [ModuleHandbook::Modules]
- *     security:
- *     - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: acronym
@@ -85,13 +83,13 @@ router.get('/:id/:version', module_handbooks_controller_1.getMhbByIdAndVersion);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: The requested module could not be found with this acronym and version.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get('/modules/:acronym/:version', module_handbooks_controller_1.getModByAcronymAndVersion);
 /**
@@ -112,12 +110,12 @@ router.get('/modules/:acronym/:version', module_handbooks_controller_1.getModByA
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: No modules could be found.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get('/modules', module_handbooks_controller_1.getModules);

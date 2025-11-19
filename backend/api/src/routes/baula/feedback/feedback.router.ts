@@ -14,14 +14,6 @@ router.use(express.json());
  *       Updates personal module recommendations based on user feedback about a completed module. 
  *       Uses similarity analysis to find related modules when content match rating is ≥ 3.
  *       If content match < 3, removes existing feedback-based recommendations for that module.
- *       
- *       The feedback includes ratings for:
- *       - Similar modules (similarmods): How similar was this module to others?
- *       - Similar chair (similarchair): How similar was the teaching style/department?
- *       - Prior knowledge (priorknowledge): How well did prerequisites prepare you?
- *       - Content match (contentmatch): How well did content match expectations?
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -40,32 +32,32 @@ router.use(express.json());
  *                 properties:
  *                   acronym:
  *                     type: string
- *                     example: 'SE1'
+ *                     example: 'MI-WebT-B'
  *                     description: Module acronym being rated
  *                   similarmods:
  *                     type: integer
  *                     minimum: 0
  *                     maximum: 5
  *                     example: 4
- *                     description: Rating for similarity to other modules (0-5)
+ *                     description: Rating for recommending similar modules (0-5)
  *                   similarchair:
  *                     type: integer
  *                     minimum: 0
  *                     maximum: 5
  *                     example: 3
- *                     description: Rating for similar teaching style/department (0-5)
+ *                     description: Rating for recommending modules of similar chair (0-5)
  *                   priorknowledge:
  *                     type: integer
  *                     minimum: 0
  *                     maximum: 5
  *                     example: 5
- *                     description: Rating for prerequisite preparation (0-5)
+ *                     description: Rating for prerequisites (0-5)
  *                   contentmatch:
  *                     type: integer
  *                     minimum: 0
  *                     maximum: 5
  *                     example: 4
- *                     description: Rating for content matching expectations (0-5, triggers recommendation if ≥3)
+ *                     description: Rating for content matching the teaching contents (0-5, triggers recommendation if ≥3)
  *     responses:
  *       200:
  *         description: Recommendations updated successfully based on feedback
@@ -118,35 +110,13 @@ router.use(express.json());
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *             examples:
- *               notAuthenticated:
- *                 value:
- *                   message: 'User not authenticated'
- *                   code: 'BAD_REQUEST'
- *               noMhb:
- *                 value:
- *                   message: 'No valid mhbId or mhbVersion found'
- *                   code: 'BAD_REQUEST'
- *               updateFailed:
- *                 value:
- *                   message: 'Failed to update recommendations based on feedback'
- *                   code: 'BAD_REQUEST'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Required data not found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *             examples:
- *               noModules:
- *                 value:
- *                   message: 'No modules found for the given MHB information'
- *                   code: 'NOT_FOUND'
- *               noEmbeddings:
- *                 value:
- *                   message: 'No embeddings found for available modules'
- *                   code: 'NOT_FOUND'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.put("/", updatePersonalRecommendationsByFeedback);
 
@@ -160,15 +130,13 @@ router.put("/", updatePersonalRecommendationsByFeedback);
  *       Removes all feedback-based recommendation sources associated with a specific module.
  *       This cleans up recommendations that were generated based on user feedback about the specified module.
  *       Modules with no remaining sources are automatically removed from recommendations.
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: acronym
  *         required: true
  *         schema:
  *           type: string
- *           example: 'SE1'
+ *           example: 'MI-WebT-B'
  *         description: Module acronym to remove feedback recommendations for
  *     responses:
  *       200:
@@ -188,13 +156,13 @@ router.put("/", updatePersonalRecommendationsByFeedback);
  *               deleted:
  *                 summary: Feedback removed
  *                 value:
- *                   _id: '507f1f77bcf86cd799439015'
- *                   userId: '507f1f77bcf86cd799439011'
+ *                   _id: '1234'
+ *                   userId: '1234'
  *                   recommendedMods:
- *                     - acronym: 'SE2'
+ *                     - acronym: 'MI-WebT-B'
  *                       source:
  *                         - type: 'job'
- *                           identifier: '507f1f77bcf86cd799439012'
+ *                           identifier: '1234'
  *                           score: 0.85
  *                       frequency: 1
  *                       score: 0.85
@@ -207,20 +175,7 @@ router.put("/", updatePersonalRecommendationsByFeedback);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *             examples:
- *               notAuthenticated:
- *                 value:
- *                   message: 'User not authenticated'
- *                   code: 'BAD_REQUEST'
- *               invalidAcronym:
- *                 value:
- *                   message: 'Invalid module acronym'
- *                   code: 'BAD_REQUEST'
- *               deletionFailed:
- *                 value:
- *                   message: 'Failed to delete feedback recommendations'
- *                   code: 'BAD_REQUEST'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.delete('/:acronym', deletePersonalRecommendationsByFeedback);
 

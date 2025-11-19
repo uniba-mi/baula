@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { PathModule } from "../../study-path";
+import { PathModule } from "../../../../../interfaces/study-path";
 export declare const findStudyPlan: (studyPlanId: string) => Promise<(import("mongoose").Document<unknown, {}, import("../../study-plan").StudyPlan, {}, {}> & import("../../study-plan").StudyPlan & Required<{
     _id: string;
 }> & {

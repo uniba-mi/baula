@@ -24,7 +24,7 @@ import { ModService } from '../../services/module.service';
 export class ModuleStatusComponent implements OnInit {
   @Input() studyPath$: Observable<StudyPath>;
   @Input() modType: string;
-  @Input() openedFromModuleCatalog: boolean = false; // TODO rename this because this is also done in sidenav
+  @Input() openedFromModuleOffer: boolean = false;
   @Input() module: Module;
   @Input() userGeneratedModule: UserGeneratedModule;
   @Input() pathModule: PathModule;
@@ -163,7 +163,7 @@ export class ModuleStatusComponent implements OnInit {
     event.stopPropagation();
 
     // dialog cannot be opened from module catalog and rec sidenav
-    if (this.openedFromModuleCatalog) {
+    if (this.openedFromModuleOffer) {
       return;
     }
 

@@ -1,7 +1,7 @@
 input: .
 output: .retype
 
-url: baula-test.minf.uni-bamberg.de # Use your website address here
+url: docs.example.com # Use your website address here
 
 start:
   # Uncomment the next line to try Retype Pro features
@@ -15,8 +15,6 @@ branding:
 links:
 - text: Zu Baula!
   link: https://baula.minf.uni-bamberg.de
-- text: Zur Developer-Doku
-  link: https://baula-test.minf.uni-bamberg.de/docs/developer
 
 footer:
   links:

@@ -14,8 +14,6 @@ router.use(express.json());
  *   get:
  *     summary: Get all study programmes
  *     tags: [Study Programmes]
- *     security:
- *     - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of all study programmes
@@ -30,7 +28,7 @@ router.use(express.json());
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get('/', getStudyProgrammes);
 
@@ -67,13 +65,13 @@ router.get('/', getStudyProgrammes);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: Es konnte kein passender Eintrag gefunden werden.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get('/:id/:version', getStudyProgramme);
 

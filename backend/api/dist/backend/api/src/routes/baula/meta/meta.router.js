@@ -15,8 +15,6 @@ router.use(express_1.default.json());
  *   get:
  *     summary: Get all departments
  *     tags: [Meta::Departments]
- *     security:
- *     - bearerAuth: []
  *     responses:
  *       200:
  *         description: String array of departments
@@ -31,13 +29,13 @@ router.use(express_1.default.json());
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  *       400:
  *         description: Es ist ein Fehler aufgetreten.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get('/departments', meta_controller_1.getDistinctDepartments);
 /**
@@ -60,13 +58,13 @@ router.get('/departments', meta_controller_1.getDistinctDepartments);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  *       400:
  *         description: Es ist ein Fehler aufgetreten.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get('/course-types', meta_controller_1.getDistinctCourseTypes);
 /**
@@ -99,7 +97,7 @@ router.get('/course-types', meta_controller_1.getDistinctCourseTypes);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get("/academic-dates/:semester", meta_controller_1.getAcademicDatesBySemester);
 /**
@@ -123,6 +121,6 @@ router.get("/academic-dates/:semester", meta_controller_1.getAcademicDatesBySeme
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  */
 router.get("/date-types", meta_controller_1.getDateTypes);

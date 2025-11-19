@@ -5,8 +5,8 @@ import {
   StudyProgramme,
 } from "@prisma/client";
 import { logError } from "../error";
-import { Person } from "../../person";
-import { ModuleHandbook } from "../../module-handbook";
+import { Person } from "../../../../../interfaces/person";
+import { ModuleHandbook } from "../../../../../interfaces/module-handbook";
 
 const prisma = new PrismaClient();
 

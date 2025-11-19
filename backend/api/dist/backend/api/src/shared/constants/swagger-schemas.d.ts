@@ -990,6 +990,52 @@ export declare const swaggerBaulaSchema: {
             };
         };
     };
+    UserJob: {
+        type: string;
+        description: string;
+        properties: {
+            _id: {
+                type: string;
+                description: string;
+                example: string;
+            };
+            title: {
+                type: string;
+                maxLength: number;
+                example: string;
+            };
+            description: {
+                type: string;
+                maxLength: number;
+                example: string;
+            };
+            keywords: {
+                type: string;
+                items: {
+                    type: string;
+                };
+                example: string[];
+            };
+            inputMode: {
+                type: string;
+                enum: string[];
+                example: string;
+            };
+            embeddingId: {
+                type: string;
+                description: string;
+                example: string;
+            };
+            createdAt: {
+                type: string;
+                format: string;
+            };
+            updatedAt: {
+                type: string;
+                format: string;
+            };
+        };
+    };
     Job: {
         type: string;
         description: string;
@@ -1426,7 +1472,7 @@ export declare const swaggerBaulaSchema: {
             };
         };
     };
-    Error: {
+    BadRequestError: {
         type: string;
         properties: {
             message: {
@@ -1438,6 +1484,49 @@ export declare const swaggerBaulaSchema: {
                 example: string;
             };
         };
+        required: string[];
+    };
+    UnauthorizedError: {
+        type: string;
+        properties: {
+            message: {
+                type: string;
+                example: string;
+            };
+            code: {
+                type: string;
+                example: string;
+            };
+        };
+        required: string[];
+    };
+    NotFoundError: {
+        type: string;
+        properties: {
+            message: {
+                type: string;
+                example: string;
+            };
+            code: {
+                type: string;
+                example: string;
+            };
+        };
+        required: string[];
+    };
+    InternalServerError: {
+        type: string;
+        properties: {
+            message: {
+                type: string;
+                example: string;
+            };
+            code: {
+                type: string;
+                example: string;
+            };
+        };
+        required: string[];
     };
 };
 export declare const swaggerBilAppSchema: {
@@ -1523,7 +1612,7 @@ export declare const swaggerBilAppSchema: {
             };
         };
     };
-    Error: {
+    BadRequestError: {
         type: string;
         properties: {
             message: {
@@ -1535,5 +1624,48 @@ export declare const swaggerBilAppSchema: {
                 example: string;
             };
         };
+        required: string[];
+    };
+    UnauthorizedError: {
+        type: string;
+        properties: {
+            message: {
+                type: string;
+                example: string;
+            };
+            code: {
+                type: string;
+                example: string;
+            };
+        };
+        required: string[];
+    };
+    NotFoundError: {
+        type: string;
+        properties: {
+            message: {
+                type: string;
+                example: string;
+            };
+            code: {
+                type: string;
+                example: string;
+            };
+        };
+        required: string[];
+    };
+    InternalServerError: {
+        type: string;
+        properties: {
+            message: {
+                type: string;
+                example: string;
+            };
+            code: {
+                type: string;
+                example: string;
+            };
+        };
+        required: string[];
     };
 };

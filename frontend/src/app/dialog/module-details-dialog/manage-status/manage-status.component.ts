@@ -22,7 +22,7 @@ export class ManageStatusComponent {
 
   @Input() selectedModule: Module;
   @Input() openedWithSemesterSet: boolean = true;
-  @Input() openedFromModuleCatalog: boolean;
+  @Input() openedFromModuleOffer: boolean;
   @Input() modType: string = 'notPath';
 
   studyPlans$: Observable<StudyPlan[]>;

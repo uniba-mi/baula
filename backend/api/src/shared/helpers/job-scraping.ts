@@ -99,7 +99,7 @@ async function scrapAfaSsWebsite(url: string) {
           throw new Error("Timout!");
         }
       } catch (error) {
-        console.log("Stellenanzeige von Stebstone nicht gefunden!:", error);
+        console.log("Stellenanzeige von Stepstone nicht gefunden!:", error);
       }
     } else {
       throw new Error("Website nicht unterstützt!");

@@ -14,8 +14,6 @@ router.use(express.json());
  *   get:
  *     summary: Get the details of a specific course by id and semester
  *     tags: [Courses]
- *     security:
- *     - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -23,14 +21,14 @@ router.use(express.json());
  *         schema:
  *           type: string
  *         description: Course id
- *         example: TODO
+ *         example: Lecture.wiai.bereic...
  *       - in: path
  *         name: semester
  *         required: true
  *         schema:
  *           type: string
  *         description: Semester of course
- *         example: TODO
+ *         example: 2024w
  *     responses:
  *       200:
  *         description: Get course with details
@@ -43,13 +41,13 @@ router.use(express.json());
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: The requested course could not be found.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get("/:id/:semester", getCourseDetails);
 
@@ -79,13 +77,13 @@ router.get("/:id/:semester", getCourseDetails);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/BadRequestError'
  *       404:
  *         description: The requested courses could not be found.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get("/:semester", getCoursesBySemester);
 
