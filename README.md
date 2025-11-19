@@ -62,8 +62,10 @@ Folgende Versionen sind die Minimalvoraussetzungen:
     SESSION_NAME=yourSessionName
     TEST_USER=user
     ADMIN_USER=admin
+    DEMO_USER=baula.demo
     TEST_PW=secretPassword
     ADMIN_PW=safePassword
+    DEMO_PW=Baula2025Demo
     #Additional variables required for server environment when FlexNow integration is needed
     FLEXNOW_LOGIN=user
     FLEXNOW_PW=superSecret123
@@ -166,7 +168,13 @@ In Baula gibt es zwei Möglichkeiten sich einzuloggen:
             shibId: "10101010101010101010101010101010", // muss exakt 32 Zeichen lang sein
             username: process.env.USER,
             password: process.env.USER_PW,
-            roles: ["student"], // die Rolle 'demo' würde dem Nutzer jegliche Schreibrechte nehmen
+            roles: ["student"],
+        },
+        {
+            shibId: "10101010101010001010101010101011",
+            username: process.env.DEMO_USER,
+            password: process.env.DEMO_PW,
+            roles: ["student", "demo"],
         },
         {
             shibId: "11010101010101010101010101010101",
@@ -230,14 +238,23 @@ Damit der Personalisierungs-Tab funktioniert, müssen im Admin-Bereich (zugängl
 Die Dokumentation der API ist nach Start des API-Servers unter der Route `/api/docs/baula` erreichbar.
 
 ### Deployment
-TBD
-Vorgehen:
-- Wichtig: prod -> main | test -> develop
-- npm run buildTest bzw. npm run buildProd
-- Stand pushen und auf Server anmelden
-- auf Server pullen und docker neustarten
-- Bei Änderungen im Frontend muss nicht neu gestartet werden. Für einen Soft Restart kann auch auf dem backend-Docker nur die API neu gestartet werden (nicht möglich bei Version updates oder Datenbank-Änderungen)
+Grundsätzlich müssen alle Schritte wie in [Setup und Installation](#setup-und-installation) durchgeführt werden. 
+Folgende Schritte müssen angepasst bzw. erweitert werden:
+- Bei **Schritt 1** nach dem Anlegen der Dateien macht es sinn im Backend-API-Ordner den Befehl `npm run copyFiles` auszuführen, um die .env-Dateien in den Dist-Ordner zu kopieren.
+- **Schritt 2** entfällt aktuell, ist nur nötig, wenn auf dem Server zukünftig der Build-Prozess angesteuert wird.
+- Bei **Schritt 7** kann die Docker-Umgebung auf dem Server mit `npm run startServerDocker` gestartet werden.
+- **Schritt 10** entfällt.
 
+Generell ist die Idee, dass auf dem `develop`-Branch der Stand des Testsystems und auf dem `main`-Branch der Stand des Produktiv-Systems liegt und auf entsprechenden Ordnern auf dem Server geklont wird. 
+Derzeit muss der Build-Prozess lokal über `npm run buildTest` bzw. `npm run buildProd` angestoßen werden. Anschließend kann der Build auf das Repo gepusht werden und auf dem Server gepullt werden. 
+Bei Änderungen im Frontend muss nicht neu gestartet werden, da einfach die neue `index.html` ausgeliefert wird. Bei kleineren Änderungen reicht meist ein Soft Restart. Dabei auf dem backend-Docker nur die API neu starten (nicht möglich bei Version updates oder Datenbank-Änderungen).
+
+Bei einem Release neuer Features ist also zukünftig nur noch folgendes nötig (wo?):
+1. (develop - lokal) Neuen Release bauen über `npm run buildTest` und auf Repo pushen.
+2. (develop - server) `git pull` und ggf. `npm run restartServerDocker` für kompletten Neustart.
+3. (Testsystem) Neue Features testen.
+4. (main - lokal) `git merge develop` um neue Features auf `main` zu holen. Anschließend `npm run buildProd` und auf Repo pushen.
+5. (main - server) `git pull` und ggf. `npm run restartServerDocker` für kompletten Neustart.
 
 
 ### Lizenz und Credits
