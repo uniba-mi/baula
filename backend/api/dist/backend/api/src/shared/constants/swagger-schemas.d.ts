@@ -220,17 +220,14 @@ export declare const swaggerBaulaSchema: {
             offerBegin: {
                 type: string;
                 description: string;
-                example: string;
             };
             offerEnd: {
                 type: string;
                 description: string;
-                example: null;
             };
             workload: {
                 type: string;
                 description: string;
-                example: string;
             };
             prevModules: {
                 type: string;
@@ -671,8 +668,6 @@ export declare const swaggerBaulaSchema: {
             shibId: {
                 type: string;
                 description: string;
-                minLength: number;
-                maxLength: number;
                 example: string;
             };
             roles: {
@@ -733,17 +728,7 @@ export declare const swaggerBaulaSchema: {
                 type: string;
                 description: string;
                 items: {
-                    type: string;
-                    properties: {
-                        key: {
-                            type: string;
-                            example: string;
-                        };
-                        visible: {
-                            type: string;
-                            example: boolean;
-                        };
-                    };
+                    $ref: string;
                 };
             };
             timetableSettings: {
@@ -778,43 +763,14 @@ export declare const swaggerBaulaSchema: {
                 type: string;
                 description: string;
                 items: {
-                    type: string;
-                    properties: {
-                        key: {
-                            type: string;
-                            example: string;
-                        };
-                        hasConfirmed: {
-                            type: string;
-                            example: boolean;
-                        };
-                    };
+                    $ref: string;
                 };
             };
             consents: {
                 type: string;
                 description: string;
                 items: {
-                    type: string;
-                    properties: {
-                        ctype: {
-                            type: string;
-                            example: string;
-                        };
-                        hasConfirmed: {
-                            type: string;
-                            example: boolean;
-                        };
-                        hasResponded: {
-                            type: string;
-                            example: boolean;
-                        };
-                        timestamp: {
-                            type: string;
-                            format: string;
-                            example: string;
-                        };
-                    };
+                    $ref: string;
                 };
             };
             topics: {
@@ -836,64 +792,14 @@ export declare const swaggerBaulaSchema: {
                 type: string;
                 description: string;
                 items: {
-                    type: string;
-                    properties: {
-                        acronym: {
-                            type: string;
-                            example: string;
-                        };
-                        similarmods: {
-                            type: string;
-                            minimum: number;
-                            maximum: number;
-                            example: number;
-                        };
-                        similarchair: {
-                            type: string;
-                            minimum: number;
-                            maximum: number;
-                            example: number;
-                        };
-                        priorknowledge: {
-                            type: string;
-                            minimum: number;
-                            maximum: number;
-                            example: number;
-                        };
-                        contentmatch: {
-                            type: string;
-                            minimum: number;
-                            maximum: number;
-                            example: number;
-                        };
-                    };
+                    $ref: string;
                 };
             };
             compAims: {
                 type: string;
                 description: string;
                 items: {
-                    type: string;
-                    properties: {
-                        compId: {
-                            type: string;
-                            example: string;
-                        };
-                        aim: {
-                            type: string;
-                            minimum: number;
-                            maximum: number;
-                            example: number;
-                        };
-                        standard: {
-                            type: string;
-                            example: string;
-                        };
-                        parent: {
-                            type: string;
-                            example: string;
-                        };
-                    };
+                    $ref: string;
                 };
             };
             createdAt: {
@@ -987,52 +893,6 @@ export declare const swaggerBaulaSchema: {
             mhbVersion: {
                 type: string;
                 example: number;
-            };
-        };
-    };
-    UserJob: {
-        type: string;
-        description: string;
-        properties: {
-            _id: {
-                type: string;
-                description: string;
-                example: string;
-            };
-            title: {
-                type: string;
-                maxLength: number;
-                example: string;
-            };
-            description: {
-                type: string;
-                maxLength: number;
-                example: string;
-            };
-            keywords: {
-                type: string;
-                items: {
-                    type: string;
-                };
-                example: string[];
-            };
-            inputMode: {
-                type: string;
-                enum: string[];
-                example: string;
-            };
-            embeddingId: {
-                type: string;
-                description: string;
-                example: string;
-            };
-            createdAt: {
-                type: string;
-                format: string;
-            };
-            updatedAt: {
-                type: string;
-                format: string;
             };
         };
     };
@@ -1149,6 +1009,39 @@ export declare const swaggerBaulaSchema: {
             };
         };
     };
+    SemesterPlanCourse: {
+        type: string;
+        properties: {
+            id: {
+                type: string;
+                example: string;
+            };
+            name: {
+                type: string;
+                example: string;
+            };
+            status: {
+                type: string;
+                example: string;
+            };
+            ects: {
+                type: string;
+                example: number;
+            };
+            sws: {
+                type: string;
+                example: number;
+            };
+            contributeTo: {
+                type: string;
+                example: string;
+            };
+            contributeAs: {
+                type: string;
+                example: string;
+            };
+        };
+    };
     SemesterPlan: {
         type: string;
         description: string;
@@ -1183,37 +1076,7 @@ export declare const swaggerBaulaSchema: {
                 type: string;
                 description: string;
                 items: {
-                    type: string;
-                    properties: {
-                        id: {
-                            type: string;
-                            example: string;
-                        };
-                        name: {
-                            type: string;
-                            example: string;
-                        };
-                        status: {
-                            type: string;
-                            example: string;
-                        };
-                        ects: {
-                            type: string;
-                            example: number;
-                        };
-                        sws: {
-                            type: string;
-                            example: number;
-                        };
-                        contributeTo: {
-                            type: string;
-                            example: string;
-                        };
-                        contributeAs: {
-                            type: string;
-                            example: string;
-                        };
-                    };
+                    $ref: string;
                 };
             };
             aimedEcts: {
@@ -1274,6 +1137,18 @@ export declare const swaggerBaulaSchema: {
             flexNowImported: {
                 type: string;
                 example: boolean;
+            };
+        };
+    };
+    TransferResult: {
+        type: string;
+        description: string;
+        properties: {
+            oldSemesterPlan: {
+                $ref: string;
+            };
+            newSemesterPlan: {
+                $ref: string;
             };
         };
     };
@@ -1469,6 +1344,114 @@ export declare const swaggerBaulaSchema: {
             updatedAt: {
                 type: string;
                 format: string;
+            };
+        };
+    };
+    ModuleFeedback: {
+        type: string;
+        properties: {
+            acronym: {
+                type: string;
+                example: string;
+            };
+            similarmods: {
+                type: string;
+                minimum: number;
+                maximum: number;
+                example: number;
+            };
+            similarchair: {
+                type: string;
+                minimum: number;
+                maximum: number;
+                example: number;
+            };
+            priorknowledge: {
+                type: string;
+                minimum: number;
+                maximum: number;
+                example: number;
+            };
+            contentmatch: {
+                type: string;
+                minimum: number;
+                maximum: number;
+                example: number;
+            };
+        };
+    };
+    Consent: {
+        type: string;
+        description: string;
+        properties: {
+            ctype: {
+                type: string;
+                example: string;
+            };
+            hasConfirmed: {
+                type: string;
+                example: boolean;
+            };
+            hasResponded: {
+                type: string;
+                example: boolean;
+            };
+            timestamp: {
+                type: string;
+                format: string;
+                example: string;
+            };
+        };
+    };
+    Hint: {
+        type: string;
+        description: string;
+        properties: {
+            key: {
+                type: string;
+                example: string;
+            };
+            hasConfirmed: {
+                type: string;
+                example: boolean;
+            };
+        };
+    };
+    DashboardSetting: {
+        type: string;
+        description: string;
+        properties: {
+            key: {
+                type: string;
+                example: string;
+            };
+            visible: {
+                type: string;
+                example: boolean;
+            };
+        };
+    };
+    CompetenceAim: {
+        type: string;
+        description: string;
+        properties: {
+            compId: {
+                type: string;
+                example: string;
+            };
+            aim: {
+                type: string;
+                minimum: number;
+                maximum: number;
+                example: number;
+            };
+            standard: {
+                type: string;
+                example: string;
+            };
+            parent: {
+                type: string;
+                example: string;
             };
         };
     };

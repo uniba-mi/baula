@@ -46,14 +46,14 @@ router.get('/', study_programmes_controller_1.getStudyProgrammes);
  *         schema:
  *           type: string
  *         description: Study programme ID
- *         example: BAAng
+ *         example: SP1
  *       - in: path
  *         name: version
  *         required: true
  *         schema:
  *           type: integer
  *         description: PO version
- *         example: 4
+ *         example: 1
  *     responses:
  *       200:
  *         description: Study programme

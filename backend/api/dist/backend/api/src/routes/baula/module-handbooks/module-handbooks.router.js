@@ -21,14 +21,14 @@ exports.moduleHandbooks = router;
  *         schema:
  *           type: string
  *         description: Module handbook id
- *         example: 17963
+ *         example: MHB1
  *       - in: path
  *         name: version
  *         required: true
  *         schema:
  *           type: integer
  *         description: Module handbook version
- *         example: 8
+ *         example: 1
  *     responses:
  *       200:
  *         description: Module handbook
@@ -63,14 +63,14 @@ router.get('/:id/:version', module_handbooks_controller_1.getMhbByIdAndVersion);
  *         schema:
  *           type: string
  *         description: Module acronym (abbreviation)
- *         example: HCI-IS-B
+ *         example: MOD-A
  *       - in: path
  *         name: version
  *         required: true
  *         schema:
  *           type: integer
  *         description: Module version
- *         example: 2
+ *         example: 1
  *     responses:
  *       200:
  *         description: Module
@@ -100,11 +100,13 @@ router.get('/modules/:acronym/:version', module_handbooks_controller_1.getModByA
  *     tags: [ModuleHandbook::Modules]
  *     responses:
  *       200:
- *         description: Module
+ *         description: All modules
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Module'
+ *               type: array
+ *               items:
+ *                  $ref: '#/components/schemas/Module'
  *       400:
  *         description: The request was invalid or malformed.
  *         content:

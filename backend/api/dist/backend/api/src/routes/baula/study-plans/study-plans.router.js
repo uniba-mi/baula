@@ -81,8 +81,8 @@ router.get("/plan/active", study_plans_controller_1.getActiveStudyPlan);
  *         required: true
  *         schema:
  *           type: string
- *           example: 'BAAng'
- *         description: Program ID (e.g., BAAng for Bachelor Applied Computer Science)
+ *           example: 'SP1'
+ *         description: Program ID
  *       - in: path
  *         name: semesterType
  *         required: true
@@ -128,7 +128,7 @@ router.get("/template/:programId/:semesterType", study_plans_controller_1.getLat
  *         required: true
  *         schema:
  *           type: string
- *           example: 'BAAng'
+ *           example: 'SP1'
  *         description: Program ID
  *       - in: path
  *         name: semesterType
@@ -177,7 +177,7 @@ router.get("/template/availablilty/:programId/:semesterType", study_plans_contro
  *                 properties:
  *                   name:
  *                     type: string
- *                     example: 'Mein Studienplan WS 2024'
+ *                     example: 'My studyplan'
  *                     description: Name of the study plan
  *                   status:
  *                     type: boolean
@@ -272,7 +272,7 @@ router.post("/modules", study_plans_controller_1.addModulesToCurrentSemesterOfAl
  *             properties:
  *               studyPlanId:
  *                 type: string
- *                 example: '507f1f77bcf86cd799439011'
+ *                 example: '<MONGO_ID>'
  *                 description: ID of the study plan to update
  *               study plan:
  *                 type: object
@@ -283,7 +283,7 @@ router.post("/modules", study_plans_controller_1.addModulesToCurrentSemesterOfAl
  *                 properties:
  *                   name:
  *                     type: string
- *                     example: 'Mein aktualisierter Studienplan'
+ *                     example: 'My updated studyplan'
  *                   status:
  *                     type: boolean
  *                     example: true
@@ -339,23 +339,23 @@ router.put("/plan", study_plans_controller_1.updateStudyPlan);
  *             properties:
  *               studyPlanId:
  *                 type: string
- *                 example: '507f1f77bcf86cd799439011'
+ *                 example: '<MONGO_ID>'
  *                 description: Study plan ID
  *               oldSemesterPlanId:
  *                 type: string
- *                 example: '507f1f77bcf86cd799439012'
+ *                 example: '<MONGO_ID>'
  *                 description: Source semester plan ID
  *               newSemesterPlanId:
  *                 type: string
- *                 example: '507f1f77bcf86cd799439013'
+ *                 example: '<MONGO_ID>'
  *                 description: Destination semester plan ID
  *               acronym:
  *                 type: string
- *                 example: 'SE1'
+ *                 example: 'MOD-A'
  *                 description: Module acronym to transfer
  *               ects:
  *                 type: number
- *                 example: 5.0
+ *                 example: 5
  *                 description: ECTS credits of the module
  *     responses:
  *       200:
@@ -363,12 +363,7 @@ router.put("/plan", study_plans_controller_1.updateStudyPlan);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 oldSemesterPlan:
- *                   $ref: '#/components/schemas/SemesterPlan'
- *                 newSemesterPlan:
- *                   $ref: '#/components/schemas/SemesterPlan'
+ *               $ref: '#/components/schemas/TransferResult'
  *       400:
  *         description: Invalid input or transfer failed
  *         content:
@@ -404,15 +399,15 @@ router.put("/module/transfer", study_plans_controller_1.transferModule);
  *             properties:
  *               studyPlanId:
  *                 type: string
- *                 example: '507f1f77bcf86cd799439011'
+ *                 example: '<MONGO_ID>'
  *                 description: Study plan ID
  *               oldSemesterPlanId:
  *                 type: string
- *                 example: '507f1f77bcf86cd799439012'
+ *                 example: '<MONGO_ID>'
  *                 description: Source semester plan ID
  *               newSemesterPlanId:
  *                 type: string
- *                 example: '507f1f77bcf86cd799439013'
+ *                 example: '<MONGO_ID>'
  *                 description: Destination semester plan ID
  *               module:
  *                 $ref: '#/components/schemas/UserGeneratedModule'
@@ -422,12 +417,7 @@ router.put("/module/transfer", study_plans_controller_1.transferModule);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 oldSemesterPlan:
- *                   $ref: '#/components/schemas/SemesterPlan'
- *                 newSemesterPlan:
- *                   $ref: '#/components/schemas/SemesterPlan'
+ *                $ref: '#/components/schemas/TransferResult'
  *       400:
  *         description: Invalid input or transfer failed
  *         content:
@@ -455,7 +445,7 @@ router.put("/user-generated-module/transfer", study_plans_controller_1.transferU
  *         required: true
  *         schema:
  *           type: string
- *           example: '507f1f77bcf86cd799439011'
+ *           example: '<MONGO_ID>'
  *         description: Study plan ID to delete
  *     responses:
  *       200:

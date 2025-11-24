@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //     try {
 //         const studyProgrammes = ['BAAng', 'BAInf', 'BAWIn', 'BKIDS', 'MAAng', 'MaCiH', 'MIISM', 'MAWin'];
 //         for (const spId of studyProgrammes) {
-//             const { candidates: candidatesData } = await import(`../../../src/evaluationData/${spId}/candidates`);
+//             const { candidates: candidatesData } = await import(`../../../staticdata/evaluationData/${spId}/candidates`);
 //             const jobEvaluations = candidatesData.map((item: { jobId: string; candidates: string; }) => ({
 //                 job: {
 //                     jobId: item.jobId,
@@ -69,8 +69,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //         if (!evaluation) {
 //             return next(new NotFoundError());
 //         }
-//         const { jobs } = await import(`../../../src/evaluationData/jobs`);
-//         const modules = require(`../../../src/evaluationData/${spId}/modules_${spId}_20252.json`);
+//         const { jobs } = await import(`../../../staticdata/evaluationData/jobs`);
+//         const modules = require(`../../../staticdata/evaluationData/${spId}/modules_${spId}_20252.json`);
 //         const evaluationWithDetails = getEvaluationDetails(evaluation, jobs, modules);
 //         res.status(200).json(evaluationWithDetails);
 //     } catch (error) {

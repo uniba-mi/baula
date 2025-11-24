@@ -75,13 +75,13 @@ exports.swaggerBaulaSchema = {
         properties: {
             shortName: {
                 type: 'string',
-                description: 'Department short identifier',
-                example: 'WIAI'
+                description: 'Short department identifier',
+                example: 'DEP'
             },
             name: {
                 type: 'string',
                 description: 'Full department name',
-                example: 'Wirtschaftsinformatik und Angewandte Informatik'
+                example: 'Department of X'
             }
         }
     },
@@ -91,39 +91,39 @@ exports.swaggerBaulaSchema = {
             spId: {
                 type: 'string',
                 description: 'Study programme ID',
-                example: 'BAAng'
+                example: 'SP1'
             },
             poVersion: {
                 type: 'integer',
                 description: 'PO (Prüfungsordnung) version number',
-                example: 4
+                example: 1
             },
             name: {
                 type: 'string',
                 description: 'Programme name',
-                example: 'Bachelorstudiengang Angewandte Informatik'
+                example: 'Bachelor Programme of X'
             },
             desc: {
                 type: 'string',
                 description: 'Programme description',
-                example: 'StuFPO vom 20.08.2010 in der ÄS vom 11.10.2017'
+                example: 'Longer programme description (StuFPO)'
             },
             date: {
                 type: 'string',
-                description: 'Programme date',
-                example: '30.09.2011'
+                description: 'Programme date (StuFPO)',
+                example: '30.09.2023'
             },
             faculty: {
                 type: 'string',
                 description: 'Faculty short name',
-                example: 'WIAI'
+                example: 'FAC1'
             },
             dep: {
                 $ref: '#/components/schemas/Department'
             },
             mhbs: {
                 type: 'array',
-                description: 'Module handbooks (Modulhandbücher)',
+                description: 'Module handbooks',
                 items: {
                     $ref: '#/components/schemas/ModuleHandbook'
                 }
@@ -137,17 +137,17 @@ exports.swaggerBaulaSchema = {
             mhbId: {
                 type: 'string',
                 description: 'Module handbook ID',
-                example: 'MHB_BAAng_2020'
+                example: 'MHB1'
             },
             name: {
                 type: 'string',
                 description: 'Handbook name',
-                example: 'Modulhandbuch Angewandte Informatik'
+                example: 'Module handbook applied X'
             },
             desc: {
                 type: 'string',
                 description: 'Handbook description',
-                example: 'Modulhandbuch für den Bachelorstudiengang Angewandte Informatik'
+                example: 'Module handbook of programme applied X'
             },
             version: {
                 type: 'integer',
@@ -161,24 +161,24 @@ exports.swaggerBaulaSchema = {
             },
             spId: {
                 type: 'string',
-                description: 'Associated study programme ID',
-                example: 'BAAng'
+                description: 'Study programme ID',
+                example: 'SP1'
             },
             poVersion: {
                 type: 'integer',
-                description: 'Associated PO version',
-                example: 4
+                description: 'PO version',
+                example: 1
             }
         }
     },
     ModuleGroup: {
         type: 'object',
-        description: 'Module group (Modulgruppe)',
+        description: 'Module group',
         properties: {
             mgId: {
                 type: 'string',
                 description: 'Module group ID',
-                example: 'MG_001'
+                example: 'MG1'
             },
             version: {
                 type: 'integer',
@@ -187,35 +187,35 @@ exports.swaggerBaulaSchema = {
             name: {
                 type: 'string',
                 description: 'Module group name',
-                example: 'Pflichtmodule'
+                example: 'Compulsory modules'
             },
             fullName: {
                 type: 'string',
                 description: 'Full module group name',
-                example: 'Pflichtmodule Informatik'
+                example: 'Compulsory modules of X'
             },
             desc: {
                 type: 'string',
                 description: 'Module group description',
-                example: 'Pflichtmodule für den Informatik-Studiengang'
+                example: 'Compulsory modules for programme X'
             },
             ectsMin: {
                 type: 'number',
                 format: 'float',
                 description: 'Minimum ECTS credits required',
-                example: 30.0
+                example: 30
             },
             ectsMax: {
                 type: 'number',
                 format: 'float',
                 description: 'Maximum ECTS credits',
-                example: 60.0
+                example: 60
             },
             order: {
                 type: 'number',
                 format: 'float',
                 description: 'Display order',
-                example: 1.0
+                example: 1
             }
         }
     },
@@ -226,7 +226,7 @@ exports.swaggerBaulaSchema = {
             mId: {
                 type: 'string',
                 description: 'Module ID',
-                example: 'M_SE1'
+                example: 'M1'
             },
             version: {
                 type: 'integer',
@@ -235,38 +235,38 @@ exports.swaggerBaulaSchema = {
             acronym: {
                 type: 'string',
                 description: 'Module acronym',
-                example: 'SE1'
+                example: 'MOD-A'
             },
             name: {
                 type: 'string',
                 description: 'Module name',
-                example: 'Software Engineering 1'
+                example: 'Applied X'
             },
             content: {
                 type: 'string',
                 description: 'Module content description',
-                example: 'Einführung in die Softwareentwicklung, objektorientierte Programmierung, Design Patterns'
+                example: 'Introduction into Applied X contains...'
             },
             skills: {
                 type: 'string',
-                description: 'Skills acquired',
-                example: 'Programmierung in Java, UML-Modellierung, Softwarearchitektur'
+                description: 'Learning goals description',
+                example: 'Students learn to...'
             },
             addInfo: {
                 type: 'string',
                 description: 'Additional information',
-                example: 'Voraussetzung für SE2'
+                example: 'Applied X takes place in ...'
             },
             priorKnowledge: {
                 type: 'string',
                 description: 'Required prior knowledge',
-                example: 'Grundlagen der Programmierung'
+                example: 'Basics in Y'
             },
             ects: {
                 type: 'number',
                 format: 'float',
                 description: 'ECTS credits',
-                example: 5.0
+                example: 5
             },
             term: {
                 type: 'string',
@@ -280,38 +280,38 @@ exports.swaggerBaulaSchema = {
             },
             duration: {
                 type: 'string',
-                description: 'Module duration',
-                example: '1 Semester'
+                description: 'Module duration (semester)',
+                example: '1'
             },
             chair: {
                 type: 'string',
                 description: 'Responsible chair/department',
-                example: 'Lehrstuhl für Softwaretechnik'
+                example: 'Chair of Y'
             },
             offerBegin: {
                 type: 'string',
                 description: 'Start of offering period',
-                example: '2020w'
+                // example: 'TODO'
             },
             offerEnd: {
                 type: 'string',
                 description: 'End of offering period',
-                example: null
+                // example: 'TODO'
             },
             workload: {
                 type: 'string',
                 description: 'Workload breakdown',
-                example: '150h (60h Präsenz, 90h Selbststudium)'
+                // example: 'TODO'
             },
             prevModules: {
                 type: 'object',
-                description: 'Previous modules (dependencies)',
+                description: 'Previous modules (JSON)',
                 example: {}
             },
             respPersonId: {
                 type: 'string',
                 description: 'Responsible person ID',
-                example: 'P_001'
+                example: 'P1'
             }
         }
     },
@@ -327,23 +327,23 @@ exports.swaggerBaulaSchema = {
             shortName: {
                 type: 'string',
                 description: 'Short exam name',
-                example: 'Klausur'
+                example: 'Exam'
             },
             name: {
                 type: 'string',
                 description: 'Full exam name',
-                example: 'Schriftliche Prüfung'
+                example: 'Written Exam'
             },
             desc: {
                 type: 'string',
                 description: 'Exam description',
-                example: '90-minütige Klausur'
+                example: '90 minutes exam'
             },
             duration: {
                 type: 'number',
                 format: 'float',
                 description: 'Exam duration in minutes',
-                example: 90.0
+                example: 90
             },
             share: {
                 type: 'string',
@@ -353,7 +353,7 @@ exports.swaggerBaulaSchema = {
             mId: {
                 type: 'string',
                 description: 'Associated module ID',
-                example: 'M_SE1'
+                example: 'M1'
             },
             version: {
                 type: 'integer',
@@ -368,12 +368,12 @@ exports.swaggerBaulaSchema = {
             mcId: {
                 type: 'string',
                 description: 'Module course ID',
-                example: 'MC_SE1_VL'
+                example: 'MC1'
             },
             name: {
                 type: 'string',
                 description: 'Course name',
-                example: 'Software Engineering 1 - Vorlesung'
+                example: 'Applied X 1 - Lecture'
             },
             identifier: {
                 type: 'object',
@@ -383,12 +383,12 @@ exports.swaggerBaulaSchema = {
             type: {
                 type: 'string',
                 description: 'Course type',
-                example: 'Vorlesung'
+                example: 'Lecture'
             },
             language: {
                 type: 'string',
                 description: 'Course language',
-                example: 'Deutsch'
+                example: 'English'
             },
             term: {
                 type: 'string',
@@ -399,7 +399,7 @@ exports.swaggerBaulaSchema = {
                 type: 'number',
                 format: 'float',
                 description: 'Display order',
-                example: 1.0
+                example: 1
             },
             compulsory: {
                 type: 'boolean',
@@ -409,12 +409,12 @@ exports.swaggerBaulaSchema = {
             desc: {
                 type: 'string',
                 description: 'Course description',
-                example: 'Vorlesung zu den Grundlagen des Software Engineering'
+                example: 'Lecture on the basics of X'
             },
             literature: {
                 type: 'string',
                 description: 'Recommended literature',
-                example: 'Sommerville: Software Engineering'
+                example: 'Author: Book title'
             },
             ects: {
                 type: 'number',
@@ -436,35 +436,35 @@ exports.swaggerBaulaSchema = {
             pId: {
                 type: 'string',
                 description: 'Person ID',
-                example: 'P_001'
+                example: 'P1'
             },
             title: {
                 type: 'string',
                 description: 'Academic title',
-                example: 'Prof. Dr.'
+                example: 'Prof.'
             },
             firstname: {
                 type: 'string',
-                example: 'Max'
+                example: 'John'
             },
             lastname: {
                 type: 'string',
-                example: 'Mustermann'
+                example: 'Doe'
             },
             email: {
                 type: 'string',
                 format: 'email',
-                example: 'max.mustermann@uni-bamberg.de'
+                example: 'john.doe@XXX.de'
             },
             tel: {
                 type: 'string',
                 description: 'Telephone number',
-                example: '+49 951 863-1234'
+                example: '+11 111 111-1111'
             },
             office: {
                 type: 'string',
                 description: 'Office location',
-                example: 'WE5/01.234'
+                example: 'FAC/1.2'
             }
         }
     },
@@ -475,52 +475,52 @@ exports.swaggerBaulaSchema = {
             id: {
                 type: 'string',
                 description: 'Course ID',
-                example: 'Lecture.wiai.berei...'
+                example: 'C1'
             },
             name: {
                 type: 'string',
                 description: 'Course name',
-                example: 'AlgoK-AK-B: Algorithmen und Komplexität'
+                example: 'MOD-A: Applied X'
             },
             short: {
                 type: 'string',
                 description: 'Short name',
-                example: ''
+                example: 'Applied X'
             },
             organizational: {
                 type: 'string',
                 description: 'Organizational information',
-                example: 'Anmeldung über FlexNow erforderlich'
+                example: 'Please write an e-mail beforehand'
             },
             desc: {
                 type: 'string',
                 description: 'Course description',
-                example: 'Praktische Übungen zur Softwareentwicklung in Teams'
+                example: 'Applying Y to X'
             },
             literature: {
                 type: 'string',
                 description: 'Literature',
-                example: 'Wird in der Veranstaltung bekannt gegeben'
+                example: 'Author: Book title'
             },
             addInfo: {
                 type: 'string',
                 description: 'Additional information',
-                example: 'Laptops erforderlich'
+                example: 'Bring tablets.'
             },
             orgname: {
                 type: 'string',
                 description: 'Organizing unit',
-                example: 'Lehrstuhl für ...'
+                example: 'Chair of X'
             },
             chair: {
                 type: 'string',
                 description: 'Chair/department',
-                example: 'Softwaretechnik'
+                example: 'X'
             },
             type: {
                 type: 'string',
                 description: 'Course type',
-                example: 'Praktikum'
+                example: 'Seminar'
             },
             semester: {
                 type: 'string',
@@ -540,7 +540,7 @@ exports.swaggerBaulaSchema = {
             keywords: {
                 type: 'string',
                 description: 'Keywords (semicolon-separated)',
-                example: 'Software;Praktikum;Teamarbeit'
+                example: 'Teamwork;Practise'
             },
             lang: {
                 type: 'string',
@@ -556,27 +556,27 @@ exports.swaggerBaulaSchema = {
             format: {
                 type: 'string',
                 description: 'Course format',
-                example: 'Präsenz'
+                example: 'Remote'
             },
             nameEn: {
                 type: 'string',
                 description: 'English course name',
-                example: 'Software Engineering Lab'
+                example: 'Applied course of X'
             },
             literatureEn: {
                 type: 'string',
                 description: 'English literature',
-                example: 'To be announced'
+                example: 'Author: Book title'
             },
             organizationalEn: {
                 type: 'string',
-                description: 'English organizational info',
-                example: 'Registration via FlexNow required'
+                description: 'Please write an e-mail beforehand',
+                example: ''
             },
             descEn: {
                 type: 'string',
                 description: 'English description',
-                example: 'Practical software development in teams'
+                example: 'Applying Y to X'
             },
             lastUpdated: {
                 type: 'string',
@@ -593,17 +593,17 @@ exports.swaggerBaulaSchema = {
             id: {
                 type: 'string',
                 description: 'Room ID',
-                example: 'WE5/01.003'
+                example: 'DEP/1.2'
             },
             short: {
                 type: 'string',
                 description: 'Short room identifier',
-                example: '01.003'
+                example: '1.2'
             },
             address: {
                 type: 'string',
                 description: 'Building address',
-                example: 'An der Weberei 5, 96047 Bamberg'
+                example: 'Summerstreet 1'
             },
             size: {
                 type: 'number',
@@ -655,12 +655,12 @@ exports.swaggerBaulaSchema = {
             roomId: {
                 type: 'string',
                 description: 'Room ID',
-                example: 'WE5/01.003'
+                example: 'DEP/1.2'
             },
             courseId: {
                 type: 'string',
                 description: 'Course ID',
-                example: 'C_2024w_001'
+                example: 'C1'
             },
             semester: {
                 type: 'string',
@@ -679,7 +679,7 @@ exports.swaggerBaulaSchema = {
             desc: {
                 type: 'string',
                 description: 'Date description',
-                example: 'Vorlesungsbeginn'
+                example: 'Holidays'
             },
             startdate: {
                 type: 'string',
@@ -721,12 +721,12 @@ exports.swaggerBaulaSchema = {
             name: {
                 type: 'string',
                 description: 'Type name',
-                example: 'Vorlesungszeit'
+                example: 'Holidays'
             },
             desc: {
                 type: 'string',
                 description: 'Type description',
-                example: 'Reguläre Vorlesungszeiten'
+                example: 'Time without lectures'
             }
         }
     },
@@ -740,14 +740,14 @@ exports.swaggerBaulaSchema = {
             _id: {
                 type: 'string',
                 description: 'MongoDB ObjectId',
-                example: '1234'
+                example: '<MONGO_ID>'
             },
             shibId: {
                 type: 'string',
-                description: 'Shibboleth ID (32 characters)',
-                minLength: 32,
-                maxLength: 32,
-                example: 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+                description: 'Shibboleth ID',
+                // minLength: 32,
+                // maxLength: 32,
+                example: '<SHIB-ID>'
             },
             roles: {
                 type: 'array',
@@ -775,7 +775,7 @@ exports.swaggerBaulaSchema = {
                 type: 'string',
                 description: 'Start semester',
                 pattern: '\\d{4}((w)|(s))',
-                example: '2022w'
+                example: '2024w'
             },
             duration: {
                 type: 'integer',
@@ -807,11 +807,7 @@ exports.swaggerBaulaSchema = {
                 type: 'array',
                 description: 'Dashboard widget visibility',
                 items: {
-                    type: 'object',
-                    properties: {
-                        key: { type: 'string', example: 'recommendations' },
-                        visible: { type: 'boolean', example: true }
-                    }
+                    $ref: '#/components/schemas/DashboardSetting'
                 }
             },
             timetableSettings: {
@@ -829,7 +825,7 @@ exports.swaggerBaulaSchema = {
                 items: {
                     type: 'string'
                 },
-                example: ['SE1', 'DB1', 'AI1']
+                example: ['MOD-A', 'MOD-B']
             },
             excludedModulesAcronyms: {
                 type: 'array',
@@ -837,30 +833,20 @@ exports.swaggerBaulaSchema = {
                 items: {
                     type: 'string'
                 },
-                example: ['HCI1']
+                example: ['MODC']
             },
             hints: {
                 type: 'array',
                 description: 'UI hints/tips status',
                 items: {
-                    type: 'object',
-                    properties: {
-                        key: { type: 'string', example: 'welcome_tour' },
-                        hasConfirmed: { type: 'boolean', example: true }
-                    }
+                    $ref: '#/components/schemas/Hint'
                 }
             },
             consents: {
                 type: 'array',
                 description: 'User consents',
                 items: {
-                    type: 'object',
-                    properties: {
-                        ctype: { type: 'string', example: 'privacy_policy' },
-                        hasConfirmed: { type: 'boolean', example: true },
-                        hasResponded: { type: 'boolean', example: true },
-                        timestamp: { type: 'string', format: 'date-time', example: '2024-01-15T10:00:00Z' }
-                    }
+                    $ref: '#/components/schemas/Consent'
                 }
             },
             topics: {
@@ -869,40 +855,27 @@ exports.swaggerBaulaSchema = {
                 items: {
                     type: 'string'
                 },
-                example: ['T_ML', 'T_WEB', 'T_DS']
+                example: ['<MONGO_ID>', '<MONGO_ID>', '<MONGO_ID>']
             },
             jobs: {
                 type: 'array',
                 description: 'User job profiles',
                 items: {
-                    $ref: '#/components/schemas/UserJob'
+                    $ref: '#/components/schemas/Job'
                 }
             },
             moduleFeedback: {
                 type: 'array',
                 description: 'Module feedback',
                 items: {
-                    type: 'object',
-                    properties: {
-                        acronym: { type: 'string', example: 'MI-WebT-B' },
-                        similarmods: { type: 'integer', minimum: 0, maximum: 5, example: 4 },
-                        similarchair: { type: 'integer', minimum: 0, maximum: 5, example: 3 },
-                        priorknowledge: { type: 'integer', minimum: 0, maximum: 5, example: 5 },
-                        contentmatch: { type: 'integer', minimum: 0, maximum: 5, example: 4 }
-                    }
+                    $ref: '#/components/schemas/ModuleFeedback'
                 }
             },
             compAims: {
                 type: 'array',
                 description: 'Competence aims',
                 items: {
-                    type: 'object',
-                    properties: {
-                        compId: { type: 'string', example: 'COMP_001' },
-                        aim: { type: 'integer', minimum: 0, maximum: 3, example: 2 },
-                        standard: { type: 'string', example: 'CS2013' },
-                        parent: { type: 'string', example: 'COMP_000' }
-                    }
+                    $ref: '#/components/schemas/CompetenceAim'
                 }
             },
             createdAt: {
@@ -924,19 +897,19 @@ exports.swaggerBaulaSchema = {
             mgId: {
                 type: 'string',
                 description: 'Module group ID',
-                example: 'MG_001'
+                example: 'MG1'
             },
             acronym: {
                 type: 'string',
-                example: 'SE1'
+                example: 'MOD-A'
             },
             name: {
                 type: 'string',
-                example: 'Software Engineering 1'
+                example: 'Applied X'
             },
             ects: {
                 type: 'number',
-                example: 5.0
+                example: 5
             },
             grade: {
                 type: 'number',
@@ -951,12 +924,12 @@ exports.swaggerBaulaSchema = {
             semester: {
                 type: 'string',
                 pattern: '\\d{4}((w)|(s))',
-                example: '2023w'
+                example: '2024w'
             },
             notes: {
                 type: 'string',
                 maxLength: 1000,
-                example: 'Interessantes Modul, sehr praxisnah'
+                example: 'Nice module, interesting for me...'
             },
             isUserGenerated: {
                 type: 'boolean',
@@ -975,23 +948,23 @@ exports.swaggerBaulaSchema = {
         properties: {
             spId: {
                 type: 'string',
-                example: 'BAAng'
+                example: 'SP1'
             },
             poVersion: {
                 type: 'integer',
-                example: 4
+                example: 1
             },
             name: {
                 type: 'string',
-                example: 'Bachelorstudiengang Angewandte Informatik'
+                example: 'Bachelor Applied X'
             },
             faculty: {
                 type: 'string',
-                example: 'WIAI'
+                example: 'FAC1'
             },
             mhbId: {
                 type: 'string',
-                example: 'MHB_BAAng_2020'
+                example: 'MHB1'
             },
             mhbVersion: {
                 type: 'integer',
@@ -999,59 +972,13 @@ exports.swaggerBaulaSchema = {
             }
         }
     },
-    UserJob: {
-        type: 'object',
-        description: 'User job profile (subdocument)',
-        properties: {
-            _id: {
-                type: 'string',
-                description: 'Subdocument ID',
-                example: '1234'
-            },
-            title: {
-                type: 'string',
-                maxLength: 1000,
-                example: 'Full-Stack Developer'
-            },
-            description: {
-                type: 'string',
-                maxLength: 2000,
-                example: 'Entwicklung von Web-Anwendungen mit React und Node.js'
-            },
-            keywords: {
-                type: 'array',
-                items: {
-                    type: 'string'
-                },
-                example: ['JavaScript', 'React', 'Node.js', 'MongoDB']
-            },
-            inputMode: {
-                type: 'string',
-                enum: ['url', 'mock'],
-                example: 'mock'
-            },
-            embeddingId: {
-                type: 'string',
-                description: 'Associated embedding ID',
-                example: 'EMB_001'
-            },
-            createdAt: {
-                type: 'string',
-                format: 'date-time'
-            },
-            updatedAt: {
-                type: 'string',
-                format: 'date-time'
-            }
-        }
-    },
     Job: {
         type: 'object',
-        description: 'Job profile (complete with user reference)',
+        description: 'Job profile',
         properties: {
             _id: {
                 type: 'string',
-                example: '507f1f77bcf86cd799439012'
+                example: '<MONGO_ID>'
             },
             title: {
                 type: 'string',
@@ -1059,7 +986,7 @@ exports.swaggerBaulaSchema = {
             },
             description: {
                 type: 'string',
-                example: 'Entwicklung von Web-Anwendungen mit React und Node.js'
+                example: 'Developing Websites with...'
             },
             keywords: {
                 type: 'array',
@@ -1075,12 +1002,12 @@ exports.swaggerBaulaSchema = {
             },
             embeddingId: {
                 type: 'string',
-                example: 'EMB_001'
+                example: 'E1'
             },
             userId: {
                 type: 'string',
                 description: 'Owner user ID',
-                example: '1234'
+                example: '<MONGO_ID>'
             },
             createdAt: {
                 type: 'string',
@@ -1123,11 +1050,11 @@ exports.swaggerBaulaSchema = {
         properties: {
             _id: {
                 type: 'string',
-                example: '507f1f77bcf86cd799439013'
+                example: '<MONGO_ID>'
             },
             name: {
                 type: 'string',
-                example: 'Mein Studienplan WS 2024'
+                example: 'My studyplan'
             },
             status: {
                 type: 'boolean',
@@ -1142,7 +1069,7 @@ exports.swaggerBaulaSchema = {
             },
             userId: {
                 type: 'string',
-                example: '1234'
+                example: '<MONGO_ID>'
             },
             createdAt: {
                 type: 'string',
@@ -1154,6 +1081,18 @@ exports.swaggerBaulaSchema = {
                 format: 'date-time',
                 example: '2024-11-05T14:30:00Z'
             }
+        }
+    },
+    SemesterPlanCourse: {
+        type: 'object',
+        properties: {
+            id: { type: 'string', example: 'C1' },
+            name: { type: 'string', example: 'Applied X' },
+            status: { type: 'string', example: 'open' },
+            ects: { type: 'number', example: 5.0 },
+            sws: { type: 'number', example: 4.0 },
+            contributeTo: { type: 'string', example: 'MC1' },
+            contributeAs: { type: 'string', example: 'Seminar' }
         }
     },
     SemesterPlan: {
@@ -1169,7 +1108,7 @@ exports.swaggerBaulaSchema = {
             isPastSemester: {
                 type: 'boolean',
                 description: 'Is this a past semester',
-                example: false
+                example: true
             },
             modules: {
                 type: 'array',
@@ -1177,7 +1116,7 @@ exports.swaggerBaulaSchema = {
                 items: {
                     type: 'string'
                 },
-                example: ['SE1', 'DB1', 'AI1']
+                example: ['MOD-A', 'MOD-B']
             },
             userGeneratedModules: {
                 type: 'array',
@@ -1190,16 +1129,7 @@ exports.swaggerBaulaSchema = {
                 type: 'array',
                 description: 'Selected courses',
                 items: {
-                    type: 'object',
-                    properties: {
-                        id: { type: 'string', example: 'C_2024w_001' },
-                        name: { type: 'string', example: 'Software Engineering Praktikum' },
-                        status: { type: 'string', example: 'enrolled' },
-                        ects: { type: 'number', example: 5.0 },
-                        sws: { type: 'number', example: 4.0 },
-                        contributeTo: { type: 'string', example: 'M_SE1' },
-                        contributeAs: { type: 'string', example: 'Praktikum' }
-                    }
+                    $ref: '#/components/schemas/SemesterPlanCourse'
                 }
             },
             aimedEcts: {
@@ -1207,14 +1137,14 @@ exports.swaggerBaulaSchema = {
                 description: 'Target ECTS for semester',
                 minimum: 0,
                 maximum: 210,
-                example: 30.0
+                example: 30
             },
             summedEcts: {
                 type: 'number',
                 description: 'Actual summed ECTS',
                 minimum: 0,
                 maximum: 210,
-                example: 28.0
+                example: 28
             },
             expanded: {
                 type: 'boolean',
@@ -1223,7 +1153,7 @@ exports.swaggerBaulaSchema = {
             },
             userId: {
                 type: 'string',
-                example: '1234'
+                example: '<MONGO_ID>'
             }
         }
     },
@@ -1234,12 +1164,12 @@ exports.swaggerBaulaSchema = {
             name: {
                 type: 'string',
                 maxLength: 1000,
-                example: 'Externes Praktikum'
+                example: 'internship'
             },
             acronym: {
                 type: 'string',
                 maxLength: 100,
-                example: 'EXT_PRAK'
+                example: 'INT'
             },
             ects: {
                 type: 'number',
@@ -1250,7 +1180,7 @@ exports.swaggerBaulaSchema = {
             notes: {
                 type: 'string',
                 maxLength: 1000,
-                example: 'Praktikum bei Firma XY'
+                example: 'Internship for SAP'
             },
             status: {
                 type: 'string',
@@ -1263,13 +1193,25 @@ exports.swaggerBaulaSchema = {
             }
         }
     },
+    TransferResult: {
+        type: 'object',
+        description: 'Result of module transfer between semesters',
+        properties: {
+            oldSemesterPlan: {
+                $ref: '#/components/schemas/SemesterPlan'
+            },
+            newSemesterPlan: {
+                $ref: '#/components/schemas/SemesterPlan'
+            }
+        }
+    },
     Recommendation: {
         type: 'object',
         description: 'Module recommendations',
         properties: {
             _id: {
                 type: 'string',
-                example: '1234'
+                example: '<MONGO_ID>'
             },
             recommendedMods: {
                 type: 'array',
@@ -1280,7 +1222,7 @@ exports.swaggerBaulaSchema = {
             },
             userId: {
                 type: 'string',
-                example: '1234'
+                example: '<MONGO_ID>'
             },
             createdAt: {
                 type: 'string',
@@ -1301,7 +1243,7 @@ exports.swaggerBaulaSchema = {
             acronym: {
                 type: 'string',
                 maxLength: 100,
-                example: 'ML1'
+                example: 'MOD-A'
             },
             source: {
                 type: 'array',
@@ -1317,7 +1259,7 @@ exports.swaggerBaulaSchema = {
                         identifier: {
                             type: 'string',
                             description: 'Source identifier (e.g., job ID)',
-                            example: '507f1f77bcf86cd799439012'
+                            example: '<MONGO_ID>'
                         },
                         score: {
                             type: 'number',
@@ -1352,7 +1294,7 @@ exports.swaggerBaulaSchema = {
             tId: {
                 type: 'string',
                 description: 'Topic ID',
-                example: 'T_ML'
+                example: 'T10'
             },
             name: {
                 type: 'string',
@@ -1373,12 +1315,12 @@ exports.swaggerBaulaSchema = {
             parentId: {
                 type: 'string',
                 description: 'Parent topic ID',
-                example: 'T_AI'
+                example: 'T1'
             },
             embeddingId: {
                 type: 'string',
                 description: 'Associated embedding ID',
-                example: 'EMB_T_ML'
+                example: 'E1'
             },
             createdAt: {
                 type: 'string',
@@ -1396,12 +1338,12 @@ exports.swaggerBaulaSchema = {
         properties: {
             _id: {
                 type: 'string',
-                example: 'EMB_001'
+                example: 'E1'
             },
             identifier: {
                 type: 'string',
                 description: 'Identifier (e.g., job ID, topic ID)',
-                example: '1234'
+                example: '<MONGO_ID>'
             },
             vector: {
                 type: 'array',
@@ -1430,12 +1372,12 @@ exports.swaggerBaulaSchema = {
         properties: {
             _id: {
                 type: 'string',
-                example: 'MEMB_SE1'
+                example: 'ME1'
             },
             acronym: {
                 type: 'string',
                 description: 'Module acronym',
-                example: 'SE1'
+                example: 'MOD-A'
             },
             vector: {
                 type: 'array',
@@ -1458,6 +1400,52 @@ exports.swaggerBaulaSchema = {
             }
         }
     },
+    ModuleFeedback: {
+        type: 'object',
+        properties: {
+            acronym: { type: 'string', example: 'MOD-A' },
+            similarmods: { type: 'integer', minimum: 0, maximum: 5, example: 4 },
+            similarchair: { type: 'integer', minimum: 0, maximum: 5, example: 3 },
+            priorknowledge: { type: 'integer', minimum: 0, maximum: 5, example: 5 },
+            contentmatch: { type: 'integer', minimum: 0, maximum: 5, example: 4 }
+        }
+    },
+    Consent: {
+        type: 'object',
+        description: 'User consent entry',
+        properties: {
+            ctype: { type: 'string', example: 'privacy-policy' },
+            hasConfirmed: { type: 'boolean', example: true },
+            hasResponded: { type: 'boolean', example: true },
+            timestamp: { type: 'string', format: 'date-time', example: '2024-01-15T10:00:00Z' }
+        }
+    },
+    Hint: {
+        type: 'object',
+        description: 'UI hint status',
+        properties: {
+            key: { type: 'string', example: 'module-hint' },
+            hasConfirmed: { type: 'boolean', example: true }
+        }
+    },
+    DashboardSetting: {
+        type: 'object',
+        description: 'Dashboard widget visibility setting',
+        properties: {
+            key: { type: 'string', example: 'gpa' },
+            visible: { type: 'boolean', example: true }
+        }
+    },
+    CompetenceAim: {
+        type: 'object',
+        description: 'User competence goal',
+        properties: {
+            compId: { type: 'string', example: 'C10' },
+            aim: { type: 'integer', minimum: 0, maximum: 3, example: 2 },
+            standard: { type: 'string', example: 'S1' },
+            parent: { type: 'string', example: 'C1' }
+        }
+    },
 };
 exports.swaggerBilAppSchema = {
     ...swaggerSchemas,
@@ -1468,7 +1456,7 @@ exports.swaggerBilAppSchema = {
             stId: {
                 type: 'string',
                 description: 'Standard ID',
-                example: 'ST_001'
+                example: 'ST1'
             },
             desc: {
                 type: 'string',
@@ -1478,7 +1466,7 @@ exports.swaggerBilAppSchema = {
             name: {
                 type: 'string',
                 description: 'Standard name',
-                example: 'CS2013'
+                example: 'Standard XY'
             }
         }
     },
@@ -1489,12 +1477,12 @@ exports.swaggerBilAppSchema = {
             compId: {
                 type: 'string',
                 description: 'Competence ID',
-                example: 'COMP_001'
+                example: 'C10'
             },
             short: {
                 type: 'string',
                 description: 'Short identifier',
-                example: 'SE.Design'
+                example: 'C10.X'
             },
             name: {
                 type: 'string',
@@ -1509,12 +1497,12 @@ exports.swaggerBilAppSchema = {
             stId: {
                 type: 'string',
                 description: 'Associated standard ID',
-                example: 'ST_001'
+                example: 'ST1'
             },
             parentId: {
                 type: 'string',
                 description: 'Parent competence ID',
-                example: 'COMP_000'
+                example: 'C1'
             }
         }
     },
@@ -1525,7 +1513,7 @@ exports.swaggerBilAppSchema = {
             cId: {
                 type: 'string',
                 description: 'Course ID',
-                example: 'C_2024w_001'
+                example: 'C1'
             },
             semester: {
                 type: 'string',
@@ -1534,12 +1522,12 @@ exports.swaggerBilAppSchema = {
             compId: {
                 type: 'string',
                 description: 'Competence ID',
-                example: 'COMP_001'
+                example: 'C10'
             },
             fulfillment: {
                 type: 'integer',
                 description: 'Fulfillment level (0-3)',
-                example: 2
+                example: 1
             }
         }
     },

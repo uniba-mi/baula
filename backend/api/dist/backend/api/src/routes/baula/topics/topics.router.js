@@ -88,7 +88,7 @@ router.get("/children", topics_controller_1.getTopicChildren);
  *                 items:
  *                   type: string
  *                 description: Array of topic IDs. Send empty array to clear topic-based recommendations.
- *                 example: ['T_ML', 'T_WEB', 'T_DS']
+ *                 example: ['T10', 'T20']
  *     responses:
  *       200:
  *         description: Recommendations generated successfully

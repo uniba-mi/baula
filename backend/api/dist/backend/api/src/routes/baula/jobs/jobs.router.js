@@ -134,7 +134,7 @@ router.post("/keywords", jobs_controller_1.generateJobKeywords);
  *             properties:
  *               jobId:
  *                 type: string
- *                 example: '1234'
+ *                 example: '<MONGO_ID>'
  *                 description: Optional - Job ID for updating existing job (if omitted, creates new job)
  *               job:
  *                 type: object
@@ -183,7 +183,7 @@ router.post("/keywords", jobs_controller_1.generateJobKeywords);
  *                         properties:
  *                           acronym:
  *                             type: string
- *                             example: 'MI-WebT-B'
+ *                             example: 'MOD-A'
  *                             description: Module acronym
  *                           score:
  *                             type: number
