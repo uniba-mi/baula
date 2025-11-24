@@ -45,6 +45,8 @@ export class EvaluationComponent implements OnInit {
   constructor(private api: EvaluationRestService, private evalRest: EvaluationRestService, private snackbar: SnackbarService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
+
+    // Get evaluation data per organsiation (e. g. chair)
     this.api.getOrganisationByCode().pipe(take(1)).subscribe((selectedOrga) => {
       if (selectedOrga) {
         this.selectedOrga = selectedOrga;
@@ -68,7 +70,7 @@ export class EvaluationComponent implements OnInit {
   initializeCompletedSections(jobEvaluations: JobEvaluation[]): void {
     let completedCount = 0;
 
-    jobEvaluations.forEach(jobEval => { // section is completed if ranked modules
+    jobEvaluations.forEach(jobEval => { // Section is completed if it holds ranked modules
       if (jobEval.rankedModules && jobEval.rankedModules.length > 0) {
         this.completedSections[jobEval.job.jobId] = true;
         completedCount++;
@@ -146,7 +148,7 @@ export class EvaluationComponent implements OnInit {
 
     const allCandidates = jobEvaluation.candidates || [];
 
-    const numberOfDropAreas = 10; // default 10
+    const numberOfDropAreas = 10; // default 10, set dynamically according to length of candidates if needed
 
     this.dropAreas = Array.from({ length: numberOfDropAreas }, () => []);
     this.irrelevantItems = [];
@@ -165,7 +167,7 @@ export class EvaluationComponent implements OnInit {
       const candidateData = allCandidates.find(c => c.acronym === rankedModule.acronym);
 
       if (candidateData) {
-        if (ranking === 100) { // irrelevant ones have ranking 100
+        if (ranking === 100) { // Irrelevant ones have ranking 100
           this.irrelevantItems.push(candidateData);
         } else if (ranking >= 0 && ranking < numberOfDropAreas) {
           this.dropAreas[ranking].push(candidateData);
@@ -250,13 +252,13 @@ export class EvaluationComponent implements OnInit {
           message: "Zuordnung wurde gespeichert.",
         });
 
-        // update local data
+        // Update local data
         if (this.evaluationData && this.selectedSection) {
           const jobEvalIndex = this.evaluationData.jobEvaluations.findIndex(
             je => je.job.jobId === this.selectedSection!.jobId
           );
 
-          if (jobEvalIndex !== -1) { // update local eval data
+          if (jobEvalIndex !== -1) { // Update local eval data
             this.evaluationData.jobEvaluations[jobEvalIndex].rankedModules = allRankedModules;
             this.evaluationData.jobEvaluations[jobEvalIndex].comment = this.comment;
           }

@@ -4,7 +4,6 @@ import { EvaluationComponent } from './evaluation.component';
 
 const routes: Routes = [
   { path: '', component: EvaluationComponent },
-  { path: 'init', component: EvaluationComponent } // delete when candidates have been initialized once
 ];
 
 @NgModule({

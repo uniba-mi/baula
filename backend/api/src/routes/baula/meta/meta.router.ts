@@ -84,7 +84,7 @@ router.get('/course-types', getDistinctCourseTypes);
  *           type: string
  *           pattern: '\\d{4}((w)|(s))'
  *           example: '2024w'
- *         description: Semester identifier (format YYYYW or YYYYS)
+ *         description: Semester identifier (format YYYYw or YYYYs)
  *     responses:
  *       200:
  *         description: Academic dates retrieved successfully

@@ -1,6 +1,6 @@
 import { BadRequestError, NotFoundError } from "../../shared/error";
 import { Request, Response, NextFunction } from "express";
-// import { orga2code } from '../../../src/evaluationData/organisations'
+// import { orga2code } from '../../../staticdata/evaluationData/organisations'
 import { Evaluation } from "../../database/mongo";
 import { Evaluation as IEvaluation, Organisation } from "../../../../../interfaces/evaluation";
 import { UserServer } from "../../../../../interfaces/user";
@@ -10,7 +10,7 @@ import { UserServer } from "../../../../../interfaces/user";
 //         const studyProgrammes = ['BAAng', 'BAInf', 'BAWIn', 'BKIDS', 'MAAng', 'MaCiH', 'MIISM', 'MAWin'];
 
 //         for (const spId of studyProgrammes) {
-//             const { candidates: candidatesData } = await import(`../../../src/evaluationData/${spId}/candidates`);
+//             const { candidates: candidatesData } = await import(`../../../staticdata/evaluationData/${spId}/candidates`);
 
 //             const jobEvaluations = candidatesData.map((item: { jobId: string; candidates: string; }) => ({
 //                 job: {
@@ -94,8 +94,8 @@ import { UserServer } from "../../../../../interfaces/user";
 //             return next(new NotFoundError());
 //         }
 
-//         const { jobs } = await import(`../../../src/evaluationData/jobs`);
-//         const modules = require(`../../../src/evaluationData/${spId}/modules_${spId}_20252.json`);
+//         const { jobs } = await import(`../../../staticdata/evaluationData/jobs`);
+//         const modules = require(`../../../staticdata/evaluationData/${spId}/modules_${spId}_20252.json`);
 
 //         const evaluationWithDetails = getEvaluationDetails(evaluation, jobs, modules);
 

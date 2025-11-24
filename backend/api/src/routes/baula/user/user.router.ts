@@ -84,8 +84,8 @@ router.get("/", getUser);
  *                     type: string
  *                     minLength: 32
  *                     maxLength: 32
- *                     description: Shibboleth ID (32 characters)
- *                     example: 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+ *                     description: Shibboleth ID
+ *                     example: '<SHIB_ID>'
  *                   roles:
  *                     type: array
  *                     items:
@@ -166,7 +166,7 @@ router.post("/", createUser);
  *                   properties:
  *                     compId:
  *                       type: string
- *                       example: 'COMP_001'
+ *                       example: 'C10'
  *                       description: Competence ID
  *                     aim:
  *                       type: integer
@@ -176,11 +176,11 @@ router.post("/", createUser);
  *                       description: Target level for this competence
  *                     standard:
  *                       type: string
- *                       example: 'CS2013'
+ *                       example: 'S1'
  *                       description: Standard/framework
  *                     parent:
  *                       type: string
- *                       example: 'COMP_000'
+ *                       example: 'C1'
  *                       description: Parent competence ID
  *     responses:
  *       200:
@@ -304,7 +304,7 @@ router.put("/study-path", updateStudyPath);
  *   put:
  *     tags: [User::Study Path]
  *     summary: Finish semester and transition modules
- *     description: Completes a semester by moving planned modules to completed modules, handling dropped modules, and preventing duplicates of already passed modules
+ *     description: Completes a semester by moving planned modules to completed modules except for modules excluded by the user (droppedModules), and preventing duplicates of already passed modules
  *     requestBody:
  *       required: true
  *       content:
@@ -383,20 +383,20 @@ router.put("/study-path/semester", finishSemester);
  *               _id:
  *                 type: string
  *                 description: Module ID (required for updates)
- *                 example: '507f1f77bcf86cd799439011'
+ *                 example: '<MONGO_ID>'
  *               acronym:
  *                 type: string
- *                 example: 'SE1'
+ *                 example: 'MOD-A'
  *               name:
  *                 type: string
- *                 example: 'Software Engineering 1'
+ *                 example: 'Applied X'
  *               status:
  *                 type: string
  *                 enum: [taken, failed, passed, open]
  *                 example: 'passed'
  *               ects:
  *                 type: number
- *                 example: 5.0
+ *                 example: 5
  *               grade:
  *                 type: number
  *                 minimum: 1.0
@@ -408,7 +408,7 @@ router.put("/study-path/semester", finishSemester);
  *                 example: '2024w'
  *               mgId:
  *                 type: string
- *                 example: 'MG_001'
+ *                 example: 'MG1'
  *               isUserGenerated:
  *                 type: boolean
  *                 example: false
@@ -458,14 +458,9 @@ router.put("/study-path/module", updateModuleInStudyPath);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - chartName
- *             properties:
- *               chartName:
- *                 type: string
- *                 example: 'recommendations'
- *                 description: Name of the dashboard widget
+ *             type: array
+ *             items:
+ *                $ref: '#/components/schemas/DashboardSetting'
  *     responses:
  *       200:
  *         description: Dashboard settings updated successfully
@@ -560,7 +555,7 @@ router.put("/timetable-settings", updateTimetableSettings);
  *             properties:
  *               acronym:
  *                 type: string
- *                 example: 'SE1'
+ *                 example: 'MOD-A'
  *                 description: Module acronym to add/remove from favourites
  *     responses:
  *       200:
@@ -571,7 +566,7 @@ router.put("/timetable-settings", updateTimetableSettings);
  *               type: array
  *               items:
  *                 type: string
- *               example: ['SE1', 'DB1', 'AI1']
+ *               example: ['MOD-A', 'MOD-B']
  *       404:
  *         description: User not found
  *         content:
@@ -599,7 +594,7 @@ router.put("/favourite-module", updateFavouriteModule);
  *             properties:
  *               acronym:
  *                 type: string
- *                 example: 'HCI1'
+ *                 example: 'MOD-A'
  *                 description: Module acronym to add/remove from excluded list
  *     responses:
  *       200:
@@ -610,7 +605,7 @@ router.put("/favourite-module", updateFavouriteModule);
  *               type: array
  *               items:
  *                 type: string
- *               example: ['HCI1', 'THEO1']
+ *               example: ['MOD-A', 'MOD-B']
  *       404:
  *         description: User not found
  *         content:
@@ -638,7 +633,7 @@ router.put("/excluded-module", updateExcludedModule);
  *             properties:
  *               topic:
  *                 type: string
- *                 example: 'T_ML'
+ *                 example: 'T10'
  *                 description: Topic ID to add/remove
  *     responses:
  *       200:
@@ -652,7 +647,7 @@ router.put("/excluded-module", updateExcludedModule);
  *                   type: array
  *                   items:
  *                     type: string
- *                   example: ['T_ML', 'T_WEB', 'T_DS']
+ *                   example: ['T10', 'T20']
  *       400:
  *         description: Invalid input or update failed
  *         content:
@@ -674,19 +669,9 @@ router.put("/topic", toggleTopic)
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - key
- *               - hasConfirmed
- *             properties:
- *               key:
- *                 type: string
- *                 example: 'welcome_tour'
- *                 description: Hint identifier
- *               hasConfirmed:
- *                 type: boolean
- *                 example: true
- *                 description: Confirmation status
+ *             type: array
+ *             items:
+ *                $ref: '#/components/schemas/Hint'
  *     responses:
  *       200:
  *         description: Hint updated successfully
@@ -728,29 +713,9 @@ router.put("/hints", updateHint);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - ctype
- *               - hasConfirmed
- *               - timestamp
- *             properties:
- *               ctype:
- *                 type: string
- *                 example: 'privacy_policy'
- *                 description: Type of consent
- *               hasConfirmed:
- *                 type: boolean
- *                 example: true
- *                 description: Whether user confirmed
- *               hasResponded:
- *                 type: boolean
- *                 example: true
- *                 description: Whether user has responded (optional, defaults to true)
- *               timestamp:
- *                 type: string
- *                 format: date-time
- *                 example: '2024-01-15T10:00:00Z'
- *                 description: Time of consent
+ *             type: array
+ *             items:
+ *                $ref: '#/components/schemas/Consent'
  *     responses:
  *       200:
  *         description: Consent added successfully
@@ -802,37 +767,7 @@ router.post("/consents", addConsents);
  *               - feedback
  *             properties:
  *               feedback:
- *                 type: object
- *                 required:
- *                   - acronym
- *                 properties:
- *                   acronym:
- *                     type: string
- *                     example: 'SE1'
- *                   similarmods:
- *                     type: integer
- *                     minimum: 0
- *                     maximum: 5
- *                     example: 4
- *                     description: Rating for similar modules
- *                   similarchair:
- *                     type: integer
- *                     minimum: 0
- *                     maximum: 5
- *                     example: 3
- *                     description: Rating for similar chair/department
- *                   priorknowledge:
- *                     type: integer
- *                     minimum: 0
- *                     maximum: 5
- *                     example: 5
- *                     description: Rating for prior knowledge requirements
- *                   contentmatch:
- *                     type: integer
- *                     minimum: 0
- *                     maximum: 5
- *                     example: 4
- *                     description: Rating for content match with expectations
+ *                  $ref: '#/components/schemas/ModuleFeedback'
  *     responses:
  *       200:
  *         description: Module feedback updated successfully
@@ -841,18 +776,7 @@ router.post("/consents", addConsents);
  *             schema:
  *               type: array
  *               items:
- *                 type: object
- *                 properties:
- *                   acronym:
- *                     type: string
- *                   similarmods:
- *                     type: integer
- *                   similarchair:
- *                     type: integer
- *                   priorknowledge:
- *                     type: integer
- *                   contentmatch:
- *                     type: integer
+ *                  $ref: '#/components/schemas/ModuleFeedback'
  *       400:
  *         description: Invalid input or unexpected error
  *         content:
@@ -983,7 +907,7 @@ router.delete("/excluded-modules", deleteExcludedModules);
  *         required: true
  *         schema:
  *           type: string
- *           example: 'HCI1'
+ *           example: 'MOD-A'
  *         description: Module acronym to remove
  *     responses:
  *       200:
@@ -1026,7 +950,7 @@ router.delete("/excluded-module/:acronym", deleteExcludedModule);
  *               id:
  *                 type: string
  *                 description: Module _id
- *                 example: '507f1f77bcf86cd799439011'
+ *                 example: '<MONGO_ID>'
  *               semester:
  *                 type: string
  *                 pattern: '\\d{4}((w)|(s))'
@@ -1081,7 +1005,7 @@ router.delete("/study-path/module", deleteModuleFromStudyPath);
  *                 properties:
  *                   acronym:
  *                     type: string
- *                     example: 'SE1'
+ *                     example: 'MOD-A'
  *                     description: Module acronym to remove feedback for
  *     responses:
  *       200:
@@ -1125,7 +1049,7 @@ router.delete("/module-feedback", deleteModuleFeedback)
  *             properties:
  *               id:
  *                 type: string
- *                 example: '507f1f77bcf86cd799439012'
+ *                 example: '<MONGO_ID>'
  *                 description: Job ID to delete
  *     responses:
  *       200:

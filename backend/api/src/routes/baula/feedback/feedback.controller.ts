@@ -1,5 +1,4 @@
-import { FeedbackRecommendationResult, RecommendedModule } from '../../../recommendation';
-import { Recommendation as IRecommendation } from '../../../recommendation';
+import { FeedbackRecommendationResult, RecommendedModule, Recommendation as IRecommendation } from '../../../../../../interfaces/recommendation';
 import { NextFunction, Request, Response } from "express";
 import { ModEmbedding, Recommendation } from "../../../database/mongo";
 import { BadRequestError, NotFoundError } from "../../../shared/error";

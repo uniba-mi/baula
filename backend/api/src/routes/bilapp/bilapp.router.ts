@@ -77,7 +77,7 @@ router.get("/competences/children/uppest/:id", getLowerCompetences);
  *                   description: Course ID
  *                 name:
  *                   type: string
- *                   example: 'Software Engineering Vorlesung'
+ *                   example: 'Software Engineering Lecture'
  *                   description: Course name
  *                 semester:
  *                   type: string
@@ -91,7 +91,7 @@ router.get("/competences/children/uppest/:id", getLowerCompetences);
  *                     properties:
  *                       modId:
  *                         type: string
- *                         example: 'M_SE1'
+ *                         example: 'MOD-A'
  *                         description: Module ID
  *                 comp:
  *                   type: array
@@ -101,7 +101,7 @@ router.get("/competences/children/uppest/:id", getLowerCompetences);
  *                     properties:
  *                       compId:
  *                         type: string
- *                         example: 'COMP_001'
+ *                         example: 'C1'
  *                         description: Competence ID
  *                       fulfillment:
  *                         type: integer
@@ -142,13 +142,13 @@ router.get("/course/:id", getCompetenceAndModulesOfCourse);
  *                     properties:
  *                       status:
  *                         type: string
- *                         example: 'enrolled'
+ *                         example: 'open'
  *                       contributeTo:
  *                         type: string
- *                         example: 'M_SE1'
+ *                         example: 'Modul-01'
  *                       contributeAs:
  *                         type: string
- *                         example: 'Praktikum'
+ *                         example: 'Modul-01c'
  *       404:
  *         description: No study plan found
  *         content:
@@ -208,16 +208,16 @@ router.get("/courses/:semester", getBilAppCourses);
  * @swagger
  * /courses/{semester}/{searchTerm}:
  *   get:
- *     summary: Get courses with a specific search term (e.g. LAMOD-01 for all EWS-Courses)
+ *     summary: Get courses with a specific search term
  *     tags: [BilApp]
  *     parameters:
- *       - in: searchTerm
- *         name: id
+ *       - in: path
+ *         name: searchTerm
  *         required: true
  *         schema:
  *           type: string
  *         description: Search term
- *         example: LAMOD-01
+ *         example: TERM-01
  *       - in: path
  *         name: semester
  *         required: true
@@ -310,7 +310,7 @@ router.get("/courses/:semester/:competence/:topN", ensureAuthenticated, getTopNC
  *                 properties:
  *                   acronym:
  *                     type: string
- *                     example: 'LAMOD_SE1'
+ *                     example: 'MOD-A'
  *                     description: Module acronym
  *                   name:
  *                     type: string

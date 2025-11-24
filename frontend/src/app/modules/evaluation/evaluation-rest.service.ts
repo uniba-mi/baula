@@ -21,6 +21,7 @@ export class EvaluationRestService {
 
   constructor(private http: HttpClient) { }
 
+  // Call this function from admin-recs component
   initEvaluationData(): Observable<any> {
     return this.http.post<any>(`${this.urlBase}evaluation/init`, {}, httpOptions);
   }

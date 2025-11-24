@@ -21,7 +21,7 @@ router.use(express.json());
  *         schema:
  *           type: string
  *         description: Course id
- *         example: Lecture.wiai.bereic...
+ *         example: CourseA
  *       - in: path
  *         name: semester
  *         required: true
@@ -64,7 +64,7 @@ router.get("/:id/:semester", getCourseDetails);
  *         schema:
  *           type: string
  *         description: Semester
- *         example: 2025s
+ *         example: 2024w
  *     responses:
  *       200:
  *         description: Array of courses

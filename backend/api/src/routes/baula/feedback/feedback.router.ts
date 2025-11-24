@@ -24,40 +24,7 @@ router.use(express.json());
  *               - moduleFeedback
  *             properties:
  *               moduleFeedback:
- *                 type: object
- *                 required:
- *                   - acronym
- *                   - similarmods
- *                   - contentmatch
- *                 properties:
- *                   acronym:
- *                     type: string
- *                     example: 'MI-WebT-B'
- *                     description: Module acronym being rated
- *                   similarmods:
- *                     type: integer
- *                     minimum: 0
- *                     maximum: 5
- *                     example: 4
- *                     description: Rating for recommending similar modules (0-5)
- *                   similarchair:
- *                     type: integer
- *                     minimum: 0
- *                     maximum: 5
- *                     example: 3
- *                     description: Rating for recommending modules of similar chair (0-5)
- *                   priorknowledge:
- *                     type: integer
- *                     minimum: 0
- *                     maximum: 5
- *                     example: 5
- *                     description: Rating for prerequisites (0-5)
- *                   contentmatch:
- *                     type: integer
- *                     minimum: 0
- *                     maximum: 5
- *                     example: 4
- *                     description: Rating for content matching the teaching contents (0-5, triggers recommendation if ≥3)
+ *                 $ref: '#/components/schemas/ModuleFeedback'
  *     responses:
  *       200:
  *         description: Recommendations updated successfully based on feedback
@@ -81,13 +48,13 @@ router.use(express.json());
  *               updated:
  *                 summary: Recommendations updated
  *                 value:
- *                   _id: '507f1f77bcf86cd799439015'
- *                   userId: '507f1f77bcf86cd799439011'
+ *                   _id: '<MONGO_ID>'
+ *                   userId: '<MONGO_ID>'
  *                   recommendedMods:
- *                     - acronym: 'SE2'
+ *                     - acronym: 'MOD-B'
  *                       source:
  *                         - type: 'feedback_similarmods'
- *                           identifier: 'SE1'
+ *                           identifier: '<MONGO_ID>'
  *                           score: 0.89
  *                       frequency: 1
  *                       score: 0.89
@@ -136,7 +103,7 @@ router.put("/", updatePersonalRecommendationsByFeedback);
  *         required: true
  *         schema:
  *           type: string
- *           example: 'MI-WebT-B'
+ *           example: 'MOD-A'
  *         description: Module acronym to remove feedback recommendations for
  *     responses:
  *       200:
@@ -156,13 +123,13 @@ router.put("/", updatePersonalRecommendationsByFeedback);
  *               deleted:
  *                 summary: Feedback removed
  *                 value:
- *                   _id: '1234'
- *                   userId: '1234'
+ *                   _id: '<MONGO_ID>'
+ *                   userId: '<MONGO_ID>'
  *                   recommendedMods:
- *                     - acronym: 'MI-WebT-B'
+ *                     - acronym: 'MOD-A'
  *                       source:
  *                         - type: 'job'
- *                           identifier: '1234'
+ *                           identifier: '<MONGO_ID>'
  *                           score: 0.85
  *                       frequency: 1
  *                       score: 0.85
