@@ -498,17 +498,18 @@ export class TransformationService {
     return `${formattedHours}:${formattedMinutes}`;
   }
 
+  // TODO exchange hex values with the vars of secondary baula colours defined in _variables.scss
   private extractBgColorOfCourseType(type: string): string {
     if (type.includes('Vorlesung')) {
-      return '#e3f6fd';
+      return '#D9ECF8';
     } else if (type.includes('Übung')) {
-      return '#e3e9fd';
+      return '#E2E4F3';
     } else if (type.includes('Tutorium')) {
-      return '#fcf5ca';
+      return '#FFF5CC';
     } else if (type.includes('Seminar')) {
-      return '#e3fdf6';
+      return '#DFF7EE';
     } else {
-      return '#faf2e6';
+      return '#F8EFE2';
     }
   }
 

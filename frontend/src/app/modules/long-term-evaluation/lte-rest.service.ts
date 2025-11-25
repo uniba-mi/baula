@@ -28,4 +28,9 @@ export class LteRestService {
   resetConsentResponse(): Observable<string> {
     return this.http.put<string>(`${this.urlBase}survey/reset/response`, {}, httpOptions);
   }
+
+  // get results from survey
+  getResults(): Observable<LongTermEvaluation[]> {
+    return this.http.get<LongTermEvaluation[]>(`${this.urlBase}survey/report`, httpOptions)
+  }
 }

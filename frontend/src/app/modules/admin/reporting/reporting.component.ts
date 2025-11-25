@@ -1,12 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
-import { Report } from '../reporting';
-import { Observable } from 'rxjs';
-import { ChartData, ChartConfiguration } from 'chart.js';
-import { PageEvent } from '@angular/material/paginator';
-import { BaseChartDirective } from 'ng2-charts';
-import type { DownloadService } from 'src/app/shared/services/download.service';
-import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
+import { AdminReport } from '../reporting';
+import { map, Observable } from 'rxjs';
+import { ReportCard } from '../../reporting/reporting';
+import { Report } from '../../reporting/reporting';
+import { Semester } from '../../../../../../interfaces/semester';
 
 @Component({
   selector: 'admin-reporting',
@@ -16,29 +14,25 @@ import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
   styleUrl: './reporting.component.scss',
 })
 export class ReportingComponent implements OnInit {
-  report$: Observable<Report>;
-  lastActiveUsersHistoryDatasets: ChartConfiguration<'line'>['data']['datasets'];
-  lastActiveUsersHistoryLabels: string[];
-  paginatedFrequencyModulesAsCompleted: any[] = []; // data for frequencyModulesAsCompleted
-  paginatedFrequencyStudyProgrammes: any[] = []; // data for frequencyStudyProgrammes
-  paginatedLastActiveUsersHistory: any[] = []; // data for lastActiveUsersHistory
-  paginatedFrequencyStartSemester: any[] = []; // data for frequencyStartSemester
-  paginatedFrequencyPlannedCourses: any[] = []; // data for frequencyPlannedCourses
-  pageSize = 5; // Standard-Seitengröße
-  currentPage = 0; // Aktuelle Seite
-  @ViewChild('#moduleStatusChart') moduleStatusChart:
-    | BaseChartDirective<'bar'>
-    | undefined;
-  @ViewChild('#frequencyDurationChart') frequencyDurationChart:
-    | BaseChartDirective<'bar'>
-    | undefined;
-  @ViewChild('#frequencyCompletedModulesChart') frequencyCompletedModulesChart:
-    | BaseChartDirective<'bar'>
-    | undefined;
-  @ViewChild('#frequencyStudyPlansClusteredChart')
-  frequencyStudyPlansClusteredChart: BaseChartDirective<'bar'> | undefined;
+  reportNew$: Observable<Report>;
+  colorMapping = {
+    taken: 'rgba(102, 144, 177, 0.8)',
+    passed: 'rgba(172, 204, 61, 0.8)',
+    failed: 'rgba(235, 105, 114, 0.8)',
+  };
 
-  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+  columnKeys = ['name', 'count'];
+  columns = [
+    {
+      key: 'name',
+      name: 'Studiengang',
+    },
+    {
+      key: 'count',
+      name: 'Häufigkeit',
+    },
+  ];
+  barChartConfig = {
     plugins: {
       legend: {
         display: false,
@@ -46,142 +40,220 @@ export class ReportingComponent implements OnInit {
     },
   };
 
-  public moduleStatusChartData: ChartData<'bar'> | undefined;
-  public frequencyDurationChartData: ChartData<'bar'> | undefined;
-  public frequencyCompletedModulesChartData: ChartData<'bar'> | undefined;
-  public frequencyStudyPlansClusteredChartData: ChartData<'bar'> | undefined;
-  public barChartType = 'bar' as const;
-
-  constructor(
-    private adminRestService: AdminRestService,
-    private lazyInject: LazyInjectService
-  ) {}
+  constructor(private adminRestService: AdminRestService) {}
 
   ngOnInit(): void {
-    this.report$ = this.adminRestService.getReport();
-    this.report$.subscribe((report) => {
-      this.paginatedFrequencyModulesAsCompleted = this.updateTableData(
-        report.frequencyModulesAsCompleted
-      );
-      this.paginatedFrequencyStudyProgrammes = this.updateTableData(
-        report.frequencyStudyProgrammes
-      );
-      this.paginatedLastActiveUsersHistory = this.updateTableData(
-        report.lastActiveUsersHistory
-      );
-      this.paginatedFrequencyStartSemester = this.updateTableData(
-        report.frequencyStartSemester
-      );
-      this.paginatedFrequencyPlannedCourses = this.updateTableData(
-        report.frequencyPlannedCourses
-      );
-      this.setChartData(report);
-    });
+    this.reportNew$ = this.adminRestService.getReport().pipe(
+      map((report: AdminReport) => {
+        report = this.cleanUpReport(report);
+
+        let cards: ReportCard[] = [];
+        // add meta card
+        cards.push({
+          id: 'userMetaData',
+          type: 'meta',
+          spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
+          cardData: {
+            title: 'Allgemeines',
+            items: [
+              {
+                iconClass: 'bi-people-fill',
+                name: 'User insgesamt:',
+                data: report.allUsers,
+              },
+              {
+                iconClass: 'bi-person-fill-check',
+                name: 'User (aktiv):',
+                data: report.activeUsers,
+                tooltip: 'Anzahl der User, die im letzten Monat aktiv waren',
+              },
+              {
+                iconClass: 'bi-journal-text',
+                name: 'Studienpläne (aktiv):',
+                data: report.frequencyStudyPlans,
+                tooltip:
+                  'Anzahl der Studienpläne, die im letzten Monat geändert wurden',
+              },
+            ],
+            reportData: report,
+          },
+        });
+        // add module status
+        cards.push({
+          id: 'moduleStatusChart',
+          type: 'bar',
+          spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
+          cardData: {
+            title: 'Häufigkeit Modulstatus',
+            data: {
+              labels: report.frequencyModuleStatus.map((item) =>
+                item.name.toString()
+              ),
+              datasets: [
+                {
+                  backgroundColor: report.frequencyModuleStatus.map(
+                    (item) =>
+                      this.colorMapping[
+                        item.name.toLowerCase() as keyof typeof this.colorMapping
+                      ]
+                  ),
+                  data: report.frequencyModuleStatus.map((item) => item.count),
+                },
+              ],
+            },
+            config: this.barChartConfig,
+          },
+        });
+        // add frequency of studyplans
+        cards.push({
+          id: 'frequencyStudyPlansClusteredChart',
+          type: 'bar',
+          spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
+          cardData: {
+            title: 'Häufigkeit Studienpläne (Cluster)',
+            data: {
+              labels: report.frequencyStudyPlansClustered.map((item) =>
+                item.name.toString()
+              ),
+              datasets: [
+                {
+                  backgroundColor: 'rgba(102, 144, 177, 0.8)',
+                  data: report.frequencyStudyPlansClustered.map(
+                    (item) => item.count
+                  ),
+                },
+              ],
+            },
+            config: this.barChartConfig,
+          },
+        });
+        // add last update user table
+        cards.push({
+          id: 'lastActiveUsersHistory',
+          type: 'table',
+          spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
+          cardData: {
+            title: 'Aktualität User',
+            data: report.lastActiveUsersHistory,
+            columnKeys: this.columnKeys,
+            columns: this.columns,
+          },
+        });
+        // add frequency of start semester
+        cards.push({
+          id: 'frequencyStartSemester',
+          type: 'table',
+          spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
+          cardData: {
+            title: 'Häufigkeit Startsemester',
+            data: report.frequencyStartSemester,
+            columnKeys: this.columnKeys,
+            columns: this.columns,
+          },
+        });
+        // add frequency of completed Modules
+        cards.push({
+          id: 'frequencyModulesAsCompleted',
+          type: 'table',
+          spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
+          cardData: {
+            title: 'Häufigkeit Abgeschlossene Module',
+            data: report.frequencyModulesAsCompleted,
+            columnKeys: this.columnKeys,
+            columns: this.columns,
+          },
+        });
+        // add frequency of study duration
+        cards.push({
+          id: 'frequencyDurationChart',
+          type: 'bar',
+          spacingClasses: 'col-12 col-md-6 my-2',
+          cardData: {
+            title: 'Häufigkeit Studienpläne (Cluster)',
+            data: {
+              labels: report.frequencyDuration.map((item) =>
+                item.name ? item.name.toString() : 'Null'
+              ),
+              datasets: [
+                {
+                  backgroundColor: 'rgba(102, 144, 177, 0.8)',
+                  data: report.frequencyDuration.map((item) => item.count),
+                },
+              ],
+            },
+            config: this.barChartConfig,
+          },
+        });
+        // add frequency of completed modules as cluster
+        cards.push({
+          id: 'frequencyCompletedModulesChart',
+          type: 'bar',
+          spacingClasses: 'col-12 col-md-6 my-2',
+          cardData: {
+            title: 'Häufigkeit Abgeschlossene Module (Cluster)',
+            data: {
+              labels: report.frequencyCompletedModules.map((item) =>
+                item.name.toString()
+              ),
+              datasets: [
+                {
+                  backgroundColor: 'rgba(102, 144, 177, 0.8)',
+                  data: report.frequencyCompletedModules.map(
+                    (item) => item.count
+                  ),
+                },
+              ],
+            },
+            config: this.barChartConfig,
+          },
+        });
+        // add frequency of start semester
+        cards.push({
+          id: 'frequencyStudyProgrammes',
+          type: 'table',
+          spacingClasses: 'col-12 col-md-6 my-2',
+          cardData: {
+            title: 'Häufigkeit Studiengang',
+            data: report.frequencyStudyProgrammes,
+            columnKeys: this.columnKeys,
+            columns: this.columns,
+          },
+        });
+        // add frequency of planned courses
+        cards.push({
+          id: 'frequencyPlannedCourses',
+          type: 'table',
+          spacingClasses: 'col-12 col-md-6 my-2',
+          cardData: {
+            title: 'Häufigkeit Lehrveranstaltungen',
+            data: report.frequencyPlannedCourses,
+            columnKeys: this.columnKeys,
+            columns: this.columns,
+          },
+        });
+
+        return {
+          cards,
+        };
+      })
+    );
   }
 
-  // function to set module status chart data
-  setChartData(report: Report): void {
-    // generation of the chart data for the module status chart
-    const colorMapping = {
-      taken: 'rgba(102, 144, 177, 0.8)',
-      passed: 'rgba(172, 204, 61, 0.8)',
-      failed: 'rgba(235, 105, 114, 0.8)',
+  private cleanUpReport(report: AdminReport): AdminReport {
+    return {
+      ...report,
+      frequencyStartSemester: report.frequencyStartSemester.map((el) => {
+        return {
+          ...el,
+          name: new Semester(el.name).shortName,
+        };
+      }),
+      frequencyPlannedCourses: report.frequencyPlannedCourses.map(el => {
+        return {
+          ...el,
+          name: `${el.name ?? ''} (${new Semester(el.semester).shortName})`
+        }
+      })
     };
-
-    this.moduleStatusChartData = {
-      labels: report.frequencyModuleStatus.map((item) => item.name.toString()),
-      datasets: [
-        {
-          backgroundColor: report.frequencyModuleStatus.map(
-            (item) =>
-              colorMapping[item.name.toLowerCase() as keyof typeof colorMapping]
-          ),
-          data: report.frequencyModuleStatus.map((item) => item.count),
-        },
-      ],
-    };
-
-    this.frequencyDurationChartData = {
-      labels: report.frequencyDuration.map((item) =>
-        item.name ? item.name.toString() : 'Null'
-      ),
-      datasets: [
-        {
-          backgroundColor: 'rgba(102, 144, 177, 0.8)',
-          data: report.frequencyDuration.map((item) => item.count),
-        },
-      ],
-    };
-
-    this.frequencyCompletedModulesChartData = {
-      labels: report.frequencyCompletedModules.map((item) =>
-        item.name.toString()
-      ),
-      datasets: [
-        {
-          backgroundColor: 'rgba(102, 144, 177, 0.8)',
-          data: report.frequencyCompletedModules.map((item) => item.count),
-        },
-      ],
-    };
-
-    this.frequencyStudyPlansClusteredChartData = {
-      labels: report.frequencyStudyPlansClustered.map((item) =>
-        item.name.toString()
-      ),
-      datasets: [
-        {
-          backgroundColor: 'rgba(102, 144, 177, 0.8)',
-          data: report.frequencyStudyPlansClustered.map((item) => item.count),
-        },
-      ],
-    };
-  }
-
-  // Methode, um die paginierten Daten zu aktualisieren
-  updateTableData(data: any[]): any[] {
-    const startIndex = this.currentPage * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    return data.slice(startIndex, endIndex);
-  }
-
-  // Event-Handler für die Paginator
-  onPageChange(event: PageEvent, key: string, data: any[]): void {
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-
-    // Aktualisiere die paginierten Daten
-    switch (key) {
-      case 'frequencyModulesAsCompleted':
-        this.paginatedFrequencyModulesAsCompleted = this.updateTableData(data);
-        break;
-      case 'frequencyStudyProgrammes':
-        this.paginatedFrequencyStudyProgrammes = this.updateTableData(data);
-        break;
-      case 'lastActiveUsersHistory':
-        this.paginatedLastActiveUsersHistory = this.updateTableData(data);
-        break;
-      case 'frequencyStartSemester':
-        this.paginatedFrequencyStartSemester = this.updateTableData(data);
-        break;
-      case 'frequencyCompletedModules':
-        this.paginatedFrequencyModulesAsCompleted = this.updateTableData(data);
-        break;
-      case 'frequencyPlannedCourses':
-        this.paginatedFrequencyPlannedCourses = this.updateTableData(data);
-        break;
-      default:
-        break;
-    }
-  }
-
-  exportReport(report: Report): void {
-    const date = new Date();
-    const formattedDate = `${date.getDate()}_${
-      date.getMonth() + 1
-    }_${date.getFullYear()}`;
-    this.lazyInject.get<DownloadService>(() => 
-      import('../../../shared/services/download.service').then((m) => m.DownloadService)
-    ).then(download => download.downloadJSONFile(report, `report_${formattedDate}.json`));
   }
 }

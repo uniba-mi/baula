@@ -41,6 +41,11 @@ import { BaseChartDirective } from 'ng2-charts';
 import { SharedModule } from '../shared/shared.module';
 import { SemesterSelectionFormComponent } from './shared/semester-selection-form/semester-selection-form.component';
 import { ResultPageComponent } from '../long-term-evaluation/result-page/result-page.component';
+import { MetaDataCardComponent } from '../reporting/meta-data-card/meta-data-card.component';
+import { BarChartCardComponent } from '../reporting/bar-chart-card/bar-chart-card.component';
+import { TableCardComponent } from '../reporting/table-card/table-card.component';
+import { ReportingBaseComponent } from '../reporting/reporting-base.component';
+import { OtherActionsComponent } from './other-actions/other-actions.component';
 
 
 @NgModule({
@@ -63,7 +68,8 @@ import { ResultPageComponent } from '../long-term-evaluation/result-page/result-
     ErrorLogsComponent,
     AdminRecsComponent,
     ReportingComponent,
-    SemesterSelectionFormComponent
+    SemesterSelectionFormComponent,
+    OtherActionsComponent
   ],
   imports: [
     CommonModule,
@@ -87,7 +93,10 @@ import { ResultPageComponent } from '../long-term-evaluation/result-page/result-
     MatAutocompleteModule,
     BaseChartDirective,
     SharedModule, 
-    ResultPageComponent
+    ResultPageComponent,
+    ReportingBaseComponent,
+    BarChartCardComponent,
+    TableCardComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

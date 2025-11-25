@@ -8,8 +8,4 @@ import { Component } from '@angular/core';
 })
 export class NotificationDialogComponent { 
   disableDialog: boolean = false;
-
-  openLink() {
-    window.open('https://vc.uni-bamberg.de/mod/feedback/view.php?id=1959319', '_blank');
-  }
 }

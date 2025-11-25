@@ -16,8 +16,4 @@ export class ErrorLogsComponent implements OnInit {
   ngOnInit(): void {
     this.errorLogs$ = this.rest.getErrorLogs();
   }
-
-  triggerError() {
-    throw new Error("Testfehler für Sentry :)");
-  }
 }

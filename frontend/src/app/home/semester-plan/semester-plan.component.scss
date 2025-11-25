@@ -2,10 +2,6 @@
   color: var(--ub-blue-100);
 }
 
-.ects-sum {
-  color: var(--cus-petrol-100);
-}
-
 // sidenav
 .sidenav-container {
   height: 100vh;
@@ -15,6 +11,8 @@
 .mat-sidenav {
   width: 30vw;
   overflow-y: auto;
+  box-shadow: -6px 0 24px rgba(0, 0, 0, 0.06);
+  background: var(--cus-bg-100);
 }
 
 .hints-sidenav {

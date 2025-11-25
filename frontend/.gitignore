@@ -40,9 +40,3 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-
-# Environment and config files
-config.**.ts
-!config.interface.ts
-environment.ts
-environment.*.ts

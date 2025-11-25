@@ -1,55 +1,54 @@
-   .header-logo img,
-   .logo {
-     width: 30px;
-     padding: 0.5em 0;
-   }
-   
-   .header-heading {
-     font-size: 0.8rem;
-   }
-   
-   .vh-100-min {
-     min-height: 100vh;
-   }
+.header-heading {
+  font-size: 0.8rem;
+}
 
-   #top-nav {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    right: 0;  
-    z-index: 100;  
-   }
+.vh-100-min {
+  min-height: 100vh;
+}
 
-   body {
-     min-height: 100%;
-     padding: 0;
-     margin: 0;
-   }
+#top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
 
-   main {
-    padding-top: 51px;
-    background: var(--cus-bg-100);
-    padding-bottom: 20px;
-   }
+body {
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+}
 
-   footer {
-     position: relative;
-     width: 100%;
-     bottom: 0;
-     padding: 25px 0px;
-     color: white;
-     font-size: 0.8rem;
-   }
-   
-   footer ul li {
-     display: inline;
-     list-style-type: none;
-     margin: 25px 50px;
-   }
+main {
+  padding-top: 51px;
+  background: var(--cus-bg-100);
+  padding-bottom: 20px;
+}
 
-   @media (min-width: 1400px) {
-    .header-heading {
-      font-size: 1rem;
-    }
-   }
-   
+footer {
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  padding: 25px 0px;
+  color: white;
+  font-size: 0.8rem;
+}
+
+footer ul li {
+  display: inline;
+  list-style-type: none;
+  margin: 25px 50px;
+}
+
+@media (min-width: 1400px) {
+  .header-heading {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 1560px) {
+  #baula-logo #word-mark {
+    display: none;
+  }
+}

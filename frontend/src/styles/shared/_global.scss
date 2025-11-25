@@ -95,7 +95,7 @@ h4 {
   border-bottom: 3px solid var(--ub-blue) !important;
 
   &:hover {
-    opacity: 0.6;
+    color: var(--brand-academic-frost) !important;
   }
 }
 
@@ -203,6 +203,8 @@ body {
 body {
   margin: 0;
   font-family: var(--app-body-font) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 input:invalid {

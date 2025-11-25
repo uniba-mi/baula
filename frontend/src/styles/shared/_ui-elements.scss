@@ -42,7 +42,7 @@
   color: var(--ub-blue) !important;
 
   &:hover {
-    background-color: var(--ub-gray-20) !important;
+    background-color: white !important;
   }
 }
 
@@ -201,10 +201,11 @@
 }
 
 .ects-chip {
-  background-color: var(--ub-blue-20) !important;
+  background-color: var(--brand-lecture-sky) !important;
   color: #000 !important;
   padding: 0 5px !important;
   font-size: 0.8rem !important;
+  border: 1px solid #C3DCEF !important;
 }
 
 .compulsory-chip {
@@ -235,25 +236,30 @@
 
 .job-chip {
   background-color: #e3e9fd !important;
+  border: 1px solid #cdd6f6 !important;
 }
 
 .topic-chip {
   background-color: #e3f6fd !important;
+  border: 1px solid #c9e8f4 !important;
 }
 
 .feedback-chip {
   background: #d4edda !important;
+  border: 1px solid #bcdcc5 !important;
   color: #155724 !important;
   cursor: auto;
 }
 
 .feedback-chip-light {
   background-color: #e6f1e9 !important;
+  border: 1px solid #cdded3 !important;
   color: #155724 !important;
 }
 
 .success-chip {
   background-color: var(--ub-green-20) !important;
+  border: 1px solid var(--ub-green-40) !important;
   padding: 0 5px !important;
   color: #000 !important;
   font-size: 0.8rem !important;
@@ -261,6 +267,7 @@
 
 .danger-chip {
   background-color: var(--ub-red-20) !important;
+  border: 1px solid var(--ub-red-40) !important;
   color: #000 !important;
 }
 
@@ -333,7 +340,7 @@
 
 .module-item:hover {
   cursor: pointer;
-  background-color: var(--cus-bg-50) !important;
+  background-color: #f5f6f8 !important;
 }
 
 .cdk-drag-preview {

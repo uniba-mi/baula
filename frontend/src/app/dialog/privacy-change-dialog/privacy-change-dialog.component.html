@@ -1,9 +1,6 @@
 <form [formGroup]="privacyChangeForm">
     <div class="content-container d-flex justify-content-between">
         <h3>Wichtig: Aktualisierung der Datenschutzerklärung</h3>
-        <button mat-dialog-close class="btn btn-outline text-gray" tabindex="0" aria-label="Schließen"> <i
-                class="bi bi-x-lg text-gray fs-4"></i>
-        </button>
     </div>
 
     <p>Ab 01.12.2025 läuft Baula im Rahmen des <a href="https://www.uni-bamberg.de/bakule/"
@@ -40,9 +37,9 @@
     <p>Du kannst deine Entscheidung bis zum 30.11.2025 in deinem Profil rückgängig machen.</p>
 
     <mat-dialog-actions>
-        <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+        <!-- <button mat-raised-button class="btn btn-outline" mat-dialog-close>
             Abbrechen
-        </button>
+        </button> -->
         <button mat-raised-button class="btn btn-primary" [disabled]="privacyChangeForm.invalid"
             [mat-dialog-close]="getPrivacyChoiceFromDialog()">
             Speichern

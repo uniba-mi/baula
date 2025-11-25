@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
   isFirstSemesterStudent: boolean = false;
   studyPlanTemplate$: Observable<StudyPlan | undefined>;
   templatesAvailable: boolean = false;
-  notificationActive: boolean = false;
+  notificationActive: boolean = true;
   privacyDialogActive: boolean = true;
 
   constructor(
@@ -85,8 +85,7 @@ export class HomeComponent implements OnInit {
         const notificationEnabled = user.hints?.find(
           (hint) => hint.key === 'notification-dialog' && !hint.hasConfirmed
         );
-        const isWIAI = user.sps[0].faculty === 'WIAI';
-        if (notificationEnabled && isWIAI && this.notificationActive) {
+        if (notificationEnabled && this.notificationActive && !user.roles.includes('demo')) {
           this.openNotificationDialog();
         }
         if (this.router.url.endsWith('app')) {
@@ -416,7 +415,7 @@ export class HomeComponent implements OnInit {
       data: {
         dialogContentId: 'privacy-change-dialog',
       },
-      disableClose: false,
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe((result) => {

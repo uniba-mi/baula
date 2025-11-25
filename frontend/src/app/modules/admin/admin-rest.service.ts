@@ -5,7 +5,7 @@ import { config } from 'src/environments/config.local';
 import { AcademicDateTemplate, AcademicDate, DateType } from '../../../../../interfaces/academic-date';
 import { Logmessage } from '../../../../../interfaces/logs';
 import { ModuleCourse2CourseConnection } from '../../../../../interfaces/connection';
-import { Report } from './reporting';
+import { AdminReport } from './reporting';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -157,7 +157,12 @@ export class AdminRestService {
   }
 
   // Query for Report
-  getReport(): Observable<Report> {
-    return this.http.get<Report>(`${this.urlBase}/report`, httpOptions);
+  getReport(): Observable<AdminReport> {
+    return this.http.get<AdminReport>(`${this.urlBase}/report`, httpOptions);
+  }
+
+  // Hint reset
+  resetNotificationHint(): Observable<string> {
+    return this.http.put<string>(`${this.urlBase}/reset-hint`, {}, httpOptions)
   }
 }

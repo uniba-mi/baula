@@ -4,19 +4,20 @@
     height: 50px;
 }
 
+.bg-bar {
+    border: 1px solid var(--ub-gray-80);
+}
+
 .bg-total-credits {
     background-color: var(--ub-gray-40);
-    border: 1px solid var(--ub-gray-80);
 }
 
 .bg-achieved-credits {
     background-color: var(--ub-green-40);
-    border: 1px solid var(--ub-green-80);
 }
 
 .bg-planned-credits {
-    background-color: var(--ub-blue-40);
-    border: 1px solid var(--ub-blue-80);
+    background-color: var(--brand-lecture-sky);
 }
 
 .bar {

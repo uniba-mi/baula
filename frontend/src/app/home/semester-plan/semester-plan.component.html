@@ -36,7 +36,7 @@
                       {{plan.semester | Semester}}</span></div>
                   <div class="text-gray align-items-center" *ngIf="ectsSum$ | async as ectsSum"
                     matTooltip="Bitte beachte: Hier können nur ECTS aufsummiert werden, die von Dozierenden in UnivIS angegeben werden.">
-                    <span class="ects-sum">Geplante ECTS: {{ ectsSum }}</span>
+                    <span class="ects-sum text-blue">Geplante ECTS: {{ ectsSum }}</span>
                     von 30 ECTS
                   </div>
                   <!-- List header end -->

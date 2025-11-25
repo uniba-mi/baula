@@ -36,10 +36,19 @@
     --cus-petrol-100: #217178;
     --cus-light-petrol-100: #f3feff;
     --cus-light-petrol-80: #f1fafb;
-    --cus-bg-100: #f5f5f7;
+    --cus-bg-100: #f1f4f8;
     --cus-bg-50: rgba(245, 245, 247, 0.5);
-}
 
-$primary: #00457d;
-$secondary: #878783b1;
-$background: #f5f5f7;
+    /* Baula brand colours - use in light or dark shades only */
+    --brand-academic-frost: #caf3ff;
+    --brand-collegiate-sky: #58CBFF;
+    --brand-campus-blue: #2698DC;
+    --brand-academic-gold: #FFD300;
+
+    /* secondary */
+    --brand-lecture-sky: #D9ECF8;
+    --brand-campus-twilight: #E2E4F3;
+    --brand-study-lamp-glow: #FFF5CC;
+    --brand-seminar-breeze: #DFF7EE;
+    --brand-archive-parchment: #F8EFE2;
+}
