@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.saveResult = saveResult;
 exports.resetConsentResponse = resetConsentResponse;
+exports.getResults = getResults;
 const express_1 = __importDefault(require("express"));
 const error_1 = require("../../../shared/error");
 const custom_validator_1 = require("../../../shared/helpers/custom-validator");
@@ -51,6 +52,16 @@ async function resetConsentResponse(req, res, next) {
         else {
             next(new error_1.NotFoundError("Es konnten keine Consents gefunden werden."));
         }
+    }
+    catch (error) {
+        console.log(error);
+        next(new error_1.BadRequestError());
+    }
+}
+async function getResults(req, res, next) {
+    try {
+        const results = await mongo_1.LongTermEvaluation.find();
+        res.json(results);
     }
     catch (error) {
         console.log(error);

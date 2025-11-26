@@ -14,3 +14,5 @@ router.use(express_1.default.json());
 router.post('/', survey_controller_1.saveResult);
 // resets all survey consenst to hasResponded = false
 router.put('/reset/response', admin_middleware_1.checkAndReturnAdminUser, survey_controller_1.resetConsentResponse);
+// get statistics for reporting in admin area
+router.get('/report', survey_controller_1.getResults);
