@@ -508,6 +508,10 @@ export class StudyPlanDetailComponent implements OnInit {
           })
         );
 
+        setTimeout(() => { // TODO check if this works on test
+          this.updateScrollState();
+        }, 50);
+
         // need current user state
         this.user$.pipe(take(1)).subscribe((user) => {
           // update user profile (study duration), adding one semester
