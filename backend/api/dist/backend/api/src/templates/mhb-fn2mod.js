@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sp2mhbTemplate = exports.m2mcTemplate = exports.mg2modTemplate = exports.mg2mgTemplate = exports.mhb2mgTemplate = exports.per2mcTemplate = exports.moduleExamTemplate = exports.modDepTemplate = exports.modTemplate = exports.mcTemplate = exports.mgTemplate = exports.mhbTemplate = exports.spTemplate = exports.personTemplate = exports.depTemplate = void 0;
+exports.m2mcTemplate = exports.mg2modTemplate = exports.mg2mgTemplate = exports.mhb2mgTemplate = exports.sp2mhbTemplate = exports.per2mcTemplate = exports.moduleExamTemplate = exports.modDepTemplate = exports.modTemplate = exports.mcTemplate = exports.mgTemplate = exports.mhbTemplate = exports.spTemplate = exports.personTemplate = exports.depTemplate = void 0;
 exports.depTemplate = ['//Fak', {
         shortName: 'Kurzbez',
         name: 'Bez'
@@ -109,6 +109,12 @@ exports.per2mcTemplate = ['//ModulLv', {
         ],
         mcId: '@ModulLv'
     }];
+exports.sp2mhbTemplate = ['//MhbPo', {
+        spId: 'Po/@Studfach',
+        poVersion: 'number(Po/@Po)',
+        mhbId: '@Modulhandbuch',
+        version: 'number(@Version)',
+    }];
 exports.mhb2mgTemplate = ['//HandbuchGruppe', {
         mhbId: '@Modulhandbuch',
         mgId: '@Modulgruppe',
@@ -134,10 +140,4 @@ exports.m2mcTemplate = ['//ModulLv', {
         ects: 'number(Ects)',
         compulsory: 'boolean(Pflicht)',
         acronym: '../../KurzBez',
-    }];
-exports.sp2mhbTemplate = ['//MhbPo', {
-        spId: 'Po/@Studfach',
-        poVersion: 'number(Po/@Po)',
-        mhbId: '@Modulhandbuch',
-        version: 'number(@Version)',
     }];
