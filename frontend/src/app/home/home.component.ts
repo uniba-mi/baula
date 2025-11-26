@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
   isFirstSemesterStudent: boolean = false;
   studyPlanTemplate$: Observable<StudyPlan | undefined>;
   templatesAvailable: boolean = false;
-  notificationActive: boolean = true;
+  notificationActive: boolean = false;
   privacyDialogActive: boolean = true;
 
   constructor(
