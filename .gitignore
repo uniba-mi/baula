@@ -6,4 +6,4 @@ package-lock.json
 *.log
 *.pem
 000-default.conf
-backups/mongodb/*
+data/backups/mongodb/*
