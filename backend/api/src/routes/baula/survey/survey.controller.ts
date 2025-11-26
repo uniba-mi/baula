@@ -62,3 +62,17 @@ export async function resetConsentResponse(
         next(new BadRequestError())
     }
 }
+
+export async function getResults(
+    req: Request,
+    res: Response,
+    next: NextFunction) {
+    try {
+        const results = await LongTermEvaluation.find();
+        res.json(results)
+    } catch(error) {
+        console.log(error)
+        next(new BadRequestError())
+    }
+}
+
