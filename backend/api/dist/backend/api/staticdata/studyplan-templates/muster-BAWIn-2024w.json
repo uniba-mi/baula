@@ -1,0 +1,124 @@
+{
+  "name": "Musterplan B. Sc. Wirtschaftsinformatik (WS24/25)",
+  "status": true,
+  "semesterPlans": [
+    {
+      "modules": [
+        "ISM-EidWI-B",
+        "Inf-Einf-B",
+        "DSG-JaP-B",
+        "Inf-DM-B"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2024w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 27
+    },
+    {
+      "modules": [
+        "WiMa-B-001",
+        "WiMa-B-002",
+        "EESYS-SaD-B",
+        "IIS-EBAS-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Fremdsprache",
+          "ects": 3,
+          "notes": "Wahlpflichtbereich Fremdsprachen",
+          "status": "open",
+          "_id": "670403bf5debe2b55b4fce34"
+        }
+      ],
+      "courses": [],
+      "semester": "2025s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30
+    },
+    {
+      "modules": [
+        "ISDL-WAWI-B",
+        "IRWP-B-01",
+        "ISPL-DIGB-B",
+        "MOBI-DBS-B",
+        "BSL-B-00"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2025w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30
+    },
+    {
+      "modules": [
+        "AI-AuD-B",
+        "SNA-WIM-B",
+        "Recht-B-02",
+        "AIC-IITP-B",
+        "EVWL"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2026s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30
+    },
+    {
+      "modules": [
+        "ISDL-ITCon-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 18,
+          "notes": "Wahlpflichtbereich Fachmodule",
+          "status": "open",
+          "_id": "670404bd5debe2b55b4fd72a"
+        },
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "_id": "670404de5debe2b55b4fd800"
+        },
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "_id": "670404e85debe2b55b4fda66"
+        }
+      ],
+      "courses": [],
+      "semester": "2026w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 33
+    },
+    {
+      "modules": [
+        "WI-Thesis-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 18,
+          "notes": "Wahlpflichtbereich Fachmodule",
+          "status": "open",
+          "_id": "66c74acd8d4ee812038f55a8"
+        }
+      ],
+      "courses": [],
+      "semester": "2027s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30
+    }
+  ]
+}
