@@ -1,0 +1,179 @@
+{
+  "name": "Musterplan B. Sc. Angewandte Informatik (WS24/25)",
+  "status": true,
+  "semesterPlans": [
+    {
+      "modules": [
+        "WiMa-B-001",
+        "WiMa-B-002",
+        "Inf-Einf-B",
+        "Inf-Ment-B",
+        "AI-Einf-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik, z. B. MI-EMI-B Medieninformatik",
+          "status": "open",
+          "_id": "6703dce8be563327c7228226"
+        }
+      ],
+      "courses": [],
+      "semester": "2024w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 31
+    },
+    {
+      "modules": [
+        "AI-AuD-B",
+        "EESYS-SaD-B",
+        "Inf-GRABS-B",
+        "KogSys-KI-B"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2025s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30
+    },
+    {
+      "modules": [
+        "PSI-EDS-B",
+        "Inf-DM-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Modul außerhalb WIAI",
+          "ects": 5,
+          "notes": "Anwendungskontext Angewandte Informatik, z. B. BA Soz A.1.1 Allgemeine Soziologie I",
+          "status": "open",
+          "_id": "6703a666be563327c72229a5"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik, z. B. HCI-IS-B Interaktive Systeme",
+          "status": "open",
+          "_id": "6703dd35be563327c722829b"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik, z. B. KInf-DigBib-B Digitale Bibliotheken und Social Computing",
+          "status": "open",
+          "_id": "6703dd5dbe563327c7228312"
+        }
+      ],
+      "courses": [],
+      "semester": "2025w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 29
+    },
+    {
+      "modules": [
+        "MI-WAIAI-B",
+        "SWT-FSE-B",
+        "MOBI-DBS-B",
+        "NLProc-IRTM-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich Seminar & Projekt, z. B. KogSys-Sem-B Bachelorseminar Kognitive Systeme",
+          "status": "open",
+          "_id": "6703aff9be563327c72230a0"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik, z. B. MI-WebT-B Web-Technologien",
+          "status": "open",
+          "_id": "6703b018be563327c7223103"
+        }
+      ],
+      "courses": [],
+      "semester": "2026s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30
+    },
+    {
+      "modules": [
+        "PSI-IntroSP-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt, z. B. MI-Proj-B Projekt zur Medieninformatik",
+          "status": "open",
+          "_id": "6703b038be563327c722316a"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik, z. B. KTR-Datkomm-B Datenkommunikation",
+          "status": "open",
+          "_id": "6703b076be563327c7223244"
+        },
+        {
+          "name": "Modul außerhalb WIAI",
+          "ects": 9,
+          "notes": "Anwendungskontext Angewandte Informatik",
+          "status": "open",
+          "_id": "6703b087be563327c722327d"
+        },
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt, z. B. HCI-Proj-B Projekt Mensch-Computer-Interaktion",
+          "status": "open",
+          "_id": "6703de52be563327c722851a"
+        }
+      ],
+      "courses": [],
+      "semester": "2026w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 33
+    },
+    {
+      "modules": [
+        "AI-Thesis-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Modul außerhalb WIAI",
+          "ects": 6,
+          "notes": "Anwendungskontext Angewandte Informatik",
+          "status": "open",
+          "_id": "6703b0abbe563327c72232f2"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik, z. B. HCI-DISTP-B Design interaktiver Systeme: Theorie und Praxis",
+          "status": "open",
+          "_id": "6703b0b4be563327c722332e"
+        },
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Seminar & Projekt, z. B. HCI-Sem-B Bachelorseminar Mensch-Computer-Interaktion",
+          "status": "open",
+          "_id": "6703df06be563327c72285cf"
+        }
+      ],
+      "courses": [],
+      "semester": "2027s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 27
+    }
+  ]
+}

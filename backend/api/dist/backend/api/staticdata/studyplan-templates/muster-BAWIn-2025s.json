@@ -1,0 +1,159 @@
+{
+    "name": "Musterplan B. Sc. Wirtschaftsinformatik (SS25)",
+    "status": false,
+    "semesterPlans": [
+        {
+            "modules": [
+                "ISM-EidWI-B",
+                "EESYS-SaD-B",
+                "BSL-B-00",
+                "WiMa-B-001",
+                "WiMa-B-002"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2025s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 33
+        },
+        {
+            "modules": [
+                "IIS-EBAS-B",
+                "Inf-Einf-B",
+                "DSG-JaP-B",
+                "Inf-DM-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2025w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 27
+        },
+        {
+            "modules": [
+                "IRWP-B-01",
+                "ISDL-WAWI-B",
+                "ISPL-DIGB-B",
+                "MOBI-DBS-B",
+                "ISDL-ITCon-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2026s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "AI-AuD-B",
+                "Recht-B-02",
+                "AIC-IITP-B",
+                "EVWL",
+                "SNA-WIM-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2026w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [],
+            "userGeneratedModules": [
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f75fce168bffa120c04c7d"
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f75fd6168bffa120c04c9c"
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f75fe0168bffa120c04cd1"
+                },
+                {
+                    "name": "Fremdsprache",
+                    "ects": 3,
+                    "notes": "Wahlpflichtbereich Fremdsprachen",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f75fef168bffa120c04cf2"
+                },
+                {
+                    "name": "Seminar",
+                    "ects": 3,
+                    "notes": "Bereich Seminar & Projekt",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f75ffc168bffa120c04d14"
+                },
+                {
+                    "name": "Projekt",
+                    "ects": 6,
+                    "notes": "Bereich Seminar & Projekt",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f76005168bffa120c04d37"
+                }
+            ],
+            "courses": [],
+            "semester": "2027s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "WI-Thesis-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f76018168bffa120c04d70"
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f76020168bffa120c04daa"
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f76027168bffa120c04dd0"
+                }
+            ],
+            "courses": [],
+            "semester": "2027w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        }
+    ]
+}

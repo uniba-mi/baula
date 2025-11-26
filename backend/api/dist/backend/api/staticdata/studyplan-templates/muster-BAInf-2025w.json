@@ -1,0 +1,183 @@
+{
+    "name": "Musterplan B. Sc. Informatik (WS25/26)",
+    "status": false,
+    "semesterPlans": [
+        {
+            "modules": [
+                "WiMa-B-001",
+                "WiMa-B-002",
+                "Inf-Einf-B",
+                "Inf-DM-B",
+                "Inf-Ment-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2025w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 31,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "MOBI-DBS-B",
+                "AI-AuD-B",
+                "Inf-LBR-B",
+                "Inf-GRABS-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2026s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "PSI-IntroSP-B",
+                "COMNET-RN-B",
+                "HCI-IS-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Informatik",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a16",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Informatik",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a17",
+                    "flexNowImported": false
+                }
+            ],
+            "courses": [],
+            "semester": "2026w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "MI-WAIAI-B",
+                "EESYS-SaD-B",
+                "DSG-IDistrSys-B",
+                "SWT-FSE-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Projekt",
+                    "ects": 6,
+                    "notes": "Bereich Seminar & Projekt",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a18",
+                    "flexNowImported": false
+                }
+            ],
+            "courses": [],
+            "semester": "2027s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "PSI-EDS-B",
+                "ESE-SEL-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Informatik",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a19",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Informatik",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a1a",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Seminar",
+                    "ects": 3,
+                    "notes": "Bereich Seminar & Projekt",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a1b",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Modul außerhalb WIAI",
+                    "ects": 5,
+                    "notes": "Anwendungskontext Wirtschaftsinformatik",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a1c",
+                    "flexNowImported": false
+                }
+            ],
+            "courses": [],
+            "semester": "2027w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 29,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "Inf-Thesis-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Informatik",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a1d",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Wahlmodul",
+                    "ects": 3,
+                    "notes": "überfachliche Qualifikationen",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a1e",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 3,
+                    "notes": "Wahlpflichtbereich Informatik",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a1f",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Projekt",
+                    "ects": 6,
+                    "notes": "Bereich Seminar & Projekt",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a20",
+                    "flexNowImported": false
+                }
+            ],
+            "courses": [],
+            "semester": "2028s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        }
+    ]
+}
