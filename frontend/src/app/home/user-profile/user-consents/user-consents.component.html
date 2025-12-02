@@ -1,41 +1,4 @@
-<ng-container *ngIf="(lastPrivacyChangeConsent$ | async) || (lastBaKuLeSurveyConsent$ | async); else noConsent">
-    <ng-container *ngIf="lastPrivacyChangeConsent$ | async as lastPrivacyChangeConsent">
-        <ng-container *ngIf="lastPrivacyChangeConsent?.hasResponded">
-            <mat-card class="p-5" *ngIf="lastPrivacyChangeConsent.hasResponded">
-                <div class="withdraw-flexnow-consent">
-                    <h3 class="info-box-title">Einwilligung zur Aktualisierung der Datenschutzerklärung (01.12.2025)
-                    </h3>
-                    <div class="mb-2">
-                        <p>Hier kannst du deine Einwilligung geben oder deine zuvorige Einwilligung widerrufen.</p>
-                        <p>Die neue Datenschutzerklärung kannst du jederzeit auf unserer <a class="link"
-                                href="/datenschutz" class="redirect link"
-                                aria-label="Zur Datenschutzseite">Datenschutzseite</a> einsehen.</p>
-
-                        <div class="on-card-info-box my-1 p-2 border border-warning rounded">
-                            <div *ngIf="lastPrivacyChangeConsent.hasConfirmed">
-                                Einwilligung zur neuen Datenschutzerklärung erteilt am {{
-                                lastPrivacyChangeConsent.timestamp | date: 'medium' }}
-                            </div>
-                            <div
-                                *ngIf="lastPrivacyChangeConsent.hasResponded && !lastPrivacyChangeConsent.hasConfirmed">
-                                Einwilligung zur neuen Datenschutzerklärung verweigert am {{
-                                lastPrivacyChangeConsent.timestamp | date: 'medium' }}
-                            </div>
-                        </div>
-                        <button class="btn btn-outline withdrawal-link my-1 p-2"
-                            (click)="openConsentDialog('2512-privacy-change')"
-                            (keyup.enter)="openConsentDialog('2512-privacy-change')">
-                            <span *ngIf="lastPrivacyChangeConsent.hasConfirmed">Einwilligung widerrufen</span>
-                            <span
-                                *ngIf="lastPrivacyChangeConsent.hasResponded && !lastPrivacyChangeConsent.hasConfirmed">Einwilligung
-                                geben</span>
-                        </button>
-                    </div>
-                </div>
-            </mat-card>
-        </ng-container>
-    </ng-container>
-
+<ng-container *ngIf="lastBaKuLeSurveyConsent$ | async; else noConsent">
     <ng-container *ngIf="lastBaKuLeSurveyConsent$ | async as lastBaKuLeSurveyConsent">
         <mat-card class="p-5 mt-4" *ngIf="!(!lastBaKuLeSurveyConsent.hasConfirmed && !lastBaKuLeSurveyConsent.hasResponded)">
             <div class="withdraw-flexnow-consent">

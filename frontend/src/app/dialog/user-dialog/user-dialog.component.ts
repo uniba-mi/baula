@@ -1,6 +1,6 @@
 import { Component, Input, model } from '@angular/core';
 import { User } from '../../../../../interfaces/user';
-import { catchError, Observable, of, take, throwError } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { config } from 'src/environments/config.local';
 import { RestService } from 'src/app/rest.service';

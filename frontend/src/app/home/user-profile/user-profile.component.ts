@@ -23,6 +23,7 @@ import { StudyPath } from '../../../../../interfaces/study-path';
 import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
 
 import type { DownloadService } from 'src/app/shared/services/download.service';
+import { UserUpdateService } from 'src/app/shared/services/user-update.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -38,13 +39,11 @@ export class UserProfileComponent implements OnInit {
   activeRoute: string;
 
   constructor(
-    private snackbar: SnackbarService,
-    private rest: RestService,
     private store: Store,
     private dialog: MatDialog,
-    private auth: AuthService,
     private router: Router,
-    private lazyInject: LazyInjectService
+    private lazyInject: LazyInjectService,
+    private userUpdateService: UserUpdateService
   ) { }
 
   ngOnInit(): void {
@@ -83,45 +82,12 @@ export class UserProfileComponent implements OnInit {
       cancelButtonLabel: 'Abbrechen',
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
-        this.deleteUser(user);
+        this.userUpdateService.deleteUser(user);
       },
     };
     this.dialog.open(ConfirmationDialogComponent, {
       data: confirmationDialogInterface,
     });
-  }
-
-  private deleteUser(user: User) {
-    this.rest
-      .deleteUser()
-      .pipe(take(1))
-      .pipe(
-        concatMap(mes => {
-          this.snackbar.openSnackBar({
-            type: AlertType.SUCCESS,
-            message: mes,
-          });
-          if (user.authType === 'saml') {
-            return this.auth.shibLogout()
-          } else {
-            return this.auth.localLogout()
-          }
-
-        }),
-        catchError(() => {
-          return of(false)
-        })
-      )
-      .subscribe((success) => {
-        if (success) {
-          document.location.href = config.homeUrl;
-        } else {
-          this.snackbar.openSnackBar({
-            type: AlertType.DANGER,
-            message: "Es ist ein Fehler beim Löschen aufgetreten.",
-          });
-        }
-      });
   }
 
   importUserData(user: User) {

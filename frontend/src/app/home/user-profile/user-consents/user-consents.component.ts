@@ -15,13 +15,10 @@ import { PrivacyStatementComponent } from 'src/app/modules/long-term-evaluation/
   styleUrl: './user-consents.component.scss'
 })
 export class UserConsentsComponent {
-
-  lastPrivacyChangeConsent$: Observable<Consent | null>;
   lastBaKuLeSurveyConsent$: Observable<Consent | null>;
 
 
   constructor(private store: Store, private dialog: MatDialog) {
-    this.lastPrivacyChangeConsent$ = this.store.select(getLastConsentByType('2512-privacy-change'));
     this.lastBaKuLeSurveyConsent$ = this.store.select(getLastConsentByType('bakule-survey'));
   }
 
@@ -43,19 +40,6 @@ export class UserConsentsComponent {
 
   private returnConfirmationDialogInterface(type: ConsentType, isConfirmed: boolean): ConfirmationDialogData | undefined {
     switch (type) {
-      case '2512-privacy-change':
-        return {
-          dialogTitle: isConfirmed ? 'Einwilligung zur Datenschutzerklärung widerrufen?' : 'Einwilligung zur Datenschutzerklärung geben?',
-          actionType: isConfirmed ? 'delete' : 'confirm',
-          confirmationItem: isConfirmed ? 'deine Einwilligung zur aktualisierten Datenschutzerklärung' : 'der aktualisierten Datenschutzerklärung',
-          confirmButtonLabel: isConfirmed ? 'Widerrufen' : 'Einwilligung geben',
-          cancelButtonLabel: 'Abbrechen',
-          confirmButtonClass: isConfirmed ? 'btn btn-danger' : 'btn btn-primary',
-          warningMessage: isConfirmed ? 'Nach dem Widerruf kannst du deinen Account noch bis zum 30.11.2025 nutzen, danach wird er jedoch gelöscht.' : '', // TODO change empty fallback after : back to this after FlexNow is integrated: Bitte beachte, dass du den Abruf deines Studienverlaufs aus FlexNow durch deine Zustimmung aus technischen Gründen erst nach dem nächsten Login nutzen kannst.
-          callbackMethod: () => {
-            this.updateConsent(type, !isConfirmed);
-          },
-        };
       case 'bakule-survey':
         return {
           dialogTitle: isConfirmed ? 'Einwilligung zum Evaluations- und Forschungsvorhaben widerrufen?' : 'Einwilligung zum Evaluations- und Forschungsvorhaben geben?',
