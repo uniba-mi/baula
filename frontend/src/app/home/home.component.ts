@@ -134,9 +134,10 @@ export class HomeComponent implements OnInit {
 
         const latestPrivacyConsent =
           privacyConsents[privacyConsents.length - 1];
-
+        console.log(user.createdAt)
+        console.log(this.isTimestampOlderThanAWeek(user.createdAt ?? new Date()))
         if (
-          ((latestPrivacyConsent && !latestPrivacyConsent.hasResponded) ||
+          ((latestPrivacyConsent && !latestPrivacyConsent.hasConfirmed) ||
             !latestPrivacyConsent) &&
           this.privacyDialogActive &&
           !user.roles.includes('demo')
@@ -430,14 +431,7 @@ export class HomeComponent implements OnInit {
             })
           );
         } else if (result.choice === 'decline') {
-          this.store.dispatch(
-            UserActions.addConsent({
-              ctype: '2512-privacy-change',
-              hasConfirmed: false,
-              hasResponded: true,
-              timestamp: new Date(),
-            })
-          );
+          this.userUpdateService.deleteUser(this.user)
         }
       }
     });

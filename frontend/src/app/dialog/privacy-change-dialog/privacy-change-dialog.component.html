@@ -17,32 +17,30 @@
 
     <div class="w-100 my-2">
         <p>Bitte wähle eine der folgenden Optionen:</p>
-        <mat-radio-group formControlName="privacyChange" (change)="updateChoice()">
-            <mat-radio-button value="accept">Ich stimme der Datenschutzerklärung vom 01.12.2025 zu und möchte Baula
-                über
-                den
-                30.11.2025 hinaus weiterhin nutzen.
+        <mat-radio-group class="d-flex flex-column" formControlName="privacyChange" (change)="updateChoice()">
+            <mat-radio-button value="accept">Ich stimme der Datenschutzerklärung vom 01.12.2025 zu und möchte Baula weiterhin nutzen.
             </mat-radio-button>
             <mat-radio-button value="decline">Ich stimme der Datenschutzerklärung vom 01.12.2025 nicht zu.
                 <strong>Mir
                     ist
                     bewusst,
-                    dass mein aktuelles Profil gelöscht wird. Ich habe verstanden, dass ich mein bestehendes Profil
-                    abgesehen von dem FlexNow-Upload noch bis zum
-                    30.11.2025 nutzen kann
-                    und meine Daten bis zum Übergang exportieren kann.</strong></mat-radio-button>
+                    dass mein aktuelles Profil gelöscht wird.</strong></mat-radio-button>
         </mat-radio-group>
     </div>
 
-    <p>Du kannst deine Entscheidung bis zum 30.11.2025 in deinem Profil rückgängig machen.</p>
-
     <mat-dialog-actions>
-        <!-- <button mat-raised-button class="btn btn-outline" mat-dialog-close>
-            Abbrechen
-        </button> -->
-        <button mat-raised-button class="btn btn-primary" [disabled]="privacyChangeForm.invalid"
-            [mat-dialog-close]="getPrivacyChoiceFromDialog()">
-            Speichern
-        </button>
+        @if(selectedPrivacyChoice == 'accept') {
+            <button mat-raised-button class="btn btn-primary"
+                [mat-dialog-close]="getPrivacyChoiceFromDialog()">
+                Speichern
+            </button>
+        } 
+        @if(selectedPrivacyChoice == 'decline') {
+            <button mat-raised-button class="btn btn-danger" [disabled]="privacyChangeForm.invalid"
+                [mat-dialog-close]="getPrivacyChoiceFromDialog()">
+                Account löschen
+            </button>
+        }
+        
     </mat-dialog-actions>
 </form>
