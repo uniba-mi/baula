@@ -15,6 +15,7 @@ node_cron_1.default.schedule("0 3 * * 1-5", () => {
     (0, univis_crawler_1.processUnivisData)(semester).then((messages) => {
         for (const message of messages) {
             logger_1.cronjobLogger.info(message);
+            console.log(message);
         }
     });
 });

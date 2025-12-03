@@ -11,6 +11,7 @@ cron.schedule("0 3 * * 1-5", () => {
   processUnivisData(semester).then((messages) => {
     for (const message of messages) {
       cronjobLogger.info(message);
+      console.log(message)
     }
   });
 });

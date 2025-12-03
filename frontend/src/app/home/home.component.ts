@@ -134,8 +134,6 @@ export class HomeComponent implements OnInit {
 
         const latestPrivacyConsent =
           privacyConsents[privacyConsents.length - 1];
-        console.log(user.createdAt)
-        console.log(this.isTimestampOlderThanAWeek(user.createdAt ?? new Date()))
         if (
           ((latestPrivacyConsent && !latestPrivacyConsent.hasConfirmed) ||
             !latestPrivacyConsent) &&
