@@ -66,9 +66,9 @@ Folgende Versionen sind die Minimalvoraussetzungen:
     TEST_PW=secretPassword
     ADMIN_PW=safePassword
     DEMO_PW=Baula2025Demo
-    #Additional variables required for server environment when FlexNow integration is needed
-    FLEXNOW_LOGIN=user
-    FLEXNOW_PW=superSecret123
+    #Additional variables required for server environment
+    FN_LOGIN=user
+    FN_PW=superSecret123
     FN_MHBS_URL=https://your-fn2-url.de/api/mhbs
     FN_STUDENT_URL=https://your-fn2-url.de/api/student
     FN_EXAM_URL_BASE=https://your-fn2-url.de/api/enroll
@@ -130,7 +130,7 @@ Baula bietet Schnittstellen zu verschiedenen universitären Systemen. Konkret um
 Nähere zum benötigten Datenschema ist in der [Backend-README](./backend/README.md). Ein Beispiel, wie eine solche Transformation aussieht findet sich in `/backend/api/src/templates/univis-template.ts`, welches dazu dient, die eingehenden XML-Daten der UnivIS-PRG-Schnittstelle in das Baula-Format zu transformieren.
 
 Damit Baula lokal läuft, müssen die Template-Dateien alle verfügbar sein. Neben der `univis-template.ts` müssen noch folgende Dateien angelegt werden:
-- `student-fn2api.ts`: Wird benötigt, um die Studenten-API von FlexNow anzusteuern. Näheres zu den benötigten Eigenschaften findet sich in der [Backend-Readme](./backend/README.md).
+- `student-fn2api.ts`: Wird benötigt, um die Studenten-API von FlexNow anzusteuern.
     ```ts
     // student-fn2api.ts
     export const studyPathTemplate = [];
@@ -211,7 +211,7 @@ Nun sollte alles eingerichtet sein, so dass man über die folgenden Befehle Baul
 ```
 
 ##### 11. Initialisierung im Admin-Bereich
-Damit der Personalisierungs-Tab funktioniert, müssen im Admin-Bereich (zugänglich über den Nutzer mit der Rolle "admin") die Modul- und Topic-Embeddings initialisiert werden. Diese finden sich im Admin-Bereich im Tab "Empfehlung". Näheres zum Admin-Tab findet sich in der [Backend-README](./backend/README.md).
+Damit der Personalisierungs-Tab funktioniert, müssen im Admin-Bereich (zugänglich über den Nutzer mit der Rolle "admin") die Modul- und Topic-Embeddings initialisiert werden. Diese finden sich im Admin-Bereich im Tab "Empfehlung".
 
 
 ### Projektstruktur

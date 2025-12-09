@@ -13,4 +13,4 @@ package-lock.json
 !univis-template.*
 users.ts
 prisma/*
-dist/*
+/api/dist/*

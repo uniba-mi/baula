@@ -16,7 +16,7 @@
         * Die `server.ts` import das App-Objekt und startet die API.
     * `/staticdata` enthält alle statischen Dateien (primär JSON), welche an verschiedenen Stellen benötigt werden.
         * `/recData` enthält nach Studiengang geordnet die Informationen für den "Beliebt"-Teil in der Empfehlungskomponente (jeweils `{spId}_common_passes.json`) sowie für die Zusatzinfos in den Moduldetails und beim Hinzufügen eines Moduls über die Studienverlaufskomponente (jeweils `{spId}_module_data.json`).
-        * `/studyplan_templates` enthält die Musterstudienpläne verschiedener Studiengänge. Hier müssen die zuvor in Baula erstellten und exportierten JSON Dateien der Musterverlaufspläne abgelegt werden, damit sie für neue Studierende auswählbar sind. Das Namensschema `muster_{spId}_{semester}.json`, wobei `spId` die FlexNow-Kennung des Studiengangs darstellt und `semester` das Semester im UnivIS Format (`yyyy(s|w)`).
+        * `/studyplan_templates` enthält die Musterstudienpläne verschiedener Studiengänge. Hier müssen die zuvor in Baula erstellten und exportierten JSON Dateien der Musterverlaufspläne abgelegt werden, damit sie für neue Studierende auswählbar sind. Das Namensschema `muster_{spId}_{semester}.json`, wobei `spId` die Kennung des Studiengangs darstellt und `semester` das Semester im UnivIS Format (`yyyy(s|w)`).
     * `Dockerfile` beschreibt den Build-Prozess des Backend-Containers
     * `package.json` enthält die Abhängigkeiten sowie Build-Skripte, welche vom Root-Verzeichnis aus angesteuert werden und zusätzliche Skripte:
         * `build` & `copyFiles` werden im Root-Verzeichnis über die entsprechend build-Befehle adressiert.
@@ -27,10 +27,14 @@
         * `startStudio` öffnet einen Web-Viewer von Prisma zum einfachen Inspizieren der Daten aus der Datenbank.
     * `start.sh` enthält zusätzliche Befehle, die nach dem Build vom Backend-Containers ausgeführt werden
     * `tsconfig.json` definiert relevante Parameter für den Build-Prozess der API (.ts -> .js)
-* `/python` enthält externe Python Dateien. Enthält eine *extra* README.md. Läuft mit im Docker und hat ein eigenes Dockerfile.
+* `/python` enthält externe Python Dateien. Enthält eine *extra* [README.md](./python/README.md). Läuft mit im Docker und hat ein eigenes Dockerfile.
+
+### Datenschema für Anbindung universitärer Systeme
+* `student-fn2api.ts`
+* `mhb-fn2mod.ts`
 
 ### Styleguide für Benennung von Routen
-* konsistente Aufteilung in Subrouten für die einzelnen Bereiche -> hierzu könnten wir auch noch eine eigenständig Guideline erstellen, ob man sich hier z.B. nach der Datenbankstruktur orientiert
+* konsistente Aufteilung in Subrouten für die einzelnen Bereiche
 * konsistente Verwendung von _get_ um Daten abzufragen, _post_ um Daten zu erzeugen, _put_ um Daten zu aktualisieren und _delete_ um Daten zu entfernen. Dabei auch keine Wiederholung des Typs in der Route sondern lediglich über HTTP-Request-Typ steuern.
 * kein CamelCase in Routen sondern zur besseren Lesbarkeit Bindestriche (-) verwenden.
 * Konsistente Benennung von mehreren Items mit Plural und einzelnen Items mit Singular -> router.get('/all/mod*S*', getAllModules);
