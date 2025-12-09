@@ -7,10 +7,10 @@ import { RestService } from 'src/app/rest.service';
 import { PathCourse, PathModule } from '../../../../../interfaces/study-path';
 import { Semester } from '../../../../../interfaces/semester';
 import {
-  FlexNowCompletedModule,
-  FlexNowCompletedCourse,
-  FlexNowStudyprogramme,
-} from '../../../../../interfaces/flex-now-user';
+  FnCompletedModule,
+  FnCompletedCourse,
+  FnStudyprogramme,
+} from '../../../../../interfaces/fn-user';
 import { StudyPlan } from '../../../../../interfaces/study-plan';
 import { UserUpdateService } from 'src/app/shared/services/user-update.service';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -159,7 +159,7 @@ export class UserDialogComponent {
 
   private extractMetadata(
     user: User,
-    fnStudyprogrammes: FlexNowStudyprogramme[]
+    fnStudyprogrammes: FnStudyprogramme[]
   ): User {
     let resultUser = {
       ...user,
@@ -195,7 +195,7 @@ export class UserDialogComponent {
   }
 
   private extractCompletedModules(
-    modules: FlexNowCompletedModule[]
+    modules: FnCompletedModule[]
   ): PathModule[] {
     return modules.map((fnModule) => {
       // TODO: if more than one Modulegroup set modulegroup to undefined, user need to set it
@@ -218,7 +218,7 @@ export class UserDialogComponent {
   }
 
   private extractCompletedCourses(
-    courses: FlexNowCompletedCourse[]
+    courses: FnCompletedCourse[]
   ): PathCourse[] {
     // TODO -> courses need to be searched with name
     return [];

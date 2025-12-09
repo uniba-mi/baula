@@ -1,12 +1,12 @@
-export interface FlexNowUser {
-    metadata: FlexNowStudyprogramme[],
+export interface FnUser {
+    metadata: FnStudyprogramme[],
     studyPath?: {
-        completedModules: FlexNowCompletedModule[],
-        completedCourses: FlexNowCompletedCourse[]
+        completedModules: FnCompletedModule[],
+        completedCourses: FnCompletedCourse[]
     }
 }
 
-export interface FlexNowStudyprogramme {
+export interface FnStudyprogramme {
     spId: string,
     poVersion: number,
     name: string,
@@ -17,10 +17,10 @@ export interface FlexNowStudyprogramme {
     duration: number,
     maxEcts: number,
     summedGrade: number,
-    semesters: FlexNowStudentSemester[]
+    semesters: FnStudentSemester[]
 }
 
-interface FlexNowStudentSemester {
+interface FnStudentSemester {
     semester: string, // semester as apnr
     type: string,
     count: number,
@@ -29,7 +29,7 @@ interface FlexNowStudentSemester {
     partTime: boolean
 }
 
-export interface FlexNowCompletedModule {
+export interface FnCompletedModule {
     mId: string,
     version: string,
     acronym: string,
@@ -44,7 +44,7 @@ export interface FlexNowCompletedModule {
     examAttempts: ExamAttemp[]
 }
 
-export interface FlexNowCompletedCourse {
+export interface FnCompletedCourse {
     id: string,
     nr: string,
     waitingList: number | null,

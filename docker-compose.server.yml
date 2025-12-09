@@ -16,7 +16,6 @@ services:
       - ./documentation/user-docs/.retype:/var/www/docs/user
       - ./documentation/developer-docs/.retype:/var/www/docs/developer
       - ./server/apache2/sites-available:/etc/apache2/sites-available   
-      - ./server/apache2/apache2.conf:/etc/apache2/apache2.conf
       - /etc/acme/rsa-certs:/etc/acme/rsa-certs
 
   rest_api:

@@ -28,7 +28,7 @@ import {
 } from '../../../interfaces/semester-plan';
 import { config } from 'src/environments/config.local';
 import { AcademicDate, DateType } from '../../../interfaces/academic-date';
-import { FlexNowUser } from '../../../interfaces/flex-now-user';
+import { FnUser } from '../../../interfaces/fn-user';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -775,7 +775,7 @@ export class RestService {
     );
   }
 
-  getStudentDataViaFlexNow(importStudyPath: boolean): Observable<FlexNowUser> {
-    return this.http.post<FlexNowUser>(`${this.urlBase}user/fn2student`, { importStudyPath }, httpOptions);
+  getStudentDataViaFlexNow(importStudyPath: boolean): Observable<FnUser> {
+    return this.http.post<FnUser>(`${this.urlBase}user/fn2student`, { importStudyPath }, httpOptions);
   }
 }

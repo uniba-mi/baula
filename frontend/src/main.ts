@@ -1,9 +1,9 @@
 import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import { init, browserTracingIntegration, captureMessage } from '@sentry/angular';
+import { init, browserTracingIntegration } from '@sentry/angular';
+import { platformBrowser } from '@angular/platform-browser';
 
 // check browser do not track
 function isDoNotTrackEnabled(): boolean {
@@ -29,5 +29,5 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+platformBrowser().bootstrapModule(AppModule)
   .catch(err => console.error(err));
