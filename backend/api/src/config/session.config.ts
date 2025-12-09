@@ -11,7 +11,7 @@ export const redisClient = createClient({
 export const expressSession = session({
   store: new RedisStore({ client: redisClient }),
   secret: process.env.SESSION_SECRET ? process.env.SESSION_SECRET : "",
-  name: process.env.SESSION_NAME ? process.env.SESSION_NAME : "baulaSession",
+  name: process.env.SESSION_NAME ? process.env.SESSION_NAME : "testSession",
   resave: false,
   saveUninitialized: false,
   proxy: true,
