@@ -64,10 +64,10 @@ Folgende Versionen sind die getesteten Voraussetzungen:
     SESSION_NAME=yourSessionName
     TEST_USER=user
     ADMIN_USER=admin
-    DEMO_USER=baula.demo
+    DEMO_USER=demo
     TEST_PW=secretPassword
     ADMIN_PW=safePassword
-    DEMO_PW=Baula2025Demo
+    DEMO_PW=demo
 
     #Additional variables required for server environment
     FN_LOGIN=user
@@ -94,6 +94,8 @@ Folgende Versionen sind die getesteten Voraussetzungen:
         localLogoutUrl: 'http://localhost:3305/logout', 
         shibLogoutUrl: 'https://meine-domain.test/Shibboleth.sso/Logout', 
         dashboardUrl: 'app/',
+        demoUser: 'demo', 
+        demoPassword: 'demo'
     }
     ```
     Für ein Deployment auf einem Server muss entsprechend die `ShibLoginUrl` und `ShibLogoutUrl` angepasst werden.
