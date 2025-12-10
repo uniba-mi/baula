@@ -19,11 +19,12 @@ Dieses Repo dokumentiert den Quellcode des digitalen Studienplanungsassistenten 
 ### Setup und Installation
 Hier sind die Schritte dokumentiert um Baula lokal zu starten.
 ##### 0. Requirements
-Um Baula lokal starten zu können ist die Installation von [Node.js](https://nodejs.org/en) inklusive des Node-Package-Manager ([npm](https://www.npmjs.com/)) sowie die [Angular CLI](https://angular.dev/tools/cli). 
-Folgende Versionen sind die Minimalvoraussetzungen:
+Um Baula lokal starten zu können ist die Installation von [Node.js](https://nodejs.org/en) inklusive des Node-Package-Manager ([npm](https://www.npmjs.com/)) sowie die [Angular CLI](https://angular.dev/tools/cli). Zudem baut das Setting auf [Docker](https://www.docker.com/products/docker-desktop/) auf.
+Folgende Versionen sind die getesteten Voraussetzungen:
 - [Node.js](https://nodejs.org/en) >= 24.10.0 
 - [npm](https://www.npmjs.com/) >= 11.6.2
 - [Angular CLI](https://angular.dev/tools/cli) >= 20.3.6
+- [Docker](https://www.docker.com/products/docker-desktop/) >= 2.35.1-desktop.1
 
 ##### 1. Anlegen der .env-Dateien
 - im root Verzeichnis muss eine `.env` angelegt werden. Diese .env Datei ist die Basis für den Start der Docker-Container. Die gesetzen Informationen (Nutzernamen und Passwörter) sind für den späteren Zugriff relevant. Die .env sollte folgende Informationen enthalten:
