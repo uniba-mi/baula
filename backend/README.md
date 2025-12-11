@@ -29,7 +29,7 @@
     * `tsconfig.json` definiert relevante Parameter für den Build-Prozess der API (.ts -> .js)
 * `/python` enthält externe Python Dateien. Enthält eine *extra* [README.md](./python/README.md). Läuft mit im Docker und hat ein eigenes Dockerfile.
 
-### Datenschema für Anbindung universitärer Systeme
+### Datenschema für Anbindung universitärer Systeme TBD
 * `student-fn2api.ts`
 * `mhb-fn2mod.ts`
 

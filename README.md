@@ -109,7 +109,10 @@ Folgende Versionen sind die getesteten Voraussetzungen:
             StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true, connectInZone: true })
         ],
         sentryDsn: 'https://my-sentry-link.test',
+        sentryTracePropagationTargets: ['localhost']
         nodeEnv: 'development', // set 'production' for public release
+        plausibleSrc: 'https://your-plausible-domain',
+        googleSiteVerificationCode: 'your-verification-code-for-search-console'
     };
     ```
 
