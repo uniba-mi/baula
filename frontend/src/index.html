@@ -6,18 +6,29 @@
   <title>BAULA - dein digitaler Studienassistent</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="google-site-verification" content="M-JaJXbEl_eK1-z1zh5PfudF_HnzlwcqGqHeXTwSn_M" />
   <meta name="apple-mobile-web-app-title" content="Baula">
   <link rel="icon" type="image/png" href="favicon.png">
   <!-- Plausible -->
   <script>
+    import { config } from 'src/environments/config.local';
+
+    console.log(config)
     var domain = window.location.host; // for both test and live
-    var script = document.createElement('script')
-    script.async = true
-    script.defer = true
-    script.dataset.domain = domain
-    script.src = "https://plausible.stats.baula.minf.uni-bamberg.de/js/script.file-downloads.hash.outbound-links.pageview-props.tagged-events.js"
-    document.head.append(script)
+    if(config.plausibleSrc) {
+      var script = document.createElement('script')
+      script.async = true
+      script.defer = true
+      script.dataset.domain = domain
+      script.src = config.plausibleSrc
+    }
+
+    if(config.googleSiteVerificationCode) {
+      var meta = document.createElement('meta')
+      meta.setAttribute('name', 'google-site-verification')
+      meta.setAttribute('content', config.googleSiteVerificationCode)
+      document.head.append(meta)
+    }
+    
 
     window.plausible = window.plausible || function () {
       (window.plausible.q = window.plausible.q || []).push(arguments)

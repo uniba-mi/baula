@@ -8,4 +8,6 @@ export interface Config {
     dashboardUrl: string;
     demoUser: string;
     demoPassword: string;
+    plausibleSrc?: string;
+    googleSiteVerificationCode?: string;
 }
