@@ -12,3 +12,4 @@ data/backups/mariadb/*
 !initial_backup.sql
 server/app/*
 .retype
+retype.manifest
