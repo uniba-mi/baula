@@ -18,7 +18,7 @@ if (!doNotTrack) {
   init({
     dsn: environment.sentryDsn,
     integrations: [browserTracingIntegration()],
-    tracePropagationTargets: ['localhost', 'baula.minf.uni-bamberg.de/api', 'baula-test.minf.uni-bamberg.de/api'],
+    tracePropagationTargets: environment.sentryTracePropagationTargets ?? [],
     tracesSampleRate: 1.0,
     environment: environment.nodeEnv,
     debug: false,
@@ -27,6 +27,25 @@ if (!doNotTrack) {
 
 if (environment.production) {
   enableProdMode();
+}
+
+// add plausible
+if(environment.plausibleSrc) {
+  const domain = window.location.host
+  const script = document.createElement('script')
+  script.async = true
+  script.defer = true
+  script.dataset.domain = domain
+  script.src = environment.plausibleSrc
+  document.head.append(script)
+}
+
+// add google site verification code for search console
+if (environment.googleSiteVerificationCode) {
+  const meta = document.createElement('meta')
+  meta.setAttribute('name', 'google-site-verification')
+  meta.setAttribute('content', environment.googleSiteVerificationCode)
+  document.head.append(meta)
 }
 
 platformBrowser().bootstrapModule(AppModule)

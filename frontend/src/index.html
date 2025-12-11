@@ -10,26 +10,6 @@
   <link rel="icon" type="image/png" href="favicon.png">
   <!-- Plausible -->
   <script>
-    import { config } from 'src/environments/config.local';
-
-    console.log(config)
-    var domain = window.location.host; // for both test and live
-    if(config.plausibleSrc) {
-      var script = document.createElement('script')
-      script.async = true
-      script.defer = true
-      script.dataset.domain = domain
-      script.src = config.plausibleSrc
-    }
-
-    if(config.googleSiteVerificationCode) {
-      var meta = document.createElement('meta')
-      meta.setAttribute('name', 'google-site-verification')
-      meta.setAttribute('content', config.googleSiteVerificationCode)
-      document.head.append(meta)
-    }
-    
-
     window.plausible = window.plausible || function () {
       (window.plausible.q = window.plausible.q || []).push(arguments)
     }

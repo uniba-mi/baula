@@ -10,26 +10,6 @@
   <link rel="icon" type="image/png" href="favicon.png">
   <!-- Plausible -->
   <script>
-    import { config } from 'src/environments/config.local';
-
-    console.log(config)
-    var domain = window.location.host; // for both test and live
-    if(config.plausibleSrc) {
-      var script = document.createElement('script')
-      script.async = true
-      script.defer = true
-      script.dataset.domain = domain
-      script.src = config.plausibleSrc
-    }
-
-    if(config.googleSiteVerificationCode) {
-      var meta = document.createElement('meta')
-      meta.setAttribute('name', 'google-site-verification')
-      meta.setAttribute('content', config.googleSiteVerificationCode)
-      document.head.append(meta)
-    }
-    
-
     window.plausible = window.plausible || function () {
       (window.plausible.q = window.plausible.q || []).push(arguments)
     }
@@ -39,6 +19,6 @@
 
 <body>
   <app-root></app-root>
-<link rel="modulepreload" href="chunk-ICUYS3ZT.js"><link rel="modulepreload" href="chunk-RDCSEFS5.js"><link rel="modulepreload" href="chunk-G6GGHPB5.js"><link rel="modulepreload" href="chunk-NB7SWCOF.js"><link rel="modulepreload" href="chunk-2UOXWDWM.js"><link rel="modulepreload" href="chunk-L65VM6RW.js"><link rel="modulepreload" href="chunk-ASOUTC2M.js"><link rel="modulepreload" href="chunk-WMD6DHRU.js"><link rel="modulepreload" href="chunk-VAQ7Q2NF.js"><link rel="modulepreload" href="chunk-HQLZ346Q.js"><script src="polyfills-5FDKUQTZ.js" type="module"></script><script src="scripts-O2FLCBSN.js" defer></script><script src="main-VME6MGBI.js" type="module"></script></body>
+<link rel="modulepreload" href="chunk-ICUYS3ZT.js"><link rel="modulepreload" href="chunk-RDCSEFS5.js"><link rel="modulepreload" href="chunk-G6GGHPB5.js"><link rel="modulepreload" href="chunk-NB7SWCOF.js"><link rel="modulepreload" href="chunk-2UOXWDWM.js"><link rel="modulepreload" href="chunk-L65VM6RW.js"><link rel="modulepreload" href="chunk-ASOUTC2M.js"><link rel="modulepreload" href="chunk-WMD6DHRU.js"><link rel="modulepreload" href="chunk-VAQ7Q2NF.js"><link rel="modulepreload" href="chunk-HQLZ346Q.js"><script src="polyfills-5FDKUQTZ.js" type="module"></script><script src="scripts-O2FLCBSN.js" defer></script><script src="main-2NGGYKFG.js" type="module"></script></body>
 
 </html>
