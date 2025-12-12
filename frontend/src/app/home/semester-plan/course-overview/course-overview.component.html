@@ -1,5 +1,4 @@
 <div class="container">
-  <!-- <p class="text-gray">Breadcrumbs tbd.</p> -->
   <app-hint [key]="courseSearchHint" [hintMessage]="courseSearchHintMessage"></app-hint>
 
   <app-course-search-panel (search)="getCourses($event)" (openSidenav)="openSearch.emit($event)">

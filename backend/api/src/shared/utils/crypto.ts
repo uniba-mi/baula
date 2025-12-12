@@ -1,7 +1,15 @@
 import crypto from "crypto";
 
 // AES-256-GCM Helpers
-const KEY = Buffer.from(process.env.SESSION_ENC_KEY ? process.env.SESSION_ENC_KEY : '', "base64");
+const keyB64 = process.env.SESSION_ENC_KEY;
+if (!keyB64) {
+  throw new Error("SESSION_ENC_KEY fehlt");
+}
+
+const KEY = Buffer.from(keyB64, "base64");
+if (KEY.length !== 32) {
+  throw new Error("SESSION_ENC_KEY muss 32 Byte (Base64) enthalten");
+}
 const ALG = "aes-256-gcm";
 
 export function encrypt(text: string) {

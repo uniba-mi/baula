@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://baula-test.minf.uni-bamberg.de/sitemap.xml.gz

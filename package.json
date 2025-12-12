@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/uniba-mi/baula.git"
   },
-  "license": "ISC",
-  "author": "",
+  "license": "MIT",
+  "author": "Chair of Media Informatics",
   "scripts": {
     "startServerDocker": "docker-compose -f docker-compose.yml -f docker-compose.server.yml up -d --build --force-recreate",
     "startLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml up -d --build --force-recreate",

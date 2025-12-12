@@ -1112,11 +1112,11 @@ async function crawlFlexNow(semester: string): Promise<string> {
     const data = new URLSearchParams();
     data.append(
       "login",
-      process.env.FLEXNOW_LOGIN ? process.env.FLEXNOW_LOGIN : ""
+      process.env.FN_LOGIN ? process.env.FN_LOGIN : ""
     );
     data.append(
       "password",
-      process.env.FLEXNOW_PW ? process.env.FLEXNOW_PW : ""
+      process.env.FN_PW ? process.env.FN_PW : ""
     );
 
     const options = {

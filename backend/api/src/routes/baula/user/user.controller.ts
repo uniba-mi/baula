@@ -25,6 +25,7 @@ import {
 } from "../../../templates/student-fn2api";
 import https from "https";
 import { findMatchingModuleIndex } from "../../../shared/helpers/plan-helper";
+import { decrypt } from "../../../shared/utils/crypto";
 
 const prisma = new PrismaClient();
 
@@ -1074,27 +1075,21 @@ export async function crawlStudentDataViaFlexNow(
   next: NextFunction
 ) {
   try {
-    const baId = 'ba2fv5';//decrypt((req.session as any).passport.user.baId);
+    const baId = decrypt((req.session as any).passport.user.baId);
     const url = process.env.FN_STUDENT_URL
       ? process.env.FN_STUDENT_URL + baId
       : "";
     const importStudyPath = req.body.importStudyPath;
     if (url) {
-      // read test xml file
-      /* const result = fs.readFileSync(
-        __dirname + "../../../../staticdata/dummy-student.xml",
-        "utf8"
-      ); */
-
       const result = await new Promise<string>((resolve, reject) => {
         const data = new URLSearchParams();
         data.append(
           "login",
-          process.env.FLEXNOW_LOGIN ? process.env.FLEXNOW_LOGIN : ""
+          process.env.FN_LOGIN ? process.env.FN_LOGIN : ""
         );
         data.append(
           "password",
-          process.env.FLEXNOW_PW ? process.env.FLEXNOW_PW : ""
+          process.env.FN_PW ? process.env.FN_PW : ""
         );
 
         const options = {
@@ -1113,7 +1108,6 @@ export async function crawlStudentDataViaFlexNow(
           });
           res.on("end", () => {
             if (res.statusCode === 200) {
-              console.log("FlexNow Request with baId successful " + baId);
               const buffer = Buffer.concat(chunks);
               const ansiString = buffer.toString("binary");
               resolve(ansiString);

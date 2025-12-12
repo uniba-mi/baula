@@ -10,7 +10,8 @@
 4. [API-Dokumentation](#api-dokumentation)
 5. [Deployment](#deployment)
 6. [Changelog](CHANGELOG.md)
-7. [Lizenz und Credits](#lizenz-und-credits)
+7. [Häufige Fehlermeldungen](#häufige-fehlermeldungen)
+8. [Lizenz und Credits](#lizenz-und-credits)
 
 ### Überblick
 Dieses Repo dokumentiert den Quellcode des digitalen Studienplanungsassistenten Baula, welcher am Lehrstuhl für Medieninformatik der Universität Bamberg seit 2022 in verschiedenen Forschungsprojekten entwickelt und beforscht wird. 
@@ -18,11 +19,12 @@ Dieses Repo dokumentiert den Quellcode des digitalen Studienplanungsassistenten 
 ### Setup und Installation
 Hier sind die Schritte dokumentiert um Baula lokal zu starten.
 ##### 0. Requirements
-Um Baula lokal starten zu können ist die Installation von [Node.js](https://nodejs.org/en) inklusive des Node-Package-Manager (npm) sowie die [Angular CLI](https://angular.dev/tools/cli). 
-Folgende Versionen sind die Minimalvoraussetzungen:
-- Node.js >= 24.10.0 
-- npm >= 11.6.2
-- Angular CLI >= 20.3.6
+Um Baula lokal starten zu können ist die Installation von [Node.js](https://nodejs.org/en) inklusive des Node-Package-Manager ([npm](https://www.npmjs.com/)) sowie die [Angular CLI](https://angular.dev/tools/cli). Zudem baut das Setting auf [Docker](https://www.docker.com/products/docker-desktop/) auf.
+Folgende Versionen sind die getesteten Voraussetzungen:
+- [Node.js](https://nodejs.org/en) >= 24.10.0 
+- [npm](https://www.npmjs.com/) >= 11.6.2
+- [Angular CLI](https://angular.dev/tools/cli) >= 20.3.6
+- [Docker](https://www.docker.com/products/docker-desktop/) >= 2.35.1-desktop.1
 
 ##### 1. Anlegen der .env-Dateien
 - im root Verzeichnis muss eine `.env` angelegt werden. Diese .env Datei ist die Basis für den Start der Docker-Container. Die gesetzen Informationen (Nutzernamen und Passwörter) sind für den späteren Zugriff relevant. Die .env sollte folgende Informationen enthalten:
@@ -62,13 +64,14 @@ Folgende Versionen sind die Minimalvoraussetzungen:
     SESSION_NAME=yourSessionName
     TEST_USER=user
     ADMIN_USER=admin
-    DEMO_USER=baula.demo
+    DEMO_USER=demo
     TEST_PW=secretPassword
     ADMIN_PW=safePassword
-    DEMO_PW=Baula2025Demo
-    #Additional variables required for server environment when FlexNow integration is needed
-    FLEXNOW_LOGIN=user
-    FLEXNOW_PW=superSecret123
+    DEMO_PW=demo
+
+    #Additional variables required for server environment
+    FN_LOGIN=user
+    FN_PW=superSecret123
     FN_MHBS_URL=https://your-fn2-url.de/api/mhbs
     FN_STUDENT_URL=https://your-fn2-url.de/api/student
     FN_EXAM_URL_BASE=https://your-fn2-url.de/api/enroll
@@ -91,6 +94,8 @@ Folgende Versionen sind die Minimalvoraussetzungen:
         localLogoutUrl: 'http://localhost:3305/logout', 
         shibLogoutUrl: 'https://meine-domain.test/Shibboleth.sso/Logout', 
         dashboardUrl: 'app/',
+        demoUser: 'demo', 
+        demoPassword: 'demo'
     }
     ```
     Für ein Deployment auf einem Server muss entsprechend die `ShibLoginUrl` und `ShibLogoutUrl` angepasst werden.
@@ -101,10 +106,13 @@ Folgende Versionen sind die Minimalvoraussetzungen:
     export const environment = {
         production: false, // true for production
         imports: [
-            StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true, connectInZone: true })
+            StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true, connectInZone: true }) // only needed for visible redux (recommended for test only)
         ],
-        sentryDsn: 'https://my-sentry-link.test',
+        sentryDsn: 'https://my-sentry-link.test', // add sentry url
+        sentryTracePropagationTargets: ['localhost'] // add additional urls like /api
         nodeEnv: 'development', // set 'production' for public release
+        plausibleSrc: 'https://your-plausible-domain', // your specific plausible url
+        googleSiteVerificationCode: 'your-verification-code-for-search-console' // for usage of google search console add verification code here
     };
     ```
 
@@ -112,7 +120,7 @@ Folgende Versionen sind die Minimalvoraussetzungen:
 Abhängigkeiten im `./backend/api` und `./frontend` mit Hilfe von `npm install` installieren.
 
 ##### 3. Certs-Files anlegen
-Im Ordner `./backend/api/src/certs` werden drei Dateien nötig, für ein lokales Setting können die Dateien mit einem beliebigen Inhalt z. B. `test` gefüllt werden. Dafür folgende Dateien anlegen: 
+Im Ordner `./backend/api/src/certs` werden drei Dateien nötig, für ein lokales Setting müssen die Dateien mit einem beliebigen Inhalt z. B. `test` gefüllt werden. Dafür folgende Dateien anlegen: 
 - `idp_cert.pem`
 - `sp_cert.pem`
 - `sp_key.pem`
@@ -126,11 +134,11 @@ Im Ordner `./backend/api/src/database` muss eine Datei `redis-users.acl` angeleg
 ```
 
 ##### 5. Template-Dateien anlegen
-Baula bietet Schnittstellen zu verschiedenen universitären Systemen. Konkret umgesetzt sind derzeit FlexNow und UnivIS. Diese Schnittstellen werden angesteuert und die empfangenen Daten in unser Baula-Datenformat transformiert. Hierzu nutzen wir das npm-Paket `camaro`, welches mit Hilfe von XPath aus den XML-Eingaben definierte JSON-Ausgaben erzeugt. 
+Baula bietet Schnittstellen zu verschiedenen universitären Systemen. Konkret umgesetzt sind derzeit FlexNow und UnivIS. Diese Schnittstellen werden angesteuert und die empfangenen Daten in unser Baula-Datenformat transformiert. Hierzu nutzen wir das npm-Paket [camaro](https://www.npmjs.com/package/camaro), welches mit Hilfe von XPath aus den XML-Eingaben definierte JSON-Ausgaben erzeugt. 
 Nähere zum benötigten Datenschema ist in der [Backend-README](./backend/README.md). Ein Beispiel, wie eine solche Transformation aussieht findet sich in `/backend/api/src/templates/univis-template.ts`, welches dazu dient, die eingehenden XML-Daten der UnivIS-PRG-Schnittstelle in das Baula-Format zu transformieren.
 
 Damit Baula lokal läuft, müssen die Template-Dateien alle verfügbar sein. Neben der `univis-template.ts` müssen noch folgende Dateien angelegt werden:
-- `student-fn2api.ts`: Wird benötigt, um die Studenten-API von FlexNow anzusteuern. Näheres zu den benötigten Eigenschaften findet sich in der [Backend-Readme](./backend/README.md).
+- `student-fn2api.ts`: Wird benötigt, um die Studenten-API von FlexNow anzusteuern.
     ```ts
     // student-fn2api.ts
     export const studyPathTemplate = [];
@@ -211,7 +219,7 @@ Nun sollte alles eingerichtet sein, so dass man über die folgenden Befehle Baul
 ```
 
 ##### 11. Initialisierung im Admin-Bereich
-Damit der Personalisierungs-Tab funktioniert, müssen im Admin-Bereich (zugänglich über den Nutzer mit der Rolle "admin") die Modul- und Topic-Embeddings initialisiert werden. Diese finden sich im Admin-Bereich im Tab "Empfehlung". Näheres zum Admin-Tab findet sich in der [Backend-README](./backend/README.md).
+Damit der Personalisierungs-Tab funktioniert, müssen im Admin-Bereich (zugänglich über den Nutzer mit der Rolle "admin") die Modul- und Topic-Embeddings initialisiert werden. Diese finden sich im Admin-Bereich im Tab "Empfehlung".
 
 
 ### Projektstruktur
@@ -256,6 +264,9 @@ Bei einem Release neuer Features ist also zukünftig nur noch folgendes nötig (
 4. (main - lokal) `git merge develop` um neue Features auf `main` zu holen. Anschließend `npm run buildProd` und auf Repo pushen.
 5. (main - server) `git pull` und ggf. `npm run restartServerDocker` für kompletten Neustart.
 
+
+### Häufige Fehlermeldungen
+Hier werden zukünftig häufig auftretende Fehlermeldungen gesammelt.
 
 ### Lizenz und Credits
 [Lizenz](LICENCE.md)

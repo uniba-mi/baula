@@ -1,5 +1,4 @@
 # Frontend starten
-
 Mit dem Befehl `ng serve --open` kann die Anwendung gestartet werden.
 
 # Styling Guidelines
@@ -48,7 +47,6 @@ In der Anwendung wird ein Mix von Angular Material und Bootstrap verwendet.
 - styles.scss: führt alle diese Dateien zusammen und ist der Styling-Einstiegspunkt
 
 # Dialoge
-
 - Im Ordner `/templates` befindet sich eine HTML-Vorlage für die Erstellung neuer Dialoge. Diese dienen als Vorlage und können wie bisherige Modale in der Parent-Dialog-Komponente gerendert werden.
 - Neue spezifische Dialoge können mithilfe der DialogComponent angelegt werden.
 - Einfache "Bestätigungsmodale" können mithilfe der ConfirmationDialogComponent und dem entsprechenden Interface angelegt werden.

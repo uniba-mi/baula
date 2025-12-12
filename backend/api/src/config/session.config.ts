@@ -7,11 +7,15 @@ export const redisClient = createClient({
   url: process.env.REDIS_URL,
 });
 
+if (!process.env.SESSION_SECRET) {
+  throw new Error("SESSION_SECRET is missing");
+}
+
 // configure and export session
 export const expressSession = session({
   store: new RedisStore({ client: redisClient }),
-  secret: process.env.SESSION_SECRET ? process.env.SESSION_SECRET : "",
-  name: process.env.SESSION_NAME ? process.env.SESSION_NAME : "baulaSession",
+  secret: process.env.SESSION_SECRET,
+  name: process.env.SESSION_NAME ?? "testSession",
   resave: false,
   saveUninitialized: false,
   proxy: true,

@@ -9,6 +9,8 @@ prisma/generated
 *.acl
 package-lock.json
 /api/src/templates/*
-!univis-template.ts
+/api/dist/backend/api/src/templates/*
+!univis-template.*
 users.ts
 prisma/*
+/api/dist/*

@@ -26,7 +26,7 @@ export const samlStrategy = new SamlStrategy(
     decryptionPvk: spKey,
     publicCert: spCert,
     idpCert: idpCert,
-    logoutUrl: "https://idp.iam.uni-bamberg.de/idp/profile/SAML2/Redirect/SLO",
+    logoutUrl: process.env.SAML_LOGOUT_URL,
     logoutCallbackUrl: process.env.LOGOUT_CALLBACK_URL,
     identifierFormat: null,
     authnContext: [

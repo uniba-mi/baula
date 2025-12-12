@@ -19,3 +19,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+**Non-Code Assets**
+Non-code assets contained in this repository — including but not limited to logos, 
+images, graphics, and trademarked material — are not licensed under the MIT License.
+Unless explicitly stated otherwise, all such assets are provided with all rights 
+reserved and may not be used, copied, modified, or redistributed without prior 
+written permission from the rights holder.
