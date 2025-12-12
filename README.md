@@ -106,13 +106,13 @@ Folgende Versionen sind die getesteten Voraussetzungen:
     export const environment = {
         production: false, // true for production
         imports: [
-            StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true, connectInZone: true })
+            StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true, connectInZone: true }) // only needed for visible redux (recommended for test only)
         ],
-        sentryDsn: 'https://my-sentry-link.test',
-        sentryTracePropagationTargets: ['localhost']
+        sentryDsn: 'https://my-sentry-link.test', // add sentry url
+        sentryTracePropagationTargets: ['localhost'] // add additional urls like /api
         nodeEnv: 'development', // set 'production' for public release
-        plausibleSrc: 'https://your-plausible-domain',
-        googleSiteVerificationCode: 'your-verification-code-for-search-console'
+        plausibleSrc: 'https://your-plausible-domain', // your specific plausible url
+        googleSiteVerificationCode: 'your-verification-code-for-search-console' // for usage of google search console add verification code here
     };
     ```
 
@@ -266,7 +266,7 @@ Bei einem Release neuer Features ist also zukünftig nur noch folgendes nötig (
 
 
 ### Häufige Fehlermeldungen
-TBD
+Hier werden zukünftig häufig auftretende Fehlermeldungen gesammelt.
 
 ### Lizenz und Credits
 [Lizenz](LICENCE.md)
