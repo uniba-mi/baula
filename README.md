@@ -1,7 +1,7 @@
 # Baula
 #### Bamberger Assistentin zur Unterstützung der Lehrveranstaltungskoordination und -Auswahl
 
-**Version:** 2.2.0
+**Version:** 1.1.0
 
 ### Inhaltsverzeichnis
 1. [Überblick](#überblick)
