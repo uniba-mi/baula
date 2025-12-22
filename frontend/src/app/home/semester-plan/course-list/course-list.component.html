@@ -1,0 +1,46 @@
+<div class="course-list-container">
+  <ng-container *ngIf="searchResult.length !== 0">
+    <ng-container *ngFor="let course of viewResult">
+      <app-course-item [course]="course" [isSelected]="selectedItems.includes(course)" [planCourses]="activePlanCourses$ | async"
+        (selectionChange)="onCourseSelected($event)" (deselectionChange)="onCourseDeselected($event)">
+      </app-course-item>
+    </ng-container>
+
+    <!-- Sticky bulk actions bar inside mat-sidenav -->
+    <div #bulkActionsBar class="bulk-actions-bar px-2 py-3 d-flex justify-content-between align-items-center"
+      [ngClass]="{'sticky': isSticky}" *ngIf="selectedItems.length > 0 || allSelected">
+
+      <div class="selection-actions">
+        <button class="selected-count-btn position-relative btn p-0 me-3" matTooltip="Ausgewählte Lehrveranstaltungen">
+          <span *ngIf="selectedItems.length > 0"
+            class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle">
+            {{ selectedItems.length }}
+          </span>
+          <i class="cart-icon bi bi-cart-check text-gray"></i>
+        </button>
+
+        <button class="btn btn-secondary me-2 btn-sm expand-on-click" (click)="toggleSelectAll()"
+          matTooltip="{{ allSelected ? 'Alle Lehrveranstaltungen abwählen' : 'Alle Lehrveranstaltungen auswählen' }}">
+          <i class=" bi" [ngClass]="allSelected ? 'bi-x-circle' : 'bi-check-all'"></i>
+          <span *ngIf="isSidenavFullScreen || screenIsXXL">
+            {{ allSelected ? 'Alle abwählen' : 'Alle wählen' }}
+          </span>
+        </button>
+      </div>
+
+      <div class="planning-actions">
+        <button class="btn btn-success me-2 btn-sm expand-on-click" (click)="planSelectedCourses()"
+          matTooltip="In den Stundenplan einplanen">
+          <i class="bi bi-plus-circle"></i>
+          <span *ngIf="isSidenavFullScreen || screenIsXXL"> Einplanen</span> </button>
+
+        <button class="btn btn-danger btn-sm expand-on-click" (click)="unplanSelectedCourses()"
+          matTooltip="Aus dem Stundenplan entfernen">
+          <i class="bi bi-dash-circle"></i>
+          <span *ngIf="isSidenavFullScreen || screenIsXXL"> Ausplanen</span> </button>
+      </div>
+    </div>
+
+    <mat-paginator #paginator *ngIf="searchResult.length !== 0" [length]="searchResult.length" [pageSize]="pageSize"
+      hidePageSize (page)="handlePageEvent($event)" aria-label="Wähle eine Ergebnisseite aus">
+    </mat-paginator>

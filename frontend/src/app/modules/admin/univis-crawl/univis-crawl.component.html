@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <h2 class="col-12 text-center">Import von UnivIS-Daten</h2>
+  </div>
+  <div class="row mb-2 align-items-center">
+    <h3 class="text-center">Crawl manuell starten:</h3>
+    <!-- Select of Semester -->
+     <div class="col-6">
+      <admin-semester-selection-form (semesterChange)="selectSemester($event)"></admin-semester-selection-form>
+     </div>
+    
+    <!-- Button to start crawl -->
+    <div class="col-6">
+      <button class="w-100 btn btn-primary" (click)="startCrawling()">
+        Importiere UnivIS-Daten
+      </button>
+    </div>
+  </div>
+  <div
+    class="row mb-2 align-items-center"
+    *ngIf="cronjobLogs$ | async as cronjobLogs"
+  >
+    <mat-card appearance="outlined" class="server-log">
+      <mat-card-header>
+        <mat-card-title>Logdatei zum Cronjob</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="container-fluid">
+        <div *ngFor="let log of cronjobLogs" class="row my-2">
+          <div class="col-md-1 col-sm-2 col-6">
+            <span
+              [ngClass]="{
+                badge: true,
+                'text-bg-info': log.level === 'info',
+                'text-bg-danger': log.level == 'error',
+
+                'text-bg-warning': log.level !== 'info' && log.level !== 'error'
+              }"
+              >{{ log.level }}</span
+            >
+          </div>
+          <div class="col-xl-2 col-lg-3 col-sm-4 col-6">
+            {{ log.timestamp | date : "short" }}
+          </div>
+          <div class="col-xl-9 col-lg-8 col-sm-6 col-12">
+            {{ log.message }}
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

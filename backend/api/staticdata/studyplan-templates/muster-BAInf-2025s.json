@@ -1,0 +1,120 @@
+{
+    "name": "Musterplan B. Sc. Informatik (SS25)",
+    "status": false,
+    "semesterPlans": [
+        {
+            "modules": [
+                "Inf-GRABS-B",
+                "Inf-LBR-B",
+                "Inf-Prog-C-B",
+                "MOBI-DBS-B",
+                "Inf-Ment-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2025s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 28
+        },
+        {
+            "modules": [
+                "WiMa-B-001",
+                "WiMa-B-002",
+                "Inf-Einf-B",
+                "Inf-DM-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2025w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "EESYS-SaD-B",
+                "AI-AuD-B",
+                "SWT-FSE-B",
+                "DSG-IDistrSys-B",
+                "MI-WAIAI-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2026s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "KTR-Datkomm-B",
+                "HCI-IS-B",
+                "PSI-IntroSP-B",
+                "PSI-EDS-B",
+                "SWT-SWL-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Seminar",
+                    "ects": 3,
+                    "notes": "Bereich Seminar & Projekt",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f8cde2168bffa120c34ed8"
+                }
+            ],
+            "courses": [],
+            "semester": "2026w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [],
+            "userGeneratedModules": [
+                {
+                    "name": "Projekt",
+                    "ects": 6,
+                    "notes": "Bereich Seminar & Projekt",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f8ce01168bffa120c34f3e"
+                },
+                {
+                    "name": "Wahlpflichtmodul(e)",
+                    "ects": 26,
+                    "notes": "aus den Modulgruppen A3, A4, A5, A6",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f8ce1e168bffa120c34f5e"
+                }
+            ],
+            "courses": [],
+            "semester": "2027s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 32
+        },
+        {
+            "modules": [
+                "I-Thesis-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Wahlpflichtmodul(e)",
+                    "ects": 18,
+                    "notes": "aus den Modulgruppen A3, A4, A5, A6",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f8ce45168bffa120c34fd6"
+                }
+            ],
+            "courses": [],
+            "semester": "2027w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        }
+    ]
+}

@@ -1,0 +1,52 @@
+<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+  <form [formGroup]="studyPlanForm">
+    <div class="content-wrapper">
+      <mat-form-field appearance="outline">
+        <mat-label>Name:</mat-label>
+        <input
+          matInput
+          #studyPlanName
+          formControlName="name"
+          maxlength="50"
+          type="text"
+          [value]="studyPlan.name"
+          required
+        />
+        <mat-error
+          *ngIf="
+            studyPlanForm.controls.name.touched &&
+            studyPlanForm.controls.name.invalid
+          "
+          ><span *ngIf="studyPlanForm.controls.name.errors?.required"
+            >Das ist ein Pflichtfeld.</span
+          ><span *ngIf="studyPlanForm.controls.name.errors?.maxlength"
+            >Du darfst nur 50 Zeichen eingeben.</span
+          ><span *ngIf="studyPlanForm.controls.name.errors?.pattern"
+            >Das Feld darf nicht leer sein.</span
+          >
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-dialog-actions>
+      <button
+        mat-raised-button
+        class="btn btn-outline"
+        mat-dialog-close
+        (click)="close('noData')"
+        (keyup)="close('noData')"
+      >
+        Abbrechen
+      </button>
+      <button
+        mat-raised-button
+        class="btn btn-primary"
+        [disabled]="!studyPlanForm.valid"
+        [mat-dialog-close]="studyPlanName.value"
+        (click)="close('data')"
+        (keyup)="close('data')"
+      >
+        Speichern
+      </button>
+    </mat-dialog-actions>
+  </form>
+</ng-container>

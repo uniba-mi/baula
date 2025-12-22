@@ -1,0 +1,9 @@
+/* this file contains bootstrap related elements */
+
+// TODO: upgrade bootstrap to the scss variant as soon as bootstrap uses @use instead of @import. This allows SASS features,
+// but currently only creates warnings, as bootstrap is incompatible
+
+@use "../../node_modules/bootstrap/dist/css/bootstrap.css";
+@use "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+/* Can override bootstrap variables here */

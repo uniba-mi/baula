@@ -1,0 +1,72 @@
+.search-panel:hover {
+  transform: scale(0.995);
+  transition: all .2s ease-in-out;
+}
+
+.course-list-container {
+  position: relative;
+}
+
+// fix to bottom initially, is then set to sticky so it doesn't go over the footer via global scss
+.bulk-actions-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--cus-bg-100);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  transition: position 0.3s ease-in-out; // smooth going into sticky mode
+}
+
+.selected-count-btn {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: default;
+}
+
+.cart-icon {
+  font-size: 1.2rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+}
+
+.mat-badge-content {
+  font-size: 0.75rem;
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 50%;
+  background-color: #f44336;
+  color: white;
+}
+
+@media (max-width: 575.98px) {
+  /* better solution? */
+  .search-panel ::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .actions .btn.expand-on-click:focus span,
+  .actions .btn.expand-on-click:active span {
+    display: inline;
+    position: absolute;
+    background-color: white;
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+}

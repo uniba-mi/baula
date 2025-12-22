@@ -1,0 +1,136 @@
+<div class="container mx-auto my-2 my-md-5" *ngIf="!maintenance; else MaintenanceDashboard">
+  <app-hint *ngIf="showFinishSemesterHint$ | async" [key]="finishSemesterHint" [hintMessage]="finishSemesterHintMessage"
+    [hintType]="'danger'"></app-hint>
+  <div class="d-flex flex-row justify-content-end align-items-end mb-1">
+    <div *ngIf="user$ | async as user">
+      <ng-container *ngIf="dashboardSettings$ | async as settings">
+        <button class="btn btn-outline btn-sm mb-0" [matMenuTriggerFor]="addWidgetMenu" aria-label="Widgets managen">
+          <i class="icon bi bi-sliders fw-bold me-2"></i><span class="manage-widget-text d-md-inline d-none">Widgets
+            managen</span>
+        </button>
+        <mat-menu #addWidgetMenu="matMenu">
+          <button *ngFor="let item of settings" mat-menu-item tabindex="0" class="mb-0"
+            (click)="changeVisibility(item.key)" (keyup.enter)="changeVisibility(item.key)">
+            <div *ngIf="item.visible; else makeVisible">
+              <i class="icon bi bi-eye"></i> {{ findEntryName(item.key) }}
+            </div>
+            <ng-template #makeVisible>
+              <i class="icon bi bi-eye-slash text-danger"></i> {{ findEntryName(item.key) }}
+            </ng-template>
+          </button>
+        </mat-menu>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Dashboard-Area -->
+  <div class="dashboard-container" *ngIf="user$ | async as user">
+    <ng-container *ngIf="visibleCharts$ | async as visibleCharts">
+      <ng-container *ngIf="studyPath$ | async as studyPath">
+        <ng-container *ngIf="semesterStudyPath">
+          <ng-container *ngFor="let chart of visibleCharts">
+            <ng-container [ngSwitch]="chart.key">
+              <!-- Card with Quick Links -->
+              <mat-card appearance="outlined" *ngSwitchCase="'quick-links'" class="dashboard-tile order-0">
+                <app-quick-links [key]="chart.key" (changeVisibility)="changeVisibility($event)"></app-quick-links>
+              </mat-card>
+              <!-- chart with gpa -->
+              <mat-card appearance="outlined" *ngSwitchCase="'gpa'" class="dashboard-tile small-tile order-1">
+                <app-dashboard-card-header [key]="chart.key"
+                  (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                <app-grade-point-average [studyPath]="studyPath"></app-grade-point-average>
+              </mat-card>
+              <!-- Card with personalisation status -->
+              <ng-container *ngIf="user.sps?.[0]?.faculty === 'WIAI'">
+                <mat-card appearance="outlined" *ngSwitchCase="'personalisation'"
+                  class="dashboard-tile small-tile order-1">
+                  <app-dashboard-card-header [key]="chart.key" [showCompletionBadge]="isPersonalisationComplete"
+                    (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                  <app-personalisation-status
+                    (allComplete)="onPersonalisationComplete($event)"></app-personalisation-status>
+                </mat-card>
+              </ng-container>
+              <!-- Card with semester dates-->
+              <mat-card appearance="outlined" *ngSwitchCase="'semester-dates'"
+                class="dashboard-tile medium-tile order-1">
+                <app-dashboard-card-header [key]="chart.key"
+                  (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                <app-semester-dates></app-semester-dates>
+              </mat-card>
+              <!-- Card with semester dates-->
+              <ng-container *ngSwitchCase="'calendar'">
+                <ng-container *ngIf="activePlan$ | async as activePlan">
+                  <ng-container *ngIf="academicDates$ | async as academicDates">
+                    <mat-card appearance="outlined" class="dashboard-tile large-tile order-2">
+                      <app-dashboard-card-header [key]="chart.key"
+                        (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                      <app-full-calendar [initalView]="initialView" [isWidget]="isWidget" [activePlan]="activePlan"
+                        [academicDates]="academicDates" [planCourses]="planCourses$ | async"></app-full-calendar>
+                    </mat-card>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+              <!-- Chart with total ects progress -->
+              <ng-container *ngSwitchCase="'total-ects-progress'">
+                <mat-card appearance="outlined" class="dashboard-tile large-tile order-3"
+                  *ngIf="semesters$ | async as semesters">
+                  <app-dashboard-card-header [key]="chart.key"
+                    (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                  <app-total-ects-progress-chart [studyPath]="semesterStudyPath" [aimedEcts]="user.maxEcts"
+                    [semesters]="semesters" [studyPlan]="activeStudyPlan$ | async"></app-total-ects-progress-chart>
+                </mat-card>
+              </ng-container>
+              <!-- chart with total module progress -->
+              <mat-card appearance="outlined" *ngSwitchCase="'total-module-progress'"
+                class="dashboard-tile medium-tile order-3">
+                <app-dashboard-card-header [key]="chart.key"
+                  (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                <app-total-module-progress-chart [studyPath]="studyPath"></app-total-module-progress-chart>
+              </mat-card>
+              <!-- card with ects progress for each semester -->
+              <ng-container *ngSwitchCase="'semester-ects-progress'">
+                <mat-card appearance="outlined" *ngIf="semesters$ | async as semesters"
+                  class="dashboard-tile large-tile order-3">
+                  <app-dashboard-card-header [key]="chart.key"
+                    (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                  <app-semester-ects-progress-chart [studyPath]="studyPath" [semesters]="semesters"
+                    [studyPlan]="activeStudyPlan$ | async"></app-semester-ects-progress-chart>
+                </mat-card>
+              </ng-container>
+              <!-- card with module progress for each semester -->
+              <ng-container *ngSwitchCase="'semester-module-progress'">
+                <mat-card appearance="outlined" *ngIf="semesters$ | async as semesters"
+                  class="dashboard-tile large-tile order-3">
+                  <app-dashboard-card-header [key]="chart.key"
+                    (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                  <app-semester-module-progress-chart [studyPath]="semesterStudyPath" [semesters]="semesters"
+                    [studyPlan]="activeStudyPlan$ | async"></app-semester-module-progress-chart>
+                </mat-card>
+              </ng-container>
+              <!-- chart with total module progress -->
+              <mat-card appearance="outlined" *ngSwitchCase="'module-group-progress'"
+                class="dashboard-tile medium-tile order-3">
+                <app-dashboard-card-header [key]="chart.key"
+                  (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                <app-module-group-progress-chart [studyPath]="studyPath"
+                  [mgs]="modulegroups$ | async"></app-module-group-progress-chart>
+              </mat-card>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<button class="border border-light-subtle feedback" #feedbackTooltip="matTooltip"
+  aria-label="Button mit einem Icon, der auf einen VC Kurs leitet, in dem wichtige Informationen zu Baula kommuniziert werden und man Feedback geben kann."
+  matTooltip="Klicke hier, um zum VC-Kurs mit allen wichtigen Informationen von Baula zu gelangen!"
+  matTooltipHideDelay="200" (click)="navigateToVC()" (keyup.enter)="navigateToVC()"
+  (mouseenter)="feedbackTooltip.show()" (mouseleave)="feedbackTooltip.hide()">
+  <i class="text-white bi bi-chat-left-heart"></i>
+</button>
+
+<ng-template #MaintenanceDashboard>
+  <app-maintenance-message [feature]="'Dashboard'"></app-maintenance-message>
+</ng-template>

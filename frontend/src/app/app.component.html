@@ -1,0 +1,50 @@
+<header id="top-nav">
+  <div class="px-3 bg-blue text-white">
+    <div class="row align-items-center d-flex justify-content-between">
+      <div class="col-auto header-logo d-flex align-items-center">
+        <a [href]="homeUrl" title="Baula">
+          <picture>
+            <source media="(max-width: 1560px)" srcset="../assets/icon.png">
+            <img src="../assets/baula-light.png" alt="Logo von Baula, ein Absolventenhut mit einem Kompass" id="baula-logo">
+          </picture>
+        </a>
+      </div>
+      <div class="col-auto d-flex align-items-center">
+        <app-nav *ngIf="user$ | async as user" [user]="user"></app-nav>
+      </div>
+      <div class="col-auto d-flex align-items-center">
+        <app-profile-menu *ngIf="user$ | async as user" [user]="user">
+        </app-profile-menu>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Bootstrap Container -->
+<main class="container-fluid vh-100-min px-0">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Footer -->
+<footer class="bg-blue d-flex justify-content-center justify-content-sm-end">
+  <ul class="d-flex flex-column flex-sm-row">
+    <li class="my-1 mx-4 text-center">
+      <a class="link text-white" tabindex="0" routerLink="/hilfe">Hilfe & Kontakt
+      </a>
+    </li>
+    <li class="my-1 mx-4 text-center">
+      <a class="link text-white" tabindex="0" routerLink="/ueber-uns">Über BAULA
+      </a>
+    </li>
+    <li class="my-1 mx-4 text-center">
+      <a class="link text-white" tabindex="0" routerLink="/publikationen">Publikationen
+      </a>
+    </li>
+    <li class="my-1 mx-4 text-center">
+      <a class="link text-white" tabindex="0" routerLink="/datenschutz">Datenschutz</a>
+    </li>
+    <li class="my-1 mx-4 text-center">
+      <a class="link text-white" tabindex="0" href="https://www.uni-bamberg.de/impressum/" target="_blank">Impressum</a>
+    </li>
+  </ul>
+</footer>

@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center mb-4" [ngClass]="{'mb-0': customStyle}">
+    <!-- Search panel start -->
+    <mat-expansion-panel #searchPanel hideToggle class="search-panel w-100" [expanded]="panelState"
+        [ngClass]="{'custom-expansion-panel': customStyle}">
+        <!-- Search panel header start -->
+        <mat-expansion-panel-header>
+            <mat-panel-title class="d-flex justify-content-between my-2 my-sm-4 w-100"
+                (click)="$event.stopPropagation();" (keydown.space)="$event.stopPropagation()"
+                (keydown.enter)="$event.stopPropagation()">
+                <!-- Search input field start -->
+                <div role="search" class="search-input-wrapper">
+                    <mat-form-field appearance="outline" class="search-input-field w-100 mx-3 my-3">
+                        <mat-label class="my-3"><i class="icon bi bi-search"></i>Suchen...</mat-label>
+                        <input #searchInput matInput type="text" maxlength="100" class="input-with-clear-icon"
+                            [(ngModel)]="searchTerm" name="searchTerm" placeholder="Gib hier einen Suchbegriff ein" />
+                        <span class="btn-icon d-inline" (click)="clearInput()" (keyup.enter)="clearInput()">
+                            <i class="bi bi-x-lg text-gray"></i>
+                        </span>
+                    </mat-form-field>
+                </div>
+                <!-- Search input field end -->
+                <!-- Filter button start -->
+                <button mat-button role="button" tabindex="0"
+                    class="search-filter-button btn btn-icon btn-primary position-relative d-flex align-items-center"
+                    tabindex="0" aria-label="Suche ausklappen" matTooltip="Filtern" matTooltipClass="custom-tooltip"
+                    (click)="togglePanel()" (keyup.enter)="togglePanel()">
+                    <i class="filter-icon bi bi-funnel"></i>
+                    <span *ngIf="!customStyle" class="d-none d-sm-inline">Filter</span>
+                    <span *ngIf="customStyle" class="d-none d-xl-inline">Filter</span>
+                    <span *ngIf="((selectedFiltersCount$ | async) ?? 0) > 0"
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{ selectedFiltersCount$ | async }}
+                    </span>
+                </button>
+                <!-- Filter button end -->
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- Search panel header end -->
+        <!-- Search panel hidden parts start -->
+        <div class="search-panel-expanded mx-3">
+            <ng-container *ngFor="let filterGroup of filterOptions">
+                <div [ngClass]="{'col-md-12': customStyle && !horizontalFilters}">
+                    <p class="text-blue fw-bold mb-2">{{ filterGroup.name }}</p>
+                    <mat-chip-listbox multiple>
+                        <mat-chip-option *ngFor="let option of filterGroup.options" [value]="option.value"
+                            [selected]="option.selected" (click)="toggleSelection(option)"
+                            (keyup.enter)="toggleSelection(option)">
+                            {{ option.name }}
+                        </mat-chip-option>
+                    </mat-chip-listbox>
+                </div>
+            </ng-container>
+        </div>
+    </mat-expansion-panel>
+    <!-- Search panel end -->
+</div>

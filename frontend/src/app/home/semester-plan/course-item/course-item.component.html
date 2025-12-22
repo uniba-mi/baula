@@ -1,0 +1,93 @@
+<div class="course-list-item container-fluid shadow-sm p-xxl-3 p-2 border mb-3 bg-body rounded position-relative"
+  (mouseover)="hover = true" (mouseleave)="hover = false">
+
+  <!-- Selection indicator -->
+  <div class="selection-indicator position-absolute top-0 start-0 p-2"
+       [ngClass]="{'selected': isSelected}">
+    <i *ngIf="!isSelected" class="bi bi-circle text-gray not-selected" (click)="toggleSelection(course)">
+    </i>
+    <i *ngIf="isSelected" class="bi bi-check-circle-fill selected" (click)="toggleSelection(course)">
+    </i>
+  </div>
+
+  <!-- <div class="course-list-item container-fluid shadow-sm p-xxl-3 p-2 border mb-3 bg-body rounded"> -->
+  <!-- Course information header start -->
+  <div class="row align-items-center" tabindex="0" aria-label="Zeile mit Lehrveranstaltungsinformationen">
+    <div class="col-8 order-0 mb-2">
+      <span>{{ course.name }}</span>
+      <span class="ms-1" *ngIf="course.short">({{ course.short }})</span>
+    </div>
+    <div class="col-6 col-md-8 order-2 container-fluid text-gray mx-0">
+      <div class="d-flex flex-column align-items-start justify-content-center">
+        <div>
+          <span class="mx-1">{{ course.type }}</span>
+          <span class="mx-1" *ngIf="course.ects && course.ects !== 0">
+            <button class="chip ects-chip" disabled>max. {{ course.ects }} ECTS</button>
+          </span>
+        </div>
+        <div>
+          <mat-chip-set *ngIf="modules && modules.length > 0; else emptyChip">
+            <mat-chip *ngFor="let acronym of modules" (click)="openModule(acronym)" role="button">
+              <i class="bi bi-box-arrow-in-up-right" matChipAvatar></i> {{ acronym }}
+            </mat-chip>
+          </mat-chip-set>
+          <ng-template #emptyChip>
+            <!-- placeholder if no module, does not work without content -->
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <!-- Button for course selection -->
+    <div class="col-6 col-md-4 order-3 order-md-1 d-flex justify-content-end align-items-center my-3 mt-sm-0"
+      *ngIf="selectedCourseIds">
+      <button *ngIf="!selectedCourseIds.includes(this.course.id)" class="btn btn-primary d-none d-md-block"
+        (click)="selectCourse()" (keyup.enter)="selectCourse()" aria-label="Lehrveranstaltung in Stundenplan einplanen">
+        Einplanen
+      </button>
+      <button *ngIf="!selectedCourseIds.includes(this.course.id)" class="btn btn-primary d-block d-md-none"
+        (click)="selectCourse()" (keyup.enter)="selectCourse()" aria-label="Lehrveranstaltung in Stundenplan einplanen">
+        Planen
+      </button>
+      <button *ngIf="selectedCourseIds.includes(this.course.id)" class="btn btn-outline" (click)="deselectCourse()"
+        (keyup.enter)="deselectCourse()" aria-label="Lehrveranstaltung aus Stundenplan entfernen"
+        matToolTip="Lehrveranstaltung aus Stundenplan entfernen">
+        <span class="d-inline">Entfernen</span>
+      </button>
+      <!-- <ng-container *ngIf="course.mCourses">
+        <div *ngIf="!selectedCourseIds.includes(this.course.id) && !isSelectable">
+          <i class="bi bi-exclamation-triangle-fill text-warning ms-2" matTooltip="Diese Lehrveranstaltung gehört zu einem Modul, zu welchem du bereits eine andere passende Lehrveranstaltung eingeplant hast."></i>
+        </div>
+      </ng-container> -->
+    </div>
+    <!-- Button for course selection end -->
+    <!-- Expansion icon -->
+    <div class="col-4 order-1 order-md-3 text-end" role="button" tabindex="0"
+      aria-label="Weitere Lehrveranstaltungsinformationen anzeigen" (click)="course.expandedContent = !course.expandedContent"
+      (keyup.enter)="course.expandedContent = !course.expandedContent">
+      <button *ngIf="!course.expandedContent" class="btn-icon top-0 end-0">
+        <i class="icon bi bi-chevron-down show-more-icon text-gray"></i>
+      </button>
+      <button class="btn-icon top-0 end-0" *ngIf="course.expandedContent">
+        <i class="icon bi bi-chevron-up text-gray"></i>
+      </button>
+    </div>
+    <!-- Expansion icon end -->
+  </div>
+  <!-- Course information header end -->
+  <!-- Course information body start - only visible if expanded -->
+  <div class="row my-4" *ngIf="course.expandedContent">
+    <!-- Additional informations  -->
+    <app-course-details [course]="course" [context]="'sidenav'"></app-course-details>
+    <!--- additional course information end -->
+  </div>
+  <!-- Course information body end -->
+</div>
+
+<!-- Templates for Visualization of Terms -->
+<ng-template #noTermsAvailable>
+  <div class="col-12">
+    <div class="alert alert-info" role="alert">
+      Zur Lehrveranstaltung liegen keine Zeitangaben vor!
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,9 @@
+<!-- Change option for semester -->
+<mat-form-field class="w-100">
+    <mat-label>Semester</mat-label>
+    <mat-select (selectionChange)="selectSemester()" [(value)]="selectedSemester">
+        <mat-option class="my-2" *ngFor="let semester of semesterList" [value]="semester.name">{{
+            semester.fullName
+            }}</mat-option>
+    </mat-select>
+</mat-form-field>

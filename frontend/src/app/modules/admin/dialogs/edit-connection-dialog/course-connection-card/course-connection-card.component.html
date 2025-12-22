@@ -1,0 +1,16 @@
+<mat-card class="w-100 mb-4 px-2 py-1" tabindex="0" aria-label="Zeile mit Lehrveranstaltungsinformationen">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="icon" (click)="openCourse()">{{ course.name }} <span *ngIf="course.short">- {{ course.short }}</span> ({{ course.type }})
+        </div>
+        <div>
+            <button class="btn btn-success"
+                *ngIf="checkCourse(course); else deleteConnection"
+                (click)="connectModule()">Verknüpfen</button>
+            <ng-template #deleteConnection>
+                <button class="btn btn-danger"
+                    (click)="disconnectModule()">Verknüpfung
+                    löschen</button>
+            </ng-template>
+        </div>
+    </div>
+</mat-card>

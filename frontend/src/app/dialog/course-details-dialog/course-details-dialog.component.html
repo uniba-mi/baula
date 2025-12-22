@@ -1,0 +1,13 @@
+<ng-container role="Dialoginhalt">
+    <div class="container my-4">
+        <app-course-details [course]="course" [context]="'detail-dialog'"></app-course-details>
+    </div>
+    <mat-dialog-actions>
+        <button mat-raised-button class="btn btn-danger" [mat-dialog-close]="course" *ngIf="deselectOption">
+            Lehrveranstaltung abwählen
+        </button>
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+            Schließen
+        </button>
+    </mat-dialog-actions>
+</ng-container>

@@ -1,0 +1,174 @@
+<div class="dialog-container" role="dialog" aria-label="Dialogfenster">
+  <div class="dialog-body">
+    <mat-dialog-content>
+      <ng-container class="col-12 col-md-6 conditional-body">
+        <!-- displays title if there is one -->
+        <div *ngIf="data.dialogTitle">
+          <p mat-dialog-title class="pl-0 text-gray">{{ data.dialogTitle }}</p>
+        </div>
+
+        <!-- displays subdialog according to id -->
+        <div *ngIf="
+            data.studyPlan && data.dialogContentId === 'add-study-plan-dialog'
+          ">
+          <app-study-plan-dialog [studyPlan]="data.studyPlan"></app-study-plan-dialog>
+        </div>
+        <div *ngIf="
+            data.aimedEcts !== undefined && data.dialogContentId === 'update-aimed-ects-dialog'
+          ">
+          <app-aimed-ects-dialog [aimedEcts]="data.aimedEcts"></app-aimed-ects-dialog>
+        </div>
+        <div *ngIf="
+            data.dialogContentId === 'edit-grade-dialog' && data.minGrade && data.maxGrade
+          ">
+          <app-edit-grade-dialog [grade]="data.grade" [minGrade]="data.minGrade"
+            [maxGrade]="data.maxGrade"></app-edit-grade-dialog>
+        </div>
+        <div *ngIf="
+        data.missingModules && data.dialogContentId === 'upload-student-data-stepper'
+      ">
+          <app-upload-student-data-stepper [missingModules]="data.missingModules"></app-upload-student-data-stepper>
+        </div>
+
+        <div *ngIf="
+        data.missingModules && data.dialogContentId === 'finish-semester-stepper'
+      ">
+          <app-finish-semester-stepper [missingModules]="data.missingModules"></app-finish-semester-stepper>
+        </div>
+
+        <div *ngIf="
+            data.module &&
+            data.dialogContentId === 'add-user-generated-module-dialog'
+          ">
+          <app-user-generated-module-dialog [module]="data.module"></app-user-generated-module-dialog>
+        </div>
+
+        <div *ngIf="
+        data.pathModule &&
+        data.dialogContentId === 'edit-path-module-dialog'
+      ">
+          <app-edit-path-module-dialog [pathModule]="data.pathModule"></app-edit-path-module-dialog>
+        </div>
+
+        <div *ngIf="
+            data.selectedModule &&
+            data.dialogContentId === 'module-details-dialog'
+          ">
+          <app-module-details-dialog [selectedModule]="data.selectedModule"
+            [dialog]="dialogRef"></app-module-details-dialog>
+        </div>
+
+        <div *ngIf="
+            data.statusOptions &&
+            data.status &&
+            data.dialogContentId === 'change-status-dialog'
+          ">
+          <app-change-status-dialog [statusOptions]="data.statusOptions" [status]="data.status"
+            [statusSemester]="data.statusSemester" [semesters$]="data.semesters$" [grade]="data.grade">
+          </app-change-status-dialog>
+        </div>
+        <div *ngIf="
+            data.mgId &&
+            data.structuredModuleGroups$ &&
+            data.showMgWizard !== undefined &&
+            data.dialogContentId === 'change-module-group-dialog'
+          ">
+          <app-change-module-group-dialog [mgId]="data.mgId" [showMgWizard]="data.showMgWizard"
+            [structuredModuleGroups$]="data.structuredModuleGroups$"></app-change-module-group-dialog>
+        </div>
+        <div *ngIf="
+            data.modules &&
+            data.semesterPlanId &&
+            data.dialogContentId === 'add-module-dialog'
+          ">
+          <app-add-module-dialog [modules]="data.modules"
+            [semesterPlanId]="data.semesterPlanId"></app-add-module-dialog>
+        </div>
+        <div *ngIf="
+          data.semesters$ &&
+          data.dialogContentId === 'select-semester-dialog'
+        ">
+          <app-select-semester-dialog [semesters$]="data.semesters$" [mode]="data.mode"></app-select-semester-dialog>
+        </div>
+
+        <div *ngIf="
+        data.dialogContentId === 'upload-student-data-dialog'
+      ">
+          <app-upload-student-data-dialog></app-upload-student-data-dialog>
+        </div>
+        <div *ngIf="
+            data.semesters$ &&
+            data.selectedSemester$ &&
+            data.dialogContentId === 'edit-semester-dialog'
+          ">
+          <app-edit-semester-dialog [semesters$]="data.semesters$"
+            [currentSemester]="data.selectedSemester$ | async"></app-edit-semester-dialog>
+        </div>
+        <!-- Dialog for Standard -->
+        <div *ngIf="data.standard && data.dialogContentId === 'standard-dialog'">
+          <app-standard-dialog [standard]="data.standard"></app-standard-dialog>
+        </div>
+
+        <!-- Dialog for Course Details -->
+        <div
+          *ngIf="data.course && data.deselectOption !== undefined && data.dialogContentId === 'course-details-dialog'">
+          <app-course-details-dialog [course]="data.course"
+            [deselectOption]="data.deselectOption"></app-course-details-dialog>
+        </div>
+
+        <!-- Dialog for Import and Export -->
+        <div *ngIf="data.dialogContentId === 'import-dialog' && data.importType">
+          <app-import-dialog [importType]="data.importType" [startSemester]="data.startSemester"
+            [studyPlanTemplate$]="data.studyPlanTemplate$"
+            [isFirstSemesterStudent]="data.isFirstSemesterStudent"></app-import-dialog>
+        </div>
+        <div *ngIf="data.dialogContentId === 'export-dialog' && data.studyPlan && data.studyPath">
+          <app-export-dialog [studyPlan]="data.studyPlan" [studyPath]="data.studyPath"></app-export-dialog>
+        </div>
+        <!-- Generischer Dialog für die Wahl zwischen Optionen -->
+        <div *ngIf="data.dialogContentId === 'select-option-dialog' && data.options">
+          <app-select-option-dialog [options]="data.options"></app-select-option-dialog>
+        </div>
+        <!-- Dialog for Activation of Study plan -->
+        <div *ngIf="data.dialogContentId === 'activate-study-plan' && data.activeStudyPlan">
+          <app-activate-study-plan-dialog [studyPlans]="data.studyPlans" [activePlan]="data.activeStudyPlan"
+            [newPlanId]="data.newPlanId"></app-activate-study-plan-dialog>
+        </div>
+        <!-- Dialog for resolving collisions of courses -->
+        <div *ngIf="data.dialogContentId === 'resolve-collision' && data.courses">
+          <app-resolve-collision-dialog [courses]="data.courses"></app-resolve-collision-dialog>
+        </div>
+        <!-- Dialog for editing or adding new jobs -->
+        <div *ngIf="data.dialogContentId === 'edit-job'">
+          <app-edit-job-dialog [job]="data.job"></app-edit-job-dialog>
+        </div>
+        <!-- Dialog for forcing reload if error from api returns -->
+        <div *ngIf="data.dialogContentId === 'force-reload'">
+          <app-reload-dialog></app-reload-dialog>
+        </div>
+        <!-- Dialog for evaluation -->
+        <div *ngIf="data.dialogContentId === 'evaluation'">
+          <app-evaluation-dialog [content]="data.content"></app-evaluation-dialog>
+        </div>
+
+        <!-- Dialog to show important notifications -->
+        <div *ngIf="data.dialogContentId === 'notification-dialog'">
+          <app-notification-dialog></app-notification-dialog>
+        </div>
+
+        @if (data.dialogContentId === 'demo-user-dialog') {
+        <app-demo-user-dialog></app-demo-user-dialog>
+        }
+
+        <div *ngIf="data.dialogContentId === 'privacy-change-dialog'">
+          <app-privacy-change-dialog></app-privacy-change-dialog>
+        </div>
+
+        @if(data.user && data.dialogContentId === 'add-user-dialog') {
+        <app-user-dialog [user]="data.user"></app-user-dialog>
+        }
+
+      </ng-container>
+    </mat-dialog-content>
+  </div>
+</div>

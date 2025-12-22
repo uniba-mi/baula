@@ -1,0 +1,61 @@
+.grade-div:hover {
+    cursor: pointer;
+}
+
+.grade {
+    font-size: 0.85em;
+}
+
+.mg-div {
+    font-size: 0.75rem;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.pencil-icon {
+    font-size: 1rem;
+}
+
+.ects-box {
+    padding-right: 0;
+}
+
+.notes-field {
+    color: var(--ub-blue);
+    background: var(--cus-bg-50);
+    border: 1px solid var(--ub-blue-40);
+    border-radius: 4px;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.invisible {
+    display: none;
+}
+
+.old-module,
+.disabled-dropdown {
+    cursor: not-allowed;
+    border: 1px solid rgb(199, 91, 91);
+}
+
+.disabled-dropdown {
+    pointer-events: none;
+}
+
+.semester-card {
+    margin: 2px 5px;
+}
+
+// drag handle on cards
+.drag-handle {
+  cursor: move;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}

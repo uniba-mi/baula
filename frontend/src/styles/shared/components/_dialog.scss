@@ -1,0 +1,101 @@
+.dialog-container {
+  min-width: 32vw;
+  max-width: 80vw;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__content {
+  padding: 2rem 3rem !important;
+  width: 100% !important;
+  overflow: auto;
+
+}
+
+.mat-mdc-dialog-container {
+  margin-right: 0 !important;
+  padding: 0 !important;
+}
+
+.dialog-body .content-wrapper {
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+
+.dialog-body .input-field-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.dialog-container p {
+  width: 100%;
+}
+
+.dialog-body .mat-mdc-form-field {
+  margin-right: 10px;
+  box-sizing: border-box;
+  width: 90%;
+  margin-bottom: 1rem;
+}
+
+.mat-mdc-dialog-actions {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 8px !important;
+}
+
+.mat-mdc-dialog-actions .btn {
+  min-width: 90px !important;
+  margin: 0 !important;
+}
+
+.dialog-body .mat-mdc-form-field-infix {
+  width: auto !important;
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 575.98px) {
+
+  .dialog-body .content-wrapper {
+    margin: 1rem 0 !important;
+    align-items: normal;
+  }
+
+  .dialog-body .mat-mdc-text-field-wrapper {
+    width: auto;
+    box-sizing: border-box;
+  }
+
+  .mat-mdc-dialog-content .mdc-dialog__content {
+    padding: 0 1rem !important;
+    margin: 0 !important;
+  }
+  
+  .dialog-container {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .mat-mdc-dialog-container .mdc-dialog__content {
+    padding: 1rem 2rem !important;
+  }
+
+  .mat-mdc-dialog-actions {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .mat-mdc-dialog-actions .btn {
+    width: 100% !important;
+    margin-bottom: 8px !important;
+  }
+
+  .mat-mdc-dialog-actions .btn:last-child {
+    margin-bottom: 0 !important;
+  }
+}

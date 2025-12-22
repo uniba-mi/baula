@@ -1,0 +1,14 @@
+<div class="mx-4 my-2">
+    <h2 mat-dialog-title>Herzlich Willkommen</h2>
+    <mat-dialog-content>
+        <p class="my-sm-3">
+            In diesem Bereich haben Sie die Möglichkeit, eigene Ziele in Form von ECTS Grenzen für die wichtigsten Kompetenzstandards der Lehramtsausbildung zu setzen. 
+            Die Funktionen innerhalb dieser Komponente sollen ihnen die kompetenzorientierte Auswahl von Lehrveranstaltungen in Ihrem Erziehungswissenschaftlichen Studium vereinfachen. 
+            Die nötigen Zielsetzungen können Sie jetzt direkt angeben. Alternativ können Sie auf "Abbrechen" klicken und die Ziele später über die "Einstellungen" setzen.
+        </p>
+        <mat-dialog-actions class="my-3">
+            <button class="btn btn-outline me-2" (click)="createEmptyAim()" mat-dialog-close>Abbrechen</button>
+            <button class="btn btn-info" (click)="openCompetenceAimForm()" mat-dialog-close>Ziele jetzt einstellen</button>
+        </mat-dialog-actions>
+    </mat-dialog-content>
+</div>

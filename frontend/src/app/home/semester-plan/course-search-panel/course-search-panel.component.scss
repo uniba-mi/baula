@@ -1,0 +1,34 @@
+.icon {
+    font-size: 1.25rem;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.detail-text {
+    color: var(--ub-blue)
+}
+
+.mat-mdc-select-panel {
+    position: relative;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.reset-option {
+    position: sticky;
+    bottom: -10px;
+    border-radius: 3px;
+    background: var(--cus-light-petrol-100) !important;
+    color: var(--cus-petrol-100);
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.reset-option:hover {
+    background: var(--cus-light-petrol-80) !important;
+}

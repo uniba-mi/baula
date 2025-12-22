@@ -1,0 +1,55 @@
+<!-- TODO: sticky need height defined on level of parent, currently set to 100vh but does not apply to changing site-height -->
+<div class="min-vh-200">
+    <div #barChart id="bar-chart">
+        <svg>
+            <g transform="translate(40,20)" *ngIf="bars">
+                <g *ngFor="let b of bars; let i = index">
+                    <!-- first bar is actual fulfillment -->
+                    <rect *ngIf="b.fulfillment" class="bar" [attr.fill]="b.fill" [attr.x]="this.xKoord(i)"
+                        [attr.y]="this.yKoord(b.fulfillment)" [attr.width]="barWidth"
+                        [attr.height]="contentHeight - yScale(b.fulfillment)" (click)="handleClick(i)" [matTooltip]="
+                            competences[i].compId.replace('_', ' ') + ' - ' + competences[i].name + ':' + b.fulfillment.toFixed(2).toString() + ' ' + currentUnit.toUpperCase()
+                        ">
+                    </rect>
+
+                    <!-- second bar is aim of this competence -->
+                    <rect *ngIf="b.aim && (unit$ | async) == 'ects'" fill="#0FB500"
+                        [attr.x]="this.xKoord(i) - (contentWidth / bars.length - barWidth)/2"
+                        [attr.y]="this.yKoord(b.aim)" [attr.width]="contentWidth / bars.length" [attr.height]="1">
+                    </rect>
+                </g>
+                <g *ngIf="hoverBars$ | async as hoverBars">
+                    <g *ngFor="let hb of hoverBars; let i = index">
+                        <rect *ngIf="hb.fulfillment" fill="#4A95CC" [attr.x]="this.xKoord(i)"
+                            [attr.y]="this.yKoord(hb.fulfillment) - (contentHeight - yScale(bars[i].fulfillment))"
+                            [attr.width]="barWidth" [attr.height]="contentHeight - yScale(hb.fulfillment)"></rect>
+                    </g>
+                </g>
+                <g *ngIf="hoverSelectBars$ | async as hoverSelectBars">
+                    <g *ngFor="let hsb of hoverSelectBars; let i = index">
+                        <rect *ngIf="hsb.fulfillment" fill="#4A95CC" [attr.x]="this.xKoord(i)"
+                            [attr.y]="this.yKoord(bars[i].fulfillment)" [attr.width]="barWidth"
+                            [attr.height]="contentHeight - yScale(hsb.fulfillment)"></rect>
+                    </g>
+                </g>
+            </g>
+            <g [attr.transform]="legendPosition">
+                <!-- each group represents a possible bar color and its description -->
+                <g>
+                    <rect x="0" y="-5" width="20" height="20" fill="var(--ub-blue)" />
+                    <text x="25" y="12.5" class="legend">Aktueller Wert</text>
+                </g>
+                <g transform="translate(150, 0)">
+                    <rect x="0" y="-5" width="20" height="20" fill="var(--ub-red)" />
+                    <text x="25" y="12.5" class="legend">Ausgewählt</text>
+                </g>
+                <g transform="translate(300, 0)" *ngIf="(unit$ | async) == 'ects'">
+                    <line x1="0" y1="5" x2="20" y2="5" stroke="#0FB500" stroke-width="3" />
+                    <text x="25" y="12.5" class="legend">Dein Zielwert</text>
+                </g>
+            </g>
+        </svg>
+    </div>
+    <!-- hr to separate the charts -->
+    <hr class="visibility" size="10" width="85%">
+</div>

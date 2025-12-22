@@ -1,0 +1,221 @@
+/* this file contains styles that are needed in the entire application such as font-related styles, colors and general layout */
+
+h1,
+h2 {
+  font-weight: 400 !important;
+}
+
+h1 {
+  margin-bottom: 1.25em !important;
+  color: var(--cus-gray-100) !important;
+  font-size: 2rem !important;
+}
+
+h2 {
+  margin: 1em 0 !important;
+  color: var(--cus-gray-100) !important;
+  font-size: 1.5rem !important;
+}
+
+h3 {
+  margin: 0.5em 0 !important;
+  color: var(--cus-gray-100) !important;
+  font-size: 1.25rem !important;
+}
+
+h4 {
+  color: var(--cus-gray-100) !important;
+  font-size: 1rem !important;
+}
+
+/* smaller font for phones */
+@media (max-width: 767.98px) {
+  h1 {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+    margin: 0.75em 0 !important;
+  }
+
+  h3 {
+    font-size: 1.1rem !important;
+    margin: 0.5em 0 !important;
+  }
+
+  h4 {
+    font-size: 0.9rem !important;
+  }
+}
+
+.xs-text {
+  font-size: x-small;
+}
+
+.s-text {
+  font-size: small !important;
+}
+
+.smaller-name-on-cards {
+  font-size: 0.9rem;
+}
+
+/* colour adjustments */
+.bg-blue {
+  background: var(--ub-blue);
+}
+
+.text-gray {
+  color: var(--cus-gray-100);
+}
+
+.text-white {
+  color: white;
+}
+
+.text-blue {
+  color: var(--ub-blue);
+}
+
+/* further global styles */
+
+.link {
+  text-decoration: none;
+  color: var(--ub-blue);
+}
+
+.link:hover {
+  color: var(--ub-blue-80);
+}
+
+.nav-link {
+  color: white !important;
+  border-bottom: 3px solid var(--ub-blue) !important;
+
+  &:hover {
+    color: var(--brand-academic-frost) !important;
+  }
+}
+
+.offset-right { // align context menu on cards
+  margin-right: -18px;
+}
+
+.icon {
+  display: inline;
+  margin: 0 10px;
+}
+
+.icon:hover {
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.hover-effect:hover {
+  filter: brightness(300%);
+}
+
+.highlighted-card {
+  border: 2px solid var(--ub-blue) !important
+}
+
+// alert
+.alert-sm {
+  font-size: 0.75rem;
+}
+
+.alert-danger {
+  color: #721c24 !important;
+}
+
+.alert-success {
+  color: #155724 !important;
+}
+
+.alert-warning {
+  color: #856404 !important;
+}
+
+.mat-drawer-container {
+  background: var(--cus-bg-100);
+}
+
+/* global style for DnD-handler */
+*[cdkDragHandle] {
+  cursor: pointer;
+}
+
+/* elements width */
+.w-30 {
+  width: 30% !important;
+}
+
+.w-60 {
+  width: 60% !important;
+}
+
+.w-45 {
+  width: 45% !important;
+}
+
+.w-90 {
+  width: 90% !important;
+}
+
+.w-95 {
+  width: 95% !important;
+}
+
+.vh-200 {
+  min-height: 200vh !important;
+}
+
+/* media queries */
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) {
+  .nav-link {
+    font-size: 1rem !important;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--app-body-font) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input:invalid {
+  color: red !important;
+}
+
+.invisible {
+  display: none !important;
+}
+
+.attribution {
+  margin-top: 0;
+  font-size: 0.5rem;
+}

@@ -1,0 +1,20 @@
+<ng-container *ngIf="selectedStandard && selectedStandard.stId !== ''; then standardIsSelected; else noStandardSelected">
+</ng-container>
+
+<ng-template #noStandardSelected>
+  <div class="alert alert-primary mt-3">
+    Bitte wählen Sie zunächst einen Standard aus um entsprechende Empfehlungen
+    zu erhalten!
+  </div>
+</ng-template>
+
+<ng-template #standardIsSelected>
+  <div class="mt-4" *ngIf="competenceGroups$ | async as competenceGroups">
+    <p class="recommendation-title">
+      Auf welchen Kompetenzbereich möchten Sie sich fokussieren?
+    </p>
+    <div class="competence-button-wrapper">
+      <app-course-list [structure]="structure"></app-course-list>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,10 @@
+<mat-chip-option (click)="toggleTopic(topic.tId)" [selected]="isSelected(topic.tId)"
+    [matTooltip]="topic.description || ''" matTooltipShowDelay="1000" matTooltipPosition="after" class="child-chip">
+    <span *ngIf="!isSelected(topic.tId)">
+        <i class="bi bi-plus-lg"></i>
+    </span>
+    {{ topic.name }}
+    <button *ngIf="isSelected(topic.tId)" matChipRemove (click)="toggleTopic(topic.tId); $event.stopPropagation()">
+        <i class="bi bi-x-lg"></i>
+    </button>
+</mat-chip-option>

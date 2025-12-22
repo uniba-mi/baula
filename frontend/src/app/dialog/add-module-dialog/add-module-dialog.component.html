@@ -1,0 +1,40 @@
+<ng-container role="Dialoginhalt">
+  <form [formGroup]="addModuleForm">
+    <div class="content-wrapper">
+      <p class="mb-4">
+        Hier findest du eine Auflistung aller Module aus deinem Modulhandbuch. <br> Tippe, um die Suche zu starten.
+      </p>
+      <mat-form-field class="study-course-field search-input-field" appearance="outline">
+        <mat-label>Wähle das neue Modul:</mat-label>
+        <input type="text" class="input-with-clear-icon" placeholder="Suche nach einem Modul"
+          aria-label="Suchfeld für Module" formControlName="moduleName" matInput [matAutocomplete]="auto" required />
+
+        <span class="btn-icon d-inline" (click)="clearInput()" (keyup.enter)="clearInput()">
+          <i class="bi bi-x-lg text-gray"></i>
+        </span>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectModule($event)">
+          <mat-option *ngFor="let module of filteredModules | async" [value]="module.name">
+            {{ module.acronym }}: {{ module.name }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="
+            addModuleForm.controls.moduleName.touched &&
+            addModuleForm.controls.moduleName.invalid
+          "><span *ngIf="addModuleForm.controls.moduleName.errors?.required">Das ist ein
+            Pflichtfeld.</span></mat-error>
+      </mat-form-field>
+      <div class="warning-box alert-sm alert-warning w-100" *ngIf="displayPriorModuleWarning">
+        <i class="bi bi-exclamation-circle"></i> {{ warningMessage }}
+      </div>
+      <mat-dialog-actions>
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+          Abbrechen
+        </button>
+        <button mat-raised-button class="btn btn-primary" [disabled]="!addModuleForm.valid || !isModuleSelected"
+          [mat-dialog-close]="getSelectedModuleFromDialog()">
+          Hinzufügen
+        </button>
+      </mat-dialog-actions>
+    </div>
+  </form>
+</ng-container>

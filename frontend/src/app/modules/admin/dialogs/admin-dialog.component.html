@@ -1,0 +1,50 @@
+<div class="dialog-container" role="dialog" aria-label="Dialogfenster">
+  <div class="dialog-body">
+    <mat-dialog-content>
+      <ng-container class="col-12 col-md-6 conditional-body">
+        <!-- displays title if there is one -->
+        <div *ngIf="data.dialogTitle">
+          <p mat-dialog-title class="pl-0 text-gray">{{ data.dialogTitle }}</p>
+        </div>
+
+        <div *ngIf="data.univisCrawl$ && data.dialogContentId === 'univis-crawl-dialog'">
+          <admin-univis-crawl-dialog
+            [univisCrawl$]="data.univisCrawl$"
+          ></admin-univis-crawl-dialog>
+        </div>
+
+        <!-- Dialog for academic date -->
+        <div *ngIf="data.dialogContentId === 'academic-date-dialog'">
+          <admin-academic-dates-dialog
+            [academicDate]="data.academicDate"
+          ></admin-academic-dates-dialog>
+        </div>
+
+        <!-- Dialog for date type -->
+        <div *ngIf="data.dialogContentId === 'date-type-dialog'">
+          <admin-date-type-dialog
+            [dateType]="data.dateType"
+          ></admin-date-type-dialog>
+        </div>
+
+        <!-- Delete Dialog -->
+        <div *ngIf="data.dialogContentId.startsWith('delete')">
+          <admin-delete-dialog
+            [dialogContentId]="data.dialogContentId"
+          ></admin-delete-dialog>
+        </div>
+
+        <!-- Edit Connection Dialog -->
+        <div *ngIf="data.dialogContentId === 'edit-connection-dialog' && data.mCourse && data.semester && data.chair && data.connection && data.courses">
+          <admin-edit-connection-dialog
+            [mCourse]="data.mCourse"
+            [semester]="data.semester"
+            [chair]="data.chair"
+            [connection]="data.connection"
+            [courses]="data.courses"
+          ></admin-edit-connection-dialog>
+        </div>
+      </ng-container>
+    </mat-dialog-content>
+  </div>
+</div>

@@ -1,0 +1,151 @@
+<div class="container mx-auto my-3 my-md-5">
+    <div class="row my-4 justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h2>Hilfe zu Baula & Kontakt</h2>
+            <p>
+                Auf dieser Seite findest du allgemeine Hilfestellung sowie häufig gestellte Fragen zu Baula und dem
+                Thema Studienplanung. Weitere Informationen über das Projekt Baula erhältst
+                du auf der <a class="link" routerLink="/ueber-uns" target="_blank">Über Baula Seite</a>.
+            </p>
+            <mat-card class="p-2 mb-4">
+                <p>
+                <b>Dokumentation für Nutzende</b><br>
+                Falls du konkrete Fragen zu einzelnen Funktionen oder einen allgemeinen Überblick zu allen verfügbaren Funktionen haben möchtest, 
+                findest du nähere Infos in unserer Dokumentation.<br>
+                </p>
+                <button class="btn btn-primary" (click)="navigateToDocs()"><i class="bi bi-link-45deg me-2"></i> Hier gehts zur Dokumentation!</button>
+            </mat-card>
+            <hr>
+            <p>Springe direkt zu:</p>
+            <ul>
+                <li><a class="link" [routerLink]="[]" fragment="kontakt">Kontakt & Feedback</a></li>
+                <li><a class="link" [routerLink]="[]" fragment="bereiche">Überblick über Baula</a></li>
+                <li><a class="link" [routerLink]="[]" fragment="faq">Häufig gestellte Fragen</a></li>
+                <li><a class="link" [routerLink]="[]" fragment="hilfe">Weitere Hilfestellung</a></li>
+            </ul>
+            <hr>
+
+            <h2 id="kontakt">Kontakt & Feedback</h2>
+            <mat-card class="p-2 mb-4">
+                <b>Projekt Baula</b><br>
+                Lehrstuhl für Medieninformatik<br>
+                An der Weberei 5<br>
+                96049 Bamberg<br>
+                <span style="white-space: nowrap;">E-Mail:<a class="contact-mail"
+                        href="mailto:baula.minf@uni-bamberg.de">baula.minf&#64;uni-bamberg.de</a></span>
+            </mat-card>
+            <h3>Feedback</h3>
+            Wir freuen uns immer über Feedback. Du kannst dich jederzeit in unseren <b><a class="link" href="https://vc.uni-bamberg.de/course/view.php?id=71480"
+                    target="_blank">VC-Kurs</a></b> einschreiben und uns dort anonym Feedback und Anregungen zukommen lassen.
+
+            <h2 id="bereiche">Kurzüberblick zu Baula</h2>
+
+            <h3><i class="bi bi-person-vcard"></i> Dashboard</h3>
+            <p class="mb-4">Im Dashboard findest du verschiedene Kacheln, die dir helfen sollen, einen Überblick über
+                wichtige
+                Eckdaten
+                zu deinem Studium sowie deinen aktuellen Fortschrittstand zu erhalten und die wichtigsten Termine im
+                Blick zu haben. Über "Widgets managen" kannst du
+                die
+                Kacheln individuell ein- oder ausblenden. Quick Links führen dich schnell zu wichtigen Ressourcen für
+                dein
+                Studium, wie z. B. dem Virtuellen Campus (VC) oder dem Prüfungsverwaltungssystem FlexNow.</p>
+
+            <h3><i class="bi bi-book"></i> Modulkatalog</h3>
+            <p class="mb-4">Der Modulkatalog enthält das gesamte Modulangebot für deinen Studiengang. Über die
+                Gruppierungsoptionen
+                auf der rechten Seite der Ansicht kannst du einzelne Modulgruppen einsehen. Die
+                ECTS Angabe bei den Modulgruppen zeigt dir, wie viele Module du für jede Modulgruppe tatsächlich belegen
+                musst. Mithilfe der Such- und Filteroptionen kannst du deine Suche nach Modulen weiter verfeinern.
+                Details zu dem jeweiligen Modul erhältst du, in dem du auf eine Modulkarte klickst.</p>
+
+            <h3><i class="bi bi-calendar2-week"></i> Stundenplan</h3>
+            <p class="mb-4">Im Stundenplan kannst du Lehrveranstaltungen für das anstehende Semester planen, in dem du
+                auf
+                "Hinzufügen" klickst. Mithilfe der Lehrveranstaltungssuche kannst du im gesamten
+                Lehrveranstaltungsbestand der Universität nach
+                Lehrveranstaltungen suchen. Bitte prüfe deshalb, ob die Lehrveranstaltung auch für dich belegbar ist
+                (Gibt es in der Lehrveranstaltungskachel z. B. eine Zuordnung zu einem Modul aus deinem Modulhandbuch?).
+                Wende dich im
+                Zweifel an deine <a class="link" href="https://www.uni-bamberg.de/studienberatung/fachstudienberatung/"
+                    target="_blank">Fachstudienberatung</a>.</p> Baula unterstützt dich außerdem mit weiteren
+            Planungshinweisen, wie z. B. bei Kursüberschneidungen.
+
+            <h3><i class="bi bi-list-ol"></i> Studienverlaufsplan</h3>
+            <p class="mb-4">Im Studienverlaufsplan findest du eine Übersicht über alle ausstehenden und vergangenen
+                Semester deines
+                Studiums. Hier kannst du Module oder individuelle Platzhalter einplanen, um dir einen langfristigen
+                Überblick über dein geplantes Studium zu verschaffen. Je nach Verfügbarkeit in deinem Studiengang
+                findest du in der Seitenleiste verschiedene Modulvorschläge.</p> Du hast auch die Möglichkeit, mehrere
+            Studienpläne anzulegen oder Pläne zu exportieren und mit anderen zu teilen.
+
+            <h3><i class="bi bi-person-circle"></i> Profil bearbeiten</h3>
+            <p class="mb-4">Hier kannst du verschiedene Einstellungen im Hinblick auf dein Nutzerprofil vornehmen wie z.
+                B. deine
+                persönlichen Daten bearbeiten, deinen Studienverlauf über die FlexNow-Schnittstelle abrufen oder
+                individuelle
+                Einstellungen für Modulvorschläge festlegen.</p>
+
+            <h2 id="faq">Häufig gestellte Fragen</h2>
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-description class="acc-title">
+                            Was ist ein Modul?
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>Ein Modul ist eine in sich abgeschlossene, thematische Lehreinheit, die sich über eines oder
+                        mehrere Semester erstrecken
+                        kann. Das Angebot von Modulen findest du in deinem <a class="link"
+                            routerLink="/app/modulkatalog" target="_blank">Modulkatalog</a>. Module können im
+                        Regelfall vorausschauend für mehr als ein Semester geplant werden. In Baula gibt es deshalb
+                        einen Studienverlaufsplan. Ein Modul kann eine oder
+                        mehrere Lehrveranstaltungen enthalten.
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-description class="acc-title">
+                            Was ist eine Lehrveranstaltung?
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>Eine Lehrveranstaltung ist eine konkrete Lerneinheit, die einem Modul zugeordnet ist.
+                        Verschiedene Typen von Lehrveranstaltungen sind zum Beispiel Vorlesung, Übung oder Seminar.
+                        Details zu Lehrveranstaltungen sind oft nur kurz vor Semesterbeginn verfügbar und können dann in
+                        den
+                        <a class="link" routerLink="/app/semester" target="_blank">Stundenplan</a> zur Wochenplanung
+                        übernommen werden.
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-description class="acc-title">
+                            Was ist der Unterschied zwischen Stundenplan und Studienverlaufsplan?
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>Mithilfe des Stundenplans kannst du deine Termine, d. h. zu besuchende Lehrveranstaltungen im
+                        Blick behalten. Im Stundenplan kannst du Lehrveranstaltungen aus
+                        dem aktuellen Angebot für das aktuelle
+                        Semester einplanen. Die Informationen hierfür werden mit dem Beginn des Semesters
+                        bekannt gegeben. Länger vorausplanen kannst du dagegen mithilfe des
+                        Studienverlaufsplans. Hier
+                        kannst du ganze Module aus dem Modulhandbuch einplanen, welche im Regelfall
+                        schon am Anfang deines Studiums bekannt sind. Somit kannst du über das aktuelle Semester hinaus
+                        einen persönlichen Verlaufsplan mit Abfolgen von Modulen erstellen.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-description class="acc-title">
+                            Wofür steht Baula?
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>Baula ist ein Akronym und steht für Bamberger Assistentin zur Unterstützung der
+                        Lehrveranstaltungskoordination und -auswahl.</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <h2 id="hilfe">Weitere Hilfestellung</h2>
+            Wenn du tiefergehende Fragen zu deiner persönlichen Studienplanung hast, kann dir die
+            <a class="link" href="https://www.uni-bamberg.de/studienberatung/fachstudienberatung/"
+                target="_blank">Fachstudienberatung</a> weiterhelfen.
+        </div>
+    </div>
+</div>

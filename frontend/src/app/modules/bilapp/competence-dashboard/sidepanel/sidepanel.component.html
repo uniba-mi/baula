@@ -1,0 +1,23 @@
+<!-- Accordion Menu -->
+<mat-accordion #settings multi>
+  <!-- Settings -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span class="w-100">Einstellungen</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-settings></app-settings>
+    <!-- Disable sorting TODO: Sorting doesnt work since restructure of courselist -->
+    <!-- <app-sorting></app-sorting> -->
+  </mat-expansion-panel>
+  <!-- Courselist -->
+  <mat-expansion-panel expanded hideToggle disabled>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span class="w-100">Veranstaltungsliste</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-courses></app-courses>
+  </mat-expansion-panel>
+</mat-accordion>

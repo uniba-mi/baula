@@ -1,0 +1,150 @@
+<!-- RECOMMENDATION SETTINGS -->
+<ng-container *ngIf="user$ | async as user">
+    <div class="topics-container">
+        <h3>Interessante Themenfelder</h3>
+        <p class="description-text mb-4">Wähle hier für Dich interessante Themenfelder aus, um in deinem
+            Studienverlaufsplan passende Module
+            vorgeschlagen zu bekommen. Um ein paar Beispiele für passende Module zu sehen, kannst du
+            entweder nach einem Themenfeld suchen oder dich durch die Themenbereiche darunter klicken.</p>
+        <div class="search-container position-relative">
+            <mat-form-field class="w-100 search-input-field" appearance="outline">
+                <mat-label>Themenfelder suchen</mat-label>
+                <input type="text" class="input-with-clear-icon" placeholder="Nach Themen suchen"
+                    aria-label="Suchfeld für Themenfelder" [formControl]="searchControl" matInput
+                    [matAutocomplete]="autoTopic" />
+                <span class="btn-icon d-inline" (click)="searchControl.setValue('')"
+                    (keyup.enter)="searchControl.setValue('')">
+                    <i class="bi bi-x-lg text-gray"></i>
+                </span>
+                <mat-autocomplete #autoTopic="matAutocomplete" class="chip-style-autocomplete">
+                    <ng-container *ngIf="filteredChildTopics$ | async as filteredTopics">
+                        <ng-container *ngIf="filteredTopics.length > 0">
+                            <mat-option *ngFor="let topic of filteredTopics" [value]="''"
+                                (onSelectionChange)="selectTopicFromSearch(topic)" class="option-with-chip">
+                                <div class="topic-option-container">
+                                    <div class="topic-chip-wrapper">
+                                        <app-topic-chip [topic]="topic" class="inline-chip"
+                                            (click)="$event.stopPropagation()"
+                                            (topicToggled)="topicToggle$.next($event)"></app-topic-chip>
+                                    </div>
+                                    <span *ngIf="topic.description" class="topic-description text-gray">
+                                        {{ topic.description | slice:0:120 }}{{topic.description.length > 120 ? '...'
+                                        :
+                                        ''}}
+                                    </span>
+                                </div>
+                            </mat-option>
+                        </ng-container>
+                        <ng-container *ngIf="filteredTopics.length === 0 && searchControl.value">
+                            <mat-option disabled>
+                                <div>
+                                    Keine Themenfelder gefunden, bitte verwende einen anderen Begriff oder klicke dich
+                                    durch den Themenbaum
+                                </div>
+                            </mat-option>
+                        </ng-container>
+                    </ng-container>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+        <div class="chips-container">
+            <ng-container *ngIf="topicTree$ | async as topicTree">
+                <div class="tree-container row mb-4">
+                    <h4 class="text-gray">Themenbereiche</h4>
+                    <div class="col-12 col-md-4">
+                        <div class="d-flex flex-column gap-2">
+                            <button class="parent-button btn btn-sm d-flex flex-row gap-2 border"
+                                *ngFor="let topic of topicTree.topics" (click)="selectParentTopic(topic)"
+                                [class.text-blue]="topic.showChildren">
+                                <i
+                                    [class]="topic.showChildren ? 'bi bi-arrow-right-circle-fill text-blue' : 'bi bi-arrow-right-circle'"></i>
+                                <span>{{ topic.name }}</span>
+                            </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="!selectedParent">
+                        <div class="col-12 col-md-8">
+                            <span class="text-gray empty-text">Klicke auf einen der Bereiche, um Themenfelder
+                                auszuwählen. Wenn du
+                                deine ausgewählten Themenfelder veränderst, kannst du sehen, wie sich die Modulbeispiele
+                                unten anpassen.</span>
+                        </div>
+                    </ng-container>
+                    <div class="col-12 col-md-8">
+                        <ng-container *ngFor="let parent of topicTree.topics">
+                            <ng-container *ngIf="parent.showChildren">
+                                <div class="parent-group">
+                                    <div class="parent-title">
+                                        <span class="text-gray">{{ parent.name }}</span>
+                                    </div>
+                                    <mat-chip-listbox multiple>
+                                        <app-topic-chip *ngFor="let child of parent.children"
+                                            (topicToggled)="topicToggle$.next($event)" [topic]="child"></app-topic-chip>
+                                    </mat-chip-listbox>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+                <ng-container *ngIf="allSelectedChildren$ | async as selectedChildren">
+                    <ng-container *ngIf="selectedChildren.length > 0">
+                        <div class="mb-4">
+                            <div class="selected-container">
+                                <span class="selected-label">Ausgewählt</span>
+                                <mat-chip-listbox multiple class="selected-chipsbox p-2">
+                                    <app-topic-chip *ngFor="let child of selectedChildren"
+                                        (topicToggled)="topicToggle$.next($event)" [topic]="child"></app-topic-chip>
+                                </mat-chip-listbox>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </div>
+        <!-- recommendations live-preview -->
+        <div class="module-recommendations-container w-100 mt-4">
+            <div class="toggle-header mb-3" (click)="showModuleRecommendations = !showModuleRecommendations"
+                role="button">
+                <h4 class="d-flex align-items-center">
+                    <i class="me-2"
+                        [class]="showModuleRecommendations ? 'bi bi-chevron-down' : 'bi bi-chevron-right'"></i>
+                    <span class="me-2">Beispiele für passende Module basierend auf deinen ausgewählten Themen</span>
+
+                    <span *ngIf="filteredRecommendations && filteredRecommendations.length > 0"
+                        class="badge rounded-pill ms-2 text-uppercase">
+                        BEISPIELE ({{ filteredRecommendations.length }})
+                    </span>
+                </h4>
+            </div>
+
+            <div *ngIf="showModuleRecommendations" class="recommendations-content mt-2">
+                <div *ngIf="isLoading$ | async" style="display: flex; align-items: center; gap: 10px;">
+                    <p style="margin: 0;">Modulvorschläge werden geladen...</p>
+                    <mat-spinner diameter="24"></mat-spinner>
+                </div>
+
+                <ng-container *ngIf="!(isLoading$ | async) && filteredRecommendations?.length" class="d-flex gap-1">
+                    <div class="container-fluid px-0">
+                        <div class="row g-2 d-flex flex-wrap">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex px-2"
+                                *ngFor="let module of filteredRecommendations">
+                                <div class="card-wrapper d-flex w-100">
+                                    <app-recs-module-card class="d-flex w-100" [module]="module" [customStyle]="true"
+                                        [allTopics]="allTopics"
+                                        (moduleMarkedExcluded)="onModuleMarkedExcluded($event)"
+                                        (moduleFavouriteToggled)="onModuleFavouriteToggled($event)"></app-recs-module-card>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <div class="loading-container"
+                    *ngIf="!(isLoading$ | async) && (!filteredRecommendations || filteredRecommendations.length === 0)">
+                    <p>Keine Modulbespiele verfügbar. Bitte wähle oben Themenfelder aus, um Vorschläge zu erhalten.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

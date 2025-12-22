@@ -1,0 +1,31 @@
+input: .
+output: .retype
+
+url: docs.example.com # Use your website address here
+
+start:
+  # Uncomment the next line to try Retype Pro features
+  # pro: true
+
+branding:
+  title: Baula
+  label: Docs
+  logo: /Assets/Logo/icon.png
+
+links:
+- text: Zu Baula!
+  link: https://baula.minf.uni-bamberg.de
+
+footer:
+  links:
+    - text: Hilfe & Kontakt
+      link: https://baula.minf.uni-bamberg.de/hilfe
+    - text: Über BAULA
+      link: https://baula.minf.uni-bamberg.de/ueber-uns
+    - text: Publikationen
+      link: https://baula.minf.uni-bamberg.de/publikationen
+    - text: Datenschutz
+      link: https://baula.minf.uni-bamberg.de/datenschutz
+    - text: Impressum
+      link: https://www.uni-bamberg.de/impressum/
+  #copyright: "&copy; Copyright {{ year }}. All rights reserved."

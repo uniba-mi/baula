@@ -1,0 +1,84 @@
+<div *ngIf="activePlan$ | async as plan; else NoPlanAvailable">
+  <ng-container *ngIf="!maintenance; else MaintenanceSemesterPlan">
+    <ng-container>
+      <mat-sidenav-container hasBackdrop="false">
+        <mat-sidenav #coursesearch mode="side" [opened]="searchOpened">
+          <!-- Content for left sidebar -->
+          <div class="d-flex justify-content-between mt-4 mb-2">
+            <h3 class="d-none d-lg-block mx-auto my-2 text-start">Suche nach Lehrver&shy;anstaltungen</h3>
+            <h3 class="d-block d-lg-none mx-auto my-2 text-start">Suche nach LVs</h3>
+            <i class="fs-4 bi bi-x-lg icon text-gray" (click)="toggleSearch()"></i>
+          </div>
+          <div>
+            <app-course-overview [activePlan]="plan" (openSearch)="toggleSearch($event)"
+              [selectedCourses]="planCourses$ | async" [isSticky]="isSticky"></app-course-overview>
+          </div>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+          <div class="container mx-auto my-3 my-md-5">
+
+            <!-- Headerrow Start-->
+            <div class="row">
+              <app-hint [key]="semesterPlanHint" [hintMessage]="semesterPlanHintMessage"></app-hint>
+            </div>
+            <!-- Headerrow End -->
+
+            <div class="row">
+              <div>
+                <!-- List start -->
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center flex-md-row justify-content-md-between px-2 py-1">
+                  <!-- List header -->
+                  <div class="text-center text-sm-start"><span matTooltip="Semester
+                    ändern" role="button" tabindex="0" (click)="editSemester()"><i
+                        class="bi bi-pencil-square mb-1"></i>
+                      {{plan.semester | Semester}}</span></div>
+                  <div class="text-gray align-items-center" *ngIf="ectsSum$ | async as ectsSum"
+                    matTooltip="Bitte beachte: Hier können nur ECTS aufsummiert werden, die von Dozierenden in UnivIS angegeben werden.">
+                    <span class="ects-sum text-blue">Geplante ECTS: {{ ectsSum }}</span>
+                    von 30 ECTS
+                  </div>
+                  <!-- List header end -->
+                </div>
+                <div class="row" *ngIf="academicDates$ | async as academicDates">
+                  <mat-card class="pt-2">
+                    <app-full-calendar [initalView]="initialView" [activePlan]="plan" [academicDates]="academicDates"
+                      [planCourses]="planCourses$ | async" [toggle]="searchOpened" (import)="importTimetable(plan)"
+                      (export)="exportTimetable(plan)" (openPDF)="openTimetable(plan)" (openUnivis)="openUnivis(plan)"
+                      (openSearch)="toggleSearch()" (openHints)="toggleHints()"></app-full-calendar>
+                  </mat-card>
+                </div>
+                <!-- List end -->
+              </div>
+            </div>
+          </div>
+
+        </mat-sidenav-content>
+
+        <!-- Sidenav for hints -->
+        <mat-sidenav class="hints-sidenav" mode="over" position="end" [opened]="hintsOpened">
+          <app-hints-sidenav [hints]="hints" (close)="toggleHints()" (acronymClick)="openModuleDetails($event)"
+            (resolveCollision)="openResolveDialog($event)">
+          </app-hints-sidenav>
+        </mat-sidenav>
+
+      </mat-sidenav-container>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #NoPlanAvailable>
+  <div class="container mx-auto my-3 my-md-5" *ngIf="activeSemester$ | async as semester">
+    <div class="text-center text-sm-start"><span matTooltip="Semester
+      ändern" role="button" tabindex="0" (click)="editSemester()"><i class="bi bi-pencil-square mb-1"></i>
+        {{semester | Semester}}</span></div>
+    <div class="alert alert-sm alert-warning fs-6" role="alert">
+      Zum ausgewählten Semester konnte kein Stundenplan gefunden werden, bitte wechsle in ein anderes Semester!
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #MaintenanceSemesterPlan>
+  <app-maintenance-message [feature]="'Stundenplan'"></app-maintenance-message>
+</ng-template>

@@ -1,0 +1,33 @@
+<div class="progress-container">
+    <div class="progress-bar">
+        <div class="d-flex align-items-center justify-content-end w-100 bar bg-bar bg-total-credits">
+        </div>
+        <div *ngIf="plannedPercentage$ | async as plannedPercentage"
+            class="d-flex align-items-center justify-content-end bar bg-bar bg-planned-credits"
+            [style.width]="plannedPercentage <= 100 ? plannedPercentage + '%' : '100%'">
+        </div>
+        <div *ngIf="achievedPercentage$ | async as achievedPercentage"
+            class="d-flex align-items-center justify-content-end bar bg-bar bg-achieved-credits"
+            [style.width]="achievedPercentage <= 100 ? achievedPercentage + '%' : '100%'">
+        </div>
+    </div>
+    <div class="progress-legend" role="contentinfo" aria-label="Studienfortschrittslegende">
+        <div class="legend-item" role="figure" aria-label="Erreichte ECTS"
+            matTooltip="Damit ECTS als erreicht gelten, müssen die Module als bestanden markiert sein.">
+            <span class="legend-color-box bg-bar bg-achieved-credits"></span>
+            <span class="legend-text">Erreichte ECTS <span class="text-gray">({{ achievedCredits$ | async
+                    }})</span></span>
+        </div>
+        <div class="legend-item" role="figure" aria-label="Geplante ECTS"
+            matTooltip="Alle ECTS, die du schon eingeplant hast.">
+            <span class="legend-color-box bg-bar bg-planned-credits"></span>
+            <span class="legend-text">Geplante ECTS <span class="text-gray">({{ plannedCredits$ | async
+                    }})</span></span>
+        </div>
+        <div class="legend-item" role="figure" aria-label="Gesamte ECTS"
+            matTooltip="ECTS, die du in deinem Studiengang erreichen musst. Diese kannst du in deinem Profil anpassen.">
+            <span class="legend-color-box bg-bar bg-total-credits"></span>
+            <span class="legend-text">Gesamt ECTS <span class="text-gray">({{ totalCredits }})</span></span>
+        </div>
+    </div>
+</div>

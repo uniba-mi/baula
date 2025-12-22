@@ -1,0 +1,103 @@
+<VirtualHost *:80>
+	# The ServerName directive sets the request scheme, hostname and port that
+	# the server uses to identify itself. This is used when creating
+	# redirection URLs. In the context of virtual hosts, the ServerName
+	# specifies what hostname must appear in the request's Host: header to
+	# match this virtual host. For the default virtual host (this file) this
+	# value is not decisive as it is used as a last resort host regardless.
+	# However, you must set it for any further virtual host explicitly.
+	#ServerName www.example.com
+
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/
+
+	Redirect "/" ${HOST_URL}
+
+	# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+	# error, crit, alert, emerg.
+	# It is also possible to configure the loglevel for particular
+	# modules, e.g.
+	#LogLevel info ssl:warn
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+	# For most configuration files from conf-available/, which are
+	# enabled or disabled at a global level, it is possible to
+	# include a line for only one particular virtual host. For example the
+	# following line enables the CGI configuration for this host only
+	# after it has been globally disabled with "a2disconf".
+	#Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+
+<VirtualHost *:443>
+    DocumentRoot /var/www/browser
+    ServerName ${HOSTNAME}
+
+    SSLEngine on
+    SSLCertificateFile /etc/acme/rsa-certs/certfullchain_${HOSTNAME}.pem
+    SSLCertificateKeyFile /etc/acme/rsa-certs/key_${HOSTNAME}.pem
+
+    Alias /3rdpartylicence.txt /var/www/browser/3rdpartylicence.txt
+    Alias /docs /var/www/docs
+
+    # Sicherheitsheader hinzufügen
+    <IfModule mod_headers.c>
+        Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        Header always set X-Frame-Options DENY
+        Header always set X-Content-Type-Options nosniff
+        RequestHeader set X-Forwarded-Proto "https"
+    </IfModule>
+
+    ProxyRequests Off
+    ProxyPreserveHost On
+
+    <Proxy *>
+        Order deny,allow
+        Allow from all
+    </Proxy>
+
+    <IfModule mod_proxy.c>
+        # Proxy für Routing-API
+        ProxyPass "/api" "http://141.13.235.13:${API_PORT}/api"
+        ProxyPassReverse "/api" "http://141.13.235.13:${API_PORT}/api"
+
+        # Proxy für Shibboleth
+        ProxyPass "/Shibboleth.sso" "http://141.13.235.13:${API_PORT}/Shibboleth.sso"
+        ProxyPassReverse "/Shibboleth.sso" "http://141.13.235.13:${API_PORT}/Shibboleth.sso"
+
+        # Proxy für öffentliche Ressourcen
+        ProxyPass "/public" "http://141.13.235.13:${API_PORT}/public"
+        ProxyPassReverse "/public" "http://141.13.235.13:${API_PORT}/public"
+
+        # Proxy für lokale Anmeldung
+        ProxyPass "/login/local" "http://141.13.235.13:${API_PORT}/login/local"
+        ProxyPassReverse "/login/local" "http://141.13.235.13:${API_PORT}/login/local"
+
+        # Proxy für den Logout
+        ProxyPass "/logout" "http://141.13.235.13:${API_PORT}/logout"
+        ProxyPassReverse "/logout" "http://141.13.235.13:${API_PORT}/logout"
+    </IfModule>
+
+    <IfModule mod_rewrite.c>
+        RewriteEngine On  
+        # Wenn eine vorhandene Datei oder ein Verzeichnis angefordert wird, gehe zu diesem
+        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+        RewriteRule ^ - [L]
+
+        # Wenn die angeforderte Ressource nicht existiert, verwende index.html
+        RewriteCond %{REQUEST_URI} !^/api
+        RewriteCond %{REQUEST_URI} !^/Shibboleth.sso
+        RewriteCond %{REQUEST_URI} !^/login/local
+        RewriteCond %{REQUEST_URI} !^/logout
+        RewriteCond %{REQUEST_URI} !^/docs/user
+        RewriteCond %{REQUEST_URI} !^/docs/developer
+        RewriteCond %{REQUEST_URI} !^/3rdpartylicenses
+        RewriteRule ^ /index.html [L]
+    </IfModule>
+
+    # Proxy und Verbindungszeitlimits
+    ProxyTimeout 1200
+    Timeout 1200
+</VirtualHost>

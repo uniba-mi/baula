@@ -1,0 +1,141 @@
+<form [formGroup]="userForm">
+  <div class="study-course-box">
+    <div class="input-field-wrapper mb-3">
+      <label>Studierst du in Voll- oder Teilzeit? </label>
+      <mat-radio-group formControlName="fulltime" (change)="updateFulltime()">
+        <mat-radio-button [value]="true">Vollzeit</mat-radio-button>
+        <mat-radio-button [value]="false">Teilzeit</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="input-field-wrapper" *ngIf="teacherEducation && bachelors && masters && others">
+      <mat-form-field class="study-course-field" appearance="outline">
+        <mat-label>Studiengang:</mat-label>
+        <mat-select #spName placeholder="Dein Studiengang" formControlName="spName"
+          (selectionChange)="selectSpName(spName.value)" aria-label="Dropdown zur Studiengangswahl" required>
+          <mat-optgroup label="Lehramt" *ngIf="teacherEducation.length !== 0">
+            <mat-option *ngFor="let name of teacherEducation" [value]="name">{{
+              name
+              }}</mat-option>
+          </mat-optgroup>
+          <mat-optgroup label="Bachelor" *ngIf="bachelors.length !== 0">
+            <mat-option *ngFor="let name of bachelors" [value]="name">{{
+              name
+              }}</mat-option>
+          </mat-optgroup>
+          <mat-optgroup label="Master" *ngIf="masters.length !== 0">
+            <mat-option *ngFor="let name of masters" [value]="name">{{
+              name
+              }}</mat-option>
+          </mat-optgroup>
+        </mat-select>
+        <mat-error *ngIf="
+            userForm.controls.spName.touched && userForm.controls.spName.invalid
+          "><span *ngIf="userForm.controls.spName.errors?.required">Das ist ein Pflichtfeld.</span></mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field-wrapper">
+      <mat-form-field appearance="outline" class="start-semester-field">
+        <mat-label>Startsemester:</mat-label>
+        <mat-select #startSemester placeholder="Dein Startsemester" (selectionChange)="selectStartSemester()"
+          formControlName="semester" aria-label="Dropdown zur Startsemesterwahl" required>
+          <mat-option *ngFor="let sem of startSemesters" [value]="sem.name">
+            {{ sem.fullName }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="
+            userForm.controls.semester.touched &&
+            userForm.controls.semester.invalid
+          "><span *ngIf="userForm.controls.semester.errors?.required">Das ist ein Pflichtfeld.</span></mat-error>
+      </mat-form-field>
+      <button class="btn-icon" matTooltip="Das Semester, in dem du dein Studium begonnen hast."
+        matTooltipClass="custom-tooltip" appTooltip>
+        <i class="bi bi-info-circle"></i>
+      </button>
+    </div>
+  </div>
+  <div class="study-programme-box" *ngIf="spVersions$ | async as spVersions">
+    <div class="w-90">
+      <hr class="my-1"/>
+      <p class="s-text text-gray">
+        Diese Informationen sind auf Basis des ausgewählten Studiengangs automatisch vorausgewählt. Passe die Angaben bei
+        Bedarf an deine konkrete Studiensituation an.
+      </p>
+    </div>
+    <div class="input-field-wrapper">
+      <mat-form-field class="study-duration-field" appearance="outline">
+        <mat-label>Studiendauer:</mat-label>
+        <input matInput #duration formControlName="duration" [value]="user.duration" type="number" min="3" max="20"
+          placeholder="Deine geplante Studiendauer" (change)="updateDuration()" required />
+        <mat-error *ngIf="
+              userForm.controls.duration.touched &&
+              userForm.controls.duration.invalid
+            "><span *ngIf="userForm.controls.duration.errors?.required">Das ist ein Pflichtfeld.</span><span *ngIf="
+                userForm.controls.duration.errors?.min ||
+                userForm.controls.duration.errors?.max
+              ">Die Semester müssen zwischen 3 und 20 liegen.</span></mat-error>
+      </mat-form-field>
+      <button class="btn-icon"
+        matTooltip="Hier gibst du deine aktuell geplante Semesteranzahl deines Studiums an. Bei Bachelorstudiengängen beträgt die Anzahl üblicherweise 6 oder 7 Semester und bei Masterstudiengängen 3 oder 4 Semester. Bitte berücksichtige die Höchststudiendauer deines Studiengangs."
+        matTooltipClass="custom-tooltip" appTooltip>
+        <i class="bi bi-info-circle"></i>
+      </button>
+    </div>
+    <div class="input-field-wrapper">
+      <mat-form-field appearance="outline" class="total-ects-field">
+        <mat-label>ECTS (gesamt):</mat-label>
+        <input matInput #maxEcts [value]="user.maxEcts" formControlName="ects" type="number" min="1" max="300"
+          placeholder="Die gesamt ECTS deines Studiengangs" (change)="updateEcts()" required />
+        <mat-error *ngIf="userForm.controls.ects.touched && userForm.controls.ects.invalid"><span
+            *ngIf="userForm.controls.ects.errors?.required">Das ist ein Pflichtfeld.</span><span *ngIf="
+                userForm.controls.ects.errors?.min ||
+                userForm.controls.ects.errors?.max
+              ">Die Zahl der ECTS muss zwischen 1 und 300 liegen.</span></mat-error>
+      </mat-form-field>
+      <button class="btn-icon"
+        matTooltip="Hier gibst du die Gesamtzahl der ECTS ein, die du für deinen Studiengang benötigst."
+        matTooltipClass="custom-tooltip" appTooltip>
+        <i class="bi bi-info-circle"></i>
+      </button>
+    </div>
+    <div class="input-field-wrapper">
+      <mat-form-field class="po-version-field" appearance="outline">
+        <mat-label>Prüfungsordnungsversion:</mat-label>
+        <mat-select #poVersion placeholder="Deine Prüfungsordnungsversion" formControlName="spVersion"
+          (selectionChange)="selectStudyprogramme(poVersion.value)" aria-label="Dropdown zur Prüfungsordnungsauswahl"
+          required>
+          <mat-option *ngFor="let version of spVersions" [value]="version">
+            {{ version }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="
+              userForm.controls.spVersion.touched &&
+              userForm.controls.spVersion.invalid
+            "><span *ngIf="userForm.controls.spVersion.errors?.required">Das ist ein Pflichtfeld.</span></mat-error>
+      </mat-form-field>
+      <button class="btn-icon"
+        matTooltip="Die Prüfungsordnungsversion, nach der du studierst, findest du in FlexNow > Studierendendaten unter der Überschrift “Abgelegte Prüfungen” In der Statuszeile"
+        matTooltipClass="custom-tooltip" appTooltip>
+        <i class="bi bi-info-circle"></i>
+      </button>
+    </div>
+    <div class="input-field-wrapper" *ngIf="selectedStudyprogramme">
+      <mat-form-field class="mhb-field" appearance="outline">
+        <mat-label>Modulhandbuch:</mat-label>
+        <mat-select #moduleHandbook placeholder="Dein Modulhandbuch" formControlName="mhb"
+          (selectionChange)="selectModuleHandbook(moduleHandbook.value)" aria-label="Dropdown zur Modulhandbuchwahl"
+          required>
+          <mat-option *ngFor="let mhb of selectedStudyprogramme.mhbs" [value]="mhb">
+            {{ mhb.name }} ({{ mhb.semester }})
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="
+              userForm.controls.mhb.touched && userForm.controls.mhb.invalid
+            "><span *ngIf="userForm.controls.mhb.errors?.required">Das ist ein Pflichtfeld.</span></mat-error>
+      </mat-form-field>
+      <button class="btn-icon" matTooltip="Gib hier das Modulhandbuch an, nach dem du studierst."
+        matTooltipClass="custom-tooltip" appTooltip>
+        <i class="bi bi-info-circle"></i>
+      </button>
+    </div>
+  </div>
+</form>

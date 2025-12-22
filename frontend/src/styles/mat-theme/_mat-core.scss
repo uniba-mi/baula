@@ -1,0 +1,14 @@
+// Custom Theming for Angular Material https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+
+@use '../variables';
+
+
+// common mat styles
+@include mat.elevation-classes();
+@include mat.app-background();
+
+
+.grouping-wrapper {
+  @include mat.form-field-density(-5);
+}

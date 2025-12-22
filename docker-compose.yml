@@ -1,0 +1,47 @@
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    environment: 
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    expose:
+      - 27017
+    volumes: 
+      - ./data/mongodb:/data/db
+      - ./data/backups/mongodb:/backups
+  
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${RELDB_ROOT_PW}
+      - MYSQL_PASSWORD=${RELDB_PASSWORD}
+      - MYSQL_DATABASE=${RELDB_DATABASE}
+      - MYSQL_USER=${RELDB_USER}
+    expose: 
+      - 3306
+    volumes:
+      - ./data/backups/mariadb:/backups
+      - ./data/mariadb:/var/lib/mysql
+
+  redis:
+    image: redis:alpine
+    restart: always
+    command: >
+      redis-server --aclfile /usr/local/etc/redis/users.acl
+    volumes:
+      - ./data/redis:/data
+      - ./backend/api/src/database/redis-users.acl:/usr/local/etc/redis/users.acl:ro
+    expose:
+      - 6379
+
+  python:
+    build:
+      context: ./backend/python
+    restart: always
+    expose:
+      - 8000
+    depends_on:
+      - mongodb
+      - mariadb

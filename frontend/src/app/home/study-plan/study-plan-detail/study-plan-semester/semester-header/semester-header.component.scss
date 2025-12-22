@@ -1,0 +1,30 @@
+.semester-short {
+    font-size: 0.8rem;
+}
+
+.ects-span {
+    padding: 0 1px;
+}
+
+.green-bg {
+    background: #E6ECCF;
+    border-radius: 5px;
+    border: solid 1px grey;
+}
+
+.ects-chip {
+    padding: 5px 10px !important;
+}
+
+.info-icon {
+    background: #E6ECCF;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    aspect-ratio: 1;
+    width: 15px;
+}
+
+.flex-now-sync {
+    right: 10px;
+}

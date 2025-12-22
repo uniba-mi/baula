@@ -1,0 +1,166 @@
+{
+  "name": "Musterplan B. Sc. Informatik (WS24/25)",
+  "status": false,
+  "semesterPlans": [
+    {
+      "modules": [
+        "WiMa-B-001",
+        "WiMa-B-002",
+        "Inf-Einf-B",
+        "Inf-DM-B",
+        "Inf-Ment-B"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2024w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 31
+    },
+    {
+      "modules": [
+        "MOBI-DBS-B",
+        "AI-AuD-B",
+        "Inf-LBR-B",
+        "Inf-GRABS-B"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2025s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30
+    },
+    {
+      "modules": [
+        "PSI-IntroSP-B",
+        "KTR-Datkomm-B",
+        "HCI-IS-B",
+        "PSI-EDS-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik, z. B. SYSNAP-SNAP-B: Systemnahe Programmierung",
+          "status": "open",
+          "_id": "6703d46bbe563327c72257be"
+        },
+        {
+          "name": "Wahlmodul",
+          "ects": 3,
+          "notes": "Überfachliche Qualifikationen, z. B. Sprachkurs: Spanisch",
+          "status": "open",
+          "_id": "6703d479be563327c72257e3"
+        }
+      ],
+      "courses": [],
+      "semester": "2025w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30
+    },
+    {
+      "modules": [
+        "MI-WAIAI-B",
+        "EESYS-SaD-B",
+        "DSG-IDistrSys-B",
+        "SWT-FSE-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "_id": "6703d553be563327c7225b7c"
+        }
+      ],
+      "courses": [],
+      "semester": "2026s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30
+    },
+    {
+      "modules": [
+        "SWT-SWL-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik, z. B. AlgoK-TAG: Tree decompositions, algorithms and games",
+          "status": "open",
+          "_id": "6703d565be563327c7225bc9"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik, z. B. GdI-MTL-B: Modal and Temporal Logic",
+          "status": "open",
+          "_id": "6703d56cbe563327c7225bf1"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik, z. B. SWT-FPS-B: Foundations of Program Semantics",
+          "status": "open",
+          "_id": "6703d572be563327c7225c1a"
+        },
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "_id": "6703d58dbe563327c7225c87"
+        },
+        {
+          "name": "Modul außerhalb WIAI",
+          "ects": 5,
+          "notes": "Anwendungsbereich Wirtschaftsinformatik, z. B. PWB-IE-V: Einführung in die\ninternationale und europäische Politik",
+          "status": "open",
+          "_id": "6703d59fbe563327c7225cb2"
+        }
+      ],
+      "courses": [],
+      "semester": "2026w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 32
+    },
+    {
+      "modules": [
+        "I-Thesis-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "_id": "6703d614be563327c7225e12"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik, z. B. VIS-GIV-B: Grundlagen der Informationsvisualisierung",
+          "status": "open",
+          "_id": "6703d61fbe563327c7225e3f"
+        },
+        {
+          "name": "Wahlmodul",
+          "ects": 3,
+          "notes": "Überfachliche Qualifikation, z. B. KogSys-GAI-B: Genderaspekte in der Informatik",
+          "status": "open",
+          "_id": "6703d62abe563327c7225e6d"
+        }
+      ],
+      "courses": [],
+      "semester": "2027s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 27
+    }
+  ]
+}

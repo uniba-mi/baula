@@ -1,0 +1,42 @@
+<ng-container class="details-dialog" role="Dialoginhalt">
+  <div>
+    <div class="card-title d-flex justify-content-between align-items-center">
+      <div class="justify-content-start">
+        <h4>{{ selectedModule.acronym }}: {{ selectedModule.name }}</h4>
+        <div class="d-flex flex-row mb-1">
+          <button class="btn btn-outline chip ects-chip px-2" disabled>
+            {{ selectedModule.ects }} ECTS
+          </button>
+          <button class="btn btn-outline chip success-chip px-2 mx-2" disabled
+            *ngIf="selectedModule.offerBegin !== '(leer)' && selectedModule.offerBegin">
+            Ab {{ selectedModule.offerBegin }}
+          </button>
+        </div>
+      </div>
+      <button mat-dialog-close class="btn btn-outline text-gray" tabindex="0" aria-label="Schließen"> <i
+          class="bi bi-x-lg text-gray fs-4"></i>
+      </button>
+    </div>
+  </div>
+  <mat-tab-group #tabGroup animationDuration="0ms">
+    <mat-tab label="Details">
+      <app-module-data [selectedModule]="selectedModule" [dialog]="dialog"></app-module-data>
+    </mat-tab>
+    <mat-tab label="Abhängigkeiten" *ngIf="focusModule && priorModules && extractedPriorModules && advancedModules && (priorModules.length > 0 || advancedModules.length > 0 || extractedPriorModules.length > 0)">
+      <ng-template matTabContent>
+        <app-dependency-graph 
+          [focusModule]="focusModule" 
+          [priorModules]="priorModules"
+          [extractedPriorModules]="extractedPriorModules"
+          [advancedModules]="advancedModules" 
+          [studyPath]="studyPath$ | async"
+          [semesterPlans]="semesterPlans$ | async"
+        ></app-dependency-graph>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Feedback" *ngIf="moduleInStudyPath$ | async">
+      <app-module-feedback [selectedModule]="selectedModule" [feedback]="feedback$ | async"
+        [dialog]="dialog"></app-module-feedback>
+    </mat-tab>
+  </mat-tab-group>
+</ng-container>

@@ -1,0 +1,20 @@
+.module-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: #f0f0f0;
+    min-height: auto;
+    max-height: none;
+}
+
+.plus-icon {
+    font-size: 2rem;
+}
+
+.empty-state-header {
+    font-weight: bold;
+}
+
+.empty-state-description {
+    font-size: 0.8rem;
+}

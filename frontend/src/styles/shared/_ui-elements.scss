@@ -1,0 +1,357 @@
+/* this file contains reusable ui components like buttons, cards, (header, footer, navigation), labels, etc. that are used more than once */
+
+/* buttons */
+/* overwrite bootstrap button colours */
+.btn-success {
+  background-color: var(--ub-green) !important;
+  border-color: var(--ub-green) !important;
+}
+
+.btn-primary {
+  background-color: var(--ub-blue) !important;
+  border-color: var(--ub-gray) !important;
+
+  &:hover {
+    background-color: var(--ub-blue-80) !important;
+  }
+}
+
+.btn-secondary {
+  background-color: var(--ub-gray) !important;
+  border-color: var(--ub-gray) !important;
+  color: white;
+
+  &:hover {
+    background-color: var(--ub-gray-80) !important;
+  }
+}
+
+.btn-outline {
+  background-color: var(--cus-bg-100) !important;
+  border-color: var(--cus-bg-100) !important;
+  color: var(--ub-blue) !important;
+
+  &:hover {
+    background-color: var(--ub-gray-20) !important;
+  }
+}
+
+.btn-blue-outline {
+  background-color: var(--cus-bg-100) !important;
+  border-color: var(--ub-blue-40) !important;
+  color: var(--ub-blue) !important;
+
+  &:hover {
+    background-color: white !important;
+  }
+}
+
+.btn-link {
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: var(--ub-blue);
+  text-decoration-color: var(--ub-blue);
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--ub-gray-20);
+  }
+}
+
+.btn-ghost {
+  background-color: none !important;
+  border-color: none !important;
+  color: var(--ub-blue) !important;
+
+  &:hover {
+    background-color: var(--ub-gray-20) !important;
+  }
+}
+
+// button for sidenav toggle
+.expand-toggle-button {
+  background: var(--ub-blue);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 400px;
+  cursor: pointer;
+  outline: none;
+  position: fixed;
+  top: 50%;
+  left: -15px;
+  z-index: 80;
+}
+
+.expand-toggle-button .icon-wrapper i {
+  font-size: 1.5em;
+}
+
+// transparent buttons around icons
+.btn-icon {
+  background: none;
+  border: none;
+}
+
+.btn-icon:hover {
+  cursor: pointer;
+}
+
+// input field with clear X
+.input-with-clear-icon {
+  width: 95% !important;
+}
+
+// search input field space between for X
+.search-input-field .mat-mdc-form-field-infix {
+  display: flex;
+  justify-content: space-between;
+}
+
+// snackbar
+.alert {
+  // for line breaks
+  white-space: pre-wrap;
+}
+
+/* Semantic elements */
+/* infobox */
+.info-box-petrol {
+  color: #217178;
+  background: #f3feff;
+  border: 1px solid #ddf3f5;
+  border-radius: 4px;
+  margin: 1rem 0 2rem 0;
+  padding: 1rem;
+}
+
+.on-card-info-box {
+  border: 1px solid #ddf3f5;
+  margin: 1rem 0 2rem 0;
+  padding: 1rem;
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  font-size: .75rem;
+}
+
+.status-box-not-clickable .btn-icon,
+.status-box-not-clickable .btn-icon:hover {
+  cursor: default;
+}
+
+.module-link {
+  border-radius: 10px;
+  border: none;
+  font-size: 0.75rem;
+}
+
+.meta-box {
+  font-size: 0.8rem;
+  background: var(--cus-bg-100);
+  margin: 1rem 0 2rem 0;
+  padding: 1rem;
+  border: 1px solid #ddf3f5;
+  border-radius: 4px;
+  background-color: #f3feff;
+}
+
+.recommendations-box {
+  background-color: #f9f7ff !important;
+  border: 1px solid #ebe4ff !important;
+}
+
+.beta-badge {
+  background: linear-gradient(120deg, #edf3bc, #d5f1b6);
+  color: #00457d !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid #d6d5d5;
+  font-size: 0.8rem !important;
+}
+
+// class for red text (e. g. warning info icons)
+.text-red {
+  color: #721c24 !important;
+}
+
+// class for green text (e. g. for success icons)
+.text-green {
+  color: var(--ub-green) !important;
+}
+
+.text-blue {
+  color: var(--ub-blue) !important;
+}
+
+// display of information as chip like button
+.chip {
+  border-radius: 10px !important;
+  border: none !important;
+  font-size: 0.75rem !important;
+  background-color: #eeeeee !important;
+  color: #000 !important;
+  padding: 2px 10px;
+}
+
+.xs-chip {
+  font-size: x-small !important;
+}
+
+.ects-chip {
+  background-color: var(--brand-lecture-sky) !important;
+  color: #000 !important;
+  padding: 0 5px !important;
+  font-size: 0.8rem !important;
+  border: 1px solid #C3DCEF !important;
+}
+
+.compulsory-chip {
+  background-color: #ffe0d5 !important;
+  color: #ff5958 !important;
+}
+
+.compulsory-icon {
+  background-color: #ffe0d5;
+  border-radius: 50rem;
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  width: 24px;
+  height: 24px;
+
+  i {
+    color: #ff5958;
+    font-weight: strong;
+    font-style: normal;
+    font-size: 0.8rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+  }
+}
+
+.job-chip {
+  background-color: #e3e9fd !important;
+  border: 1px solid #cdd6f6 !important;
+}
+
+.topic-chip {
+  background-color: #e3f6fd !important;
+  border: 1px solid #c9e8f4 !important;
+}
+
+.feedback-chip {
+  background: #d4edda !important;
+  border: 1px solid #bcdcc5 !important;
+  color: #155724 !important;
+  cursor: auto;
+}
+
+.feedback-chip-light {
+  background-color: #e6f1e9 !important;
+  border: 1px solid #cdded3 !important;
+  color: #155724 !important;
+}
+
+.success-chip {
+  background-color: var(--ub-green-20) !important;
+  border: 1px solid var(--ub-green-40) !important;
+  padding: 0 5px !important;
+  color: #000 !important;
+  font-size: 0.8rem !important;
+}
+
+.danger-chip {
+  background-color: var(--ub-red-20) !important;
+  border: 1px solid var(--ub-red-40) !important;
+  color: #000 !important;
+}
+
+// truncating texts
+.truncate {
+  display: flex;
+  overflow: hidden;
+  align-items: flex-end;
+}
+
+.truncate .truncate-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+  -moz-hyphens: auto;
+  -o-hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.truncate-icon {
+  padding-right: 5px;
+  flex: 0 0 auto;
+}
+
+.show-more-icon {
+  align-self: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  transition: transform 0.2s ease-in-out;
+  transform-origin: 50% 50%;
+}
+
+.show-more-icon:not(.icon-collapsed) svg {
+  transform: rotate(-180deg);
+  transform-origin: 50% 50%;
+}
+
+.warning-box {
+  color: #856404;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+/* CHIPS */
+.mat-mdc-standard-chip.mat-primary.mat-mdc-chip-selected {
+  --mat-chip-elevated-container-color: var(--ub-blue);
+}
+
+/* sticky reset button */
+.mat-mdc-select-panel-wrap .mat-select-panel {
+  max-height: 256px;
+}
+
+.sticky-action-row {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  padding: 0;
+}
+
+.module-item:hover {
+  cursor: pointer;
+  background-color: #f5f6f8 !important;
+}
+
+.cdk-drag-preview {
+  border: 1px solid var(--ub-gray) !important;
+  overflow: hidden !important;
+}
+
+// does not work without ng deep (parent-child thing)
+.mat-sidenav-container .bulk-actions-bar.sticky {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 0px;
+}

@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row">
+        @for(card of report().cards; track card.id) {
+            <div [class]="card.spacingClasses">
+                @switch (card.type) {
+                    @case ('meta') {
+                        <reporting-meta-data-card [cardData]="card.cardData"></reporting-meta-data-card>
+                    }
+                    @case ('bar') {
+                        <reporting-bar-chart-card [cardData]="card.cardData"></reporting-bar-chart-card>
+                    }
+                    @case ('table') {
+                        <reporting-table-card [cardData]="card.cardData"></reporting-table-card>
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>

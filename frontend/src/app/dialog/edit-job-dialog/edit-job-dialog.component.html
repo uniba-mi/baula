@@ -1,0 +1,126 @@
+<div *ngIf="!editMode">
+    <!-- <div class="mb-4">
+        Hier kannst du aus bestehenden Jobprofilen ein passendes auswählen oder eigene Jobanzeigen per URL hochladen.
+        Eigene Jobanzeigen können derzeit vom Jobportal der <a class="link"
+            href="https://www.arbeitsagentur.de/jobsuche/" aria-label="Link zum Jobportal der Arbeitsagentur"
+            tabindex="0" target="_blank">Arbeitsagentur</a> geladen werden, bitte gebe nur URLs dieser Seiten an.
+        Die hier eingefügten Jobanzeigen gehen in die Empfehlungsgenerierung für dich ein, welche du im
+        Studienverlaufsplan nutzen kannst.
+    </div> -->
+    <div class="mb-4">
+        Hier kannst du aus bestehenden Jobprofilen ein passendes auswählen.
+        Die hier eingefügten Jobanzeigen gehen in die Empfehlungsgenerierung für dich ein, welche du im
+        Studienverlaufsplan nutzen kannst. Zukünftig soll es möglich sein, dass du eigene Jobanzeigen vom Jobportal der <a class="link"
+            href="https://www.arbeitsagentur.de/jobsuche/" aria-label="Link zum Jobportal der Arbeitsagentur"
+            tabindex="0" target="_blank">Arbeitsagentur</a> hochladen kannst. Daran arbeiten wir derzeit noch (TBD).
+    </div>
+    <!-- InputMode selection Beginn -->
+    <div class="d-flex justify-content-start my-2">
+        <mat-chip-listbox aria-label="Input mode selection">
+            <!-- <mat-chip-option [selected]="inputMode === 'mock'" (selectionChange)="selectInputMode('mock')">
+                Jobprofil auswählen
+            </mat-chip-option> -->
+            <!-- <mat-chip-option [selected]="inputMode === 'url'" (selectionChange)="selectInputMode('url')">
+                Jobanzeige per URL
+            </mat-chip-option> -->
+            <mat-chip-option [selected]="inputMode === 'mock'" selectable="false" disableRipple>
+                Jobprofil auswählen
+            </mat-chip-option>
+            <mat-chip-option [selected]="inputMode === 'url'" disabled>
+                Jobanzeige per URL <span class="badge beta-badge">TBD</span>
+            </mat-chip-option>
+        </mat-chip-listbox>
+    </div>
+    <!-- InputMode selection End -->
+    <!-- Mocked Job selection Beginn -->
+    <div class="d-flex flex-row align-items-center my-2" *ngIf="inputMode === 'mock'">
+        <mat-form-field class="search-input-field my-3" appearance="outline">
+            <mat-label>Wähle aus den exemplarischen Jobanzeigen aus:</mat-label>
+            <mat-select [(value)]="selectedJob" (selectionChange)="selectJob()" [disabled]="editMode ">
+                <mat-select-trigger>{{ selectedJob?.title }}</mat-select-trigger>
+                <ng-container *ngFor="let mockJob of mockedJobs">
+                    <mat-option *ngIf="!existingJobMap.get(mockJob.title)" [value]="mockJob">
+                        <h3>{{ mockJob.title }}</h3>
+                        <p>{{ mockJob.description }}</p>
+                        <hr>
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <!-- Mocked Job selection End -->
+    <div class="d-flex flex-row align-items-center my-2" *ngIf="inputMode === 'url'">
+        <mat-form-field class="search-input-field my-3" appearance="outline">
+            <mat-label>URL https://www.arbeitsagentur.de/jobsuche/... </mat-label>
+            <input matInput type="url" class="input-with-clear-icon" [(ngModel)]="searchUrl" [disabled]="editMode"
+                (keyup.enter)="crawlJob()">
+            <button matSuffix class="btn-icon d-inline me-2" (click)="clearInput()" (keyup.enter)="clearInput()">
+                <i class="bi bi-x-lg text-gray"></i>
+            </button>
+        </mat-form-field>
+        <button class="btn btn-outline" [disabled]="editMode" (click)="crawlJob()">
+            <i class="fs-5 bi bi-search"></i>
+        </button>
+    </div>
+</div>
+<!-- Job Information -->
+<div class="d-flex flex-column" *ngIf="!loading; else JobLoading">
+    <ng-container *ngIf="editedJob && !errorMessage">
+        <div *ngIf="inputMode === 'url' || editMode">
+            <mat-form-field appearance="outline">
+                <mat-label>Titel</mat-label>
+                <input matInput [(ngModel)]="editedJob.title" [disabled]="editMode">
+            </mat-form-field>
+        </div>
+        <div *ngIf="editedJob.description">
+            <mat-form-field appearance="outline">
+                <mat-label>Beschreibung</mat-label>
+                <textarea matInput [(ngModel)]="editedJob.description" disabled rows="5"></textarea>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Schlagworte</mat-label>
+                <div *ngIf="loadingKeywords" class="d-flex align-items-center justify-content-center">
+                    <ng-container *ngTemplateOutlet="JobLoading"></ng-container>
+                </div>
+                <mat-chip-grid #chipGrid aria-label="Passe die Schlagworte an." [disabled]="inputMode === 'mock'">
+                    @for (keyword of editedJob.keywords; track keyword; let index = $index) {
+                    <mat-chip-row (removed)="removeKeyword(index)"
+                        [aria-description]="'Klicke Enter, um das Schlagwort ' + keyword + ' zu bearbeiten.'">
+                        {{keyword}}
+                        <button matChipRemove [attr.aria-label]="'Entferne ' + keyword">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </mat-chip-row>
+                    }
+                    <input placeholder="Neues Schlagwort..." [matChipInputFor]="chipGrid"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="addKeyword($event)" required />
+                </mat-chip-grid>
+                <button *ngIf="inputMode !== 'mock'" matSuffix class="btn-icon"
+                    matTooltip="Erzeuge Schlagwörter aus der Jobbeschreibung, selbst hinzugefügte Schlagworte werden überschrieben."
+                    (click)="generateKeywords()">
+                    <i class="bi bi-magic"></i>
+                </button>
+            </mat-form-field>
+            <div *ngIf="editedJob.keywords?.length === 0" class="text-danger small">
+                Gib mindestens ein Schlagwort an oder lasse dir über den Zauberstab Schlagworte extrahieren.
+            </div>
+        </div>
+    </ng-container>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-2" role="alert">
+        {{errorMessage}}
+    </div>
+</div>
+<div class="d-flex flex-row mt-4">
+    <button class="btn btn-secondary me-2" role="button" mat-dialog-close>Abbrechen</button>
+    <button class="btn btn-primary" *ngIf="editedJob" role="button" [mat-dialog-close]="editedJob"
+        [disabled]="!editedJob || !editedJob.keywords || editedJob.keywords.length === 0">Speichern</button>
+</div>
+
+<ng-template #JobLoading>
+    <div class="d-flex align-items-center justify-content-center">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

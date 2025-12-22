@@ -1,0 +1,28 @@
+<div class="feedback-form-wrapper p-4">
+    <div class="feedback-form py-4">
+        <p class="fw-bold">Hier kannst du Feedback zum Modul geben und bearbeiten. Dein Feedback trägt dazu bei,
+            deine Modulempfehlungen zu verbessern.</p>
+        <hr />
+        <form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
+            <div *ngFor="let question of questions" class="mb-3">
+                <label class="form-label mb-2">{{ question.label }}</label>
+                <div class="d-flex justify-content-end flex-row-reverse">
+                    <ng-container *ngFor="let option of [5, 4, 3, 2, 1]">
+                        <input type="radio" [id]="question.id + '-' + option" [value]="option"
+                            [formControlName]="question.id" class="d-none" />
+                        <label [for]="question.id + '-' + option" class="star-label">
+                            <i class="bi" [ngClass]="{
+                  'bi-star-fill text-blue': feedbackForm.get(question.id)?.value >= option,
+                  'bi-star': feedbackForm.get(question.id)?.value < option
+                }"></i>
+                        </label>
+                    </ng-container>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                Feedback absenden
+            </button>
+        </form>
+        <hr />
+    </div>
+</div>

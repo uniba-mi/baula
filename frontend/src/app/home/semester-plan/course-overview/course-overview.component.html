@@ -1,0 +1,23 @@
+<div class="container">
+  <app-hint [key]="courseSearchHint" [hintMessage]="courseSearchHintMessage"></app-hint>
+
+  <app-course-search-panel (search)="getCourses($event)" (openSidenav)="openSearch.emit($event)">
+  </app-course-search-panel>
+
+  <!-- Container for result depending on data -->
+  <div class="row w-100 mx-0" *ngIf="!(spinner$ | async); else progressSpinner">
+    <ng-container>
+      <app-course-list class="course-list" [courses]="courses" [searchSettings]="searchSettings" [isSticky]="isSticky"
+        (notify)="updateList()"></app-course-list>
+      <div *ngIf="courseListEmpty === true" class="mx-auto mt-2 alert alert-primary" role="alert">
+        Zum eingegebenen Suchbegriff konnten keine passenden Lehrveranstaltungen
+        gefunden werden!
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Loading spinner -->
+  <ng-template #progressSpinner>
+    <mat-spinner class="mx-auto my-4"></mat-spinner>
+  </ng-template>
+</div>

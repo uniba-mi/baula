@@ -1,0 +1,21 @@
+@if(cardData(); as cardData) {
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{cardData.title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="mt-2">
+        <table mat-table [dataSource]="tableData">
+            @for(column of cardData.columns; track column) {
+            <ng-container [matColumnDef]="column.key">
+                <th class="fw-bold" [class]="column.key === 'count' ? 'text-center' : ''" mat-header-cell *matHeaderCellDef>{{ column.name }}</th>
+                <td [class]="column.key === 'count' ? 'text-center' : ''" mat-cell *matCellDef="let element"> {{element[column.key]}} </td>
+            </ng-container>
+            }
+            <tr mat-header-row *matHeaderRowDef="cardData.columnKeys"></tr>
+            <tr mat-row *matRowDef="let row; columns: cardData.columnKeys;"></tr>
+        </table>
+        <mat-paginator hidePageSize [length]="cardData.data.length" [pageSize]="pageSize"
+            (page)="onPageChange($event, cardData.data)"></mat-paginator>
+    </mat-card-content>
+</mat-card>
+}

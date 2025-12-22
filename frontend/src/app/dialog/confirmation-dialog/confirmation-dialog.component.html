@@ -1,0 +1,54 @@
+<div class="dialog-container" role="dialog" aria-label="Dialogfenster">
+  <mat-dialog-content>
+    <div class="content-wrapper">
+      <ng-container class="col-12 col-md-6">
+        <!-- displays title if there is one -->
+        <div *ngIf="data.dialogTitle">
+          <p mat-dialog-title class="pl-0 text-gray">{{ data.dialogTitle }}</p>
+        </div>
+
+        <!-- dynamic message based on actionType -->
+        <p>
+          <!-- delete action -->
+          <span *ngIf="data.actionType === 'delete'">
+            Bist du sicher, dass du <b>{{ data.confirmationItem }}</b> löschen möchtest?
+          </span>
+
+          <!-- add action -->
+          <span *ngIf="data.actionType === 'add'">
+            Bist du sicher, dass du <b>{{ data.confirmationItem }}</b> hinzufügen möchtest?
+          </span>
+
+          <!-- update action -->
+          <span *ngIf="data.actionType === 'update'">
+            Bist du sicher, dass du <b>{{ data.confirmationItem }}</b> aktualisieren möchtest?
+          </span>
+
+          <!-- overwrite action -->
+          <span *ngIf="data.actionType === 'overwrite'">
+            Bist du sicher, dass du <b>{{ data.confirmationItem }}</b> überschreiben möchtest?
+          </span>
+
+          <!-- other possible actions / fallback -->
+          <span *ngIf="!data.actionType">
+            Bist du sicher, dass du mit <b>{{ data.confirmationItem }}</b> fortfahren möchtest?
+          </span>
+        </p>
+
+        <p *ngIf="data.warningMessage" class="fw-semibold">
+          {{ data.warningMessage }}
+        </p>
+      </ng-container>
+    </div>
+
+    <div mat-dialog-actions>
+      <!-- Dynamic button classes based on action type -->
+      <button mat-raised-button [ngClass]="data.confirmButtonClass" (click)="handleDialogSubmit()">
+        {{ data.confirmButtonLabel }}
+      </button>
+      <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+        {{ data.cancelButtonLabel }}
+      </button>
+    </div>
+  </mat-dialog-content>
+</div>

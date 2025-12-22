@@ -1,0 +1,16 @@
+<!-- TODO drag n drop currently doesnt work!!! -->
+<div class="drop-zone d-flex flex-column align-items-center" appDnd (fileDropped)="handleFileInput($event)">
+    <input type="file" #file id="file" multiple (change)="handleFileInput($event)"/>
+    <p> Laden sie hier ihre FN2XML-Datei über Drag'n'Drop hoch</p>
+    <p> Oder:</p>
+    <label for="file">Nach Datei suchen</label>
+</div>
+
+<div class="d-flex justify-content-center align-items-center mt-4">
+    <div class="me-4">
+        <admin-semester-selection-form (semesterChange)="selectSemester($event)"></admin-semester-selection-form>
+    </div>
+    <div>
+        <button class="btn btn-primary" (click)="crawlFlexNow()">FlexNow Daten automatisch importieren</button>
+    </div>
+</div>

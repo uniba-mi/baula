@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="row">
+        <div #cyModuleDetails id="cyModuleDetails" class="col-12 col-xxl-6 col-md-5"></div>
+        <div class="col-12 col-xxl-6 col-md-7 mt-4 legend">
+            <div class="fw-bold">Legende</div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="pe-3"><i class="bi bi-square-fill color-red"></i></td>
+                        <td>Modul nicht eingeplant</td>
+                    </tr>
+                    <tr>
+                        <td><i class="bi bi-square-fill color-orange"></i></td>
+                        <td>Modul belegt oder eingeplant</td>
+                    </tr>
+                    <tr>
+                        <td><i class="bi bi-square-fill color-green"></i></td>
+                        <td>Modul bestanden</td>
+                    </tr>
+                    <tr>
+                        <td class="pt-2">P</td>
+                        <td class="pt-2">Pflichtmodul</td>
+                    </tr>
+                    <tr>
+                        <td>W</td>
+                        <td>Wahlmodul</td>
+                    </tr>
+                    <!-- <tr>
+                        <td class="pt-2">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="circle-symbols">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="black" stroke-width="0.8rem" />
+                            </svg>
+                        </td>
+                        <td class="pt-2">Das Modul ist in deinem Modulhandbuch enthalten.</td>
+                    </tr> -->
+                    <!-- <tr>
+                        <td>
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="circle-symbols">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="black" stroke-width="0.8rem"
+                                    stroke-dasharray="16,15" />
+                            </svg>
+                        </td>
+                        <td>Das Modul wurde aus den empfohlenen Vorkenntnissen extrahiert.</td>
+                    </tr> -->
+                    <!-- <tr>
+                        <td class="pt-2 arrow-symbol">➝</td>
+                        <td class="pt-2">Zulassungsvoraussetzung</td>
+                    </tr> -->
+                    <tr>
+                        <td class="arrow-symbol">⇢</td>
+                        <td>Aus empfohlenen Vorkenntnissen extrahiert <i class="bi bi-info-circle" matTooltip="Die Vorkenntnis wurde auf Basis der empfohlenen Vorkenntnisse in den Details extrahiert, dieser Ansatz ist nicht vollständig fehlerfrei. Lese dir also zusätzlich die empfohlenen Vorkenntnisse in den Details durch!"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="pt-2 small"><i class="bi bi-asterisk"></i></td>
+                        <td class="pt-2">Zum weiterführenden Modul sind weitere Vorkenntnisse angegeben.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary my-2" (click)="resetVisualization()">Visualisierung zurücksetzen</button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="tooltip.visible" [style.top.px]="tooltip.y" [style.left.px]="tooltip.x"
+    class="custom-tooltip" [innerHTML]="tooltip.content">
+</div>

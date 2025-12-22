@@ -1,0 +1,20 @@
+<form [formGroup]="moduleForm">
+  <mat-form-field class="w-100" appearance="fill" *ngIf="modules !== undefined">
+    <mat-label>Module</mat-label>
+    <mat-select formControlName="selectedModules" (selectionChange)="changeSelection($event.value)" multiple>
+      <mat-select-trigger>
+        {{modules[0] || ''}}
+        <span *ngIf="(modules.length || 0) > 1">
+          (+{{(modules.length || 0) - 1}} {{modules.length === 2 ? 'weitere' : 'weitere'}})
+        </span>
+      </mat-select-trigger>
+      <mat-optgroup label="EWS I" *ngIf="ewsI$ | async as ewsI">
+        <mat-option *ngFor="let module of ewsI" value="{{module.name}} ({{module.acronym}})">{{module.acronym}} - {{ module.name}} </mat-option>
+      </mat-optgroup>
+      <mat-optgroup label="EWS II" *ngIf="ewsII$ | async as ewsII">
+        <mat-option *ngFor="let module of ewsII" value="{{module.name}} ({{module.acronym}})">{{module.acronym}} - {{ module.name}} </mat-option>
+      </mat-optgroup>
+    </mat-select>
+  </mat-form-field>
+</form>
+ 

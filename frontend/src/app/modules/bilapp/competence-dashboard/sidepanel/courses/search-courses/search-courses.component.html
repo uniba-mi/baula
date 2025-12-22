@@ -1,0 +1,42 @@
+<!-- Searchbar -->
+<div class="row mt-3 mb-1">
+    <div class="col-6">
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Suchbegriff</mat-label>
+            <input matInput [(ngModel)]="searchTerm" (keyup)="searchCourses($event)">
+        </mat-form-field>
+    </div>
+    <div class="col-6">
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Suche in...</mat-label>
+            <mat-select [formControl]="filters" multiple>
+              <mat-select-trigger>
+                {{filters.value ? filters.value[0] : ''}}
+                <span *ngIf="filters.value?.length > 1" class="example-additional-selection">
+                  (+{{filters.value.length - 1}} {{filters.value?.length === 2 ? 'weiteres' : 'weitere'}})
+                </span>
+              </mat-select-trigger>
+              <mat-option *ngFor="let filteroption of filterList" [value]="filteroption">{{filteroption}}</mat-option>
+            </mat-select>
+        </mat-form-field> 
+    </div>
+</div>
+<div class="my-2 mb-4">
+    <button class="btn btn-outline w-100" (click)="searchCourses()">Suchen</button>
+</div>
+<!-- Search result list -->
+<ng-container *ngIf="!searchResult || searchResult.length !== 0; then showSearchResult; else noResultFound"></ng-container>
+
+<ng-template #showSearchResult>
+    <div *ngFor="let course of searchResult">
+        <ng-container *ngIf="selectedCourses$ | async as selectedCourses">
+            <app-course-item [course]="course" [selectedCourses]="selectedCourses"></app-course-item>
+        </ng-container>
+    </div>
+</ng-template>
+
+<ng-template #noResultFound>
+    <div class="mt-2 alert alert-primary">
+        Zum eingegebenen Suchbegriff konnten keine passenden Lehrveranstaltungen gefunden werden!
+    </div>
+</ng-template>

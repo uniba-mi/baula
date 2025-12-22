@@ -1,0 +1,44 @@
+<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+    <form [formGroup]="gradeForm">
+        <div class="content-wrapper">
+            <div class="input-field-wrapper">
+                <mat-form-field appearance="outline">
+                    <mat-label>Note:</mat-label>
+                    <!-- input text, otherwise trouble with ,0 and .0 number validation, also with step: any -->
+                    <input matInput #grade formControlName="grade" type="text" pattern="^[1-5]((\.|,)[0-9])?$"/>
+                    <mat-error *ngIf="gradeForm.get('grade')?.errors">
+                        <span *ngIf="gradeForm.get('grade')?.errors?.min || gradeForm.get('grade')?.errors?.max">
+                            Die Zahl muss zwischen {{minGrade}}.0 und {{maxGrade}}.0 liegen.
+                        </span>
+                        <span *ngIf="gradeForm.get('grade')?.errors?.required">
+                            Das ist ein Pflichtfeld.
+                        </span>
+                        <span *ngIf="gradeForm.get('grade')?.errors?.pattern">
+                            Bitte gib eine gültige Zahl ein (z. B. 2, 2.5).
+                        </span>
+                    </mat-error>
+                    <mat-hint *ngIf="showNoEditHint" class="text-gray">
+                        <span>
+                            <i class="bi bi-exclamation-triangle ms-2 text-red"></i> Da das Modul als "nicht bestanden"
+                            markiert
+                            ist, kannst du die Note nicht ändern.
+                        </span>
+                    </mat-hint>
+                </mat-form-field>
+                <i class="bi bi-info-circle"
+                    matTooltip="Gib hier deine Note ein (z. B. 2,3). Bitte beachte, dass mögliche Noten immer mit dem Status (Bestanden, nicht bestanden, ...) zusammenhängen."
+                    matTooltipClass="custom-tooltip" appTooltip></i>
+            </div>
+        </div>
+        <mat-dialog-actions>
+            <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
+                (keyup)="close('noData')">
+                Abbrechen
+            </button>
+            <button mat-raised-button class="btn btn-primary" [disabled]="!gradeForm.valid"
+                [mat-dialog-close]="gradeForm.controls.grade.value" (click)="close('data')" (keyup)="close('data')">
+                Speichern
+            </button>
+        </mat-dialog-actions>
+    </form>
+</ng-container>

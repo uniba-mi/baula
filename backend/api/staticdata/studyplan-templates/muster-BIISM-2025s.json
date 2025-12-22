@@ -1,0 +1,164 @@
+{
+    "name": "Musterplan B. Sc. International Information Systems Management (SS25)",
+    "status": true,
+    "semesterPlans": [
+        {
+            "modules": [
+                "WiMa-B-001",
+                "WiMa-B-002",
+                "ISM-EidWI-B",
+                "EVWL",
+                "BSL-B-00"
+            ],
+            "userGeneratedModules": [],
+            "courses": [
+                {
+                    "id": "Lecture.sowi.bereic_1.profes.0",
+                    "name": "WiMa-B-002: Wirtschaftsmathematik: Analysis",
+                    "status": "open",
+                    "ects": null,
+                    "sws": 2,
+                    "contributeTo": "WiMa-B-002",
+                    "contributeAs": "42200",
+                    "_id": "67f50589168bffa120bd9f29"
+                }
+            ],
+            "semester": "2025s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "IIS-EBAS-B",
+                "ISDL-ITCon-B",
+                "MOBI-DBS-B",
+                "Inf-Einf-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fremdsprache",
+                    "ects": 3,
+                    "notes": "Fremdsprache",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "66c74c9bb8cafbecb3a137c6"
+                }
+            ],
+            "courses": [],
+            "semester": "2025w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "ISPL-FIISM-B",
+                "SNA-WIM-B",
+                "EESYS-SaD-B",
+                "AIC-IITP-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fachmodul",
+                    "ects": 3,
+                    "notes": "Wahlpflichtbereich IISM",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "66c74e05b8cafbecb3a13b22"
+                }
+            ],
+            "courses": [],
+            "semester": "2026s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "WI-Projekt-B",
+                "ISDL-WAWI-B",
+                "IRWP-B-01",
+                "CTRL-B-01",
+                "WI-Seminar-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fremdsprache",
+                    "ects": 3,
+                    "notes": "Wahlpflichtbereich Fremdsprachen",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "66c74d45b8cafbecb3a13a63"
+                }
+            ],
+            "courses": [],
+            "semester": "2026w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [],
+            "userGeneratedModules": [
+                {
+                    "name": "Auslandsaufenthalt",
+                    "ects": 30,
+                    "notes": "Gelenktes Auslandsstudium",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "66c74f7eb8cafbecb3a13d79"
+                }
+            ],
+            "courses": [],
+            "semester": "2027s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        },
+        {
+            "modules": [
+                "WI-Thesis-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich IISM",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "66c74e60b8cafbecb3a13bf2"
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 3,
+                    "notes": "Wahlpflichtbereich IISM",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f4e946168bffa120bd6853"
+                },
+                {
+                    "name": "Fremdprache",
+                    "ects": 3,
+                    "notes": "Wahlpflichtbereich Fremdsprachen",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f4e952168bffa120bd6877"
+                },
+                {
+                    "name": "Wahlpflichtmodul",
+                    "ects": 6,
+                    "notes": "Allgemeine Schlüsselqualifikationen",
+                    "flexNowImported": false,
+                    "status": "open",
+                    "_id": "67f4e960168bffa120bd689c"
+                }
+            ],
+            "courses": [],
+            "semester": "2027w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30
+        }
+    ]
+}

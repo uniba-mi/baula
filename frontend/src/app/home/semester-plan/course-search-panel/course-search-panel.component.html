@@ -1,0 +1,190 @@
+<div class="d-flex justify-content-center mb-4">
+    <!-- Search panel start -->
+    <mat-expansion-panel #searchPanel hideToggle class="search-panel w-100" [expanded]="panelState">
+        <!-- Search panel header start -->
+        <mat-expansion-panel-header class="p-0">
+            <mat-panel-title class="d-flex flex-wrap justify-content-between my-2" (click)="$event.stopPropagation();"
+                (keydown.space)="$event.stopPropagation()" (keydown.enter)="$event.stopPropagation()">
+
+                <!-- wrapper for search and filter -->
+                <div class="d-flex justify-content-between align-items-center w-100 mx-1 my-2">
+
+                    <!-- Search input field start -->
+                    <div role="search" class="search-input-wrapper flex-grow-1">
+                        <mat-form-field appearance="outline" class="search-input-field m-3">
+                            <mat-label class="my-3"><i class="icon bi bi-search"></i>Suchen...</mat-label>
+                            <input #courseSearchInput matInput maxlength="100" class="input-with-clear-icon" [(ngModel)]="searchTerm"
+                                name="searchTerm" (keydown.enter)="emitSearch(false)" placeholder="Gib hier einen Suchbegriff ein" />
+                            <span class="btn-icon d-inline" (click)="clearInput()" (keyup.enter)="clearInput()">
+                                <i class="bi bi-x-lg text-gray"></i>
+                            </span>
+                        </mat-form-field>
+                    </div>
+                    <!-- Search input field end -->
+                    <!-- Filter (expansion) icon start -->
+                    <button mat-button role="button" class="search-filter-button btn btn-icon btn-primary position-relative"
+                        tabindex="0" aria-label="Suche ausklappen" matTooltip="Filtern" matTooltipClass="custom-tooltip"
+                        (click)="togglePanel()" (keyup.enter)="togglePanel()">
+                        <i class="filter-icon bi bi-funnel"></i><span class="d-inline"></span>
+                        <span *ngIf="((selectedFiltersCount$ | async) ?? 0) > 0"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ selectedFiltersCount$ | async }}
+                        </span>
+                    </button>
+                    <!-- Filter (expansion) icon end -->
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- Search panel header end -->
+
+        <form [formGroup]="advancedSearchOptions">
+            <!-- Search panel hidden parts start -->
+            <div class="search-panel-expanded row pb-2">
+
+                <!-- Search in input field start -->
+                <div formGroupName="filter" class="row mb-4">
+
+                    <div formGroupName="time" class="col-12 d-flex flex-wrap align-items-center">
+                        <!-- Weekday selection -->
+                        <div class="col-12 col-xxl-6">
+                            <mat-form-field appearance="outline" class="w-100 pe-1">
+                                <mat-label><i class="bi bi-calendar-event"></i> Tag</mat-label>
+                                <mat-select formControlName="day">
+                                    <mat-option>Alle</mat-option>
+                                    <mat-option value="Mo">Montag</mat-option>
+                                    <mat-option value="Di">Dienstag</mat-option>
+                                    <mat-option value="Mi">Mittwoch</mat-option>
+                                    <mat-option value="Do">Donnerstag</mat-option>
+                                    <mat-option value="Fr">Freitag</mat-option>
+                                    <mat-option value="Sa">Samstag</mat-option>
+                                    <mat-option value="So">Sonntag</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Time Selection -->
+                        <div class="col-6 col-xxl-3">
+                            <mat-form-field appearance="outline" class="w-100 pe-1">
+                                <mat-label><i class="bi bi-clock"></i> Start</mat-label>
+                                <input type="time" matInput formControlName="timeStart">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6 col-xxl-3">
+                            <mat-form-field appearance="outline" class="w-100 pe-1">
+                                <mat-label><i class="bi bi-clock"></i> Ende</mat-label>
+                                <input type="time" matInput formControlName="timeEnd">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Type selection -->
+                    <div class="col-12" *ngIf="types$ | async as courseTypes">
+                        <mat-form-field appearance="outline" class="w-100" *ngIf="types$ | async as courseTypes">
+                            <mat-label><i class="bi bi-people"></i> Veranstaltungstyp</mat-label>
+                            <mat-select class="select-field" formControlName="types" multiple>
+                                <mat-option *ngFor="let type of courseTypes" [value]="type">{{type}}</mat-option>
+                                <mat-option class="reset-option" (click)="resetFilter('types')"
+                                    (keyup.enter)="resetFilter('types')">
+                                    <i class="bi bi-repeat me-2"></i>Zurücksetzen
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Department selection -->
+                    <div class="col-12" *ngIf="faculties$ | async as faculties">
+                        <mat-form-field appearance="outline" class="w-100" *ngIf="faculties$ | async as faculties">
+                            <mat-label><i class="bi bi-house"></i> Einrichtung</mat-label>
+                            <mat-select class="select-field" formControlName="departments" multiple>
+                                <mat-option *ngFor="let fac of faculties" [value]="fac">{{ fac }}</mat-option>
+                                <mat-option class="reset-option" (click)="resetFilter('departments')"
+                                    (keyup.enter)="resetFilter('departments')">
+                                    <i class="bi bi-repeat me-2"></i>Zurücksetzen
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Filterbutton to filter only modules from mhb -->
+                    <div class="col-12 mt-2">
+                        <p class="text-blue fw-bold">Lehrveranstaltungen beschränken auf...</p>
+                        <div class="listboxes d-flex flex-row">
+                            <mat-chip-listbox class="me-1"
+                                aria-label="Beschränke die Ergebnisliste auf Lehrveranstaltungen, die zu Modulen aus dem Modulhandbuch passen"
+                                formControlName="onlyModuleCourses">
+                                <mat-chip-option [value]="true">Modul in Modulkatalog</mat-chip-option>
+                            </mat-chip-listbox>
+                            <mat-chip-listbox class="me-1"
+                                aria-label=" Beschränke die Ergebnisliste auf eingeplante Lehrveranstaltungen"
+                                formControlName="onlySelectedCourses">
+                                <mat-chip-option [value]="true">LV Eingeplant</mat-chip-option>
+                            </mat-chip-listbox>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expert search -->
+                <div class="row mt-2">
+                    <div class="detail-text fw-bold col-12">
+                        <span><i class="bi bi-eyeglasses"></i> Detailsuche</span>
+                        <span class="col-auto px-2" role="button" (click)="detailSearchExpanded = !detailSearchExpanded"
+                            (keyup.enter)="detailSearchExpanded = !detailSearchExpanded">
+                            <i *ngIf="!detailSearchExpanded" class="bi bi-chevron-down show-more-icon"></i>
+                            <i *ngIf="detailSearchExpanded" class="bi bi-chevron-up"></i>
+                        </span>
+                    </div>
+                    <div *ngIf="detailSearchExpanded">
+                        <ng-container formArrayName="detailSearch">
+                            <div class="toggle-wrapper mt-4 mb-2">
+                                <mat-slide-toggle class="me-2" [checked]="fulltextSearchEnabled"
+                                    (change)="toggleFulltextSearch()" aria-label="Toggle fulltext search"
+                                    aria-label="Volltextsuche aktivieren">
+                                    Volltextsuche
+                                </mat-slide-toggle>
+                                <i class="bi bi-info-circle"
+                                    matTooltip="Hier kannst du die Sucheinstellung von Suche in Titel und Modulkürzel auf Volltextsuche umstellen."
+                                    matTooltipClass="custom-tooltip" appTooltip></i>
+                            </div>
+                            <ng-container *ngFor="let group of detailSearchFields.controls; let i = index">
+                                <div [formGroupName]="i" class="mb-1">
+                                    <mat-form-field appearance="outline" class="me-1 w-40">
+                                        <mat-label>Suchfeld</mat-label>
+                                        <mat-select formControlName="searchIn">
+                                            <mat-option *ngFor="let option of searchInOptions" [value]="option.key">{{
+                                                option.name }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="me-1 w-40">
+                                        <mat-label>Suchbegriff</mat-label>
+                                        <input matInput formControlName="term" (keydown.enter)="onDetailSearchChange($event)">
+                                    </mat-form-field>
+                                    <i class="icon text-gray bi bi-plus-square" aria-label="Weiteres Feld hinzufügen"
+                                        matTooltip="Hinzufügen" matTooltipClass="custom-tooltip"
+                                        (click)="addDetailSearchField()"></i>
+                                    <i *ngIf="i == 0" class="icon bi bi-trash3 text-gray" aria-label="Feld zurücksetzen"
+                                        matTooltip="Zurücksetzen" matTooltipClass="custom-tooltip"
+                                        (click)="resetDetailSearchField(i)"></i>
+                                    <i *ngIf="i !== 0" class="icon bi bi-trash3 text-gray" aria-label="Feld entfernen"
+                                        matTooltip="Entfernen" matTooltipClass="custom-tooltip"
+                                        (click)="removeDetailSearchField(i)"></i>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <!-- Search panel hidden parts start -->
+            <!-- Button to apply filters and setting start -->
+            <div class="d-flex flex-xxl-row flex-column-reverse">
+                <button class="btn btn-outline w-xxl-50 w-100 m-2" role="button"
+                    (click)="resetAllFilters()"><i class="bi bi-repeat"></i> Alle Filter 
+                    zurücksetzen</button>
+                <button class="btn btn-primary w-xxl-5 w-100 m-2" role="button"
+                    (click)="emitSearch(true)"><i class="bi bi-search"></i> Mit Filtern
+                    suchen</button>
+            </div>
+            <!-- Button to apply filters and setting end -->
+        </form>
+    </mat-expansion-panel>
+    <!-- Search panel end -->
+</div>

@@ -1,0 +1,85 @@
+<div id="module-overview" class="container mx-auto my-3 my-md-5" *ngIf="!maintenance; else MaintenanceModuleOverview">
+  <h1 class="text-center text-sm-start">Modulkatalog</h1>
+
+  <!-- Hinweis Modulerklärung -->
+  <app-hint [key]="moduleHint" [hintMessage]="moduleHintMessage"></app-hint>
+
+  <app-search-panel [searchSettings]="searchSettings$ | async" [filterOptions]="filterList" [horizontalFilters]="true"
+    (search)="searchModules($event)">
+  </app-search-panel>
+
+  <!-- Mobile View Collapse Button -->
+  <button *ngIf="mobileView" class="expand-toggle-button" [ngClass]="{'open': sideNavOpened, 'closed': !sideNavOpened}"
+    (click)="toggleSidenav()" (keyup.enter)="toggleSidenav()">
+    <span class="icon-wrapper">
+      <i [ngClass]="sideNavOpened ? 'bi-chevron-double-left' : 'bi-chevron-double-right'" class="bi"></i>
+    </span>
+  </button>
+
+  <!-- Sidenav area -->
+  <mat-sidenav-container #sidenavContainer [hasBackdrop]="false">
+    <!-- Beginn group navigation -->
+    <mat-sidenav id="structure-sidenav" [opened]="sideNavOpened" [mode]="'side'"
+      [@slideInOut]="sideNavOpened ? 'open' : 'closed'">
+      <div #sidenav class="sticky-sidenav me-4">
+        <ng-container *ngTemplateOutlet="GroupingOptions"></ng-container>
+        <app-group-navigation [searchSettings]="searchSettings$ | async" [removeGroupFilters]="removeGroupFilters"
+          [selectedGroup]="selectedGroup" [groups]="groups" [modules]="modules$ | async"></app-group-navigation>
+      </div>
+    </mat-sidenav>
+    <!-- End group navigation -->
+    <mat-sidenav-content>
+      <h4 class="filter-display" *ngIf="selectedGroupFilter && mobileView">
+        Gruppiert nach
+        <span class="fst-italic me-3">{{selectedGroupFilter.name}}</span>
+        <span class="d-inline-block link" (click)="removeGroupFilter()"><i class="me-1 bi bi-x-lg"></i>Gruppierung
+          aufheben</span>
+      </h4>
+      <!-- Beginn search results -->
+      <div class="d-flex flex-rowalign-items-start">
+        <!-- Desktop View Collapse Button -->
+        <div *ngIf="!mobileView" class="mx-3 desktop-toggle-button" role="button"
+          [ngClass]="{'open': sideNavOpened, 'closed': !sideNavOpened}" (click)="toggleSidenav()"
+          (keyup.enter)="toggleSidenav()">
+          <span class="icon-wrapper">
+            <i [ngClass]="sideNavOpened ? 'bi-chevron-double-left' : 'bi-chevron-double-right'" class="bi"></i>
+          </span>
+        </div>
+        <app-module-list class="w-100" [modules]="modules$ | async" [acronyms]="acronyms$ | async"
+          [searchSettings]="searchSettings$ | async" [passedOrTakenAcronyms]="passedOrTakenAcronyms"></app-module-list>
+      </div>
+      <!-- End search results -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<ng-template #MaintenanceModuleOverview>
+  <app-maintenance-message [feature]="'Modulkatalog'"></app-maintenance-message>
+</ng-template>
+
+<ng-template #GroupingOptions>
+  <div class="d-flex flex-row align-items-center mt-1 mb-4">
+    <!-- Grouping input field -->
+    <div class="grouping-wrapper">
+      <form>
+        <mat-form-field class="mb-0" appearance="outline">
+          <mat-label>
+            Gruppieren nach...
+          </mat-label>
+          <mat-select [(value)]="selectedGroup" (selectionChange)="onGroupingSelectionChange($event.value)">
+            <mat-option *ngFor="let option of groupingOptions" [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+    <!-- Deselection Button -->
+    <div class="me-lg-0 me-2" *ngIf="!mobileView">
+      <button class="btn btn-sm btn-outline ms-0 w-100" *ngIf="selectedGroupFilter" (click)="removeGroupFilter()">
+        <i class="bi bi-x-lg"></i>
+        <span class="ms-2">Auswahl aufheben</span>
+      </button>
+    </div>
+  </div>
+</ng-template>

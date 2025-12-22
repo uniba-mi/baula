@@ -1,0 +1,19 @@
+<mat-card-content class="container-fluid d-block pt-0">
+    <div class="card-body p-0">
+        <div class="step" *ngFor="let step of steps" [routerLink]="[step.link]">
+            <i [class]="step.icon + ' step-icon'"></i>
+            <div class="step-content">
+                <div class="step-title fw-bold">{{ step.title }}</div>
+                <div class="step-desc">{{ step.description }}</div>
+            </div>
+            <div class="step-progress">
+                <ng-container *ngIf="step.completed$ | async; else notDone">
+                    <i class="bi bi-check-circle-fill text-success"></i>
+                </ng-container>
+                <ng-template #notDone>
+                    <i class="bi bi-circle"></i>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</mat-card-content>

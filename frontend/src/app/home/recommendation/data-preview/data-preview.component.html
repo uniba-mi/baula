@@ -1,0 +1,48 @@
+<div class="data-wrapper rounded p-3">
+    <ng-container *ngIf="displayItems$ | async as displayItems">
+        <div class="row g-3" *ngIf="displayItems.length > 0; else emptyState">
+            <div class="col-12 col-lg-5">
+                <div class="card-body p-0">
+                    <p class="card-title fw-bold mb-4">
+                        <i class="bi bi-signpost-split-fill fw-bold me-2" *ngIf="type === 'jobs'"></i>
+                        <i class="bi bi-tag-fill fw-bold me-2" *ngIf="type === 'topics'"></i>
+                        <span class="me-2">{{ title }}</span>
+                        <i class="bi bi-info-circle" [matTooltip]="tooltipText" matTooltipClass="custom-tooltip"
+                            appTooltip></i>
+                    </p>
+                    <ul class="preview-list list-group list-group-flush mb-3 position-relative"
+                        *ngIf="displayItems$ | async as displayItems">
+                        <li class="list-group-item rounded d-flex justify-content-between align-items-center mb-1"
+                            *ngFor="let item of displayItems.slice(0, 5)">
+                            <div class="d-flex align-items-center w-100">
+                                <span class="item-name">{{ getItemName(item) }}</span>
+                            </div>
+                        </li>
+                        <div class="gradient-overlay rounded" *ngIf="displayItems.length > 5"></div>
+                    </ul>
+                    <div class="btn-link w-100 mb-0 text-center" [routerLink]="routeLink">
+                        <i class="bi bi-arrow-up-right-square me-2"></i>Alle verwalten
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-7">
+                <app-word-cloud *ngIf="type === 'jobs'" [words]="(recommendedAcronyms$ | async) || []" theme="jobs"
+                    class="jobs-cloud" [clickable]="true" (clicked)="onModuleClick($event)"></app-word-cloud>
+                <app-word-cloud *ngIf="type === 'topics'" [words]="(recommendedAcronyms$ | async) || []" theme="topics"
+                    class="topics-cloud" [clickable]="true" (clicked)="onModuleClick($event)"></app-word-cloud>
+            </div>
+        </div>
+        <ng-template #emptyState>
+            <div class="empty-state d-flex align-items-center justify-content-center p-4">
+                <div class="text-center">
+                    <i class="bi bi-info-circle fs-1 text-muted mb-3"></i>
+                    <p class="text-muted mb-3">Füge hier interessante Themenfelder und Jobs hinzu, um etwas zu sehen und
+                        Modulempfehlungen zu erhalten.</p>
+                    <a class="btn btn-primary" [routerLink]="routeLink">
+                        {{ title }} hinzufügen
+                    </a>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

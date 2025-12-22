@@ -1,0 +1,59 @@
+<mat-card-content class="container-fluid d-block pt-0" *ngIf="academicDates$ | async as academicDates">
+    <ng-container *ngFor="let date of academicDates">
+        <!-- current periods -->
+        <!-- check if datetype is not 'Vorlesungsfrei' -->
+        @if (date.dateType.typeId !== 6) {
+        <div *ngIf="!isPeriodOver(date)" class="row py-2 align-items-center justify-content-between">
+            <div class="col-auto">{{ date.dateType.name }}:</div>
+            <div class="col d-flex justify-content-end align-items-center">
+                <span class="btn period-btn-disabled btn-outline-secondary px-3" [ngClass]="getCountdownClass(date)"
+                    matTooltip="{{ getCountdownMessage(date) }}" matTooltipClass="custom-tooltip">
+                    <i class="bi bi-clock ms-2"></i>
+                    {{ date.startdate | date:'shortDate' }}
+                    <span *ngIf="date.starttime">(ab {{ date.starttime }})</span>
+                    bis
+                    {{ date.enddate | date:'shortDate' }}
+                    <span *ngIf="date.endtime">(bis {{ date.endtime }})</span>
+                </span>
+            </div>
+        </div>
+        }
+    </ng-container>
+
+    <!-- show message if no current periods exist -->
+    <div *ngIf="activePeriods.length === 0" class="text-muted">
+        Keine aktuellen Zeiträume.
+    </div>
+
+    <!-- expandable past periods -->
+    <div *ngIf="pastPeriods.length > 0" class="my-3">
+        <span class="toggle-text text-gray" (click)="togglePastPeriods()">
+            {{ pastPeriodsExpanded ? 'Vergangene Zeiträume verbergen' : 'Vergangene Zeiträume anzeigen' }}
+            <i class="bi" [ngClass]="{
+              'bi-chevron-up': pastPeriodsExpanded, 
+              'bi-chevron-down': !pastPeriodsExpanded
+            }"></i>
+        </span>
+    </div>
+
+    <div *ngIf="pastPeriodsExpanded">
+        <ng-container *ngFor="let date of academicDates">
+            @if (date.dateType.typeId !== 6) {
+            <div *ngIf="isPeriodOver(date)" class="row py-2 align-items-center justify-content-between">
+                <div class="col-auto">{{ date.dateType.name }}:</div>
+                <div class="col d-flex justify-content-end align-items-center">
+                    <span class="btn period-btn-disabled btn-outline-secondary px-3"
+                        matTooltip="{{ getCountdownMessage(date) }}" matTooltipClass="custom-tooltip">
+                        <i class="bi bi-clock ms-2"></i>
+                        {{ date.startdate | date:'shortDate' }}
+                        <span *ngIf="date.starttime">(ab {{ date.starttime }})</span>
+                        bis
+                        {{ date.enddate | date:'shortDate' }}
+                        <span *ngIf="date.endtime">(bis {{ date.endtime }})</span>
+                    </span>
+                </div>
+            </div>
+            }
+        </ng-container>
+    </div>
+</mat-card-content>

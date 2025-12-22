@@ -1,0 +1,28 @@
+<div class="row">
+    <!-- <p class="description-text mb-4">
+        Hier kannst du Jobanzeigen mittels URL hochladen oder ein vordefiniertes Jobprofil auswählen und dir Module, 
+        welche zu dieser Jobanzeige passen, anzeigen lassen. Die hier eingefügten Jobanzeigen gehen zudem in die 
+        Empfehlungsgenerierung für dich ein, welche du im Studienverlaufsplan nutzen kannst.
+    </p> -->
+    <p class="description-text mb-4">
+        Hier kannst du ein vordefiniertes Jobprofil auswählen und dir Module,
+        welche zu dieser Jobanzeige passen, anzeigen lassen. Die hier eingefügten Jobanzeigen gehen zudem in die
+        Empfehlungsgenerierung für dich ein, welche du im Studienverlaufsplan nutzen kannst.
+        Wir arbeiten daran, dass du zukünftig auch eigene Jobanzeigen mittels URL hochladen kannst.
+    </p>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6 p-2">
+        <mat-card appearance="raised" class="h-100 d-flex align-items-center justify-content-center link new-job-box"
+            role="button" (click)="openAddJobDialog()" (keyup.enter)="openAddJobDialog()" tabindex="0">
+            <mat-card-content>
+                <i class="fs-1 bi bi-plus-lg text-gray" matTooltip="Klicke, um einen neuen Job hinzuzufügen."></i>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <ng-container *ngIf="jobs$ | async as jobs">
+        <div class="col-12 col-md-6 p-2" *ngFor="let job of jobs">
+            <app-job-card [job]="job" [studyPathModules]="studyPathModules$ | async"></app-job-card>
+        </div>
+    </ng-container>
+</div>

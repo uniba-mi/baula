@@ -1,0 +1,47 @@
+.scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    z-index: 10;
+    width: 42px;
+    height: 42px;
+    border-radius: 50rem;
+    border: 2px solid var(--ub-blue);
+    background: white;
+    color: var(--ub-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+
+    &.scroll-arrow-left {
+        left: 15px;
+    }
+
+    &.scroll-arrow-right {
+        right: 15px;
+    }
+
+    &:hover:not(.disabled) {
+        background: var(--ub-blue);
+        color: white;
+        transform: translate(0, -50%) scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active:not(.disabled) {
+        transform: translate(0, -50%) scale(0.95);
+    }
+
+    &.disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        border-color: #ccc;
+        color: #ccc;
+        pointer-events: none;
+    }
+}

@@ -1,0 +1,62 @@
+<div class="module-container d-flex justify-content-start">
+    <!-- Loading and No Data States -->
+    <ng-container *ngIf="semesterStudyPath$ | async as semesterStudyPath">
+        <!-- No Modules Message -->
+        <div class="text-center p-4" *ngIf="
+            semesterPlan.modules.length === 0 &&
+            semesterPlan.userGeneratedModules.length === 0 &&
+            (!metaSemester.isPastSemester || (metaSemester.isPastSemester && semesterStudyPath[0].modules?.length === 0))
+            ">
+            <i class="plus-icon bi bi-plus-square-dotted text-gray"></i>
+            <span *ngIf="!metaSemester.isPastSemester; else noPastModules">
+                <p class="empty-state-header">Noch keine Module für dieses Semester eingeplant.</p>
+                <p class="empty-state-description">Füge über den <a class="link"
+                        routerLink="../../../modulkatalog">Modulkatalog</a>
+                    Module zu deinem Plan hinzu oder erstelle einen eigenen Platzhalter.</p>
+            </span>
+
+            <ng-template #noPastModules>
+                <p class="empty-state-header">Noch keine Module in diesem Semester absolviert.</p>
+                <p class="empty-state-description">Lade im Profil deinen <a class="link"
+                        routerLink="/app/profil/verlauf-verwalten">FlexNow-Auszug</a>
+                    mit deinem bisherigen Studienverlauf hoch oder füge deine Leistungen manuell über das Plus
+                    hinzu.
+                </p>
+            </ng-template>
+        </div>
+
+        <!-- MHB Modules -->
+        <ng-container *ngFor="let acronym of semesterPlan.modules">
+            <ng-container *ngIf="!metaSemester.isPastSemester">
+                <ng-container *ngIf="getModuleInformation(acronym) | async as module;">
+                    <app-semester-card [moduleData]="module" [moduleType]="'module'" [metaSemester]="metaSemester"
+                        [modType]="'notPath'" [isSmallScreen]="isSmallScreen"
+                        [availableActions]="['select', 'feedback', 'drag', 'moveToSem', 'delete']"
+                        (actionTriggered)="handleModuleAction($event)">
+                    </app-semester-card>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+
+        <!-- User Generated Modules -->
+        <ng-container *ngIf="!metaSemester.isPastSemester && semesterPlan.userGeneratedModules.length > 0">
+            <ng-container *ngFor="let module of semesterPlan.userGeneratedModules">
+                <app-semester-card [moduleData]="module" [moduleType]="'userGeneratedModule'"
+                    [metaSemester]="metaSemester" [modType]="'notPath'" [isSmallScreen]="isSmallScreen"
+                    [availableActions]="['edit', 'drag', 'moveToSem', 'delete']"
+                    (actionTriggered)="handleModuleAction($event)">
+                </app-semester-card>
+            </ng-container>
+        </ng-container>
+
+        <!-- Path Modules -->
+        <ng-container *ngIf="metaSemester.isPastSemester && semesterStudyPath[0].modules.length > 0">
+            <ng-container *ngFor="let pathModule of semesterStudyPath[0].modules">
+                <app-semester-card [moduleData]="pathModule" [moduleType]="'pathModule'" [metaSemester]="metaSemester"
+                    [modType]="'path'" [availableActions]="['feedback', 'edit', 'delete', 'changeMG', 'editGrade']"
+                    (actionTriggered)="handleModuleAction($event)">
+                </app-semester-card>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</div>

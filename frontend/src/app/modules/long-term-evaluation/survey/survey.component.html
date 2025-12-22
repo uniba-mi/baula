@@ -1,0 +1,270 @@
+<mat-dialog-content id="survey-container" class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h3>Deine Meinung zu Baula</h3>    
+        </div>
+        <button [mat-dialog-close]="false" class="btn btn-outline text-gray" tabindex="0" aria-label="Schließen"> <i
+                class="bi bi-x-lg text-gray fs-6"></i>
+        </button>
+    </div> 
+    <div>
+        @if(view=='intro') {
+        <p>Hallo, 👋</p>
+        <p>wir hoffen, Baula hilft dir, dein Studium besser zu planen. Um die Nutzung von Baula zu verbessern,
+            würden wir uns freuen, wenn du an der folgenden Umfrage teilnehmen könntest.
+            Vielen Dank!</p>
+        <p>Dein Baula-Team ✨</p>
+        <div>
+            <button class="btn btn-primary m-1" [disabled]="dismiss()" (click)="changeView('survey')">Umfrage
+                starten</button>
+            <hr class="w-100 dashed">
+            <div class="mb-1">
+                <mat-checkbox [(ngModel)]="dismiss">Ich möchte dieses Semester nicht an der Umfrage
+                    teilnehmen.</mat-checkbox>
+            </div>
+            <button class="btn btn-secondary m-1" [disabled]="!dismiss()" [mat-dialog-close]="dismiss()">Speichern</button>
+        </div>
+        }
+        @else {
+        <mat-stepper linear #stepper>
+            @if(!data.consentGiven) {
+            <mat-step label="Datenschutz" [stepControl]="consent">
+                <div class="row">
+                    <p class="fst-italic">Bevor es losgeht, folgend noch einige Hinweise bezüglich des Datenschutzes.
+                    </p>
+                    <p>Bitte lies die folgenden Informationen sorgfältig durch. Für Rückfragen schreibe uns gerne eine
+                        Mail
+                        an
+                        <a href="mailto:baula.minf@uni-bamberg.de">baula.minf&#64;uni-bamberg.de</a>.
+                    </p>
+                </div>
+                <div class="row">
+                    <mat-card>
+                        <mat-card-content class="py-2 px-1 py-sm-3 py-sm-2">
+                            <lte-privacy-statement></lte-privacy-statement>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div class="row my-4">
+                    <h4>Einwilligungserklärung</h4>
+                    <mat-radio-group aria-label="Wähle eine Option" [formControl]="consent">
+                        <mat-radio-button class="mx-2" [value]="true">Ja, ich stimme zu.</mat-radio-button>
+                        <mat-radio-button class="mx-2" [value]="false">Nein, ich stimme nicht zu.</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div>
+                    <button class="btn btn-outline me-2" (click)="changeView('intro')">Zurück</button>
+                    @if(consent.valid) {
+                    <button class="btn btn-primary" matStepperNext>Weiter</button>
+                    }
+                    @else {
+                        <button class="btn btn-primary" disabled>Weiter</button><i class="ms-2 bi bi-info-circle" matTooltip="Bitte stimme zu, um an der Umfrage teilzunehmen!"></i>
+                    }
+                    @if(consent.value == false) {
+                        <button class="btn btn-secondary mx-2 my-2 my-sm-0" [mat-dialog-close]="true">Speichern</button>
+                    }
+                </div>
+            </mat-step>
+            }
+            <mat-step [stepControl]="personalCodeForm" label="Code">
+                <ng-template matStepperIcon>1</ng-template>
+                <div class="row">
+                    <p>Um deine angegebenen Daten über mehrere Semester miteinander in Verbindung zu setzen, benötigen
+                        wir
+                        einen pseudonymisierten eindeutigen Code. Auf Groß- und Kleinschreibung musst du keine Rücksicht
+                        nehmen.
+                    </p>
+                </div>
+                <form [formGroup]="personalCodeForm">
+                    <div class="row mb-4 justify-content-center">
+                        <div class="col-sm-8 col-12">
+                            <div>Nenne den zweiten und letzten Buchstaben des Vornamens deiner Mutter.</div>
+                            <div class="fst-italic s-text">z.B. Heike → EE (wenn unbekannt XX)</div>
+                        </div>
+                        <div class="col-sm-4 col-12">
+                            <mat-form-field>
+                                <input matInput formControlName="code1" placeholder="z.B. EE" required>
+                                @if(personalCodeForm.get('code1')?.invalid) {
+                                <mat-error class="code-error">{{ personalCodeForm.get('code1')?.hasError('required') ?
+                                    'Dieses
+                                    Feld ist
+                                    verpflichtend.' : 'Bitte gib genau zwei Buchstaben ein.'}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-8 col-12">
+                            <div>Nenne den ersten und letzten Buchstaben des Vornamens deines Vaters.</div>
+                            <div class="fst-italic s-text">z.B. Herbert → HT (wenn unbekannt XX)</div>
+                        </div>
+                        <div class="col-sm-4 col-12">
+                            <mat-form-field>
+                                <input matInput formControlName="code2" placeholder="z.B. HT" required>
+                                @if(personalCodeForm.get('code2')?.invalid) {
+                                <mat-error class="code-error">{{ personalCodeForm.get('code2')?.hasError('required') ?
+                                    'Dieses
+                                    Feld ist
+                                    verpflichtend.' : 'Bitte gib genau zwei Buchstaben ein.'}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-8 col-12">
+                            <div>Nenne die ersten zwei Ziffern deines Geburtstages.</div>
+                            <div class="fst-italic s-text">z.B. 04. Februar → 04</div>
+                        </div>
+                        <div class="col-sm-4 col-12">
+                            <mat-form-field>
+                                <input matInput formControlName="code3" placeholder="z.B. 04" required>
+                                @if(personalCodeForm.get('code3')?.invalid) {
+                                <mat-error class="code-error">{{ personalCodeForm.get('code3')?.hasError('required') ?
+                                    'Dieses
+                                    Feld ist
+                                    verpflichtend.' : 'Bitte gib genau zwei Zahlen ein.'}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-8 col-12">
+                            <div>Nenne die letzten zwei Buchstaben deines Geburtsortes.</div>
+                            <div class="fst-italic s-text">z.B. Berlin → I N</div>
+                        </div>
+                        <div class="col-sm-4 col-12">
+                            <mat-form-field>
+                                <input matInput formControlName="code4" placeholder="z.B. IN" required>
+                                @if(personalCodeForm.get('code4')?.invalid) {
+                                <mat-error class="code-error">{{ personalCodeForm.get('code4')?.hasError('required') ?
+                                    'Dieses
+                                    Feld ist
+                                    verpflichtend.' : 'Bitte gib genau zwei Buchstaben sein.'}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div>
+                        @if(data.consentGiven) {
+                        <button class="btn btn-outline me-2" (click)="changeView('intro')">Zurück</button>
+                        } @else {
+                        <button class="btn btn-outline me-2" matStepperPrevious>Zurück</button>
+                        }
+                        <button class="btn btn-primary" matStepperNext
+                            [disabled]="personalCodeForm.invalid">Weiter</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="surveyForm" label="Umfrage">
+                <p>Bitte teile uns deine Einschätzungen zur Nützlichkeit und Benutzerfreundlichkeit von Baula mit.
+                    Deine Antworten helfen uns, die Anwendung weiter zu optimieren und besser auf die Bedürfnisse der
+                    Nutzer einzugehen.</p>
+                <form [formGroup]="surveyForm">
+                    <div class="mt-4 separator">Nützlichkeit</div>
+                    @for(question of puLikertQuestions; track question) {
+                    <div class="my-2 my-lg-3">
+                        <div>{{ question.text }}*</div>
+                        <mat-radio-group class="my-1 survey-radio-group" aria-label="Wähle eine Option"
+                            [formControlName]="question.id" required>
+                            @for(scale of likertScale; track scale; let index = $index) {
+                            <mat-radio-button [labelPosition]="index == 0 && isLargeScreen ? 'before' : 'after'"
+                                [value]="index+1">{{ index == 0 || index == 6 || !isLargeScreen ? scale : ''
+                                }}</mat-radio-button>
+                            }
+                            <div class="vr ms-4 d-none d-lg-inline"></div>
+                            <hr class="d-lg-none w-100 my-1">
+                            <mat-radio-button [value]="0">Keine Angabe</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    }
+                    <div class="mt-4 separator">Benutzerfreundlichkeit</div>
+                    @for(question of peouLikertQuestions; track question) {
+                    <div class="my-2 my-lg-3">
+                        <div>{{ question.text }}*</div>
+                        <mat-radio-group class="my-1 survey-radio-group" aria-label="Wähle eine Option"
+                            [formControlName]="question.id" required>
+                            @for(scale of likertScale; track scale; let index = $index) {
+                            <mat-radio-button [labelPosition]="index == 0 && isLargeScreen ? 'before' : 'after'"
+                                [value]="index+1">{{ index == 0 || index == 6 || !isLargeScreen ? scale : ''
+                                }}</mat-radio-button>
+                            }
+                            <div class="vr ms-4 d-none d-lg-inline"></div>
+                            <hr class="d-lg-none w-100 my-1">
+                            <mat-radio-button [value]="0">Keine Angabe</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    }
+                    <div class="mt-4 separator">Nutzung & Feedback</div>
+                    <div class="my-3">
+                        <div>{{ biLikertQuestion.text }}*</div>
+                        <mat-radio-group class="my-1 survey-radio-group" aria-label="Wähle eine Option"
+                            [formControlName]="biLikertQuestion.id" required>
+                            @for(scale of likertScale; track scale; let index = $index) {
+                            <mat-radio-button [labelPosition]="index == 0 && isLargeScreen ? 'before' : 'after'"
+                                [value]="index+1">{{ index == 0 || index == 6 || !isLargeScreen ? scale : ''
+                                }}</mat-radio-button>
+                            }
+                            <div class="vr ms-4 d-none d-lg-inline"></div>
+                            <hr class="d-lg-none w-100 my-1">
+                            <mat-radio-button [value]="0">Keine Angabe</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="my-3">
+                        <div>Wie häufig hast du Baula in den letzten Wochen verwendet?*</div>
+                        <mat-radio-group formControlName="use" class="survey-radio-group">
+                            <mat-radio-button value="täglich">Täglich</mat-radio-button>
+                            <mat-radio-button value="mehrmals pro Woche">Mehrmals pro Woche</mat-radio-button>
+                            <mat-radio-button value="einmal pro Woche">Einmal pro Woche</mat-radio-button>
+                            <mat-radio-button value="seltener">Seltener</mat-radio-button>
+                            <div class="vr mx-2 d-none d-lg-inline"></div>
+                            <hr class="d-lg-none w-100 my-1">
+                            <mat-radio-button value="undefined">Keine Angabe</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="my-3">
+                        <div class="mb-2">Wie wahrscheinlich ist es, dass Du Baula Kommilitoninnen oder Kommilitonen
+                            weiterempfehlen
+                            würden?*</div>
+                        <div class="d-flex justify-content-end flex-row-reverse flex-wrap-reverse">
+                            <label class="mx-2">10</label>
+                            @for(option of [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]; track option) {
+                            <span class="mx-2">
+                                <input type="radio" [id]="'nps-' + option" [value]="option" formControlName="nps"
+                                    class="d-none" />
+                                <label [for]="'nps-' + option" class="star-label">
+                                    @if(npsValue && npsValue >= option) {
+                                    <i class="bi bi-star-fill text-blue"></i>
+                                    }
+                                    @else {
+                                    <i class="bi bi-star"></i>
+                                    }
+                                </label>
+                            </span>
+                            }
+                            <label class="mx-2">1</label>
+                        </div>
+                    </div>
+                    <div class="my-3">
+                        <div class="mb-2">Hast Du weiteres Feedback, Verbesserungsvorschläge oder Kritik zu Baula?</div>
+                        <mat-form-field>
+                            <textarea matInput #feedback formControlName="feedback"
+                                placeholder="Platz für Anmerkungen"></textarea>
+                            <mat-hint align="end">{{feedback.value.length}} / 1000</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline me-2" matStepperPrevious>Zurück</button>
+                        <button class="btn btn-primary" [disabled]="surveyForm.invalid"
+                            (click)="onSubmit()">Speichern</button>
+                    </div>
+                </form>
+
+
+            </mat-step>
+            <ng-template matStepperIcon="edit">
+                <i class="bi bi-check-lg"></i>
+            </ng-template>
+        </mat-stepper>
+        }
+    </div>
+</mat-dialog-content>

@@ -1,0 +1,21 @@
+<div class="d-flex flex-column p-2 justify-content-center align-items-center">
+  <div>
+    <!-- varying png for diagram- and non-diagram displayal-->
+    <img *ngIf="!diagram" class="no-data-img" src="../../../../assets/no_data.png" alt="Keine Daten vorhanden" />
+    <img *ngIf="diagram" class="no-data-img" src="../../../../assets/no_data_diagramme.png"
+      alt="Keine Daten vorhanden" />
+  </div>
+  <div *ngIf="!diagram" class="no-data-message p-2 text-center text-gray">
+    {{ noDataMessage }}
+  </div>
+  <div *ngIf="diagram" class="no-data-message-diagram p-2 text-center text-gray">
+    Noch keine Daten vorhanden.
+    <i class="bi bi-info-circle"
+      matTooltip="Dieses Diagramm visualisiert deinen Studienverlauf. Füge Module hinzu, indem du deinen FlexNow-Auszug hochlädst oder den Modulstatus für die jeweiligen Module im Modulkatalog anpasst."
+      matTooltipClass="custom-tooltip" appTooltip></i>
+  </div>
+  <a *ngIf="noDataBtnText && noDataLinkText" class="no-data-btn btn btn-outline redirect link"
+    [routerLink]="noDataLinkText" aria-label="Gehe zu">
+    {{ noDataBtnText }}
+  </a>
+</div>

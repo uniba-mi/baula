@@ -1,0 +1,61 @@
+.recommendations-content {
+  transition: all 0.3s ease;
+}
+
+.preview-container {
+  width: 100%;
+  position: relative;
+}
+
+.preview-scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  scroll-behavior: smooth;
+}
+
+.scroll-arrow-left {
+  left: -20px;
+}
+
+.scroll-arrow-right {
+  right: -20px;
+}
+
+.preview-cards-row {
+  display: flex;
+  gap: 12px;
+  padding: 4px 0;
+  min-width: min-content;
+}
+
+.preview-card {
+  flex: 0 0 auto;
+  width: 280px;
+  min-width: 280px;
+
+  app-recs-module-card {
+    height: 100%;
+    display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .preview-card {
+    width: 260px;
+    min-width: 260px;
+  }
+
+  .preview-container {
+    .slider-btn-left {
+      left: 4px;
+    }
+
+    .slider-btn-right {
+      right: 4px;
+    }
+  }
+}

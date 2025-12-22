@@ -1,0 +1,237 @@
+<ng-container class="finish-dialog-container" role="Dialogfenster" aria-label="Dialogfenster">
+
+    <p *ngIf="!formInitialised">Bitte wähle alle Module oder Platzhalter an, die du in den Studienverlauf übernehmen
+        möchtest und klicke auf
+        weiter.</p>
+
+    <ng-container *ngIf="!formInitialised">
+
+        <!-- Table -->
+        <div class="mt-3 p-0 rounded bg-white">
+            <div class="row my-auto py-3 px-1 d-none d-sm-flex fw-bold text-gray border">
+                <div class="col-8 text-gray">Kürzel/Name</div>
+                <div class="col-4 text-gray">Übernehmen</div>
+            </div>
+            <div *ngIf="missingModules.length > 0;">
+                <div class="row p-2 py-sm-4 px-sm-2 border" *ngFor="let module of missingModules">
+                    <div class="col-12 col-sm-8 mb-1 mb-sm-0">
+                        <!-- for user generated modules display both acronym and name (notes) -->
+                        <ng-container>
+                            {{ module.acronym }} - {{ module.name }}
+                        </ng-container>
+                    </div>
+                    <div class="col-12 col-sm-4 d-flex justify-content-start">
+                        <button class="btn-icon" *ngIf="isModuleSelected(module)" tabindex="0"
+                            (click)="setModuleCompletion(module, false)"
+                            (keyup.enter)="setModuleCompletion(module, false)">
+                            <i class="status-toggle active-toggle icon bi bi-toggle-on"></i>
+                        </button>
+                        <button class="btn-icon" *ngIf="!isModuleSelected(module)" tabindex="0"
+                            (click)="setModuleCompletion(module, true)"
+                            (keyup.enter)="setModuleCompletion(module, true)">
+                            <i class="status-toggle icon bi bi-toggle-off text-gray"></i>
+                        </button>
+                        <span class="status-active px-2 rounded info" *ngIf="isModuleSelected(module)">Übernehmen</span>
+                        <span class="text-gray" *ngIf="!isModuleSelected(module)">Nicht übernehmen</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+
+    <p *ngIf="formInitialised && formData">Bitte prüfe bzw. ergänze unten aufgeführte Module und Platzhalter. Wenn du
+        alles
+        vervollständigt hast und
+        auf "Speichern" klickst, wird das Semester abgeschlossen, als vergangen markiert und somit deine Belegungen zum
+        Studienverlauf hinzugefügt. Die Module sind dann <b>nicht mehr veränderbar</b>.
+    </p>
+
+    <ng-container *ngIf="formInitialised">
+        <mat-horizontal-stepper *ngIf="formData; else noData" [linear]="true" [formGroup]="stepperForm" #stepper
+            (animationDone)="selectionChange(stepper)">
+            <mat-step *ngFor="let module of getSelectedModules(); let i = index" [formGroupName]="getFormKey(module, i)"
+                [completed]="getFormGroup(getFormKey(module, i)).valid"
+                [hasError]="getFormGroup(getFormKey(module, i)).invalid && (getFormGroup(getFormKey(module, i)).dirty || getFormGroup(getFormKey(module, i)).touched)">
+                <ng-template matStepLabel> <span
+                        [style.color]="getFormGroup(getFormKey(module, i)).invalid && (getFormGroup(getFormKey(module, i)).dirty || getFormGroup(getFormKey(module, i)).touched) ? 'red' : ''">
+                        {{ module.acronym }}
+                    </span></ng-template>
+                <form [formGroup]="getFormGroup(getFormKey(module, i))">
+                    <div class="content-wrapper">
+                        <!-- Basic Module Information -->
+                        <div class="input-field-wrapper">
+                            <mat-form-field appearance="outline" class="mt-1">
+                                <mat-label>Kürzel</mat-label>
+                                <input matInput formControlName="acronym" #acronym required>
+                                <mat-error
+                                    *ngIf="getFormGroup(getFormKey(module, i)).get('acronym')?.touched && getFormGroup(getFormKey(module, i)).get('acronym')?.invalid">
+                                    <span
+                                        *ngIf="getFormGroup(getFormKey(module, i)).get('acronym')?.errors?.required">Das
+                                        ist
+                                        ein
+                                        Pflichtfeld.</span>
+                                </mat-error>
+                            </mat-form-field>
+                            <i class="bi bi-info-circle"
+                                matTooltip="Hier kannst du ein Kürzel eingeben, um dein Modul wiederzuerkennen. Am besten verwendest du eine übliche Modulbezeichnung."
+                                matTooltipClass="custom-tooltip" appTooltip></i>
+                        </div>
+                        <div class="input-field-wrapper">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Name</mat-label>
+                                <input matInput formControlName="name" #name required>
+                                <mat-error
+                                    *ngIf="getFormGroup(getFormKey(module, i)).get('name')?.touched && getFormGroup(getFormKey(module, i)).get('name')?.invalid">
+                                    <span *ngIf="getFormGroup(getFormKey(module, i)).get('name')?.errors?.required">Das
+                                        ist ein
+                                        Pflichtfeld.</span>
+                                </mat-error>
+                            </mat-form-field>
+                            <i class="bi bi-info-circle" matTooltip="Lege einen Namen für das Modul fest."
+                                matTooltipClass="custom-tooltip" appTooltip></i>
+                        </div>
+                        <div class="input-field-wrapper">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Status</mat-label>
+                                <mat-select formControlName="status" #status required>
+                                    <mat-option value="passed">Bestanden</mat-option>
+                                    <mat-option value="failed">Nicht bestanden</mat-option>
+                                    <mat-option value="taken">Belegt</mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="getFormGroup(getFormKey(module, i)).get('status')?.touched && getFormGroup(getFormKey(module, i)).get('status')?.invalid">
+                                    <span
+                                        *ngIf="getFormGroup(getFormKey(module, i)).get('status')?.errors?.required">Das
+                                        ist
+                                        ein
+                                        Pflichtfeld.</span>
+                                </mat-error>
+                            </mat-form-field>
+                            <i class="bi bi-info-circle" matTooltip="Gib hier den letzten Status des Moduls an."
+                                matTooltipClass="custom-tooltip" appTooltip></i>
+                        </div>
+                        <div class="input-field-wrapper">
+                            <mat-form-field appearance="outline">
+                                <mat-label>ECTS</mat-label>
+                                <input matInput formControlName="ects" #ects type="number" min="1" max="30" required>
+                                <mat-error
+                                    *ngIf="getFormGroup(getFormKey(module, i)).get('ects')?.touched && getFormGroup(getFormKey(module, i)).get('ects')?.invalid"><span
+                                        *ngIf="
+                                getFormGroup(getFormKey(module, i)).get('ects')?.errors?.min ||
+                                getFormGroup(getFormKey(module, i)).get('ects')?.errors?.max
+                              ">Die ECTS müssen mindestens 1 und maximal 30 sein.</span><span
+                                        *ngIf="getFormGroup(getFormKey(module, i)).get('ects')?.errors?.required">Das
+                                        ist ein
+                                        Pflichtfeld.</span>
+                                </mat-error>
+                            </mat-form-field>
+                            <i class="bi bi-info-circle"
+                                matTooltip="Gib hier die ECTS ein. Der Wert darf zwischen 1 und 30 liegen."
+                                matTooltipClass="custom-tooltip" appTooltip></i>
+                        </div>
+                        <div class="input-field-wrapper">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Note</mat-label>
+                                <input matInput formControlName="grade" #grade type="text" required>
+                                <mat-error
+                                    *ngIf="getFormGroup(getFormKey(module, i)).get('grade')?.touched && getFormGroup(getFormKey(module, i)).get('grade')?.invalid">
+                                    <span *ngIf="getFormGroup(getFormKey(module, i)).get('grade')?.errors?.required">Das
+                                        ist
+                                        ein
+                                        Pflichtfeld.
+                                    </span>
+                                    <span
+                                        *ngIf="getFormGroup(getFormKey(module, i)).get('grade')?.errors?.min || getFormGroup(getFormKey(module, i)).get('grade')?.errors?.max">Die
+                                        Note muss zwischen 1,0 und 4,0 liegen.
+                                    </span>
+                                    <span *ngIf="getFormGroup(getFormKey(module, i)).get('grade')?.errors?.pattern">
+                                        Bitte gib eine gültige Zahl ein (z. B. 2, 2.5).
+                                    </span>
+                                </mat-error>
+                                <mat-hint *ngIf="showNoEditHint || showNoGradeHint" class="text-gray">
+                                    <span *ngIf="showNoEditHint"> <i
+                                            class="bi bi-exclamation-triangle ms-2 text-red"></i>
+                                        Da das Modul als "nicht
+                                        bestanden"
+                                        markiert ist, kannst du die Note nicht ändern.</span>
+                                    <span *ngIf="showNoGradeHint">
+                                        <i class="bi bi-exclamation-triangle ms-2 text-red"></i> Da das Modul als
+                                        "belegt"
+                                        markiert ist, gibt es noch keine Note.
+                                    </span>
+                                </mat-hint>
+                            </mat-form-field>
+                            <i class="bi bi-info-circle"
+                                matTooltip="Gib hier deine Note an. Sie kann zwischen 1,0 und 5,0 liegen."
+                                matTooltipClass="custom-tooltip" appTooltip></i>
+                        </div>
+                        <div class="input-field-wrapper">
+                            <mat-form-field *ngIf="structuredModuleGroups$ | async as structuredModuleGroups"
+                                appearance="outline">
+                                <mat-label>Modulgruppe</mat-label>
+                                <mat-select formControlName="mgId" #mgId>
+                                    <mat-option *ngFor="let group of structuredModuleGroups" [value]="group.mgId"
+                                        [ngStyle]="{'padding-left': ((group.level ?? 0) * 10 + 10) + 'px'}"> {{
+                                        group.path
+                                        }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="button-group d-flex justify-content-between">
+                            <button mat-raised-button class="previous-btn btn btn-outline me-2" matStepperPrevious
+                                *ngIf="i !== 0">
+                                <i class="bi bi-arrow-left"></i>
+                                <span class="d-none d-sm-inline">Vorheriges Modul</span>
+                            </button>
+
+                            <button mat-raised-button class="next-btn btn btn-primary" matStepperNext
+                                *ngIf="i !== getSelectedModules().length - 1"
+                                [disabled]="!getFormGroup(getFormKey(module, i)).valid">
+                                <span class="d-none d-sm-inline">Nächstes Modul</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                        <button mat-raised-button class="save-btn btn btn-primary"
+                            *ngIf="i === getSelectedModules().length - 1" [disabled]="!stepperForm.valid"
+                            [mat-dialog-close]="getData()" (click)="close('data')" (keyup.enter)="close('data')">
+                            Speichern
+                        </button>
+                    </div>
+                </form>
+            </mat-step>
+            <!-- force stepper to use proper icons, default state is numbers.. -->
+            <ng-template matStepperIcon="edit">
+                <i class="bi bi-check-lg"></i>
+            </ng-template>
+            <ng-template matStepperIcon="done">
+                <i class="bi bi-check-lg"></i>
+            </ng-template>
+        </mat-horizontal-stepper>
+    </ng-container>
+    <mat-dialog-actions>
+        <!-- Weiter Button -->
+        <button *ngIf="!formInitialised" mat-raised-button class="btn btn-primary mt-3" (click)="startStepper()"
+            (keyup.enter)="startStepper()">
+            Weiter
+        </button>
+        <button *ngIf="formInitialised" mat-raised-button class="btn btn-outline mt-3" (click)="stopStepper()"
+            (keyup.enter)="stopStepper()">
+            Zurück
+        </button>
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+            Abbrechen
+        </button>
+        <button *ngIf="formInitialised && !formData" mat-raised-button class="btn btn-danger"
+            [mat-dialog-close]="getData()">
+            Ohne Abschließen
+        </button>
+    </mat-dialog-actions>
+
+    <ng-template #noData>
+        <mat-card appearance="outlined" class="my-3 p-4">
+            <p>Es liegen keine Module oder Platzhalter zur Übernahme in den Studienverlauf vor.</p>
+        </mat-card>
+    </ng-template>

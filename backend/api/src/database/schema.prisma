@@ -1,0 +1,364 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("REL_DATABASE_URL")
+}
+
+model Department {
+  shortName String           @id @map("short_name")
+  name      String
+  sps       StudyProgramme[]
+}
+
+model StudyProgramme {
+  spId      String     @map("sp_id")
+  poVersion Int        @map("po_version")
+  name      String     @db.Text
+  desc      String
+  faculty   String
+  date      String
+  dep       Department @relation(fields: [faculty], references: [shortName], onDelete: Restrict, onUpdate: Cascade)
+  mhbs      Sp2Mhb[]
+
+  @@id(fields: [spId, poVersion], name: "spId_poVersion")
+}
+
+model Sp2Mhb {
+  spId      String         @map("sp_id")
+  poVersion Int            @map("po_version")
+  mhbId     String         @map("mhb_id")
+  version   Int
+  mhb       Mhb            @relation(fields: [mhbId, version], references: [mhbId, version], onDelete: Cascade, onUpdate: Cascade)
+  sp        StudyProgramme @relation(fields: [spId, poVersion], references: [spId, poVersion], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([spId, poVersion, mhbId, version])
+}
+
+model Mhb {
+  mhbId     String         @map("mhb_id")
+  name      String
+  desc      String         @db.Text
+  version   Int
+  semester  String
+  sps       Sp2Mhb[]
+  mgs       Mhb2Mg[]
+
+  @@id([mhbId, version])
+}
+
+model Mhb2Mg {
+  mg         ModuleGroup @relation(fields: [mgId, versionMg], references: [mgId, version], onDelete: Cascade, onUpdate: Cascade)
+  mgId       String      @map("mg_id")
+  mhb        Mhb         @relation(fields: [mhbId, versionMhb], references: [mhbId, version], onDelete: Cascade, onUpdate: Cascade)
+  mhbId      String      @map("mhb_id")
+  versionMhb Int         @map("version_mhb")
+  versionMg  Int         @map("version_mg")
+
+  @@id([mgId, mhbId, versionMhb, versionMg])
+}
+
+model ModuleGroup {
+  mgId     String   @map("mg_id")
+  version  Int
+  name     String   @db.Text
+  fullName String   @db.Text @map("full_name")
+  desc     String   @db.Text
+  ectsMin  Float?   @map("ects_min")
+  ectsMax  Float?   @map("ects_max")
+  order    Float?
+  mhbs     Mhb2Mg[]
+  mgParent Mg2Mg[]  @relation(name: "mgParent")
+  mgChild  Mg2Mg[]  @relation(name: "mgChild")
+  modules  Mod2Mg[]
+
+  @@id([mgId, version])
+}
+
+model Mg2Mg {
+  parent        ModuleGroup @relation(fields: [parentId, parentVersion], references: [mgId, version], name: "mgParent", onDelete: Cascade, onUpdate: Cascade)
+  parentId      String      @map("parent_id")
+  child         ModuleGroup @relation(fields: [childId, childVersion], references: [mgId, version], name: "mgChild", onDelete: Cascade, onUpdate: Cascade)
+  childId       String      @map("child_id")
+  parentVersion Int         @map("parent_version")
+  childVersion  Int         @map("child_version")
+
+  @@id([parentId, childId, parentVersion, childVersion])
+}
+
+model Module {
+  mId            String          @map("m_id")
+  version        Int
+  acronym        String
+  name           String
+  content        String          @db.Text
+  skills         String          @db.Text
+  addInfo        String          @map("add_info") @db.Text
+  priorKnowledge String          @map("prior_knowledge") @db.Text
+  ects           Float
+  term           String
+  recTerm        String          @map("rec_term")
+  duration       String
+  chair          String
+  offerBegin     String?         @map("offer_begin")
+  offerEnd       String?         @map("offer_end")
+  workload       String?
+  prevModules    Json
+  exams          ModuleExam[]
+  respPersonId   String?
+  respPerson     Person?         @relation(fields: [respPersonId], references: [pId], onDelete: SetNull, onUpdate: Cascade)
+  mCourses       Mod2ModCourse[]
+  mgs            Mod2Mg[]
+  followedBy     ModuleDep[]     @relation("following")
+  following      ModuleDep[]     @relation("follower")
+
+  @@id([mId, version])
+}
+
+model ModuleDep {
+  follower         Module @relation("follower", fields: [followerId, followerVersion], references: [mId, version], onDelete: Cascade, onUpdate: Cascade)
+  followerId       String
+  followerVersion  Int
+  following        Module @relation("following", fields: [followingId, followingVersion], references: [mId, version], onDelete: Cascade, onUpdate: Cascade)
+  followingId      String
+  followingVersion Int
+
+  @@id([followerId, followerVersion, followingId, followingVersion])
+}
+
+model ModuleExam {
+  meId      Int    @id
+  shortName String
+  name      String
+  desc      String @db.Text
+  duration  Float?
+  share     String
+  mId       String
+  version   Int
+  module    Module @relation(fields: [mId, version], references: [mId, version], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Mod2Mg {
+  mg        ModuleGroup @relation(fields: [mgId, mgVersion], references: [mgId, version], onDelete: Cascade, onUpdate: Cascade)
+  mgId      String      @map("mg_id")
+  mod       Module      @relation(fields: [mId, mVersion], references: [mId, version], onDelete: Cascade, onUpdate: Cascade)
+  mId       String      @map("m_id")
+  mVersion  Int         @map("m_version")
+  mgVersion Int         @map("mg_version")
+
+  @@id([mgId, mId, mVersion, mgVersion])
+}
+
+model ModuleCourse {
+  mcId       String                @id @map("mc_id")
+  name       String
+  identifier Json
+  type       String
+  language   String
+  term       String
+  order      Float?
+  compulsory Boolean
+  desc       String                @db.Text
+  literature String                @db.Text
+  ects       Float?
+  sws        Float?
+  lecturers  Person2ModCourse[]
+  modules    Mod2ModCourse[]
+  uCourses   Course2ModuleCourse[]
+}
+
+model Person {
+  pId       String             @id @map("p_id")
+  title     String?
+  firstname String
+  lastname  String
+  email     String
+  tel       String?
+  office    String?
+  modules   Module[]
+  mCourses  Person2ModCourse[]
+  courses   Person2Course[]
+}
+
+model Person2ModCourse {
+  pId       String       @map("p_id")
+  person    Person       @relation(fields: [pId], references: [pId], onDelete: Cascade, onUpdate: Cascade)
+  mcId      String       @map("mc_id")
+  modCourse ModuleCourse @relation(fields: [mcId], references: [mcId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([pId, mcId])
+}
+
+model Mod2ModCourse {
+  module     Module       @relation(fields: [mId, mVersion], references: [mId, version], onDelete: Cascade, onUpdate: Cascade)
+  mId        String       @map("m_id")
+  mCourse    ModuleCourse @relation(fields: [mcId], references: [mcId], onDelete: Cascade, onUpdate: Cascade)
+  mcId       String       @map("mc_id")
+  mVersion   Int
+  ects       Float?
+  compulsory Boolean
+  acronym    String
+
+  @@id([mId, mVersion, mcId])
+}
+
+// Start of UnivIS-Schema
+model Room {
+  id      String  @id
+  short   String
+  address String?
+  size    Float?
+  terms   Term[]
+}
+
+model Term {
+  id        Int     @id @default(autoincrement())
+  startdate String
+  enddate   String?
+  starttime String
+  endtime   String
+  repeat    String
+  exclude   String?
+  roomId    String? @map("room_id")
+  courseId  String  @map("course_id")
+  semester  String
+  room      Room?   @relation(fields: [roomId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  course    Course  @relation(fields: [courseId, semester], references: [id, semester], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Person2Course {
+  pId      String @map("p_id")
+  cId      String @map("c_id")
+  semester String
+  person   Person @relation(fields: [pId], references: [pId], onDelete: Cascade, onUpdate: Cascade)
+  course   Course @relation(fields: [cId, semester], references: [id, semester], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([pId, cId, semester])
+}
+
+model Course2ModuleCourse {
+  mcId      String       @map("mc_id")
+  cId       String       @map("c_id")
+  semester  String
+  modCourse ModuleCourse @relation(fields: [mcId], references: [mcId], onDelete: Cascade, onUpdate: Cascade)
+  course    Course       @relation(fields: [cId, semester], references: [id, semester], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([mcId, cId, semester])
+}
+
+model Course {
+  id             String
+  name           String                @db.Text
+  short          String?               @db.Text
+  organizational String?               @db.MediumText
+  desc           String?               @db.MediumText
+  literature     String?               @db.Text
+  addInfo        String?               @db.Text
+  orgname        String
+  chair          String
+  type           String
+  semester       String
+  ects           Float?
+  sws            Float?
+  keywords       String?               @db.Text
+  lang           String?               
+  expAttendance  Float?                  @map("exp_attendance")
+  format         String?               
+  nameEn         String?               @map("name_en") @db.Text
+  literatureEn   String?               @map("literature_en") @db.Text
+  organizationalEn String?             @map("organizational_en") @db.MediumText
+  descEn         String?               @map("desc_en") @db.MediumText
+  lastUpdated    DateTime?             @db.Date
+  dozs           Person2Course[]
+  terms          Term[]
+  mCourses       Course2ModuleCourse[]
+  competence     CompetenceCourse[]
+
+  @@id([id, semester])
+}
+
+// Start of competence Schema
+model Standard {
+  stId        String       @id @unique @map("st_id")
+  desc        String       @db.VarChar(2000)
+  name        String
+  competences Competence[]
+}
+
+model Competence {
+  compId       String             @id @unique @map("comp_id")
+  short        String
+  name         String             @db.VarChar(1000)
+  desc         String             @db.VarChar(2000)
+  stId         String
+  standard     Standard           @relation(fields: [stId], references: [stId], onDelete: Cascade, onUpdate: Cascade)
+  parentId     String?
+  parent       Competence?        @relation("parentChildren", fields: [parentId], references: [compId], onDelete: Cascade, onUpdate: Cascade)
+  children     Competence[]       @relation("parentChildren")
+  fulfillments CompetenceCourse[]
+}
+
+model CompetenceCourse {
+  cId         String     @map("c_id")
+  semester    String
+  compId      String     @map("comp_id")
+  comp        Competence @relation(fields: [compId], references: [compId], onDelete: Cascade, onUpdate: Cascade)
+  course      Course     @relation(fields: [cId, semester], references: [id, semester], onDelete: Cascade, onUpdate: Cascade)
+  fulfillment Int
+
+  @@id([cId, semester, compId])
+}
+
+// BilApp Legacy Scheme
+model BilAppCourse {
+  id       Int                      @id @map("course_id")
+  desc     String                   @map("course_description") @db.VarChar(6000)
+  name     String                   @map("course_name") @db.VarChar(1000)
+  sws      Int                      @map("course_sws")
+  type     String                   @map("course_type")
+  ects     Int                      @map("course_ECTS")
+  semester String                   @map("course_semester")
+  creator  String                   @map("creator_id")
+  modules  BilAppCourse2Module[]
+  comp     BilAppCompetenceCourse[]
+}
+
+model BilAppCompetenceCourse {
+  fulfillment Int          @map("competenceCourse_Fulfillment")
+  compId      String       @map("competence_id")
+  cId         Int          @map("course_id")
+  course      BilAppCourse @relation(fields: [cId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([cId, compId])
+}
+
+model BilAppCourse2Module {
+  ects   Float        @map("course2Module_Container_Course_ECTS")
+  comp   Boolean      @map("course2Module_Compulsory")
+  modId  String       @map("container_id")
+  cId    Int          @map("courseId")
+  course BilAppCourse @relation(fields: [cId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([modId, cId])
+}
+
+model AcademicDate {
+  id        Int       @id @default(autoincrement())
+  desc      String?   @db.VarChar(1000)
+  startdate DateTime  @db.Date
+  enddate   DateTime  @db.Date
+  starttime String?   
+  endtime   String? 
+  typeId    Int       @map("type_id")
+  semester  String
+  dateType  DateType @relation(fields: [typeId], references: [typeId], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model DateType {
+  typeId       Int            @id @default(autoincrement()) @map("type_id")
+  name         String         @db.VarChar(1000) @unique
+  desc         String         @db.VarChar(6000)
+  AcademicDate AcademicDate[]
+}

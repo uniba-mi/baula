@@ -1,0 +1,65 @@
+<div class="wrapper p-4">
+
+    <!-- Prüfungshistorie -->
+    <div class="history-wrapper pb-4 mb-4">
+        <h4 class="mb-3 fw-bold">Prüfungshistorie</h4>
+
+        <div class="timeline d-flex flex-column">
+            <div *ngFor="let item of history; let i = index" class="timeline-item d-flex align-items-center relative">
+                <div class="timeline-line d-flex flex-column align-items-center flex-shrink-0">
+                    <span class="badge rounded-pill bg-light border mb-2 px-2 py-1">
+                        <div class="flex-shrink-0 me-2">
+                            <app-module-status [studyPath$]="studyPath$" [module]="selectedModule" [modType]="modType"
+                                [openedWithSemesterSet]="openedWithSemesterSet" [openedFromModuleOffer]="true"
+                                [showStatusText]="true"></app-module-status>
+                        </div>
+                    </span>
+                    <div class="flex-grow-1 border-start"></div>
+                </div>
+
+                <div class="timeline-content flex-grow-1 ms-3 p-2" [ngClass]="{'fw-bold': i===0}">
+                    <div class="mb-1">
+                        {{ item.semester }} (Versuch {{ item.attempt }})
+                    </div><!-- Note und Prüfungsbemerkung -->
+                    <div class="small text-muted">{{ item.grade }} {{item.note}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Planungsstatus -->
+    <div class="planning-wrapper">
+        <h4 class="mt-3 fw-bold">Planungsstatus</h4>
+        <div class="table-wrapper p-3">
+            <table class="table table-sm align-middle mb-0">
+                <tbody>
+                    <tr *ngFor="let studyPlan of (studyPlans$ | async)" class="bg-body-secondary">
+                        <ng-container *ngIf="hasModuleInPlan(studyPlan)">
+                            <td class="w-25 text-gray">{{ studyPlan.name }}</td>
+                            <td>
+                                <div *ngFor="let semesterPlan of getModuleSemesterPlans(studyPlan)"
+                                    class="d-flex align-items-center justify-content-between bg-light border p-2 mb-2 rounded">
+                                    <div class="d-flex flex-column">
+                                        <span>{{ semesterPlan.semester | Semester }}</span>
+                                    </div>
+                                    <div class="flex-shrink-0 me-2">
+                                        <app-module-status [studyPath$]="studyPath$" [module]="selectedModule"
+                                            [modType]="modType" [statusSemester]="semesterPlan.semester"
+                                            [openedWithSemesterSet]="openedWithSemesterSet"
+                                            [openedFromModuleOffer]="true"
+                                            [showStatusText]="true"></app-module-status>
+                                    </div>
+                                    <button class="btn btn-danger btn-sm"
+                                        (click)="openDeleteDialog(studyPlan._id, studyPlan.name, semesterPlan._id, semesterPlan.semester)"
+                                        (keyup.enter)="openDeleteDialog(studyPlan._id, studyPlan.name, semesterPlan._id, semesterPlan.semester)">
+                                        <i class="bi bi-trash me-1"></i>Löschen
+                                    </button>
+                                </div>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

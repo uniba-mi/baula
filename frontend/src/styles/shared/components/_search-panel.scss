@@ -1,0 +1,74 @@
+// applies to all searches (search panel, course search, ...)
+
+.search-panel-expanded {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  
+  > div {
+    flex: 0 1 auto;
+    padding-left: 30px;
+    border-left: 1px solid #dee2e6;
+    
+    &:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+    
+    // no dividers when customStyle && !horizontalFilters
+    &.col-md-12 {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+}
+
+.search-input-wrapper {
+  width: 75%;
+}
+
+.search-filter-button {
+  margin-left: 1rem;
+  min-width: fit-content;
+  white-space: nowrap;
+  gap: 0.5rem;
+
+  &.filter-icon {
+    font-size: 1.25rem;
+  }
+}
+
+// is applied if search panel is passed [customStyle]="true"
+// currently: sidenav search
+.custom-expansion-panel {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+// remove margins and paddings
+.custom-expansion-panel {
+
+  .mat-expansion-panel-header,
+  .mat-expansion-panel-body {
+    padding: 0 !important;
+  }
+
+  .search-input-field {
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .search-panel {
+    width: 100%;
+  }
+
+}
+
+@media (max-width: 767.98px) {
+  .search-panel-expanded > div {
+    border-left: none;
+    padding-left: 0;
+    flex: 1 1 100%;
+  }
+}

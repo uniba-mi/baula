@@ -1,0 +1,71 @@
+.semester-header {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.vertical-title {
+  transform: rotate(270deg);
+  justify-content: end;
+  font-weight: bold;
+  padding: 1rem 0;
+  transition: opacity 0.3s ease-in-out;
+ 
+  &[hidden] {
+    opacity: 0;
+    visibility: hidden;
+  }
+ 
+  span {
+    white-space: nowrap;
+  }
+}
+.semester-droplist {
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  max-height: 1000px;
+  min-height: 1000px;
+  opacity: 1;
+ 
+  &[hidden] {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+}
+
+.chip {
+  background-color: #dddcdc !important;
+}
+
+.status-bar {
+  min-height: 20px;
+}
+
+.current-icon {
+  color: grey;
+}
+
+.finished-icon {
+  color: green;
+}
+
+.to-be-finished-icon {
+  color: red;
+}
+
+.semester {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  align-items: stretch;
+  height: 100%;
+  flex: 1;
+  min-height: 1000px; // TODO
+  background-color: #efefef;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+
+  &.current {
+    border: 1px solid #5c9df1;
+  }
+}

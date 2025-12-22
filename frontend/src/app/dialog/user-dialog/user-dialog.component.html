@@ -1,0 +1,123 @@
+<div class="user-dialog">
+  @switch (currentStep) {
+  @case ('welcome') {
+  <div>
+    <h2>Herzlich Willkommen</h2>
+    <p>
+      Hallo! Das ist BAULA, die digitale Studienplanungsassistentin der
+      Otto-Friedrich Universität Bamberg!<br />
+      Bevor es losgeht lese dir aufmerksam unsere Nutzungsbedingungen und Datenschutzhinweise durch.
+    </p>
+    <div class="my-2">
+      <a routerLink="/datenschutz" target="_blank">Nutzungsbedingungen und Datenschutzhinweise
+        von Baula
+        (neuer Tab)</a>
+    </div>
+    <div>
+      <mat-checkbox [(ngModel)]="termsConfirmed">Ich habe die Nutzungsbedingungen und die Datenschutzerklärung gelesen
+        und
+        stimme beidem
+        zu.</mat-checkbox>
+      <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+      <mat-dialog-actions>
+        <button class="btn btn-outline" (click)="returnToStart()">
+          Abbrechen
+        </button>
+        <button class="btn btn-primary" (click)="nextStep()" [disabled]="!termsConfirmed()">
+          Weiter
+        </button>
+      </mat-dialog-actions>
+    </div>
+  </div>
+  }
+  @case ('selection') {
+  <div>
+    <p class="fw-bold">Vielen Dank für deine Zustimmung!</p>
+    <p>Als nächstes müssen wir deinen Nutzeraccount erstellen. Hierzu benötigen wir ein paar Informationen zu dir.<br>
+      Wir können diese Informationen über FlexNow importieren oder du kannst du sie manuell eingeben.</p>
+    <mat-dialog-actions>
+      <button class="btn btn-outline" (click)="previousStep()">
+        Zurück
+      </button>
+      <button class="btn btn-primary" (click)="nextStep('flexnow')">
+        Aus FlexNow importieren
+      </button>
+      <button class="btn btn-primary" (click)="nextStep('createUser')">
+        Daten manuell eingeben
+      </button>
+    </mat-dialog-actions>
+  </div>
+  }
+  @case ('flexnow') {
+  <div>
+    <p>Um deine Informationen aus FlexNow auszulesen, werden wir deine ba-Nummer, welche uns beim Login übergeben wird
+      nutzen.</p>
+    <p>Bitte lese dir aufmerksam die folgendene Datenschutzerklärung zum FlexNow-Import durch. Darin ist ausführlich
+      beschrieben, welche Daten wir für den Zugriff auf deine FlexNow-Daten verarbeiten.</p>
+    <div class="flex-now-data-information mb-4">
+      <mat-expansion-panel class="py-2">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Datenschutzhinweise für optionalen Upload eines FlexNow-Auszugs
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- content -->
+        <app-upload-data-privacy></app-upload-data-privacy>
+      </mat-expansion-panel>
+    </div>
+    <mat-checkbox [(ngModel)]="flexNowImportConfirmed">Ich habe die Datenschutzerklärung zum Zugriff auf FlexNow gelesen
+      und stimme dem Abrufen der Daten zu.</mat-checkbox>
+    @if(flexNowImportConfirmed()) {
+    <div class="d-flex ms-4">
+      <div class="vr"></div>
+      <div class="ms-1">
+        <div class="m-2 s-text">Folgende Daten sollen in meinen Account übernommen werden:</div>
+        <ul class="list-unstyled">
+          <li>
+            <mat-checkbox [(ngModel)]="flexNowImportConfirmed" disabled>Allgemeine Informationen (Studiengang,
+              Startsemester,
+              ...) </mat-checkbox>
+          </li>
+          <li>
+            <mat-checkbox [(ngModel)]="StudyPathConfirmed">Verlaufsinformationen (Abgelegte Prüfungen, Module und
+              Lehrveranstaltungen)</mat-checkbox>
+          </li>
+        </ul>
+      </div>
+    </div>
+    }
+    <mat-dialog-actions>
+      <button class="btn btn-outline" (click)="previousStep()">
+        Zurück
+      </button>
+      <button class="btn btn-primary" (click)="getFlexNowInformation()" [disabled]="!flexNowImportConfirmed()">
+        Weiter
+      </button>
+    </mat-dialog-actions>
+  </div>
+  }
+  @case ('createUser') {
+  <div>
+    <h2>Erstelle dein Profil</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <app-user-form [user]="user" [isEdit]="false" (submitUser)="updateUserData($event)" class="w-100"></app-user-form>
+    <mat-dialog-actions>
+      <button class="btn btn-outline" (click)="previousStep()">
+        Zurück
+      </button>
+      <button class="btn btn-primary" (click)="saveUser()" [disabled]="validateUserData()">
+        Speichern
+      </button>
+    </mat-dialog-actions>
+  </div>
+  }
+  @case ('loading') {
+  <div>
+    <div class="text-center mb-4">{{ loadingMessage }}</div>
+    <div class="d-flex align-items-center justify-content-center">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+  }
+  }
+</div>

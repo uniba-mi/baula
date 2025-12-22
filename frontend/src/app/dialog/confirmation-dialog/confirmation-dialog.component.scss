@@ -1,0 +1,20 @@
+.dialog-container {
+  min-width: 32vw;
+  max-width: 50vw;
+}
+
+.mat-mdc-dialog-content {
+  padding: 0rem 3rem 2rem 3rem;
+}
+
+.btn {
+  margin-right: 8px;
+}
+
+@media (max-width: 575.98px) {
+
+  .dialog-container {
+    max-width: 90vw;
+  }
+
+}

@@ -1,0 +1,26 @@
+<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+    <form [formGroup]="consentForm">
+        <div class="content-wrapper">
+            <div class="scrollable-content">
+                <app-upload-data-privacy></app-upload-data-privacy>
+            </div>
+            <div class="mt-4 mb-2">
+                <mat-checkbox formControlName="agreeToTerms"> Ich willige in die Verarbeitung meiner oben genannten
+                    personenbezogenen Daten im Projekt
+                    BaKuLe der Einrichtung des Lehrstuhls für Medieninformatik der Otto-Friedrich-Universität Bamberg
+                    ein</mat-checkbox>
+            </div>
+        </div>
+        <mat-dialog-actions>
+            <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
+                (keyup)="close('noData')">
+                Abbrechen
+            </button>
+            <button mat-raised-button class="btn btn-primary plausible-event-name=Studyprogression-Save+Button"
+                [mat-dialog-close]="getConsent()" id="study_prog_save_button" [disabled]="!consentForm.valid"
+                (click)="close('data')" (keyup)="close('data')">
+                Weiter
+            </button>
+        </mat-dialog-actions>
+    </form>
+</ng-container>

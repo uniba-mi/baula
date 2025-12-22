@@ -1,0 +1,26 @@
+services:
+  mongodb:
+    ports:
+      - 27017:27017
+  
+  mariadb:
+    ports: 
+      - 3306:3306
+
+  redis:
+    ports:
+      - 6379:6379
+
+  python:
+    ports: 
+      - 8000:8000
+
+  userDocs:
+    image: retypeapp/retype:latest
+    restart: always
+    command: >
+      retype start /docs --host 0.0.0.0 --port 4201
+    volumes:
+      - ./documentation/user-docs:/docs
+    ports:
+      - 4201:4201

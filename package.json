@@ -1,0 +1,31 @@
+{
+  "name": "baula",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/uniba-mi/baula#readme",
+  "bugs": {
+    "url": "https://github.com/uniba-mi/baula/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uniba-mi/baula.git"
+  },
+  "license": "MIT",
+  "author": "Chair of Media Informatics",
+  "scripts": {
+    "startServerDocker": "docker-compose -f docker-compose.yml -f docker-compose.server.yml up -d --build --force-recreate",
+    "startLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml up -d --build --force-recreate",
+    "restartLocalDocker": "npm run stopLocalDocker && npm run startLocalDocker",
+    "restartServerDocker":"npm run stopServerDocker && npm run startServerDocker",
+    "stopLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml down",
+    "stopServerDocker": "docker-compose -f docker-compose.yml -f docker-compose.server.yml down",
+    "startBackend": "cd backend/api && npm run startApi",
+    "startFrontend": "cd frontend && ng serve --open --no-hmr",
+    "buildFrontendProd": "cd frontend && ng build --configuration=production",
+    "buildFrontendTest": "cd frontend && ng build --configuration=test",
+    "buildBackend": "cd backend/api && npm run build",
+    "buildUserDocs": "cd documentation/user-docs && retype build",
+    "buildTest": "npm run buildBackend && npm run buildFrontendTest && npm run buildUserDocs",
+    "buildProd": "npm run buildBackend && npm run buildFrontendProd && npm run buildUserDocs"
+  }
+}

@@ -1,0 +1,50 @@
+.expand-toggle-button.open {
+  left: calc(100% - 15px) !important;
+  transform: translateX(-50%) !important;
+}
+
+.expand-toggle-button .icon-wrapper i {
+  font-size: 1.5em;
+}
+
+.desktop-toggle-button {
+  cursor: pointer !important;
+  outline: none !important;
+  z-index: 80 !important;
+}
+
+.desktop-toggle-button .icon-wrapper i {
+  font-size: 1.2em;
+}
+
+.filter-display {
+  margin-left: calc(2rem + 1.2em);
+}
+
+mat-sidenav {
+  width: 33%;
+  height: 100%;
+  background-color: inherit;
+}
+
+@media (max-width: 992px) {
+  .mat-sidenav {
+    width: 100%;
+    height: 100%;
+  }
+
+  .filter-display {
+    margin-left: 0;
+  }
+
+  .mat-drawer-side {
+    border: none !important;
+  }
+}
+
+@media (min-width: 993px) {
+  .sticky-sidenav {
+    position: sticky;
+    top: 1rem;
+  }
+}

@@ -1,0 +1,30 @@
+<div mat-dialog-content>
+    <div class="d-flex flex-column">
+        <label id="example-radio-group-label">Was möchtest du exportieren?</label>
+        <mat-radio-group aria-labelledby="example-radio-group-label" [(ngModel)]="exportFormat">
+            <mat-radio-button value="studyPathWithFutureSemester" class="me-2">Bisherige und alle zukünftigen Semestern 
+                <button
+                    class="btn-icon"
+                    matTooltip="Hier werden alle Semester exportiert. Diese Option eignet sich besonders gut, um deinen Verlauf und deinen weiteren Plan mit Mitstudierenden zu teilen. Es werden dabei keine personenbezogenen Daten wie z. B. deine Note exportiert."
+                    matTooltipClass="custom-tooltip" appTooltip>
+                    <i class="bi bi-info-circle"></i>
+                </button>
+            </mat-radio-button>
+            <mat-radio-button value="onlyFutureSemester" class="me-2">Nur zukünftige Semester 
+                <button class="btn-icon"
+                    matTooltip="Mit dieser Option werden nur die zukünftigen Semester in die Exportdatei eingefügt, ohne deinen Studienverlauf. Diese Option eignet sich z. B. dafür, wenn du den aktuellen Plan sichern möchtest."
+                    matTooltipClass="custom-tooltip" appTooltip>
+                    <i class="bi bi-info-circle"></i>
+                </button>
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+</div>
+<mat-dialog-actions>
+    <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+        Abbrechen
+    </button>
+    <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="transformStudyPlan()">
+        Exportieren
+    </button>
+</mat-dialog-actions>

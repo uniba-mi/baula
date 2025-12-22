@@ -1,0 +1,18 @@
+<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+  <div *ngIf="univisCrawl$ | async as messages;else progressSpinner">
+      <div *ngFor="let message of messages">
+        <i class="text-success bi bi-check-lg"></i> 
+        {{ message }}
+      </div>
+    <mat-dialog-actions>
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+          Abbrechen
+        </button>
+      </mat-dialog-actions>
+  </div>
+  <!-- Loading spinner -->
+  <ng-template #progressSpinner>
+    <mat-spinner class="mx-auto my-4"></mat-spinner>
+    <div>Don't worry... this process can take up to 10 minutes ☕</div>
+  </ng-template>
+</ng-container>

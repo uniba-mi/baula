@@ -1,0 +1,15 @@
+node_modules
+# Keep environment variables out of version control
+.env
+.idea
+.bin
+.gz
+.csv
+prisma/generated
+*.acl
+/api/src/templates/*
+/api/dist/backend/api/src/templates/*
+!univis-template.*
+users.ts
+prisma/*
+/api/dist/*

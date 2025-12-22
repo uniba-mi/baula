@@ -1,0 +1,175 @@
+{
+    "name": "Musterplan B. Sc. Wirtschaftsinformatik (WS25/26)",
+    "status": false,
+    "semesterPlans": [
+        {
+            "modules": [
+                "ISM-EidWI-B",
+                "Inf-Einf-B",
+                "GAMES-Java-B",
+                "Inf-DM-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2025w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 27,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "WiMa-B-001",
+                "WiMa-B-002",
+                "EESYS-SaD-B",
+                "IIS-EBAS-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fremdsprache",
+                    "ects": 3,
+                    "notes": "Wahlpflichtbereich Fremdsprachen",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d39fd",
+                    "flexNowImported": false
+                }
+            ],
+            "courses": [],
+            "semester": "2026s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "IRWP-B-01",
+                "ISDL-WAWI-B",
+                "ISPL-DIGB-B",
+                "MOBI-DBS-B",
+                "BSL-B-00"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2026w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "AI-AuD-B",
+                "Recht-B-02",
+                "AIC-IITP-B",
+                "SNA-WIM-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "EVWL*",
+                    "ects": 6,
+                    "notes": "Einführung in die VWL Vertiefungsstudium VWL/Recht (* alternativ auch Mikroökonomik I möglich)",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d39fe",
+                    "flexNowImported": false
+                }
+            ],
+            "courses": [],
+            "semester": "2027s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        },
+        {
+            "modules": [
+              "ISDL-ITCon-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d39ff",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a00",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a01",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Projekt",
+                    "ects": 6,
+                    "notes": "Seminar & Projekt",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a02",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Seminar",
+                    "ects": 3,
+                    "notes": "Bereich Seminar & Projekt",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a03",
+                    "flexNowImported": false
+                }
+            ],
+            "courses": [],
+            "semester": "2027w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 33,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "WI-Thesis-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a04",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a05",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Wahlpflichtbereich Fachmodule",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a06",
+                    "flexNowImported": false
+                }
+            ],
+            "courses": [],
+            "semester": "2028s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        }
+    ]
+}

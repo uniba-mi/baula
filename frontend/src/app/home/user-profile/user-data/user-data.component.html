@@ -1,0 +1,5 @@
+<div *ngIf="user$ | async as user" class="row mb-4">
+    <mat-card class="p-5">
+        <app-user-form [user]="user" [isEdit]="true" (submitUser)="updateUserData($event)"></app-user-form>
+    </mat-card>
+</div>

@@ -1,0 +1,44 @@
+.action-icons .icon:hover {
+  color: var(--ub-blue-100);
+}
+
+// sidenav
+.sidenav-container {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.mat-sidenav {
+  width: 30vw;
+  overflow-y: auto;
+  box-shadow: -6px 0 24px rgba(0, 0, 0, 0.06);
+  background: var(--cus-bg-100);
+}
+
+.hints-sidenav {
+  width: 20vw;
+}
+
+.mat-drawer-inner-container::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 1199.98px) {
+  .mat-sidenav {
+    width: 100vw;
+  }
+
+  .hints-sidenav {
+    width: 35vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .mat-sidenav {
+    width: 100vw;
+  }
+
+  .hints-sidenav {
+    width: 100vw;
+  }
+}

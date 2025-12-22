@@ -1,0 +1,139 @@
+<mat-card class="p-3 mb-2 rounded module-item semester-card"
+    [ngClass]="{'old-module': moduleType === 'module' && moduleData?.isOld === true}" tabindex="0"
+    aria-label="Tabellenzeile mit Modulinformationen"
+    (click)="availableActions.includes('select') && moduleType === 'module' && !moduleData?.isOld && triggerAction('select')"
+    (keyup.enter)="availableActions.includes('select') && moduleType === 'module' && !moduleData?.isOld && triggerAction('select')"
+    cdkDrag [cdkDragDisabled]="!canDrag()" [cdkDragData]="moduleData" (cdkDragStarted)="onDragStarted()"
+    (cdkDragEnded)="onDragEnded()" (mousedown)="onDragAttempt($event)" (touchstart)="onDragAttempt($event)">
+
+    <div class="d-flex align-items-center justify-content-between mb-2">
+
+        <!-- First Row -->
+        <div class="d-flex align-items-center flex-grow-1">
+            <!-- Drag Indicator -->
+            <div *ngIf="canDrag()" class="drag-handle me-2 d-none d-md-flex">
+                <i class="bi bi-grip-vertical text-gray"></i>
+            </div>
+
+            <!-- Status Column -->
+            <div *ngIf="studyPath$" class="d-flex align-items-center me-3">
+                <ng-container *ngIf="!moduleData.isOld; else oldModule">
+                    <app-module-status [studyPath$]="studyPath$" [module]="moduleType === 'module' ? moduleData : null"
+                        [userGeneratedModule]="moduleType === 'userGeneratedModule' ? moduleData : null"
+                        [pathModule]="moduleType === 'pathModule' ? moduleData : null"
+                        [statusSemester]="metaSemester.semester" [openedWithSemesterSet]="openedWithSemesterSet"
+                        [modType]="modType">
+                    </app-module-status>
+                </ng-container>
+                <ng-template #oldModule>
+                    <i class="bi bi-exclamation-triangle ms-2 text-red"
+                        matTooltip="Dieses Modul ist in deinem aktuellen Modulhandbuch nicht mehr vorhanden.">
+                    </i>
+                </ng-template>
+            </div>
+
+            <!-- Acronym/Name Column -->
+            <div class="text-gray fw-bold">
+                <ng-container *ngIf="moduleType === 'userGeneratedModule'; else showAcronym">
+                    {{ moduleData.name }}
+                </ng-container>
+                <ng-template #showAcronym>
+                    {{ moduleData.acronym }}
+                </ng-template>
+            </div>
+        </div>
+
+        <!-- Context Menu -->
+        <div *ngIf="menuActions.length > 0" class="d-flex align-items-center offset-right">
+            <button mat-button class="btn-icon" role="button" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                aria-label="Kontextmenu für weitere Aktionen öffnen" (click)="$event.stopPropagation()"
+                (keyup.enter)="$event.stopPropagation()" [matMenuTriggerFor]="contextMenu">
+                <i class="icon bi bi-three-dots-vertical text-gray"></i>
+            </button>
+
+            <!-- Context Menu Options -->
+            <mat-menu #contextMenu="matMenu" class="action-menu d-flex justify-content-center">
+                <ng-container *ngFor="let action of menuActions">
+                    <ng-container *ngIf="canShowAction(action)">
+                        <button mat-menu-item class="btn-icon" role="menuitem" tabindex="0"
+                            (click)="triggerAction(action, null, $event)"
+                            (keyup.enter)="triggerAction(action, null, $event)">
+                            <i class="icon bi {{ actionConfig[action].icon }} text-end text-gray"></i>
+                            {{ actionConfig[action].text }}
+                        </button>
+                    </ng-container>
+                </ng-container>
+            </mat-menu>
+        </div>
+    </div>
+
+    <!-- Second Row -->
+    <div class="d-flex mb-2">
+        <ng-container [ngSwitch]="moduleType">
+            <!-- Regular Module Name -->
+            <div *ngSwitchCase="'module'" class="flex-fill smaller-name-on-cards">
+                {{ moduleData.name }}
+            </div>
+
+            <!-- User Generated Module Notes -->
+            <div *ngSwitchCase="'userGeneratedModule'" class="text-start flex-fill text-gray">
+                <div class="notes-field border">
+                    <b>Notizen:</b> {{ moduleData.notes }}
+                </div>
+            </div>
+
+            <!-- Path Module Name -->
+            <div *ngSwitchCase="'pathModule'" class="flex-fill">
+                {{ moduleData.name }}
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- Third Row -->
+    <ng-container [ngSwitch]="moduleType">
+        <div *ngSwitchCase="'pathModule'" class="d-flex mb-2">
+            <div class="mg-div flex-fill" (click)="triggerAction('changeMG', null, $event)"
+                (keyup.enter)="triggerAction('changeMG', null, $event)"
+                matTooltip="Bitte wähle eine Modulgruppe, damit Modulgruppengrenzen bei der Einplanung berücksichtigt werden können.">
+                <ng-container *ngIf="getModulePath(moduleData.mgId) | async as modulePath; else noMgData">
+                    <span>{{ modulePath }}</span>
+                </ng-container>
+                <ng-template #noMgData>
+                    <span class="text-gray no-mg-warning">
+                        <i class="bi bi-exclamation-triangle ms-2 text-red"></i>
+                        Bitte wähle eine Modulgruppe
+                    </span>
+                </ng-template>
+            </div>
+        </div>
+    </ng-container>
+
+    <!-- Fourth Row -->
+    <div class="d-flex align-items-center justify-content-between gap-3">
+        <div> <!-- so ECTS stick to the right in any case -->
+            <span matTooltip="Das ist ein Pflichtmodul"
+                *ngIf="moduleType === 'module' && moduleData.type === 'Pflichtmodul'" class="compulsory-icon">
+                <i>P</i>
+            </span>
+
+            <!-- Grade Column -->
+            <ng-container [ngSwitch]="moduleType">
+                <!-- Path Module Grade -->
+                <div *ngSwitchCase="'pathModule'" class="grade-div" (click)="triggerAction('editGrade', null, $event)"
+                    (keyup.enter)="triggerAction('editGrade', null, $event)">
+                    <ng-container *ngIf="moduleData.grade; else noGrade">
+                        <span class="grade">Note: {{ moduleData.grade }}</span>
+                    </ng-container>
+                    <ng-template #noGrade>
+                        <i class="bi bi-question-circle"></i>
+                    </ng-template>
+                </div>
+            </ng-container>
+        </div>
+
+        <!-- ECTS Column -->
+        <button class="btn btn-outline chip ects-chip px-2" disabled>
+            {{ moduleData.ects }} ECTS
+        </button>
+    </div>
+</mat-card>

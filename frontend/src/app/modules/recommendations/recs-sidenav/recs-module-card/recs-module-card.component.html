@@ -1,0 +1,134 @@
+<mat-card class="p-3 mb-2 rounded module-item" [ngClass]="{'w-100 d-flex flex-column': customStyle}"
+    [ngStyle]="{'opacity': isDropped(module.acronym) ? '0.7' : '1'}" tabindex="0"
+    aria-label="Karte mit Modulinformationen" *ngIf="module" cdkDrag [cdkDragDisabled]="isSmallScreen || customStyle"
+    [cdkDragData]="module" (cdkDragStarted)="onDragStarted()" (cdkDragEnded)="onDragEnded()"
+    (click)="selectModule(module)" (keyup.enter)="selectModule(module)">
+
+    <div class="d-flex align-items-center justify-content-between mb-2">
+        <!-- First Row -->
+        <div class="d-flex align-items-center flex-grow-1 small-gap">
+            <!-- Drag Indicator -->
+            <div *ngIf="!customStyle || isSmallScreen" class="drag-handle me-2 d-none d-md-flex">
+                <i class="bi bi-grip-vertical text-gray"></i>
+            </div>
+
+            <!-- Status Column -->
+            <div class="d-flex align-items-center">
+                <div *ngIf="studyPath$ | async as studyPath" class="status-box-not-clickable">
+                    <app-module-status [studyPath$]="studyPath$" [module]="module" [modType]="modType"
+                        [openedFromModuleOffer]="true"></app-module-status>
+                </div>
+            </div>
+
+            <!-- Acronym Column -->
+            <div class="text-gray fw-bold">
+                {{ module.acronym }}
+            </div>
+        </div>
+
+        <!-- Context Menu -->
+        <div class="d-flex align-items-center offset-right">
+            <button class="btn-icon" [matMenuTriggerFor]="moduleMenu" role="button" aria-haspopup="true"
+                aria-expanded="false" tabindex="0" aria-label="Kontextmenu für weitere Aktionen öffnen"
+                (click)="onContextMenuClick($event)" (keyup.enter)="onContextMenuClick($event)">
+                <i class="icon bi bi-three-dots-vertical text-gray"></i>
+            </button>
+            <mat-menu #moduleMenu="matMenu">
+                <ng-container *ngIf="(isFavourite(module.acronym) | async); else notFavouriteTemplate">
+                    <button mat-menu-item (click)="onToggleFavourite($event, module.acronym)"
+                        (keyup.enter)="onToggleFavourite($event, module.acronym)">
+                        <i class="bi bi-bookmark-fill text-gray"></i> <span> Nicht mehr merken</span>
+                    </button>
+                </ng-container>
+                <ng-template #notFavouriteTemplate>
+                    <button mat-menu-item (click)="onToggleFavourite($event, module.acronym)"
+                        (keyup.enter)="onToggleFavourite($event, module.acronym)">
+                        <i class="bi bi-bookmark"></i> <span> Merken</span>
+                    </button>
+                </ng-template>
+                <button mat-menu-item (click)="markAsExcluded($event, module.acronym)"
+                    (keyup.enter)="markAsExcluded($event, module.acronym)">
+                    <i class="bi text-gray" [ngClass]="{
+       'bi-hand-thumbs-down-fill': (isExcluded(module.acronym) | async), 
+       'bi-hand-thumbs-down': !(isExcluded(module.acronym) | async)
+     }" aria-hidden="true"></i>
+                    <span> Nicht mehr vorschlagen</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+
+    <!-- Second Row -->
+    <div class="d-flex mb-2" [ngClass]="{'module-name-fixed-height': customStyle}">
+        <div class="flex-fill module-name-container smaller-name-on-cards" #nameElement
+            [matTooltip]="showModuleNameTooltip(nameElement) ? module.name : ''" matTooltipClass="custom-tooltip">
+            {{ module.name }}
+        </div>
+    </div>
+
+    <!-- Bottom Content -->
+
+    <div [ngClass]="{'mt-auto': customStyle}">
+
+        <!-- Third Row -->
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="text-gray flex-fill s-text">
+                <span matTooltip="Angebotssemester" matTooltipClass="custom-tooltip">{{ module.term }}</span>
+            </div>
+
+            <!-- Add Button (only if not customStyle) -->
+            <div *ngIf="!customStyle" class="flex-shrink-0">
+                <button class="add-button btn-icon btn-outline" (click)="openSelectSemesterDialog($event, module)"
+                    (keyup.enter)="openSelectSemesterDialog($event, module)"
+                    [matTooltip]="isDropped(module.acronym) ? 'Eingeplant' : 'Hinzufügen'"
+                    matTooltipClass="custom-tooltip">
+                    <i class="bi" [ngClass]="isDropped(module.acronym) ? 'bi-check-lg text-success' : 'bi-plus-lg'"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Fourth Row - Job and Topic Chips -->
+        <div *ngIf="hasMetadata(module) || hasFeedbackSource()" class="d-flex align-items-center mb-2"
+            style="gap: 0.25rem;">
+
+            <!-- Feedback chip -->
+            <ng-container *ngIf="hasFeedbackSource()">
+                <button class="chip feedback-chip" [ngClass]="getFeedbackChipClass()"
+                    [matTooltip]="getFeedbackTooltip()" matTooltipClass="custom-tooltip">
+                    <i class="bi" [ngClass]="getFeedbackIcon()"></i>
+                </button>
+            </ng-container>
+
+            <!-- First Job/Topic chip -->
+            <ng-container *ngIf="getFirstChip() as firstChip">
+                <button class="chip truncated-chip" [ngClass]="firstChip.type === 'job' ? 'job-chip' : 'topic-chip'"
+                    [matTooltip]="getFirstChipTooltip(firstChip)">
+                    {{ firstChip.displayText }}
+                </button>
+            </ng-container>
+            <!-- Show +X more chip -->
+            <ng-container *ngIf="getTotalChipCount() > 1">
+                <button class="chip more-chip" [matTooltip]="getAllChipsTooltip()" matTooltipClass="custom-tooltip">
+                    +{{ getTotalChipCount() - 1 }}
+                </button>
+            </ng-container>
+        </div>
+
+        <!-- Fifth Row -->
+        <div class="d-flex align-items-start justify-content-between">
+            <div> <!-- so that ects always stick to the right -->
+                <span matTooltip="Das ist ein Pflichtmodul" *ngIf="module.type === 'Pflichtmodul'"
+                    class="compulsory-icon">
+                    <i>P</i>
+                </span>
+            </div>
+
+            <!-- ECTS Column -->
+            <div class="text-gray flex-shrink-0">
+                <button class="btn btn-outline chip ects-chip px-2" disabled>
+                    {{ module.ects }} ECTS
+                </button>
+            </div>
+        </div>
+    </div>
+</mat-card>

@@ -1,0 +1,117 @@
+<div *ngIf="user$ | async as user" class="container mx-auto my-3 my-md-5">
+    <div class="d-flex justify-content-between align-items-center header-container">
+        <div class="d-flex align-items-start justify-content-start">
+            <h1>Personalisierung</h1>
+            <span class="badge beta-badge ms-2">Beta</span>
+        </div>
+        <button class="btn btn-blue-outline" [matMenuTriggerFor]="settingsMenu" aria-label="Anpassen">
+            <i class="bi bi-stars me-2"></i>Profil personalisieren
+        </button>
+    </div>
+    <app-hint [key]="personalisationHint" [hintMessage]="personalisationMessage"></app-hint>
+
+    <div class="navigation-container" class="d-flex align-items-center justify-content-between mb-4">
+        <mat-chip-listbox class="selected-chipsbox p-2">
+            <mat-chip-option (click)="navigate('')" [selected]="activeRoute ==''" [selectable]="false"
+                class="child-chip" role="button" tabindex="0" aria-label="Überblick über Personalisierung">
+                Überblick
+            </mat-chip-option>
+            <mat-chip-option (click)="navigate('modulliste')" [selected]="activeRoute =='modulliste'"
+                [selectable]="false" class="child-chip" role="button" tabindex="0"
+                aria-label="Liste mit Modulempfehlungen">
+                Modulempfehlungen
+            </mat-chip-option>
+        </mat-chip-listbox>
+
+        <div class="menu-container">
+
+            <!-- mat menu with settings pages -->
+            <mat-menu #settingsMenu="matMenu">
+                <button mat-menu-item (click)="navigate('topics')" [class.active]="activeRoute === 'topics'"
+                    aria-label="Einstellungen zu Interessen">
+                    <i class="bi bi-tags-fill text-gray me-2"></i>
+                    <span>Interessen</span>
+                </button>
+
+                <button mat-menu-item (click)="navigate('jobs')" [class.active]="activeRoute === 'jobs'"
+                    aria-label="Einstellungen zu Jobs">
+                    <i class="bi bi-signpost-split-fill text-gray me-2"></i>
+                    <span>Jobs</span>
+                </button>
+
+                <button mat-menu-item (click)="navigate('feedback')" [class.active]="activeRoute === 'feedback'"
+                    aria-label="Einstellungen zu Feedback">
+                    <i class="bi bi-chat-dots-fill text-gray me-2"></i>
+                    <span>Feedback</span>
+                </button>
+
+                <button mat-menu-item (click)=" navigate('merkliste')" [class.active]="activeRoute === 'merkliste'"
+                    aria-label="Merkliste">
+                    <i class="bi bi-bookmark-fill text-gray me-2"></i>
+                    <span>Merkliste</span>
+                </button>
+
+                <button mat-menu-item (click)="navigate('blacklist')" [class.active]="activeRoute === 'blacklist'"
+                    aria-label="Liste mit nicht interessanten Modulen">
+                    <i class="bi bi-shield-fill-x text-gray me-2"></i>
+                    <span>Blacklist</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+
+    <ng-container *ngIf="activeRoute === ''; else routerContent">
+
+        <div *ngIf="hasRecommendations" class="d-flex justify-content-between align-items-center">
+            <h4 class="h5 mb-0">Für dich passende Module
+                <i class="bi bi-info-circle"
+                    matTooltip="Hier werden dir Module auf Basis deiner Angaben zu Interessen und Jobs vorgeschlagen. Je öfter das Modul für die einzelnen Interessen und Jobs passend ist, desto weiter vorne wird es dir angezeigt."
+                    matTooltipClass="custom-tooltip" appTooltip>
+                </i>
+            </h4>
+            <div class="btn-link mb-0" (click)="navigate('modulliste')">
+                <i class="bi bi-arrow-up-right-square me-2"></i>Alle
+                verwalten
+            </div>
+        </div>
+
+        <div class="recs-list mb-4">
+            <app-recommendations-list [preview]="true" [maxPreviewItems]="6"
+                (hasRecommendations)="hasRecommendations = $event"></app-recommendations-list>
+        </div>
+
+
+        <div class="jobs-interests mb-4">
+            <h4 class="h5 mb-3">Deine Jobs und Interessen</h4>
+            <div class="row">
+                <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+                    <app-data-preview [type]="'jobs'"></app-data-preview>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <app-data-preview [type]="'topics'"></app-data-preview>
+                </div>
+            </div>
+        </div>
+
+        <div class="further-cards">
+            <!-- once for favourites, blacklist, feedback, with preview true -->
+            <h4 class="h5 mb-3">Sonstiges</h4>
+            <div class="row">
+                <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+                    <app-settings-list [preview]="true" [type]="'merkliste'"></app-settings-list>
+                </div>
+                <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+                    <app-settings-list [preview]="true" [type]="'blacklist'"></app-settings-list>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <app-settings-list [preview]="true" [type]="'feedback'"></app-settings-list>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #routerContent>
+        <router-outlet></router-outlet>
+    </ng-template>
+
+</div>

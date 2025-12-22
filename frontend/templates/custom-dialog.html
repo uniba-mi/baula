@@ -1,0 +1,59 @@
+<!-- MAY BE USED FOR NEW CUSTOM DIALOGS -->
+
+<ng-container role="Dialoginhalt">
+  <!-- Title is inserted via open function in component -->
+  <!-- Space for text and inputs -->
+  <div class="content-wrapper">
+    <!-- inputs -->
+    <mat-form-field appearance="outline">
+      <mat-label>Name:</mat-label>
+      <input
+        matInput
+        #studyplanName
+        type="text"
+        placeholder="Füge hier deinen Text ein.."
+        [value]="studyplan.name"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Startsemester:</mat-label>
+      <mat-select #userStartSemester placeholder="Blubb" aria-label="Blubb">
+        <mat-option></mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>ECTS:</mat-label>
+      <input
+        matInput
+        #moduleEcts
+        type="number"
+        min="1"
+        max="30"
+        placeholder="ECTS"
+        [value]="studyplan.ects"
+        required
+      />
+    </mat-form-field>
+
+    <p>Beautiful text here.</p>
+  </div>
+
+  <mat-dialog-actions>
+    <!-- first button -->
+    <button
+      mat-raised-button
+      class="btn btn-primary"
+      [mat-dialog-close]="{ name: studyplanName.value, ects: moduleEcts.value }"
+    >
+      PrimaryButtonName
+    </button>
+
+    <!-- second button -->
+    <button mat-raised-button class="btn btn-secondary" mat-dialog-close>
+      SecondaryButtonName
+    </button>
+  </mat-dialog-actions>
+</ng-container>

@@ -1,0 +1,18 @@
+<div mat-dialog-content>
+    <div class="d-flex flex-column">
+        <label id="example-radio-group-label">{{ dialogTitle }}</label>
+        <mat-radio-group aria-labelledby="example-radio-group-label" [(ngModel)]="option" style="display: flex; flex-direction: column;">
+            <mat-radio-button *ngFor="let option of options" [value]="option.value" class="mb-2">
+                {{ option.label }}
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+</div>
+<mat-dialog-actions>
+    <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+        Abbrechen
+    </button>
+    <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="selectOption()">
+        Wählen
+    </button>
+</mat-dialog-actions>

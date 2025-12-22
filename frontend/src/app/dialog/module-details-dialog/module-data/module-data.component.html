@@ -1,0 +1,323 @@
+<div class="card-body module-information">
+    <div class="card-text module-information-content">
+        <!-- box with module meta info -->
+        <div class="meta-box">
+            <div class="row module-information-prof-row" *ngIf="selectedModule.respPerson">
+                <span class="fw-bold col-12 col-md-3"><i class="bi bi-person"></i> Modulverantwortl.</span>
+                <span class="col-12 col-md-3">{{ selectedModule.respPerson.firstname }}
+                    {{ selectedModule.respPerson.lastname }}
+                </span>
+                <span class="fw-bold col-12 col-md-3"><i class="bi bi-house"></i> Lehrstuhl</span>
+                <span class="col-12 col-md-3">{{ selectedModule.chair }}</span>
+            </div>
+            <div class="row my-2">
+                <span class="fw-bold col-12 col-md-3"><i class="bi bi-arrow-clockwise"></i> Angebotshäufigkeit</span>
+                <span class="col-12 col-md-3">{{ selectedModule.term }}</span>
+                <span class="fw-bold col-12 col-md-3"><i class="bi bi-alarm"></i> Moduldauer</span>
+                <span class="col-12 col-md-3">{{ selectedModule.duration }} Semester</span>
+            </div>
+            <div class="row my-2">
+                <span class="fw-bold col-12 col-md-3" *ngIf="selectedModule.recTerm"><i class="bi bi-calendar"></i>
+                    Empfohlenes Semester</span>
+                <span class="col-12 col-md-3" *ngIf="selectedModule.recTerm"><span
+                        *ngIf="selectedModule.recTerm !== '0'; else noMhbInfo">{{
+                        selectedModule.recTerm
+                        }}</span></span>
+                <span class="fw-bold col-12 col-md-3"><span *ngIf="selectedModule.type !== ''"><i
+                            class="bi bi-exclamation-circle"></i> Modulart</span></span>
+                <span class="col-12 col-md-3" *ngIf="selectedModule.type !== ''">
+                    <span class="chip" [ngClass]="selectedModule.type === 'Pflichtmodul' ? 'compulsory-chip' : ''">{{
+                        selectedModule.type
+                        }}</span>
+                </span>
+            </div>
+            <div class="row my-2">
+                <ng-container *ngIf="getFullModuleGroup(selectedModule.mgId) | async as mg">
+                    <span class="fw-bold col-12 col-md-3"><i class="bi bi-grid"></i> Modulgruppe</span>
+                    <span class="col-12 col-md-3" *ngIf="mg">{{ mg }}</span>
+                </ng-container>
+            </div>
+        </div>
+        <div class="row module-information-description-row">
+            <div class="col-12 col-md-3 fw-bold">Inhalte</div>
+            <div class="col-12 col-md-9" [ngClass]="selectedModule.content.length > 500 ? 'truncate' : ''">
+                <span id="{{ selectedModule.mId }}-content" class="module-information-description" [ngClass]="
+              selectedModule.content.length > 500 ? 'truncate-text' : ''
+            " [innerHtml]="selectedModule.content"></span>
+                <span role="button" class="px-2" *ngIf="selectedModule.content.length > 500"><i
+                        *ngIf="!expandedModuleContent" class="bi bi-chevron-down show-more-icon"
+                        (click)="toggleContent(selectedModule, 'expand')"
+                        (keyup.enter)="toggleContent(selectedModule, 'expand')"></i><i *ngIf="expandedModuleContent"
+                        class="bi bi-chevron-up" (click)="toggleContent(selectedModule, 'collapse')"
+                        (keyup.enter)="toggleContent(selectedModule, 'collapse')"></i>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-3 fw-bold">Lernziele</div>
+            <div class="col-12 col-md-9" [ngClass]="selectedModule.skills.length > 500 ? 'truncate' : ''">
+                <span id="{{ selectedModule.mId }}-goals" class="module-information-description" [ngClass]="
+              selectedModule.skills.length > 500 ? 'truncate-text' : ''
+            " [innerHtml]="selectedModule.skills">
+                </span>
+                <span role="button" class="px-2" *ngIf="selectedModule.skills.length > 500">
+                    <i *ngIf="!expandedModuleGoals" class="bi bi-chevron-down show-more-icon"
+                        (click)="toggleModuleGoals(selectedModule, 'expand')"
+                        (keyup.enter)="toggleModuleGoals(selectedModule, 'expand')">
+                    </i>
+                    <i *ngIf="expandedModuleGoals" class="bi bi-chevron-up"
+                        (click)="toggleModuleGoals(selectedModule, 'collapse')"
+                        (keyup.enter)="toggleModuleGoals(selectedModule, 'collapse')">
+                    </i>
+                </span>
+            </div>
+        </div>
+        <div class="row" *ngIf="selectedModule.skills != selectedModule.addInfo && selectedModule.addInfo">
+            <span class="col-12 col-md-3 fw-bold">Zusatz&shy;informationen</span>
+            <span class="col-12 col-md-9" [innerHtml]="selectedModule.addInfo"></span>
+        </div>
+        <div class="row" *ngIf="selectedModule.workload && selectedModule.workload != ''">
+            <span class="col-12 col-md-3 fw-bold">Arbeitsaufwand</span>
+            <span class="col-12 col-md-9" [innerHtml]="selectedModule.workload"></span>
+        </div>
+        <div class="row" *ngIf="selectedModule.prevModules.length > 0">
+            <div class="row" *ngIf="selectedModule.prevModules">
+                <span class="fw-bold col-12 col-md-3">Vorkenntnisse</span>
+                <span class="col-12 col-md-9">
+                    <span *ngFor="let prevMod of selectedModule.prevModules">
+                        <button class="prev-chip chip me-2" (click)="selectModuleWithAcronym(prevMod.acronym)"
+                            (keyup.enter)="selectModuleWithAcronym(prevMod.acronym)" [mat-dialog-close]="'next'"
+                            [matTooltip]="prevMod.name">
+                            {{ prevMod.acronym }}
+                        </button>
+                    </span>
+                </span>
+            </div>
+        </div>
+        <div class="row" *ngIf="selectedModule.priorKnowledge">
+            <span class="fw-bold col-12 col-md-3">Empfohlene Vorkenntnisse</span>
+            <span class="col-12 col-md-9 module-information-priorKnowledge"
+                [innerHTML]="highlightAcronyms(selectedModule.allPriorModules, selectedModule.priorKnowledge)">
+            </span>
+        </div>
+        <div class="row" *ngIf="moduleClasses$ | async as moduleClasses">
+            <div class="module-information-classes" *ngIf="moduleClasses.length > 0">
+                <div class="module-information-classes">
+                    <div class="row module-information-classes-header">
+                        <div class="fw-bold col-12 col-md-3">
+                            Lehrveranstaltungen
+                            <span class="col-auto px-2" role="button" (click)="expandedClasses = !expandedClasses"
+                                (keyup.enter)="expandedClasses = !expandedClasses">
+                                <i *ngIf="!expandedClasses" class="bi bi-chevron-down show-more-icon"></i>
+                                <i *ngIf="expandedClasses" class="bi bi-chevron-up"></i>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <button class="btn btn-primary btn-sm d-xl-inline" [disabled]="expandedClasses" (click)="
+                      findCourses(
+                        selectedModule.acronym
+                      )
+                    " [mat-dialog-close]="'jump'">
+                                <i class="bi bi-search d-none d-sm-inline me-2"></i>
+                                Finde passende Lehrveranstaltungen
+                            </button>
+                            <i class="bi bi-info-circle icon"
+                                matTooltip="Module können einen oder mehrere Lehrveranstaltungen enthalten. Finde passende Lehrveranstaltungen, die du für dein Modul belegen kannst."
+                                appTooltip></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="expandedClasses">
+                    <div *ngFor="let class of moduleClasses" class="module-information-classes-content py-4">
+                        <!-- show class informations, currently just key -->
+                        <div class="row module-information-classes-name-row">
+                            <div class="fw-bold col-12 col-md-3">{{ class.type }}</div>
+                            <div class="fw-bold col-12 col-md-6">{{ class.name }}</div>
+                            <div class="fw-bold col-12 col-md-3">
+                                <button class="btn btn-primary btn-sm d-xl-inline"
+                                    (click)="findCourses(selectedModule.acronym, class.type)"
+                                    [mat-dialog-close]="'jump'">
+                                    <i class="bi bi-search d-xl-none d-inline"></i>
+                                    Finde passende Lehrveranstaltung
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row module-information-classes-details-row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12 col-md-3 module-information-classes-titleCol fw-bold">
+                                        Lehrperson
+                                    </div>
+                                    <div class="col-12 col-md-3 module-information-classes-titleCol fw-bold">
+                                        Angebotshäufigkeit
+                                    </div>
+                                    <div class="col-12 col-md-3 module-information-classes-titleCol fw-bold">
+                                        Sprache
+                                    </div>
+                                    <div class="col-12 col-md-3 module-information-classes-titleCol fw-bold">
+                                        SWS
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-3">
+                                        <div *ngFor="let prof of class.lecturers">
+                                            {{ prof.firstname }} {{ prof.lastname }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">{{ class.term }}</div>
+                                    <div class="col-12 col-md-3">{{ class.language }}</div>
+                                    <div class="col-12 col-md-3">{{ class.sws }}</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-xxl-6 mt-2" *ngIf="class.desc">
+                                <div class="module-information-classes-titleCol fw-bold">Inhalte</div>
+                                <div [innerHtml]="class.desc"></div>
+                            </div>
+                            <div class="col-12 col-xxl-6 mt-2" *ngIf="class.literature">
+                                <div class="module-information-classes-titleCol fw-bold">Literatur</div>
+                                <div [innerHtml]="class.literature"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- exam info -->
+            <div class="module-information-exam" *ngIf="selectedModule.exams.length > 0">
+                <div class="module-information-classes">
+                    <div class="row module-information-classes-header">
+                        <div class="fw-bold col-12 col-md-3">
+                            Prüfungen
+                            <span class="col-auto px-2" role="button" (click)="expandedExams = !expandedExams"
+                                (keyup.enter)="expandedExams = !expandedExams">
+                                <i *ngIf="!expandedExams" class="bi bi-chevron-down show-more-icon"></i>
+                                <i *ngIf="expandedExams" class="bi bi-chevron-up"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="expandedExams">
+                    <div *ngFor="let exam of selectedModule.exams" class="module-information-classes-content py-4">
+                        <div class="row pb-2">
+                            <div class="col-12 col-md-3 fw-bold">
+                                {{ exam.shortName }} {{ exam.name }}
+                            </div>
+                            <div class="col-12 col-md-9 truncate">
+                                <span *ngIf="exam.desc" id="{{ exam.meId }}-description"
+                                    class="module-information-description truncate-text" [innerHtml]="exam.desc"></span>
+                                <span *ngIf="exam.desc" role="button"><i *ngIf="!expandedExamDescription"
+                                        class="bi bi-chevron-down show-more-icon"
+                                        (click)="toggleExamDescription(exam, 'expand')"
+                                        (keyup.enter)="toggleExamDescription(exam, 'expand')"></i><i
+                                        *ngIf="expandedExamDescription" class="bi bi-chevron-up"
+                                        (click)="toggleExamDescription(exam, 'collapse')"
+                                        (keyup.enter)="toggleExamDescription(exam, 'collapse')"></i></span>
+                            </div>
+                        </div>
+                        <div class="row p-0">
+                            <div class="col-md-3"></div>
+                            <div class="col-12 col-md-9">
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <span class="fw-bold">
+                                            <i class="bi bi-alarm"></i> Prüfungsdauer: </span><span
+                                            *ngIf="exam.duration; else noMhbInfo"></span>{{ exam.duration }} Minuten
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <span class="fw-bold">
+                                            <i class="bi bi-pie-chart"></i> Anteil an Modulnote: </span><span
+                                            *ngIf="exam.share && exam.share !== '0' && exam.share !== '0,0'; else noMhbInfo"
+                                            class="col-12 col-md-5">
+                                            {{ exam.share }}%
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- add module to study plan -->
+                <!-- only show if user does not study teacher education TODO: change when study planning is available for teacher education! -->
+                <ng-container *ngIf="!userStudiesLA && !selectedModule.isOld">
+                    <div class="row module-information-studyPlan justify-content-between"
+                        *ngIf="studyPlans$ | async as studyPlans">
+                        <div *ngIf="studyPlans.length > 0">
+                            <div class="row d-flex flex-row align-items-center justify-content-center"
+                                *ngIf="user$ | async as user">
+                                <div class="col-12 fw-bold">Einplanen</div>
+                                <div class="col-12" *ngIf="plannedSemesters$ | async as plannedSemesters">
+                                    <div *ngIf="plannedSemesters && plannedSemesters.length > 0"
+                                        class="module-planning-notification mt-2 d-flex flex-wrap align-items-center">
+                                        <i class="bi bi-check-lg me-2 text-success"></i>
+                                        <span class="text-break">
+                                            Das Modul ist im aktiven Plan "{{ activeStudyPlan?.name }}" eingeplant:
+                                            <span *ngFor="let semester of plannedSemesters; let last = last">
+                                                <strong>{{ semester | Semester }}</strong><span *ngIf="!last">, </span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <form [formGroup]="form" class="mt-2">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-12 col-md-4">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Studienplan</mat-label>
+                                                <mat-select formControlName="selectedStudyPlanId"
+                                                    (selectionChange)="checkConstraints()"
+                                                    aria-label="Dropdown zur Studienplanwahl" required>
+                                                    <mat-option *ngFor="let studyPlan of studyPlans"
+                                                        [value]="studyPlan._id" [ngClass]="{
+                                    'active-option': studyPlan?._id === activeStudyPlan?._id
+                                  }">
+                                                        {{ studyPlan.name }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <span>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Semester</mat-label>
+                                                    <mat-select formControlName="selectedSemesterPlanId"
+                                                        (selectionChange)="checkConstraints()"
+                                                        aria-label="Dropdown zur Semesterwahl" required>
+                                                        <mat-option
+                                                            *ngFor="let plan of (selectedStudyPlan?.semesterPlans ||[])"
+                                                            [value]="plan._id" [ngClass]="{
+                              'active-option': plan._id === activeSemesterId
+                            }">
+                                                            {{ plan.semester | Semester }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 d-flex align-items-start align-items-md-center">
+                                            <button class="btn btn-primary module-information-study-plan-btn"
+                                                (click)="addModuleToPlan(selectedModule)"
+                                                (keyup.enter)="addModuleToPlan(selectedModule)"
+                                                aria-label="In den Studienplan einplanen">
+                                                Einplanen
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="warning-box" *ngIf="displayPriorModuleWarning">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    {{ warningMessage }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noMhbInfo> Keine Angabe </ng-template>
+</div>

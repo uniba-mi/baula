@@ -1,0 +1,104 @@
+<div class="d-flex flex-wrap align-items-center mx-3 my-1">
+    <h3 class="d-flex me-3 order-0" [matTooltip]="chartData.desc" *ngIf="chartData"><i class="bi me-1"
+            [ngClass]="chartData.icon"></i> {{ chartData.name }}</h3>
+
+    <div class="d-flex flex-wrap align-items-center order-2 order-xl-1 pb-2 pb-xl-0">
+
+        <!-- Link to university website -->
+        <div class="icon">
+            <a href="https://www.uni-bamberg.de/" target="_blank">
+                <img src="../../../../assets/quick-links/ub_favicon_website.png"
+                    alt="Das Favicon der Universität Bamberg bestehend aus drei unvollendeten Kreisen"
+                    matTooltip="Zur Webseite der Uni Bamberg">
+            </a>
+        </div>
+        <!-- Link to vc -->
+        <div class="icon">
+            <a href="https://vc.uni-bamberg.de/" target="_blank">
+                <img src="../../../../assets/quick-links/moodle_logo.png"
+                    alt="Das Logo von Moodle, dem LMS an der Universität Bamberg"
+                    matTooltip="Zum Virtuellen Campus (VC)">
+            </a>
+        </div>
+        <!-- Link to flexnow -->
+        <div class="icon">
+            <a href="https://flexnow.uni-bamberg.de/FN2AUTH/FN2AuthServlet?op=Login" target="_blank">
+                <img src="../../../../assets/quick-links/fn2_logo.png" alt="Das Logo von FlexNow"
+                    matTooltip="Zu FlexNow">
+            </a>
+        </div>
+        <!-- Link to mail -->
+        <div class="icon">
+            <a href="https://o365.uni-bamberg.de/" target="_blank">
+                <i class="fs-4 bi bi-envelope text-blue" matTooltip="Zur Uni-Mail (Office 365)"></i>
+            </a>
+        </div>
+        <!-- Link to rocketchat -->
+        <div class="icon">
+            <a href="https://rocketchat.rz.uni-bamberg.de/home" target="_blank">
+                <img src="../../../../assets/quick-links/rocketchat.png" alt="Das Logo von Rocketchat"
+                    matTooltip="Zu Rocketchat">
+            </a>
+        </div>
+        <!-- Link to teams -->
+        <div class="icon">
+            <a href="https://teams.microsoft.com/" target="_blank">
+                <i class="fs-4 bi bi-microsoft-teams text-blue" matTooltip="Zu MS Teams"></i>
+            </a>
+        </div>
+        <!-- Link to online services -->
+        <div class="icon">
+            <a href="https://qis.uni-bamberg.de/qisserver/rds?state=user&type=0" target="_blank">
+                <i class="fs-4 bi bi-person-square text-blue" matTooltip="Zu den Online-Diensten"></i>
+            </a>
+        </div>
+        <!-- Link to campus print -->
+        <div class="icon">
+            <a href="https://campusprint.uni-bamberg.de/#/login" target="_blank">
+                <i class="fs-4 bi bi-printer text-blue" matTooltip="Zu Campus-Print"></i>
+            </a>
+        </div>
+        <!-- Link to library -->
+        <div class="icon">
+            <a href="https://katalog.ub.uni-bamberg.de/vufind/" target="_blank">
+                <img src="../../../../assets/quick-links/UB_Initialen.png"
+                    alt="Das Logo der Universitätsbibliothek Bamberg" matTooltip="Zum Katalog der Uni-Bibliothek">
+            </a>
+        </div>
+        <!-- Link to gitlab -->
+        <div class="icon">
+            <a href="https://gitlab.rz.uni-bamberg.de/" target="_blank">
+                <img src="../../../../assets/quick-links/gitlab-rz-favicon.png"
+                    alt="Das Logo des Gitlabs der Universität Bamberg" matTooltip="Zum Gitlab der Uni Bamberg">
+            </a>
+        </div>
+        <!-- Link to fis -->
+        <div class="icon">
+            <a href="https://fis.uni-bamberg.de/" target="_blank">
+                <img src="../../../../assets/quick-links/FIS_logo.png"
+                    alt="Das Logo des Forschungsinformationssystems der Universität Bamberg"
+                    matTooltip="Zum FIS der Uni Bamberg - Forschungsinformationssystem">
+            </a>
+        </div>
+        <!-- Link to stuve -->
+        <div class="icon">
+            <a href="https://stuve-bamberg.de/" target="_blank">
+                <img src="../../../../assets/quick-links/logo_stuve.png"
+                    alt="Das Logo der Studierendenvertretung Bamberg" matTooltip="Zur Studierendenvertretung">
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Gear for settings -->
+    <button class="btn-icon ms-auto order-1 order-xl-2" [matMenuTriggerFor]="widgetSettingsMenu">
+        <i class="icon bi bi-gear-fill text-gray"></i>
+    </button>
+    <mat-menu #widgetSettingsMenu="matMenu">
+        <button mat-menu-item tabindex="0" class="mb-0" (click)="hideElement()" (keyup.enter)="hideElement()">
+            <div>
+                <i class="icon bi bi-eye-slash text-danger"></i> Widget ausblenden
+            </div>
+        </button>
+    </mat-menu>
+</div>

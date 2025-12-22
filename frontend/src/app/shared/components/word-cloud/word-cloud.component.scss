@@ -1,0 +1,23 @@
+.word-cloud {
+    min-height: 120px;
+    max-height: 300px;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.word {
+    font-weight: 600;
+    transition: transform 0.25s ease, text-shadow 0.25s ease;
+    user-select: none;
+    white-space: nowrap;
+    display: inline-block;
+
+    &.clickable {
+        cursor: pointer;
+        pointer-events: auto;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}

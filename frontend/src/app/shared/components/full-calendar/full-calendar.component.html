@@ -1,0 +1,129 @@
+<div class="d-flex align-items-center justify-content-center justify-content-sm-between flex-wrap mx-2 mb-3">
+    <div>
+        <button class="btn me-2" (click)="today()" (keyup.enter)="today()">Heute</button>
+        <button class="btn btn-ghost me-2" (click)="prev()" (keyup.enter)="prev()">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+        <button class="btn btn-ghost" (click)="next()" (keyup.enter)="next()">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+    </div>
+    <div *ngIf="currentDate" class="d-none d-sm-flex">
+        <h2 [ngClass]="isWidget ? 'my-0' : ''">{{ currentDate }}</h2>
+    </div>
+    <div class="mt-2 mt-sm-0">
+
+        <!-- Area for opening coursesearch -->
+        <button id="timetable_add_button" appHoverTracker
+            class="btn btn-primary ms-2 d-none d-sm-inline plausible-event-name=Timetable-Add+Button"
+            (click)="openSearch.emit()" (keyup.enter)="openSearch.emit()" aria-label="Lehrveranstaltungssuche öffnen"
+            tabindex="0" *ngIf="!isWidget">
+            <i class="bi bi-plus-lg"></i>
+            <span class="ms-1">Hinzufügen</span>
+        </button>
+
+        <button class="add-button d-sm-none" (click)="openSearch.emit()" aria-label="Lehrveranstaltungssuche öffnen"
+            *ngIf="!isWidget">
+            <i class="bi bi-plus-lg"></i>
+        </button>
+
+        <!-- Area for changing view -->
+        <button [matMenuTriggerFor]="viewMenu" class="btn mx-2" aria-label="Ansicht wechseln">
+            <i class="bi bi-chevron-down"></i>
+            <span class="ms-1">Ansicht</span>
+        </button>
+        <mat-menu #viewMenu="matMenu">
+            <button mat-menu-item (click)="changeView('timeGridDay')" (keyup.enter)="changeView('timeGridDay')"
+                aria-label="Auf Tagesansicht umstellen" tabindex="0">
+                <i class="bi bi-calendar-day"></i>
+                <span class="ms-2">Tag</span>
+            </button>
+            <button mat-menu-item (click)="changeView('timeGridWeek')" (keyup.enter)="changeView('timeGridWeek')"
+                aria-label="Auf Wochenansicht umstellen" tabindex="0">
+                <i class="bi bi-calendar-week"></i>
+                <span class="ms-2">Woche</span>
+            </button>
+            <button mat-menu-item (click)="changeView('dayGridMonth')" (keyup.enter)="changeView('dayGridMonth')"
+                aria-label="Auf Monatsansicht umstellen" tabindex="0">
+                <i class="bi bi-calendar-month"></i>
+                <span class="ms-2">Monat</span>
+            </button>
+            <button mat-menu-item (click)="changeView('listWeek')" (keyup.enter)="changeView('listWeek')"
+                aria-label="Auf Terminübersicht umstellen" tabindex="0">
+                <i class="bi bi-card-list"></i>
+                <span class="ms-2">Terminübersicht</span>
+            </button>
+        </mat-menu>
+
+        <!-- Area for import and export -->
+        <button [matMenuTriggerFor]="ieMenu" class="btn" aria-label="Import und Export Menü öffnen" *ngIf="!isWidget">
+            <i class="bi bi-chevron-down"></i>
+            <span class="ms-1">Import/Export</span>
+        </button>
+        <mat-menu #ieMenu="matMenu">
+            <button mat-menu-item (click)="import.emit()" (keyup.enter)="import.emit()"
+                aria-label="Stundenplan importieren" tabindex="0">
+                <i class="bi bi-upload"></i>
+                <span class="ms-2">Plan importieren (JSON)</span>
+            </button>
+            <button mat-menu-item (click)="export.emit()" (keyup.enter)="export.emit()"
+                aria-label="Stundenplan exportieren" tabindex="0">
+                <i class="bi bi-download"></i>
+                <span class="ms-2">Plan exportieren (JSON)</span>
+            </button>
+            <button mat-menu-item (click)="openPDF.emit()" (keyup.enter)="openPDF.emit()"
+                aria-label="Stundenplan als PDF anzeigen" tabindex="0">
+                <i class="bi bi-filetype-pdf"></i>
+                <span class="ms-2">Plan als PDF anzeigen</span>
+            </button>
+            <button mat-menu-item (click)="openUnivis.emit()" (keyup.enter)="openUnivis.emit()"
+                aria-label="Stundenplan in UnivIS anzeigen" tabindex="0">
+                <img src="../../../../assets/univis.png" width="16px" height="16px"
+                    alt="Das Favicon der UnivIS, dem universitären Informationssystem.">
+                <span class="ms-2">Plan in UnivIS anzeigen</span>
+            </button>
+        </mat-menu>
+
+        <button class="btn-icon" [matMenuTriggerFor]="calenderSettingsMenu">
+            <i class="icon bi bi-sliders fw-bold me-2"></i>
+        </button>
+        <mat-menu #calenderSettingsMenu="matMenu" class="calendar-settings-menu d-flex justify-content-center">
+            <button mat-menu-item class="btn-icon my-2">
+                <mat-slide-toggle [checked]="calendarOptions.weekends" (change)="toggleWeekends()"
+                    aria-label="Zeige auch die Wochenendtage Samstag und Sonntag an">
+                    Wochenende anzeigen
+                </mat-slide-toggle>
+            </button>
+        </mat-menu>
+        <ng-container>
+            <button class="btn-icon" *ngIf="!isWidget" (click)="openHints.emit()"
+                matTooltip="Klicke hier um Planungshinweise anzuzeigen." matTooltipClass="custom-tooltip" appTooltip>
+                <i class="bi bi-exclamation-triangle-fill fs-5 me-2"
+                    [ngClass]="{'text-warning': hintsIconColor === 'warning', 'text-danger': hintsIconColor === 'danger', 'text-secondary': hintsIconColor === 'standard'}"></i>
+            </button>
+        </ng-container>
+    </div>
+</div>
+<div class="container mx-auto alert alert-sm alert-warning" role="alert" *ngFor="let deletedCourse of deletedCourses">
+    Die Lehrveranstaltung "{{ deletedCourse.name ? deletedCourse.name : deletedCourse.id }}" wurde in UnivIS gelöscht
+    und ist nicht mehr verfügbar.
+    <span class="ms-2 delete-link" aria-label="Lehrveranstaltung abwählen" tabindex="0"
+        (click)="deselectDeletedCourse(deletedCourse)"
+        (keyup.enter)="deselectDeletedCourse(deletedCourse)">Lehrveranstaltung abwählen</span>
+</div>
+<full-calendar class="calendar-container" #calendar [options]="calendarOptions" [events]="events">
+    <ng-template #eventContent let-arg>
+        <div class="fc-event-main-frame s-text" [matTooltip]="arg.event.title" *ngIf="arg">
+            <div class="fc-event-time d-flex flex-wrap justify-content-between">
+                <div>{{ arg.timeText }}</div>
+                <div *ngIf="arg.event.extendedProps.course && arg.event.extendedProps.course.terms[0].room">
+                    <i class="bi bi-pin-map me-1"></i>
+                    {{ arg.event.extendedProps.course.terms[0].room.short }}
+                </div>
+            </div>
+            <div class="d-flex flex-wrap text-break fc-event-title-container">
+                <div class="fc-event-title fc-sticky">{{ arg.event.title }}</div>
+            </div>
+        </div>
+    </ng-template>
+</full-calendar>

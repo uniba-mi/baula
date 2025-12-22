@@ -1,0 +1,22 @@
+.file-select {
+    margin-top: 0.75rem;
+}
+
+.upload {
+    display: block;
+}
+
+.withdrawal-link {
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+@media(max-width: 575.98px) {
+    .mat-card {
+        padding: 0;
+    }
+
+    .dialog-container {
+        width:  90%;
+    }
+}

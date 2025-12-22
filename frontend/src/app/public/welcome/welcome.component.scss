@@ -1,0 +1,22 @@
+.sponsor {
+  filter: grayscale(1);
+  transition: .25s ease-in-out;
+}
+
+.sponsor:hover {
+  filter: grayscale(0);
+}
+
+.welcome {
+  margin: 4rem 2rem 4rem 2rem;
+}
+
+.acronym {
+  color: var(--ub-blue);
+}
+
+@media(max-width: 576px) {
+  .welcome-card {
+    width: 90% !important;
+  }
+}

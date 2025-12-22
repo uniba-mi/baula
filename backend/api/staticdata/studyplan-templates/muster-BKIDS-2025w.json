@@ -1,0 +1,183 @@
+{
+    "name": "Musterplan B. Sc. Künstliche Intelligenz und Data Science (WS25/26)",
+    "status": false,
+    "semesterPlans": [
+        {
+            "modules": [
+                "Stat-B-01",
+                "MOBI-DBS-B",
+                "Inf-Einf-B",
+                "Inf-DM-B",
+                "Inf-Ment-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2025w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 31,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "AI-AuD-B",
+                "Stat-B-02",
+                "WiMa-B-002",
+                "MI-WAIAI-B",
+                "Inf-LBR-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2026s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "PSI-IntroSP-B",
+                "MOBI-DE-B",
+                "GdI-MTL-B",
+                "KogSys-ML-B",
+                "AISE-LKR-B"
+            ],
+            "userGeneratedModules": [],
+            "courses": [],
+            "semester": "2026w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "KogSys-KI-B",
+                "VIS-GIV-B"
+            ],
+            "userGeneratedModules": [
+              {
+                  "name": "Seminar",
+                  "ects": 3,
+                  "notes": "Bereich Seminar & Projekt",
+                  "status": "open",
+                  "_id": "68de7d6559cadf6cda0d3a21",
+                  "flexNowImported": false
+              },
+              {
+                  "name": "Projekt",
+                  "ects": 6,
+                  "notes": "Bereich Seminar & Projekt",
+                  "status": "open",
+                  "_id": "68de7d6559cadf6cda0d3a22",
+                  "flexNowImported": false
+              },
+              {
+                  "name": "Fachmodul",
+                  "ects": 6,
+                  "notes": "Wahlpflichtbereich Profilstudium/Informatik/Mathematik",
+                  "status": "open",
+                  "_id": "68de7d6559cadf6cda0d3a23",
+                  "flexNowImported": false
+              },
+              {
+                  "name": "Schlüsselkompetenzen",
+                  "ects": 2,
+                  "notes": "Wahlpflichtbereich Profilstudium/Informatik/Mathematik",
+                  "status": "open",
+                  "_id": "68de7d6559cadf6cda0d3a24",
+                  "flexNowImported": false
+              }
+            ],
+            "courses": [],
+            "semester": "2027s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 29,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "AISE-DO-B",
+                "PSI-EDS-B"
+            ],
+            "userGeneratedModules": [
+              {
+                  "name": "Seminar",
+                  "ects": 3,
+                  "notes": "Bereich Seminar & Projekt",
+                  "status": "open",
+                  "_id": "68de7d6559cadf6cda0d3a25",
+                  "flexNowImported": false
+              },
+              {
+                  "name": "Projekt",
+                  "ects": 6,
+                  "notes": "Bereich Seminar & Projekt",
+                  "status": "open",
+                  "_id": "68de7d6559cadf6cda0d3a26",
+                  "flexNowImported": false
+              },
+              {
+                  "name": "Fachmodul",
+                  "ects": 6,
+                  "notes": "Wahlpflichtbereich Profilstudium/Informatik/Mathematik",
+                  "status": "open",
+                  "_id": "68de7d6559cadf6cda0d3a27",
+                  "flexNowImported": false
+              },
+              {
+                  "name": "Fachmodul",
+                  "ects": 6,
+                  "notes": "Wahlpflichtbereich Profilstudium/Informatik/Mathematik",
+                  "status": "open",
+                  "_id": "68de7d6559cadf6cda0d3a28",
+                  "flexNowImported": false
+              }
+            ],
+            "courses": [],
+            "semester": "2027w",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        },
+        {
+            "modules": [
+                "KI-Thesis-B"
+            ],
+            "userGeneratedModules": [
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Profilstudium/Informatik/Mathematik",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a29",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Profilstudium/Informatik/Mathematik",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a2a",
+                    "flexNowImported": false
+                },
+                {
+                    "name": "Fachmodul",
+                    "ects": 6,
+                    "notes": "Profilstudium/Informatik/Mathematik",
+                    "status": "open",
+                    "_id": "68de7d6559cadf6cda0d3a2b",
+                    "flexNowImported": false
+                }
+            ],
+            "courses": [],
+            "semester": "2028s",
+            "isPastSemester": false,
+            "aimedEcts": 30,
+            "summedEcts": 30,
+            "expanded": true
+        }
+    ]
+}

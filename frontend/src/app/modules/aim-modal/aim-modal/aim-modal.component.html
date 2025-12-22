@@ -1,0 +1,24 @@
+<div class="mx-4 my-2">
+    <h2 mat-dialog-title>Ziele bearbeiten</h2>
+    <mat-dialog-content>
+        <p class="my-sm-3">
+            Hier können Sie eigene Zielsetzungen angeben, wie stark Sie die einzelnen Bereiche der
+            verschiedenen Standards/Zielvorgaben erfüllen möchten. Die Angabe erfolgt in
+            ECTS und ist zunächst nur für die erste Kompetenzebene möglich.<br />
+            Sie können somit einen Richtwert festlegen, welcher anschließend in der
+            Visualisierung des Balkendiagramms angezeigt wird.
+        </p>
+        <!-- Each standard gets one tab, tab content is managed in own component -->
+        <mat-tab-group *ngIf="standards$ | async as standards">
+            <mat-tab *ngFor="let standard of standards" [label]="standard.stId">
+                <div class="p-3" [innerHtml]="standard.desc">
+                </div>
+                <app-competence-tab [standard]="standard" (update)="updateForm($event)"></app-competence-tab>
+            </mat-tab>
+        </mat-tab-group>
+        <mat-dialog-actions class="my-3">
+            <button class="btn btn-outline me-2" mat-dialog-close>Abbrechen</button>
+            <button class="btn btn-success" (click)="saveCompetenceAims()" mat-dialog-close>Speichern</button>
+        </mat-dialog-actions>
+    </mat-dialog-content>
+</div>

@@ -1,0 +1,123 @@
+<div class="container mx-auto my-3 my-md-5" *ngIf="user$ | async as user">
+  <!-- Intro -->
+  <h1 class="text-center text-sm-start">Alle Studienpläne</h1>
+  <app-hint [key]="studyPlanHint" [hintMessage]="studyPlanMessage"></app-hint>
+  <div class="d-flex justify-content-center justify-content-sm-end">
+    <button *ngIf="templatesAvailable" class="btn btn-secondary me-2"
+      (click)="chooseImportType(user._id, user.startSemester)"
+      (keyup.enter)="chooseImportType(user._id, user.startSemester)" aria-label="Studienplan importieren"
+      [disabled]="studyPlans.length >= 5">
+      <i class="bi bi-upload me-1"></i> Importieren
+    </button>
+    <button *ngIf="!templatesAvailable" class="btn btn-secondary me-2"
+      (click)="importIndividualStudyPlan(user._id, user.startSemester)"
+      (keyup.enter)="importIndividualStudyPlan(user._id, user.startSemester)" aria-label="Studienplan importieren"
+      [disabled]="studyPlans.length >= 5">
+      <i class="bi bi-upload me-1"></i> Importieren
+    </button>
+    <button class="btn btn-primary" (click)="openAddStudyPlanDialog(user)" (keyup.enter)="openAddStudyPlanDialog(user)"
+      aria-label="Neuen Studienplan erstellen" [disabled]="studyPlans.length >= 5">
+      + Erstellen
+    </button>
+    <i *ngIf="studyPlans.length >= 5" class="text-danger bi bi-exclamation-triangle my-auto icon"
+      matTooltip="Du hast die maximale Anzahl von Studienplänen erreicht. Erstellen, Duplizieren und Importieren von weiteren Studienplänen ist erst möglich, wenn du einen alten Studienplan gelöscht hast."></i>
+  </div>
+
+  <!-- Intro end -->
+  <!-- Table -->
+  <div class="study-plan-list mt-3 p-0 rounded bg-white" *ngIf="studyPlans.length > 0; else noData">
+    <!-- Table Header -->
+    <div class="row study-plan-list-header my-auto mx-0 py-3 px-1 d-none d-sm-flex fw-bold text-gray border">
+      <div class="col-4 text-gray">Name</div>
+      <div class="col-3 text-gray">Status</div>
+      <div class="col-4 text-gray">Erstellt am</div>
+      <div class="col-1"></div>
+    </div>
+    <!-- Table Header End -->
+
+    <!-- Table Body -->
+    <div class="list-body" *ngIf="studyPlans$ | async as studyPlans">
+      <!-- Study Plan Item -->
+      <div class="row study-plan-list-item p-2 py-sm-4 px-sm-2 border" (click)="selectStudyPlan(studyPlan._id)"
+        (keyup.enter)="selectStudyPlan(studyPlan._id)" tabindex="0" *ngFor="let studyPlan of studyPlans">
+        <div class="col-12 col-sm-4 mb-1 mb-sm-0">{{ studyPlan.name }}</div>
+        <div class="col-6 col-sm-3 d-flex justify-content-start">
+          <button class="btn-icon" *ngIf="studyPlan.status" tabindex="0"
+            (click)="toggleActiveState($event, studyPlan._id)"
+            (keyup.enter)="toggleActiveState($event, studyPlan._id)">
+            <i class="status-toggle active-toggle icon bi bi-toggle-on"></i>
+          </button>
+          <button class="btn-icon" *ngIf="!studyPlan.status" tabindex="0"
+            (click)="toggleActiveState($event, studyPlan._id)"
+            (keyup.enter)="toggleActiveState($event, studyPlan._id)">
+            <i class="status-toggle icon bi bi-toggle-off text-gray"></i>
+          </button>
+          <span class="status-active px-2 rounded info" *ngIf="studyPlan.status">Aktiv</span>
+          <span class="text-gray" *ngIf="!studyPlan.status">Archiviert</span>
+        </div>
+
+        <div class="col-6 col-sm-4 d-flex justify-content-end justify-content-sm-start text-gray">
+          {{ studyPlan.createdAt | date }}
+        </div>
+        <!-- Context menu that contains actions -->
+        <div class="col-12 col-sm-1 order-first order-sm-last position-relative">
+          <button mat-button class="btn-icon position-absolute top-0 end-0" role="button" aria-haspopup="true"
+            aria-expanded="false" tabindex="0" aria-label="Kontextmenu für weitere Aktionen öffnen"
+            (click)="onContextMenuClick($event)" (keyup.enter)="onContextMenuClick($event)"
+            [matMenuTriggerFor]="contextMenu">
+            <i class="icon bi bi-three-dots-vertical text-gray"></i>
+          </button>
+          <mat-menu #contextMenu="matMenu" class="action-menu d-flex justify-content-center">
+            <button mat-menu-item class="btn-icon" (click)="
+                exportStudyPlan(studyPlan, user.studyPath)
+              " (keyup.enter)="
+                exportStudyPlan(studyPlan, user.studyPath)
+              ">
+              <i class="icon bi bi-download d-inline text-gray"></i>
+              Exportieren
+            </button>
+            <button mat-menu-item class="btn-icon" (click)="
+                openAddStudyPlanDialog(user, studyPlan._id, studyPlan)
+              " (keyup.enter)="
+                openAddStudyPlanDialog(user, studyPlan._id, studyPlan)
+              ">
+              <i class="icon bi bi-pencil d-inline text-gray"></i>
+              Bearbeiten
+            </button>
+            <button mat-menu-item class="btn-icon" (click)="duplicateStudyPlan(user, studyPlan)"
+              (keyup.enter)="duplicateStudyPlan(user, studyPlan)" [disabled]="studyPlans.length >= 5">
+              <i class="icon bi bi-files d-inline text-gray"></i>
+              Duplizieren
+            </button>
+            <button *ngIf="studyPlans.length > 1 && !studyPlan.status" mat-menu-item class="btn-icon" (click)="
+                openDeleteDialog(
+                  studyPlan._id,
+                  studyPlan.name
+                )
+              " (keyup.enter)="
+                openDeleteDialog(
+                  studyPlan._id,
+                  studyPlan.name
+                )
+              ">
+              <i class="icon bi bi-trash3 d-inline text-gray"></i>
+              Löschen
+            </button>
+          </mat-menu>
+        </div>
+        <!-- Context menu  end -->
+      </div>
+      <!-- Study Plan Item End -->
+    </div>
+    <!-- Body End -->
+  </div>
+  <!-- Table End -->
+</div>
+
+
+<ng-template #noData>
+  <mat-card appearance="outlined" class="my-3 p-4">
+    <app-no-data noDataMessage="Du hast noch keinen Studienplan angelegt. Klicke hierzu auf den Button 'Erstellen'"
+      [diagram]="false"></app-no-data>
+  </mat-card>
+</ng-template>

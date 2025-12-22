@@ -1,0 +1,28 @@
+fastapi~=0.115.5
+langdetect~=1.0.9
+mariadb~=1.1.10
+nltk~=3.9.1
+pandas~=2.2.2
+python-dotenv~=1.0.1
+pymongo~=4.9.1
+pytz~=2024.2
+requests~=2.32.3
+scikit-learn~=1.5.2
+transformers~=4.46.3
+uvicorn~=0.30.5
+starlette~=0.41.3
+keybert~=0.8.5
+regex~=2024.11.6
+pydantic~=2.10.3
+#urllib3~=2.2.3
+sentence-transformers~=3.1.1
+#spacy~=3.7.5
+#pot~=0.9.4
+#torch~=2.4.1
+#numpy==1.26.4
+#gensim~=4.3.3
+
+# python -m spacy download de_core_news_sm
+# python -m spacy download en_core_web_sm
+# python -m spacy download de_core_news_lg
+# python -m spacy validate

@@ -1,0 +1,46 @@
+<form [formGroup]="privacyChangeForm">
+    <div class="content-container d-flex justify-content-between">
+        <h3>Wichtig: Aktualisierung der Datenschutzerklärung</h3>
+    </div>
+
+    <p>Ab 01.12.2025 läuft Baula im Rahmen des <a href="https://www.uni-bamberg.de/bakule/"
+            target="_blank">BaKuLe-Projekts</a> an
+        der Universität Bamberg weiter und es gilt die neue Datenschutzerklärung vom
+        01.12.2025. Bitte lies die Änderungen und stimme zu, um Baula weiterhin mit deinem aktuellen Profil zu nutzen.
+        <strong>Ohne deine Einwilligung werden deine aktuellen Daten gelöscht und
+            du musst dir ein neues Konto anlegen.</strong>
+    </p>
+    <p><i class="bi bi-arrow-right-circle-fill text-blue me-2"></i><a class="link" routerLink="../datenschutz"
+            target="_blank">Neue
+            Datenschutzerklärung ab
+            01.12.2025 (Neuer Tab)</a></p>
+
+    <div class="w-100 my-2">
+        <p>Bitte wähle eine der folgenden Optionen:</p>
+        <mat-radio-group class="d-flex flex-column" formControlName="privacyChange" (change)="updateChoice()">
+            <mat-radio-button value="accept">Ich stimme der Datenschutzerklärung vom 01.12.2025 zu und möchte Baula weiterhin nutzen.
+            </mat-radio-button>
+            <mat-radio-button value="decline">Ich stimme der Datenschutzerklärung vom 01.12.2025 nicht zu.
+                <strong>Mir
+                    ist
+                    bewusst,
+                    dass mein aktuelles Profil gelöscht wird.</strong></mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+    <mat-dialog-actions>
+        @if(selectedPrivacyChoice == 'accept') {
+            <button mat-raised-button class="btn btn-primary"
+                [mat-dialog-close]="getPrivacyChoiceFromDialog()">
+                Speichern
+            </button>
+        } 
+        @if(selectedPrivacyChoice == 'decline') {
+            <button mat-raised-button class="btn btn-danger" [disabled]="privacyChangeForm.invalid"
+                [mat-dialog-close]="getPrivacyChoiceFromDialog()">
+                Account löschen
+            </button>
+        }
+        
+    </mat-dialog-actions>
+</form>

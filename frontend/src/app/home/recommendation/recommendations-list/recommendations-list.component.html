@@ -1,0 +1,64 @@
+<app-search-panel *ngIf="!preview" [searchSettings]="searchSettings$ | async" [filterOptions]="filterList"
+    [customStyle]="true" [horizontalFilters]="true" (search)="searchModules($event)" (filter)="onFilterChange($event)"
+    (clear)="showAllModules()">
+</app-search-panel>
+
+<div class="module-recommendations-container w-100" [ngClass]="{'mt-4': !preview, 'mt-2': preview}">
+    <div class="recommendations-content" [ngClass]="{'mt-2': !preview}">
+
+        <div *ngIf="isLoading" class="d-flex align-items-center gap-2">
+            <p class="mb-0">Modulvorschläge werden geladen...</p>
+            <mat-spinner diameter="24"></mat-spinner>
+        </div>
+
+        <ng-container *ngIf="!isLoading && recommendations?.length">
+
+            <!-- preview mode -->
+            <div *ngIf="preview" class="preview-container">
+
+                <button *ngIf="canScrollLeft" class="scroll-arrow scroll-arrow-left" (click)="scrollLeft()"
+                    matTooltip="Nach links scrollen" aria-label="Nach links scrollen">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+
+                <button *ngIf="canScrollRight" class="scroll-arrow scroll-arrow-right" (click)="scrollRight()"
+                    matTooltip="Nach rechts scrollen" aria-label="Nach rechts scrollen">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+
+                <div #scrollContainer class="preview-scroll-wrapper mb-3" (scroll)="onScroll()">
+                    <div class="preview-cards-row">
+                        <div class="preview-card" *ngFor="let module of displayedRecommendations">
+                            <app-recs-module-card [module]="module" [customStyle]="true" [allJobs]="jobsArray"
+                                [allTopics]="topicsArray"
+                                (moduleMarkedExcluded)="onModuleMarkedExcluded($event)"
+                                (moduleFavouriteToggled)="onModuleFavouriteToggled($event)">
+                            </app-recs-module-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- full mode (no preview) -->
+            <div *ngIf="!preview" class="container-fluid px-0">
+                <div class="row g-2">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let module of recommendations">
+                        <app-recs-module-card class="d-flex w-100 h-100" [module]="module" [customStyle]="true"
+                            [allJobs]="jobsArray" [allTopics]="topicsArray"
+                            (moduleMarkedExcluded)="onModuleMarkedExcluded($event)"
+                            (moduleFavouriteToggled)="onModuleFavouriteToggled($event)">
+                        </app-recs-module-card>
+                    </div>
+                </div>
+            </div>
+
+        </ng-container>
+
+        <ng-container *ngIf="!isLoading && (!recommendations || recommendations.length === 0)">
+            <p *ngIf="!preview">
+                Keine Modulvorschläge verfügbar. Bitte wähle Interessen oder Jobs aus, um Empfehlungen zu erhalten.
+            </p>
+        </ng-container>
+
+    </div>
+</div>

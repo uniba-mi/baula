@@ -1,0 +1,36 @@
+<!-- Study progress / semester status -->
+<div class="status-bar mb-2 d-flex">
+  <div class="chip" *ngIf="isOldestPastSemester()" matTooltip="Abgeschlossene Semester"
+    matTooltipClass="custom-tooltip">
+    <i class="finished-icon bi bi-check-circle-fill"></i><span *ngIf="isExpanded"> Abgeschlossen</span>
+  </div>
+  <div class="chip" *ngIf="isCurrentSemester()" matTooltip="Laufendes Semester" matTooltipClass="custom-tooltip">
+    <i class="current-icon bi bi-play-circle-fill"></i><span *ngIf="isExpanded"> Laufend</span>
+  </div>
+  <div class="chip" *ngIf="isEligibleForFinish" matTooltip="Semester, die du abschließen kannst."
+    matTooltipClass="custom-tooltip">
+    <i class="to-be-finished-icon bi bi-record-circle-fill"></i><span *ngIf="isExpanded">
+      Bereit zum Abschluss</span>
+  </div>
+</div>
+
+<!-- Semester box -->
+<div class="semester d-flex justify-content-start" [class.current]="isCurrentSemester()">
+  <app-semester-header class="semester-header p-2" [metaSemester]="metaSemester" [studyPlanId]="studyPlanId"
+    [semesterPlan]="semesterPlan" [semesterNumber]="semesterNumber" [semesterStudyPath$]="semesterStudyPath$"
+    (toggleExpanded)="onToggleExpanded()" (finishSemester)="handleFinishSemester($event)" [isExpanded]="isExpanded"
+    [isEligibleForFinish]="isEligibleForFinish"></app-semester-header>
+
+  <!-- Expanded Semester -->
+  <div [hidden]="!isExpanded" cdkDropList [cdkDropListData]="semesterPlan" [id]="semesterPlan._id"
+    [cdkDropListConnectedTo]="connectedDropListIds" (cdkDropListDropped)="onDrop($event)"
+    [cdkDropListDisabled]="metaSemester.isPastSemester" class="semester-droplist">
+    <app-semester-body [metaSemester]="metaSemester" [semesterPlan]="semesterPlan" [studyPlanId]="studyPlanId"
+      [semesterStudyPath$]="semesterStudyPath$"></app-semester-body>
+  </div>
+
+  <!-- Non Expanded Semester -->
+  <div [hidden]="isExpanded" class="vertical-title d-flex align-items-center">
+    <span class="text-gray">{{semesterNumber}}. Semester</span>
+  </div>
+</div>

@@ -1,0 +1,138 @@
+<ng-container *ngIf="!maintenance; else MaintenanceStudyPlan">
+  <ng-container *ngIf="selectedStudyPlan$ | async as selectedPlan; else NoStudyPlan">
+    <mat-sidenav-container class="mat-drawer-container" [hasBackdrop]="false" cdkDropListGroup
+      *ngIf="user$ | async as user">
+      <mat-sidenav class="study-plan-sidenav" #sidenav mode="side" [ngClass]="{
+    'd-none': isSmallScreen, 
+    'd-flex': !isSmallScreen, 
+    'zero-width': !(isActivePlan$ | async)
+  }">
+        <!-- Sidenav bar content -->
+        <app-recs-sidenav *ngIf="(isActivePlan$ | async) && (plannedModules$ | async) as plannedModules" [spId]="spId"
+          [plannedModules]="plannedModules" [user]="user" (tabClicked)="onRecsSidenavTabClicked($event)"
+          (toggleSidenav)="onRecsSidenavClosed()"></app-recs-sidenav>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <!-- Button to toggle sidenav -->
+        <button *ngIf="(isActivePlan$ | async) && !isSmallScreen" class="btn trigger-study-plan-sidenav"
+          [ngClass]="{'open': sidenav.opened, 'closed': !sidenav.opened}" (click)="toggleSidenav()"
+          (keyup.enter)="toggleSidenav()"
+          [matTooltip]="sidenav.opened ? 'Modulempfehlungen einklappen' : 'Modulempfehlungen ausklappen'">
+          <span class="icon-wrapper">
+            <i [ngClass]="sidenav.opened ? 'bi-chevron-double-left' : 'bi-chevron-double-right'" class="bi"></i>
+          </span>
+        </button>
+        <div class="container mx-auto my-3 my-md-5" [ngClass]="{'apply-padding': !isSmallScreen}">
+          <!-- Intro -->
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-start justify-content-start">
+              <h1>{{selectedPlan.name}}</h1>
+              <button class="btn-icon" (click)="
+                openEditStudyPlanDialog(selectedPlan._id, selectedPlan)
+              " (keyup.enter)="
+                openEditStudyPlanDialog(selectedPlan._id, selectedPlan)
+              ">
+                <i class="edit-pencil icon bi bi-pencil-square d-inline text-gray"></i></button>
+            </div>
+            <button class="btn btn-blue-outline manage-study-plans" tabindex="0" aria-label="Alle Studienpläne ansehen"
+              routerLink="/app/studium/ueberblick">
+              <i class="bi bi-arrow-up-right-square"></i> Studienpläne verwalten
+            </button>
+          </div>
+          <app-hint [key]="studyPlanDetailHint" [hintMessage]="studyPlanDetailMessage"></app-hint>
+          <div class="row justify-content-center mb-2">
+            <div class="col-12 mb-2" *ngIf="displayProgressBar">
+              <app-progress-bar [totalCredits]="user.maxEcts ? user.maxEcts : 0" [semesterPlans$]="semesterPlans$"
+                [studyPath$]="semesterStudyPath$"></app-progress-bar>
+            </div>
+          </div>
+          <!-- Intro End -->
+
+          <!-- Sidenav for hints -->
+          <mat-sidenav *ngIf="(isActivePlan$ | async)" class=" hints-sidenav" mode="over" position="end"
+            [opened]="hintsOpened"><app-hints-sidenav [hints]="hints" (close)="toggleHints()"
+              (acronymClick)="openModuleDetails($event)">
+            </app-hints-sidenav>
+          </mat-sidenav>
+
+          <!-- Adding semesters option -->
+          <ng-container *ngIf="activeSemesters$ | async as activeSemesters">
+            <ng-container *ngIf=" metaSemesters$ | async as metaSemesters">
+              <div class="menu-box d-flex justify-content-end align-items-center gap-2 mb-2">
+                <button *ngIf="semesterPlans$ | async as semesterPlans" class="study-progress btn btn-outline btn-sm"
+                  (click)="toggleProgressBar()" (keyup.enter)="toggleProgressBar()"
+                  matTooltip="Studienfortschritt anzeigen" matTooltipClass="custom-tooltip">
+                  <i class="bi bi-graph-up-arrow"></i> {{ displayProgressBar ? 'ECTS Fortschritt verstecken' : 'ECTS
+                  Fortschritt
+                  anzeigen' }}
+                </button>
+                <button class="add-semester-btn btn btn-primary btn-sm"
+                  *ngIf="isLastSemesterActive(metaSemesters, activeSemesters) && (metaSemesters.length < 20)"
+                  (click)="openAddSemesterDialog()" (keyup.enter)="openAddSemesterDialog()"
+                  matTooltip="Studiendauer verlängern" matTooltipClass="custom-tooltip">
+                  <i class="bi bi-plus-lg me-2"> Semester hinzufügen</i>
+                </button>
+                <button *ngIf="(isActivePlan$ | async)" class="btn-icon" (click)="toggleHints()"
+                  matTooltip="Klicke hier, um Planungshinweise anzuzeigen." matTooltipClass="custom-tooltip">
+                  <i class="bi bi-exclamation-triangle-fill fs-5"
+                    [ngClass]="{'text-warning': hintsIconColor === 'warning', 'text-danger': hintsIconColor === 'danger', 'text-secondary': hintsIconColor === 'standard'}"></i>
+                </button>
+                <!-- TODO comment back in as soon as API is there -->
+                <!-- <button class="sync-with-fn btn btn-primary btn-sm" matTooltip="FlexNow-Auszug laden"
+                  matTooltipClass="custom-tooltip" aria-label="FlexNow-Auszug laden">
+                  <a class="profile-link redirect" (click)="importCompleteFlexNowData()"
+                    (keyup.enter)="importCompleteFlexNowData()"><i class="bi bi-arrow-repeat me-2"></i>Studienverlauf
+                    aus FlexNow laden</a>
+                </button> -->
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <!-- Semester columns -->
+          <div class="semester-container-wrapper" *ngIf=" metaSemesters$ | async as metaSemesters">
+
+            <!-- Left arrow -->
+            <button class="scroll-arrow scroll-arrow-left" *ngIf="!isSmallScreen" [class.disabled]="!canScrollLeft"
+              (click)="scrollLeft()" [disabled]="!canScrollLeft" matTooltip="Nach links scrollen"
+              aria-label="Nach links scrollen">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+
+            <!-- Right arrow -->
+            <button class="scroll-arrow scroll-arrow-right" *ngIf="!isSmallScreen" [class.disabled]="!canScrollRight"
+              (click)="scrollRight()" [disabled]="!canScrollRight" matTooltip="Nach rechts scrollen"
+              aria-label="Nach rechts scrollen">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+
+            <div class="semester-container" #semesterContainer (scroll)="onScroll()">
+              <div class="semester-column" [ngClass]="{
+       'collapsed': !isExpanded(metaSemester.semester),
+       'separator': metaSemester.isPastSemester && !getNextSemester(metaSemesters, i)?.isPastSemester,
+     }" *ngFor="let metaSemester of metaSemesters; let i = index">
+
+                <app-study-plan-semester [ngClass]="{'collapsed': !isExpanded(metaSemester.semester)}"
+                  [metaSemester]=" metaSemester" [semesterNumber]="i + 1"
+                  [isExpanded]="isExpanded(metaSemester.semester)" (finishSemester)="handleFinishSemester($event)"
+                  [eligibleSemesterId]="eligibleSemesterId" (toggleExpanded)="onSemesterToggled(metaSemester.semester)">
+                </app-study-plan-semester>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #NoStudyPlan>
+  <div class="container mx-auto my-3 my-md-5">
+    <p>Es konnte kein Studienverlaufsplan gefunden werden.</p>
+    <a class="link" href="/app/studium/ueberblick" class="btn btn-primary redirect link"
+      aria-label="Studienverlaufsplan auswählen">Wähle hier einen vorhandenen Studienverlaufsplan aus</a>
+  </div>
+</ng-template>
+
+<ng-template #MaintenanceStudyPlan>
+  <app-maintenance-message [feature]="'Studienplan'"></app-maintenance-message>
+</ng-template>

@@ -1,0 +1,176 @@
+<!-- Terms, Teachers and Organization -->
+<div class="row">
+    <!-- Terms -->
+    <div class="col-12 mb-2" [class.col-md-6]="context == 'detail-dialog'">
+        <div class="row" *ngIf="course.terms && course.terms.length !== 0; else noTermsAvailable">
+            <div class="col-12 mx-0 mb-2 fw-bold">
+                <i class="bi bi-clock"></i> Zeitangaben:
+            </div>
+            <ng-container *ngFor="let term of course.terms">
+                <div class="row my-1">
+                    <div class="col" *ngIf="term.startdate || term.enddate">
+                        <span *ngIf="term.startdate">{{
+                            term.startdate | date : "EE, dd.MM.YYYY"
+                            }}</span>
+                        <span *ngIf="
+                    term.startdate &&
+                    term.enddate &&
+                    term.startdate !== term.enddate
+                  ">
+                            bis {{ term.enddate | date : "EE, dd.MM.YYYY" }}</span>
+                    </div>
+                    <div class="col" *ngIf="term.repeat && term.repeat !== ''">
+                        {{ term.repeat }}
+                    </div>
+                    <div class="col" *ngIf="term.starttime !== '' && term.endtime !== ''">
+                        {{ term.starttime }}-{{ term.endtime }} Uhr
+                    </div>
+                    <div class="col" *ngIf="term.room">
+                        {{ term.room.short }}
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <!-- For space -->
+    <div [class.col-md-1]="context == 'detail-dialog'"></div>
+
+    <!-- Teachers and Organization -->
+    <div class="col-12 container-fluid" [class.col-md-5]="context == 'detail-dialog'">
+        <div class="d-flex flex-wrap">
+            <div *ngIf="course.ects" class="me-4">
+                <span class="fw-bold me-2">ECTS:</span>
+                <span>{{ course.ects }}</span>
+            </div>
+            <div *ngIf="course.sws">
+                <span class="fw-bold me-2">SWS:</span>
+                <span>{{ course.sws }}</span>
+            </div>
+        </div>
+        <!-- Language, Format, Keywords and addInfo -->
+        <!-- Format -->
+        <div class="d-flex flex-wrap my-3" *ngIf="course.format">
+            <div class="fw-bold me-2">
+                <i class="bi bi-person-video3 me-2"></i> Format:
+            </div>
+            <div>
+                {{ course.format | courseFormat}}
+            </div>
+        </div>
+        <!-- Language -->
+        <div class="d-flex flex-wrap my-3" *ngIf="course.lang">
+            <div class="fw-bold me-2">
+                <i class="bi bi-translate me-2"></i> Sprache:
+            </div>
+            <div>
+                {{ course.lang | courseLang}}
+            </div>
+        </div>
+        <!-- Expected Attendance -->
+        <div class="d-flex flex-wrap my-3" *ngIf="course.expAttendance ">
+            <div class="fw-bold me-2">
+                <i class="bi bi-people me-1"></i> Erwartete Teilnehmerzahl:
+            </div>
+            <div>
+                {{ course.expAttendance }}
+            </div>
+        </div>
+        <ng-container *ngIf="course.dozs">
+            <!-- Teachers -->
+            <div class="fw-bold mt-3 mb-1 my-md-0">
+                <i class="bi bi-person me-1"></i> Dozierende:
+            </div>
+            <div class="d-flex flex-wrap mb-2" *ngFor="let doz of course.dozs">
+                <div class="d-inline-flex align-items-center me-2">
+                    {{ doz.title }} {{ doz.firstname }} {{ doz.lastname }}
+                </div>
+                <div class="d-inline" *ngIf="doz.email">
+                    <button class="btn btn-outline" (click)="writeEMail(doz.email)"
+                        (keyup.enter)="writeEMail(doz.email)" aria-label="E-Mail an Lehrende">
+                        <i class="bi bi-envelope"></i>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+        <!-- Organization -->
+        <div *ngIf="course.orgname || course.chair" class="my-3">
+            <div class="fw-bold my-1">
+                <i class="bi bi-house me-2"></i>
+                <span>Lehrstuhl:</span>
+            </div>
+            <div>{{ course.chair }}</div>
+        </div>
+        <div *ngIf="course.keywords || course.addInfo" class="my-3">
+            <div class="fw-bold mb-1">
+                <i class="bi bi-tags me-1"></i> Schlagworte:
+            </div>
+            <div class="d-flex flex-wrap" *ngIf="course.keywords">
+                <div>
+                    {{ course.keywords }}
+                </div>
+            </div>
+            <div class="d-flex flex-wrap" *ngIf="course.addInfo">
+                <mat-chip-set aria-label="Zusätzliche Angaben zu Inhalten">
+                    <mat-chip *ngFor="let item of course.addInfo.split(';')">{{ item }}</mat-chip>
+                </mat-chip-set>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <!-- additional course information start -->
+    <div class="row my-3" *ngIf="course.organizational && course.organizational !== ''">
+        <div class="col-12 fw-bold" [class.col-xl-3]="context == 'detail-dialog'">Organisatorisches</div>
+        <div [ngClass]="course.organizational.length > 300 ? 'truncate' : ''" class="col-12"
+            [class.col-xl-9]="context == 'detail-dialog'">
+            <span id="{{ course.id }}-organisation"
+                [ngClass]="course.organizational.length > 300 ? 'truncate-text' : ''"
+                [innerHtml]="course.organizational | markdown"></span>
+            <span role="button" class="px-2" *ngIf="course.organizational.length > 300"><i
+                    *ngIf="!expandedCourseOrganisation" class="bi bi-chevron-down show-more-icon"
+                    (click)="toggleCourseOrganisation(course, 'expand')"
+                    (keyup.enter)="toggleCourseOrganisation(course, 'expand')"></i><i *ngIf="expandedCourseOrganisation"
+                    class="bi bi-chevron-up" (click)="toggleCourseOrganisation(course, 'collapse')"
+                    (keyup.enter)="toggleCourseOrganisation(course, 'collapse')"></i></span>
+        </div>
+    </div>
+    <div class="row my-2" *ngIf="course.desc">
+        <div class="col-12 fw-bold" [class.col-xl-3]="context == 'detail-dialog'">Beschreibung</div>
+        <div class="col-12" [ngClass]="course.desc.length > 300 ? 'truncate' : ''"
+            [class.col-xl-9]="context == 'detail-dialog'">
+            <!-- {{ course.desc }} -->
+            <span id="{{ course.id }}-description" [ngClass]="course.desc.length > 300 ? 'truncate-text' : ''"
+                [innerHtml]="course.desc | markdown"></span>
+            <span role="button" class="px-2" *ngIf="course.desc.length > 300"><i *ngIf="!expandedCourseDescription"
+                    class="bi bi-chevron-down show-more-icon" (click)="toggleCourseDescription(course, 'expand')"
+                    (keyup.enter)="toggleCourseDescription(course, 'expand')"></i><i *ngIf="expandedCourseDescription"
+                    class="bi bi-chevron-up" (click)="toggleCourseDescription(course, 'collapse')"
+                    (keyup.enter)="toggleCourseDescription(course, 'collapse')"></i></span>
+        </div>
+    </div>
+
+    <div class="row my-2" *ngIf="course.literature">
+        <div class="col-12 fw-bold" [class.col-xl-3]="context == 'detail-dialog'">Literatur</div>
+        <div class="col-12" [class.col-xl-9]="context == 'detail-dialog'" [innerHtml]="course.literature | markdown">
+        </div>
+    </div>
+
+    <div class="row my-3" *ngIf="modules && modules.length !== 0 && context !== 'sidenav'">
+        <div class="col-12 fw-bold" [class.col-xl-5]="context == 'detail-dialog'">Lehrveranstaltung für dich belegbar in
+            den folgenden Modulen:</div>
+        <div class="col-12 d-flex align-items-center" [class.col-xl-7]="context == 'detail-dialog'">
+            <ul>
+                <li *ngFor="let mod of modules">{{ mod.identifier.acronym }} <span *ngIf="mod.ects">({{ mod.ects }}
+                        ECTS)</span></li>
+            </ul>
+        </div>
+    </div>
+    <!--- additional course information end -->
+
+    <!-- Templates for Visualization of Terms -->
+    <ng-template #noTermsAvailable>
+        <div class="row">
+            <div class="alert alert-info" role="alert">
+                Zur Lehrveranstaltung liegen keine Zeitangaben vor!
+            </div>
+        </div>
+    </ng-template>

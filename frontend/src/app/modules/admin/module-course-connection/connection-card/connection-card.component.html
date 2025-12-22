@@ -1,0 +1,40 @@
+<mat-card *ngFor="let container of containers" class="mx-1 my-2">
+    <!-- Header contains title and acronym of the module and possibility to open details of module -->
+    <mat-card-header>
+        <mat-card-subtitle class="icon" (click)="openModule(container.module)">{{ container.module.acronym }} - {{ container.module.name }}</mat-card-subtitle>
+    </mat-card-header>
+    <!-- Content section -->
+    <mat-card-content>
+        <div class="d-flex flex-row my-1" *ngFor="let mCourse of container.module.mCourses">
+            <!-- Status of the moduleCourse <-> Course connection, decides if check or x is displayed -->
+            <div [ngSwitch]="checkStatus(container.connection, mCourse.mcId)">
+                <i *ngSwitchCase="false" class="text-danger bi bi-x-lg"></i>
+                <i *ngSwitchCase="true" class="text-success bi bi-check-lg"></i>
+            </div>
+            <!-- Main information of connection -->
+            <div class="flex-grow-1 ms-2">
+                <!-- ModuleCourse Data -->
+                <div>
+                    {{ mCourse.name }} ({{ mCourse.type }})
+                </div>
+                <!-- Connected courses -->
+                <div class="ms-2 my-1">
+                    <ng-container *ngFor="let connection of container.connection">
+                        <ng-container *ngIf="connection.mcId == mCourse.mcId">
+                            <div class="d-flex">
+                                <div class="vr"></div>
+                                <div class="ms-2 icon" (click)="openCourse(connection.course)">
+                                    {{ connection.course.name }}
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+            <div>
+                <!-- edit option -->
+                <i class="bi bi-pencil-square" (click)="openEditDialog(mCourse, container.module.chair, container.connection)"></i>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

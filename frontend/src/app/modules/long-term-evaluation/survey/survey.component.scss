@@ -1,0 +1,88 @@
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #000;
+}
+
+.separator:not(:empty)::before {
+  margin-right: .25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: .25em;
+}
+
+/* separator classes inspired by https://stackoverflow.com/questions/2812770/add-centered-text-to-the-middle-of-a-horizontal-rule */
+
+.survey-radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#survey-container {
+    max-width: 95vw;
+}
+
+.code-error {
+    width: 40% !important; 
+}
+
+label.star-label {
+    cursor: pointer;
+    &:hover, &:hover ~ label.star-label {
+        color: var(--ub-blue);
+    }
+}
+
+hr.dashed {
+    border: 2px dashed var(--ub-gray);
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { 
+    #survey-container {
+        max-width: 90vw;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+    .code-error {
+        width: 50% !important; 
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+    .survey-radio-group {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    .code-error {
+        width: 100% !important; 
+    }
+}
+
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+    #survey-container {
+        max-width: 70vw;
+    }
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) { 
+    #survey-container {
+        max-width: 60vw;
+    }
+}

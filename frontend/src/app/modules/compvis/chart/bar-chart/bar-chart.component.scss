@@ -1,0 +1,40 @@
+.bar {
+    padding-left: 100px;
+}
+
+.bar:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.visibility {
+    visibility: hidden;
+    display: inline-block;
+}
+
+.axis-text {
+    font-size: 14pt;
+}
+
+.legend {
+    font-size: 1.15rem;
+}
+
+@media (min-width: 992px) and (max-width: 1400px){
+    #bar-chart {
+        position: sticky;
+        top: 0;
+        width: 35vw;
+        height: auto;
+    }
+ 
+    .min-vh-200 {
+        height: 200vh;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .visibility {
+        visibility: visible;
+    }
+}

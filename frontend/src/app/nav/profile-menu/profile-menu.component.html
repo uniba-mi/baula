@@ -1,0 +1,33 @@
+<!-- Profile and Logout Section -->
+<nav class="navbar navbar-expand pb-0 row">
+  <div class="col d-flex justify-content-between align-items-end">
+    <div class="main-nav navbar-nav me-auto align-items-start">
+      <div class="nav-item">
+        <button class="nav-link" role="button" tabindex="0" aria-haspopup="true" aria-label="Profil"
+          [class.active]="router.isActive('/app/profil', false)" [matMenuTriggerFor]="profil"
+          *ngIf="user.shibId !== ''; else loginButton">
+          <i class="bi bi-person-circle"></i>
+          <span class="d-none mx-2">Profil</span>
+        </button>
+        <mat-menu #profil="matMenu" xPosition="before">
+          <button mat-menu-item tabindex="0" aria-haspopup="false" aria-label="Profil bearbeiten"
+            routerLink="app/profil/daten">
+            <i class="bi bi-gear-fill"></i>
+            <span class="mx-2 profil-item">Einstellungen</span>
+          </button>
+          <button mat-menu-item tabindex="0" aria-label="Logout" (click)="logout()">
+            <i class="bi bi-power"></i>
+            <span class="mx-2 profil-item">Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<ng-template #loginButton>
+  <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Login" (click)="login()">
+    <i class="bi bi-person-fill-lock me-2"></i>
+    <span class="d-none d-lg-inline">Login</span>
+  </span>
+</ng-template>

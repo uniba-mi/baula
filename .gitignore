@@ -1,0 +1,14 @@
+.env*
+data/mongodb
+data/redis
+data/mariadb
+*.log
+*.pem
+redis-users.acl
+000-default.conf
+data/backups/mongodb/*
+data/backups/mariadb/*
+!initial_backup.sql
+server/app/*
+.retype
+retype.manifest

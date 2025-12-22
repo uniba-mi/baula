@@ -1,0 +1,30 @@
+services:
+  server:
+    build:
+      context: ./server/
+      dockerfile: Dockerfile
+    restart: always   
+    environment:
+      - HOST_URL=${HOST_URL}
+      - HOSTNAME=${HOSTNAME}
+      - API_PORT=${API_PORT} 
+    ports:    
+      - "${HOST_IP}:${SERVER_PORT}:80"
+      - "${HOST_IP}:${SERVER_PORT_SSL}:443"
+    volumes:
+      - ./server/app:/var/www   
+      - ./documentation/user-docs/.retype:/var/www/docs/user
+      - ./documentation/developer-docs/.retype:/var/www/docs/developer
+      - ./server/apache2/sites-available:/etc/apache2/sites-available   
+      - /etc/acme/rsa-certs:/etc/acme/rsa-certs
+
+  rest_api:
+    build:
+      context: ./backend/api
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./backend/api/dist/backend/api:/api
+      - ./backend/api/dist/interfaces:/interfaces
+    ports:    
+      - "${HOST_IP}:${API_PORT}:${API_PORT}"

@@ -1,0 +1,54 @@
+:root {
+
+    --app-body-font: "InterVariable", "Helvetica Neue", sans-serif;
+    --app-mono-font: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    /* uni bamberg colors */
+    --ub-blue: #00457d;
+    --ub-blue-80: rgb(51, 106, 151);
+    --ub-blue-60: rgb(102, 144, 177);
+    --ub-blue-40: rgb(153, 181, 203);
+    --ub-blue-20: rgb(204, 218, 229);
+    --ub-blue-0: #e6ecf2;
+    --ub-yellow: #ffd300;
+    --ub-yellow-80: rgb(255, 220, 51);
+    --ub-yellow-60: rgb(255, 229, 102);
+    --ub-yellow-40: rgb(255, 237, 153);
+    --ub-yellow-20: rgb(255, 246, 204);
+    --ub-green: #97bf0d;
+    --ub-green-80: rgb(172, 204, 61);
+    --ub-green-60: rgb(193, 216, 110);
+    --ub-green-40: rgb(213, 229, 158);
+    --ub-green-20: rgb(234, 242, 207);
+    --ub-red: #e6444f;
+    --ub-red-80: rgb(235, 105, 114);
+    --ub-red-60: rgb(240, 143, 149);
+    --ub-red-40: rgb(245, 180, 184);
+    --ub-red-20: rgb(250, 218, 220);
+    --ub-gray: #878783b1;
+    --ub-gray-80: rgb(159, 159, 156);
+    --ub-gray-60: rgb(183, 183, 181);
+    --ub-gray-40: rgb(207, 207, 206);
+    --ub-gray-20: rgb(231, 231, 230);
+
+    /* further colours */
+    --cus-gray-100: #707075;
+    --cus-petrol-100: #217178;
+    --cus-light-petrol-100: #f3feff;
+    --cus-light-petrol-80: #f1fafb;
+    --cus-bg-100: #f1f4f8;
+    --cus-bg-50: rgba(245, 245, 247, 0.5);
+
+    /* Baula brand colours - use in light or dark shades only */
+    --brand-academic-frost: #caf3ff;
+    --brand-collegiate-sky: #58CBFF;
+    --brand-campus-blue: #2698DC;
+    --brand-academic-gold: #FFD300;
+
+    /* secondary */
+    --brand-lecture-sky: #D9ECF8;
+    --brand-campus-twilight: #E2E4F3;
+    --brand-study-lamp-glow: #FFF5CC;
+    --brand-seminar-breeze: #DFF7EE;
+    --brand-archive-parchment: #F8EFE2;
+}

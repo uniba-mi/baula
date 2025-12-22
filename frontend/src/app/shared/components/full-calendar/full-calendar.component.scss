@@ -1,0 +1,29 @@
+.calendar-container {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+/* round button for mobile screens */
+.add-button {
+    background: var(--ub-blue);
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 400px;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 80;
+}
+
+.delete-link {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.delete-link:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}

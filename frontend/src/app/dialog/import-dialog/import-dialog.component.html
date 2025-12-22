@@ -1,0 +1,142 @@
+<div mat-dialog-content>
+
+    <!-- display loader when data is being fetched -->
+    <ng-container *ngIf="loading; else content">
+        <div class="d-flex justify-content-center align-items-center">
+            <mat-spinner></mat-spinner>
+        </div>
+    </ng-container>
+
+    <div *ngIf="importType !== 'deinen Musterplan'" class="drop-zone d-flex flex-column align-items-center" appDnd
+        (fileDropped)="uploadedFile($event)">
+        <input type="file" id="file" multiple (change)="uploadedFile($event)" />
+        <p> Lade hier {{ importType }} über Drag'n'Drop hoch</p>
+        <p> Oder:</p>
+        <label for="file">Nach Datei suchen</label>
+        <div *ngIf="filename">{{ filename }}</div>
+    </div>
+
+    <!-- if template available -->
+    <ng-template #content>
+        <div *ngIf="importType === 'deinen Musterplan'">
+            <div *ngIf="studyPlanTemplate$ | async; else noTemplate" class="d-flex flex-column align-items-start">
+                <p>Ein Musterstudienverlaufsplan gilt nur als Orientierung und kann nicht deine individuellen Interessen abdecken.
+                    Bitte informiere dich abseits dieses Musters über die
+                    vielfältigen Möglichkeiten deines Studiengangs.</p>
+                <div class="d-flex align-items-start">
+
+                    <div class="uploaded-file d-flex align-items-start info-box-petrol me-3">
+                        <i class="bi bi-file-earmark-text-fill me-2" style="font-size: 2rem;"></i>
+                        <div>
+                            <p class="mb-0 fw-bold">Dein Musterstudienverlaufsplan ist bereit.</p>
+                            <p class="text-muted mb-0">{{ templateFileName || 'Musterplan.pdf' }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="showRecencyWarning && previousSemester">
+                        <div class="text-danger p-4">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Dieser Plan ist aus dem Semester <b>{{ previousSemester | Semester }}</b>. Der aktuellste
+                            Plan wird kurz vor Semesterbeginn bereitgestellt.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- Warnings for semester planning -->
+    <ng-container *ngIf="importType === 'deinen Stundenplan'">
+        <div class="alert alert-danger my-2" role="alert">
+            Solltest du bereits einen Stundenplan für das Semester gespeichert haben, wird dieser überschrieben! Achte
+            zudem darauf, dass der importierte Stundenplan aus dem gleichen Semester stammt, das derzeit ausgewählt
+            ist!
+        </div>
+    </ng-container>
+
+    <!-- Options for study planning -->
+    <div
+        *ngIf="start && end && (importType === 'deinen Studienplan' || importType === 'deinen Musterplan') && !isFirstSemesterStudent">
+        <hr />
+        <div class="mt-4">
+            Der Studienplan, den du importieren möchtest beginnt im <span class="fw-bold">{{ start.fullName }}</span>
+            und endet im <span class="fw-bold">{{ end.fullName }}</span>.
+        </div>
+        <label id="import-radio-group-label">In welchem Semester soll für dich der importierte Plan beginnen?</label>
+        <mat-radio-group class="d-flex flex-column" aria-labelledby="import-radio-group-label"
+            [(ngModel)]="importFormat">
+            <mat-radio-button *ngIf="startSemester" value="startWithUserStartSemester" class="me-2">In meinem
+                Startsemester ({{ startSemester.fullName }})
+                <button *ngIf="importType === 'deinen Studienplan'" class="btn-icon"
+                    matTooltip="Hier wird dein bestehender Studienverlauf mit den zukünftigen Semestern kombiniert. Diese Option eignet sich besonders gut, um deinen Verlauf und deinen weiteren Plan mit Mitstudierenden zu teilen. Es werden dabei keine personenbezogenen Daten wie z. B. deine Note exportiert."
+                    matTooltipClass="custom-tooltip" appTooltip>
+                    <i class="bi bi-info-circle"></i>
+                </button>
+                <button *ngIf="importType === 'deinen Musterplan'" class="btn-icon"
+                    matTooltip="Hier kannst du den importieren Plan in deinem ersten Semester beginnen lassen. Bitte beachte, dass der Semestertyp (Sommer/Winter) des Musterstudienverlaufsplan am besten mit deinem Startsemestertyp übereinstimmen sollte, damit die Module belegbar sind. Den Semestertyp siehst du am letzten Buchstaben des oben angezeigten Dateinamens."
+                    matTooltipClass="custom-tooltip" appTooltip>
+                    <i class="bi bi-info-circle"></i>
+                </button>
+            </mat-radio-button>
+            <mat-radio-button value="startWithCurrentSemester" class="me-2">Im aktuellen Semester ({{ current.fullName
+                }})
+                <button *ngIf="importType === 'deinen Studienplan'" class="btn-icon"
+                    matTooltip="Mit dieser Option werden nur die zukünftigen Semester in die Exportdatei eingefügt, ohne deinen Studienverlauf. Diese Option eignet sich z. B. dafür, wenn du den aktuellen Plan sichern möchtest"
+                    matTooltipClass="custom-tooltip" appTooltip>
+                    <i class="bi bi-info-circle"></i>
+                </button>
+                <button *ngIf="importType === 'deinen Musterplan'" class="btn-icon"
+                    matTooltip="Hier kannst du den importieren Plan im aktuellen Semester beginnen lassen. Dies bedeutet, dass das erste Semester des importerten Plans in das aktuelle Semester eingefügt wird usw."
+                    matTooltipClass="custom-tooltip" appTooltip>
+                    <i class="bi bi-info-circle"></i>
+                </button>
+            </mat-radio-button>
+            <mat-radio-button value="keepSemesterOfFile" class="me-2">Wie in
+                der Importdatei ({{ start.fullName }})
+                <button *ngIf="importType === 'deinen Studienplan'" class="btn-icon"
+                    matTooltip="Mit dieser Option werden nur die zukünftigen Semester in die Exportdatei eingefügt, ohne deinen Studienverlauf. Diese Option eignet sich z. B. dafür, wenn du den aktuellen Plan sichern möchtest"
+                    matTooltipClass="custom-tooltip" appTooltip>
+                    <i class="bi bi-info-circle"></i>
+                </button>
+                <button *ngIf="importType === 'deinen Musterplan'" class="btn-icon"
+                    matTooltip="Hier kannst du den importieren Plan im Startsemester des importierten Plans beginnen lassen. Dies bedeutet, dass dein Studieverlauf ab dem Startsemester des Plans gefüllt wird."
+                    matTooltipClass="custom-tooltip" appTooltip>
+                    <i class="bi bi-info-circle"></i>
+                </button>
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+    <!-- Warnings for study planning -->
+</div>
+
+<mat-dialog-actions>
+    <ng-container *ngIf="importType !== 'deinen Musterplan'">
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+            Abbrechen
+        </button>
+        <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="generateOutput(upload)"
+            [disabled]="!file">
+            Importieren
+        </button>
+    </ng-container>
+    <ng-container *ngIf="importType === 'deinen Musterplan'">
+        <button *ngIf="start && end && !isFirstSemesterStudent; else skipButton" mat-raised-button class="btn btn-outline" mat-dialog-close>
+            Abbrechen
+        </button>
+        <ng-template #skipButton>
+            <button  mat-raised-button class="btn btn-primary" mat-dialog-close>
+                Überspringen
+            </button>
+        </ng-template>
+        <button mat-raised-button class="btn btn-primary"
+            [mat-dialog-close]="generateOutput(upload)">
+            Importieren
+        </button>
+    </ng-container>
+
+</mat-dialog-actions>
+
+<ng-template #noTemplate>
+    <app-no-data noDataMessage="Kein Muster für deinen Studiengang vorhanden." [diagram]="false"></app-no-data>
+</ng-template>

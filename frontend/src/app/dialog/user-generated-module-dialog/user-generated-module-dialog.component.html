@@ -1,0 +1,54 @@
+<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+  <form [formGroup]="moduleForm">
+    <div class="content-wrapper">
+      <div class="input-field-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Name:</mat-label>
+          <input matInput #moduleName formControlName="name" maxlength="50" type="text" [value]="module.name"
+            required />
+          <mat-error *ngIf="
+            moduleForm.controls.name.touched &&
+            moduleForm.controls.name.invalid
+            "><span *ngIf="moduleForm.controls.name.errors?.required">Das ist ein Pflichtfeld.</span><span
+              *ngIf="moduleForm.controls.name.errors?.maxlength">Du darfst nur 50 Zeichen eingeben.</span>
+            <span *ngIf="moduleForm.controls.name.errors?.pattern">Das Feld darf nicht leer sein.</span></mat-error>
+        </mat-form-field>
+      </div>
+      <div class="input-field-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Notizen:</mat-label>
+          <textarea matInput formControlName="notes" #moduleNotes maxlength="1000" type="text" [value]="module.notes">
+          </textarea>
+        </mat-form-field>
+      </div>
+      <div class="input-field-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>ECTS:</mat-label>
+          <input matInput type="number" min="1" max="30" formControlName="ects" placeholder="ECTS" #moduleEcts
+            [value]="module.ects" required />
+          <mat-error *ngIf="
+            moduleForm.controls.ects.touched &&
+            moduleForm.controls.ects.invalid
+            "><span *ngIf="moduleForm.controls.ects.errors?.required">Das ist ein Pflichtfeld.</span><span *ngIf="
+              moduleForm.controls.ects.errors?.min ||
+              moduleForm.controls.ects.errors?.max
+              ">Die Zahl der ECTS muss zwischen 1 und 30 liegen.</span></mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-dialog-actions>
+      <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
+        (keyup)="close('noData')">
+        Abbrechen
+      </button>
+      <button mat-raised-button [disabled]="!moduleForm.valid" class="btn btn-primary" type="submit" [mat-dialog-close]="{
+          name: moduleName.value,
+          notes: moduleNotes.value,
+          ects: moduleEcts.value,
+          flexNowImported: moduleForm.controls.flexNowImported.value
+        }" (click)="close('data')" (keyup)="close('data')">
+        Speichern
+      </button>
+    </mat-dialog-actions>
+  </form>
+</ng-container>

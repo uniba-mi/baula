@@ -1,0 +1,110 @@
+.parent-title {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 0.7rem;
+  padding: 0 0.5rem;
+}
+
+.parent-group {
+  border-bottom: 1px solid #ccc;
+  padding: 15px 0;
+
+  &:first-of-type {
+    padding-top: 0;
+  }
+}
+
+.empty-text {
+  font-size: 0.8rem;
+}
+
+.parent-button:hover {
+  color: var(--ub-blue);
+}
+
+.selected-container {
+  position: relative;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  padding-top: 14px;
+}
+
+.selected-label {
+  font-size: 0.7rem;
+  color: green;
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  font-weight: 500;
+}
+
+.selected-chipsbox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background-color: transparent;
+  border: none;
+}
+
+mat-chip-option.selected {
+  background-color: #0056b3;
+}
+
+mat-chip-listbox {
+  border: none;
+  border-radius: 8px;
+  padding: 0 10px;
+}
+
+.selected-card .mat-card-content {
+  padding: 0;
+}
+
+.topic-option-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  .topic-description {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.inline-chip {
+  margin: 0 8px 0 0;
+  padding: 0;
+  min-height: 32px;
+
+  &.mdc-evolution-chip {
+    margin-right: 8px;
+  }
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.35rem 0.65rem;
+  font-weight: 600;
+  background-color: #d4edda !important;
+  color: green;
+  border: 1px solid #c3e6cb;
+}
+
+.toggle-header {
+  cursor: pointer;
+}
+
+.recommendations-content {
+  transition: all 0.3s ease;
+  min-height: 400px;
+}
+
+// min width for loading box to avoid footer jumping up entirely
+.loading-container {
+  min-height: 400px;
+}
