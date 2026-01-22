@@ -28,6 +28,7 @@
     "buildUserDocs": "cd documentation/user-docs && retype build",
     "buildDocs": "npm run buildDevDocs && npm run buildUserDocs",
     "buildTest": "npm run buildBackend && npm run buildFrontendTest && npm run buildDocs",
-    "buildProd": "npm run buildBackend && npm run buildFrontendProd && npm run buildDocs"
+    "buildProd": "npm run buildBackend && npm run buildFrontendProd && npm run buildDocs",
+    "buildInitial": "npm initial/initial.ts"
   }
 }
