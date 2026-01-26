@@ -316,7 +316,7 @@ export class StudyPlanDetailComponent implements OnInit {
   }
 
   importCompleteFlexNowData() {
-    this.flexnowService.triggerFlexNowDataLoading(this.availableSemesters$);
+    this.flexnowService.triggerFlexNowDataLoading(this.availableSemesters$, 'update-studypath');
   }
 
   private setupScrollObserver(): void {

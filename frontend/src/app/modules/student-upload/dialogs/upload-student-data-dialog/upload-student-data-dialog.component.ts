@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
 
@@ -11,13 +10,21 @@ import { closeDialogMode } from 'src/app/actions/dialog.actions';
 })
 export class UploadStudentDataDialogComponent {
 
-  consentForm: FormGroup;
+  flexNowImportConfirmed = false;
+  studypathConfirmed = false;
+  gradesConfirmed = false;
   fileToUpload: File | null = null;
 
-  constructor(private fb: FormBuilder, private store: Store) {
-    this.consentForm = this.fb.group({
-      agreeToTerms: [false, Validators.requiredTrue],
-    });
+  constructor(private store: Store) { }
+
+  receiveChanges(confirmations: {
+    flexNowImportConfirmed: boolean,
+    studypathConfirmed: boolean,
+    gradesConfirmed: boolean,
+  }) {
+    this.flexNowImportConfirmed = confirmations.flexNowImportConfirmed;
+    this.studypathConfirmed = confirmations.studypathConfirmed;
+    this.gradesConfirmed = confirmations.gradesConfirmed;
   }
 
   close(mode: string) {
@@ -25,6 +32,10 @@ export class UploadStudentDataDialogComponent {
   }
 
   getConsent() {
-    return this.consentForm.valid && this.consentForm.get('agreeToTerms')?.value;
+    return this.flexNowImportConfirmed ? {
+      flexNowImportConfirmed: this.flexNowImportConfirmed,
+      studypathConfirmed: this.studypathConfirmed,
+      gradesConfirmed: this.gradesConfirmed
+    } : undefined;
   }
 }

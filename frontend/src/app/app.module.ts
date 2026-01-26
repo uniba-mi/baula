@@ -168,6 +168,7 @@ import { DataPreviewComponent } from './home/recommendation/data-preview/data-pr
 import { SettingsListComponent } from './home/recommendation/settings-list/settings-list.component';
 import { HintsSidenavComponent } from './shared/components/hints-sidenav/hints-sidenav.component';import { NotFoundComponent } from './public/not-found/not-found.component';
 import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluation-dialog/evaluation-dialog.component';
+import { UploadStudentDataConfirmationComponent } from './modules/student-upload/dialogs/upload-student-data-confirmation/upload-student-data-confirmation.component';
 
 
 @NgModule({
@@ -279,7 +280,8 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     PersonalisationStatusComponent,
     WordCloudComponent,
     DataPreviewComponent,
-    SettingsListComponent
+    SettingsListComponent,
+    UploadStudentDataConfirmationComponent
   ],
   bootstrap: [AppComponent],
   imports: [

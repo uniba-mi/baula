@@ -62,35 +62,16 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <!-- content -->
-        <app-upload-data-privacy></app-upload-data-privacy>
+        <app-upload-data-privacy [version]="'bakule'"></app-upload-data-privacy>
       </mat-expansion-panel>
     </div>
-    <mat-checkbox [(ngModel)]="flexNowImportConfirmed">Ich habe die Datenschutzerklärung zum Zugriff auf FlexNow gelesen
-      und stimme dem Abrufen der Daten zu.</mat-checkbox>
-    @if(flexNowImportConfirmed()) {
-    <div class="d-flex ms-4">
-      <div class="vr"></div>
-      <div class="ms-1">
-        <div class="m-2 s-text">Folgende Daten sollen in meinen Account übernommen werden:</div>
-        <ul class="list-unstyled">
-          <li>
-            <mat-checkbox [(ngModel)]="flexNowImportConfirmed" disabled>Allgemeine Informationen (Studiengang,
-              Startsemester,
-              ...) </mat-checkbox>
-          </li>
-          <li>
-            <mat-checkbox [(ngModel)]="StudyPathConfirmed">Verlaufsinformationen (Abgelegte Prüfungen, Module und
-              Lehrveranstaltungen)</mat-checkbox>
-          </li>
-        </ul>
-      </div>
-    </div>
-    }
+    <app-upload-student-data-confirmation
+      (confirmFlexNowImport)="receiveChanges($event)"></app-upload-student-data-confirmation>
     <mat-dialog-actions>
       <button class="btn btn-outline" (click)="previousStep()">
         Zurück
       </button>
-      <button class="btn btn-primary" (click)="getFlexNowInformation()" [disabled]="!flexNowImportConfirmed()">
+      <button class="btn btn-primary" (click)="getFlexNowInformation()" [disabled]="!flexNowImportConfirmed">
         Weiter
       </button>
     </mat-dialog-actions>

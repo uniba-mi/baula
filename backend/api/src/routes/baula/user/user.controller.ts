@@ -1,17 +1,30 @@
 import { NextFunction, Request, Response } from "express";
 import { Request as JWTRequest } from "express-jwt";
-import { StudyPlan, User, Recommendation, SemesterPlan } from "../../../database/mongo";
+import {
+  StudyPlan,
+  User,
+  Recommendation,
+  SemesterPlan,
+} from "../../../database/mongo";
 import {
   validateAndReturnSemester,
   validateAndReturnUser,
   validateObjectId,
 } from "../../../shared/helpers/custom-validator";
 import { Types } from "mongoose";
-import { PathCourse, PathModule } from "../../../../../../interfaces/study-path";
-import { BadRequestError, logError, NotFoundError } from "../../../shared/error";
+import {
+  PathCourse,
+  PathModule,
+} from "../../../../../../interfaces/study-path";
+import {
+  BadRequestError,
+  logError,
+  NotFoundError,
+} from "../../../shared/error";
 import validator from "validator";
 import {
   ModuleFeedback,
+  MStudyProgramme,
   User as UserClient,
   UserServer,
 } from "../../../../../../interfaces/user";
@@ -21,11 +34,20 @@ import { ExtendedJob, Job } from "../../../../../../interfaces/job";
 import { transform } from "camaro";
 import {
   studyPathTemplate,
-  metaDataTemplate
+  metaDataTemplate,
 } from "../../../templates/student-fn2api";
 import https from "https";
 import { findMatchingModuleIndex } from "../../../shared/helpers/plan-helper";
 import { decrypt } from "../../../shared/utils/crypto";
+import {
+  FnCompletedCourse,
+  FnCompletedModule,
+  FnMetaData,
+  FnStudyPath,
+  FnStudyProgramme,
+} from "../../../../../../interfaces/fn-user";
+import { extractModules } from "../../../shared/helpers/module-helpers";
+import { Semester } from "../../../semester";
 
 const prisma = new PrismaClient();
 
@@ -39,8 +61,8 @@ export async function getUser(req: Request, res: Response, next: NextFunction) {
     logError(error);
     next(
       new BadRequestError(
-        "Beim Formatieren der Daten ist ein Fehler aufgetreten."
-      )
+        "Beim Formatieren der Daten ist ein Fehler aufgetreten.",
+      ),
     );
   }
 }
@@ -49,7 +71,7 @@ export async function getUser(req: Request, res: Response, next: NextFunction) {
 export async function createUser(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const sentUser = req.body.user;
 
@@ -60,19 +82,19 @@ export async function createUser(
     topics: [],
     favouriteModulesAcronyms: [],
     excludedModulesAcronyms: [],
-    moduleFeedback: []
-  })
+    moduleFeedback: [],
+  });
 
-  if(user) {
+  if (user) {
     try {
       const createdUser = await User.create({
-        ...user
-      })
+        ...user,
+      });
       // create User
       const userClient = await transformUserStudyPath(createdUser);
-      res.status(200).json(userClient)
-    } catch(error) {
-      console.error(error)
+      res.status(200).json(userClient);
+    } catch (error) {
+      console.error(error);
       next(new BadRequestError("Es ist ein Fehler aufgetreten."));
     }
   } else {
@@ -84,7 +106,7 @@ export async function createUser(
 export async function updateUser(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const user = validateAndReturnUser(req.body.user);
   //check validity of user
@@ -103,8 +125,7 @@ export async function updateUser(
         userServer.dashboardSettings = user.dashboardSettings;
         userServer.timetableSettings = user.timetableSettings;
         userServer.favouriteModulesAcronyms = user.favouriteModulesAcronyms;
-        userServer.excludedModulesAcronyms =
-          user.excludedModulesAcronyms;
+        userServer.excludedModulesAcronyms = user.excludedModulesAcronyms;
         userServer.topics = user.topics;
         userServer.hints = user.hints;
         userServer.consents = user.consents;
@@ -127,7 +148,7 @@ export async function updateUser(
 export async function updateModuleInStudyPath(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const _id = validateObjectId(req.body._id) ? req.body._id : undefined;
   const acronym =
@@ -143,7 +164,7 @@ export async function updateModuleInStudyPath(
   const grade = typeof req.body.grade == "number" ? req.body.grade : undefined;
   const semester = validator.matches(
     String(req.body.semester),
-    /\d{4}((w)|(s))/g
+    /\d{4}((w)|(s))/g,
   )
     ? req.body.semester
     : undefined;
@@ -225,7 +246,7 @@ export async function updateModuleInStudyPath(
 export async function updateStudyPath(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const userReq = req.user as UserServer;
   const modulesToUpdate: PathModule[] = req.body.completedModules;
@@ -251,7 +272,7 @@ export async function updateStudyPath(
       const indexToUpdate = findMatchingModuleIndex(
         user.completedModules,
         module,
-        moduleObjectId
+        moduleObjectId,
       );
 
       if (indexToUpdate > -1) {
@@ -264,7 +285,7 @@ export async function updateStudyPath(
             (existingMod) =>
               moduleObjectId?.toString() &&
               existingMod._id &&
-              moduleObjectId.toString() === existingMod._id.toString()
+              moduleObjectId.toString() === existingMod._id.toString(),
           )
         ) {
           user.completedModules.push(module);
@@ -277,7 +298,7 @@ export async function updateStudyPath(
     res.status(200).json(userClient.studyPath);
   } catch (error) {
     next(
-      new BadRequestError("Studienverlauf konnte nicht aktualisiert werden")
+      new BadRequestError("Studienverlauf konnte nicht aktualisiert werden"),
     );
   }
 }
@@ -286,7 +307,7 @@ export async function updateStudyPath(
 export async function finishSemester(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const userReq = req.user as UserServer;
   const modulesToUpdate: PathModule[] = req.body.completedModules;
@@ -313,7 +334,7 @@ export async function finishSemester(
       const indexToDelete = findMatchingModuleIndex(
         user.completedModules,
         module,
-        moduleObjectId
+        moduleObjectId,
       );
 
       if (indexToDelete > -1) {
@@ -329,7 +350,7 @@ export async function finishSemester(
           !module.isUserGenerated &&
           existingMod.acronym === module.acronym &&
           existingMod.semester !== module.semester &&
-          existingMod.status === "passed"
+          existingMod.status === "passed",
       );
 
       // if it was passed in other semesters, remove it from the current semester
@@ -350,7 +371,7 @@ export async function finishSemester(
       const indexToUpdate = findMatchingModuleIndex(
         user.completedModules,
         module,
-        moduleObjectId
+        moduleObjectId,
       );
 
       if (indexToUpdate > -1) {
@@ -363,7 +384,7 @@ export async function finishSemester(
             (existingMod) =>
               moduleObjectId?.toString() &&
               existingMod._id &&
-              moduleObjectId.toString() === existingMod._id.toString()
+              moduleObjectId.toString() === existingMod._id.toString(),
           )
         ) {
           if (!module._id || module._id === null) {
@@ -380,8 +401,8 @@ export async function finishSemester(
   } catch (error) {
     next(
       new BadRequestError(
-        "Semester konnte nicht zum Studienverlauf hinzugefügt werden."
-      )
+        "Semester konnte nicht zum Studienverlauf hinzugefügt werden.",
+      ),
     );
   }
 }
@@ -393,7 +414,7 @@ export async function finishSemester(
 export async function updateCompetenceAims(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const user = req.user as UserServer;
   const aims = req.body.aims;
@@ -402,7 +423,7 @@ export async function updateCompetenceAims(
     try {
       const update = await User.updateOne(
         { _id: user._id },
-        { compAims: aims }
+        { compAims: aims },
       ).exec();
       if (update.modifiedCount > 0) {
         res
@@ -417,8 +438,8 @@ export async function updateCompetenceAims(
   } else {
     next(
       new BadRequestError(
-        "Die eingegebenen Daten sind unvollständig oder ungültig."
-      )
+        "Die eingegebenen Daten sind unvollständig oder ungültig.",
+      ),
     );
   }
 }
@@ -426,7 +447,7 @@ export async function updateCompetenceAims(
 export async function deleteModuleFromStudyPath(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const id = typeof req.body.id == "string" ? req.body.id : undefined;
   const semester = validateAndReturnSemester(req.body.semester);
@@ -456,7 +477,7 @@ export async function deleteModuleFromStudyPath(
 export async function deleteStudyPath(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const user = req.user as UserServer;
   try {
@@ -467,7 +488,7 @@ export async function deleteStudyPath(
           $set: {
             completedModules: [],
           },
-        }
+        },
       );
       res.status(200).json(result);
     } else {
@@ -481,7 +502,7 @@ export async function deleteStudyPath(
 export async function deleteFavouriteModules(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const user = req.user as UserServer;
@@ -492,7 +513,7 @@ export async function deleteFavouriteModules(
           $set: {
             favouriteModulesAcronyms: [],
           },
-        }
+        },
       );
       res.status(200).json(result);
     } else {
@@ -506,7 +527,7 @@ export async function deleteFavouriteModules(
 export async function deleteExcludedModules(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const user = req.user as UserServer;
@@ -517,7 +538,7 @@ export async function deleteExcludedModules(
           $set: {
             excludedModulesAcronyms: [],
           },
-        }
+        },
       );
       res.status(200).json(result);
     } else {
@@ -531,7 +552,7 @@ export async function deleteExcludedModules(
 export async function deleteExcludedModule(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const acronym =
     typeof req.params.acronym == "string" ? req.params.acronym : undefined;
@@ -544,7 +565,7 @@ export async function deleteExcludedModule(
           $pull: {
             excludedModulesAcronyms: acronym,
           },
-        }
+        },
       );
       res.status(200).json(result);
     } else {
@@ -552,7 +573,9 @@ export async function deleteExcludedModule(
     }
   } catch (error) {
     next(
-      new BadRequestError("Beim Löschen des Moduls ist ein Fehler aufgetreten.")
+      new BadRequestError(
+        "Beim Löschen des Moduls ist ein Fehler aufgetreten.",
+      ),
     );
   }
 }
@@ -560,7 +583,7 @@ export async function deleteExcludedModule(
 export async function updateDashboardView(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const userReq = req.user as UserServer;
   const name = validator.isAlpha(String(req.body.chartName), undefined, {
@@ -592,7 +615,7 @@ export async function updateDashboardView(
 export async function updateTimetableSettings(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const userReq = req.user as UserServer;
   const showWeekends = Boolean(req.body.showWeekends);
@@ -623,7 +646,7 @@ export async function updateTimetableSettings(
 export async function updateFavouriteModule(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const userReq = req.user as UserServer;
   const acronym =
@@ -653,7 +676,7 @@ export async function updateFavouriteModule(
 export async function updateExcludedModule(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const user = req.user as UserServer;
   const acronym =
@@ -683,7 +706,7 @@ export async function updateExcludedModule(
 export async function toggleTopic(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const user = req.user as UserServer;
   const topic = req.body.topic;
@@ -714,7 +737,7 @@ export async function toggleTopic(
 export async function updateHint(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const userReq = req.user as UserServer;
   const key = typeof req.body.key == "string" ? req.body.key : undefined;
@@ -742,7 +765,7 @@ export async function updateHint(
 export async function addConsents(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const userReq = req.user as UserServer;
   const ctype =
@@ -789,7 +812,7 @@ export async function addConsents(
 export async function updateModuleFeedback(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const userReq = req.user as { _id: string };
   const feedback: ModuleFeedback = req.body.feedback;
@@ -811,7 +834,7 @@ export async function updateModuleFeedback(
 
     // existing feedback?
     const existingFeedbackIndex = user.moduleFeedback.findIndex(
-      (mf: ModuleFeedback) => mf.acronym === feedback.acronym
+      (mf: ModuleFeedback) => mf.acronym === feedback.acronym,
     );
 
     // update changed properties
@@ -848,9 +871,8 @@ export async function updateModuleFeedback(
 export async function deleteModuleFeedback(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
-
   const userReq = req.user as UserServer;
   const feedback: ModuleFeedback = req.body.feedback;
 
@@ -871,7 +893,7 @@ export async function deleteModuleFeedback(
 
     // remove feedback for the given acronym
     user.moduleFeedback = user.moduleFeedback.filter(
-      (mf: ModuleFeedback) => mf.acronym !== feedback.acronym
+      (mf: ModuleFeedback) => mf.acronym !== feedback.acronym,
     );
 
     await user.save();
@@ -884,7 +906,7 @@ export async function deleteModuleFeedback(
 export async function deleteJob(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const user = req.user as UserServer;
   const jobId = validateObjectId(req.body.id) ? req.body.id : undefined;
@@ -894,18 +916,18 @@ export async function deleteJob(
       // delete job from user
       await User.findOneAndUpdate(
         { _id: user._id },
-        { $pull: { jobs: { _id: jobId } } }
+        { $pull: { jobs: { _id: jobId } } },
       );
       // delete job from recommendation
       const recommendation = await Recommendation.findOne({ userId: user._id });
       if (recommendation && recommendation.recommendedMods) {
         recommendation.recommendedMods.forEach((mod) => {
           mod.source = mod.source.filter(
-            (source) => source.identifier !== jobId
+            (source) => source.identifier !== jobId,
           );
         });
         recommendation.recommendedMods = recommendation.recommendedMods.filter(
-          (mod) => mod.source.length > 0
+          (mod) => mod.source.length > 0,
         );
         await recommendation.save();
       }
@@ -921,7 +943,7 @@ export async function deleteJob(
 export async function deleteUser(
   req: JWTRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   let user: any = req.user;
   let shibId = undefined;
@@ -937,21 +959,26 @@ export async function deleteUser(
         });
         const deletedSemesterPlans = await SemesterPlan.deleteMany({
           userId: user._id,
-        })
+        });
         const deletedRecommendations = await Recommendation.deleteMany({
           userId: user._id,
-        })
+        });
         const deletedUser = await User.findByIdAndDelete(user._id);
-        if (deletedStudyPlans && deletedUser && deletedSemesterPlans && deletedRecommendations) {
+        if (
+          deletedStudyPlans &&
+          deletedUser &&
+          deletedSemesterPlans &&
+          deletedRecommendations
+        ) {
           res.status(200).json("Der Nutzer wurde gelöscht!");
         } else {
           next(
-            new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten.")
+            new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."),
           );
         }
       } catch (error) {
         next(
-          new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten.")
+          new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."),
         );
       }
     } else {
@@ -1024,7 +1051,7 @@ async function transformUserStudyPath(user: UserServer): Promise<UserClient> {
 
 async function transformJobs(
   userId: string,
-  jobs: Job[] | undefined
+  jobs: Job[] | undefined,
 ): Promise<ExtendedJob[]> {
   if (jobs) {
     const recModules = await Recommendation.findOne({ userId });
@@ -1033,7 +1060,7 @@ async function transformJobs(
       for (const job of jobs) {
         const jobModules = recModules.recommendedMods?.filter((mod) => {
           return mod.source.find(
-            (source) => source.identifier === job._id.toString()
+            (source) => source.identifier === job._id.toString(),
           )
             ? true
             : false;
@@ -1072,71 +1099,208 @@ async function transformJobs(
 export async function crawlStudentDataViaFlexNow(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const baId = decrypt((req.session as any).passport.user.baId);
     const url = process.env.FN_STUDENT_URL
       ? process.env.FN_STUDENT_URL + baId
       : "";
-    const importStudyPath = req.body.importStudyPath;
+    const importStudypath = req.body.importStudypath;
+    const includeGrades = req.body.includeGrades;
+    const studyprogrammes = await prisma.studyProgramme.findMany({
+      select: {
+        spId: true,
+        poVersion: true,
+      },
+    });
     if (url) {
-      const result = await new Promise<string>((resolve, reject) => {
-        const data = new URLSearchParams();
-        data.append(
-          "login",
-          process.env.FN_LOGIN ?? ""
-        );
-        data.append(
-          "password",
-          process.env.FN_PW ?? ""
-        );
+      setTimeout(async () => {
+        // read test xml file
+        /* const result = fs.readFileSync(
+          __dirname + "../../../../staticdata/dummy_student.xml",
+          "utf8"
+        ); */
 
-        const options = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        };
+        const result = await new Promise<string>((resolve, reject) => {
+          const data = new URLSearchParams();
+          data.append(
+            "login",
+            process.env.FLEXNOW_LOGIN ? process.env.FLEXNOW_LOGIN : "",
+          );
+          data.append(
+            "password",
+            process.env.FLEXNOW_PW ? process.env.FLEXNOW_PW : "",
+          );
 
-        const req = https.request(url, options, (res) => {
-          const chunks: Buffer[] = [];
-          res.on("data", (chunk) => {
-            chunks.push(
-              Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "binary")
-            );
-          });
-          res.on("end", () => {
-            if (res.statusCode === 200) {
-              const buffer = Buffer.concat(chunks);
-              const ansiString = buffer.toString("binary");
-              resolve(ansiString);
-            } else {
-              reject(
-                new Error(`Request failed with status code ${res.statusCode}`)
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          };
+
+          const req = https.request(url, options, (res) => {
+            const chunks: Buffer[] = [];
+            res.on("data", (chunk) => {
+              chunks.push(
+                Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "utf-8"),
               );
-            }
+            });
+            res.on("end", () => {
+              if (res.statusCode === 200) {
+                const buffer = Buffer.concat(chunks);
+                const ansiString = buffer.toString("utf-8");
+                resolve(ansiString);
+              } else {
+                reject(
+                  new Error(
+                    `Request failed with status code ${res.statusCode}`,
+                  ),
+                );
+              }
+            });
           });
+
+          req.on("error", (e) => {
+            reject(e);
+          });
+
+          req.write(data.toString());
+          req.end();
         });
+        const metadata: FnStudyProgramme[] = await transform(
+          result,
+          metaDataTemplate,
+        );
+        const studypath: FnStudyPath = importStudypath
+          ? await transform(result, studyPathTemplate)
+          : undefined;
 
-        req.on("error", (e) => {
-          reject(e);
+        const userData: FnMetaData = extractMetadata(
+          metadata,
+          studyprogrammes,
+        );
+        const mhbId =
+          userData.sps.length !== 0 ? userData.sps[0].mhbId : undefined;
+        const mhbVersion =
+          userData.sps.length !== 0 ? userData.sps[0].mhbVersion : undefined;
+        if (!includeGrades) {
+          for (let module of studypath.completedModules) {
+            module.grade = 0;
+          }
+        }
+
+        if (studypath.completedModules) {
+          console.log(studypath.completedCourses);
+          console.log("semesters");
+          console.log(studypath.completedModules.map((mod) => mod.semester));
+          console.log("status");
+          console.log(studypath.completedModules.map((mod) => mod.status));
+        }
+
+        if (studypath.completedModules && mhbId && mhbVersion) {
+          const modules = await extractModules(mhbId.toString(), mhbVersion);
+          for (let module of studypath.completedModules) {
+            // first try to find suitable modulegroups within fn xml
+            const exactMatches = module.moduleGroups.filter(
+              (mod) => mod.mhbId == mhbId && mod.mhbVersion == mhbVersion,
+            );
+            if (exactMatches.length > 0) {
+              module.moduleGroups = exactMatches;
+              continue;
+            }
+            const nearlyMatches = [
+              ...new Map(
+                module.moduleGroups
+                  .filter((item) => item.mhbId == mhbId)
+                  .map((item) => [item.mgId, item.version]),
+              ).entries(),
+            ].map(([mgId, version]) => ({ mgId, version, mhbId, mhbVersion }));
+            if (nearlyMatches.length > 0) {
+              module.moduleGroups = nearlyMatches;
+              continue;
+            }
+            // find module in modules
+            if (modules) {
+              module.moduleGroups = modules
+                .filter((el) => el.mId == module.mId)
+                .map((mod) => ({
+                  mgId: mod.mgId,
+                  version: "0",
+                  mhbId,
+                  mhbVersion,
+                }));
+            }
+          }
+        }
+
+        res.json({
+          metadata: userData,
+          studypath,
+          xml: result,
         });
-
-        req.write(data.toString());
-        req.end();
-      });
-      const metadata = await transform(result, metaDataTemplate)
-      const studyPath = importStudyPath ? await transform(result, studyPathTemplate) : undefined
-
-      res.json({
-        metadata,
-        studyPath
-      });
+      }, 5000);
     } else {
       res.status(404);
     }
   } catch (error) {
     next(error);
+  }
+
+  function extractMetadata(
+    fnStudyprogrammes: FnStudyProgramme[],
+    studyprogrammes: { spId: string; poVersion: number }[],
+  ): FnMetaData {
+    let metadata: FnMetaData = {
+      sps: [],
+    };
+
+    // filter only active studyprogrammes TODO change when multiple studyprogrammes are available
+    fnStudyprogrammes = fnStudyprogrammes.filter(
+      (el) =>
+        el.status == "Immatrikuliert" &&
+        studyprogrammes.findIndex(
+          (sp) => sp.spId == el.spId && sp.poVersion == el.poVersion,
+        ) > -1,
+    );
+    // TODO: Currently checks only first studyprogamme
+    for (let fnStudyprogramme of fnStudyprogrammes) {
+      metadata.sps = [
+        {
+          spId: fnStudyprogramme.spId,
+          poVersion: fnStudyprogramme.poVersion,
+          name: fnStudyprogramme.name,
+          faculty: fnStudyprogramme.faculty,
+          mhbId: fnStudyprogramme.mhbId,
+          mhbVersion: fnStudyprogramme.mhbVersion,
+        },
+      ];
+      metadata.duration =
+        fnStudyprogramme.duration > fnStudyprogramme.semesters.length
+          ? fnStudyprogramme.duration
+          : fnStudyprogramme.semesters.length; // check maximum semester count
+      metadata.maxEcts = fnStudyprogramme.maxEcts;
+      metadata.fulltime = true; // preset fulltime to true
+      const currentSemester = new Semester();
+      for (let fnSemester of fnStudyprogramme.semesters) {
+        if (fnSemester.startSemester) {
+          metadata.startSemester = new Semester(fnSemester.semester).name;
+        }
+        if (fnSemester.semester == currentSemester.apNr) {
+          metadata.fulltime = !fnSemester.partTime;
+        }
+      }
+      // if startsemester is undefined set to first semester of semesterlist
+      if (!metadata.startSemester) {
+        metadata.startSemester = new Semester(
+          fnStudyprogramme.semesters[0].semester,
+        ).name;
+      }
+
+      break;
+    }
+
+    return metadata;
   }
 }

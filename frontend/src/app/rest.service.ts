@@ -775,7 +775,8 @@ export class RestService {
     );
   }
 
-  getStudentDataViaFlexNow(importStudyPath: boolean): Observable<FnUser> {
-    return this.http.post<FnUser>(`${this.urlBase}user/fn2student`, { importStudyPath }, httpOptions);
+  getStudentDataViaFlexNow(importStudypath: boolean, includeGrades: boolean): Observable<FnUser | undefined> {
+    return this.http.post<FnUser | undefined>(`${this.urlBase}user/fn2student`, { importStudypath, includeGrades }, httpOptions);
   }
+
 }
