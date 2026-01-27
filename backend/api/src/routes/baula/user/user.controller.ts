@@ -40,14 +40,13 @@ import https from "https";
 import { findMatchingModuleIndex } from "../../../shared/helpers/plan-helper";
 import { decrypt } from "../../../shared/utils/crypto";
 import {
-  FnCompletedCourse,
-  FnCompletedModule,
   FnMetaData,
   FnStudyPath,
   FnStudyProgramme,
 } from "../../../../../../interfaces/fn-user";
 import { extractModules } from "../../../shared/helpers/module-helpers";
-import { Semester } from "../../../semester";
+import { Semester } from "../../../../../../interfaces/semester";
+import * as fs from "fs";
 
 const prisma = new PrismaClient();
 
@@ -1118,8 +1117,8 @@ export async function crawlStudentDataViaFlexNow(
       setTimeout(async () => {
         // read test xml file
         /* const result = fs.readFileSync(
-          __dirname + "../../../../staticdata/dummy_student.xml",
-          "utf8"
+          __dirname + "../../../../../staticdata/dummy_student.xml",
+          "utf8",
         ); */
 
         const result = await new Promise<string>((resolve, reject) => {
@@ -1177,60 +1176,65 @@ export async function crawlStudentDataViaFlexNow(
           ? await transform(result, studyPathTemplate)
           : undefined;
 
-        const userData: FnMetaData = extractMetadata(
-          metadata,
-          studyprogrammes,
-        );
+        const userData: FnMetaData = extractMetadata(metadata, studyprogrammes);
         const mhbId =
           userData.sps.length !== 0 ? userData.sps[0].mhbId : undefined;
         const mhbVersion =
           userData.sps.length !== 0 ? userData.sps[0].mhbVersion : undefined;
-        if (!includeGrades) {
-          for (let module of studypath.completedModules) {
-            module.grade = 0;
+
+        if (studypath) {
+          if (!includeGrades) {
+            for (let module of studypath.completedModules) {
+              module.grade = 0;
+            }
           }
-        }
 
-        if (studypath.completedModules) {
-          console.log(studypath.completedCourses);
-          console.log("semesters");
-          console.log(studypath.completedModules.map((mod) => mod.semester));
-          console.log("status");
-          console.log(studypath.completedModules.map((mod) => mod.status));
-        }
+          if (studypath.completedModules) {
+            console.log(studypath.completedCourses);
+            console.log("semesters");
+            console.log(studypath.completedModules.map((mod) => mod.semester));
+            console.log("status");
+            console.log(studypath.completedModules.map((mod) => mod.status));
+          }
 
-        if (studypath.completedModules && mhbId && mhbVersion) {
-          const modules = await extractModules(mhbId.toString(), mhbVersion);
-          for (let module of studypath.completedModules) {
-            // first try to find suitable modulegroups within fn xml
-            const exactMatches = module.moduleGroups.filter(
-              (mod) => mod.mhbId == mhbId && mod.mhbVersion == mhbVersion,
-            );
-            if (exactMatches.length > 0) {
-              module.moduleGroups = exactMatches;
-              continue;
-            }
-            const nearlyMatches = [
-              ...new Map(
-                module.moduleGroups
-                  .filter((item) => item.mhbId == mhbId)
-                  .map((item) => [item.mgId, item.version]),
-              ).entries(),
-            ].map(([mgId, version]) => ({ mgId, version, mhbId, mhbVersion }));
-            if (nearlyMatches.length > 0) {
-              module.moduleGroups = nearlyMatches;
-              continue;
-            }
-            // find module in modules
-            if (modules) {
-              module.moduleGroups = modules
-                .filter((el) => el.mId == module.mId)
-                .map((mod) => ({
-                  mgId: mod.mgId,
-                  version: "0",
-                  mhbId,
-                  mhbVersion,
-                }));
+          if (studypath.completedModules && mhbId && mhbVersion) {
+            const modules = await extractModules(mhbId.toString(), mhbVersion);
+            for (let module of studypath.completedModules) {
+              // first try to find suitable modulegroups within fn xml
+              const exactMatches = module.moduleGroups.filter(
+                (mod) => mod.mhbId == mhbId && mod.mhbVersion == mhbVersion,
+              );
+              if (exactMatches.length > 0) {
+                module.moduleGroups = exactMatches;
+                continue;
+              }
+              const nearlyMatches = [
+                ...new Map(
+                  module.moduleGroups
+                    .filter((item) => item.mhbId == mhbId)
+                    .map((item) => [item.mgId, item.version]),
+                ).entries(),
+              ].map(([mgId, version]) => ({
+                mgId,
+                version,
+                mhbId,
+                mhbVersion,
+              }));
+              if (nearlyMatches.length > 0) {
+                module.moduleGroups = nearlyMatches;
+                continue;
+              }
+              // find module in modules
+              if (modules) {
+                module.moduleGroups = modules
+                  .filter((el) => el.mId == module.mId)
+                  .map((mod) => ({
+                    mgId: mod.mgId,
+                    version: "0",
+                    mhbId,
+                    mhbVersion,
+                  }));
+              }
             }
           }
         }

@@ -9,7 +9,6 @@ import { closeDialogMode } from 'src/app/actions/dialog.actions';
   standalone: false
 })
 export class UploadStudentDataDialogComponent {
-
   flexNowImportConfirmed = false;
   studypathConfirmed = false;
   gradesConfirmed = false;
