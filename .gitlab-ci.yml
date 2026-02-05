@@ -1,0 +1,36 @@
+stages:
+  - install_dependencies
+  - create_required_files
+  - create_docker
+  - start_baula
+
+install_dependencies:
+  script:
+    - npm run buildInitial INSTALL_NPM_DEPENDENCIES
+
+create_required_files:
+  script:
+    - npm run buildInitial CREATE_CONFIG_AND_ENV CREATE_CERTS CREATE_TEMPLATES CREATE_LOCAL_USERS
+
+create_docker:
+  script:
+    - npm run buildInitial HANDLE_DOCKER
+
+start_backend:
+  stage: start_baula
+  script:
+    - echo "Starting backend..."
+    - nohup npm run startBackend &
+    - sleep 5
+  artifacts:
+    expire_in: 1h
+    paths:
+      - backend.log
+
+start_frontend:
+  stage: start_baula
+  script:
+    - echo "Starting frontend..."
+    - npm run startFrontend
+  needs:
+    - job: start_backend
