@@ -32,5 +32,3 @@ start_frontend:
   script:
     - echo "Starting frontend..."
     - npm run startFrontend
-  needs:
-    - job: start_backend
