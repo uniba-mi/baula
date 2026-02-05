@@ -3,6 +3,12 @@ stages:
   - create_required_files
   - create_docker
   - start_baula
+  - test
+
+test:
+  stage: test
+  script:
+    - echo "Running tests..."
 
 install_dependencies:
   script:
