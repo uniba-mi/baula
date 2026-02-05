@@ -1,0 +1,26 @@
+export interface SetupFlags {
+    CHECK_VERSIONS: boolean;
+    CREATE_CONFIG_AND_ENV: boolean;
+    INSTALL_NPM_DEPENDENCIES: boolean;
+    CREATE_CERTS: boolean;
+    CREATE_REDIS: boolean;
+    CREATE_TEMPLATES: boolean;
+    CREATE_LOCAL_USERS: boolean;
+    HANDLE_DOCKER: boolean;
+    LOAD_MARIADB_DUMP: boolean;
+    BUILD_PRISMA_CLIENT: boolean;
+}
+
+
+export const FLAGS: SetupFlags = {
+    CHECK_VERSIONS: false,
+    CREATE_CONFIG_AND_ENV: false,
+    INSTALL_NPM_DEPENDENCIES: false,
+    CREATE_CERTS: false,
+    CREATE_REDIS: false,
+    CREATE_TEMPLATES: false,
+    CREATE_LOCAL_USERS: false,
+    HANDLE_DOCKER: false,
+    LOAD_MARIADB_DUMP: false,
+    BUILD_PRISMA_CLIENT: false
+};
