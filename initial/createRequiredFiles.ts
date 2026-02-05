@@ -134,17 +134,17 @@ export async function createRedisAcl() {
     const filePath = rootDir + "/backend/api/src/database/redis-users.acl";
     const fileNameInMessage = "redis-users.acl file in /backend/api/src/database";
     const content =
-        `# redis-users.acl
-user default off
-user test on >test123 ~* +@all`;
+        `user default off
+user test on >test123 ~* +@all
+`;
 
     await createFile(filePath, fileNameInMessage, content);
 }
 
 /// Template files
 export async function createStudentFn2apiTs() {
-    const filePath = rootDir + "/backend/api/src/templates/univis-template.ts";
-    const fileNameInMessage = "univis-template.ts file in /backend/api/src/templates";
+    const filePath = rootDir + "/backend/api/src/templates/student-fn2api.ts";
+    const fileNameInMessage = "student-fn2api.ts file in /backend/api/src/templates";
     const content =
         `// student-fn2api.ts
 export const studyPathTemplate = [];

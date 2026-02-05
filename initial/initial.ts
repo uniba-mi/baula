@@ -53,7 +53,7 @@ await handleDockerContainer();
 console.warn('If you want to start the Docker container independent from this script, you can use "npm run startLocalDocker".');
 
 // 8. Load MariaDB dump
-await handleMariaDBdump();
+// await handleMariaDBdump();
 
 // 9. Build Prisma client
 await handlePrismaClient();
