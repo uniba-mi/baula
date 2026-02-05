@@ -3,22 +3,19 @@ stages:
   - create_required_files
   - create_docker
   - start_baula
-  - test
-
-test:
-  stage: test
-  script:
-    - echo "Running tests..."
 
 install_dependencies:
+  stage: install_dependencies
   script:
     - npm run buildInitial INSTALL_NPM_DEPENDENCIES
 
 create_required_files:
+  stage: create_required_files
   script:
     - npm run buildInitial CREATE_CONFIG_AND_ENV CREATE_CERTS CREATE_TEMPLATES CREATE_LOCAL_USERS
 
 create_docker:
+  stage: create_docker
   script:
     - npm run buildInitial HANDLE_DOCKER
 
