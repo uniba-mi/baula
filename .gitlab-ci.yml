@@ -8,7 +8,7 @@ install_dependencies:
   stage: install_dependencies
   script:
     - cd backend/api && npm install
-    - cd ../frontend && npm install
+    - cd ../../frontend && npm install
     #- npm run buildInitial INSTALL_NPM_DEPENDENCIES
 
 create_required_files:
