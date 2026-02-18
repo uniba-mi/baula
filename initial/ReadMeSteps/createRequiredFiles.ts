@@ -1,11 +1,6 @@
-import { promises as fs } from "fs";
-import * as path from "path";
-import { fileURLToPath } from "url";
-import { createFile } from "./helpers.ts";
+import { createFile, getRootDir } from "../helpers.ts";
 
-const currentFile = fileURLToPath(import.meta.url);
-const currentFileDir = path.dirname(currentFile);
-const rootDir = path.resolve(currentFileDir, "..");
+const rootDir = getRootDir();
 
 /// Backend env files
 

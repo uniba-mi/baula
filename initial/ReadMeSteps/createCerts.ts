@@ -1,10 +1,6 @@
-import { createFile } from "./helpers.ts";
-import * as path from "path";
-import { fileURLToPath } from "url";
+import { createFile, getRootDir } from "../helpers.ts";
 
-const currentFile = fileURLToPath(import.meta.url);
-const currentFileDir = path.dirname(currentFile);
-const rootDir = path.resolve(currentFileDir, "..");
+const rootDir = getRootDir();
 const certDir = rootDir + "/backend/api/src/certs/";
 
 const certPaths = [

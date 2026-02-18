@@ -1,11 +1,7 @@
-import * as path from "path";
-import { fileURLToPath } from "url";
 import { spawn } from "child_process";
+import { getRootDir } from "../helpers";
 
-
-const currentFile = fileURLToPath(import.meta.url);
-const currentFileDir = path.dirname(currentFile);
-const rootDir = path.resolve(currentFileDir, "..");
+const rootDir = getRootDir();
 
 const npmInstallPaths = [rootDir + "/backend/api", rootDir + "/frontend"];
 
