@@ -1,5 +1,5 @@
 import { spawn } from "child_process";
-import { getRootDir } from "../helpers";
+import { getRootDir } from "../helpers.ts";
 
 const rootDir = getRootDir();
 

@@ -19,7 +19,7 @@ async function saveFile(filePath: string, content: string): Promise<void> {
     await fs.writeFile(filePath, content, "utf-8");
 }
 
-export function getRootDir(): String {
+export function getRootDir(): string {
     const currentFile = fileURLToPath(import.meta.url);
     let currentFileDir = path.dirname(currentFile);
     let rootDir = null;

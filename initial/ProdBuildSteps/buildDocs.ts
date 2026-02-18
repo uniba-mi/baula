@@ -1,16 +1,14 @@
 import { spawn } from "child_process";
 
-import { fileURLToPath } from "url";
-
-function buildDocs(cwd: string): Promise<void> {
+export default function buildDocs(cwd: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        const proc = spawn("npm", ["install"], { cwd, stdio: "inherit", shell: true });
+        const proc = spawn("npm", ["run", "buildDocs"], { cwd, stdio: "inherit", shell: true, });
 
         proc.on("close", (code) => {
             if (code === 0) {
                 resolve();
             } else {
-                reject(new Error("npm install exited with code " + code));
+                reject(new Error("npm run buildDocs exited with code " + code));
             }
         });
 

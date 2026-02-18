@@ -1,15 +1,19 @@
-import { getArguments } from "./ReadMeSteps/argumentLogic.ts";
-import type { SetupFlags as ISetupFlags } from "./ReadMeSteps/setupFlags.ts";
+import { getArguments } from "./argumentLogic.ts";
+import type { SetupFlags as ISetupFlags } from "./setupFlags.ts";
 import ReadMeSteps from "./ReadMeSteps/ReadMeSteps.ts";
+import ProdBuildSteps from "./ProdBuildSteps/ProdBuildSteps.ts";
 
 async function createBaula() {
     const readMeSteps = new ReadMeSteps();
+    const prodBuildSteps = new ProdBuildSteps();
+
     const FLAGS: ISetupFlags = getArguments();
     const functionsToExecute: Array<Function> = [];
 
     (Object.keys(FLAGS) as Array<keyof ISetupFlags>).forEach((flag) => {
         // functionsToExecute.push(flagToFunctions(flag, FLAGS[flag]));
         functionsToExecute.push(readMeSteps.flagToFunctions(flag, FLAGS[flag]));
+        functionsToExecute.push(prodBuildSteps.flagToFunctions(flag, FLAGS[flag]));
     });
 
     for (const flagFunction of functionsToExecute) {

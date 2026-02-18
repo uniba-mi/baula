@@ -8,6 +8,7 @@ export function getArguments() {
         try FLAGS[arg] = true 
         */
         
+        /// ReadMeSteps
         switch (arg) {
             case "CHECK_VERSIONS":
                 FLAGS.CHECK_VERSIONS = true;
@@ -38,6 +39,22 @@ export function getArguments() {
                 break;
             case "BUILD_PRISMA_CLIENT":
                 FLAGS.BUILD_PRISMA_CLIENT = true;
+                break;
+            default:
+                break;
+        }
+
+
+        /// ProdBuildSteps
+                switch (arg) {
+            case "PROD_BUILD_BACKEND":
+                FLAGS.PROD_BUILD_BACKEND = true;
+                break;
+            case "PROD_BUILD_DOCS":
+                FLAGS.PROD_BUILD_DOCS = true;
+                break;
+            case "PROD_BUILD_FRONTEND":
+                FLAGS.PROD_BUILD_FRONTEND = true;
                 break;
             default:
                 break;
