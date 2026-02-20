@@ -22,5 +22,7 @@ RUN npm install -g npm@11.6.2
 # Install Angular CLI
 RUN npm install -g @angular/cli@20.3.6
 
+RUN npm install -g typescript
+
 # Verify versions
 RUN node -v && npm -v && ng version
