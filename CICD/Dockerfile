@@ -11,7 +11,11 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     docker.io \
     libicu74 \
-    docker-compose \
+    docker-ce \
+    docker-ce-cli \
+    containerd.io \
+    docker-buildx-plugin \
+    docker-compose-plugin \
     && rm -rf /var/lib/apt/lists/*
     
 # Install Node.js 24.x
