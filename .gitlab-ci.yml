@@ -33,7 +33,7 @@ build_backend:
   script:
     - cd backend/api && npm install
     - cd ../../frontend && npm install
-    - cd ../../
+    - cd ../
     - npm run buildInitial PROD_BUILD_BACKEND
 
 build_docs:
