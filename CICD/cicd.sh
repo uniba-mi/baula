@@ -6,11 +6,13 @@ if [ ! -f /etc/gitlab-runner/config.toml ]; then
     gitlab-runner register \
         --non-interactive \
         --url https://gitlab.rz.uni-bamberg.de \
-        --token glrt-gZoS5W_ZEl4ZqMoewaEvL286MQpwOjZqagp0OjMKdToxenoT.01.1c1tcpz88 \
+        --token glrt-zu-oVX90-Mnu_aB8iZlGU286MQpwOjZqagp0OjMKdToxenoT.01.1c0brv6ms \
         --description "Runner-inside-Docker" \
-        --executor docker \
-        --docker-image ubuntu:22.04
+        --executor shell
 fi
 
+export PATH=$PATH:/usr/local/bin
+
+
 # Start the runner
-exec gitlab-runner run --user=gitlab-runner --working-directory=/home/gitlab-runner
+exec gitlab-runner run --user=root --working-directory=/home/gitlab-runner
