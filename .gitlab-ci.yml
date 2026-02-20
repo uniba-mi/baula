@@ -6,6 +6,16 @@ stages:
   - build_frontend
   - create_docker
 
+variables:
+  GIT_STRATEGY: fetch
+  GIT_CLEAN_FLAGS: "" 
+
+cache:
+  key: shared-node
+  paths:
+    - backend/api/node_modules
+    - frontend/node_modules
+
 install_dependencies:
   stage: install_dependencies
   script:
