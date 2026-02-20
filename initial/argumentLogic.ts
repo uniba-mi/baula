@@ -3,11 +3,11 @@ import { FLAGS } from "./setupFlags.ts";
 export function getArguments() {
     process.argv.forEach((arg: string) => {
         // Check for set flags, which determine what the main script should do
-        
+
         /* Could work, may be more elegant
         try FLAGS[arg] = true 
         */
-        
+
         /// ReadMeSteps
         switch (arg) {
             case "CHECK_VERSIONS":
@@ -46,7 +46,10 @@ export function getArguments() {
 
 
         /// ProdBuildSteps
-                switch (arg) {
+        switch (arg) {
+            case "PROD_CREATE_ENV":
+                FLAGS.PROD_CREATE_ENV = true;
+                break;
             case "PROD_BUILD_BACKEND":
                 FLAGS.PROD_BUILD_BACKEND = true;
                 break;
@@ -55,6 +58,9 @@ export function getArguments() {
                 break;
             case "PROD_BUILD_FRONTEND":
                 FLAGS.PROD_BUILD_FRONTEND = true;
+                break;
+            case "PROD_START_DOCKER":
+                FLAGS.PROD_START_DOCKER = true;
                 break;
             default:
                 break;

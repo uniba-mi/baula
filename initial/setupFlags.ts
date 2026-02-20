@@ -9,9 +9,13 @@ export interface SetupFlags {
     HANDLE_DOCKER: boolean;
     LOAD_MARIADB_DUMP: boolean;
     BUILD_PRISMA_CLIENT: boolean;
+
+    // PROD FLAGS
+    PROD_CREATE_ENV: boolean;
     PROD_BUILD_BACKEND: boolean;
     PROD_BUILD_DOCS: boolean;
     PROD_BUILD_FRONTEND: boolean;
+    PROD_START_DOCKER: boolean;
 }
 
 
@@ -26,7 +30,10 @@ export const FLAGS: SetupFlags = {
     HANDLE_DOCKER: false,
     LOAD_MARIADB_DUMP: false,
     BUILD_PRISMA_CLIENT: false,
+
+    PROD_CREATE_ENV: false,
     PROD_BUILD_BACKEND: false,
     PROD_BUILD_DOCS: false,
     PROD_BUILD_FRONTEND: false,
+    PROD_START_DOCKER: false,
 };
