@@ -18,6 +18,7 @@ services:
     volumes: 
       # - ./:/home/baula
       - /etc/acme/rsa-certs:/etc/acme/rsa-certs
+      - /var/run/docker.sock:/var/run/docker.sock
     
   
   server:
