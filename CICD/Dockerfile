@@ -1,4 +1,7 @@
 FROM gitlab/gitlab-runner:latest
+COPY ./cicd.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \

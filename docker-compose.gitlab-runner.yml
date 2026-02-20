@@ -18,17 +18,7 @@ services:
     volumes: 
       # - ./:/home/baula
       - /etc/acme/rsa-certs:/etc/acme/rsa-certs
-    command: >
-      bash -c "
-        gitlab-runner register \
-          --non-interactive \ 
-          --url https://gitlab.rz.uni-bamberg.de \
-          --token glrt-gZoS5W_ZEl4ZqMoewaEvL286MQpwOjZqagp0OjMKdToxenoT.01.1c1tcpz88 \
-          --description 'Runner-inside-Docker' \
-          --run-untagged=true \
-          --locked=false;
-        gitlab-runner run --user=gitlab-runner --working-directory=/home/gitlab-runner
-      "
+    
   
   server:
     build:
