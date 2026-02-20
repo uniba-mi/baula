@@ -23,6 +23,6 @@ RUN npm install -g npm@11.6.2
 RUN npm install -g @angular/cli@20.3.6
 
 RUN npm install -g typescript
-RUN npm install -g retype
+RUN npm install -g retypeapp
 # Verify versions
 RUN node -v && npm -v && ng version
