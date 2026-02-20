@@ -113,7 +113,7 @@ export const environment = {
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true, connectInZone: true }) // only needed for visible redux (recommended for test only)
     ],
     sentryDsn: 'https://my-sentry-link.test', // add sentry url
-    sentryTracePropagationTargets: ['localhost'] // add additional urls like /api
+    sentryTracePropagationTargets: ['localhost'], // add additional urls like /api
     nodeEnv: 'development', // set 'production' for public release
     plausibleSrc: 'https://your-plausible-domain', // your specific plausible url
     googleSiteVerificationCode: 'your-verification-code-for-search-console' // for usage of google search console add verification code here
