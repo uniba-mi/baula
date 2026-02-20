@@ -39,17 +39,24 @@ create_required_files:
 build_backend:
   stage: build_backend
   script:
+    - cd backend/api && npm run generateDB && cd ../../
     - npm run buildInitial PROD_BUILD_BACKEND
+  artifacts:
+    - /backend/api/dist
 
 build_docs:
   stage: build_docs
   script:
     - npm run buildInitial PROD_BUILD_DOCS
+  artifacts:
+    - /server/app/docs
 
 build_frontend:
   stage: build_frontend
   script:
     - npm run buildInitial PROD_BUILD_FRONTEND
+  artifacts:
+    - /server/app/browser
 
 create_docker:
   stage: create_docker
