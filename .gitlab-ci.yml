@@ -34,6 +34,9 @@ create_required_files:
   artifacts:
     paths:
       - backend/api/src/certs
+      - backend/api/src/src
+      - backend/api/src/staticdate
+      - backend/api/src/environment
       - frontend/src/environments
 
 build_backend:
