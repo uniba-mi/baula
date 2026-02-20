@@ -55,10 +55,9 @@ build_docs:
   stage: build_docs
   dependencies: []
   script:
+    - ls
+    - ls ./documentation
     - npm run buildInitial PROD_BUILD_DOCS
-    - pwd
-    - ls -la
-    - ls -la documentation || echo "documentation missing"
   artifacts:
     paths:
       - server/app/docs
