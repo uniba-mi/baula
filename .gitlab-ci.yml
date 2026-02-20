@@ -1,8 +1,10 @@
 stages:
   - install_dependencies
   - create_required_files
+  - build_backend
+  - build_docs
+  - build_frontend
   - create_docker
-  - start_baula
 
 install_dependencies:
   stage: install_dependencies
@@ -14,26 +16,24 @@ install_dependencies:
 create_required_files:
   stage: create_required_files
   script:
-    - npm run buildInitial CREATE_CONFIG_AND_ENV CREATE_CERTS CREATE_TEMPLATES CREATE_LOCAL_USERS
+    - npm run buildInitial CREATE_CONFIG_AND_ENV CREATE_CERTS CREATE_TEMPLATES CREATE_LOCAL_USERS PROD_CREATE_ENV
+
+build_backend:
+  stage: build_backend
+  script:
+    - npm run buildInitial PROD_BUILD_BACKEND
+
+build_docs:
+  stage: build_docs
+  script:
+    - npm run buildInitial PROD_BUILD_DOCS
+
+build_frontend:
+  stage: build_frontend
+  script:
+    - npm run buildInitial PROD_BUILD_FRONTEND
 
 create_docker:
   stage: create_docker
   script:
-    - npm run buildInitial HANDLE_DOCKER
-
-start_backend:
-  stage: start_baula
-  script:
-    - echo "Starting backend..."
-    - nohup npm run startBackend &
-    - sleep 5
-  artifacts:
-    expire_in: 1h
-    paths:
-      - backend.log
-
-start_frontend:
-  stage: start_baula
-  script:
-    - echo "Starting frontend..."
-    - npm run startFrontend
+    - npm run buildInitial PROD_START_DOCKER
