@@ -22,18 +22,24 @@ install_dependencies:
     - cd backend/api && npm install
     - cd ../../frontend && npm install
     #- npm run buildInitial INSTALL_NPM_DEPENDENCIES
+  artifacts:
+    paths:
+      - backend/api/node_modules
+      - frontend/node_modules
 
 create_required_files:
   stage: create_required_files
   script:
     - npm run buildInitial CREATE_CONFIG_AND_ENV CREATE_CERTS CREATE_TEMPLATES CREATE_LOCAL_USERS PROD_CREATE_ENV
+  artifacts:
+    paths:
+      - backend/api/**
+      - frontend/src/environments/**
 
 build_backend:
   stage: build_backend
   script:
-    - cd backend/api && npm install
-    - cd ../../frontend && npm install
-    - cd ../ && npm run buildInitial PROD_BUILD_BACKEND
+    - npm run buildInitial PROD_BUILD_BACKEND
 
 build_docs:
   stage: build_docs
