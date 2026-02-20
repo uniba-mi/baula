@@ -1,0 +1,23 @@
+FROM gitlab/gitlab-runner:latest
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+    docker.io \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js 24.x
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
+    && apt-get install -y nodejs
+
+# Ensure npm latest
+RUN npm install -g npm@11.6.2
+
+# Install Angular CLI
+RUN npm install -g @angular/cli@20.3.6
+
+# Verify versions
+RUN node -v && npm -v && ng version
