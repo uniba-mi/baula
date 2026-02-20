@@ -10,8 +10,9 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     lsb-release \
     docker.io \
+    libicu72 \
     && rm -rf /var/lib/apt/lists/*
-
+    
 # Install Node.js 24.x
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -y nodejs
