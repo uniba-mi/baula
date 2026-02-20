@@ -33,8 +33,8 @@ create_required_files:
     - npm run buildInitial CREATE_CONFIG_AND_ENV CREATE_CERTS CREATE_TEMPLATES CREATE_LOCAL_USERS PROD_CREATE_ENV
   artifacts:
     paths:
-      - backend/api/**
-      - frontend/src/environments/**
+      - backend/api/src/certs
+      - frontend/src/environments
 
 build_backend:
   stage: build_backend
