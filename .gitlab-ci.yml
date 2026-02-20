@@ -41,15 +41,19 @@ create_required_files:
 
 build_backend:
   stage: build_backend
+  dependencies:
+    - install_dependencies
+    - create_required_files
   script:
     - cd backend/api && npm run generateDB && cd ../../
     - npm run buildInitial PROD_BUILD_BACKEND
   artifacts:
     paths:
-      - /backend/api/dist
+      - backend/api/dist
 
 build_docs:
   stage: build_docs
+  dependencies: []
   script:
     - npm run buildInitial PROD_BUILD_DOCS
     - pwd
@@ -57,17 +61,26 @@ build_docs:
     - ls -la documentation || echo "documentation missing"
   artifacts:
     paths:
-      - /server/app/docs
+      - server/app/docs
 
 build_frontend:
   stage: build_frontend
+  dependencies:
+    - install_dependencies
+    - create_required_files
   script:
     - npm run buildInitial PROD_BUILD_FRONTEND
   artifacts:
     paths:
-      - /server/app/browser
+      - server/app/browser
 
 create_docker:
   stage: create_docker
+  dependencies:
+    - install_dependencies
+    - create_required_files
+    - build_backend
+    - build_docs
+    - build_frontend
   script:
     - npm run buildInitial PROD_START_DOCKER
