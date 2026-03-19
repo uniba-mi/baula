@@ -38,6 +38,7 @@ create_required_files:
       - backend/api/src/staticdate
       - backend/api/src/environment
       - frontend/src/environments
+      - .env
 
 build_backend:
   stage: build_backend
@@ -55,8 +56,6 @@ build_docs:
   stage: build_docs
   dependencies: []
   script:
-    - ls
-    - ls ./documentation
     - npm run buildInitial PROD_BUILD_DOCS
   artifacts:
     paths:
