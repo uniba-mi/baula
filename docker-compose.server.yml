@@ -9,8 +9,8 @@ services:
       - HOSTNAME=${HOSTNAME}
       - API_PORT=${API_PORT} 
     ports:    
-      - "192.168.188.161:${SERVER_PORT}:80"
-      - "192.168.188.161:${SERVER_PORT_SSL}:443"
+      - "${LOCAL_IP}:${SERVER_PORT}:80"
+      - "${LOCAL_IP}:${SERVER_PORT_SSL}:443"
     volumes:
       - ./server/app:/var/www   
       - ./documentation/user-docs/.retype:/var/www/docs/user
@@ -27,4 +27,4 @@ services:
       - ./backend/api/dist/backend/api:/api
       - ./backend/api/dist/interfaces:/interfaces
     ports:    
-      - "192.168.188.161:${API_PORT}:3305"
+      - "${LOCAL_IP}:${API_PORT}:3305"
