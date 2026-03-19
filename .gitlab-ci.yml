@@ -35,8 +35,9 @@ create_required_files:
     paths:
       - backend/api/src/certs
       - backend/api/src
+      # TODO staticdata instead? 
       - backend/api/src/staticdate
-      - backend/api/src/environment
+      - backend/api/environment
       - frontend/src/environments
       - .env
 
