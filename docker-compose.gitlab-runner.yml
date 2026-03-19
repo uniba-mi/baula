@@ -19,6 +19,21 @@ services:
       # - ./:/home/baula
       - /etc/acme/rsa-certs:/etc/acme/rsa-certs
       - /var/run/docker.sock:/var/run/docker.sock
+      # From docker-compose.server.yml
+      - ./server/app:/var/www   
+      - ./documentation/user-docs/.retype:/var/www/docs/user
+      - ./documentation/developer-docs/.retype:/var/www/docs/developer
+      - ./server/apache2/sites-available:/etc/apache2/sites-available   
+      # - /etc/acme/rsa-certs:/etc/acme/rsa-certs
+      # From docker-compose.yml
+      - ./data/backups/mariadb:/backups
+      - ./data/mariadb:/var/lib/mysql
+    # From docker-compose.yml
+    environment:
+      - MYSQL_ROOT_PASSWORD=${RELDB_ROOT_PW}
+      - MYSQL_PASSWORD=${RELDB_PASSWORD}
+      - MYSQL_DATABASE=${RELDB_DATABASE}
+      - MYSQL_USER=${RELDB_USER}
     user: root
   
   server:
