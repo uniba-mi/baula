@@ -12,7 +12,10 @@ variables:
   GIT_CLEAN_FLAGS: "" 
 
 cache:
-  key: shared-node
+  key: 
+    files:
+      - backend/api/package-lock.json
+      - frontend/package-lock.json
   paths:
     - backend/api/node_modules
     - frontend/node_modules
@@ -23,10 +26,10 @@ install_dependencies:
     - cd backend/api && npm install
     - cd ../../frontend && npm install
     #- npm run buildInitial INSTALL_NPM_DEPENDENCIES
-  artifacts:
-    paths:
-      - backend/api/node_modules
-      - frontend/node_modules
+  #artifacts:
+  #  paths:
+  #    - backend/api/node_modules
+  #    - frontend/node_modules
 
 create_required_files:
   stage: create_required_files
