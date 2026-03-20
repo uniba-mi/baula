@@ -5,6 +5,7 @@ stages:
   - build_docs
   - build_frontend
   - create_docker
+  - check_services
 
 variables:
   GIT_STRATEGY: fetch
@@ -95,4 +96,4 @@ check_services:
     - create_docker
   script:
     # - npm run buildInitial ...
-    - echo "Checking services..."
+    - npm run buildInitial CHECK_API_PYTHON CHECK_API_NODE
