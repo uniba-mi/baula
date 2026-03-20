@@ -65,6 +65,24 @@ export function getArguments() {
             default:
                 break;
         }
+
+        /// CheckServicesSteps
+        switch (arg) {
+            case "CHECK_API_PYTHON":
+                FLAGS.CHECK_API_PYTHON = true;
+            case "CHECK_API_NODE":
+                FLAGS.CHECK_API_NODE = true;
+            case "CHECK_APACHE":
+                FLAGS.CHECK_APACHE = true;
+            case "CHECK_MONGO":
+                FLAGS.CHECK_MONGO = true;
+            case "CHECK_REDIS":
+                FLAGS.CHECK_REDIS = true;
+            case "CHECK_MARIADB":
+                FLAGS.CHECK_MARIADB = true;
+            default:
+                break;
+        }
     });
 
     return FLAGS;

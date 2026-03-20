@@ -83,3 +83,16 @@ create_docker:
     - build_frontend
   script:
     - npm run buildInitial PROD_START_DOCKER
+
+check_services:
+  stage: check_services
+  dependencies:
+    - install_dependencies
+    - create_required_files
+    - build_backend
+    - build_docs
+    - build_frontend
+    - create_docker
+  script:
+    # - npm run buildInitial ...
+    - echo "Checking services..."
