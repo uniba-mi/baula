@@ -8,6 +8,7 @@ async function createBaula() {
     const readMeSteps = new ReadMeSteps();
     const prodBuildSteps = new ProdBuildSteps();
     const checkServicesSteps = new CheckServicesSteps();
+    await checkServicesSteps.init();
     
     const FLAGS: ISetupFlags = getArguments();
     const functionsToExecute: Array<Function> = [];
