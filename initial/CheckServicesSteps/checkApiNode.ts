@@ -6,6 +6,20 @@ export default async function checkApiNode(containerId: string): Promise<Status[
     return new Promise<Status[]>(async (resolve, reject) => {
         let statusMessage = await executeCommandInDocker("pm2 status", containerId);
         const status = convertMessageToStatus(statusMessage);
+
+        if (status.length < 2) {
+            const errorStatus: Status = {
+                name: "baula-rest_api",
+                status: "Not running. Some error occurred.",
+                running: false,
+                message: "Not every service that was expected to run was found. Check rest api docker to find out more."
+            }
+
+            status.push(errorStatus);
+
+            reject(status);
+            return;
+        }
         resolve(status);
     });
 }
