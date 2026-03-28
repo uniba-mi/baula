@@ -70,16 +70,22 @@ export function getArguments() {
         switch (arg) {
             case "CHECK_API_PYTHON":
                 FLAGS.CHECK_API_PYTHON = true;
+                break;
             case "CHECK_API_NODE":
                 FLAGS.CHECK_API_NODE = true;
+                break;
             case "CHECK_APACHE":
                 FLAGS.CHECK_APACHE = true;
+                break;
             case "CHECK_MONGO":
                 FLAGS.CHECK_MONGO = true;
+                break;
             case "CHECK_REDIS":
                 FLAGS.CHECK_REDIS = true;
+                break;
             case "CHECK_MARIADB":
                 FLAGS.CHECK_MARIADB = true;
+                break;
             default:
                 break;
         }

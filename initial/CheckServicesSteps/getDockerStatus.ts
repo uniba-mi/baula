@@ -100,9 +100,10 @@ export async function executeCommandInDocker(command: string, containerId: strin
 
         proc.on("close", (code) => {
             if (code === 0) {
-                resolve(output);
+                resolve(output + errorOutput);
             } else {
-                reject(new Error(errorOutput || `Exited with code ${code}`));
+                resolve(output + errorOutput)
+                //reject(new Error(errorOutput || `Exited with code ${code}`));
             }
         });
 
@@ -132,6 +133,40 @@ export async function getDockerLogs(containerId: string): Promise<string> {
         });
 
         proc.on("close", (code) => {
+            if (code === 0) {
+                resolve(output);
+            } else {
+                reject(new Error(output || `Exited with code ${code}`));
+            }
+        });
+
+        proc.on("error", (err) => {
+            reject(err);
+        });
+    });
+}
+
+export async function getDockerInspect(containerId: string): Promise<string> {
+    const cwd = getRootDir();
+
+    return new Promise((resolve, reject) => {
+        const proc = spawn("docker", ["inspect", containerId], {
+            cwd,
+        });
+
+        let output = "";
+
+        proc.stdout.on("data", (data) => {
+            output += data.toString();
+        });
+
+        // Docker logs often come through stderr
+        proc.stderr.on("data", (data) => {
+            output += data.toString();
+        });
+
+        proc.on("close", (code) => {
+            // if (code === 0) {
             if (code === 0) {
                 resolve(output);
             } else {

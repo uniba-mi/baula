@@ -7,7 +7,9 @@ import checkMongo from "./checkMongo.ts";
 import checkRedis from "./checkRedis.ts";
 
 import { spawn } from "child_process";
-import getDockerStatus, { convertDockerPS, executeCommandInDocker } from "./getDockerStatus.ts";
+import getDockerStatus, { convertDockerPS } from "./getDockerStatus.ts";
+
+import type { Status } from "./StatusMode.ts";
 
 export default class CheckServicesSteps {
     containers: JSON[] = [];
@@ -21,17 +23,35 @@ export default class CheckServicesSteps {
         if (!val) return () => { };
         switch (flag) {
             case "CHECK_API_PYTHON":
-                return () => this.checkApiPython();
+                return async () => { 
+                    const status = await this.checkApiPython(); 
+                    console.log(status) 
+                };
             case "CHECK_API_NODE":
-                return () => this.checkApiNode();
+                return async () => {
+                    const status = await this.checkApiNode();
+                    console.log(status);
+                }
             case "CHECK_APACHE":
-                return this.checkApache;
+                return async () => {
+                    const status = await this.checkApache();
+                    console.log(status);
+                }
             case "CHECK_MONGO":
-                return this.checkMongo;
+                return async () => {
+                    const status = await this.checkMongo();
+                    console.log(status);
+                }
             case "CHECK_REDIS":
-                return this.checkRedis;
+                return async () => {
+                    const status = await this.checkRedis();
+                    console.log(status);
+                }
             case "CHECK_MARIADB":
-                return this.checkMariaDB;
+                return async () => {
+                    const status = await this.checkMariaDB();
+                    console.log(status);
+                }
             default:
                 break;
         }
@@ -59,9 +79,13 @@ export default class CheckServicesSteps {
         try {
             const baula_python = this.containers.find(c => c.image.includes(containerName));
             const status = await checkApiPython(baula_python.containerId);
-            console.log("Python status: ", status)
+
+            return status;
         } catch (error) {
-            console.error(error);
+            const errorStatus = this.createErrorStatus("API Python");
+            errorStatus.message += (error instanceof Error ? error.message : String(error));
+
+            return errorStatus;
         }
     }
 
@@ -70,41 +94,84 @@ export default class CheckServicesSteps {
         try {
             const baula_rest_api = this.containers.find(c => c.image.includes(containerName));
             const status = await checkApiNode(baula_rest_api.containerId);
-            console.log("STATUS:", status)
+
+            return status;
         } catch (error) {
-            console.error("API Node check failed:", error);
+            const errorStatus = this.createErrorStatus("API Node");
+            errorStatus.message += (error instanceof Error ? error.message : String(error));
+
+            return errorStatus;
         }
     }
 
     async checkApache() {
+        const containerName = "baula-server";
         try {
-            await checkApache();
-        } catch (error) {
+            const baula_server = this.containers.find(c => c.image.includes(containerName));
+            const status = await checkApache(baula_server.containerId);
 
+            return status;
+        } catch (error) {
+            const errorStatus = this.createErrorStatus("Apache");
+            errorStatus.message += (error instanceof Error ? error.message : String(error));
+
+            return errorStatus;
         }
     }
 
     async checkMongo() {
+        const containerName = "mongo";
         try {
-            await checkMongo();
-        } catch (error) {
+            const mongo = this.containers.find(c => c.image.includes(containerName));
+            const status = await checkMongo(mongo.containerId);
 
+            return status;
+        } catch (error) {
+            const errorStatus = this.createErrorStatus("MongoDB");
+            errorStatus.message += (error instanceof Error ? error.message : String(error));
+
+            return errorStatus;
         }
     }
 
     async checkRedis() {
+        const containerName = "redis:alpine";
         try {
-            await checkRedis();
+            const redis = this.containers.find(c => c.image.includes(containerName));
+            const status = await checkRedis(redis.containerId);
+            
+            return status;
         } catch (error) {
+            const errorStatus = this.createErrorStatus("Redis");
+            errorStatus.message += (error instanceof Error ? error.message : String(error));
 
+            return errorStatus;
         }
     }
 
     async checkMariaDB() {
+        const containerName = "mariadb";
         try {
-            await checkMariaDB();
-        } catch (error) {
+            const maria = this.containers.find(c => c.image.includes(containerName));
+            const status = await checkMariaDB(maria.containerId);
 
+            return status;
+        } catch (error) {
+            const errorStatus = this.createErrorStatus("MariaDB");
+            errorStatus.message += (error instanceof Error ? error.message : String(error));
+
+            return errorStatus;
         }
+    }
+
+    createErrorStatus(serviceName: string): Status {
+        const status: Status = {
+            name: serviceName,
+            status: "The service may be running (or not), but its status could not be determined.",
+            message: "Determined error: \n",
+            running: false,
+        }
+
+        return status;
     }
 }
