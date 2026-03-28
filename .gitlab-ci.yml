@@ -87,6 +87,8 @@ create_docker:
     - build_frontend
   script:
     - npm run buildInitial PROD_START_DOCKER
+    - sleep 10
+    - npm run buildInitial CHECK_API_PYTHON CHECK_API_NODE CHECK_APACHE CHECK_MONGO CHECK_REDIS CHECK_MARIADB
 
 # check_services:
 #   stage: check_services
