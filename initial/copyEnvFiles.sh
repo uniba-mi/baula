@@ -13,4 +13,4 @@ PATH=/home/baula/envFiles
 /usr/bin/cp ./backend/api/src/certs/idp_cert.pem $PATH
 /usr/bin/cp ./backend/api/src/certs/sp_cert.pem $PATH
 /usr/bin/cp ./backend/api/src/certs/sp_key.pem $PATH
-
+/usr/bin/cp ./frontend/src/environments/config.prod.ts $PATH
