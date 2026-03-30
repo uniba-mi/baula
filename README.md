@@ -1,17 +1,17 @@
 # Baula
 #### Bamberger Assistentin zur Unterstützung der Lehrveranstaltungskoordination und -Auswahl
 
-**Version:** 2.2.0
+**Version:** 1.1.0
 
 ### Inhaltsverzeichnis
 1. [Überblick](#überblick)
 2. [Setup und Installation](#setup-und-installation)
 3. [Projektstruktur](#projektstruktur)
 4. [API-Dokumentation](#api-dokumentation)
-5. [Deployment](#deployment)
-6. [Changelog](CHANGELOG.md)
-7. [Häufige Fehlermeldungen](#häufige-fehlermeldungen)
-8. [Lizenz und Credits](#lizenz-und-credits)
+5. [Changelog](CHANGELOG.md)
+6. [Häufige Fehlermeldungen](#häufige-fehlermeldungen)
+7. [Lizenz und Credits](#lizenz-und-credits)
+8. [Danksagungen](#danksagungen)
 
 ### Überblick
 Dieses Repo dokumentiert den Quellcode des digitalen Studienplanungsassistenten Baula, welcher am Lehrstuhl für Medieninformatik der Universität Bamberg seit 2022 in verschiedenen Forschungsprojekten entwickelt und beforscht wird. 
@@ -24,7 +24,7 @@ Folgende Versionen sind die getesteten Voraussetzungen:
 - [Node.js](https://nodejs.org/en) >= 24.10.0 
 - [npm](https://www.npmjs.com/) >= 11.6.2
 - [Angular CLI](https://angular.dev/tools/cli) >= 20.3.6
-- [Docker](https://www.docker.com/products/docker-desktop/) >= 2.35.1-desktop.1
+- [Docker](https://www.docker.com/products/docker-desktop/) >= 2.27.1-desktop.1 (docker compose) && 26.1.4 (Docker)
 
 ##### 1. Anlegen der .env-Dateien
 - im root Verzeichnis muss eine `.env` angelegt werden. Diese .env Datei ist die Basis für den Start der Docker-Container. Die gesetzen Informationen (Nutzernamen und Passwörter) sind für den späteren Zugriff relevant. Die .env sollte folgende Informationen enthalten:
@@ -43,17 +43,25 @@ Folgende Versionen sind die getesteten Voraussetzungen:
     SERVER_PORT=80 # regular port on the server
     HOSTNAME=localhost # replace localhost by hostname (e.g. domain)
     HOST_URL=https://localhost # replace localhost by domain
+    HOST_IP=123.456.789.101
+
     API_PORT=1234 # port where backend is served
+    DOCS_PORT=4201
     ```
 - unter `./backend/api/environment/` muss ebenfalls eine `.env.backend` angelegt werden. Diese enthält die Umgebungsvariablen für die API. Folgende Informationen müssen enthalten sein:
     ```bash
     # .env.backend 
     NODE_ENV=local
     ORIGIN=http://localhost:4200
+    API_PORT=3300
     SESSION_SECRET=firstsecret
     SAML_ENTRY_POINT=https://idp.test.de/idp/profile/SAML2/Redirect/SSO # entry point of your idp
     SAML_ISSUER=https://sp.test.de/shibboleth # entity id of your sp
     SAML_CALLBACK_URL=https://sp.test.de/Shibboleth.sso/SAML2/POST # callback url of your sp
+    SAML_LOGOUT_URL=https://your-idp.com/profile/SAML2/Redirect/SLO
+    SAML_LOGOUT_ISSUER=https://your-idp.com/shibboleth
+    UNIVIS_API_URL=https://your-univis-url.de/prg?search=lectures&show=xml&sem= 
+    PLAUSIBLE_URL=https://your-plausible-domain.com
     MONGO_DATABASE_URL=mongodb://root:password@localhost:27017/Baula?authSource=admin&retryWrites=true&w=majority
     REDIS_URL=redis://test:test123@localhost:6379
     PYTHON_URL=http://localhost
@@ -88,12 +96,13 @@ Folgende Versionen sind die getesteten Voraussetzungen:
 
     export const config: Config = {
         homeUrl: 'http://localhost:4200', 
-        apiUrl: 'http://localhost:3305/api/',
-        loginUrl: 'http://localhost:3305/login/',
+        apiUrl: 'http://localhost:3300/api/',
+        loginUrl: 'http://localhost:3300/login/',
         shibLoginUrl: 'https://meine-domain.test/Shibboleth.sso/Login',
-        localLogoutUrl: 'http://localhost:3305/logout', 
+        localLogoutUrl: 'http://localhost:3300/logout', 
         shibLogoutUrl: 'https://meine-domain.test/Shibboleth.sso/Logout', 
         dashboardUrl: 'app/',
+        userDocsUrl: 'http://localhost:4201',
         demoUser: 'demo', 
         demoPassword: 'demo'
     }
@@ -109,7 +118,7 @@ Folgende Versionen sind die getesteten Voraussetzungen:
             StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true, connectInZone: true }) // only needed for visible redux (recommended for test only)
         ],
         sentryDsn: 'https://my-sentry-link.test', // add sentry url
-        sentryTracePropagationTargets: ['localhost'] // add additional urls like /api
+        sentryTracePropagationTargets: ['localhost'], // add additional urls like /api
         nodeEnv: 'development', // set 'production' for public release
         plausibleSrc: 'https://your-plausible-domain', // your specific plausible url
         googleSiteVerificationCode: 'your-verification-code-for-search-console' // for usage of google search console add verification code here
@@ -117,7 +126,7 @@ Folgende Versionen sind die getesteten Voraussetzungen:
     ```
 
 ##### 2. Installieren der Dependencies
-Abhängigkeiten im `./backend/api` und `./frontend` mit Hilfe von `npm install` installieren.
+Abhängigkeiten im `./backend/api` und `./frontend` mit Hilfe von `npm ci` installieren.
 
 ##### 3. Certs-Files anlegen
 Im Ordner `./backend/api/src/certs` werden drei Dateien nötig, für ein lokales Setting müssen die Dateien mit einem beliebigen Inhalt z. B. `test` gefüllt werden. Dafür folgende Dateien anlegen: 
@@ -245,30 +254,14 @@ Damit der Personalisierungs-Tab funktioniert, müssen im Admin-Bereich (zugängl
 ### API-Dokumentation
 Die Dokumentation der API ist nach Start des API-Servers unter der Route `/api/docs/baula` erreichbar.
 
-### Deployment
-Grundsätzlich müssen alle Schritte wie in [Setup und Installation](#setup-und-installation) durchgeführt werden. 
-Folgende Schritte müssen angepasst bzw. erweitert werden:
-- Bei **Schritt 1** nach dem Anlegen der Dateien macht es sinn im Backend-API-Ordner den Befehl `npm run copyFiles` auszuführen, um die .env-Dateien in den Dist-Ordner zu kopieren.
-- **Schritt 2** entfällt aktuell, ist nur nötig, wenn auf dem Server zukünftig der Build-Prozess angesteuert wird.
-- Bei **Schritt 7** kann die Docker-Umgebung auf dem Server mit `npm run startServerDocker` gestartet werden.
-- **Schritt 10** entfällt.
-
-Generell ist die Idee, dass auf dem `develop`-Branch der Stand des Testsystems und auf dem `main`-Branch der Stand des Produktiv-Systems liegt und auf entsprechenden Ordnern auf dem Server geklont wird. 
-Derzeit muss der Build-Prozess lokal über `npm run buildTest` bzw. `npm run buildProd` angestoßen werden. Anschließend kann der Build auf das Repo gepusht werden und auf dem Server gepullt werden. 
-Bei Änderungen im Frontend muss nicht neu gestartet werden, da einfach die neue `index.html` ausgeliefert wird. Bei kleineren Änderungen reicht meist ein Soft Restart. Dabei auf dem backend-Docker nur die API neu starten (nicht möglich bei Version updates oder Datenbank-Änderungen).
-
-Bei einem Release neuer Features ist also zukünftig nur noch folgendes nötig (wo?):
-1. (develop - lokal) Neuen Release bauen über `npm run buildTest` und auf Repo pushen.
-2. (develop - server) `git pull` und ggf. `npm run restartServerDocker` für kompletten Neustart.
-3. (Testsystem) Neue Features testen.
-4. (main - lokal) `git merge develop` um neue Features auf `main` zu holen. Anschließend `npm run buildProd` und auf Repo pushen.
-5. (main - server) `git pull` und ggf. `npm run restartServerDocker` für kompletten Neustart.
-
-
 ### Häufige Fehlermeldungen
 Hier werden zukünftig häufig auftretende Fehlermeldungen gesammelt.
 
 ### Lizenz und Credits
-[Lizenz](LICENCE.md)
+Das Projekt ist unter der MIT Lizenz lizensiert, genauere Details finden sich hier: [Lizenz](LICENCE.md)
+**Wichtig:** Ausgeschlossen sind "Non-code assets", d.h. insbesondere aber nicht ausschließlich Logos und verwendete Grafiken. Hier gilt alle Rechte vorbehalten mit entsprechenden Implikationen.
 
 <a class="link" href="https://storyset.com/data">Data illustrations by Storyset</a>
+
+### Danksagungen
+Baula wurde im Rahmen der Projekte ["Digitale  Kulturen  in  der  Lehre  entwickeln  (DiKuLe)"](https://www.uni-bamberg.de/dikule/) und ["Von  Lernenden  lernen  (VoLL-KI)"](https://www.uni-bamberg.de/wiai/forschung/forschungseinrichtungen-verbundprojekte/voll-kiba/)  durchgeführt  und  von  der  [Stiftung  Innovation  in  der  Hochschullehre](https://stiftung-hochschullehre.de/)  sowie  der  Förderinitiative  ["Künstlichen Intelligenz in der Hochschulbildung" (BMBF)](https://www.bmftr.bund.de)  finanziert. Seit dem 1.10.2025 wird Baula im Projekt ["Bamberger Kulturen der Lehre gemeinsam gestalten (BaKuLe)"](https://www.uni-bamberg.de/bakule/) unter Förderung der [Stiftung  Innovation  in  der  Hochschullehre](https://stiftung-hochschullehre.de/) fortgeführt.

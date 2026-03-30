@@ -2,7 +2,7 @@ import app from './app';
 import { redisClient } from './config/session.config';
 import mongoose from "mongoose";
 
-const port = 3305;
+const port = process.env.API_PORT;
 
 // creates and starts server on port 3305
 app.listen(port, () => {

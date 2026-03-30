@@ -1085,11 +1085,11 @@ export async function crawlStudentDataViaFlexNow(
         const data = new URLSearchParams();
         data.append(
           "login",
-          process.env.FN_LOGIN ? process.env.FN_LOGIN : ""
+          process.env.FN_LOGIN ?? ""
         );
         data.append(
           "password",
-          process.env.FN_PW ? process.env.FN_PW : ""
+          process.env.FN_PW ?? ""
         );
 
         const options = {

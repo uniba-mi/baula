@@ -6,6 +6,7 @@ export interface Config {
     localLogoutUrl: string;
     shibLogoutUrl: string;
     dashboardUrl: string;
+    userDocsUrl: string;
     demoUser: string;
     demoPassword: string;
 }

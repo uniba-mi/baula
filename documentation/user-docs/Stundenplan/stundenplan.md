@@ -6,11 +6,11 @@ Mit dem Stundenplan hast du eine nützliche Übersicht deiner, in dem jeweiligen
 
 +++ Kopfzeile (vgl. Abbildung 1 A)
 
-Hier kannst du, durch einen Klick auf das :icon-pencil:-Symbol, das Semester auswählen, für welches der Stundenplan angezeigt werden soll.
+Hier kannst du, durch einen Klick auf das <i class="bi bi-pencil-square mb-1"></i>, das Semester auswählen, für welches der Stundenplan angezeigt werden soll.
 
 Außerdem siehst du den derzeitig dargestellten Zeitraum und kannst durch einen Klick auf „Heute“ zu dem aktuellen Zeitraum wechseln.
 
-Durch das :icon-chevron-left: und :icon-chevron-right:-Symbol kannst du im Stundenplan nach hinten und vorne wechseln.
+Durch das <i class="bi bi-chevron-left"></i> und <i class="bi bi-chevron-right"></i>-Symbol kannst du im Stundenplan nach hinten und vorne wechseln.
 
 +++ Anpassungs-Schaltfläche (vgl. Abbildung 1 B)
 Hier kannst du auf verschiedene Weisen mit dem Stundenplan interagieren. 
@@ -42,4 +42,4 @@ Eine Erklärung zu den verschiedenen Fehlermeldungen findest du hier:
 +++ Veranstaltungsübersicht (vgl. Abbildung 1 C, D)
 Hier siehst du alle von dir eingeplanten Lehrveranstaltungen (vgl. Abbildung 1 D) inklusive wann diese stattfinden (vgl. Abbildung 1 C). 
 
-Durch einen Klick auf eine Lehrveranstaltung kriegst du zusätzliche Informationen zu dieser und kannst sie durch einen Klick auf „Lehrveranstaltung abwählen“ abwählen.
+Durch einen Klick auf eine Lehrveranstaltung kriegst du zusätzliche Informationen zu dieser und kannst sie durch einen Klick auf <button class="btn btn-danger me-2 mb-2 mb-lg-0">Lehrveranstaltung abwählen</button> abwählen.

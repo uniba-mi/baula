@@ -41,14 +41,12 @@ footer ul li {
   margin: 25px 50px;
 }
 
+#baula-logo{
+  height: 28px;
+  width: auto;
+}
 @media (min-width: 1400px) {
   .header-heading {
     font-size: 1rem;
-  }
-}
-
-@media (max-width: 1560px) {
-  #baula-logo #word-mark {
-    display: none;
   }
 }

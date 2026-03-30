@@ -10,7 +10,7 @@ start:
 branding:
   title: Baula
   label: Docs
-  logo: /Logo.png
+  logo: /Assets/Logo/icon.png
 
 links:
 - text: Zu Baula!

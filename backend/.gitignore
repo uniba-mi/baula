@@ -7,7 +7,6 @@ node_modules
 .csv
 prisma/generated
 *.acl
-package-lock.json
 /api/src/templates/*
 /api/dist/backend/api/src/templates/*
 !univis-template.*

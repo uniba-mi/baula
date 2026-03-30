@@ -48,7 +48,10 @@ export async function processUnivisData(
 ): Promise<string[]> {
   return new Promise(async (resolve, reject) => {
     let startTime = Date.now();
-    const queryLink = `https://univis.uni-bamberg.de/prg?search=lectures&sem=${semester}&show=xml`;
+    if(!process.env.UNIVIS_API_URL) {
+      reject('Es wurde kein gültiger API-Endpunkt für UnivIS angegeben.')
+    }
+    const queryLink = `${process.env.UNIVIS_API_URL}${semester}`;
     const data = await crawlUnivis(queryLink);
     let message: string[] = [];
 

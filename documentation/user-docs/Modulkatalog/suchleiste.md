@@ -6,7 +6,7 @@ Durch einen Klick auf das „Suchen“-Feld (vgl. Abbildung 1) kannst du den Mod
 
 <!-- Filter -->
 ![Abbildung 2](Abbildung17_ModulSuche_2.png)
-Es können auch zusätzliche Filter in der Suche angewandt werden. Diese siehst du, indem du auf „Filter“ (vgl. Abbildung 2) drückst und können durch einen Klick auf das jeweilige Filter-Feld angewandt werden.
+Es können auch zusätzliche Filter in der Suche angewandt werden. Diese siehst du, indem du auf <button _ngcontent-ng-c1874965177="" class="btn btn-primary my-1 py-3 px-4"><i class="filter-icon bi bi-funnel"></i> Filter </button> (vgl. Abbildung 2) drückst und können durch einen Klick auf das jeweilige Filter-Feld angewandt werden.
 
 <!-- Angebotssemester -->
 ![Abbildung 3](Abbildung17_ModulSuche_3.png)

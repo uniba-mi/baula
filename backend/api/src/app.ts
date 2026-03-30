@@ -18,12 +18,11 @@ import { errorHandler, notFoundHandler } from "./shared/middleware/error-handler
 const app: Express = express();
 
 // cors for local setting
-if (process.env.NODE_ENV === "local") {
+if (process.env.NODE_ENV === "local" && process.env.ORIGIN) {
   app.use(
     cors({
       origin: [
-        process.env.ORIGIN ? process.env.ORIGIN : "",
-        "https://idp.iam.uni-bamberg.de/idp",
+        process.env.ORIGIN,
       ],
       credentials: true,
     })
@@ -45,7 +44,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "https://plausible.stats.baula.minf.uni-bamberg.de"],
+        scriptSrc: ["'self'", process.env.PLAUSIBLE_URL ?? ""],
         styleSrc: ["'self'"],
       },
     },

@@ -25,11 +25,7 @@ export function loginRedirect(req: Request, res: Response) {
   if (!req.user) {
     return res.status(401).send({ success: false, message: "Login failed" });
   }
-  return res.redirect(
-    process.env.DASHBOARD_URL
-      ? process.env.DASHBOARD_URL
-      : "https://baula.minf.uni-bamberg.de/app/"
-  );
+  return res.redirect(process.env.DASHBOARD_URL ?? 'back');
 }
 
 /**---------------------------------------------
@@ -39,12 +35,12 @@ export function loginRedirect(req: Request, res: Response) {
 export function spInitiatedLogout(req: Request, res: Response) {
   let user: any = req.user;
 
-  if (!req.user) {
+  if (!req.user || !process.env.SAML_LOGOUT_ISSUER) {
     return res.json({ success: false });
   }
   const samlReq: RequestWithUser = Object.assign({}, req, {
     samlLogoutRequest: {
-      issuer: "https://idp.rz.uni-bamberg.de/idp/shibboleth",
+      issuer: process.env.SAML_LOGOUT_ISSUER,
       nameID: user.shibId,
       nameIDFormat: "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent",
     },

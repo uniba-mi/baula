@@ -191,11 +191,16 @@ export class DownloadService {
   private async generateTableOfCourses(input: PathCourse[]): Promise<any[]> {
     let result = [['ID', 'Status', 'Semester']];
     for (let entry of input) {
-      result.push([
-        await this.transform.transformUnivIsKeys(entry.id, entry.semester),
-        this.transform.transformStatus(entry.status),
-        this.transform.transformUnivIsSemester(entry.semester),
-      ]);
+      try {
+        result.push([
+          await this.transform.transformUnivIsKeys(entry.id, entry.semester),
+          this.transform.transformStatus(entry.status),
+          this.transform.transformUnivIsSemester(entry.semester),
+        ]);
+      } catch(error) {
+        console.error(`Die Lehrveranstaltung mit der Id ${entry.id} ist leider nicht mehr im UnivIS vorhanden und kann daher im Export nicht angezeigt werden.`)
+        continue;
+      }
     }
     return new Promise((resolve) => {
       resolve(result);

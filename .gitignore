@@ -2,7 +2,6 @@
 data/mongodb
 data/redis
 data/mariadb
-package-lock.json
 *.log
 *.pem
 redis-users.acl

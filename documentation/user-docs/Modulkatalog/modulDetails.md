@@ -27,7 +27,7 @@ Erfolgreichstes Semester      | Dies gilt als ungefährer Richtwert, in welchem 
 ==- Lehrveranstaltungen
 ![Abbildung 4](Abbildung18_Moduldetails_4.png)
 
-Module haben im Regelfall auch eine dazu gehörige Lehrveranstaltung. Hier kannst du die verschiedenen Lehrveranstaltungstypen (z.B. Vorlesung, oder Übung) sehen und durch einen Klick auf „finde passende Lehrveranstaltung“ (vgl. Abbildung 4) wirst du auf die „Stundenplan“-Seite weitergeleitet, wo du anschließend die Veranstaltung zu deinem Stundenplan hinzufügen kannst.
+Module haben im Regelfall auch eine dazu gehörige Lehrveranstaltung. Hier kannst du die verschiedenen Lehrveranstaltungstypen (z.B. Vorlesung, oder Übung) sehen und durch einen Klick auf <button class="btn btn-primary my-1 py-3 px-4"> Finde passende Lehrveranstaltung </button> (vgl. Abbildung 4) wirst du auf die „Stundenplan“-Seite weitergeleitet, wo du anschließend die Veranstaltung zu deinem Stundenplan hinzufügen kannst.
 
 [!ref](../Stundenplan/stundenplan.md)
 
@@ -48,4 +48,4 @@ Dieser Reiter gibt dir Informationen darüber, von welchem Modul das betrachtete
 
 +++ Feedback
 ![Abbildung 8](Abbildung18_Moduldetails_8.png)
-Der „Feedback“-Reiter ermöglicht es dir, Feedback, in Form von 0-5 Sternen, abzugeben. Dadurch können wir bessere Modulempfehlungen für dich erstellen. Das Feedback kann durch einen Klick auf „Feedback absenden“ (vgl. Abbildung 8) gespeichert werden. 
+Der „Feedback“-Reiter ermöglicht es dir, Feedback, in Form von 0-5 Sternen, abzugeben. Dadurch können wir bessere Modulempfehlungen für dich erstellen. Das Feedback kann durch einen Klick auf <button _ngcontent-ng-c2278834521="" id="timetable_add_button" apphovertracker="" aria-label="Lehrveranstaltungssuche öffnen" tabindex="0" class="btn btn-primary ms-2 d-none d-sm-inline plausible-event-name=Timetable-Add+Button">Feedback absenden</button> (vgl. Abbildung 8) gespeichert werden. 

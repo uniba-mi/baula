@@ -3,7 +3,10 @@
     <div class="row align-items-center d-flex justify-content-between">
       <div class="col-auto header-logo d-flex align-items-center">
         <a [href]="homeUrl" title="Baula">
-          <img src="../assets/baula.svg" alt="Logo von Baula, ein Absolventenhut mit einem Kompass" id="baula-logo">
+          <picture>
+            <source media="(max-width: 1560px)" srcset="../assets/icon.png">
+            <img src="../assets/baula-light.png" alt="Logo von Baula, ein Absolventenhut mit einem Kompass" id="baula-logo">
+          </picture>
         </a>
       </div>
       <div class="col-auto d-flex align-items-center">
