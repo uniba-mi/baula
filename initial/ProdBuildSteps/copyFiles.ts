@@ -11,7 +11,7 @@ const files = {
     "environment.prod.ts": "/frontend/src/environments/environment.prod.ts",
 
     // Redis
-    "redis-user-acl.acl": "/backend/api/src/database/redis-users.acl",
+    "redis-user.acl": "/backend/api/src/database/redis-users.acl",
 
     // Templates
     "student-fn2api.ts": "/backend/api/src/templates/student-fn2api.ts",
