@@ -40,6 +40,7 @@ export const config: Config = {
     localLogoutUrl: 'http://localhost:3305/logout', 
     shibLogoutUrl: 'https://meine-domain.test/Shibboleth.sso/Logout', 
     dashboardUrl: 'app/',
+    userDocsUrl: 'http://localhost:4201',
     demoUser: 'demo', 
     demoPassword: 'demo'
 }
