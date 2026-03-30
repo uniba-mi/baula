@@ -11,14 +11,14 @@ const files = {
     "environment.prod.ts": "/frontend/src/environments/environment.prod.ts",
 
     // Redis
-    "redis-user-acl": "/backend/api/src/database/redis-users.acl",
+    "redis-user-acl.acl": "/backend/api/src/database/redis-users.acl",
 
     // Templates
     "student-fn2api.ts": "/backend/api/src/templates/student-fn2api.ts",
     "mhb-fn2mod.ts": "/backend/api/src/templates/mhb-fn2mod.ts",
 
     // Users
-    "user.ts": "/backend/api/src/shared/constants/users.ts",
+    "users.ts": "/backend/api/src/shared/constants/users.ts",
 
     // Certs
     "idp_cert.pem": "/backend/api/src/certs/idp_cert.pem",
