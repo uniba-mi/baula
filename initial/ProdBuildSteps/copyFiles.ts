@@ -11,7 +11,7 @@ const files = {
     "environment.prod.ts": "/frontend/src/environments/environment.prod.ts",
     "environment.ts": "/frontend/src/environments/environment.ts",
     "config.prod.ts": "/frontend/src/environments/config.prod.ts",
-    "config.local.ts": "/frontend/src/environments/config.prod.ts",
+    "config.local.ts": "/frontend/src/environments/config.local.ts",
 
     // Redis
     "redis-users.acl": "/backend/api/src/database/redis-users.acl",
