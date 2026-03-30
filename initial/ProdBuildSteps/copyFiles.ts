@@ -39,6 +39,7 @@ export default async function copyFiles() {
 async function copy(from: string, to: string) {
     console.log("Copying from", from, "to", to);
     try {
+        await fs.mkdir(path.dirname(to), { recursive: true });
         await fs.copyFile(from, to);
     } catch (error) {
         console.error("COULD NOT COPY", from);
