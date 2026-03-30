@@ -56,6 +56,27 @@ Führt folgenden Befehl aus:
 ### PROD_START_DOCKER
 Führt folgenden Befehl aus:
 - npm run startServerDocker
+### PROD_COPY_FILES
+Es muss COPY_PATH als Umgebungsvariable definiert sein. Z.B. kann 'COPY_PATH=/home/files/ npm run buildInitial PROD_COPY_FILES' benutzt werden.
+Es werden folgende Dateien kopiert (Format: NAME_DER_DATEI: WOHIN_DIE_DATEI_KOPIERT_WIRD):
+#### .env Dateien
+- .env: ./
+- .env.backend: ./backend/api/environment/.env.backend
+- database.env: ./backend/api/src/database/.env
+#### Konfigurations Dateien
+- environment.prod.ts: ./frontend/src/environments/environment.prod.ts
+- config.prod.ts: ./frontend/src/environments/config.prod.ts
+#### Redis
+- redis-user-acl: ./backend/api/src/database/redis-users.acl
+#### Templates
+- student-fn2api.ts: ./backend/api/src/templates/student-fn2api.ts
+- mhb-fn2mod.ts: ./backend/api/src/templates/mhb-fn2mod.ts
+#### Vorderfinierte Nutzer
+- user.ts: ./backend/api/src/shared/constants/users.ts
+#### Zertifikate
+- idp_cert.pem: ./backend/api/src/certs/idp_cert.pem
+- sp_cert.pem: ./backend/api/src/certs/sp_cert.pem
+- sp_key.pem: ./backend/api/src/certs/sp_key.pem
 
 # Check Services Steps
 ## Allgemein
@@ -86,3 +107,5 @@ Wenn die logs 'Ready to accept connections' enthalten, gilt der Service als 'run
 Von der Docker Container 'mariadb' werden die 'docker logs' untersucht.
 Die logs werden in Status.message gespeichert.
 Wenn die logs 'mariadbd: ready for connections' enthalten, gilt der Service als 'running'.
+### CHECK_ALL
+Checkt alle Services, wie oben aufgeführt. Gibt am Schluss eine Übersicht zurück.

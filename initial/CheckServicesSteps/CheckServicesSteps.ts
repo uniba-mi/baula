@@ -9,7 +9,7 @@ import checkRedis from "./checkRedis.ts";
 import { spawn } from "child_process";
 import getDockerStatus, { convertDockerPS } from "./getDockerStatus.ts";
 
-import type { Status } from "./StatusMode.ts";
+import { statusToConsoleMessage, type Status } from "./StatusMode.ts";
 
 export default class CheckServicesSteps {
     containers: JSON[] = [];
@@ -23,9 +23,9 @@ export default class CheckServicesSteps {
         if (!val) return () => { };
         switch (flag) {
             case "CHECK_API_PYTHON":
-                return async () => { 
-                    const status = await this.checkApiPython(); 
-                    console.log(status) 
+                return async () => {
+                    const status = await this.checkApiPython();
+                    console.log(status)
                 };
             case "CHECK_API_NODE":
                 return async () => {
@@ -51,6 +51,10 @@ export default class CheckServicesSteps {
                 return async () => {
                     const status = await this.checkMariaDB();
                     console.log(status);
+                }
+            case "CHECK_ALL":
+                return async () => {
+                    await this.checkAll();
                 }
             default:
                 break;
@@ -139,7 +143,7 @@ export default class CheckServicesSteps {
         try {
             const redis = this.containers.find(c => c.image.includes(containerName));
             const status = await checkRedis(redis.containerId);
-            
+
             return status;
         } catch (error) {
             const errorStatus = this.createErrorStatus("Redis");
@@ -173,5 +177,26 @@ export default class CheckServicesSteps {
         }
 
         return status;
+    }
+
+    async checkAll() {
+        const apiPythonStatus = await this.checkApiPython();
+        const apiNodeStatus = await this.checkApiNode();
+        const apacheStatus = await this.checkApache();
+        const mongoStatus = await this.checkMongo();
+        const redisStatus = await this.checkRedis();
+        const mariaDBStatus = await this.checkMariaDB();
+
+        const status: Status[] = [
+            apiPythonStatus,
+            ...(Array.isArray(apiNodeStatus) ? apiNodeStatus : [apiNodeStatus]),
+            apacheStatus,
+            mongoStatus,
+            redisStatus,
+            mariaDBStatus,
+        ];
+        const message = statusToConsoleMessage(status);
+
+        console.log(message);
     }
 }

@@ -62,6 +62,9 @@ export function getArguments() {
             case "PROD_START_DOCKER":
                 FLAGS.PROD_START_DOCKER = true;
                 break;
+            case "PROD_COPY_FILES":
+                FLAGS.PROD_COPY_FILES = true;
+                break;
             default:
                 break;
         }
@@ -85,6 +88,9 @@ export function getArguments() {
                 break;
             case "CHECK_MARIADB":
                 FLAGS.CHECK_MARIADB = true;
+                break;
+            case "CHECK_ALL":
+                FLAGS.CHECK_ALL = true;
                 break;
             default:
                 break;

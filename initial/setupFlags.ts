@@ -16,13 +16,16 @@ export interface SetupFlags {
     PROD_BUILD_DOCS: boolean;
     PROD_BUILD_FRONTEND: boolean;
     PROD_START_DOCKER: boolean;
+    PROD_COPY_FILES: boolean;
 
+    // HEALTH CHECK FLAGS
     CHECK_API_PYTHON: boolean;
     CHECK_API_NODE: boolean;
     CHECK_APACHE: boolean;
     CHECK_MONGO: boolean;
     CHECK_REDIS: boolean;
     CHECK_MARIADB: boolean;
+    CHECK_ALL: boolean;
 }
 
 
@@ -43,6 +46,7 @@ export const FLAGS: SetupFlags = {
     PROD_BUILD_DOCS: false,
     PROD_BUILD_FRONTEND: false,
     PROD_START_DOCKER: false,
+    PROD_COPY_FILES: false,
 
     CHECK_API_PYTHON: false,
     CHECK_API_NODE: false,
@@ -50,4 +54,5 @@ export const FLAGS: SetupFlags = {
     CHECK_MONGO: false,
     CHECK_REDIS: false,
     CHECK_MARIADB: false,
+    CHECK_ALL: false,
 };

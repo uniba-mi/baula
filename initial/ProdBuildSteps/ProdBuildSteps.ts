@@ -2,6 +2,7 @@ import { getRootDir } from "../helpers.ts";
 import buildBackend from "./buildBackend.ts";
 import buildDocs from "./buildDocs.ts";
 import buildFrontendProd from "./buildFrontendProd.ts";
+import copyFiles from "./copyFiles.ts";
 import { createFrontendProdEnvTs, createFrontendConfigLocalTs } from "./createProdEnv.ts";
 import startServerDocker from "./startServerDocker.ts";
 
@@ -19,6 +20,8 @@ export default class ProdBuildSteps {
                 return this.buildFrontend;
             case "PROD_START_DOCKER":
                 return this.startServerDocker;
+            case "PROD_COPY_FILES":
+                return this.copyFiles;
             default:
                 break;
         }
@@ -76,5 +79,9 @@ export default class ProdBuildSteps {
             console.error("There was an error starting the server Docker. Aborting.")
             throw error;
         }
+    }
+
+    async copyFiles() {
+        await copyFiles();
     }
 }

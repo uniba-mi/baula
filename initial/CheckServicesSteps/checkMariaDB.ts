@@ -5,7 +5,6 @@ export default async function checkMariaDB(containerId: string): Promise<Status>
     return new Promise<Status>(async (resolve, reject) => {
         const logs = await getDockerLogs(containerId);
         const status = logsToStatus(logs);
-        console.log(status)
         resolve(status);
     });
 }
