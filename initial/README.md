@@ -49,7 +49,7 @@ Führt folgenden Befehl aus:
 - npm run buildBackend
 ### PROD_BUILD_DOCS
 Führt folgenden Befehl aus:
-- npm run buildDocs
+- npm run buildUserDocs
 ### PROD_BUILD_FRONTEND
 Führt folgenden Befehl aus:
 - npm run buildFrontendProd

@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 
 export default function buildDocs(cwd: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        const proc = spawn("npm", ["run", "buildDocs"], { cwd, stdio: "inherit", shell: true, });
+        const proc = spawn("npm", ["run", "buildUserDocs"], { cwd, stdio: "inherit", shell: true, });
 
         proc.on("close", (code) => {
             if (code === 0) {
