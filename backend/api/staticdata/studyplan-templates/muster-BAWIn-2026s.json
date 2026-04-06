@@ -1,0 +1,161 @@
+{
+  "name": "Musterplan B. Sc. Wirtschaftsinformatik (SS25)",
+  "status": true,
+  "semesterPlans": [
+    {
+      "modules": [
+        "ISM-EidWI-B",
+        "EESYS-SaD-B",
+        "BSL-B-00",
+        "WiMa-B-001",
+        "WiMa-B-002"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2026s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 33,
+      "expanded": true
+    },
+    {
+      "modules": ["IIS-EBAS-B", "Inf-Einf-B", "GAMES-Java-B", "Inf-DM-B"],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2026w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 27,
+      "expanded": true
+    },
+    {
+      "modules": [
+        "Recht-B-02",
+        "SNA-WIM-B",
+        "MOBI-DBS-B",
+        "AI-AuD-B",
+        "AIC-IITP-B"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2027s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["ISPL-DIGB-B", "ISDL-WAWI-B", "ISDL-ITCon-B", "IRWP-B-01"],
+      "userGeneratedModules": [
+        {
+          "name": "Vertiefungsstudium VWL/Recht",
+          "ects": 6,
+          "notes": "EVWL - Einführung in die VWL oder alternativ Mikroökonomik I",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d37264a74135e3561ab9e0"
+        }
+      ],
+      "courses": [],
+      "semester": "2027w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": [],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Fachmodule",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d37292a74135e3561aba51"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Fachmodule",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d372a8a74135e3561aba79"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Fachmodule",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d372b5a74135e3561abaa2"
+        },
+        {
+          "name": "Fremdsprache",
+          "ects": 3,
+          "notes": "Wahlpflichtbereich Fremdsprachen",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d372d1a74135e3561ac4d9"
+        },
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich Seminar & Projekte",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d372e4a74135e3561ac544"
+        },
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d372f2a74135e3561ac617"
+        }
+      ],
+      "courses": [],
+      "semester": "2028s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["WI-Thesis-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Fachmodule",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d37301a74135e3561ac894"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Fachmodule",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3730aa74135e3561ac8c2"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Fachmodule",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d37313a74135e3561ac8f1"
+        }
+      ],
+      "courses": [],
+      "semester": "2028w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    }
+  ]
+}
