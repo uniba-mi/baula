@@ -164,7 +164,7 @@
       "expanded": true
     },
     {
-      "modules": [],
+      "modules": ["AI-Thesis-B"],
       "userGeneratedModules": [
         {
           "name": "Fachmodul",
@@ -189,14 +189,6 @@
           "status": "open",
           "flexNowImported": false,
           "_id": "69d39c81a74135e3561c07e2"
-        },
-        {
-          "name": "Bachelorarbeit",
-          "ects": 12,
-          "notes": "",
-          "status": "open",
-          "flexNowImported": false,
-          "_id": "69d39c8aa74135e3561c0aa8"
         }
       ],
       "courses": [],

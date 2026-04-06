@@ -124,7 +124,7 @@
       "expanded": true
     },
     {
-      "modules": [],
+      "modules": ["Inf-Thesis-B"],
       "userGeneratedModules": [
         {
           "name": "Fachmodul",
@@ -149,14 +149,6 @@
           "status": "open",
           "flexNowImported": false,
           "_id": "69d39f6ba74135e3561caca6"
-        },
-        {
-          "name": "Bachelorarbeit",
-          "ects": 12,
-          "notes": "",
-          "status": "open",
-          "flexNowImported": false,
-          "_id": "69d39f75a74135e3561cace4"
         }
       ],
       "courses": [],
