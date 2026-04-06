@@ -1,0 +1,170 @@
+{
+  "name": "Musterplan B. Sc. Informatik (SS26)",
+  "status": true,
+  "semesterPlans": [
+    {
+      "modules": ["EESYS-SaD-B", "Inf-Ment-B", "Inf-LBR-B", "Inf-GRABS-B"],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2026s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 28,
+      "expanded": true
+    },
+    {
+      "modules": ["Inf-Einf-B", "Inf-DM-B", "WiMa-B-001", "WiMa-B-002"],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2026w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": [
+        "MI-WAIAI-B",
+        "MOBI-DBS-B",
+        "DSG-IDistrSys-B",
+        "AI-AuD-B",
+        "SWT-FSE-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Modul außerhalb WIAI",
+          "ects": 5,
+          "notes": "Anwendungskontext 5 ECTS",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39ea7a74135e3561c8466"
+        }
+      ],
+      "courses": [],
+      "semester": "2027s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 32,
+      "expanded": true
+    },
+    {
+      "modules": [
+        "PSI-IntroSP-B",
+        "HCI-IS-B",
+        "COMNET-RN-B",
+        "ESE-SEL-B",
+        "PSI-EDS-B"
+      ],
+      "userGeneratedModules": [
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39eefa74135e3561c9e5f"
+        }
+      ],
+      "courses": [],
+      "semester": "2027w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": [],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39f08a74135e3561ca26b"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39f16a74135e3561ca2a2"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39f1fa74135e3561ca489"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "6",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39f28a74135e3561ca4c2"
+        },
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39f4ba74135e3561ca6be"
+        }
+      ],
+      "courses": [],
+      "semester": "2028s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": [],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39f3ba74135e3561ca683"
+        },
+        {
+          "name": "Wahlmodul",
+          "ects": 6,
+          "notes": "Überfachliche Qualifikation",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39f5ea74135e3561ca6fa"
+        },
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39f6ba74135e3561caca6"
+        },
+        {
+          "name": "Bachelorarbeit",
+          "ects": 12,
+          "notes": "",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39f75a74135e3561cace4"
+        }
+      ],
+      "courses": [],
+      "semester": "2028w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    }
+  ]
+}

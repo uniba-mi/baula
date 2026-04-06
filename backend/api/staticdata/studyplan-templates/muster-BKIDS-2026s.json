@@ -1,0 +1,183 @@
+{
+  "name": "Musterplan B. Sc. Künstliche Intelligenz und Data Science (SS26)",
+  "status": true,
+  "semesterPlans": [
+    {
+      "modules": ["WiMa-B-002", "MOBI-DBS-B", "VIS-GIV-B", "Inf-Ment-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Stat-B-01",
+          "ects": 6,
+          "notes": "Methoden der Statistik I\nFachstudium Mathematische Grundlagen",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a244a74135e3561cf93b"
+        },
+        {
+          "name": "Schlüsselkompetenzen",
+          "ects": 2,
+          "notes": "",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a285a74135e3561d007b"
+        }
+      ],
+      "courses": [],
+      "semester": "2026s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 27,
+      "expanded": true
+    },
+    {
+      "modules": ["KogSys-ML-B", "Inf-Einf-B", "Inf-DM-B", "GdI-MTL-B"],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2026w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["KogSys-KI-B", "Inf-LBR-B", "AI-AuD-B", "MI-WAIAI-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Stat-B-02",
+          "ects": 6,
+          "notes": "Methoden der Statistik II Fachstudium Mathematische Grundlagen",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a2dfa74135e3561d037f"
+        }
+      ],
+      "courses": [],
+      "semester": "2027s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["AISE-DO-B", "PSI-IntroSP-B", "AISE-LKR-B", "PSI-EDS-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich\nSeminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a314a74135e3561d0a28"
+        },
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a31fa74135e3561d0a60"
+        }
+      ],
+      "courses": [],
+      "semester": "2027w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["MOBI-DE-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Profilstudium/Informatik/Mathematik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a340a74135e3561d0daf"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Profilstudium/Informatik/Mathematik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a349a74135e3561d1175"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Profilstudium/Informatik/Mathematik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a357a74135e3561d1958"
+        },
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a365a74135e3561d1994"
+        },
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a371a74135e3561d19d1"
+        }
+      ],
+      "courses": [],
+      "semester": "2028s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 33,
+      "expanded": true
+    },
+    {
+      "modules": [],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Profilstudium/Informatik/Mathematik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a38ca74135e3561d1a0f"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Profilstudium/Informatik/Mathematik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a394a74135e3561d1a4e"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Profilstudium/Informatik/Mathematik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a39ba74135e3561d1a8e"
+        },
+        {
+          "name": "Bachelorarbeit",
+          "ects": 12,
+          "notes": "",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a3a5a74135e3561d1c5a"
+        }
+      ],
+      "courses": [],
+      "semester": "2028w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    }
+  ]
+}
