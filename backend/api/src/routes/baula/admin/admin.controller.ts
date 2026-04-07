@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { Prisma, PrismaClient } from "@prisma/client";
-import { BadRequestError, logError, NotFoundError } from "../../../shared/error";
+import {
+  BadRequestError,
+  logError,
+  NotFoundError,
+} from "../../../shared/error";
 import validator from "validator";
 import { validateAndReturnSemester } from "../../../shared/helpers/custom-validator";
 import path from "path";
@@ -50,7 +54,7 @@ const prisma = new PrismaClient();
 export async function getCronjobLogs(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     // read and deliver json file
@@ -73,7 +77,7 @@ export async function getCronjobLogs(
 export async function getErrorLogs(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     // read and deliver json file
@@ -97,7 +101,7 @@ export async function getErrorLogs(
 export async function getAllAcademicDates(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const academicDates = await prisma.academicDate.findMany({
@@ -115,7 +119,7 @@ export async function getAllAcademicDates(
 export async function addAcademicDate(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const desc = validator.isAlphanumeric(req.body.desc, "de-DE", {
     ignore: " .!?äöüß,",
@@ -168,7 +172,7 @@ export async function addAcademicDate(
 export async function updateAcademicDate(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const id = validator.isNumeric(String(req.body.id)) ? req.body.id : undefined;
   const desc = validator.isAlphanumeric(req.body.desc, "de-DE", {
@@ -225,7 +229,7 @@ export async function updateAcademicDate(
 export async function deleteAcademicDate(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const id = validator.isNumeric(req.params.id)
     ? Number(req.params.id)
@@ -251,7 +255,7 @@ export async function deleteAcademicDate(
 export async function addDateType(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const name = validator.isAlphanumeric(req.body.name, "de-DE", {
     ignore: " .!?äöüß,",
@@ -285,7 +289,7 @@ export async function addDateType(
 export async function updateDateType(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const id = validator.isNumeric(String(req.body.id))
     ? Number(req.body.id)
@@ -325,7 +329,7 @@ export async function updateDateType(
 export async function deleteDateType(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const id = validator.isNumeric(String(req.params.id))
     ? Number(req.params.id)
@@ -351,7 +355,7 @@ export async function deleteDateType(
 export async function getConnectedCoursesForModule(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const moduleId = validator.isAlphanumeric(req.params.id, undefined, {
     ignore: "_-",
@@ -407,8 +411,8 @@ export async function getConnectedCoursesForModule(
       } else {
         next(
           new NotFoundError(
-            "Es konnte zu dem Modul keine Modulkurse gefunden werden!"
-          )
+            "Es konnte zu dem Modul keine Modulkurse gefunden werden!",
+          ),
         );
       }
     } catch (error) {
@@ -423,7 +427,7 @@ export async function getConnectedCoursesForModule(
 export async function initConnectionModulecourse2Course(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   let messages = [];
   let startTime = Date.now();
@@ -541,7 +545,7 @@ export async function initConnectionModulecourse2Course(
       }
     } else {
       next(
-        new NotFoundError("Es liegen noch keine Modullehrveranstaltungen vor!")
+        new NotFoundError("Es liegen noch keine Modullehrveranstaltungen vor!"),
       );
     }
   } catch (error) {
@@ -553,7 +557,7 @@ export async function initConnectionModulecourse2Course(
 export async function createCourseToModuleConnection(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const mcId = validator.isAlphanumeric(req.body.mcId, "de-DE", { ignore: "-" })
     ? req.body.mcId
@@ -586,7 +590,7 @@ export async function createCourseToModuleConnection(
 export async function deleteCourseToModuleConnection(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const mcId = validator.isAlphanumeric(req.params.mcId, "de-DE", {
     ignore: "-",
@@ -626,7 +630,7 @@ export async function deleteCourseToModuleConnection(
 export async function crawlCourses(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   // check if semester input is valid
   const semester = checkSemester(req.body.semester);
@@ -642,7 +646,7 @@ export async function crawlCourses(
       });
   } else {
     next(
-      new BadRequestError("Das übergebene Semester hat das falsche Format.")
+      new BadRequestError("Das übergebene Semester hat das falsche Format."),
     );
   }
 }
@@ -650,12 +654,12 @@ export async function crawlCourses(
 export async function crawlFN2Modules(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const semester = checkSemester(req.params.semester);
   if (semester) {
     let startTime = Date.now();
-    let mhbs: string = '';
+    let mhbs: string = "";
     try {
       mhbs = await crawlFlexNow(semester);
     } catch (error) {
@@ -670,7 +674,7 @@ export async function crawlFN2Modules(
     res.status(200).json(result);
   } else {
     next(
-      new BadRequestError("Das übergebene Semester hat das falsche Format.")
+      new BadRequestError("Das übergebene Semester hat das falsche Format."),
     );
   }
 }
@@ -679,7 +683,7 @@ export async function crawlFN2Modules(
 export async function addModuleStructureToDatabase(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   // typecheck body
   const xml: string =
@@ -707,14 +711,14 @@ export async function addModuleStructureToDatabase(
 export async function updateModuleEmbeddings(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const embeddingsFilePath = path.join(
       __dirname,
       "../../../..",
       "staticdata",
-      "module-embeddings.json"
+      "module-embeddings.json",
     );
     const fileData = await fs.promises.readFile(embeddingsFilePath, "utf8");
     const embeddings = JSON.parse(fileData) as { [acronym: string]: number[] };
@@ -723,9 +727,9 @@ export async function updateModuleEmbeddings(
         return ModEmbedding.findOneAndUpdate(
           { acronym }, // match by acronym
           { acronym, vector },
-          { upsert: true, new: true, setDefaultsOnInsert: true } // create new if does not exist
+          { upsert: true, new: true, setDefaultsOnInsert: true }, // create new if does not exist
         );
-      }
+      },
     );
 
     const results = await Promise.all(promises);
@@ -737,7 +741,7 @@ export async function updateModuleEmbeddings(
     });
   } catch (error) {
     next(
-      new BadRequestError("Modulembeddings konnte nicht aktualisiert werden.")
+      new BadRequestError("Modulembeddings konnte nicht aktualisiert werden."),
     );
   }
 }
@@ -748,14 +752,14 @@ export async function updateModuleEmbeddings(
 export async function initTopicsFromJSON(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const topicsFilePath = path.join(
       __dirname,
       "../../../..",
       "staticdata",
-      "topic-embeddings.json"
+      "topic-embeddings.json",
     );
 
     // parse JSON file
@@ -802,17 +806,20 @@ export async function initTopicsFromJSON(
           keywords: topicData.keywords,
           parentId: parentId,
         },
-        { upsert: true, new: true, setDefaultsOnInsert: true }
+        { upsert: true, new: true, setDefaultsOnInsert: true },
       );
 
       let needsNewEmbedding = true;
 
       // update existing embedding if there is one
       if (topic.embeddingId) {
-        const updatedEmbedding = await Embedding.findByIdAndUpdate(topic.embeddingId, {
-          identifier: topic.tId,
-          vector: topicData.vector,
-        });
+        const updatedEmbedding = await Embedding.findByIdAndUpdate(
+          topic.embeddingId,
+          {
+            identifier: topic.tId,
+            vector: topicData.vector,
+          },
+        );
 
         if (updatedEmbedding) {
           needsNewEmbedding = false;
@@ -851,7 +858,7 @@ export async function initTopicsFromJSON(
 export async function getReporting(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     // define helper variables
@@ -861,19 +868,19 @@ export async function getReporting(
     // request variables for report
     // count all users
     const allUsers = await User.countDocuments({
-      authType: 'saml'
+      authType: "saml",
     });
     // count active users in the last month
     const activeUsers = await User.countDocuments({
-      authType: 'saml',
+      authType: "saml",
       updatedAt: { $gte: oneMonthAgo },
     });
     // get cluster when users where last active
     const lastActiveUsersHistory = await User.aggregate([
       {
         $match: {
-          authType: 'saml'
-        }
+          authType: "saml",
+        },
       },
       {
         $group: {
@@ -892,8 +899,8 @@ export async function getReporting(
     const frequencyModuleStatus = await User.aggregate([
       {
         $match: {
-          authType: 'saml'
-        }
+          authType: "saml",
+        },
       },
       { $unwind: "$completedModules" },
       { $group: { _id: "$completedModules.status", count: { $sum: 1 } } },
@@ -902,8 +909,8 @@ export async function getReporting(
     const frequencyStudyProgrammes = await User.aggregate([
       {
         $match: {
-          authType: 'saml'
-        }
+          authType: "saml",
+        },
       },
       { $unwind: "$sps" },
       { $group: { _id: "$sps.name", count: { $sum: 1 } } },
@@ -913,8 +920,8 @@ export async function getReporting(
     const frequencyDuration = await User.aggregate([
       {
         $match: {
-          authType: 'saml'
-        }
+          authType: "saml",
+        },
       },
       { $group: { _id: "$duration", count: { $sum: 1 } } },
     ]);
@@ -922,8 +929,8 @@ export async function getReporting(
     const frequencyStartSemester = await User.aggregate([
       {
         $match: {
-          authType: 'saml'
-        }
+          authType: "saml",
+        },
       },
       { $group: { _id: "$startSemester", count: { $sum: 1 } } },
       { $sort: { count: -1 } },
@@ -932,8 +939,8 @@ export async function getReporting(
     const frequencyCompletedModules = await User.aggregate([
       {
         $match: {
-          authType: 'saml'
-        }
+          authType: "saml",
+        },
       },
       {
         $addFields: {
@@ -978,8 +985,8 @@ export async function getReporting(
     const frequencyModulesAsCompleted = await User.aggregate([
       {
         $match: {
-          authType: 'saml'
-        }
+          authType: "saml",
+        },
       },
       { $unwind: "$completedModules" },
       { $group: { _id: "$completedModules.acronym", count: { $sum: 1 } } },
@@ -1077,14 +1084,14 @@ export async function getReporting(
         (module) => ({
           name: module._id,
           count: module.count,
-        })
+        }),
       ),
       frequencyStudyPlans: frequencyStudyPlans,
       frequencyStudyPlansClustered: frequencyStudyPlansClustered.map(
         (group) => ({
           name: group.label,
           count: group.count,
-        })
+        }),
       ),
       frequencyPlannedCourses: frequencyPlannedCourses.map((course) => ({
         id: course._id.id,
@@ -1110,14 +1117,8 @@ async function crawlFlexNow(semester: string): Promise<string> {
   const url = process.env.FN_MHBS_URL + semester;
   let result = new Promise<string>((resolve, reject) => {
     const data = new URLSearchParams();
-    data.append(
-      "login",
-      process.env.FN_LOGIN ? process.env.FN_LOGIN : ""
-    );
-    data.append(
-      "password",
-      process.env.FN_PW ? process.env.FN_PW : ""
-    );
+    data.append("login", process.env.FN_LOGIN ? process.env.FN_LOGIN : "");
+    data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
 
     const options = {
       method: "POST",
@@ -1128,26 +1129,28 @@ async function crawlFlexNow(semester: string): Promise<string> {
 
     const req = https.request(url, options, (res) => {
       const chunks: Buffer[] = [];
+
       res.on("data", (chunk) => {
-        chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "utf-8"));
+        chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
       });
+
       res.on("end", () => {
-        if (res.statusCode === 200) {
-          const buffer = Buffer.concat(chunks);
-          const ansiString = buffer.toString("utf-8");
-          resolve(ansiString);
+        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+          resolve(Buffer.concat(chunks).toString("utf-8"));
         } else {
-          reject(
-            new Error(`Request failed with status code ${res.statusCode}`)
-          );
+          reject(new Error(`Status ${res.statusCode}`));
         }
       });
+
+      res.on("error", reject);
+      res.on("aborted", () => reject(new Error("response aborted")));
     });
 
-    req.on("error", (e) => {
-      reject(e);
+    req.setTimeout(10000, () => {
+      req.destroy(new Error("timeout"));
     });
 
+    req.on("error", reject);
     req.write(data.toString());
     req.end();
   });
@@ -1196,7 +1199,14 @@ async function processFlexNowData(xml: string): Promise<string[]> {
   // add module exams to database, only when adding modules not resulting in an error
 
   if (modulesMessage.startsWith("ERROR")) {
-    return [depMessage, personsMessage, spsMessage, mhbsMessage, mgsMessage, modulesMessage]
+    return [
+      depMessage,
+      personsMessage,
+      spsMessage,
+      mhbsMessage,
+      mgsMessage,
+      modulesMessage,
+    ];
   }
   const modExamMessage = await upsertModuleExams(modExams);
 
@@ -1205,17 +1215,23 @@ async function processFlexNowData(xml: string): Promise<string[]> {
 
   // add moduleHandbook2modulegroup to database, only when adding mhbs and mgs not resulting in an error
 
-  if (
-    mhbsMessage.startsWith("ERROR") ||
-    mgsMessage.startsWith("ERROR")
-  ) {
-    return [depMessage, personsMessage, spsMessage, mhbsMessage, mgsMessage, modulesMessage, modExamMessage, modCoursesMessage]
+  if (mhbsMessage.startsWith("ERROR") || mgsMessage.startsWith("ERROR")) {
+    return [
+      depMessage,
+      personsMessage,
+      spsMessage,
+      mhbsMessage,
+      mgsMessage,
+      modulesMessage,
+      modExamMessage,
+      modCoursesMessage,
+    ];
   }
 
   const resultSp2Mhb = await prisma.sp2Mhb.createMany({
     data: sp2mhb,
     skipDuplicates: true,
-  })
+  });
 
   const resultMhb2Mg = await prisma.mhb2Mg.createMany({
     data: mhb2mg,
