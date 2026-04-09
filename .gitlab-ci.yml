@@ -22,8 +22,9 @@ cache:
 
 install_dependencies:
   stage: install_dependencies
-  script:
+  before_script:
     - sudo chown -R gitlab-runner ./
+  script:
     - cd backend/api && npm install
     - cd ../../frontend && npm install
     #- npm run buildInitial INSTALL_NPM_DEPENDENCIES
