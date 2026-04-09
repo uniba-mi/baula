@@ -92,6 +92,7 @@ create_docker:
     - sleep 20
     - npm run buildInitial CHECK_ALL
 
+
 # check_services:
 #   stage: check_services
 #   dependencies:
