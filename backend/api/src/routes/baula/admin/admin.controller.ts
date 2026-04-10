@@ -674,6 +674,7 @@ export async function crawlFN2Modules(
       result.push(`${minutes} Minutes and ${seconds} Seconds to process`);
       res.status(200).json(result);
     } else {
+      console.log(mhbs)
       next(
         new BadRequestError("Es konnten keine Daten von FlexNow geladen werden.")
       )
@@ -1138,6 +1139,33 @@ async function crawlFlexNow(semester: string): Promise<string> {
         "Accept": "*/*"
       }
     }, (res) => {
+      let raw = "";
+
+      res.on("data", chunk => raw += chunk);
+      res.on("end", () => {
+        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+          resolve(raw);
+        } else {
+          reject(new Error(`Status ${res.statusCode}`));
+        }
+      });
+    });
+
+    req.on("error", console.error);
+    req.write(body);
+    req.end();
+    /* const data = new URLSearchParams();
+    data.append("login", process.env.FN_LOGIN ? process.env.FN_LOGIN : "");
+    data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+
+    const req = https.request(url, options, (res) => {
       const chunks: Buffer[] = [];
 
       res.on("data", (chunk) => {
@@ -1156,9 +1184,13 @@ async function crawlFlexNow(semester: string): Promise<string> {
       res.on("aborted", () => reject(new Error("response aborted")));
     });
 
-    req.on("error", console.error);
-    req.write(body);
-    req.end();
+    req.setTimeout(12000000, () => {
+      req.destroy(new Error("timeout"));
+    });
+
+    req.on("error", reject);
+    req.write(data.toString());
+    req.end(); */
   });
   return result;
 }
