@@ -1125,7 +1125,7 @@ async function crawlFlexNow(semester: string): Promise<string> {
   const url = process.env.FN_MHBS_URL + semester;
   let result = new Promise<string>((resolve, reject) => {
     const data = new URLSearchParams();
-    data.append("username", process.env.FN_LOGIN || "");
+    data.append("login", process.env.FN_LOGIN || "");
     data.append("password", process.env.FN_PW || "");
 
     const body = data.toString();
