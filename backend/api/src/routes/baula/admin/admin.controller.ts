@@ -666,12 +666,20 @@ export async function crawlFN2Modules(
       logError(error);
       next(new BadRequestError("Fehler beim Crawlen der FlexNow-Daten"));
     }
-    const result = await processFlexNowData(mhbs);
-    let difference = ((Date.now() - startTime) / 1000) | 0;
-    let minutes = (difference / 60) | 0;
-    let seconds = difference - minutes * 60;
-    result.push(`${minutes} Minutes and ${seconds} Seconds to process`);
-    res.status(200).json(result);
+    if(mhbs.length > 0) {
+      const result = await processFlexNowData(mhbs);
+      let difference = ((Date.now() - startTime) / 1000) | 0;
+      let minutes = (difference / 60) | 0;
+      let seconds = difference - minutes * 60;
+      result.push(`${minutes} Minutes and ${seconds} Seconds to process`);
+      res.status(200).json(result);
+    } else {
+      console.log(mhbs)
+      next(
+        new BadRequestError("Es konnten keine Daten von FlexNow geladen werden.")
+      )
+    }
+    
   } else {
     next(
       new BadRequestError("Das übergebene Semester hat das falsche Format."),
@@ -1146,7 +1154,7 @@ async function crawlFlexNow(semester: string): Promise<string> {
       res.on("aborted", () => reject(new Error("response aborted")));
     });
 
-    req.setTimeout(10000, () => {
+    req.setTimeout(12000000, () => {
       req.destroy(new Error("timeout"));
     });
 
