@@ -1139,29 +1139,6 @@ async function crawlFlexNow(semester: string): Promise<string> {
         "Accept": "*/*"
       }
     }, (res) => {
-      let raw = "";
-
-      res.on("data", chunk => raw += chunk);
-      res.on("end", () => {
-        console.log(res.statusCode, raw);
-      });
-    });
-
-    req.on("error", console.error);
-    req.write(body);
-    req.end();
-    /* const data = new URLSearchParams();
-    data.append("login", process.env.FN_LOGIN ? process.env.FN_LOGIN : "");
-    data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    };
-
-    const req = https.request(url, options, (res) => {
       const chunks: Buffer[] = [];
 
       res.on("data", (chunk) => {
@@ -1180,13 +1157,9 @@ async function crawlFlexNow(semester: string): Promise<string> {
       res.on("aborted", () => reject(new Error("response aborted")));
     });
 
-    req.setTimeout(12000000, () => {
-      req.destroy(new Error("timeout"));
-    });
-
-    req.on("error", reject);
-    req.write(data.toString());
-    req.end(); */
+    req.on("error", console.error);
+    req.write(body);
+    req.end();
   });
   return result;
 }
