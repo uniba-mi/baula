@@ -1125,6 +1125,32 @@ async function crawlFlexNow(semester: string): Promise<string> {
   const url = process.env.FN_MHBS_URL + semester;
   let result = new Promise<string>((resolve, reject) => {
     const data = new URLSearchParams();
+    data.append("username", process.env.FN_LOGIN || "");
+    data.append("password", process.env.FN_PW || "");
+
+    const body = data.toString();
+
+    const req = https.request(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Length": Buffer.byteLength(body),
+        "User-Agent": "curl/7.88.1",
+        "Accept": "*/*"
+      }
+    }, (res) => {
+      let raw = "";
+
+      res.on("data", chunk => raw += chunk);
+      res.on("end", () => {
+        console.log(res.statusCode, raw);
+      });
+    });
+
+    req.on("error", console.error);
+    req.write(body);
+    req.end();
+    /* const data = new URLSearchParams();
     data.append("login", process.env.FN_LOGIN ? process.env.FN_LOGIN : "");
     data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
 
@@ -1160,7 +1186,7 @@ async function crawlFlexNow(semester: string): Promise<string> {
 
     req.on("error", reject);
     req.write(data.toString());
-    req.end();
+    req.end(); */
   });
   return result;
 }
