@@ -667,12 +667,21 @@ export async function crawlFN2Modules(
       next(new BadRequestError("Fehler beim Crawlen der FlexNow-Daten"));
     }
     if(mhbs.length > 0) {
+      try {
+      fs.writeFile(__dirname + 'export.xml', mhbs, (err) => {
+        if (err) throw err;
+        console.log('Die Datei wurde erfolgreich gespeichert!');
+      });
       const result = await processFlexNowData(mhbs);
       let difference = ((Date.now() - startTime) / 1000) | 0;
       let minutes = (difference / 60) | 0;
       let seconds = difference - minutes * 60;
       result.push(`${minutes} Minutes and ${seconds} Seconds to process`);
       res.status(200).json(result);
+      } catch(error) {
+        console.log(error)
+        res.status(400)
+      }
     } else {
       console.log(mhbs)
       next(
@@ -1123,6 +1132,8 @@ async function crawlFlexNow(semester: string): Promise<string> {
     semester = semester.replace("w", "2");
   }
   const url = process.env.FN_MHBS_URL + semester;
+  //let result = fs.readFileSync(__dirname + '/export.xml').toString()
+  
   let result = new Promise<string>((resolve, reject) => {
     const data = new URLSearchParams();
     data.append("login", process.env.FN_LOGIN || "");
@@ -1154,43 +1165,6 @@ async function crawlFlexNow(semester: string): Promise<string> {
     req.on("error", console.error);
     req.write(body);
     req.end();
-    /* const data = new URLSearchParams();
-    data.append("login", process.env.FN_LOGIN ? process.env.FN_LOGIN : "");
-    data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    };
-
-    const req = https.request(url, options, (res) => {
-      const chunks: Buffer[] = [];
-
-      res.on("data", (chunk) => {
-        chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-      });
-
-      res.on("end", () => {
-        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
-          resolve(Buffer.concat(chunks).toString("utf-8"));
-        } else {
-          reject(new Error(`Status ${res.statusCode}`));
-        }
-      });
-
-      res.on("error", reject);
-      res.on("aborted", () => reject(new Error("response aborted")));
-    });
-
-    req.setTimeout(12000000, () => {
-      req.destroy(new Error("timeout"));
-    });
-
-    req.on("error", reject);
-    req.write(data.toString());
-    req.end(); */
   });
   return result;
 }
