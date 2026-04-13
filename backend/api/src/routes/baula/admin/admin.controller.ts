@@ -659,7 +659,7 @@ export async function crawlFN2Modules(
   const semester = checkSemester(req.params.semester);
   if (semester) {
     let startTime = Date.now();
-    let mhbs: string = "";
+    let mhbs: string[] = [];
     try {
       mhbs = await crawlFlexNow(semester);
     } catch (error) {
@@ -668,16 +668,19 @@ export async function crawlFN2Modules(
     }
     if(mhbs.length > 0) {
       try {
-      fs.writeFile(__dirname + 'export.xml', mhbs, (err) => {
-        if (err) throw err;
-        console.log('Die Datei wurde erfolgreich gespeichert!');
-      });
-      const result = await processFlexNowData(mhbs);
-      let difference = ((Date.now() - startTime) / 1000) | 0;
-      let minutes = (difference / 60) | 0;
-      let seconds = difference - minutes * 60;
-      result.push(`${minutes} Minutes and ${seconds} Seconds to process`);
-      res.status(200).json(result);
+        let result: string[] = []
+        let index = 0
+        for(let mhb of mhbs) {
+          index++;
+          console.log(`Process mhb number ${index}`)
+          result = result.concat(await processFlexNowData(mhb))
+        }
+        console.log('Processings mhbs completed')
+        let difference = ((Date.now() - startTime) / 1000) | 0;
+        let minutes = (difference / 60) | 0;
+        let seconds = difference - minutes * 60;
+        result.push(`${minutes} Minutes and ${seconds} Seconds to process`);
+        res.status(200).json(result);
       } catch(error) {
         console.log(error)
         res.status(400)
@@ -1125,7 +1128,7 @@ export async function getReporting(
   }
 }
 
-async function crawlFlexNow(semester: string): Promise<string> {
+async function crawlFlexNow(semester: string): Promise<string[]> {
   if (semester.endsWith("s")) {
     semester = semester.replace("s", "1");
   } else {
@@ -1134,7 +1137,8 @@ async function crawlFlexNow(semester: string): Promise<string> {
   const url = process.env.FN_MHBS_URL + semester;
   //let result = fs.readFileSync(__dirname + '/export.xml').toString()
   
-  let result = new Promise<string>((resolve, reject) => {
+  
+  let result = new Promise<string[]>((resolve, reject) => {
     const data = new URLSearchParams();
     data.append("login", process.env.FN_LOGIN || "");
     data.append("password", process.env.FN_PW || "");
@@ -1147,7 +1151,7 @@ async function crawlFlexNow(semester: string): Promise<string> {
         "Content-Type": "application/x-www-form-urlencoded",
         "Content-Length": Buffer.byteLength(body),
         "User-Agent": "curl/7.88.1",
-        "Accept": "*/*"
+        "Accept": "*//*"
       }
     }, (res) => {
       let raw = "";
@@ -1155,7 +1159,8 @@ async function crawlFlexNow(semester: string): Promise<string> {
       res.on("data", chunk => raw += chunk);
       res.on("end", () => {
         if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
-          resolve(raw);
+          const mhbs = raw.match(/<Modulhandbuch [\s\S]*?<\/Modulhandbuch>/g)
+          resolve(mhbs ?? []);
         } else {
           reject(new Error(`Status ${res.statusCode}`));
         }
