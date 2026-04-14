@@ -39,6 +39,8 @@ create_required_files:
       - backend/api/environment
       - frontend/src/environments
       - .env
+    expire_in:
+      - 1 day
 
 build_backend:
   stage: build_backend
@@ -51,6 +53,8 @@ build_backend:
   artifacts:
     paths:
       - backend/api/dist
+    expire_in:
+      - 1 day
 
 build_docs:
   stage: build_docs
@@ -60,6 +64,8 @@ build_docs:
   artifacts:
     paths:
       - server/app/docs
+    expire_in:
+      - 1 day
 
 build_frontend:
   stage: build_frontend
@@ -71,6 +77,8 @@ build_frontend:
   artifacts:
     paths:
       - server/app/browser
+    expire_in:
+      - 1 day
 
 create_docker:
   stage: create_docker
