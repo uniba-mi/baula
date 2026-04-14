@@ -1,5 +1,7 @@
 services:
   server:
+    tmpfs:
+      - /var/run/apache2
     build:
       context: ./server/
       dockerfile: Dockerfile
