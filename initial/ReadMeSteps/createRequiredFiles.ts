@@ -22,7 +22,14 @@ SERVER_PORT_SSL=443 # ssl port on the server
 SERVER_PORT=80 # regular port on the server
 HOSTNAME=localhost # replace localhost by hostname (e.g. domain)
 HOST_URL=https://localhost # replace localhost by domain
+HOST_IP=123.456.789.101
+
 API_PORT=1234 # port where backend is served
+DOCS_PORT=4201
+
+# only for gitlab-runner/ CI deployment
+RUNNER_UID=999
+RUNNER_GID=987
     `;
 
     await createFile(filePath, fileNameInMessage, content);
