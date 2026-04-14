@@ -5,13 +5,14 @@ import { Observable } from 'rxjs';
 import { ModuleCourse } from '../../../../../../interfaces/module-course';
 import { ModuleCourse2CourseConnection } from '../../../../../../interfaces/connection';
 import { Course } from '../../../../../../interfaces/course';
+import { ImportLogMessage } from '../../../../../../interfaces/logs';
 
 export interface AdminDialogData {
   dialogTitle?: String;
   dialogContentId: String;
   academicDate?: AcademicDate;
   dateType?: DateType;
-  univisCrawl$?: Observable<string[]>;
+  univisCrawl$?: Observable<ImportLogMessage>;
   mCourse?: ModuleCourse;
   semester?: string;
   chair?: string;

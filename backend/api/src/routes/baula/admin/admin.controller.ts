@@ -38,6 +38,7 @@ import {
 } from "../../../database/mongo";
 import https from "https";
 import {
+  generateLogging,
   upsertDeparmtents,
   upsertModuleCourses,
   upsertModuleExams,
@@ -47,6 +48,7 @@ import {
   upsertPersons,
   upsertStudyprogrammes,
 } from "../../../shared/helpers/fn2mod-helper";
+import { MergedChangelog } from "../../../logs";
 
 const prisma = new PrismaClient();
 
@@ -668,19 +670,18 @@ export async function crawlFN2Modules(
     }
     if(mhbs.length > 0) {
       try {
-        let result: string[] = []
-        let index = 0
+        let changelogs: MergedChangelog[] = [];
         for(let mhb of mhbs) {
-          index++;
-          console.log(`Process mhb number ${index}`)
-          result = result.concat(await processFlexNowData(mhb))
+          changelogs.push(await processFlexNowData(mhb))
         }
-        console.log('Processings mhbs completed')
+        let mergedLogs = generateLogging(changelogs);
+
         let difference = ((Date.now() - startTime) / 1000) | 0;
         let minutes = (difference / 60) | 0;
         let seconds = difference - minutes * 60;
-        result.push(`${minutes} Minutes and ${seconds} Seconds to process`);
-        res.status(200).json(result);
+        
+        mergedLogs.logs.push(`${minutes} Minutes and ${seconds} Seconds to process`);
+        res.status(200).json(mergedLogs);
       } catch(error) {
         console.log(error)
         res.status(400)
@@ -1135,9 +1136,9 @@ async function crawlFlexNow(semester: string): Promise<string[]> {
     semester = semester.replace("w", "2");
   }
   const url = process.env.FN_MHBS_URL + semester;
-  //let result = fs.readFileSync(__dirname + '/export.xml').toString()
-  
-  
+  /* let result = fs.readFileSync(__dirname + '/export.xml').toString()
+  const mhbs = result.match(/<Modulhandbuch [\s\S]*?<\/Modulhandbuch>/g)
+  return mhbs ?? []; */
   let result = new Promise<string[]>((resolve, reject) => {
     const data = new URLSearchParams();
     data.append("login", process.env.FN_LOGIN || "");
@@ -1151,7 +1152,7 @@ async function crawlFlexNow(semester: string): Promise<string[]> {
         "Content-Type": "application/x-www-form-urlencoded",
         "Content-Length": Buffer.byteLength(body),
         "User-Agent": "curl/7.88.1",
-        "Accept": "*//*"
+        "Accept": "*/*"
       }
     }, (res) => {
       let raw = "";
@@ -1174,7 +1175,7 @@ async function crawlFlexNow(semester: string): Promise<string[]> {
   return result;
 }
 
-async function processFlexNowData(xml: string): Promise<string[]> {
+async function processFlexNowData(xml: string): Promise<MergedChangelog> {
   const dep = await transform(xml, depTemplate);
   const persons = await transform(xml, personTemplate);
   const sps = await transform(xml, spTemplate);
@@ -1191,81 +1192,73 @@ async function processFlexNowData(xml: string): Promise<string[]> {
   const modExams = await transform(xml, moduleExamTemplate);
   // module dependencies via own n:m relational table, currently not in use but available.
   const modDepend = await transform(xml, modDepTemplate);
+  let resultLog: MergedChangelog = {}
 
   // add or update departments in database
-  const depMessage = await upsertDeparmtents(dep);
+  resultLog.department = await upsertDeparmtents(dep);
 
   // add persons to database
-  const personsMessage = await upsertPersons(persons);
+  resultLog.persons = await upsertPersons(persons);
 
   // add sp to database
   const spsMessage = await upsertStudyprogrammes(sps);
+  resultLog.sps = spsMessage;
 
   // add module handbooks and beyond to database, only when adding sps not resulting in an error
-  if (spsMessage.startsWith("ERROR")) {
-    return [depMessage, personsMessage, spsMessage];
+  if (spsMessage.error) {
+    return resultLog;
   }
   const mhbsMessage = await upsertModuleHandbooks(mhbs);
+  resultLog.mhbs = mhbsMessage;
 
   // add module groups to database
   const mgsMessage = await upsertModuleGroups(mgs);
+  resultLog.mgs = mgsMessage;
 
   // add modules to database
   const modulesMessage = await upsertModules(modules);
+  resultLog.modules = modulesMessage
 
   // add module exams to database, only when adding modules not resulting in an error
-
-  if (modulesMessage.startsWith("ERROR")) {
-    return [
-      depMessage,
-      personsMessage,
-      spsMessage,
-      mhbsMessage,
-      mgsMessage,
-      modulesMessage,
-    ];
+  if (modulesMessage.error) {
+    return resultLog;
   }
-  const modExamMessage = await upsertModuleExams(modExams);
+  resultLog.modExams = await upsertModuleExams(modExams);
 
   // add modulecourses to database
-  const modCoursesMessage = await upsertModuleCourses(mc);
+  resultLog.modCourses = await upsertModuleCourses(mc);
 
   // add moduleHandbook2modulegroup to database, only when adding mhbs and mgs not resulting in an error
 
-  if (mhbsMessage.startsWith("ERROR") || mgsMessage.startsWith("ERROR")) {
-    return [
-      depMessage,
-      personsMessage,
-      spsMessage,
-      mhbsMessage,
-      mgsMessage,
-      modulesMessage,
-      modExamMessage,
-      modCoursesMessage,
-    ];
+  if (mhbsMessage.error || mgsMessage.error) {
+    return resultLog;
   }
 
   const resultSp2Mhb = await prisma.sp2Mhb.createMany({
     data: sp2mhb,
     skipDuplicates: true,
   });
+  resultLog.sp2mhb = { queried: sp2mhb.length, added: resultSp2Mhb.count, updated: 0, deleted: 0, error: false, detailLog: [] }
 
   const resultMhb2Mg = await prisma.mhb2Mg.createMany({
     data: mhb2mg,
     skipDuplicates: true,
   });
+  resultLog.mhb2mg = { queried: mhb2mg.length, added: resultMhb2Mg.count, updated: 0, deleted: 0, error: false, detailLog: [] }
 
   // add modulegroup2modulegroup to database, only when adding mgs not resulting in an error
   let resultMg2Mg = await prisma.mg2Mg.createMany({
     data: mg2mg,
     skipDuplicates: true,
   });
+  resultLog.mg2mg = { queried: mg2mg.length, added: resultMg2Mg.count, updated: 0, deleted: 0, error: false, detailLog: [] }
 
   // add modulegroup2module to database, only when adding mgs and modules not resulting in an error
   let resultMg2Mod = await prisma.mod2Mg.createMany({
     data: mg2mod,
     skipDuplicates: true,
   });
+  resultLog.mg2mod = { queried: mg2mod.length, added: resultMg2Mod.count, updated: 0, deleted: 0, error: false, detailLog: [] }
 
   // filter invalid values in m2mc connection
   for (let el of m2mc) {
@@ -1277,12 +1270,14 @@ async function processFlexNowData(xml: string): Promise<string[]> {
     data: m2mc,
     skipDuplicates: true,
   });
+  resultLog.mod2mc = { queried: m2mc.length, added: resultMod2Mc.count, updated: 0, deleted: 0, error: false, detailLog: [] }
 
   // module dependencies via own n:m relational table, currently not in use but available.
   const resultModDepend = await prisma.moduleDep.createMany({
     data: modDepend,
     skipDuplicates: true,
   });
+  resultLog.modDepend = { queried: modDepend.length, added: resultModDepend.count, updated: 0, deleted: 0, error: false, detailLog: [] }
 
   // add connection between persons and modulecourse from course starting
   // transform data, since multiple pIds are contained
@@ -1300,21 +1295,7 @@ async function processFlexNowData(xml: string): Promise<string[]> {
     data: person2ModCourse,
     skipDuplicates: true,
   });
-  return [
-    depMessage,
-    personsMessage,
-    spsMessage,
-    mhbsMessage,
-    mgsMessage,
-    modulesMessage,
-    modExamMessage,
-    modCoursesMessage,
-    `Studyprogramme2Modulehandbook: ${sp2mhb.length} queried - ${resultSp2Mhb.count} added`,
-    `Modulehandbook2Modulegroup: ${mhb2mg.length} queried - ${resultMhb2Mg.count} added`,
-    `Modulegroup2Modulegroup: ${mg2mg.length} queried - ${resultMg2Mg.count} added`,
-    `Modulegroup2Module: ${mg2mod.length} queried - ${resultMg2Mod.count} added`,
-    `Module2ModuleCourse: ${m2mc.length} queried - ${resultMod2Mc.count} added`,
-    `Person2ModuleCourse: ${person2ModCourse.length} queried - ${resultPer2Mc.count} added`,
-    `Module Dependencies: ${modDepend.length} queried - ${resultModDepend.count} added`,
-  ];
+  resultLog.per2mc = { queried: person2ModCourse.length, added: resultPer2Mc.count, updated: 0, deleted: 0, error: false, detailLog: [] }
+
+  return resultLog;
 }

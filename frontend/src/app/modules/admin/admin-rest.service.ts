@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/config.local';
 import { AcademicDateTemplate, AcademicDate, DateType } from '../../../../../interfaces/academic-date';
-import { Logmessage } from '../../../../../interfaces/logs';
+import { ImportLogMessage, Logmessage } from '../../../../../interfaces/logs';
 import { ModuleCourse2CourseConnection } from '../../../../../interfaces/connection';
 import { AdminReport } from './reporting';
 
@@ -25,8 +25,8 @@ export class AdminRestService {
 
   constructor(private http: HttpClient) { }
 
-  crawlFlexNow(semester: string): Observable<string[]> {
-    return this.http.get<string[]>(`${this.urlBase}/crawling/fnmhbs/${semester}`, httpOptions);
+  crawlFlexNow(semester: string): Observable<ImportLogMessage> {
+    return this.http.get<ImportLogMessage>(`${this.urlBase}/crawling/fnmhbs/${semester}`, httpOptions);
   };
 
   crawlUnivIS(semester: string): Observable<string[]> {

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ImportLogMessage } from '../../../../../../../interfaces/logs';
 
 @Component({
     selector: 'admin-univis-crawl-dialog',
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
     standalone: false
 })
 export class UnivisCrawlDialogComponent {
-  @Input() univisCrawl$: Observable<string[]>
+  @Input() univisCrawl$: Observable<ImportLogMessage>
 
   constructor() { }
 
