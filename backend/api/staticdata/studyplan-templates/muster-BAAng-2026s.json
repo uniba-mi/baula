@@ -1,0 +1,202 @@
+{
+  "name": "Musterplan B. Sc. Angewandte Informatik (SS26)",
+  "status": true,
+  "semesterPlans": [
+    {
+      "modules": [
+        "WiMa-B-001",
+        "WiMa-B-002",
+        "EESYS-SaD-B",
+        "MOBI-DBS-B",
+        "Inf-Ment-B"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2026s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 28,
+      "expanded": true
+    },
+    {
+      "modules": ["Inf-Einf-B", "Inf-DM-B", "AI-Einf-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39b63a74135e3561bff68"
+        },
+        {
+          "name": "Modul außerhalb WIAI",
+          "ects": 5,
+          "notes": "Anwendungskontext\nAngewandte Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39b84a74135e3561bff9d"
+        }
+      ],
+      "courses": [],
+      "semester": "2026w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 32,
+      "expanded": true
+    },
+    {
+      "modules": [
+        "KogSys-KI-B",
+        "Inf-GRABS-B",
+        "AI-AuD-B",
+        "SWT-FSE-B",
+        "MI-WAIAI-B"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2027s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["PSI-IntroSP-B", "PSI-EDS-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39b9da74135e3561bffd3"
+        },
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39baca74135e3561c000a"
+        },
+        {
+          "name": "Modul außerhalb WIAI",
+          "ects": 6,
+          "notes": "Anwendungskontext Angewandte Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39bcba74135e3561c0042"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39bd9a74135e3561c007b"
+        }
+      ],
+      "courses": [],
+      "semester": "2027w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": [],
+      "userGeneratedModules": [
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39beca74135e3561c00b5"
+        },
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39bf9a74135e3561c00f0"
+        },
+        {
+          "name": "Schlüsselkompetenzen",
+          "ects": 3,
+          "notes": "Wahlpflichtbereich",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39c09a74135e3561c012c"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39c1da74135e3561c0169"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39c29a74135e3561c01a7"
+        },
+        {
+          "name": "Modul außerhalb WIAI",
+          "ects": 6,
+          "notes": "Anwendungskontext Angewandte Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39c3ca74135e3561c01e6"
+        }
+      ],
+      "courses": [],
+      "semester": "2028s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["AI-Thesis-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39c59a74135e3561c0226"
+        },
+        {
+          "name": "Modul außerhalb WIAI",
+          "ects": 6,
+          "notes": "Anwendungskontext Angewandte Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39c6da74135e3561c0267"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich (Angewandte) Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d39c81a74135e3561c07e2"
+        }
+      ],
+      "courses": [],
+      "semester": "2028w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    }
+  ]
+}

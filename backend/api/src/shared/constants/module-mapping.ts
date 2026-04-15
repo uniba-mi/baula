@@ -507,4 +507,36 @@ export const moduleChanges: ModuleChangelog[] = [
         newModuleName: "Objektorientierte Programmierung mit Java",
         newModuleSemesterStart: "WS25/26"
     },
+    {
+        oldModuleAcronym: "BFC-B-01",
+        oldModuleName: "Einführung in das Banking und Finanzcontrolling",
+        oldModuleSemesterEnd: "SS25",
+        newModuleAcronym: "BFC-B-01",
+        newModuleName: "Grundlagen der Finanzierung",
+        newModuleSemesterStart: "WS25/26"
+    },
+    {
+        oldModuleAcronym: "BFC-M-01",
+        oldModuleName: "Financial Innovation",
+        oldModuleSemesterEnd: "SS25",
+        newModuleAcronym: "BFC-M-01",
+        newModuleName: "Kapitalmarkttheorie",
+        newModuleSemesterStart: "WS25/26"
+    },
+    {
+        oldModuleAcronym: "BFC-M-03",
+        oldModuleName: "Fixed Income Instruments",
+        oldModuleSemesterEnd: "SS25",
+        newModuleAcronym: "BFC-M-03",
+        newModuleName: "Options & Futures",
+        newModuleSemesterStart: "WS25/26"
+    },
+    {
+        oldModuleAcronym: "BFC-M-02",
+        oldModuleName: "International Finance",
+        oldModuleSemesterEnd: "WS25/26",
+        newModuleAcronym: "BFC-M-02",
+        newModuleName: "Fixed Income & International Finance",
+        newModuleSemesterStart: "SS26"
+    },
 ];

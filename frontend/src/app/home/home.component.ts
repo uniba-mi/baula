@@ -144,6 +144,7 @@ export class HomeComponent implements OnInit {
         } else if (
           user.authType === 'saml' &&
           this.isTimestampOlderThanAWeek(user.createdAt ?? new Date())
+          // TODO: check additionally for last bakule-survey confirmation and if it's older than 6 months open BaKuLe Survey again
         ) {
           // only opens bakule survey, when privacy dialog is not opened, user is not demo user and is created more than one week ago
           this.openBaKuLeSurveyDialog();
