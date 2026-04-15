@@ -21,12 +21,14 @@ cache:
 
 install_dependencies:
   stage: install_dependencies
+  dependencies: []
   script:
     - cd backend/api && npm install
     - cd ../../frontend && npm install
 
 create_required_files:
   stage: create_required_files
+  dependencies: []
   script:
     #- npm run buildInitial CREATE_CONFIG_AND_ENV CREATE_CERTS CREATE_TEMPLATES CREATE_LOCAL_USERS PROD_CREATE_ENV
     - COPY_PATH=/home/gitlab-runner/envFiles npm run buildInitial CREATE_CERTS PROD_COPY_FILES
