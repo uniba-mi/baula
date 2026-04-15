@@ -90,4 +90,3 @@ create_docker:
     - npm run buildInitial PROD_START_DOCKER
     - sleep 20
     - npm run buildInitial CHECK_ALL
-
