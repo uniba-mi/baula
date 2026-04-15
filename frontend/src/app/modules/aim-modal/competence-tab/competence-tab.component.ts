@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { Standard } from '../../bilapp/interfaces/standard';
 import { BilappRestService } from '../../bilapp/bilapp-rest.service';
 import { Observable } from 'rxjs';
-import { Competence } from '../../../../../../interfaces/competence';
+import { Competence } from '@interfaces/competence';
 import { map } from 'rxjs/operators';
-import { CompAim } from '../../../../../../interfaces/user';
+import { CompAim } from '@interfaces/user';
 
 @Component({
     selector: 'app-competence-tab',

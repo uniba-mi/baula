@@ -1,17 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { Module } from '../../../../interfaces/module';
-import { UserGeneratedModule } from '../../../../interfaces/user-generated-module';
-import { Semester } from '../../../../interfaces/semester';
-import { StudyPlan, StudyPlanTemplate } from '../../../../interfaces/study-plan';
-import { Status, User } from '../../../../interfaces/user';
+import { Module } from '@interfaces/module';
+import { UserGeneratedModule } from '@interfaces/user-generated-module';
+import { Semester } from '@interfaces/semester';
+import { StudyPlan, StudyPlanTemplate } from '@interfaces/study-plan';
+import { Status, User } from '@interfaces/user';
 import { Standard } from '../modules/bilapp/interfaces/standard';
-import { PathModule, SemesterStudyPath } from '../../../../interfaces/study-path';
-import { ExtendedModuleGroup } from '../../../../interfaces/module-group';
-import { AcademicDate } from '../../../../interfaces/academic-date';
-import { Course } from '../../../../interfaces/course';
-import { Job, Jobtemplate } from '../../../../interfaces/job';
+import { PathModule, SemesterStudyPath } from '@interfaces/study-path';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
+import { AcademicDate } from '@interfaces/academic-date';
+import { Course } from '@interfaces/course';
+import { Job, Jobtemplate } from '@interfaces/job';
 
 export interface DialogData {
   dialogTitle?: String; // heading

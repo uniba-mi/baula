@@ -7,8 +7,8 @@ import { AlertType } from 'src/app/shared/classes/alert';
 import { getModuleByAcronym } from 'src/app/selectors/module-overview.selectors';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
-import { Module } from '../../../../../interfaces/module';
+import { UserGeneratedModule } from '@interfaces/user-generated-module';
+import { Module } from '@interfaces/module';
 import { StudyPlanService } from './study-plan.service';
 
 @Injectable({

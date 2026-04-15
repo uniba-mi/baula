@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { Competence } from '../../../../../../interfaces/competence';
-import { ExpandedCourse, Course } from '../../../../../../interfaces/course';
+import { Competence } from '@interfaces/competence';
+import { ExpandedCourse, Course } from '@interfaces/course';
 
 export const setInitialBars = createAction(
     '[Chart] Set initial Bars',

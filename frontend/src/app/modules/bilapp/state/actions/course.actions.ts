@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createAction, props } from "@ngrx/store";
-import { ExpandedCourse, Course } from "../../../../../../../interfaces/course";
+import { ExpandedCourse, Course } from "@interfaces/course";
 
 export const loadCourses = createAction(
     '[Course] Load Courses for BilApp',

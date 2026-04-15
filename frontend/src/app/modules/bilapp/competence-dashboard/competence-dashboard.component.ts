@@ -5,7 +5,7 @@ import { State } from 'src/app/reducers';
 import { getUserAims } from 'src/app/selectors/user.selectors';
 import { loadCourses, loadSelectedCourses } from '../state/actions/course.actions';
 import { loadStandard } from '../state/actions/standard.actions';
-import { CompAim } from '../../../../../../interfaces/user';
+import { CompAim } from '@interfaces/user';
 import { MatDialog } from '@angular/material/dialog';
 import { WelcomeDialogComponent } from '../dialogs/welcome-dialog/welcome-dialog.component';
 import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';

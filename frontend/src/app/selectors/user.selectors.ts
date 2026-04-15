@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Semester } from '../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { State as UserState } from '../reducers/user.reducer';
-import { ModuleFeedback } from '../../../../interfaces/user';
+import { ModuleFeedback } from '@interfaces/user';
 
 export const getUserState = createFeatureSelector<UserState>('user');
 

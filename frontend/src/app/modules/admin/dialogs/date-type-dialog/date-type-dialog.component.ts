@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DateType } from '../../../../../../../interfaces/academic-date';
+import { DateType } from '@interfaces/academic-date';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({

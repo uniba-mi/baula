@@ -1,9 +1,9 @@
-import { StudyProgramme } from '../../../../interfaces/study-programme';
+import { StudyProgramme } from '@interfaces/study-programme';
 import { createReducer, on } from '@ngrx/store';
 import * as ModuleOverviewActions from '../actions/module-overview.actions';
-import { ModuleHandbook } from '../../../../interfaces/module-handbook';
-import { Module } from '../../../../interfaces/module';
-import { ModuleGroup } from '../../../../interfaces/module-group';
+import { ModuleHandbook } from '@interfaces/module-handbook';
+import { Module } from '@interfaces/module';
+import { ModuleGroup } from '@interfaces/module-group';
 import { ModuleHandbookActions, UnknownModulesActions, ModuleInteractionActions } from '../actions/module-overview.actions';
 
 export const moduleOverviewFeatureKey = 'module-overview';

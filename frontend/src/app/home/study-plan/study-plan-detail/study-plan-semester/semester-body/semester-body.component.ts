@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Module } from '../../../../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { ModService } from 'src/app/shared/services/module.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
@@ -21,18 +21,18 @@ import {
 } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
 import {
   UserGeneratedModule,
-} from '../../../../../../../../interfaces/user-generated-module';
+} from '@interfaces/user-generated-module';
 import {
   closeUserGeneratedModuleDialog,
   openUserGeneratedModuleDialog,
 } from 'src/app/actions/dialog.actions';
-import { User } from '../../../../../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import {
   PathModule,
   SemesterStudyPath,
   StudyPath,
-} from '../../../../../../../../interfaces/study-path';
-import { SemesterPlan, MetaSemester, ItemActionName } from '../../../../../../../../interfaces/semester-plan';
+} from '@interfaces/study-path';
+import { SemesterPlan, MetaSemester, ItemActionName } from '@interfaces/semester-plan';
 import {
   getSemesterList,
   getUser,
@@ -42,9 +42,9 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { ScreenSizeService } from 'src/app/shared/services/screen-size.service';
 import { StudyPathActions } from 'src/app/actions/user.actions';
-import { ExtendedModuleGroup } from '../../../../../../../../interfaces/module-group';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
 import { UnknownModulesActions } from 'src/app/actions/module-overview.actions';
-import { Semester } from '../../../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { getSemesterPlanIdBySemester } from 'src/app/selectors/study-planning.selectors';
 import { DragDropService } from 'src/app/shared/services/drag-drop.service';
 

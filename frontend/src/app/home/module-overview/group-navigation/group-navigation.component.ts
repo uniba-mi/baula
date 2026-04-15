@@ -10,20 +10,20 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { ModuleGroup } from '../../../../../../interfaces/module-group';
+import { ModuleGroup } from '@interfaces/module-group';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import {
   Option,
   SearchSettings,
-} from '../../../../../../interfaces/search';
-import { Module } from '../../../../../../interfaces/module';
+} from '@interfaces/search';
+import { Module } from '@interfaces/module';
 import { skipWhile, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { getHoveredModule } from 'src/app/selectors/module-overview.selectors';
 import { getUserStudyPath } from 'src/app/selectors/user.selectors';
-import { PathModule } from '../../../../../../interfaces/study-path';
+import { PathModule } from '@interfaces/study-path';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 
 @Component({

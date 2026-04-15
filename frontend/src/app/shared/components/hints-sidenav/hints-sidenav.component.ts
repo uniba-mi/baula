@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PlanningHints } from '../../../../../../interfaces/semester-plan';
+import { PlanningHints } from '@interfaces/semester-plan';
 
 @Component({
   selector: 'app-hints-sidenav',

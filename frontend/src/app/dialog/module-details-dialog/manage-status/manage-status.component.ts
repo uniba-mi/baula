@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
-import { Module } from '../../../../../../interfaces/module';
-import { StudyPlan } from '../../../../../../interfaces/study-plan';
+import { Module } from '@interfaces/module';
+import { StudyPlan } from '@interfaces/study-plan';
 import { Observable } from 'rxjs';
 import { getStudyPlans } from 'src/app/selectors/study-planning.selectors';
-import { StudyPath } from '../../../../../../interfaces/study-path';
+import { StudyPath } from '@interfaces/study-path';
 import { getUserStudyPath } from 'src/app/selectors/user.selectors';
-import { Semester } from '../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { ConfirmationDialogComponent, ConfirmationDialogData } from '../../confirmation-dialog/confirmation-dialog.component';
 import { ModulePlanningActions } from 'src/app/actions/study-planning.actions';
 import { MatDialog } from '@angular/material/dialog';

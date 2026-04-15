@@ -17,16 +17,16 @@ import {
   getModules,
 } from 'src/app/selectors/module-overview.selectors';
 import { State } from 'src/app/reducers';
-import { ModuleHandbook } from '../../../../../interfaces/module-handbook';
-import { Module } from '../../../../../interfaces/module';
+import { ModuleHandbook } from '@interfaces/module-handbook';
+import { Module } from '@interfaces/module';
 import {
   OptionGroup,
   Option,
   SearchSettings,
-} from '../../../../../interfaces/search';
+} from '@interfaces/search';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModService } from 'src/app/shared/services/module.service';
-import { ModuleGroup } from '../../../../../interfaces/module-group';
+import { ModuleGroup } from '@interfaces/module-group';
 import {
   trigger,
   state,

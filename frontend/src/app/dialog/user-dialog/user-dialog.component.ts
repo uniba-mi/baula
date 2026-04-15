@@ -1,17 +1,17 @@
 import { Component, Input, model } from '@angular/core';
-import { User } from '../../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import { Observable, take } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { config } from 'src/environments/config.local';
 import { RestService } from 'src/app/rest.service';
-import { PathCourse, PathModule } from '../../../../../interfaces/study-path';
-import { Semester } from '../../../../../interfaces/semester';
+import { PathCourse, PathModule } from '@interfaces/study-path';
+import { Semester } from '@interfaces/semester';
 import {
   FnCompletedModule,
   FnCompletedCourse,
   FnStudyprogramme,
-} from '../../../../../interfaces/fn-user';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
+} from '@interfaces/fn-user';
+import { StudyPlan } from '@interfaces/study-plan';
 import { UserUpdateService } from 'src/app/shared/services/user-update.service';
 import { MatDialogRef } from '@angular/material/dialog';
 

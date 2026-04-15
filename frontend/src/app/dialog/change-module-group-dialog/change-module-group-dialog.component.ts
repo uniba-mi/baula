@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ExtendedModuleGroup } from '../../../../../interfaces/module-group';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
 import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';

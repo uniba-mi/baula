@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getHintByKey, getUser } from 'src/app/selectors/user.selectors';
-import { Semester } from '../../../../../interfaces/semester';
-import { User } from '../../../../../interfaces/user';
-import { SemesterPlan, SemesterPlanTemplate } from '../../../../../interfaces/semester-plan';
+import { Semester } from '@interfaces/semester';
+import { User } from '@interfaces/user';
+import { SemesterPlan, SemesterPlanTemplate } from '@interfaces/semester-plan';
 import { ModulePlanningActions, SemesterPlanActions, StudyPlanActions } from 'src/app/actions/study-planning.actions';
-import { StudyPlan, StudyPlanTemplate } from '../../../../../interfaces/study-plan';
+import { StudyPlan, StudyPlanTemplate } from '@interfaces/study-plan';
 import { filter, from, Observable, take, tap } from 'rxjs';
-import { Module } from '../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { PlanningValidationService } from './planning-validation.service';
 import { SnackbarService } from './snackbar.service';
 import { AlertType } from '../classes/alert';

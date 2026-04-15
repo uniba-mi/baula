@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
-import { Logmessage } from '../../../../../../interfaces/logs';
+import { Logmessage } from '@interfaces/logs';
 import { Observable } from 'rxjs';
 
 @Component({

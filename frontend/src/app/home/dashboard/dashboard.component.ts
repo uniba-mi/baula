@@ -7,7 +7,7 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs';
-import { ChartVisibility, User } from '../../../../../interfaces/user';
+import { ChartVisibility, User } from '@interfaces/user';
 import { Store } from '@ngrx/store';
 import {
   getDashboardSettings,
@@ -19,8 +19,8 @@ import {
 import {
   SemesterStudyPath,
   StudyPath,
-} from '../../../../../interfaces/study-path';
-import { Semester } from '../../../../../interfaces/semester';
+} from '@interfaces/study-path';
+import { Semester } from '@interfaces/semester';
 import {
   getActiveStudyPlan,
   getPlanCourses,
@@ -28,18 +28,18 @@ import {
   getShowFinishSemesterInfo,
   getStudyPlans,
 } from 'src/app/selectors/study-planning.selectors';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
-import { ModuleGroup } from '../../../../../interfaces/module-group';
+import { StudyPlan } from '@interfaces/study-plan';
+import { ModuleGroup } from '@interfaces/module-group';
 import { getFirstLevelModuleGroups } from 'src/app/selectors/module-overview.selectors';
 import { combineLatest } from 'rxjs';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
 import { DashboardActions } from 'src/app/actions/user.actions';
-import { AcademicDate } from '../../../../../interfaces/academic-date';
+import { AcademicDate } from '@interfaces/academic-date';
 import { RestService } from 'src/app/rest.service';
 import {
   PlanCourse,
   SemesterPlan,
-} from '../../../../../interfaces/semester-plan';
+} from '@interfaces/semester-plan';
 import { chartMetadata } from 'src/app/shared/constants/chart-metadata';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { MatTooltip } from '@angular/material/tooltip';

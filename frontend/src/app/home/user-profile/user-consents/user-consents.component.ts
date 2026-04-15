@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, take } from 'rxjs';
-import { Consent, ConsentType } from '../../../../../../interfaces/user';
+import { Consent, ConsentType } from '@interfaces/user';
 import { getLastConsentByType } from 'src/app/selectors/user.selectors';
 import { Store } from '@ngrx/store';
 import { ConfirmationDialogComponent, ConfirmationDialogData } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/rest.service';
 import { Observable, take } from 'rxjs';
-import { AcademicDate } from '../../../../../../interfaces/academic-date';
+import { AcademicDate } from '@interfaces/academic-date';
 import { Store } from '@ngrx/store';
 import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
 

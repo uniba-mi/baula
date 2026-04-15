@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { LongTermEvaluation } from '../../../../../interfaces/long-term-evaluation';
+import { LongTermEvaluation } from '@interfaces/long-term-evaluation';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/config.local';
 

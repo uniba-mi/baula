@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SimilarityService } from '../../services/similarity.service';
 import { Observable, take } from 'rxjs';
-import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
 
 @Component({
     selector: 'app-module-group-wizard',

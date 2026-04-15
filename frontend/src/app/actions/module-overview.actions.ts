@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Module } from '../../../../interfaces/module';
-import { ModuleGroup } from '../../../../interfaces/module-group';
-import { ModuleHandbook } from '../../../../interfaces/module-handbook';
-import { StudyProgramme } from '../../../../interfaces/study-programme';
+import { Module } from '@interfaces/module';
+import { ModuleGroup } from '@interfaces/module-group';
+import { ModuleHandbook } from '@interfaces/module-handbook';
+import { StudyProgramme } from '@interfaces/study-programme';
 
 export const ModuleInteractionActions = createActionGroup({
     source: 'Module Interaction',

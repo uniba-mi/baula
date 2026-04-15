@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CourseList } from 'src/app/modules/bilapp/interfaces/course-list';
 import { State } from 'src/app/reducers';
-import { Course } from '../../../../../../../../../interfaces/course';
+import { Course } from '@interfaces/course';
 
 interface ShortModule {
   id: string,

@@ -17,7 +17,7 @@ import {
   JobActions,
 } from '../actions/user.actions';
 import { Router } from '@angular/router';
-import { User } from '../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import { getStudyPlans } from '../selectors/study-planning.selectors';
 import { Store } from '@ngrx/store';
 import { SemesterPlanActions } from '../actions/study-planning.actions';

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as EvaluationActions from '../actions/evaluation.actions';
-import { Organisation } from '../../../../interfaces/evaluation';
+import { Organisation } from '@interfaces/evaluation';
 
 export const evaluationFeatureKey = 'evaluation';
 

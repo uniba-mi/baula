@@ -5,7 +5,7 @@ import {
   SemesterPlanActions,
   StudyPlanActions,
 } from 'src/app/actions/study-planning.actions';
-import { User } from '../../../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import {
   getSemesterList,
   getUser,
@@ -17,13 +17,13 @@ import {
   PathModule,
   SemesterStudyPath,
   StudyPath,
-} from '../../../../../../interfaces/study-path';
+} from '@interfaces/study-path';
 import {
   SemesterPlan,
   MetaSemester,
   PlanningHints,
-} from '../../../../../../interfaces/semester-plan';
-import { Semester } from '../../../../../../interfaces/semester';
+} from '@interfaces/semester-plan';
+import { Semester } from '@interfaces/semester';
 import {
   ConfirmationDialogData,
   ConfirmationDialogComponent,
@@ -47,10 +47,10 @@ import {
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
-import { UserGeneratedModule } from '../../../../../../interfaces/user-generated-module';
+import { UserGeneratedModule } from '@interfaces/user-generated-module';
 import { getModuleByAcronym, getOldModuleByAcronym } from 'src/app/selectors/module-overview.selectors';
 import { StudyPathActions, UserActions } from 'src/app/actions/user.actions';
-import { StudyPlan } from '../../../../../../interfaces/study-plan';
+import { StudyPlan } from '@interfaces/study-plan';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { ScreenSizeService } from 'src/app/shared/services/screen-size.service';
 import { getCloseDialogMode } from 'src/app/selectors/dialog.selectors';

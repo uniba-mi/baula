@@ -1,22 +1,22 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { OptionGroup, Option, SearchSettings } from '../../../../../../interfaces/search';
+import { OptionGroup, Option, SearchSettings } from '@interfaces/search';
 import { RecsHelperService } from '../recs-helper.service';
 import { Store } from '@ngrx/store';
 import { getJobs } from 'src/app/selectors/user.selectors';
-import { PathModule } from '../../../../../../interfaces/study-path';
+import { PathModule } from '@interfaces/study-path';
 import { Observable, take, tap } from 'rxjs';
-import { Module } from '../../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { RecsRestService } from '../recs-rest.service';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FavoriteModulesActions } from 'src/app/actions/user.actions';
 import { ScreenSizeService } from 'src/app/shared/services/screen-size.service';
-import { ModuleWithMetadata } from '../../../../../../interfaces/recommendation';
-import { ExtendedJob, Job } from '../../../../../../interfaces/job';
-import { Topic } from '../../../../../../interfaces/topic';
+import { ModuleWithMetadata } from '@interfaces/recommendation';
+import { ExtendedJob, Job } from '@interfaces/job';
+import { Topic } from '@interfaces/topic';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
-import { User } from '../../../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import { RecsTabService } from '../recs-tab.service';
 
 @Component({

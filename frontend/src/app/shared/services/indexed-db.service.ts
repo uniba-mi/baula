@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { openDB, IDBPDatabase } from 'idb';
 import { RestService } from 'src/app/rest.service';
 import { firstValueFrom } from 'rxjs';
-import { Course } from '../../../../../interfaces/course';
-import { SearchSettings } from '../../../../../interfaces/search';
+import { Course } from '@interfaces/course';
+import { SearchSettings } from '@interfaces/search';
 
 interface IndexedDB {
   courses: Course[];

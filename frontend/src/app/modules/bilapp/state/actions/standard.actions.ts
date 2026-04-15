@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Standard } from '../../interfaces/standard';
-import { Competence } from '../../../../../../../interfaces/competence';
+import { Competence } from '@interfaces/competence';
 
 export const loadStandard = createAction(
   '[Standard] Load Standard',

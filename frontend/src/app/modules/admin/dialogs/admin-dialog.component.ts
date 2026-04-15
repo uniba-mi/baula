@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { AcademicDate, DateType } from '../../../../../../interfaces/academic-date';
+import { AcademicDate, DateType } from '@interfaces/academic-date';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { ModuleCourse } from '../../../../../../interfaces/module-course';
-import { ModuleCourse2CourseConnection } from '../../../../../../interfaces/connection';
-import { Course } from '../../../../../../interfaces/course';
-import { ImportLogMessage } from '../../../../../../interfaces/logs';
+import { ModuleCourse } from '@interfaces/module-course';
+import { ModuleCourse2CourseConnection } from '@interfaces/connection';
+import { Course } from '@interfaces/course';
+import { ImportLogMessage } from '@interfaces/logs';
 
 export interface AdminDialogData {
   dialogTitle?: String;

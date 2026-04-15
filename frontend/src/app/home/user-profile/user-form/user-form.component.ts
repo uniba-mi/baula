@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { User } from '../../../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import {
   FormBuilder,
   FormControl,
@@ -14,9 +14,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable, catchError, firstValueFrom, map, of, take } from 'rxjs';
-import { Semester } from '../../../../../../interfaces/semester';
-import { StudyProgramme } from '../../../../../../interfaces/study-programme';
-import { ModuleHandbook } from '../../../../../../interfaces/module-handbook';
+import { Semester } from '@interfaces/semester';
+import { StudyProgramme } from '@interfaces/study-programme';
+import { ModuleHandbook } from '@interfaces/module-handbook';
 import { RestService } from 'src/app/rest.service';
 import { Store } from '@ngrx/store';
 import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';

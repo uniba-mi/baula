@@ -1,9 +1,9 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { DialogComponent } from '../../dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Module } from '../../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ModuleFeedback } from '../../../../../../interfaces/user';
+import { ModuleFeedback } from '@interfaces/user';
 import { Store } from '@ngrx/store';
 import { UserActions } from 'src/app/actions/user.actions';
 

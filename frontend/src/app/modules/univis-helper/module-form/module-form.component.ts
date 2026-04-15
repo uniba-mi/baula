@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ModuleAcronym } from '../../../../../../interfaces/module';
+import { ModuleAcronym } from '@interfaces/module';
 import { PublicRestService } from '../public-rest.service';
 
 @Component({

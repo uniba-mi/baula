@@ -14,7 +14,7 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AlertType } from '../shared/classes/alert';
-import { UserGeneratedModule } from '../../../../interfaces/user-generated-module';
+import { UserGeneratedModule } from '@interfaces/user-generated-module';
 import {
   ModulePlanningActions,
   UserGeneratedModuleActions,
@@ -25,7 +25,7 @@ import {
 } from '../actions/study-planning.actions';
 import { Store } from '@ngrx/store';
 import { getUserStudyPath } from '../selectors/user.selectors';
-import { PathModule } from '../../../../interfaces/study-path';
+import { PathModule } from '@interfaces/study-path';
 import { StudyPathActions } from '../actions/user.actions';
 
 @Injectable()

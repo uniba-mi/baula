@@ -5,9 +5,9 @@ import { MetaCardData, Report, ReportCard } from '../../reporting/reporting';
 import { ReportingBaseComponent } from '../../reporting/reporting-base.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { Semester } from '../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { MatMenuModule } from '@angular/material/menu';
-import { LongTermEvaluation } from '../../../../../../interfaces/long-term-evaluation';
+import { LongTermEvaluation } from '@interfaces/long-term-evaluation';
 import { SharedModule } from '../../shared/shared.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 

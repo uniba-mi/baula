@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { Competence, Fulfillment } from '../../../../../../../interfaces/competence';
+import { Competence, Fulfillment } from '@interfaces/competence';
 import { Bar } from '../../interfaces/chart';
 import * as d3 from 'd3';
 import { Store } from '@ngrx/store';
@@ -7,7 +7,7 @@ import { State } from 'src/app/reducers';
 import { deselectBar } from '../../state/chart.actions';
 import {
   ExpandedCourse
-} from '../../../../../../../interfaces/course';
+} from '@interfaces/course';
 
 @Component({
     selector: 'app-donut-chart',

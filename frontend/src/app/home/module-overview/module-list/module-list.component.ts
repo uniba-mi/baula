@@ -6,12 +6,12 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
-import { Module } from '../../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import {
   Option,
   SearchSettings,
-} from '../../../../../../interfaces/search';
-import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
+} from '@interfaces/search';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
 import { Observable } from 'rxjs';
 import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
 import { State } from 'src/app/reducers';

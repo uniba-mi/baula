@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Course } from '../../../../../interfaces/course';
+import { Course } from '@interfaces/course';
 
 @Component({
     selector: 'app-resolve-collision-dialog',

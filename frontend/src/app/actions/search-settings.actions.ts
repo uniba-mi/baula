@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
-import { SearchSettings, Option } from "../../../../interfaces/search";
+import { SearchSettings, Option } from "@interfaces/search";
 
 export const SearchActions = createActionGroup({
     source: 'Search',

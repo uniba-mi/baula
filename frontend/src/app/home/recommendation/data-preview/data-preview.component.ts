@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { combineLatest, map, Observable } from 'rxjs';
 import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.service';
 import { getJobs, getUserTopics, getExcludedModulesAcronyms } from 'src/app/selectors/user.selectors';
-import { ExtendedJob } from '../../../../../../interfaces/job';
-import { Topic } from '../../../../../../interfaces/topic';
+import { ExtendedJob } from '@interfaces/job';
+import { Topic } from '@interfaces/topic';
 import { ModService } from 'src/app/shared/services/module.service';
 
 @Component({

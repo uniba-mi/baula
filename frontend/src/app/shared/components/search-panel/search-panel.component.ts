@@ -11,7 +11,7 @@ import {
   Option,
   OptionGroup,
   SearchSettings,
-} from '../../../../../../interfaces/search';
+} from '@interfaces/search';
 import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,

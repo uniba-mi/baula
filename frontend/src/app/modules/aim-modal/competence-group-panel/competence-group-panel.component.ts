@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Competence } from '../../../../../../interfaces/competence';
+import { Competence } from '@interfaces/competence';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { CompAim } from '../../../../../../interfaces/user';
+import { CompAim } from '@interfaces/user';
 import { State } from 'src/app/reducers';
 import { Store } from '@ngrx/store';
 import { getUserAims } from 'src/app/selectors/user.selectors';

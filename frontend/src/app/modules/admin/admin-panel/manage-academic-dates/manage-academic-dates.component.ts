@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AdminRestService } from '../../admin-rest.service';
 import { Observable, Subscription } from 'rxjs';
-import { AcademicDate, AcademicDateTemplate } from '../../../../../../../interfaces/academic-date';
+import { AcademicDate, AcademicDateTemplate } from '@interfaces/academic-date';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';

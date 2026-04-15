@@ -5,8 +5,8 @@ import { concatMap, filter, map, Observable, of, Subject, take, takeUntil, tap }
 import { UserActions } from 'src/app/actions/user.actions';
 import { ConfirmationDialogComponent, ConfirmationDialogData } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
 import { DialogComponent, DialogData } from 'src/app/dialog/dialog.component';
-import { Semester } from '../../../../../interfaces/semester';
-import { Consent } from '../../../../../interfaces/user';
+import { Semester } from '@interfaces/semester';
+import { Consent } from '@interfaces/user';
 import { getLastConsentByType } from 'src/app/selectors/user.selectors';
 
 @Injectable({

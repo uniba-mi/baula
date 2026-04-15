@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ExtendedJob, Job, Jobtemplate } from '../../../../../interfaces/job';
+import { ExtendedJob, Job, Jobtemplate } from '@interfaces/job';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable, take } from 'rxjs';

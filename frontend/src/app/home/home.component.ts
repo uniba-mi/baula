@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { Semester } from '../../../../interfaces/semester';
-import { User } from '../../../../interfaces/user';
+import { Semester } from '@interfaces/semester';
+import { User } from '@interfaces/user';
 import {
   StudyPlanActions,
   TimetableActions,
@@ -20,15 +20,15 @@ import {
   getStudyPlans,
 } from '../selectors/study-planning.selectors';
 import { filter, take, takeWhile, tap } from 'rxjs/operators';
-import { StudyPlan } from '../../../../interfaces/study-plan';
+import { StudyPlan } from '@interfaces/study-plan';
 import { UserUpdateService } from '../shared/services/user-update.service';
 import { getModules } from '../selectors/module-overview.selectors';
 import { RestService } from '../rest.service';
-import { SemesterPlanTemplate } from '../../../../interfaces/semester-plan';
+import { SemesterPlanTemplate } from '@interfaces/semester-plan';
 import { IndexedDbService } from '../shared/services/indexed-db.service';
 import { Router } from '@angular/router';
 import { SurveyComponent } from '../modules/long-term-evaluation/survey/survey.component';
-import { LongTermEvaluation } from '../../../../interfaces/long-term-evaluation';
+import { LongTermEvaluation } from '@interfaces/long-term-evaluation';
 import { StudyPlanService } from '../shared/services/study-plan.service';
 
 @Component({

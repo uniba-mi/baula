@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import {
   StudyPath,
   SemesterStudyPath,
-} from '../../../../../interfaces/study-path';
-import { Semester } from '../../../../../interfaces/semester';
-import { MStudyProgramme } from '../../../../../interfaces/user';
-import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
+} from '@interfaces/study-path';
+import { Semester } from '@interfaces/semester';
+import { MStudyProgramme } from '@interfaces/user';
+import { UserGeneratedModule } from '@interfaces/user-generated-module';
 import { Store } from '@ngrx/store';
 import { getModuleById } from 'src/app/selectors/module-overview.selectors';
 import { filter, map, take } from 'rxjs/operators';
 import { RestService } from 'src/app/rest.service';
 import { combineLatest, firstValueFrom, Observable, of } from 'rxjs';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
+import { StudyPlan } from '@interfaces/study-plan';
 import { EventInput } from '@fullcalendar/core';
-import { AcademicDate } from '../../../../../interfaces/academic-date';
-import { Course, Term } from '../../../../../interfaces/course';
+import { AcademicDate } from '@interfaces/academic-date';
+import { Course, Term } from '@interfaces/course';
 import { RRule, Weekday } from 'rrule';
 import { getSemesterPlansOfActiveStudyPlan } from 'src/app/selectors/study-planning.selectors';
 

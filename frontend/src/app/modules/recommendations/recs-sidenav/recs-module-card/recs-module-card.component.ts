@@ -1,21 +1,21 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges, OnChanges, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Module } from '../../../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { EMPTY, map, Observable, switchMap, take, tap } from 'rxjs';
 import { ModService } from 'src/app/shared/services/module.service';
-import { StudyPath } from '../../../../../../../interfaces/study-path';
+import { StudyPath } from '@interfaces/study-path';
 import { Store } from '@ngrx/store';
 import { getFavouriteModuleAcronyms, getExcludedModulesAcronyms, getSemesterList, getUser, getUserStudyPath } from 'src/app/selectors/user.selectors';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
-import { Semester } from '../../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { getActiveStudyPlanId, getSemesterPlanIdBySemester } from 'src/app/selectors/study-planning.selectors';
 import { ExcludedModuleActions } from 'src/app/actions/user.actions';
 import { ListType } from '../../interfaces/list-types';
-import { User } from '../../../../../../../interfaces/user';
-import { Job } from '../../../../../../../interfaces/job';
-import { ModuleWithMetadata, Source } from '../../../../../../../interfaces/recommendation';
-import { Topic } from '../../../../../../../interfaces/topic';
+import { User } from '@interfaces/user';
+import { Job } from '@interfaces/job';
+import { ModuleWithMetadata, Source } from '@interfaces/recommendation';
+import { Topic } from '@interfaces/topic';
 
 @Component({
   selector: 'app-recs-module-card',

@@ -3,12 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { AdminRestService } from '../admin-rest.service';
 import { AdminDialogComponent } from '../dialogs/admin-dialog.component';
 import { forkJoin, map, Observable, switchMap, shareReplay } from 'rxjs';
-import { Module } from '../../../../../../interfaces/module';
-import { Semester } from '../../../../../../interfaces/semester';
+import { Module } from '@interfaces/module';
+import { Semester } from '@interfaces/semester';
 import { Store } from '@ngrx/store';
 import { getModules } from 'src/app/selectors/module-overview.selectors';
-import { ModuleCourse2CourseConnection } from '../../../../../../interfaces/connection';
-import { Course } from '../../../../../../interfaces/course';
+import { ModuleCourse2CourseConnection } from '@interfaces/connection';
+import { Course } from '@interfaces/course';
 import { RestService } from 'src/app/rest.service';
 
 @Component({

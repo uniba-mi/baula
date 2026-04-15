@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { SearchSettings } from '../../../../interfaces/search';
+import { SearchSettings } from '@interfaces/search';
 import { SearchActions } from '../actions/search-settings.actions';
 
 export const searchSettingsFeatureKey = 'search-settings';

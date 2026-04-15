@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable, firstValueFrom } from 'rxjs';
-import { Competence, Fulfillment } from '../../../../../../interfaces/competence';
+import { Competence, Fulfillment } from '@interfaces/competence';
 import { Standard } from '../../bilapp/interfaces/standard';
 import { CompetenceFormData } from '../interfaces/form-data';
 import { PublicRestService } from '../public-rest.service';

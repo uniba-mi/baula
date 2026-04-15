@@ -13,9 +13,9 @@ import { getSelectedSemesterPlanSemesterById } from 'src/app/selectors/study-pla
 import { AlertType } from 'src/app/shared/classes/alert';
 import { PlanningValidationService } from 'src/app/shared/services/planning-validation.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { Module } from '../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
-import { PathModule } from '../../../../../interfaces/study-path';
+import { PathModule } from '@interfaces/study-path';
 import { ModService } from 'src/app/shared/services/module.service';
 
 @Component({

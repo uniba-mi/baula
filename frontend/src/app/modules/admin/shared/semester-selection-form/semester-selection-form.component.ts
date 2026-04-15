@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Semester } from '../../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 
 @Component({
   selector: 'admin-semester-selection-form',

@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { Module } from '../../../interfaces/module';
-import { Course } from '../../../interfaces/course';
-import { StudyProgramme } from '../../../interfaces/study-programme';
-import { ModuleHandbook } from '../../../interfaces/module-handbook';
-import { StudyPlan, StudyPlanTemplate } from '../../../interfaces/study-plan';
+import { Module } from '@interfaces/module';
+import { Course } from '@interfaces/course';
+import { StudyProgramme } from '@interfaces/study-programme';
+import { ModuleHandbook } from '@interfaces/module-handbook';
+import { StudyPlan, StudyPlanTemplate } from '@interfaces/study-plan';
 import {
   UserGeneratedModule,
   UserGeneratedModuleTemplate,
-} from '../../../interfaces/user-generated-module';
-import { StudyPath, PathModule } from '../../../interfaces/study-path';
+} from '@interfaces/user-generated-module';
+import { StudyPath, PathModule } from '@interfaces/study-path';
 import {
   ChartVisibility,
   CompAim,
@@ -19,16 +19,16 @@ import {
   User,
   ConsentType,
   ModuleFeedback,
-} from '../../../interfaces/user';
+} from '@interfaces/user';
 import {
   PlanCourse,
   SemesterPlan,
   SemesterPlanTemplate,
   TimetableSettings,
-} from '../../../interfaces/semester-plan';
+} from '@interfaces/semester-plan';
 import { config } from 'src/environments/config.local';
-import { AcademicDate, DateType } from '../../../interfaces/academic-date';
-import { FnUser } from '../../../interfaces/fn-user';
+import { AcademicDate, DateType } from '@interfaces/academic-date';
+import { FnUser } from '@interfaces/fn-user';
 
 const httpOptions = {
   headers: new HttpHeaders({

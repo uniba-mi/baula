@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CompAim, User } from '../../../../../../interfaces/user';
+import { CompAim, User } from '@interfaces/user';
 import { Standard } from '../../bilapp/interfaces/standard';
 import { State } from 'src/app/reducers';
 import { Store } from '@ngrx/store';

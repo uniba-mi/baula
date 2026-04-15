@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { filter, Observable } from 'rxjs';
-import { User } from '../../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { getUser } from 'src/app/selectors/user.selectors';

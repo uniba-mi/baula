@@ -16,7 +16,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import deLocale from '@fullcalendar/core/locales/de';
 import listPlugin from '@fullcalendar/list';
-import { Course } from '../../../../../../interfaces/course';
+import { Course } from '@interfaces/course';
 import {
   Observable,
   Subject,
@@ -31,14 +31,14 @@ import {
 } from 'rxjs';
 import { RestService } from 'src/app/rest.service';
 import rrulePlugin from '@fullcalendar/rrule';
-import { AcademicDate } from '../../../../../../interfaces/academic-date';
+import { AcademicDate } from '@interfaces/academic-date';
 import { MatDialog } from '@angular/material/dialog';
 import {
   DeletedCourse,
   PlanCourse,
   PlanningHints,
   SemesterPlan,
-} from '../../../../../../interfaces/semester-plan';
+} from '@interfaces/semester-plan';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { FullCalendarComponent as FullCalendar } from '@fullcalendar/angular';

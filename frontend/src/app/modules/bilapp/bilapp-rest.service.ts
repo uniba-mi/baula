@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ExpandedCourse, Course } from '../../../../../interfaces/course';
-import { Competence } from '../../../../../interfaces/competence';
+import { ExpandedCourse, Course } from '@interfaces/course';
+import { Competence } from '@interfaces/competence';
 import { Standard } from './interfaces/standard';
 import { config } from 'src/environments/config.local';
 

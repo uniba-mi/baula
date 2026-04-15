@@ -7,10 +7,10 @@ import { getNewModules } from 'src/app/selectors/module-overview.selectors';
 import { getFavouriteModuleAcronyms, getExcludedModulesAcronyms } from 'src/app/selectors/user.selectors';
 import { RecsRestService } from './recs-rest.service';
 import { RecsHelperService } from './recs-helper.service';
-import { Module } from '../../../../../interfaces/module';
-import { ModuleWithMetadata } from '../../../../../interfaces/recommendation';
-import { Topic } from '../../../../../interfaces/topic';
-import { ExtendedJob } from '../../../../../interfaces/job';
+import { Module } from '@interfaces/module';
+import { ModuleWithMetadata } from '@interfaces/recommendation';
+import { Topic } from '@interfaces/topic';
+import { ExtendedJob } from '@interfaces/job';
 
 @Injectable({
   providedIn: 'root'

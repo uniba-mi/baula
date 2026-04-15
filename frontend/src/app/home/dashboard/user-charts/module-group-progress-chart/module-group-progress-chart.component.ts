@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { Module } from '../../../../../../../interfaces/module';
-import { ModuleGroup } from '../../../../../../../interfaces/module-group';
-import { StudyPath } from '../../../../../../../interfaces/study-path';
+import { Module } from '@interfaces/module';
+import { ModuleGroup } from '@interfaces/module-group';
+import { StudyPath } from '@interfaces/study-path';
 import { ChartConfiguration } from 'chart.js';
 
 @Component({

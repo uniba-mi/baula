@@ -1,8 +1,8 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Competence } from '../../../../../interfaces/competence';
-import { ModuleAcronym } from '../../../../../interfaces/module';
+import { Competence } from '@interfaces/competence';
+import { ModuleAcronym } from '@interfaces/module';
 import { Standard } from '../bilapp/interfaces/standard';
 import { BilAppCourseShort, BilAppCourse } from './interfaces/bilapp';
 import { config } from 'src/environments/config.local';

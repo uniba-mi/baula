@@ -1,25 +1,25 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getModuleByAcronym, getModules, getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
-import { Exam, ExamAttempt, PathModule } from '../../../../../../interfaces/study-path'
+import { Exam, ExamAttempt, PathModule } from '@interfaces/study-path'
 import { StudyPathActions, UserActions } from 'src/app/actions/user.actions';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent, DialogData } from 'src/app/dialog/dialog.component';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
-import { Consent, User } from '../../../../../../interfaces/user';
+import { Consent, User } from '@interfaces/user';
 import { Observable, Subject, firstValueFrom, map, take, takeUntil, tap } from 'rxjs';
 import { getLastConsentByType, getSemesterList } from 'src/app/selectors/user.selectors';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
-import { Module } from '../../../../../../interfaces/module';
-import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
-import { UserGeneratedModuleTemplate } from '../../../../../../interfaces/user-generated-module';
-import { Semester } from '../../../../../../interfaces/semester';
+import { Module } from '@interfaces/module';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
+import { UserGeneratedModuleTemplate } from '@interfaces/user-generated-module';
+import { Semester } from '@interfaces/semester';
 import { ModulePlanningActions, UserGeneratedModuleActions } from 'src/app/actions/study-planning.actions';
-import { StudyPlan } from '../../../../../../interfaces/study-plan';
+import { StudyPlan } from '@interfaces/study-plan';
 import { getSemesterPlansOfActiveStudyPlan, getStudyPlans } from 'src/app/selectors/study-planning.selectors';
-import { SemesterPlan } from '../../../../../../interfaces/semester-plan';
+import { SemesterPlan } from '@interfaces/semester-plan';
 import { FlexnowService } from 'src/app/shared/services/flex-now.service';
 
 @Component({

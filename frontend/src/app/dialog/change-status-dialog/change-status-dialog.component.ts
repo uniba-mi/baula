@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges }
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
-import { Status } from '../../../../../interfaces/user';
+import { Status } from '@interfaces/user';
 import { Observable } from 'rxjs';
-import { Semester } from '../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { map, take } from 'rxjs/operators';
 import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
 

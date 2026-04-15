@@ -3,8 +3,8 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { State } from 'src/app/reducers';
-import { Competence } from '../../../../../../interfaces/competence';
-import { ExpandedCourse } from '../../../../../../interfaces/course';
+import { Competence } from '@interfaces/competence';
+import { ExpandedCourse } from '@interfaces/course';
 import { Bar } from '../interfaces/chart';
 import { getBars, getSelectedBar } from '../state/chart.selectors';
 

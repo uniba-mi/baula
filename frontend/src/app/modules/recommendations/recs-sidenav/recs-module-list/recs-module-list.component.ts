@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ListType } from '../../interfaces/list-types';
-import { Topic } from '../../../../../../../interfaces/topic';
-import { Job } from '../../../../../../../interfaces/job';
-import { ModuleWithMetadata } from '../../../../../../../interfaces/recommendation';
-import { Module } from '../../../../../../../interfaces/module';
+import { Topic } from '@interfaces/topic';
+import { Job } from '@interfaces/job';
+import { ModuleWithMetadata } from '@interfaces/recommendation';
+import { Module } from '@interfaces/module';
 
 @Component({
   selector: 'app-recs-module-list',

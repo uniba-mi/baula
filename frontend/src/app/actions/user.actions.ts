@@ -1,9 +1,9 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChartVisibility, CompAim, Hint, Consent, User, ConsentType, UserServer, ModuleFeedback } from '../../../../interfaces/user';
-import { StudyPath, PathModule } from '../../../../interfaces/study-path';
-import { TimetableSettings } from '../../../../interfaces/semester-plan';
-import { ExtendedJob, Jobtemplate } from '../../../../interfaces/job';
+import { ChartVisibility, CompAim, Hint, Consent, User, ConsentType, UserServer, ModuleFeedback } from '@interfaces/user';
+import { StudyPath, PathModule } from '@interfaces/study-path';
+import { TimetableSettings } from '@interfaces/semester-plan';
+import { ExtendedJob, Jobtemplate } from '@interfaces/job';
 
 export const UserActions = createActionGroup({
   source: 'User',

@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
-import { StudyPlan } from '../../../../interfaces/study-plan';
+import { StudyPlan } from '@interfaces/study-plan';
 import { ModulePlanningActions, UserGeneratedModuleActions, SemesterPlanActions, StudyPlanActions, CoursePlanningActions, TimetableActions, LoadingActions } from '../actions/study-planning.actions';
-import { PlanningHints } from '../../../../interfaces/semester-plan';
-import { Semester } from '../../../../interfaces/semester';
+import { PlanningHints } from '@interfaces/semester-plan';
+import { Semester } from '@interfaces/semester';
 
 export const studyPlanningFeatureKey = 'study-planning';
 

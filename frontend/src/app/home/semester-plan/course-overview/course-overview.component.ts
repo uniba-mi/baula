@@ -12,15 +12,15 @@ import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { UntypedFormControl } from '@angular/forms';
-import { Course } from '../../../../../../interfaces/course';
+import { Course } from '@interfaces/course';
 import {
   Option,
   SearchSettings,
-} from '../../../../../../interfaces/search';
+} from '@interfaces/search';
 import { takeUntil } from 'rxjs/operators';
 import { getModuleAcronyms } from 'src/app/selectors/module-overview.selectors';
-import { ModuleCourse } from '../../../../../../interfaces/module-course';
-import { PlanCourse, SemesterPlan } from '../../../../../../interfaces/semester-plan';
+import { ModuleCourse } from '@interfaces/module-course';
+import { PlanCourse, SemesterPlan } from '@interfaces/semester-plan';
 import { getLoadingState } from 'src/app/selectors/study-planning.selectors';
 import {
   LoadingActions,

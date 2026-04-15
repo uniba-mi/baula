@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
-import { DateType } from '../../../../../../../interfaces/academic-date';
+import { DateType } from '@interfaces/academic-date';
 import { AdminRestService } from '../../admin-rest.service';
 import { AdminDialogComponent } from '../../dialogs/admin-dialog.component';
 import { RestService } from 'src/app/rest.service';

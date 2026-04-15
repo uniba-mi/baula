@@ -17,7 +17,7 @@ import {
 import {
   Option,
   SearchSettings,
-} from '../../../../../../interfaces/search';
+} from '@interfaces/search';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { ActivatedRoute } from '@angular/router';

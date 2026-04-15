@@ -1,21 +1,21 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Module } from '../../../../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { combineLatest, concatMap, filter, Observable, of, Subject, take, takeUntil, takeWhile } from 'rxjs';
 import { getAllDistinctModules } from 'src/app/selectors/module-overview.selectors';
 import { getCloseDialogMode } from 'src/app/selectors/dialog.selectors';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
-import { SemesterPlan, MetaSemester } from '../../../../../../../../interfaces/semester-plan';
-import { Semester } from '../../../../../../../../interfaces/semester';
+import { SemesterPlan, MetaSemester } from '@interfaces/semester-plan';
+import { Semester } from '@interfaces/semester';
 import { SemesterPlanActions, UserGeneratedModuleActions } from 'src/app/actions/study-planning.actions';
-import { UserGeneratedModuleTemplate } from '../../../../../../../../interfaces/user-generated-module';
+import { UserGeneratedModuleTemplate } from '@interfaces/user-generated-module';
 import { StudyPathActions } from 'src/app/actions/user.actions';
-import { PathModule, SemesterStudyPath } from '../../../../../../../../interfaces/study-path';
+import { PathModule, SemesterStudyPath } from '@interfaces/study-path';
 import { getActiveStudyPlanId, getSelectedStudyPlanId } from 'src/app/selectors/study-planning.selectors';
 import { FlexnowService } from 'src/app/shared/services/flex-now.service';
 import { getLastConsentByType } from 'src/app/selectors/user.selectors';
-import { Consent } from '../../../../../../../../interfaces/user';
+import { Consent } from '@interfaces/user';
 import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
 
 @Component({

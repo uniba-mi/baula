@@ -1,18 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Module } from '../../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { Store } from '@ngrx/store';
-import { PathModule, StudyPath } from '../../../../../../interfaces/study-path';
+import { PathModule, StudyPath } from '@interfaces/study-path';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { getCloseDialogMode } from 'src/app/selectors/dialog.selectors';
-import { Status, User } from '../../../../../../interfaces/user';
+import { Status, User } from '@interfaces/user';
 import { Observable, Subject } from 'rxjs';
-import { Semester } from '../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { getUser } from 'src/app/selectors/user.selectors';
-import { StudyPlan } from '../../../../../../interfaces/study-plan';
+import { StudyPlan } from '@interfaces/study-plan';
 import { take, takeUntil } from 'rxjs/operators';
 import { StudyPathActions } from 'src/app/actions/user.actions';
-import { UserGeneratedModule } from '../../../../../../interfaces/user-generated-module';
+import { UserGeneratedModule } from '@interfaces/user-generated-module';
 import { ModService } from '../../services/module.service';
 
 @Component({

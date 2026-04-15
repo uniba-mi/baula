@@ -4,7 +4,7 @@ import { AdminReport } from '../reporting';
 import { map, Observable } from 'rxjs';
 import { ReportCard } from '../../reporting/reporting';
 import { Report } from '../../reporting/reporting';
-import { Semester } from '../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 
 @Component({
   selector: 'admin-reporting',

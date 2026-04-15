@@ -8,14 +8,14 @@ import {
 import cytoscape, { NodeSingular } from 'cytoscape';
 import dagre from 'cytoscape-dagre';
 import { style } from 'src/app/shared/classes/style';
-import { StudyPath } from '../../../../../../interfaces/study-path';
-import { SemesterPlan } from '../../../../../../interfaces/semester-plan';
+import { StudyPath } from '@interfaces/study-path';
+import { SemesterPlan } from '@interfaces/semester-plan';
 import {
   ModuleDetailsDependencyVisNodeSchema,
   ModuleStatusSchema,
-} from '../../../../../../interfaces/visualization-data';
+} from '@interfaces/visualization-data';
 import { ModService } from 'src/app/shared/services/module.service';
-import { Semester } from '../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 
 @Component({
   selector: 'app-dependency-graph',

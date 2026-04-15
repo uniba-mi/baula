@@ -21,7 +21,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ScreenSizeService } from 'src/app/shared/services/screen-size.service';
 import { Subscription, take } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { LongTermEvaluation } from '../../../../../../interfaces/long-term-evaluation';
+import { LongTermEvaluation } from '@interfaces/long-term-evaluation';
 import { LteRestService } from '../lte-rest.service';
 import { PrivacyStatementComponent } from '../privacy-statement/privacy-statement.component';
 import { MatTooltipModule } from '@angular/material/tooltip';

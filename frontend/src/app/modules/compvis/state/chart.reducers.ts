@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import { Bar, ChartSettings } from '../interfaces/chart';
 import * as ChartActions from './chart.actions';
-import { Competence } from '../../../../../../interfaces/competence';
-import { Course } from '../../../../../../interfaces/course';
-import { ModuleCourse } from '../../../../../../interfaces/module-course';
+import { Competence } from '@interfaces/competence';
+import { Course } from '@interfaces/course';
+import { ModuleCourse } from '@interfaces/module-course';
 
 export const chartFeatureKey = 'chart';
 

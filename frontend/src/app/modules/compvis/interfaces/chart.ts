@@ -1,5 +1,5 @@
-import { Course } from '../../../../../../interfaces/course';
-import { Competence } from '../../../../../../interfaces/competence';
+import { Course } from '@interfaces/course';
+import { Competence } from '@interfaces/competence';
 
 export interface ChartSettings {
     unit: string,

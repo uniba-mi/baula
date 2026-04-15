@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
-import { Course } from '../../../../../../../../interfaces/course';
+import { Course } from '@interfaces/course';
 import { Standard } from '../../../interfaces/standard';
 import { getCourses } from '../../../state/selectors/course.selectors';
 import { getSelectedStandard } from '../../../state/selectors/standard.selectors';

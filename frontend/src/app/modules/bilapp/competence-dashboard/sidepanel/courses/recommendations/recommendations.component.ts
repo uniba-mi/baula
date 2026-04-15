@@ -5,10 +5,10 @@ import { BilappRestService } from 'src/app/modules/bilapp/bilapp-rest.service';
 import { CourseList } from 'src/app/modules/bilapp/interfaces/course-list';
 import { getCompetenceGroups } from '../../../../state/selectors/standard.selectors';
 import { State } from 'src/app/reducers';
-import { Course } from '../../../../../../../../../interfaces/course';
+import { Course } from '@interfaces/course';
 import { Standard } from '../../../../interfaces/standard';
 import { loadCompetenceGroups } from '../../../../state/actions/standard.actions';
-import { Competence } from '../../../../../../../../../interfaces/competence';
+import { Competence } from '@interfaces/competence';
 import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
 
 @Component({

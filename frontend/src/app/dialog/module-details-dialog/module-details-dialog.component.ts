@@ -1,17 +1,17 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Module } from '../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog.component';
 import { getModuleFeedback, getUserStudyPath, isModuleInStudyPath } from 'src/app/selectors/user.selectors';
-import { ModuleFeedback } from '../../../../../interfaces/user';
+import { ModuleFeedback } from '@interfaces/user';
 import { Observable, Subject, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatTabGroup } from '@angular/material/tabs';
 import { getAllModules } from 'src/app/selectors/module-overview.selectors';
-import { StudyPath } from '../../../../../interfaces/study-path';
-import { SemesterPlan } from '../../../../../interfaces/semester-plan';
+import { StudyPath } from '@interfaces/study-path';
+import { SemesterPlan } from '@interfaces/semester-plan';
 import { getSemesterPlansOfActiveStudyPlan } from 'src/app/selectors/study-planning.selectors';
-import { ModuleDetailsDependencyVisNodeSchema } from '../../../../../interfaces/visualization-data';
+import { ModuleDetailsDependencyVisNodeSchema } from '@interfaces/visualization-data';
 import { AnalyticsService } from 'src/app/shared/services/analytics.service';
 
 @Component({

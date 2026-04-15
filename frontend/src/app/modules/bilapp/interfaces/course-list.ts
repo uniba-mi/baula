@@ -1,4 +1,4 @@
-import { Course } from "../../../../../../interfaces/course";
+import { Course } from "@interfaces/course";
 
 
 export class CourseList {

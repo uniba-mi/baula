@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PathModule, StudyPath } from '../../../../../../interfaces/study-path';
+import { PathModule, StudyPath } from '@interfaces/study-path';
 
 @Component({
     selector: 'app-grade-point-average',

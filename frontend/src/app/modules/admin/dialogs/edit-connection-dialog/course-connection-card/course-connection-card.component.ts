@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ModuleCourse } from '../../../../../../../../interfaces/module-course';
-import { Course } from '../../../../../../../../interfaces/course';
+import { ModuleCourse } from '@interfaces/module-course';
+import { Course } from '@interfaces/course';
 import { CourseService } from 'src/app/shared/services/course.service';
 
 @Component({

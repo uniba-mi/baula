@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { combineLatest, map, Observable, switchMap, take } from 'rxjs';
-import { ExtendedJob } from '../../../../../../interfaces/job';
-import { Module } from '../../../../../../interfaces/module';
+import { ExtendedJob } from '@interfaces/job';
+import { Module } from '@interfaces/module';
 import { Store } from '@ngrx/store';
 import { getFavouriteModuleAcronyms, getJobs, getUserTopics } from 'src/app/selectors/user.selectors';
 import { ModService } from 'src/app/shared/services/module.service';

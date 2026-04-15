@@ -1,4 +1,4 @@
-import { User } from '../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import { createReducer, on } from '@ngrx/store';
 import { CompetenceAimsActions, DashboardActions, FavoriteModulesActions, JobActions, ExcludedModuleActions, ExcludedModulesActions, StudyPathActions, TimetableActions, UserActions } from '../actions/user.actions';
 

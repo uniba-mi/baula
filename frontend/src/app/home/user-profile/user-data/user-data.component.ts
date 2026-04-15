@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { User } from '../../../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import { getUser } from 'src/app/selectors/user.selectors';
 import { UserActions } from 'src/app/actions/user.actions';
 import { SearchActions } from 'src/app/actions/search-settings.actions';

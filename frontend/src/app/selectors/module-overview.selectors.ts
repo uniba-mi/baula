@@ -1,8 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Module } from '../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { State as ModuleOverviewState } from '../reducers/module-overview.reducer';
-import { ExtendedModuleGroup } from '../../../../interfaces/module-group';
-import { Semester } from '../../../../interfaces/semester';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
+import { Semester } from '@interfaces/semester';
 
 export const getModuleOverviewState =
   createFeatureSelector<ModuleOverviewState>('module-overview');

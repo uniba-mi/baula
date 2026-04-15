@@ -9,11 +9,11 @@ import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.servi
 import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
 import { getJobs, getExcludedModulesAcronyms } from 'src/app/selectors/user.selectors';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
-import { Module } from '../../../../../../interfaces/module';
-import { ModuleWithMetadata } from '../../../../../../interfaces/recommendation';
-import { OptionGroup, Option, SearchSettings } from '../../../../../../interfaces/search';
-import { Job } from '../../../../../../interfaces/job';
-import { Topic } from '../../../../../../interfaces/topic';
+import { Module } from '@interfaces/module';
+import { ModuleWithMetadata } from '@interfaces/recommendation';
+import { OptionGroup, Option, SearchSettings } from '@interfaces/search';
+import { Job } from '@interfaces/job';
+import { Topic } from '@interfaces/topic';
 
 @Component({
   selector: 'app-recommendations-list',

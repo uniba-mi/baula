@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Module } from '../../../../../../../interfaces/module';
-import { ModuleCourse2CourseConnection } from '../../../../../../../interfaces/connection';
-import { ModuleCourse } from '../../../../../../../interfaces/module-course';
+import { Module } from '@interfaces/module';
+import { ModuleCourse2CourseConnection } from '@interfaces/connection';
+import { ModuleCourse } from '@interfaces/module-course';
 import { MatDialog } from '@angular/material/dialog';
 import { AdminDialogComponent } from '../../dialogs/admin-dialog.component';
-import { Course } from '../../../../../../../interfaces/course';
+import { Course } from '@interfaces/course';
 import { ModService } from 'src/app/shared/services/module.service';
 import { CourseService } from 'src/app/shared/services/course.service';
 

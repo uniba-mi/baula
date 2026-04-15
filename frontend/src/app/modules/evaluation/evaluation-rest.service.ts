@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/config.local';
-import { Evaluation, JobEvaluation, Organisation, RankedModule } from '../../../../../interfaces/evaluation';
+import { Evaluation, JobEvaluation, Organisation, RankedModule } from '@interfaces/evaluation';
 
 const httpOptions = {
   headers: new HttpHeaders({

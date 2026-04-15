@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
 import { getSemesterList } from 'src/app/selectors/user.selectors';
-import { Semester } from '../../../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { changeUnit, changeView } from '../../../../compvis/state/chart.actions';
 import { getUnit, getView } from '../../../../compvis/state/chart.selectors';
 import { MatDialog } from '@angular/material/dialog';

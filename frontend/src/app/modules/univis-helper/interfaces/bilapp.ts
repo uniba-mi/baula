@@ -1,4 +1,4 @@
-import { Fulfillment } from "../../../../../../interfaces/competence"
+import { Fulfillment } from "@interfaces/competence"
 
 export interface BilAppCourse extends BilAppCourseShort {
     desc: string,

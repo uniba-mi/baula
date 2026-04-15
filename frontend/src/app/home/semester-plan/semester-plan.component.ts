@@ -16,15 +16,15 @@ import {
   SemesterPlan,
   PlanningHints,
   DeletedCourse,
-} from '../../../../../interfaces/semester-plan';
-import { Course } from '../../../../../interfaces/course';
+} from '@interfaces/semester-plan';
+import { Course } from '@interfaces/course';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
-import { AcademicDate } from '../../../../../interfaces/academic-date';
-import { Semester } from '../../../../../interfaces/semester';
+import { AcademicDate } from '@interfaces/academic-date';
+import { Semester } from '@interfaces/semester';
 import { getSemesterList } from 'src/app/selectors/user.selectors';
 import { MatSidenav } from '@angular/material/sidenav';
 import {

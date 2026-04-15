@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { ExpandedCourse, Course } from "../../../../../../../interfaces/course";
+import { ExpandedCourse, Course } from "@interfaces/course";
 import * as CourseActions from '../actions/course.actions';
 
 export const courseFeatureKey = 'course';

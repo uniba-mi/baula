@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { getSemesterList } from 'src/app/selectors/user.selectors';
-import { Semester } from '../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
@@ -9,7 +9,7 @@ import { AlertType } from 'src/app/shared/classes/alert';
 import { MatDialog } from '@angular/material/dialog';
 import { AdminRestService } from '../admin-rest.service';
 import { AdminDialogComponent } from '../dialogs/admin-dialog.component';
-import { Logmessage } from '../../../../../../interfaces/logs';
+import { Logmessage } from '@interfaces/logs';
 
 @Component({
     selector: 'admin-univis-crawl',

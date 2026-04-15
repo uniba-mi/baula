@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Semester } from '../../../../interfaces/semester';
-import { StudyProgramme } from '../../../../interfaces/study-programme';
-import { MStudyProgramme, User } from '../../../../interfaces/user';
+import { Semester } from '@interfaces/semester';
+import { StudyProgramme } from '@interfaces/study-programme';
+import { MStudyProgramme, User } from '@interfaces/user';
 import {
   getActiveStudyPlanId,
   getStudyPlans,

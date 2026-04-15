@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ModuleCourse } from '../../../../../../../interfaces/module-course';
-import { Course } from '../../../../../../../interfaces/course';
+import { ModuleCourse } from '@interfaces/module-course';
+import { Course } from '@interfaces/course';
 import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
-import { ModuleCourse2CourseConnection } from '../../../../../../../interfaces/connection';
+import { ModuleCourse2CourseConnection } from '@interfaces/connection';
 import { AdminRestService } from '../../admin-rest.service';
 import { take } from 'rxjs';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';

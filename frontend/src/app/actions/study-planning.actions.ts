@@ -3,10 +3,10 @@ import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import {
   UserGeneratedModule,
   UserGeneratedModuleTemplate
-} from '../../../../interfaces/user-generated-module';
-import { StudyPlan, StudyPlanTemplate } from '../../../../interfaces/study-plan';
-import { PlanCourse, PlanningHints, SemesterPlan, SemesterPlanTemplate } from '../../../../interfaces/semester-plan';
-import { Course } from '../../../../interfaces/course';
+} from '@interfaces/user-generated-module';
+import { StudyPlan, StudyPlanTemplate } from '@interfaces/study-plan';
+import { PlanCourse, PlanningHints, SemesterPlan, SemesterPlanTemplate } from '@interfaces/semester-plan';
+import { Course } from '@interfaces/course';
 
 /************** GENERAL *********************/
 

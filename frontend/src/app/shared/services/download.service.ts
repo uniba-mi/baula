@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { User } from '../../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import {
   PathCourse,
   PathModule,
-} from '../../../../../interfaces/study-path';
+} from '@interfaces/study-path';
 import { TransformationService } from './transformation.service';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
-import { SemesterPlan } from '../../../../../interfaces/semester-plan';
+import { StudyPlan } from '@interfaces/study-plan';
+import { SemesterPlan } from '@interfaces/semester-plan';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
