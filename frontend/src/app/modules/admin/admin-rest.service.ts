@@ -29,8 +29,8 @@ export class AdminRestService {
     return this.http.get<ImportLogMessage>(`${this.urlBase}/crawling/fnmhbs/${semester}`, httpOptions);
   };
 
-  crawlUnivIS(semester: string): Observable<string[]> {
-    return this.http.post<string[]>(
+  crawlUnivIS(semester: string): Observable<ImportLogMessage> {
+    return this.http.post<ImportLogMessage>(
       `${this.urlBase}/crawling/univis`,
       { semester },
       httpOptions
