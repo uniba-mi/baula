@@ -1,12 +1,9 @@
 services:
   server:
-    tmpfs:
-      - /var/run/apache2
     build:
       context: ./server/
       dockerfile: Dockerfile
     restart: always   
-    user: "${RUNNER_UID}:${RUNNER_GID}"
     environment:
       - HOST_URL=${HOST_URL}
       - HOSTNAME=${HOSTNAME}
@@ -26,7 +23,6 @@ services:
       context: ./backend/api
       dockerfile: Dockerfile
     restart: always
-    user: "${RUNNER_UID}:${RUNNER_GID}"
     volumes:
       - ./backend/api/dist/backend/api:/api
       - ./backend/api/dist/interfaces:/interfaces

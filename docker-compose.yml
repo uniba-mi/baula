@@ -2,7 +2,6 @@ services:
   mongodb:
     image: mongo
     restart: always
-    user: "${RUNNER_UID}:${RUNNER_GID}"
     environment: 
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
@@ -15,7 +14,6 @@ services:
   mariadb:
     image: mariadb
     restart: always
-    user: "${RUNNER_UID}:${RUNNER_GID}"
     environment:
       - MYSQL_ROOT_PASSWORD=${RELDB_ROOT_PW}
       - MYSQL_PASSWORD=${RELDB_PASSWORD}
@@ -30,7 +28,6 @@ services:
   redis:
     image: redis:alpine
     restart: always
-    user: "${RUNNER_UID}:${RUNNER_GID}"
     command: >
       redis-server --aclfile /usr/local/etc/redis/users.acl
     volumes:
