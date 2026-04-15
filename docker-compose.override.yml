@@ -1,17 +1,21 @@
 services:
   mongodb:
+    user: "${RUNNER_UID}:${RUNNER_GID}"
     ports:
       - 27017:27017
   
   mariadb:
+    user: "${RUNNER_UID}:${RUNNER_GID}"
     ports: 
       - 3306:3306
 
   redis:
+    user: "${RUNNER_UID}:${RUNNER_GID}"
     ports:
       - 6379:6379
 
   python:
+    user: "${RUNNER_UID}:${RUNNER_GID}"
     ports: 
       - 8000:8000
 
