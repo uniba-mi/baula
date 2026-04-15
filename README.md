@@ -47,10 +47,6 @@ Folgende Versionen sind die getesteten Voraussetzungen:
 
     API_PORT=1234 # port where backend is served
     DOCS_PORT=4201
-
-    # only for gitlab-runner/ CI deployment
-    RUNNER_UID=999 # UID of the gitlab-runner user
-    RUNNER_GID=987 # GID of the gitlab-runner user
     ```
 - unter `./backend/api/environment/` muss ebenfalls eine `.env.backend` angelegt werden. Diese enthält die Umgebungsvariablen für die API. Folgende Informationen müssen enthalten sein:
     ```bash
