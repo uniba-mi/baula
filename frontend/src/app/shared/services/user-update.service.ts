@@ -4,16 +4,16 @@ import {
   Consent,
   Hint,
   User,
-} from '../../../../../interfaces/user';
-import { UserActions } from 'src/app/actions/user.actions';
+} from '@interfaces/user';
+import { UserActions } from '../../actions/user.actions';
 import { Store } from '@ngrx/store';
-import { PathModule } from '../../../../../interfaces/study-path';
-import { TimetableSettings } from '../../../../../interfaces/semester-plan';
+import { PathModule } from '@interfaces/study-path';
+import { TimetableSettings } from '@interfaces/semester-plan';
 import { catchError, concatMap, of, take } from 'rxjs';
 import { SnackbarService } from './snackbar.service';
-import { RestService } from 'src/app/rest.service';
+import { RestService } from '../../rest.service';
 import { AuthService } from '../auth/auth.service';
-import { config } from 'src/environments/config.local';
+import { config } from '../../../environments/config.local';
 import { AlertType } from '../classes/alert';
 
 @Injectable({
@@ -138,7 +138,7 @@ export class UserUpdateService {
       .deleteUser()
       .pipe(take(1))
       .pipe(
-        concatMap((mes) => {
+        concatMap((mes: string) => {
           this.snackbar.openSnackBar({
             type: AlertType.SUCCESS,
             message: mes,
@@ -153,7 +153,7 @@ export class UserUpdateService {
           return of(false);
         })
       )
-      .subscribe((success) => {
+      .subscribe((success: boolean | { success: boolean, requestUrl?: string }) => {
         if (success) {
           document.location.href = config.homeUrl;
         } else {

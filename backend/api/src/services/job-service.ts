@@ -2,7 +2,7 @@ import { scrapAfaSsWebsite } from "../shared/helpers/job-scraping";
 import { BadRequestError, logError } from "../shared/error";
 import validator from "validator";
 import { error } from "winston";
-import { Module } from "../../../../interfaces/module";
+import { Module } from "@interfaces/module";
 import { postFetchData } from "./request";
 
 /** -----------------------------

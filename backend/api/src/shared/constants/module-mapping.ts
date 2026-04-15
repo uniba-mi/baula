@@ -1,4 +1,4 @@
-import { ModuleChangelog } from '../../../../../interfaces/module'
+import { ModuleChangelog } from '@interfaces/module'
 
 // CURRENT STATE: WS25/26
 export const moduleChanges: ModuleChangelog[] = [

@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import { addAllPriorModules, addExtractedModules, addModuleCourses, findAndBuildModuleHandbookByIdAndVersion } from "../../../shared/helpers/module-helpers";
-import { Module } from "../../../../../../interfaces/module";
+import { Module } from "@interfaces/module";
 
 const prisma = new PrismaClient();
 

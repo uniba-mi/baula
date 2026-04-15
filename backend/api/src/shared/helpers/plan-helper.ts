@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { StudyPlan } from "../../database/mongo";
-import { PathModule } from "../../../../../interfaces/study-path";
-import { Semester } from "../../../../../interfaces/semester";
+import { PathModule } from "@interfaces/study-path";
+import { Semester } from "@interfaces/semester";
 import { validateObjectId } from "./custom-validator";
 
 export const findStudyPlan = async (studyPlanId: string) => {

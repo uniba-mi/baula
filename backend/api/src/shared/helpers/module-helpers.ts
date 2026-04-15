@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { moduleChanges } from "../constants/module-mapping";
-import { ModuleGroup } from "../../../../../interfaces/module-group";
-import { Module } from "../../../../../interfaces/module";
-import { ModuleCourse } from "../../../../../interfaces/module-course";
-import { ModuleHandbook } from "../../../../../interfaces/module-handbook";
+import { ModuleGroup } from "@interfaces/module-group";
+import { Module } from "@interfaces/module";
+import { ModuleCourse } from "@interfaces/module-course";
+import { ModuleHandbook } from "@interfaces/module-handbook";
 
 const prisma = new PrismaClient();
 

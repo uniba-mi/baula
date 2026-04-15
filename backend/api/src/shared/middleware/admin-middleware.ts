@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { UserServer } from "../../../../../interfaces/user";
+import { UserServer } from "@interfaces/user";
 import { User } from "../../database/mongo";
 
 export async function checkAndReturnAdminUser(req: Request, res: Response, next: NextFunction) {

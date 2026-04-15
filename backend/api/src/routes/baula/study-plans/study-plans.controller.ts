@@ -9,8 +9,8 @@ import { BadRequestError, NotFoundError } from "../../../shared/error";
 import validator from "validator";
 import fs from "fs/promises";
 import path from "path";
-import { UserGeneratedModule } from "../../../../../../interfaces/user-generated-module";
-import { UserServer } from "../../../../../../interfaces/user";
+import { UserGeneratedModule } from "@interfaces/user-generated-module";
+import { UserServer } from "@interfaces/user";
 import { getLatestPlanFilename } from "../../../shared/helpers/plan-helper";
 
 // GET REQUESTS

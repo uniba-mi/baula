@@ -5,13 +5,13 @@ import {
   StudyProgramme,
 } from "@prisma/client";
 import { logError } from "../error";
-import { Person } from "../../../../../interfaces/person";
-import { ModuleHandbook } from "../../../../../interfaces/module-handbook";
+import { Person } from "@interfaces/person";
+import { ModuleHandbook } from "@interfaces/module-handbook";
 import {
   Changelog,
   ImportLogMessage,
   MergedChangelog,
-} from "../../../../../interfaces/logs";
+} from "@interfaces/logs";
 
 const prisma = new PrismaClient();
 

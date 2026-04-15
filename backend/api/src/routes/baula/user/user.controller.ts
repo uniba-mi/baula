@@ -7,17 +7,17 @@ import {
   validateObjectId,
 } from "../../../shared/helpers/custom-validator";
 import { Types } from "mongoose";
-import { PathCourse, PathModule } from "../../../../../../interfaces/study-path";
+import { PathCourse, PathModule } from "@interfaces/study-path";
 import { BadRequestError, logError, NotFoundError } from "../../../shared/error";
 import validator from "validator";
 import {
   ModuleFeedback,
   User as UserClient,
   UserServer,
-} from "../../../../../../interfaces/user";
+} from "@interfaces/user";
 import { PrismaClient } from "@prisma/client";
 import mongoose from "mongoose";
-import { ExtendedJob, Job } from "../../../../../../interfaces/job";
+import { ExtendedJob, Job } from "@interfaces/job";
 import { transform } from "camaro";
 import {
   studyPathTemplate,

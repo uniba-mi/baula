@@ -48,7 +48,7 @@ import {
   upsertPersons,
   upsertStudyprogrammes,
 } from "../../../shared/helpers/fn2mod-helper";
-import { MergedChangelog } from "../../../logs";
+import { MergedChangelog } from "@interfaces/logs";
 
 const prisma = new PrismaClient();
 

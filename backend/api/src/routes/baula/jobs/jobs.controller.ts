@@ -7,14 +7,14 @@ import {
 import validator from "validator";
 import { User, Recommendation } from "../../../database/mongo";
 import mongoose from "mongoose";
-import { UserServer } from "../../../../../../interfaces/user";
+import { UserServer } from "@interfaces/user";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
-import { ExtendedJob, Job, Jobtemplate } from "../../../../../../interfaces/job";
+import { ExtendedJob, Job, Jobtemplate } from "@interfaces/job";
 import {
   validateAndReturnJobtemplate,
   validateObjectId,
 } from "../../../shared/helpers/custom-validator";
-import { RecommendedModule } from "../../../../../../interfaces/recommendation";
+import { RecommendedModule } from "@interfaces/recommendation";
 import { extractModules } from "../../../shared/helpers/module-helpers";
 import path from "path";
 import { readJsonFile } from "../../../shared/helpers/process-data-helper";

@@ -3,8 +3,8 @@ import { transform } from "camaro";
 import { IncomingMessage } from "http";
 import https from "https";
 import { courses, rooms, persons } from "../../templates/univis-template";
-import { CompetenceFulfillment } from "../../../../../interfaces/competence";
-import { Course, Term, UnivISCourse } from "../../../../../interfaces/course";
+import { CompetenceFulfillment } from "@interfaces/competence";
+import { Course, Term, UnivISCourse } from "@interfaces/course";
 import { BadRequestError } from "../error";
 import {
   addCompetences,
@@ -18,7 +18,7 @@ import {
   transformEntry,
   transformUnivISCourse,
 } from "./univis-helpers";
-import { Person } from "../../../../../interfaces/person";
+import { Person } from "@interfaces/person";
 
 const prisma = new PrismaClient();
 

@@ -1,9 +1,9 @@
-import { FeedbackRecommendationResult, RecommendedModule, Recommendation as IRecommendation } from '../../../../../../interfaces/recommendation';
+import { FeedbackRecommendationResult, RecommendedModule, Recommendation as IRecommendation } from '@interfaces/recommendation';
 import { NextFunction, Request, Response } from "express";
 import { ModEmbedding, Recommendation } from "../../../database/mongo";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import { generateFeedbackBasedRecommendations } from "../../../services/feedback-service";
-import { UserServer } from "../../../../../../interfaces/user";
+import { UserServer } from "@interfaces/user";
 import validator from "validator";
 import { extractModules } from "../../../shared/helpers/module-helpers";
 
