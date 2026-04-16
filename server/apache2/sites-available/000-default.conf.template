@@ -59,24 +59,24 @@
 
     <IfModule mod_proxy.c>
         # Proxy für Routing-API
-        ProxyPass "/api" "http://141.13.235.13:${API_PORT}/api"
-        ProxyPassReverse "/api" "http://141.13.235.13:${API_PORT}/api"
+        ProxyPass "/api" "http://192.168.188.177:${API_PORT}/api"
+        ProxyPassReverse "/api" "http://192.168.188.177:${API_PORT}/api"
 
         # Proxy für Shibboleth
-        ProxyPass "/Shibboleth.sso" "http://141.13.235.13:${API_PORT}/Shibboleth.sso"
-        ProxyPassReverse "/Shibboleth.sso" "http://141.13.235.13:${API_PORT}/Shibboleth.sso"
+        ProxyPass "/Shibboleth.sso" "http://192.168.188.177:${API_PORT}/Shibboleth.sso"
+        ProxyPassReverse "/Shibboleth.sso" "http://192.168.188.177:${API_PORT}/Shibboleth.sso"
 
         # Proxy für öffentliche Ressourcen
-        ProxyPass "/public" "http://141.13.235.13:${API_PORT}/public"
-        ProxyPassReverse "/public" "http://141.13.235.13:${API_PORT}/public"
+        ProxyPass "/public" "http://192.168.188.177:${API_PORT}/public"
+        ProxyPassReverse "/public" "http://192.168.188.177:${API_PORT}/public"
 
         # Proxy für lokale Anmeldung
-        ProxyPass "/login/local" "http://141.13.235.13:${API_PORT}/login/local"
-        ProxyPassReverse "/login/local" "http://141.13.235.13:${API_PORT}/login/local"
+        ProxyPass "/login/local" "http://192.168.188.177:${API_PORT}/login/local"
+        ProxyPassReverse "/login/local" "http://192.168.188.177:${API_PORT}/login/local"
 
         # Proxy für den Logout
-        ProxyPass "/logout" "http://141.13.235.13:${API_PORT}/logout"
-        ProxyPassReverse "/logout" "http://141.13.235.13:${API_PORT}/logout"
+        ProxyPass "/logout" "http://192.168.188.177:${API_PORT}/logout"
+        ProxyPassReverse "/logout" "http://192.168.188.177:${API_PORT}/logout"
     </IfModule>
 
     <IfModule mod_rewrite.c>
