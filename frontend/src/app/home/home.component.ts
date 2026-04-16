@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Semester } from '../../../../interfaces/semester';
-import { User } from '../../../../interfaces/user';
+import { Consent, User } from '../../../../interfaces/user';
 import {
   StudyPlanActions,
   TimetableActions,
@@ -134,6 +134,7 @@ export class HomeComponent implements OnInit {
 
         const latestPrivacyConsent =
           privacyConsents[privacyConsents.length - 1];
+
         if (
           ((latestPrivacyConsent && !latestPrivacyConsent.hasConfirmed) ||
             !latestPrivacyConsent) &&
@@ -142,11 +143,10 @@ export class HomeComponent implements OnInit {
         ) {
           this.openPrivacyChangeDialog();
         } else if (
-          user.authType === 'saml' &&
+          //user.authType === 'saml' &&
           this.isTimestampOlderThanAWeek(user.createdAt ?? new Date())
-          // TODO: check additionally for last bakule-survey confirmation and if it's older than 6 months open BaKuLe Survey again
         ) {
-          // only opens bakule survey, when privacy dialog is not opened, user is not demo user and is created more than one week ago
+          // only opens bakule survey, when privacy dialog is not opened, user is not demo user and is created more than one week ago and if consent is older than three months and in new semester
           this.openBaKuLeSurveyDialog();
         }
       });
@@ -349,13 +349,14 @@ export class HomeComponent implements OnInit {
   }
 
   openBaKuLeSurveyDialog() {
+    // get latest bakule consent
     // Sort by timestamp in descending order
     const surveyConsent = this.user.consents.filter(
       (el) => el.ctype === 'bakule-survey'
     ).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-    const latestSurveyConsent = surveyConsent.length > 0 ? surveyConsent[0] : null;
-    
-    if (!latestSurveyConsent || !latestSurveyConsent.hasResponded) {
+    const latestSurveyConsent = surveyConsent.length > 0 ? surveyConsent[0] : undefined;
+
+    if (!latestSurveyConsent || !latestSurveyConsent.hasResponded || this.isTimestampOlderThanThreeMonthsOrInNewSemster(new Date(latestSurveyConsent.timestamp))) {
       const month = new Date().getMonth()+1;
       const year = new Date().getFullYear();
       const dialogRef = this.dialog.open(SurveyComponent, {
@@ -444,5 +445,30 @@ export class HomeComponent implements OnInit {
     const dateFromTimestamp = new Date(timestamp);
 
     return dateFromTimestamp < oneWeekAgo;
-}
+  }
+
+  private isTimestampOlderThanThreeMonthsOrInNewSemster(timestamp: Date): boolean {
+    const threeMonthsAgo = new Date(new Date().getTime() - (3 * 30 * 24 * 60 * 60 * 1000)); // Millisekunden von drei Monaten
+    const currentSemester = new Semester().apNr;
+    const year = Number(currentSemester.slice(0, 4));
+    const stampYear = timestamp.getFullYear();
+    const stampMonth = timestamp.getMonth();
+
+    if(timestamp > threeMonthsAgo) {
+      return false;
+    }
+
+    if (stampMonth < 3 && year == stampYear - 1) {
+        // represents winter semester ending
+        return false;
+    } else if (stampMonth >= 3 && stampMonth < 9 && year === stampYear) {
+        // representing summer semester
+        return false;
+    } else if (stampMonth >= 9 && year === stampYear) {
+        // representing winter semester beginning
+        return false;
+    }
+
+    return true;
+  }
 }

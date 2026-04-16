@@ -1,3 +1,4 @@
+
 export class Semester {
     // name is representing univisName
     name: string;
