@@ -78,6 +78,21 @@ Es werden folgende Dateien kopiert (Format: NAME_DER_DATEI: WOHIN_DIE_DATEI_KOPI
 - sp_cert.pem: ./backend/api/src/certs/sp_cert.pem
 - sp_key.pem: ./backend/api/src/certs/sp_key.pem
 
+## PROD_DEPLOY
+Verschiebt folgende Dateien/ Verzeichnisse in das "Deployment"-Verzeichnis (definiert in deploy.ts: const deployDir):
+- "package.json",
+- "docker-compose.override.yml",
+- "docker-compose.server.yml",
+- "docker-compose.yml",
+- "server",
+- "documentation",
+- "data",
+- "backend/api",
+- "backend/python",
+- ".env"
+
+Verzeichnisse werden rekursiv (sammt aller Dateien und Unterverzeichnissen) kopiert.
+
 # Check Services Steps
 ## Allgemein
 Dieser Schritt geht davon aus, dass die Docker Container gestartet wurden. Die Namen der Docker Container sollten wie folgt aussehen:
