@@ -2,6 +2,7 @@ import { getRootDir } from "../helpers.ts";
 import * as path from "path";
 import { promises as fs } from "fs";
 
+/*
 const paths = [
     "package.json",
     // Compose files
@@ -34,7 +35,18 @@ const paths = [
     "data/redis",
     "backend/api/src/database/redis-users.acl",
 ]
-
+*/
+const files = [
+    "package.json",
+    // Compose files
+    "docker-compose.override.yml",
+    "docker-compose.server.yml",
+    "docker-compose.yml",
+    "server",
+    "documentation",
+    "data",
+    "backend/api"
+]
 const rootDir = getRootDir();
 
 const deployDir = "/home/gitlab-runner/deployment";
