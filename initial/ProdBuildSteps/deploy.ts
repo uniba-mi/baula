@@ -45,7 +45,8 @@ const paths = [
     "server",
     "documentation",
     "data",
-    "backend/api"
+    "backend/api",
+    ".env"
 ]
 const rootDir = getRootDir();
 
