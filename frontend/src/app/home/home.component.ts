@@ -143,7 +143,7 @@ export class HomeComponent implements OnInit {
         ) {
           this.openPrivacyChangeDialog();
         } else if (
-          //user.authType === 'saml' &&
+          user.authType === 'saml' &&
           this.isTimestampOlderThanAWeek(user.createdAt ?? new Date())
         ) {
           // only opens bakule survey, when privacy dialog is not opened, user is not demo user and is created more than one week ago and if consent is older than three months and in new semester
