@@ -102,5 +102,8 @@ deploy:
     - build_frontend
   script:
     - rm -rf /home/gitlab-runner/deployment
+    - ls -a
+    - ls ./documentation -a
+    - ls ./documentation/user-docs -a
     - npm run buildInitial PROD_DEPLOY
     - cd /home/gitlab-runner/deployment && npm run startServerDocker
