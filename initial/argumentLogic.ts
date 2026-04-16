@@ -65,6 +65,9 @@ export function getArguments() {
             case "PROD_COPY_FILES":
                 FLAGS.PROD_COPY_FILES = true;
                 break;
+            case "PROD_DEPLOY":
+                FLAGS.PROD_DEPLOY = true;
+                break;
             default:
                 break;
         }

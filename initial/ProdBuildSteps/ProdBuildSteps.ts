@@ -4,6 +4,7 @@ import buildDocs from "./buildDocs.ts";
 import buildFrontendProd from "./buildFrontendProd.ts";
 import copyFiles from "./copyFiles.ts";
 import { createFrontendProdEnvTs, createFrontendConfigLocalTs } from "./createProdEnv.ts";
+import deploy from "./deploy.ts";
 import startServerDocker from "./startServerDocker.ts";
 
 export default class ProdBuildSteps {
@@ -22,6 +23,8 @@ export default class ProdBuildSteps {
                 return this.startServerDocker;
             case "PROD_COPY_FILES":
                 return this.copyFiles;
+            case "PROD_DEPLOY":
+                return this.deployProduction;
             default:
                 break;
         }
@@ -83,5 +86,9 @@ export default class ProdBuildSteps {
 
     async copyFiles() {
         await copyFiles();
+    }
+
+    async deployProduction() {
+        await deploy();
     }
 }

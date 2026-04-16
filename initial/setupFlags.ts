@@ -17,6 +17,7 @@ export interface SetupFlags {
     PROD_BUILD_FRONTEND: boolean;
     PROD_START_DOCKER: boolean;
     PROD_COPY_FILES: boolean;
+    PROD_DEPLOY: boolean;
 
     // HEALTH CHECK FLAGS
     CHECK_API_PYTHON: boolean;
@@ -47,6 +48,7 @@ export const FLAGS: SetupFlags = {
     PROD_BUILD_FRONTEND: false,
     PROD_START_DOCKER: false,
     PROD_COPY_FILES: false,
+    PROD_DEPLOY: false,
 
     CHECK_API_PYTHON: false,
     CHECK_API_NODE: false,
