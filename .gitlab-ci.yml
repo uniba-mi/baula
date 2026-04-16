@@ -1,3 +1,7 @@
+default:
+  tags:
+    - live-test-server
+
 stages:
   - install_dependencies
   - create_required_files
@@ -5,7 +9,7 @@ stages:
   - build_docs
   - build_frontend
   # - create_docker
-  - deploy
+  # - deploy
 
 variables:
   GIT_STRATEGY: fetch
@@ -92,16 +96,16 @@ build_frontend:
 #     - sleep 20
 #     - npm run buildInitial CHECK_ALL
 
-deploy:
-  stage: deploy
-  dependencies:
-    - install_dependencies
-    - create_required_files
-    - build_backend
-    - build_docs
-    - build_frontend
-  script:
-    - docker compose -f docker-compose.yml -f docker-compose.server.yml down
-    #- rm -rf /home/gitlab-runner/deployment
-    - npm run buildInitial PROD_DEPLOY
-    - cd /home/gitlab-runner/deployment && npm run startServerDocker
+# deploy:
+#   stage: deploy
+#   dependencies:
+#     - install_dependencies
+#     - create_required_files
+#     - build_backend
+#     - build_docs
+#     - build_frontend
+#   script:
+#     - docker compose -f docker-compose.yml -f docker-compose.server.yml down
+#     #- rm -rf /home/gitlab-runner/deployment
+#     - npm run buildInitial PROD_DEPLOY
+#     - cd /home/gitlab-runner/deployment && npm run startServerDocker
