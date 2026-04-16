@@ -10,12 +10,12 @@ const paths = [
     "docker-compose.yml",
     // docker-compose.override.yml
     "documentation/user-docs",
-    "documentation/developer-docs",
+    // TODO: "documentation/developer-docs",
     // docker-compose.server.yml
     /// server
     "server/app",
     "documentation/user-docs/.retype",
-    "documentation/developer-docs/.retype",
+    // TODO: "documentation/developer-docs/.retype",
     "server/apache2/sites-available",
     /// rest_api
     "backend/api/dist/backend/api",
