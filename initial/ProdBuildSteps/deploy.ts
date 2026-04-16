@@ -36,7 +36,7 @@ const paths = [
     "backend/api/src/database/redis-users.acl",
 ]
 */
-const files = [
+const paths = [
     "package.json",
     // Compose files
     "docker-compose.override.yml",
