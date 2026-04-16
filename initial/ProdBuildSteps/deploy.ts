@@ -46,6 +46,7 @@ const paths = [
     "documentation",
     "data",
     "backend/api",
+    "backend/python",
     ".env"
 ]
 const rootDir = getRootDir();
