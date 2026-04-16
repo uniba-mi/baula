@@ -4,7 +4,8 @@ stages:
   - build_backend
   - build_docs
   - build_frontend
-  - create_docker
+  # - create_docker
+  - deploy
 
 variables:
   GIT_STRATEGY: fetch
@@ -90,3 +91,15 @@ create_docker:
     - npm run buildInitial PROD_START_DOCKER
     - sleep 20
     - npm run buildInitial CHECK_ALL
+
+deploy:
+  stage: deploy
+  dependencies:
+    - install_dependencies
+    - create_required_files
+    - build_backend
+    - build_docs
+    - build_frontend
+  script:
+    - npm run buildInitial PROD_DEPLOY
+    - cd /home/gitlab-runner/deployment && npm run startServerDocker
