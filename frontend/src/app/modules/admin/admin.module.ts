@@ -46,6 +46,7 @@ import { BarChartCardComponent } from '../reporting/bar-chart-card/bar-chart-car
 import { TableCardComponent } from '../reporting/table-card/table-card.component';
 import { ReportingBaseComponent } from '../reporting/reporting-base.component';
 import { OtherActionsComponent } from './other-actions/other-actions.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -96,7 +97,8 @@ import { OtherActionsComponent } from './other-actions/other-actions.component';
     ResultPageComponent,
     ReportingBaseComponent,
     BarChartCardComponent,
-    TableCardComponent
+    TableCardComponent,
+    MatExpansionModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

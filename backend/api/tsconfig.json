@@ -6,8 +6,7 @@
     "lib": ["ES2019"],
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
     "resolveJsonModule": false,
-    "outDir": "./dist",   
-    "rootDirs": ["./src", "../../interfaces"],                                
+    "outDir": "./dist",                               
     "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */                                /* Type declaration files to be included in compilation. */
     /* Type Checking */
     "strict": true,                                      /* Enable all strict type-checking options. */
@@ -16,5 +15,5 @@
     "skipLibCheck": true                                       /* Enable all strict type-checking options. */
   },
   "include": ["./src/**/*"],
-  "exclude": ["./node_modules", "./dist", "../../interfaces/*.ts"]
+  "exclude": ["./node_modules", "./dist"]
 }
