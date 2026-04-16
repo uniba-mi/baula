@@ -79,18 +79,18 @@ build_frontend:
       - server/app/browser
     expire_in: 1 day
 
-create_docker:
-  stage: create_docker
-  dependencies:
-    - install_dependencies
-    - create_required_files
-    - build_backend
-    - build_docs
-    - build_frontend
-  script:
-    - npm run buildInitial PROD_START_DOCKER
-    - sleep 20
-    - npm run buildInitial CHECK_ALL
+# create_docker:
+#   stage: create_docker
+#   dependencies:
+#     - install_dependencies
+#     - create_required_files
+#     - build_backend
+#     - build_docs
+#     - build_frontend
+#   script:
+#     - npm run buildInitial PROD_START_DOCKER
+#     - sleep 20
+#     - npm run buildInitial CHECK_ALL
 
 deploy:
   stage: deploy
