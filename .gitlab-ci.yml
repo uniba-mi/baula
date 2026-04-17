@@ -24,11 +24,13 @@ cache:
     - backend/api/node_modules
     - frontend/node_modules
 
+before_script:
+  - source ~/.nvm/nvm.sh
+
 install_dependencies:
   stage: install_dependencies
   dependencies: []
   script:
-    - source ~/.nvm/nvm.sh
     - cd backend/api && npm install
     - cd ../../frontend && npm install
 
