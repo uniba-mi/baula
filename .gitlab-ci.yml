@@ -28,6 +28,7 @@ install_dependencies:
   stage: install_dependencies
   dependencies: []
   script:
+    - source ~/.nvm/nvm.sh
     - cd backend/api && npm install
     - cd ../../frontend && npm install
 
