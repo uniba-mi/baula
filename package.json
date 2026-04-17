@@ -25,7 +25,9 @@
     "buildFrontendTest": "cd frontend && ng build --configuration=test",
     "buildBackend": "cd backend/api && npm run build",
     "buildUserDocs": "cd documentation/user-docs && retype build",
-    "buildTest": "npm run buildBackend && npm run buildFrontendTest && npm run buildUserDocs",
-    "buildProd": "npm run buildBackend && npm run buildFrontendProd && npm run buildUserDocs"
+    "buildDocs": "npm run buildDevDocs && npm run buildUserDocs",
+    "buildTest": "npm run buildBackend && npm run buildFrontendTest && npm run buildDocs",
+    "buildProd": "npm run buildBackend && npm run buildFrontendProd && npm run buildDocs",
+    "buildInitial": "node initial/initial.ts"
   }
 }
