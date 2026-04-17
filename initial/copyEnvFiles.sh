@@ -5,6 +5,8 @@ PATH=/var/uniba.de/docker/testEnvFiles
 /usr/bin/cp ./backend/api/environment/.env.backend $PATH
 /usr/bin/cp ./backend/api/src/database/.env $PATH/database.env
 /usr/bin/cp ./frontend/src/environments/environment.prod.ts $PATH
+/usr/bin/cp ./frontend/src/environments/environment.test.ts $PATH
+/usr/bin/cp ./frontend/src/environments/environment.ts $PATH
 /usr/bin/cp ./frontend/src/environments/config.prod.ts $PATH
 /usr/bin/cp ./frontend/src/environments/config.ts $PATH
 /usr/bin/cp ./frontend/src/environments/config.interface.ts $PATH
