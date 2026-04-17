@@ -112,3 +112,4 @@ deploy:
     #- rm -rf /home/gitlab-runner/deployment
     - npm run buildInitial PROD_DEPLOY
     # - cd /home/gitlab-runner/deployment && npm run startServerDocker
+    
