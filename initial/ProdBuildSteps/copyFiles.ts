@@ -9,9 +9,11 @@ const files = {
 
     // Config files
     "environment.prod.ts": "/frontend/src/environments/environment.prod.ts",
+    "environment.test.ts": "/frontend/src/environments/environment.test.ts",
     "environment.ts": "/frontend/src/environments/environment.ts",
     "config.prod.ts": "/frontend/src/environments/config.prod.ts",
     "config.local.ts": "/frontend/src/environments/config.local.ts",
+    "config.test.ts": "/frontend/src/environments/config.test.ts",
     "config.interface.ts": "/frontend/src/environments/config.interface.ts",
 
     // Redis

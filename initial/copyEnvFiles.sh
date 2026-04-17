@@ -9,6 +9,7 @@ PATH=/var/uniba.de/docker/testEnvFiles
 /usr/bin/cp ./frontend/src/environments/environment.ts $PATH
 /usr/bin/cp ./frontend/src/environments/config.prod.ts $PATH
 /usr/bin/cp ./frontend/src/environments/config.ts $PATH
+/usr/bin/cp ./frontend/src/environments/config.test.ts $PATH
 /usr/bin/cp ./frontend/src/environments/config.interface.ts $PATH
 /usr/bin/cp ./backend/api/src/database/redis-users.acl $PATH
 /usr/bin/cp ./backend/api/src/templates/student-fn2api.ts $PATH
