@@ -27,13 +27,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModService } from 'src/app/shared/services/module.service';
 import { ModuleGroup } from '../../../../../interfaces/module-group';
-import {
-  trigger,
-  state,
-  animate,
-  style,
-  transition,
-} from '@angular/animations';
 import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
@@ -43,19 +36,6 @@ import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.se
   templateUrl: './module-overview.component.html',
   styleUrls: ['./module-overview.component.scss'],
   standalone: false,
-  animations: [
-    trigger('slideInOut', [
-      state('open', style({
-        transform: 'translateX(0)', // Volle Sichtbarkeit
-      })),
-      state('closed', style({
-        transform: 'translateX(-200%)', // Komplett ausgeblendet
-      })),
-      transition('open <=> closed', [
-        animate('400ms ease-in-out'), // Geschwindigkeit und Timing
-      ]),
-    ]),
-  ],
 })
 export class ModuleOverviewComponent
   implements OnInit, OnDestroy, AfterViewInit {
@@ -186,6 +166,7 @@ export class ModuleOverviewComponent
     concat(mhbSub, modSub, soSub).subscribe(value => {
       if (value && 'mhbId' in value) {
         this.mhb = value;
+        console.log(this.mhb)
       } else if (value && Array.isArray(value)) {
         this.modules = value;
       } else {

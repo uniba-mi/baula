@@ -29,24 +29,24 @@ export async function findAndBuildModuleHandbookByIdAndVersion(mhbId: string, ve
       let mhbStructure = undefined;
   
       // get mhb information
-      const mhb = await prisma.mhb.findUnique({
+      const mhbs = await prisma.mhb.findMany({
         where: {
-          mhbId_version: {
-            mhbId,
-            version,
-          },
+          mhbId: mhbId,
         }
       });
-  
+
+      const mhb = mhbs.find(el => el.version === version);
       // build own structure
       if (mhb) {
+        const versions = mhbs.map(el => el.version)
         // build initial structure
         mhbStructure = new ModuleHandbook(
           mhb.mhbId,
           mhb.version,
           mhb.name,
           mhb.desc,
-          mhb.semester
+          mhb.semester,
+          versions
         );
   
         // find and add modulegroups
