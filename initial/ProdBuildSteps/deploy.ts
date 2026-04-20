@@ -51,7 +51,7 @@ const paths = [
 ]
 const rootDir = getRootDir();
 
-const deployDir = "/home/gitlab-runner/deployment";
+const deployDir = "/home/gitlab-runner/baula-test";
 
 export default async function deploy() {
     // Copy every file from rootDir + files[x] to deployDIr + files[x]
