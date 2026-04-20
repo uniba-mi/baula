@@ -111,5 +111,6 @@ deploy:
     #- rm -rf /home/gitlab-runner/deployment
     - mkdir /home/gitlab-runner/baula-test
     - npm run buildInitial PROD_DEPLOY
+    - cp -r /home/gitlab-runner/envFiles/data/ /home/gitlab-runner/baula-test
     - cd /home/gitlab-runner/baula-test && docker-compose -f docker-compose.yml -f docker-compose.server.yml down
     - cd /home/gitlab-runner/baula-test && npm run startServerDocker
