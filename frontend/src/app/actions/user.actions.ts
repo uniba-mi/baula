@@ -33,6 +33,15 @@ export const UserActions = createActionGroup({
   }
 });
 
+export const StudyProgrammeActions = createActionGroup({
+  source: 'Study Programme', 
+  events: {
+    'Change Modulehandbook': props<{ mhbId: string, version: number }>(),
+    'Change Modulehandbook Success': props<{ updatedUser: User }>(),
+    'Change Modulehandbook Failure': props<{ error: HttpErrorResponse }>()
+  }
+})
+
 export const StudyPathActions = createActionGroup({
   source: 'Study Path',
   events: {

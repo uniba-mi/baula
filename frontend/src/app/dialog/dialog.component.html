@@ -160,6 +160,10 @@
         <app-demo-user-dialog></app-demo-user-dialog>
         }
 
+        @if (data.dialogContentId === 'update-mhb-dialog' && data.mhb) {
+        <app-update-mhb-dialog [currentMhb]="data.mhb"></app-update-mhb-dialog>
+        }
+
         <div *ngIf="data.dialogContentId === 'privacy-change-dialog'">
           <app-privacy-change-dialog></app-privacy-change-dialog>
         </div>

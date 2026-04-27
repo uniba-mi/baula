@@ -1,0 +1,27 @@
+<mat-dialog-content>
+    <h2>📣 Neues Modulhandbuch verfügbar</h2>
+    <p>Das Modulhandbuch, welches du derzeit in deinem Profil ausgewählt hast ist veraltet. 
+       In unserer Datenbank liegt für deinen Studiengang ein neueres Modulhandbuch vor.
+    </p>
+    <div class="alert alert-info" role="alert">
+        Dein derzeit ausgewähltes Modulhandbuch enthält möglicherweise veraltete Informationen, welche 
+        nicht mehr gültig sind. Wechsel am besten direkt auf die neueste Version, damit du die aktuellen 
+        Informationen rund um die Module deines Studiengangs im Überblick hast.
+    </div>
+    <!-- <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header tabindex="-1">
+                <mat-panel-title class="my-2"> Das sind die Änderungen im Vergleich zu deinem aktuellen Modulhandbuch </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>{{ changeLog }}</p>
+        </mat-expansion-panel>
+    </mat-accordion> -->
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button class="btn btn-outline" [mat-dialog-close]="currentMhb">
+        Abbrechen
+    </button>
+    <button class="btn btn-primary" [mat-dialog-close]="upToDateMhb">
+        Wechseln
+    </button>
+</mat-dialog-actions>

@@ -446,6 +446,13 @@ export class RestService {
     );
   }
 
+  getUpToDateModulehandbook(id: string): Observable<ModuleHandbook> {
+    return this.http.get<ModuleHandbook>(
+      `${this.urlBase}module-handbooks/${id}`,
+      httpOptions
+    );
+  }
+
   getModuleByAcronymAndVersion(
     acronym: string,
     version?: number

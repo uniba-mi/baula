@@ -4,6 +4,7 @@ import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import { addAllPriorModules, addExtractedModules, addModuleCourses, findAndBuildModuleHandbookByIdAndVersion } from "../../../shared/helpers/module-helpers";
 import { Module } from "../../../../../../interfaces/module";
+import { UserServer } from "../../../../../../interfaces/user";
 
 const prisma = new PrismaClient();
 
@@ -18,6 +19,53 @@ export async function getMhbByIdAndVersion(req: Request, res: Response, next: Ne
       res.status(200).json(mhb);
     } else {
       next(new NotFoundError("The requested module handbook could not be found with this id and version."));
+    }
+  } else {
+    next(new BadRequestError())
+  }
+}
+
+export async function getUpToDateMhb(req: Request, res: Response, next: NextFunction) {
+  const mhbId = validator.isAlphanumeric(req.params.id, undefined, { ignore: '_-' }) ? req.params.id : undefined;
+  const user = req.user as UserServer;
+
+  if(mhbId && user && user.sps && user.sps.length > 0) {
+    console.log(await prisma.sp2Mhb.findMany({
+      select: {
+        mhbId: true,
+        version: true
+      },
+      where: {
+        mhbId: mhbId,
+        spId: user.sps[0].spId
+      }, 
+      orderBy: {
+        version: 'desc'
+      },
+    }))
+    const currentMhbVersion = await prisma.sp2Mhb.findFirst({
+      select: {
+        mhbId: true,
+        version: true
+      },
+      where: {
+        mhbId: mhbId,
+        spId: user.sps[0].spId
+      }, 
+      orderBy: {
+        version: 'desc'
+      },
+    })
+    console.log(currentMhbVersion)
+    if(currentMhbVersion) {
+      const mhb = await findAndBuildModuleHandbookByIdAndVersion(currentMhbVersion.mhbId, currentMhbVersion.version);
+      if (mhb) {
+        res.status(200).json(mhb);
+      } else {
+        next(new NotFoundError("The requested module handbook could not be found with this id and version."));
+      }
+    } else {
+      next(new NotFoundError("No module handbook could be found with the given id."));
     }
   } else {
     next(new BadRequestError())

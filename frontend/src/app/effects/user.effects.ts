@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, mergeMap, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, concatMap, map, mergeMap, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { RestService } from '../rest.service';
 import { AlertType } from '../shared/classes/alert';
@@ -15,6 +15,7 @@ import {
   ExcludedModuleActions,
   TimetableActions,
   JobActions,
+  StudyProgrammeActions,
 } from '../actions/user.actions';
 import { Router } from '@angular/router';
 import { User } from '../../../../interfaces/user';
@@ -22,6 +23,8 @@ import { getStudyPlans } from '../selectors/study-planning.selectors';
 import { Store } from '@ngrx/store';
 import { SemesterPlanActions } from '../actions/study-planning.actions';
 import { RecsRestService } from '../modules/recommendations/recs-rest.service';
+import { getUser } from '../selectors/user.selectors';
+import { ModuleHandbookActions } from '../actions/module-overview.actions';
 
 @Injectable()
 export class UserEffects {
@@ -112,6 +115,43 @@ export class UserEffects {
       )
     )
   );
+
+  updateModulehandbook$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType(StudyProgrammeActions.changeModulehandbook),
+      withLatestFrom(this.store.select(getUser)),
+      switchMap(([mhb, user]) => {
+        let studyprogramme = user.sps?.find(el => el.mhbId == mhb.mhbId)
+        if(studyprogramme) {
+          studyprogramme.mhbVersion = mhb.version
+        }
+        let updatedUser = {
+          ...user
+        }
+        return this.rest.updateUser(updatedUser).pipe(
+          map((user: User) =>
+            UserActions.updateUserSuccess({
+              user,
+            })
+          ),
+          tap(() => {
+            this.store.dispatch(ModuleHandbookActions.loadModuleHandbook({ id: mhb.mhbId, version: mhb.version }))
+            this.snackbar.openSnackBar({
+              type: AlertType.SUCCESS,
+              message: 'Das Modulhandbuch wurde erfolgreich aktualisiert.',
+            });
+          }),
+          catchError((error) => {
+            this.snackbar.openSnackBar({
+              type: AlertType.DANGER,
+              message: 'Das Modulhandbuch konnte nicht aktualisiert werden!',
+            });
+            return of(UserActions.updateUserFailure({ error }));
+          })
+        )
+      })
+    )  
+  )
 
   finishSemester$ = createEffect(() =>
     this.actions$.pipe(

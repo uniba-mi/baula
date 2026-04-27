@@ -15,6 +15,7 @@ import { take } from 'rxjs';
 import { ModuleInteractionActions } from 'src/app/actions/module-overview.actions';
 import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
 import { PathModule } from '../../../../../interfaces/study-path';
+import { ModuleHandbook } from '../../../../../interfaces/module-handbook';
 
 @Injectable({
   providedIn: 'root',
@@ -73,6 +74,11 @@ export class ModService {
     });
   }
 
+  // Function to compare mhbs
+  compareMhbs(baseMhb: ModuleHandbook, targetMhb: ModuleHandbook): string {
+    return 'Es hat sich nichts geändert.'
+  }
+
   // retrieve modules based on acronyms
   public getFullModulesByAcronyms(acronyms: string[]): Observable<Module[]> {
     return this.store.pipe(
@@ -125,10 +131,10 @@ export class ModService {
         selectedModule: module,
         activeTab,
       },
-      enterAnimationDuration: 100,
-      exitAnimationDuration: 100,
-      minWidth: '80vw',
-      minHeight: '80vh',
+              enterAnimationDuration: 100,
+        exitAnimationDuration: 100,
+        minWidth: '80vw',
+        minHeight: '80vh',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

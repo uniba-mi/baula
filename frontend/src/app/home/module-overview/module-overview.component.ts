@@ -30,6 +30,10 @@ import { ModuleGroup } from '../../../../../interfaces/module-group';
 import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
+import { DialogComponent } from 'src/app/dialog/dialog.component';
+import { StudyProgrammeActions, UserActions } from 'src/app/actions/user.actions';
+import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-module-overview',
@@ -143,7 +147,8 @@ export class ModuleOverviewComponent
     private modService: ModService,
     private router: Router,
     private renderer: Renderer2,
-    private recsHelper: RecsHelperService
+    private recsHelper: RecsHelperService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -166,7 +171,9 @@ export class ModuleOverviewComponent
     concat(mhbSub, modSub, soSub).subscribe(value => {
       if (value && 'mhbId' in value) {
         this.mhb = value;
-        console.log(this.mhb)
+        if(!this.mhb.upToDate) {
+          this.openUpdateMhbDialog(this.mhb);
+        }
       } else if (value && Array.isArray(value)) {
         this.modules = value;
       } else {
@@ -312,6 +319,25 @@ export class ModuleOverviewComponent
   // push command to group-navigation to init removal of groupFilters
   removeGroupFilter() {
     this.removeGroupFilters = !this.removeGroupFilters;
+  }
+
+  private openUpdateMhbDialog(mhb: ModuleHandbook) {
+    const dialogRef = this.dialog.open(DialogComponent, 
+      {
+        data: {
+          dialogContentId: 'update-mhb-dialog',
+          mhb
+        }
+      }
+    )
+
+    dialogRef.afterClosed().pipe(take(1)).subscribe((mhb: ModuleHandbook) => {
+      if(mhb.version !== this.mhb.version) {
+        console.log(mhb)
+        this.store.dispatch(StudyProgrammeActions.changeModulehandbook({ mhbId: mhb.mhbId, version: mhb.version }))
+        //this.store.dispatch(ModuleHandbookActions.loadModuleHandbook({ id: mhb.mhbId, version: mhb.version }))
+      }
+    })
   }
 
   ngOnDestroy() {
