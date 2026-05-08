@@ -57,7 +57,6 @@ export async function getUpToDateMhb(req: Request, res: Response, next: NextFunc
         version: 'desc'
       },
     })
-    console.log(currentMhbVersion)
     if(currentMhbVersion) {
       const mhb = await findAndBuildModuleHandbookByIdAndVersion(currentMhbVersion.mhbId, currentMhbVersion.version, user.completedModules);
       if (mhb) {

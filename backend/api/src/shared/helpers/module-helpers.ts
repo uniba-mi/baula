@@ -198,6 +198,37 @@ async function buildStructure(
 
     let modules: Module[] = [];
 
+    // check if modules exist
+    if (modulesResult.length !== 0) {
+      // transform moduleResult to modules
+      for (const entry of modulesResult) {
+        entry.mod.exams;
+        modules.push(
+          new Module(
+            entry.mod.mId,
+            entry.mod.version,
+            entry.mod.acronym,
+            entry.mod.name,
+            entry.mod.content,
+            entry.mod.skills,
+            entry.mod.addInfo,
+            entry.mod.priorKnowledge,
+            entry.mod.ects,
+            entry.mod.term,
+            entry.mod.recTerm,
+            entry.mod.duration,
+            entry.mod.chair,
+            entry.mod.respPerson,
+            entry.mod.exams,
+            entry.mod.prevModules,
+            entry.mod.offerBegin,
+            entry.mod.offerEnd,
+            entry.mod.workload,
+          ),
+        );
+      }
+    }
+
     if (
       completedModulesOfModuleGroup &&
       completedModulesOfModuleGroup.length > 0
@@ -211,6 +242,7 @@ async function buildStructure(
             },
             where: {
               acronym: completedModule.acronym,
+              
             },
           });
           let moduleToAdd: Module;
@@ -263,37 +295,6 @@ async function buildStructure(
           }
           modules.push(moduleToAdd);
         }
-      }
-    }
-
-    // check if modules exist
-    if (modulesResult.length !== 0) {
-      // transform moduleResult to modules
-      for (const entry of modulesResult) {
-        entry.mod.exams;
-        modules.push(
-          new Module(
-            entry.mod.mId,
-            entry.mod.version,
-            entry.mod.acronym,
-            entry.mod.name,
-            entry.mod.content,
-            entry.mod.skills,
-            entry.mod.addInfo,
-            entry.mod.priorKnowledge,
-            entry.mod.ects,
-            entry.mod.term,
-            entry.mod.recTerm,
-            entry.mod.duration,
-            entry.mod.chair,
-            entry.mod.respPerson,
-            entry.mod.exams,
-            entry.mod.prevModules,
-            entry.mod.offerBegin,
-            entry.mod.offerEnd,
-            entry.mod.workload,
-          ),
-        );
       }
     }
 

@@ -26,7 +26,7 @@
           } @else if(module.notExistingModule) {
           <i class="bi bi-exclamation-square text-danger status-box-not-clickable" matTooltip="Dieses Modul exisitiert nicht in unserer Moduldatenbank und wurde von dir selbst erstellt. Es ist nicht Teil des offiziellen Modulhandbuchs."></i>
           } @else if(module.equivalentModule) {
-          <i class="bi bi-exclamation-square status-box-not-clickable" [matTooltip]="`Dieses Modul ist equivalent zu ${module.equivalentModule} und daher ausgegraut.`"></i>
+          <i class="bi bi-exclamation-square status-box-not-clickable" [matTooltip]="`Dieses Modul ist äquivalent zu ${module.equivalentModule} und daher ausgegraut.`"></i>
           }
         </div>
       </div>
