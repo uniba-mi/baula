@@ -3,6 +3,7 @@ import {
     getMhbByIdAndVersion, 
     getModByAcronymAndVersion,
     getModules,
+    getUpToDateMhb,
 } from './module-handbooks.controller';
 
 const router: Router = express.Router();
@@ -49,6 +50,42 @@ const router: Router = express.Router();
  *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get('/:id/:version', getMhbByIdAndVersion);
+
+/**
+ * @swagger
+ * /module-handbooks/{id}:
+ *   get:
+ *     summary: Get module handbook with newest version by id
+ *     tags: [ModuleHandbook]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Module handbook id
+ *         example: MHB1
+ *     responses:
+ *       200:
+ *         description: Module handbook
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ModuleHandbook'
+ *       400:
+ *         description: The request was invalid or malformed.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BadRequestError'
+ *       404:
+ *         description: No module handbook could be found with the given id.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
+ */
+router.get('/:id', getUpToDateMhb)
 
 /**
  * @swagger

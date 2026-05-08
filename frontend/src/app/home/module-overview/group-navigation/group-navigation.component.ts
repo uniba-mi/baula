@@ -11,8 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ModuleGroup } from '../../../../../../interfaces/module-group';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { MatTree, MatTreeNestedDataSource } from '@angular/material/tree';
 import {
   Option,
   SearchSettings,
@@ -23,8 +22,9 @@ import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { getHoveredModule } from 'src/app/selectors/module-overview.selectors';
 import { getUserStudyPath } from 'src/app/selectors/user.selectors';
-import { PathModule } from '../../../../../../interfaces/study-path';
+import { PathModule, StudyPath } from '../../../../../../interfaces/study-path';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
+import { ModService } from 'src/app/shared/services/module.service';
 
 @Component({
     selector: 'app-group-navigation',
@@ -46,11 +46,11 @@ export class GroupNavigationComponent
   private destroy$ = new Subject<void>(); // container for subscriptions
 
   expandedModuleDescription: boolean = false;
-  treeControl = new NestedTreeControl<ModuleGroup>((node) => node.children);
+  childrenAccessor = (node: ModuleGroup) => node.children ?? [];
   dataSource = new MatTreeNestedDataSource<ModuleGroup>();
   selectedGroupFilter: Option | undefined;
 
-  constructor(private store: Store<State>, private cdr: ChangeDetectorRef) {}
+  constructor(private store: Store<State>, private cdr: ChangeDetectorRef, private modService: ModService) {}
 
   ngOnInit(): void {
     // subscribe to hovered Module
@@ -101,6 +101,7 @@ export class GroupNavigationComponent
         )
         .subscribe((studyPath) => {
           if (this.dataSource.data && studyPath.completedModules) {
+
             this.clearAchievedECTS(this.dataSource.data);
             this.dataSource.data = this.setAchievedEcts(
               this.dataSource.data,
@@ -112,7 +113,6 @@ export class GroupNavigationComponent
 
     // TODO cleaner solution? Quick fix to make sure the chair filter is still active after leaving and coming back to the module catalog.
     if (changes.selectedGroup) {
-
       this.removeMarkedClass();
 
       setTimeout(() => {
@@ -219,14 +219,14 @@ export class GroupNavigationComponent
     const element = document.getElementById(`${mg.mgId}-description`);
     const icon = document.getElementById(`${mg.mgId}-icon`);
     if (element !== null && icon !== null) {
-      if (icon.classList.contains('bi-chevron-down')) {
+      if (icon.classList.contains('bi-chevron-right')) {
         element.classList.remove('truncate-text');
-        icon.classList.remove('bi-chevron-down');
-        icon.classList.add('bi-chevron-up');
-      } else if (icon.classList.contains('bi-chevron-up')) {
-        element.classList.add('truncate-text');
-        icon.classList.remove('bi-chevron-up');
+        icon.classList.remove('bi-chevron-right');
         icon.classList.add('bi-chevron-down');
+      } else if (icon.classList.contains('bi-chevron-down')) {
+        element.classList.add('truncate-text');
+        icon.classList.remove('bi-chevron-down');
+        icon.classList.add('bi-chevron-right');
       }
     }
   }
@@ -245,8 +245,9 @@ export class GroupNavigationComponent
   }
 
   // function to make only one node expandable
-  toggleNode(group: ModuleGroup) {
-    const currentSelection = this.treeControl.expansionModel.selected;
+  toggleNode(treeControl: MatTree<ModuleGroup>, group: ModuleGroup) {
+    
+    const currentSelection = treeControl._getExpansionModel().selected;
     const selectionToKeep = currentSelection.filter(mg => {
       // check cases to keep selection
       // case if current selected mg fits to clicked mg (default to keep selected)
@@ -264,9 +265,9 @@ export class GroupNavigationComponent
       // default case return false
       return false;
     })
-    this.treeControl.collapseAll();
+    treeControl.collapseAll();
     for(let selection of selectionToKeep) {
-      this.treeControl.expand(selection);
+      treeControl.expand(selection);
     }
   }
 
@@ -314,7 +315,7 @@ export class GroupNavigationComponent
         group.children = this.setAchievedEcts(group.children, completedModules);
         group.achievedEcts = group.children
           .map((el) => el.achievedEcts)
-          .reduce((pv, cv) => Number(pv) + Number(cv), 0);
+          .reduce((pv, cv) => Number(pv) + Number(cv), group.achievedEcts);
       }
     }
     return groups;

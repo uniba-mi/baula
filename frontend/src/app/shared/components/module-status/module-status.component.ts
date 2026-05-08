@@ -14,6 +14,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { StudyPathActions } from 'src/app/actions/user.actions';
 import { UserGeneratedModule } from '../../../../../../interfaces/user-generated-module';
 import { ModService } from '../../services/module.service';
+import { moduleChanges } from '../../constants/module-mapping';
 
 @Component({
     selector: 'app-module-status',
@@ -44,6 +45,9 @@ export class ModuleStatusComponent implements OnInit {
     { status: 'failed', name: 'Nicht bestanden', iconClass: 'bi bi-x-lg text-danger' },
     { status: 'open', name: 'Nicht belegt', iconClass: 'bi bi-question-lg' },
   ];
+  moduleChanges = moduleChanges;
+  newModules = moduleChanges.map(el => el.newModuleAcronym)
+  oldModules = moduleChanges.map(el => el.oldModuleAcronym)
 
   constructor(private store: Store, private dialog: MatDialog, private modService: ModService) { }
 
@@ -81,7 +85,7 @@ export class ModuleStatusComponent implements OnInit {
     if (moduleType === 'UserGeneratedModule' || moduleType === 'PathModule') {
       return module._id!
     } else if (moduleType === 'Module') {
-      const matchingModule = this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
+      const matchingModule = this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester, module.mgId);
 
       return matchingModule ? matchingModule._id : undefined;
     }
@@ -94,7 +98,7 @@ export class ModuleStatusComponent implements OnInit {
     if (moduleId) {
       const matchingModule = semester
         ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-        : this.findCorrespondingModuleInStudyPath(spath, moduleId, semester);
+        : this.findCorrespondingModuleInStudyPath(spath, moduleId, semester, module.mgId);
       return matchingModule?.status || 'open';
     }
     return;
@@ -108,7 +112,7 @@ export class ModuleStatusComponent implements OnInit {
       // Otherwise, find the corresponding module in the study path
       const matchingModule = semester
         ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-        : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
+        : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester, module.mgId);
       return matchingModule?.semester || undefined;
     }
   }
@@ -117,19 +121,21 @@ export class ModuleStatusComponent implements OnInit {
     const moduleId = this.getModuleId(module, spath, semester);
     const matchingModule = semester
       ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-      : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
+      : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester, module.mgId);
     return matchingModule?.grade || undefined
   }
 
   private findCorrespondingModuleInStudyPath(
     spath: StudyPath,
     acronym: string,
-    semester: string | undefined
+    semester: string | undefined,
+    mgId: string | undefined
   ): PathModule | undefined {
-
     // check for modules with the same acronym in the study path
-    const filteredModules = spath.completedModules.filter(mod => mod.acronym === acronym);
-
+    // first identify if module is included within moduleChanges
+    const oldAcronym = this.modService.isEquivalent(acronym)
+    // map module if acronym maps or if module change -> if studypath module maps to module change also include into filtered modules
+    const filteredModules = spath.completedModules.filter(mod => (mod.mgId == mgId || mod.mgId == 'init') && (mod.acronym === acronym || (oldAcronym && oldAcronym == mod.acronym)));
     // if a semester is given (= study plan semester), check if one of the matching modules is in the same semester
     if (this.openedWithSemesterSet) {
       return filteredModules.find(mod => mod.semester === semester);

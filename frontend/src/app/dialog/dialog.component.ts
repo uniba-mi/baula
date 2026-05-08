@@ -12,6 +12,7 @@ import { ExtendedModuleGroup } from '../../../../interfaces/module-group';
 import { AcademicDate } from '../../../../interfaces/academic-date';
 import { Course } from '../../../../interfaces/course';
 import { Job, Jobtemplate } from '../../../../interfaces/job';
+import { ModuleHandbook } from '../../../../interfaces/module-handbook';
 
 export interface DialogData {
   dialogTitle?: String; // heading
@@ -52,6 +53,7 @@ export interface DialogData {
   deselectOption?: boolean;
   options?: { value: string, label: string }[]; // for generic choose option dialog
   isFirstSemesterStudent?: boolean;
+  mhb?: ModuleHandbook;
   content?: any; // just for evaluation
 }
 

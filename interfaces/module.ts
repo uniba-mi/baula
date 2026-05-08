@@ -30,6 +30,8 @@ export class Module {
   mCourses: ModuleCourse[];
   isDropped: boolean;
   isOld?: boolean;
+  notExistingModule?: boolean;
+  equivalentModule?: string; // contains acronym of equivalent module if existing
 
   constructor(
     mId: string,
