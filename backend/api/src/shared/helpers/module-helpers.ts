@@ -538,7 +538,7 @@ export function removeDuplicates(arr: Module[]): Module[] {
 
 // function to identify equivalent modules 
 function findEquivalentModule(baseMod: string, completedModules: PathModule[]): string | undefined {
-  const foundModuleChange = moduleChanges.filter(el => el.newModuleAcronym == baseMod)[0] // take last entry of module change
+  const foundModuleChange = moduleChanges.filter(el => el.newModuleAcronym == baseMod).pop() // take last entry of module change
   if(foundModuleChange && completedModules.findIndex(el => el.acronym == foundModuleChange.oldModuleAcronym) > -1) {
     return foundModuleChange.oldModuleAcronym
   }

@@ -85,7 +85,7 @@ export class ModService {
   }
 
   // Function to identify if a module is included in the module mapping, returns oldAcronym
-  isEquivalent (newAcronym: string, completedModules?: PathModule[]): string | undefined {
+  isEquivalent (newAcronym: string): string | undefined {
     const mapping = moduleChanges.find(el => el.newModuleAcronym == newAcronym)
     return mapping ? mapping.oldModuleAcronym : undefined;
   }

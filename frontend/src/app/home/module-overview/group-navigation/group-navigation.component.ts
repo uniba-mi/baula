@@ -298,12 +298,7 @@ export class GroupNavigationComponent
     completedModules: PathModule[]
   ): ModuleGroup[] {
     for (let group of groups) {
-      const groupModuleAcronyms = group.modules ? group.modules.map(el => el.acronym) : []
-      const oldModuleAcronyms = groupModuleAcronyms.map(acronym => this.modService.isEquivalent(acronym) ?? '').filter(Boolean)
-      const acronyms = groupModuleAcronyms.concat(oldModuleAcronyms)
-      
       let modules = completedModules.filter((el) => el.mgId == group.mgId);
-      console.log(group)
       if (modules.length > 0) {
         group.achievedEcts = modules
           .map((el) => {
@@ -315,7 +310,6 @@ export class GroupNavigationComponent
             }
           })
           .reduce((pv, cv) => pv + cv, 0);
-        console.log(group)
       }
       if (group.children) {
         group.children = this.setAchievedEcts(group.children, completedModules);
