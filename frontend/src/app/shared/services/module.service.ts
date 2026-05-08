@@ -16,6 +16,7 @@ import { ModuleInteractionActions } from 'src/app/actions/module-overview.action
 import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
 import { PathModule } from '../../../../../interfaces/study-path';
 import { ModuleHandbook } from '../../../../../interfaces/module-handbook';
+import { moduleChanges } from '../constants/module-mapping';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,10 @@ export class ModService {
     Module | PathModule | UserGeneratedModule | null
   >(null);
   currentAcronym$ = this.moduleAcronymSource.asObservable();
+
+  moduleChanges = moduleChanges;
+  newModules = moduleChanges.map(el => el.newModuleAcronym)
+  oldModules = moduleChanges.map(el => el.oldModuleAcronym)
 
   constructor(
     private store: Store,
@@ -77,6 +82,12 @@ export class ModService {
   // Function to compare mhbs
   compareMhbs(baseMhb: ModuleHandbook, targetMhb: ModuleHandbook): string {
     return 'Es hat sich nichts geändert.'
+  }
+
+  // Function to identify if a module is included in the module mapping, returns oldAcronym
+  isEquivalent (newAcronym: string, completedModules?: PathModule[]): string | undefined {
+    const mapping = moduleChanges.find(el => el.newModuleAcronym == newAcronym)
+    return mapping ? mapping.oldModuleAcronym : undefined;
   }
 
   // retrieve modules based on acronyms

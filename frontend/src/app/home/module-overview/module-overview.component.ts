@@ -8,7 +8,7 @@ import {
   Renderer2,
   AfterViewInit,
 } from '@angular/core';
-import { concat, Observable, of, skipWhile, Subject, switchMap, take, takeUntil } from 'rxjs';
+import { concat, mergeMap, Observable, of, skipWhile, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
   getAllModules,
@@ -333,9 +333,7 @@ export class ModuleOverviewComponent
 
     dialogRef.afterClosed().pipe(take(1)).subscribe((mhb: ModuleHandbook) => {
       if(mhb.version !== this.mhb.version) {
-        console.log(mhb)
         this.store.dispatch(StudyProgrammeActions.changeModulehandbook({ mhbId: mhb.mhbId, version: mhb.version }))
-        //this.store.dispatch(ModuleHandbookActions.loadModuleHandbook({ id: mhb.mhbId, version: mhb.version }))
       }
     })
   }

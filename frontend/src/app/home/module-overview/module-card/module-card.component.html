@@ -1,4 +1,5 @@
-<mat-card class="py-3 px-2 my-0 mb-2 module-item" (mouseenter)="setHoverModule()" (mouseleave)="unsetHoverModule()">
+<mat-card class="py-3 px-2 my-0 mb-2 module-item" [ngClass]="{'cursor-disabled user-module-card': module.notExistingModule, 'old-module': module.isOld, 'card-disabled': module.equivalentModule}" 
+(mouseenter)="setHoverModule()" (mouseleave)="unsetHoverModule()">
   <div class="d-flex align-items-center" tabindex="0" aria-label="Zeile mit Modulinformationen"
     (click)="selectModule(module)" (keyup.enter)="selectModule(module)"
     [ngClass]="module.type === 'Pflichtmodul' ? 'compulsory' : ' '">
@@ -15,10 +16,18 @@
         </div>
         <!-- ModuleGroup -->
         <div class="d-flex align-items-center">
-          <button class="chip me-1">{{ path }}</button>
+          <button class="chip me-1" [class.cursor-disabled]="module.notExistingModule">{{ path }}</button>
           <span matTooltip="Das ist ein Pflichtmodul" *ngIf="module.type === 'Pflichtmodul'" class="compulsory-icon">
             <i>P</i>
           </span>
+          <!-- Exlamation mark if module is old or not existing -->
+          @if(module.isOld) {
+          <i class="bi bi-exclamation-square text-warning status-box-not-clickable" matTooltip="Dieses Modul ist nicht mehr Teil deine aktuell ausgewählten Modulhandbuchs."></i>
+          } @else if(module.notExistingModule) {
+          <i class="bi bi-exclamation-square text-danger status-box-not-clickable" matTooltip="Dieses Modul exisitiert nicht in unserer Moduldatenbank und wurde von dir selbst erstellt. Es ist nicht Teil des offiziellen Modulhandbuchs."></i>
+          } @else if(module.equivalentModule) {
+          <i class="bi bi-exclamation-square status-box-not-clickable" [matTooltip]="`Dieses Modul ist equivalent zu ${module.equivalentModule} und daher ausgegraut.`"></i>
+          }
         </div>
       </div>
 
@@ -29,7 +38,7 @@
         </div>
         <!-- ECTS -->
         <div>
-          <button class="chip ects-chip">{{ module.ects }} ECTS</button>
+          <button class="chip ects-chip" [class.cursor-disabled]="module.notExistingModule">{{ module.ects }} ECTS</button>
         </div>
       </div>
     </div>

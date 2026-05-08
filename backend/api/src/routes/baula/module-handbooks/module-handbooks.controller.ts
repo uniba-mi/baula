@@ -13,8 +13,9 @@ export async function getMhbByIdAndVersion(req: Request, res: Response, next: Ne
   const version = validator.isInt(req.params.version)
     ? parseInt(req.params.version)
     : undefined;
-  if (mhbId && version) {
-    const mhb = await findAndBuildModuleHandbookByIdAndVersion(mhbId, version);
+  const user = req.user as UserServer
+  if (mhbId && version && user) {
+    const mhb = await findAndBuildModuleHandbookByIdAndVersion(mhbId, version, user.completedModules);
     if (mhb) {
       res.status(200).json(mhb);
     } else {
@@ -58,7 +59,7 @@ export async function getUpToDateMhb(req: Request, res: Response, next: NextFunc
     })
     console.log(currentMhbVersion)
     if(currentMhbVersion) {
-      const mhb = await findAndBuildModuleHandbookByIdAndVersion(currentMhbVersion.mhbId, currentMhbVersion.version);
+      const mhb = await findAndBuildModuleHandbookByIdAndVersion(currentMhbVersion.mhbId, currentMhbVersion.version, user.completedModules);
       if (mhb) {
         res.status(200).json(mhb);
       } else {

@@ -1,5 +1,5 @@
 <!-- Tree section -->
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="navigation-tree">
+<mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor" class="navigation-tree">
     <!-- This ist the tree node for leafs -->
     <mat-tree-node *matTreeNodeDef="let node">
         <div class="w-100">
@@ -21,8 +21,10 @@
         <div class="mat-tree-node">
             <div class="fs-6">
                 <div id="{{node.mgId}}-node" class="tree-node">
-                    <i matTreeNodeToggle (click)="toggleNode(node)" class="bi bi-chevron-right me-2" *ngIf="!treeControl.isExpanded(node)"></i>
-                    <i matTreeNodeToggle (click)="toggleNode(node)" class="bi bi-chevron-down me-2" *ngIf="treeControl.isExpanded(node)"></i>
+                    <i matTreeNodeToggle (click)="toggleNode(tree, node)" class="bi bi-chevron-right me-2"
+                        *ngIf="!tree.isExpanded(node)"></i>
+                    <i matTreeNodeToggle (click)="toggleNode(tree, node)" class="bi bi-chevron-down me-2"
+                        *ngIf="tree.isExpanded(node)"></i>
                     <span (click)="selectFilter($event, node)">{{ node.fullName.endsWith('(Modulgruppe)') ||
                         node.fullName.endsWith('(Fach)') ?
                         node.name : node.fullName}}</span>
@@ -32,7 +34,7 @@
         </div>
         <!-- There is inline padding applied to this div using styles.
             This padding value depends on the mat-icon-button width.  -->
-        <div [class.navigation-tree-invisible]="!treeControl.isExpanded(node)" role="group">
+        <div [class.navigation-tree-invisible]="!tree.isExpanded(node)" role="group">
             <ng-container *ngTemplateOutlet="groupDescription; context: { group: node }"></ng-container>
             <ng-container matTreeNodeOutlet></ng-container>
         </div>
@@ -48,7 +50,7 @@
     <div *ngIf="group.desc != ''" class="d-flex flex-row align-items-start my-1 s-text"
         [ngClass]="group.desc.length > 200 ? 'truncate' : ''">
         <div role="button" class="px-2" *ngIf="group.desc.length > 200">
-            <i id="{{ group.mgId }}-icon" class="bi bi-chevron-down" (click)="toggleModuleDescription($event, group)"
+            <i id="{{ group.mgId }}-icon" class="bi bi-chevron-right" (click)="toggleModuleDescription($event, group)"
                 (keyup.enter)="toggleModuleDescription($event, group)">
             </i>
         </div>
