@@ -195,12 +195,12 @@ export class FinishSemesterStepperComponent {
           this.showNoGradeHint = true;
           break;
         case 'passed':
-          gradeControl.setValidators([Validators.required, Validators.min(1), Validators.max(4)]);
+          gradeControl.setValidators([Validators.min(1), Validators.max(4)]);
           gradeControl.enable();
           break;
         case 'failed':
           gradeControl.setValue(5);
-          gradeControl.setValidators([Validators.required, Validators.min(5), Validators.max(5)]);
+          gradeControl.setValidators([Validators.min(5), Validators.max(5)]);
           gradeControl.disable();
           this.showNoEditHint = true;
           break;
