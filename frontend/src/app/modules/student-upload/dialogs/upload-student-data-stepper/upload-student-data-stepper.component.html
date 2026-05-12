@@ -144,7 +144,7 @@
                     </div>
                     <!-- similar module groups wizard -->
                     <app-module-group-wizard [mgId]="getFormGroup(module.acronym).get('mgId')?.value"
-                        [structuredModuleGroups$]="structuredModuleGroups$"
+                        [structuredModuleGroups]="structuredModuleGroups$ | async"
                         (groupSelected)="selectSimilarGroup($event, module.acronym)">
                     </app-module-group-wizard>
 

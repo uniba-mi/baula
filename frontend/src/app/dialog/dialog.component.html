@@ -70,11 +70,10 @@
         <div *ngIf="
             data.mgId &&
             data.structuredModuleGroups$ &&
-            data.showMgWizard !== undefined &&
             data.dialogContentId === 'change-module-group-dialog'
           ">
-          <app-change-module-group-dialog [mgId]="data.mgId" [showMgWizard]="data.showMgWizard"
-            [structuredModuleGroups$]="data.structuredModuleGroups$"></app-change-module-group-dialog>
+          <app-change-module-group-dialog [mgId]="data.mgId"
+            [structuredModuleGroups$]="data.structuredModuleGroups$" [acronym]="data.pathModule?.acronym"></app-change-module-group-dialog>
         </div>
         <div *ngIf="
             data.modules &&

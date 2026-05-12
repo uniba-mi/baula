@@ -55,7 +55,6 @@ export class SemesterCardComponent {
   ) { }
 
   ngOnInit() {
-    console.log(this.moduleData)
     this.studyPath$ = this.store.select(getUserStudyPath);
 
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);

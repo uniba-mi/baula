@@ -18,9 +18,6 @@
             <span *ngIf="changeStatusForm.get('grade')?.errors?.min || changeStatusForm.get('grade')?.errors?.max">
               Die Zahl muss zwischen {{minGrade}}.0 und {{maxGrade}}.0 liegen.
             </span>
-            <span *ngIf="changeStatusForm.get('grade')?.errors?.required">
-              Das ist ein Pflichtfeld.
-            </span>
             <span *ngIf="changeStatusForm.get('grade')?.errors?.pattern">
               Bitte gib eine gültige Zahl ein (z. B. 2, 2.5).
             </span>
@@ -31,6 +28,7 @@
           </mat-hint>
         </mat-form-field>
       </ng-container>
+      
       <mat-dialog-actions>
         <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
           (keyup)="close('noData')">

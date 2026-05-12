@@ -5,11 +5,12 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
 import {
   getAllModules,
   getDistinctModules,
+  getModules,
 } from 'src/app/selectors/module-overview.selectors';
 import { Module } from '../../../../../interfaces/module';
 import { AlertType } from '../classes/alert';
 import { SnackbarService } from './snackbar.service';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ModuleInteractionActions } from 'src/app/actions/module-overview.actions';
@@ -88,6 +89,13 @@ export class ModService {
   isEquivalent (newAcronym: string): string | undefined {
     const mapping = moduleChanges.find(el => el.newModuleAcronym == newAcronym)
     return mapping ? mapping.oldModuleAcronym : undefined;
+  }
+
+  // Function to identify possible modulegroups of given acronym
+  findModuleGroups(acronym: string): Observable<string[]> {
+    return this.store.select(getModules).pipe(
+      map(modules => modules.filter(el => el.acronym == acronym).map(el => el.mgId))
+    )
   }
 
   // retrieve modules based on acronyms

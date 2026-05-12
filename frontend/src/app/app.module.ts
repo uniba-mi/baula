@@ -169,6 +169,7 @@ import { SettingsListComponent } from './home/recommendation/settings-list/setti
 import { HintsSidenavComponent } from './shared/components/hints-sidenav/hints-sidenav.component';import { NotFoundComponent } from './public/not-found/not-found.component';
 import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluation-dialog/evaluation-dialog.component';
 import { UpdateMhbDialogComponent } from './dialog/update-mhb-dialog/update-mhb-dialog.component';
+import { ChangeModuleGroupComponent } from './shared/components/change-module-group/change-module-group.component';
 
 
 @NgModule({
@@ -281,7 +282,8 @@ import { UpdateMhbDialogComponent } from './dialog/update-mhb-dialog/update-mhb-
     WordCloudComponent,
     DataPreviewComponent,
     SettingsListComponent,
-    UpdateMhbDialogComponent
+    UpdateMhbDialogComponent,
+    ChangeModuleGroupComponent
   ],
   bootstrap: [AppComponent],
   imports: [

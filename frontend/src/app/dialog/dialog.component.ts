@@ -45,7 +45,6 @@ export interface DialogData {
   newPlanId?: string;
   missingModules?: PathModule[];
   pathModule?: PathModule;
-  showMgWizard?: boolean;
   academicDate?: AcademicDate;
   mode?: string;
   course?: Course;

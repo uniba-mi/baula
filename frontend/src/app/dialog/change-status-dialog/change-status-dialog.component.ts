@@ -105,7 +105,7 @@ export class ChangeStatusDialogComponent implements OnInit, OnChanges {
     if (status === 'failed') {
       this.minGrade = 5;
       this.maxGrade = 5;
-      gradeControl?.setValidators([Validators.required, Validators.min(this.minGrade), Validators.max(this.maxGrade)]);
+      gradeControl?.setValidators([Validators.min(this.minGrade), Validators.max(this.maxGrade)]);
       gradeControl?.setValue(5);
       gradeControl?.disable();
       this.showNoEditHint = true;
@@ -113,7 +113,7 @@ export class ChangeStatusDialogComponent implements OnInit, OnChanges {
     } else if (status === 'passed') {
       this.minGrade = 1;
       this.maxGrade = 4;
-      gradeControl?.setValidators([Validators.required, Validators.min(this.minGrade), Validators.max(this.maxGrade)]);
+      gradeControl?.setValidators([Validators.min(this.minGrade), Validators.max(this.maxGrade)]);
       gradeControl?.enable();
     } else {
       gradeControl?.clearValidators();
