@@ -94,7 +94,7 @@ export class ModService {
   // Function to identify possible modulegroups of given acronym
   findModuleGroups(acronym: string): Observable<string[]> {
     return this.store.select(getModules).pipe(
-      map(modules => modules.filter(el => el.acronym == acronym).map(el => el.mgId))
+      map(modules => modules.filter(el => el.acronym == acronym && !el.hasIssue && !el.isOld).map(el => el.mgId))
     )
   }
 
