@@ -104,9 +104,6 @@
                             <input matInput formControlName="grade" #grade type="text" required>
                             <mat-error
                                 *ngIf="getFormGroup(module.acronym).get('grade')?.touched && getFormGroup(module.acronym).get('grade')?.invalid">
-                                <span *ngIf="getFormGroup(module.acronym).get('grade')?.errors?.required">Das ist ein
-                                    Pflichtfeld.
-                                </span>
                                 <span
                                     *ngIf="getFormGroup(module.acronym).get('grade')?.errors?.min || getFormGroup(module.acronym).get('grade')?.errors?.max">Die
                                     Note muss zwischen 1,0 und 4,0 liegen.
