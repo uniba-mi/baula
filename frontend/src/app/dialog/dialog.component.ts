@@ -17,6 +17,7 @@ import { ModuleHandbook } from '../../../../interfaces/module-handbook';
 export interface DialogData {
   dialogTitle?: String; // heading
   dialogContentId: String; // for subdialog insertion
+  acronym?: string;
   studyPlan?: StudyPlanTemplate;
   module?: UserGeneratedModule;
   semesters$?: Observable<Semester[]>;
@@ -53,6 +54,7 @@ export interface DialogData {
   options?: { value: string, label: string }[]; // for generic choose option dialog
   isFirstSemesterStudent?: boolean;
   mhb?: ModuleHandbook;
+  moduleData?: UserGeneratedModule | Module | PathModule,
   content?: any; // just for evaluation
 }
 

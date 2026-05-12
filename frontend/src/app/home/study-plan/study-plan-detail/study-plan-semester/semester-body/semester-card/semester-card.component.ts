@@ -29,6 +29,7 @@ export class SemesterCardComponent {
   @Input() modType: string;
   @Input() isSmallScreen: boolean;
   @Input() availableActions: ItemActionName[] = []; // available for card type
+  @Input() mgId: string;
 
   @Output() actionTriggered = new EventEmitter<{ action: ItemActionName, data: any }>();
 

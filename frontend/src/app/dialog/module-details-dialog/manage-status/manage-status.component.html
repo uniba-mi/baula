@@ -11,7 +11,7 @@
                         <div class="flex-shrink-0 me-2">
                             <app-module-status [studyPath$]="studyPath$" [module]="selectedModule" [modType]="modType"
                                 [openedWithSemesterSet]="openedWithSemesterSet" [openedFromModuleOffer]="true"
-                                [showStatusText]="true"></app-module-status>
+                                [showStatusText]="true" [mgId]="'init'"></app-module-status>
                         </div>
                     </span>
                     <div class="flex-grow-1 border-start"></div>
@@ -47,7 +47,7 @@
                                             [modType]="modType" [statusSemester]="semesterPlan.semester"
                                             [openedWithSemesterSet]="openedWithSemesterSet"
                                             [openedFromModuleOffer]="true"
-                                            [showStatusText]="true"></app-module-status>
+                                            [showStatusText]="true" [mgId]="'init'"></app-module-status>
                                     </div>
                                     <button class="btn btn-danger btn-sm"
                                         (click)="openDeleteDialog(studyPlan._id, studyPlan.name, semesterPlan._id, semesterPlan.semester)"

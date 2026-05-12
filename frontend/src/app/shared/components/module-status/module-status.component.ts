@@ -31,12 +31,12 @@ export class ModuleStatusComponent implements OnInit {
   @Input() pathModule: PathModule;
   @Input() statusSemester: string | undefined;
   @Input() openedWithSemesterSet: boolean; // true for opening from study plan
+  @Input() mgId: string;
   status: string | undefined;
   grade: number | undefined;
   activePlan$: Observable<StudyPlan | undefined>;
   closeMode: string;
   user: User;
-  mgId: string;
   displayStatusOnHover: string = '';
   private destroy$ = new Subject<void>();
   statusOptions: Status[] = [
@@ -85,7 +85,7 @@ export class ModuleStatusComponent implements OnInit {
     if (moduleType === 'UserGeneratedModule' || moduleType === 'PathModule') {
       return module._id!
     } else if (moduleType === 'Module') {
-      const matchingModule = this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester, module.mgId);
+      const matchingModule = this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
 
       return matchingModule ? matchingModule._id : undefined;
     }
@@ -98,7 +98,7 @@ export class ModuleStatusComponent implements OnInit {
     if (moduleId) {
       const matchingModule = semester
         ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-        : this.findCorrespondingModuleInStudyPath(spath, moduleId, semester, module.mgId);
+        : this.findCorrespondingModuleInStudyPath(spath, moduleId, semester);
       return matchingModule?.status || 'open';
     }
     return;
@@ -112,7 +112,7 @@ export class ModuleStatusComponent implements OnInit {
       // Otherwise, find the corresponding module in the study path
       const matchingModule = semester
         ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-        : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester, module.mgId);
+        : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
       return matchingModule?.semester || undefined;
     }
   }
@@ -121,7 +121,7 @@ export class ModuleStatusComponent implements OnInit {
     const moduleId = this.getModuleId(module, spath, semester);
     const matchingModule = semester
       ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-      : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester, module.mgId);
+      : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
     return matchingModule?.grade || undefined
   }
 
@@ -129,13 +129,12 @@ export class ModuleStatusComponent implements OnInit {
     spath: StudyPath,
     acronym: string,
     semester: string | undefined,
-    mgId: string | undefined
   ): PathModule | undefined {
     // check for modules with the same acronym in the study path
     // first identify if module is included within moduleChanges
     const oldAcronym = this.modService.isEquivalent(acronym)
     // map module if acronym maps or if module change -> if studypath module maps to module change also include into filtered modules
-    const filteredModules = spath.completedModules.filter(mod => (mod.mgId == mgId || mod.mgId == 'init') && (mod.acronym === acronym || (oldAcronym && oldAcronym == mod.acronym)));
+    const filteredModules = spath.completedModules.filter(mod => (mod.mgId == this.mgId || this.mgId == 'init') && (mod.acronym === acronym || (oldAcronym && oldAcronym == mod.acronym)));
     // if a semester is given (= study plan semester), check if one of the matching modules is in the same semester
     if (this.openedWithSemesterSet) {
       return filteredModules.find(mod => mod.semester === semester);
@@ -217,7 +216,7 @@ export class ModuleStatusComponent implements OnInit {
 
           if (this.closeMode === 'data') {
 
-            const { status, semester, grade } = result;
+            const { status, semester, grade, mgId } = result;
 
             // declare data
             let moduleVersion, moduleAcronym: string, moduleMgId, moduleName, moduleEcts: number, isUserGenerated, flexNowImported;
@@ -226,13 +225,13 @@ export class ModuleStatusComponent implements OnInit {
               moduleAcronym = this.pathModule.acronym;
               moduleName = this.pathModule.name;
               moduleEcts = this.pathModule.ects;
-              moduleMgId = 'init'; // set mgId to init to prevent false value due to preselect of one mgId instead of selection out of all possible mgIds
+              moduleMgId = mgId ? mgId : 'init';
               isUserGenerated = this.pathModule.isUserGenerated;
               flexNowImported = this.pathModule.flexNowImported;
             } else if (this.userGeneratedModule) {
               moduleAcronym = this.userGeneratedModule.acronym ? this.userGeneratedModule.acronym : this.userGeneratedModule.name;
               //moduleMgId = this.userGeneratedModule.mgId !== undefined ? this.userGeneratedModule.mgId : 'init';
-              moduleMgId = 'init'; // set mgId to init to prevent false value due to preselect of one mgId instead of selection out of all possible mgIds
+              moduleMgId = mgId ? mgId : 'init';
               moduleName =  this.userGeneratedModule.name || this.userGeneratedModule.notes || '-';
               moduleEcts = this.userGeneratedModule.ects;
               isUserGenerated = true;
@@ -240,7 +239,7 @@ export class ModuleStatusComponent implements OnInit {
             } else { // non user generated module
               moduleVersion = this.module.version;
               moduleAcronym = this.module.acronym;
-              moduleMgId = 'init'; // set mgId to undefined to prevent false value due to preselect of one mgId instead of selection out of all possible mgIds
+              moduleMgId = mgId ? mgId : 'init';
               moduleName = this.module.name;
               moduleEcts = this.module.ects;
               isUserGenerated = false;

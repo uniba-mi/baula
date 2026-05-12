@@ -217,7 +217,7 @@ export class SemesterBodyComponent {
         dialogContentId: 'change-module-group-dialog',
         mgId: module.mgId,
         structuredModuleGroups$: this.structuredModuleGroups$,
-        pathModule: module
+        acronym: module.acronym
       },
     });
 

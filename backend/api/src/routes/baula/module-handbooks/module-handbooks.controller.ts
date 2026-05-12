@@ -31,19 +31,6 @@ export async function getUpToDateMhb(req: Request, res: Response, next: NextFunc
   const user = req.user as UserServer;
 
   if(mhbId && user && user.sps && user.sps.length > 0) {
-    console.log(await prisma.sp2Mhb.findMany({
-      select: {
-        mhbId: true,
-        version: true
-      },
-      where: {
-        mhbId: mhbId,
-        spId: user.sps[0].spId
-      }, 
-      orderBy: {
-        version: 'desc'
-      },
-    }))
     const currentMhbVersion = await prisma.sp2Mhb.findFirst({
       select: {
         mhbId: true,

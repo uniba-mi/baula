@@ -19,9 +19,9 @@
     </div>
   </div>
   <!-- alert if module is old -->
-  @if(selectedModule.isOld) {
+  @if(selectedModule.hasIssue) {
   <div class="alert alert-warning" role="alert">
-    Dieses Modul ist nicht mehr Teil deines aktuell ausgewählten Modulhandbuchs.
+    Dieses Modul ist nicht mehr Teil deines aktuell ausgewählten Modulhandbuchs oder ist einer Modulgruppe zugeordnet, in welcher es ursprünglich nicht enthalten ist. Prüfe ggf. die Anrechenbarkeit.
   </div>
   }
   <mat-tab-group #tabGroup animationDuration="0ms">

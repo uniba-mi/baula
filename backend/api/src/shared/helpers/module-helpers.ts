@@ -242,7 +242,6 @@ async function buildStructure(
             },
             where: {
               acronym: completedModule.acronym,
-              
             },
           });
           let moduleToAdd: Module;
@@ -268,7 +267,7 @@ async function buildStructure(
               mod.offerEnd,
               mod.workload,
             );
-            moduleToAdd.isOld = true;
+            moduleToAdd.hasIssue = true;
           } else {
             moduleToAdd = new Module(
               completedModule.acronym,

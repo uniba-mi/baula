@@ -16,7 +16,7 @@
             <div class="d-flex align-items-center">
                 <div *ngIf="studyPath$ | async as studyPath" class="status-box-not-clickable">
                     <app-module-status [studyPath$]="studyPath$" [module]="module" [modType]="modType"
-                        [openedFromModuleOffer]="true"></app-module-status>
+                        [openedFromModuleOffer]="true" [mgId]="'init'"></app-module-status>
                 </div>
             </div>
 

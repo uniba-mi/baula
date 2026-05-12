@@ -61,9 +61,10 @@
         <div *ngIf="
             data.statusOptions &&
             data.status &&
+            data.moduleData &&
             data.dialogContentId === 'change-status-dialog'
           ">
-          <app-change-status-dialog [statusOptions]="data.statusOptions" [status]="data.status"
+          <app-change-status-dialog [module]="data.moduleData" [statusOptions]="data.statusOptions" [status]="data.status"
             [statusSemester]="data.statusSemester" [semesters$]="data.semesters$" [grade]="data.grade">
           </app-change-status-dialog>
         </div>
@@ -73,7 +74,7 @@
             data.dialogContentId === 'change-module-group-dialog'
           ">
           <app-change-module-group-dialog [mgId]="data.mgId"
-            [structuredModuleGroups$]="data.structuredModuleGroups$" [acronym]="data.pathModule?.acronym"></app-change-module-group-dialog>
+            [structuredModuleGroups$]="data.structuredModuleGroups$" [acronym]="data.acronym"></app-change-module-group-dialog>
         </div>
         <div *ngIf="
             data.modules &&
