@@ -19,6 +19,7 @@ import {
   transformUnivISCourse,
 } from "./univis-helpers";
 import { Person } from "../../../../../interfaces/person";
+import { ImportLogMessage } from "../../../../../interfaces/logs";
 
 const prisma = new PrismaClient();
 
@@ -45,7 +46,7 @@ export async function crawlUnivis(url: string): Promise<string> {
 
 export async function processUnivisData(
   semester: string
-): Promise<string[]> {
+): Promise<ImportLogMessage> {
   return new Promise(async (resolve, reject) => {
     let startTime = Date.now();
     if(!process.env.UNIVIS_API_URL) {
@@ -54,7 +55,7 @@ export async function processUnivisData(
     const queryLink = `${process.env.UNIVIS_API_URL}${semester}`;
     const data = await crawlUnivis(queryLink);
     let message: string[] = [];
-
+    
     try {
       // take crawled xml and transform input to courses, rooms and persons, templates given in parent-folder 'templates/univis_template.ts'
       const newCourses: UnivISCourse[] = await transform(data, courses);
@@ -353,13 +354,16 @@ export async function processUnivisData(
         message.push(`${addedCompetences} Connections to Competences added`);
         message.push(`${addedModuleConnections} Connections to Modules added`);
         message.push(`${errorsOccured} Errors occured`);
-        message = message.concat(updateLog);
+        const detailLog = message.concat(updateLog);
         let difference = ((Date.now() - startTime) / 1000) | 0;
         let minutes = (difference / 60) | 0;
         let seconds = difference - minutes * 60;
         message.push(`${minutes} Minutes and ${seconds} Seconds to process`);
         //message.push(errorLog.join(";"));
-        resolve(message);
+        resolve({
+          logs: message,
+          detailLog
+        });
       } else {
         reject(
           new BadRequestError("Es ist ein Fehler in Ihrer Anfrage vorgekommen.")

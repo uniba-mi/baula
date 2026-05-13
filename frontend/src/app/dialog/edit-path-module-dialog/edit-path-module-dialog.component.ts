@@ -41,7 +41,6 @@ export class EditPathModuleDialogComponent implements OnInit {
         Validators.max(30),
       ]],
       grade: [this.pathModule?.grade ? this.pathModule.grade.toString() : '', [
-        Validators.required,
         Validators.min(1),
         Validators.max(5),
         Validators.pattern(/^[1-5]((\.|,)[0-9])?$/),
@@ -77,12 +76,12 @@ export class EditPathModuleDialogComponent implements OnInit {
           this.showNoGradeHint = true;
           break;
         case 'passed':
-          this.gradeControl.setValidators([Validators.required, Validators.min(1), Validators.max(4)]);
+          this.gradeControl.setValidators([Validators.min(1), Validators.max(4)]);
           this.gradeControl.enable();
           break;
         case 'failed':
           this.gradeControl.setValue('5');
-          this.gradeControl.setValidators([Validators.required, Validators.min(5), Validators.max(5)]);
+          this.gradeControl.setValidators([Validators.min(5), Validators.max(5)]);
           this.gradeControl.disable();
           this.showNoEditHint = true;
           break;

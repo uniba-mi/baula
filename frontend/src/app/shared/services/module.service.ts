@@ -5,16 +5,19 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
 import {
   getAllModules,
   getDistinctModules,
+  getModules,
 } from 'src/app/selectors/module-overview.selectors';
 import { Module } from '../../../../../interfaces/module';
 import { AlertType } from '../classes/alert';
 import { SnackbarService } from './snackbar.service';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ModuleInteractionActions } from 'src/app/actions/module-overview.actions';
 import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
 import { PathModule } from '../../../../../interfaces/study-path';
+import { ModuleHandbook } from '../../../../../interfaces/module-handbook';
+import { moduleChanges } from '../constants/module-mapping';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +30,10 @@ export class ModService {
     Module | PathModule | UserGeneratedModule | null
   >(null);
   currentAcronym$ = this.moduleAcronymSource.asObservable();
+
+  moduleChanges = moduleChanges;
+  newModules = moduleChanges.map(el => el.newModuleAcronym)
+  oldModules = moduleChanges.map(el => el.oldModuleAcronym)
 
   constructor(
     private store: Store,
@@ -71,6 +78,24 @@ export class ModService {
         });
       }
     });
+  }
+
+  // Function to compare mhbs
+  compareMhbs(baseMhb: ModuleHandbook, targetMhb: ModuleHandbook): string {
+    return 'Es hat sich nichts geändert.'
+  }
+
+  // Function to identify if a module is included in the module mapping, returns oldAcronym
+  isEquivalent (newAcronym: string): string | undefined {
+    const mapping = moduleChanges.find(el => el.newModuleAcronym == newAcronym)
+    return mapping ? mapping.oldModuleAcronym : undefined;
+  }
+
+  // Function to identify possible modulegroups of given acronym
+  findModuleGroups(acronym: string): Observable<string[]> {
+    return this.store.select(getModules).pipe(
+      map(modules => modules.filter(el => el.acronym == acronym && !el.hasIssue && !el.isOld).map(el => el.mgId))
+    )
   }
 
   // retrieve modules based on acronyms
@@ -125,10 +150,10 @@ export class ModService {
         selectedModule: module,
         activeTab,
       },
-      enterAnimationDuration: 100,
-      exitAnimationDuration: 100,
-      minWidth: '80vw',
-      minHeight: '80vh',
+              enterAnimationDuration: 100,
+        exitAnimationDuration: 100,
+        minWidth: '80vw',
+        minHeight: '80vh',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

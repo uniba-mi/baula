@@ -4,11 +4,10 @@ FROM debian:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update
-RUN apt-get upgrade -y
-
 # Install common tools and dependencies
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y \
     bash-completion \
     vim \
     git \

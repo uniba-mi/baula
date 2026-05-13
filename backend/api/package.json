@@ -5,7 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json && npm run copyFiles",
-    "copyFiles": "copyfiles package.json dist/backend/api && copyfiles -u 1 staticdata/* dist/backend/api/staticdata && copyfiles -u 1 src/certs/* dist/backend/api/src && copyfiles -u 1 -a -e '**/*.ts' src/database/* dist/backend/api/src/ && copyfiles -a -u 2 src/database/.env dist/backend/api/src/database && copyfiles -a environment/* dist/backend/api/",
+    "copyFiles": "copyfiles package.json dist/backend/api && copyfiles -u 1 staticdata/* dist/backend/api/staticdata && copyfiles -u 1 staticdata/**/* dist/backend/api/staticdata && copyfiles -u 1 src/certs/* dist/backend/api/src && copyfiles -u 1 -a -e '**/*.ts' src/database/* dist/backend/api/src/ && copyfiles -a -u 2 src/database/.env dist/backend/api/src/database && copyfiles -a environment/* dist/backend/api/",
     "startApi": "nodemon ./src/server.ts",
     "startCronjob": "nodemon ./src/shared/utils/cron-job.ts",
     "generateDB": "npx prisma generate --schema ./src/database/schema.prisma",

@@ -19,8 +19,7 @@
   <!-- Sidenav area -->
   <mat-sidenav-container #sidenavContainer [hasBackdrop]="false">
     <!-- Beginn group navigation -->
-    <mat-sidenav id="structure-sidenav" [opened]="sideNavOpened" [mode]="'side'"
-      [@slideInOut]="sideNavOpened ? 'open' : 'closed'">
+    <mat-sidenav id="structure-sidenav" class="panel" [class.open]="sideNavOpened" [class.closed]="!sideNavOpened" [opened]="sideNavOpened" [mode]="'side'">
       <div #sidenav class="sticky-sidenav me-4">
         <ng-container *ngTemplateOutlet="GroupingOptions"></ng-container>
         <app-group-navigation [searchSettings]="searchSettings$ | async" [removeGroupFilters]="removeGroupFilters"

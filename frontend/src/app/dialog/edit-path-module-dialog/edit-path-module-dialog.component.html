@@ -78,11 +78,8 @@
       <div class="input-field-wrapper">
         <mat-form-field appearance="outline">
           <mat-label>Note</mat-label>
-          <input matInput formControlName="grade" #grade type="text" required pattern="^[1-5]((\.|,)[0-9])?$">
+          <input matInput formControlName="grade" #grade type="text" pattern="^[1-5]((\.|,)[0-9])?$">
           <mat-error *ngIf="pathModuleForm.controls['grade'].touched && pathModuleForm.controls['grade'].invalid">
-            <span *ngIf="pathModuleForm.controls['grade'].errors?.required">Das ist ein
-              Pflichtfeld.
-            </span>
             <span
               *ngIf="pathModuleForm.controls['grade'].errors?.min || pathModuleForm.controls['grade'].errors?.max">Die
               Note muss zwischen 1,0 und 4,0 liegen.

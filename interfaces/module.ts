@@ -30,6 +30,9 @@ export class Module {
   mCourses: ModuleCourse[];
   isDropped: boolean;
   isOld?: boolean;
+  hasIssue?: boolean; // used if module does not exist in mhb or is connected to a invalid modulegroup
+  notExistingModule?: boolean;
+  equivalentModule?: string; // contains acronym of equivalent module if existing
 
   constructor(
     mId: string,

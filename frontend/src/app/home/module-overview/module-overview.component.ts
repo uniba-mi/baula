@@ -8,7 +8,7 @@ import {
   Renderer2,
   AfterViewInit,
 } from '@angular/core';
-import { concat, Observable, of, skipWhile, Subject, switchMap, take, takeUntil } from 'rxjs';
+import { concat, mergeMap, Observable, of, skipWhile, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
   getAllModules,
@@ -27,35 +27,19 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModService } from 'src/app/shared/services/module.service';
 import { ModuleGroup } from '../../../../../interfaces/module-group';
-import {
-  trigger,
-  state,
-  animate,
-  style,
-  transition,
-} from '@angular/animations';
 import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
+import { DialogComponent } from 'src/app/dialog/dialog.component';
+import { StudyProgrammeActions, UserActions } from 'src/app/actions/user.actions';
+import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-module-overview',
   templateUrl: './module-overview.component.html',
   styleUrls: ['./module-overview.component.scss'],
   standalone: false,
-  animations: [
-    trigger('slideInOut', [
-      state('open', style({
-        transform: 'translateX(0)', // Volle Sichtbarkeit
-      })),
-      state('closed', style({
-        transform: 'translateX(-200%)', // Komplett ausgeblendet
-      })),
-      transition('open <=> closed', [
-        animate('400ms ease-in-out'), // Geschwindigkeit und Timing
-      ]),
-    ]),
-  ],
 })
 export class ModuleOverviewComponent
   implements OnInit, OnDestroy, AfterViewInit {
@@ -163,7 +147,8 @@ export class ModuleOverviewComponent
     private modService: ModService,
     private router: Router,
     private renderer: Renderer2,
-    private recsHelper: RecsHelperService
+    private recsHelper: RecsHelperService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -186,6 +171,9 @@ export class ModuleOverviewComponent
     concat(mhbSub, modSub, soSub).subscribe(value => {
       if (value && 'mhbId' in value) {
         this.mhb = value;
+        if(!this.mhb.upToDate) {
+          this.openUpdateMhbDialog(this.mhb);
+        }
       } else if (value && Array.isArray(value)) {
         this.modules = value;
       } else {
@@ -331,6 +319,23 @@ export class ModuleOverviewComponent
   // push command to group-navigation to init removal of groupFilters
   removeGroupFilter() {
     this.removeGroupFilters = !this.removeGroupFilters;
+  }
+
+  private openUpdateMhbDialog(mhb: ModuleHandbook) {
+    const dialogRef = this.dialog.open(DialogComponent, 
+      {
+        data: {
+          dialogContentId: 'update-mhb-dialog',
+          mhb
+        }
+      }
+    )
+
+    dialogRef.afterClosed().pipe(take(1)).subscribe((mhb: ModuleHandbook) => {
+      if(mhb.version !== this.mhb.version) {
+        this.store.dispatch(StudyProgrammeActions.changeModulehandbook({ mhbId: mhb.mhbId, version: mhb.version }))
+      }
+    })
   }
 
   ngOnDestroy() {

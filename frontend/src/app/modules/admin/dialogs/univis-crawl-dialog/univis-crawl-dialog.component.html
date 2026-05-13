@@ -1,9 +1,19 @@
 <ng-container role="Dialogfenster" aria-label="Dialogfenster">
   <div *ngIf="univisCrawl$ | async as messages;else progressSpinner">
-      <div *ngFor="let message of messages">
+      <div *ngFor="let message of messages.logs">
         <i class="text-success bi bi-check-lg"></i> 
         {{ message }}
       </div>
+      <mat-accordion *ngIf="messages.detailLog.length > 0">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Detaillierter Log </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let detail of messages.detailLog">
+            {{ detail }}
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     <mat-dialog-actions>
         <button mat-raised-button class="btn btn-outline" mat-dialog-close>
           Abbrechen

@@ -2,6 +2,7 @@ import cron from "node-cron";
 import { cronjobLogger } from "./logger";
 import { processUnivisData } from "../helpers/univis-crawler";
 import { Semester } from "../../../../../interfaces/semester";
+import '../../config/env.config'
 
 // CRON job: execute at 3 AM from Monday to Friday
 cron.schedule("0 3 * * 1-5", () => {
@@ -9,7 +10,11 @@ cron.schedule("0 3 * * 1-5", () => {
   cronjobLogger.info(message);
   const semester = new Semester().name;
   processUnivisData(semester).then((messages) => {
-    for (const message of messages) {
+    for (const message of messages.logs) {
+      cronjobLogger.info(message);
+    }
+    cronjobLogger.info("Ausführliche Änderungen:");
+    for (const message of messages.detailLog) {
       cronjobLogger.info(message);
     }
   });

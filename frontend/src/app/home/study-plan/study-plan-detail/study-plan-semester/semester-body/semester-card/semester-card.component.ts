@@ -29,6 +29,7 @@ export class SemesterCardComponent {
   @Input() modType: string;
   @Input() isSmallScreen: boolean;
   @Input() availableActions: ItemActionName[] = []; // available for card type
+  @Input() mgId: string;
 
   @Output() actionTriggered = new EventEmitter<{ action: ItemActionName, data: any }>();
 
@@ -55,7 +56,6 @@ export class SemesterCardComponent {
   ) { }
 
   ngOnInit() {
-
     this.studyPath$ = this.store.select(getUserStudyPath);
 
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);

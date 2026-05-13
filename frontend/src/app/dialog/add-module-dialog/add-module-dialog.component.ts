@@ -50,6 +50,8 @@ export class AddModuleDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.modules = this.modules.filter(mod => !mod.isOld && !mod.hasIssue && !mod.notExistingModule)
+
     this.addModuleForm = this.formBuilder.group({
       moduleName: this.selectedModuleName,
     });

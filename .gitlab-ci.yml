@@ -1,0 +1,115 @@
+default:
+  tags:
+    - live-test-server
+
+stages:
+  - install_dependencies
+  - create_required_files
+  - build_backend
+  - build_docs
+  - build_frontend
+  # - create_docker
+  - deploy
+
+variables:
+  GIT_STRATEGY: fetch
+  GIT_CLEAN_FLAGS: "" 
+
+cache:
+  key: 
+    files:
+      - backend/api/package-lock.json
+      - frontend/package-lock.json
+  paths:
+    - backend/api/node_modules
+    - frontend/node_modules
+
+before_script:
+  - source ~/.nvm/nvm.sh
+
+install_dependencies:
+  stage: install_dependencies
+  dependencies: []
+  script:
+    - cd backend/api && npm install
+    - cd ../../frontend && npm install
+
+create_required_files:
+  stage: create_required_files
+  dependencies: []
+  script:
+    #- npm run buildInitial CREATE_CONFIG_AND_ENV CREATE_CERTS CREATE_TEMPLATES CREATE_LOCAL_USERS PROD_CREATE_ENV
+    - COPY_PATH=/home/gitlab-runner/envFiles npm run buildInitial PROD_COPY_FILES
+  artifacts:
+    paths:
+      - backend/api/src/certs
+      - backend/api/src
+      # TODO staticdata instead? 
+      - backend/api/src/staticdate
+      - backend/api/environment
+      - frontend/src/environments
+      - .env
+    expire_in: 1 day
+
+build_backend:
+  stage: build_backend
+  dependencies:
+    - install_dependencies
+    - create_required_files
+  script:
+    - cd backend/api && npm run generateDB && cd ../../
+    - npm run buildInitial PROD_BUILD_BACKEND
+  artifacts:
+    paths:
+      - backend/api/dist
+    expire_in: 1 day
+
+build_docs:
+  stage: build_docs
+  dependencies: []
+  script:
+    - npm run buildInitial PROD_BUILD_DOCS
+  artifacts:
+    paths:
+      - server/app/docs
+    expire_in: 1 day
+
+build_frontend:
+  stage: build_frontend
+  dependencies:
+    - install_dependencies
+    - create_required_files
+  script:
+    - npm run buildInitial PROD_BUILD_FRONTEND
+  artifacts:
+    paths:
+      - server/app/browser
+    expire_in: 1 day
+
+# create_docker:
+#   stage: create_docker
+#   dependencies:
+#     - install_dependencies
+#     - create_required_files
+#     - build_backend
+#     - build_docs
+#     - build_frontend
+#   script:
+#     - npm run buildInitial PROD_START_DOCKER
+#     - sleep 20
+#     - npm run buildInitial CHECK_ALL
+
+deploy:
+  stage: deploy
+  dependencies:
+    - install_dependencies
+    - create_required_files
+    - build_backend
+    - build_docs
+    - build_frontend
+  script:
+    #- rm -rf /home/gitlab-runner/deployment
+    - npm run buildInitial PROD_DEPLOY
+    - cd /home/gitlab-runner/baula-test && docker-compose -f docker-compose.yml -f docker-compose.server.yml down
+    - cd /home/gitlab-runner/baula-test && npm run startServerDocker
+

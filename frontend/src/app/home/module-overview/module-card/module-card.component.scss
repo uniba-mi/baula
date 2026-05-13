@@ -18,3 +18,19 @@
     transform: translate(-50%, -50%)
   }
 }
+
+.cursor-disabled {
+  cursor: not-allowed;
+}
+
+.user-module-card {
+  border: 2px dashed var(--ub-gray);
+}
+
+.card-disabled {
+  opacity: 0.5;
+}
+
+.old-module {
+  border: 2px solid var(--ub-yellow);
+}

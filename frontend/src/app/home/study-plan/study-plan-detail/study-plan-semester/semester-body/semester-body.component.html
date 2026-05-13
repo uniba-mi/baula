@@ -30,7 +30,7 @@
             <ng-container *ngIf="!metaSemester.isPastSemester">
                 <ng-container *ngIf="getModuleInformation(acronym) | async as module;">
                     <app-semester-card [moduleData]="module" [moduleType]="'module'" [metaSemester]="metaSemester"
-                        [modType]="'notPath'" [isSmallScreen]="isSmallScreen"
+                        [modType]="'notPath'" [isSmallScreen]="isSmallScreen" [mgId]="'init'"
                         [availableActions]="['select', 'feedback', 'drag', 'moveToSem', 'delete']"
                         (actionTriggered)="handleModuleAction($event)">
                     </app-semester-card>
@@ -41,7 +41,7 @@
         <!-- User Generated Modules -->
         <ng-container *ngIf="!metaSemester.isPastSemester && semesterPlan.userGeneratedModules.length > 0">
             <ng-container *ngFor="let module of semesterPlan.userGeneratedModules">
-                <app-semester-card [moduleData]="module" [moduleType]="'userGeneratedModule'"
+                <app-semester-card [moduleData]="module" [moduleType]="'userGeneratedModule'" [mgId]="'init'"
                     [metaSemester]="metaSemester" [modType]="'notPath'" [isSmallScreen]="isSmallScreen"
                     [availableActions]="['edit', 'drag', 'moveToSem', 'delete']"
                     (actionTriggered)="handleModuleAction($event)">
@@ -54,7 +54,7 @@
             <ng-container *ngFor="let pathModule of semesterStudyPath[0].modules">
                 <app-semester-card [moduleData]="pathModule" [moduleType]="'pathModule'" [metaSemester]="metaSemester"
                     [modType]="'path'" [availableActions]="['feedback', 'edit', 'delete', 'changeMG', 'editGrade']"
-                    (actionTriggered)="handleModuleAction($event)">
+                    (actionTriggered)="handleModuleAction($event)" [mgId]="pathModule.mgId ?? 'init'">
                 </app-semester-card>
             </ng-container>
         </ng-container>

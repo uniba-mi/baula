@@ -7,19 +7,31 @@ import {
 import { logError } from "../error";
 import { Person } from "../../../../../interfaces/person";
 import { ModuleHandbook } from "../../../../../interfaces/module-handbook";
+import {
+  Changelog,
+  ImportLogMessage,
+  MergedChangelog,
+} from "../../../../../interfaces/logs";
 
 const prisma = new PrismaClient();
 
 export async function upsertDeparmtents(
-  departments: Department[]
-): Promise<string> {
+  departments: Department[],
+): Promise<Changelog> {
   return new Promise(async (resolve, reject) => {
-    const depChange = { added: 0, updated: 0 };
+    const depChange: Changelog = {
+      queried: departments.length,
+      added: 0,
+      updated: 0,
+      deleted: 0,
+      error: false,
+      detailLog: [],
+    };
     try {
       // reduce departments to unique values
       departments = departments.filter(
         (department, index, self) =>
-          index === self.findIndex((d) => d.shortName === department.shortName)
+          index === self.findIndex((d) => d.shortName === department.shortName),
       );
       // add departments to database otherwise check for update
       for (let department of departments) {
@@ -33,6 +45,7 @@ export async function upsertDeparmtents(
             data: department,
           });
           depChange.added++;
+          depChange.detailLog.push(`Added ${department.shortName}`);
         } else {
           // check for changes and update
           if (existingDep.name !== department.name) {
@@ -45,27 +58,39 @@ export async function upsertDeparmtents(
               },
             });
             depChange.updated++;
+            depChange.detailLog.push(`Changed name of ${department.shortName}`);
           }
         }
       }
-      resolve(
-        `Departments: ${departments.length} queried - ${depChange.added} added - ${depChange.updated} updated`
-      );
+      resolve(depChange);
     } catch (error) {
       logError(error);
-      resolve("ERROR - Fehler beim Hinzufügen der Departments");
+      depChange.error = true;
+      depChange.detailLog.push(
+        "ERROR - Fehler beim Hinzufügen der Einrichtungen",
+      );
+      resolve(depChange);
     }
   });
 }
 
-export async function upsertPersons(persons: Person[]): Promise<string> {
+export async function upsertPersons(persons: Person[]): Promise<Changelog> {
   return new Promise(async (resolve, reject) => {
-    const personsChange = { added: 0, updated: 0 };
+    const personsChange: Changelog = {
+      queried: 0,
+      added: 0,
+      updated: 0,
+      deleted: 0,
+      error: false,
+      detailLog: [],
+    };
     try {
       persons = persons.filter(
         (person, index, self) =>
-          index === self.findIndex((d) => d.pId === person.pId)
+          index === self.findIndex((d) => d.pId === person.pId),
       );
+      personsChange.queried = persons.length;
+
       for (let person of persons) {
         const existingPerson = await prisma.person.findUnique({
           where: {
@@ -77,48 +102,58 @@ export async function upsertPersons(persons: Person[]): Promise<string> {
             data: person,
           });
           personsChange.added++;
+          personsChange.detailLog.push(`Added Person with id ${person.pId}`);
         } else {
           // check for changes and update
-          if (
-            existingPerson.firstname !== person.firstname ||
-            existingPerson.lastname !== person.lastname ||
-            existingPerson.title !== person.title ||
-            existingPerson.email !== person.email
-          ) {
+          const changes = checkAndReturnChanges(person, existingPerson);
+          if (changes.length > 0) {
             await prisma.person.update({
-              where: {
-                pId: person.pId,
-              },
+              where: { pId: person.pId },
               data: person,
             });
+
             personsChange.updated++;
+            personsChange.detailLog.push(
+              `Updated Person ${person.pId}: ${changes.join(", ")}`,
+            );
           }
         }
       }
-      resolve(
-        `Persons: ${persons.length} queried - ${personsChange.added} added - ${personsChange.updated} updated`
-      );
+      resolve(personsChange);
     } catch (error) {
       logError(error);
-      resolve("ERROR - Fehler beim Hinzufügen der Personen");
+      personsChange.error = true;
+      personsChange.detailLog.push(
+        "ERROR - Fehler beim Hinzufügen der Personen",
+      );
+      resolve(personsChange);
     }
   });
 }
 
 export async function upsertStudyprogrammes(
-  sps: StudyProgramme[]
-): Promise<string> {
+  sps: StudyProgramme[],
+): Promise<Changelog> {
   return new Promise(async (resolve, reject) => {
-    const spsChanges = { added: 0, updated: 0 };
+    const spsChanges: Changelog = {
+      queried: 0,
+      added: 0,
+      updated: 0,
+      deleted: 0,
+      error: false,
+      detailLog: [],
+    };
     try {
       sps = sps.filter(
         (programme, index, self) =>
           index ===
           self.findIndex(
             (d) =>
-              d.spId === programme.spId && d.poVersion === programme.poVersion
-          )
+              d.spId === programme.spId && d.poVersion === programme.poVersion,
+          ),
       );
+      spsChanges.queried = sps.length;
+
       for (let programme of sps) {
         const existingSp = await prisma.studyProgramme.findUnique({
           where: {
@@ -133,14 +168,13 @@ export async function upsertStudyprogrammes(
             data: programme,
           });
           spsChanges.added++;
+          spsChanges.detailLog.push(
+            `Added Study Programme with id ${programme.spId}`,
+          );
         } else {
           // check for changes and update
-          if (
-            existingSp.desc !== programme.desc ||
-            existingSp.name !== programme.name ||
-            existingSp.date !== programme.date ||
-            existingSp.faculty !== programme.faculty
-          ) {
+          const changes = checkAndReturnChanges(programme, existingSp);
+          if (changes.length > 0) {
             await prisma.studyProgramme.update({
               where: {
                 spId_poVersion: {
@@ -151,32 +185,46 @@ export async function upsertStudyprogrammes(
               data: programme,
             });
             spsChanges.updated++;
+            spsChanges.detailLog.push(
+              `Updated Study Programme ${programme.spId}: ${changes.join(", ")}`,
+            );
           }
         }
       }
-      resolve(
-        `Study Programmes: ${sps.length} queried - ${spsChanges.added} added - ${spsChanges.updated} updated`
-      );
+      resolve(spsChanges);
     } catch (error) {
       logError(error);
-      resolve("ERROR - Fehler beim Hinzufügen der Studiengänge");
+      spsChanges.error = true;
+      spsChanges.detailLog.push(
+        "ERROR - Fehler beim Hinzufügen der Studiengänge",
+      );
+      resolve(spsChanges);
     }
   });
 }
 
 export async function upsertModuleHandbooks(
-  mhbs: ModuleHandbook[]
-): Promise<string> {
+  mhbs: ModuleHandbook[],
+): Promise<Changelog> {
   return new Promise(async (resolve, reject) => {
-    const mhbsChanges = { added: 0, updated: 0 };
+    const mhbsChanges: Changelog = {
+      queried: 0,
+      added: 0,
+      updated: 0,
+      deleted: 0,
+      error: false,
+      detailLog: [],
+    };
     try {
       mhbs = mhbs.filter(
         (mhb, index, self) =>
           index ===
           self.findIndex(
-            (d) => d.mhbId === mhb.mhbId && d.version === mhb.version
-          )
+            (d) => d.mhbId === mhb.mhbId && d.version === mhb.version,
+          ),
       );
+      mhbsChanges.queried = mhbs.length;
+
       for (let mhb of mhbs) {
         const existingMhb = await prisma.mhb.findUnique({
           where: {
@@ -197,13 +245,13 @@ export async function upsertModuleHandbooks(
             },
           });
           mhbsChanges.added++;
+          mhbsChanges.detailLog.push(
+            `Added mhb with name: ${mhb.name} (${mhb.mhbId})`,
+          );
         } else {
           // check for changes and update
-          if (
-            existingMhb.name !== mhb.name ||
-            existingMhb.desc !== mhb.desc ||
-            existingMhb.semester !== mhb.semester
-          ) {
+          const changes = checkAndReturnChanges(mhb, existingMhb);
+          if (changes.length > 0) {
             await prisma.mhb.update({
               where: {
                 mhbId_version: {
@@ -218,30 +266,44 @@ export async function upsertModuleHandbooks(
               },
             });
             mhbsChanges.updated++;
+            mhbsChanges.detailLog.push(
+              `Updated mhb ${mhb.mhbId}: ${changes.join(", ")}`,
+            );
           }
         }
       }
-      resolve(
-        `Module Handbooks: ${mhbs.length} queried - ${mhbsChanges.added} added - ${mhbsChanges.updated} updated`
-      );
+      resolve(mhbsChanges);
     } catch (error) {
       logError(error);
-      resolve("ERROR - Fehler beim Hinzufügen der Modulhandbücher");
+      mhbsChanges.error = true;
+      mhbsChanges.detailLog.push(
+        "ERROR - Fehler beim Hinzufügen der Modulhandbücher",
+      );
+      resolve(mhbsChanges);
     }
   });
 }
 
 export async function upsertModuleGroups(
-  mgs: Prisma.ModuleGroupCreateInput[]
-): Promise<string> {
+  mgs: Prisma.ModuleGroupCreateInput[],
+): Promise<Changelog> {
   return new Promise(async (resolve, reject) => {
-    const mgsChange = { added: 0, updated: 0 };
+    const mgsChange: Changelog = {
+      queried: 0,
+      added: 0,
+      updated: 0,
+      deleted: 0,
+      error: false,
+      detailLog: [],
+    };
     try {
       mgs = mgs.filter(
         (mg, index, self) =>
           index ===
-          self.findIndex((d) => d.mgId === mg.mgId && d.version === mg.version)
+          self.findIndex((d) => d.mgId === mg.mgId && d.version === mg.version),
       );
+      mgsChange.queried = mgs.length;
+
       for (let mg of mgs) {
         // filter invalid values in mgs
         if (Number.isNaN(mg.ectsMin)) {
@@ -267,16 +329,13 @@ export async function upsertModuleGroups(
             data: mg,
           });
           mgsChange.added++;
+          mgsChange.detailLog.push(
+            `Added Modulegroup with name: ${mg.name} (${mg.mgId})`,
+          );
         } else {
           // check for changes and update
-          if (
-            existingMg.name !== mg.name ||
-            existingMg.desc !== mg.desc ||
-            existingMg.fullName !== mg.fullName ||
-            existingMg.ectsMin !== mg.ectsMin ||
-            existingMg.ectsMax !== mg.ectsMax ||
-            existingMg.order !== mg.order
-          ) {
+          const changes = checkAndReturnChanges(mg, existingMg);
+          if (changes.length > 0) {
             await prisma.moduleGroup.update({
               where: {
                 mgId_version: {
@@ -287,35 +346,47 @@ export async function upsertModuleGroups(
               data: mg,
             });
             mgsChange.updated++;
+            mgsChange.detailLog.push(
+              `Updated Module Group ${mg.mgId}: ${changes.join(", ")}`,
+            );
           }
         }
       }
-      resolve(
-        `Module Groups: ${mgs.length} queried - ${mgsChange.added} added - ${mgsChange.updated} updated`
-      );
+      resolve(mgsChange);
     } catch (error) {
       logError(error);
-      resolve("ERROR - Fehler beim Hinzufügen der Modulgruppen");
+      mgsChange.error = true;
+      mgsChange.detailLog.push(
+        "ERROR - Fehler beim Hinzufügen der Modulgruppen",
+      );
+      resolve(mgsChange);
     }
   });
 }
 
-export async function upsertModules(
-  modules: any[]
-): Promise<string> {
+export async function upsertModules(modules: any[]): Promise<Changelog> {
   return new Promise(async (resolve, reject) => {
-    const modulesChange = { added: 0, updated: 0 };
+    const modulesChange: Changelog = {
+      queried: 0,
+      added: 0,
+      updated: 0,
+      deleted: 0,
+      error: false,
+      detailLog: [],
+    };
     try {
       modules = modules.filter(
         (module, index, self) =>
           index ===
           self.findIndex(
-            (d) => d.mId === module.mId && d.version === module.version
-          )
+            (d) => d.mId === module.mId && d.version === module.version,
+          ),
       );
+      modulesChange.queried = modules.length;
+
       for (let module of modules) {
         // convert workload from array to string
-        if(module.workload) {
+        if (module.workload) {
           let workloadString = "";
           for (let string of module.workload) {
             if (string.type && string.hours) {
@@ -342,23 +413,13 @@ export async function upsertModules(
             data: module,
           });
           modulesChange.added++;
+          modulesChange.detailLog.push(
+            `Added Module with name ${module.name} (${module.mId})`,
+          );
         } else {
           // check for changes and update
-          if (
-            existingModule.name !== module.name ||
-            existingModule.content !== module.content ||
-            existingModule.skills !== module.skills ||
-            existingModule.addInfo !== module.addInfo ||
-            existingModule.priorKnowledge !== module.priorKnowledge ||
-            existingModule.ects !== module.ects ||
-            existingModule.term !== module.term ||
-            existingModule.recTerm !== module.recTerm ||
-            existingModule.duration !== module.duration ||
-            existingModule.chair !== module.chair ||
-            existingModule.offerBegin !== module.offerBegin ||
-            existingModule.offerEnd !== module.offerEnd ||
-            existingModule.workload !== module.workload
-          ) {
+          const changes = checkAndReturnChanges(module, existingModule);
+          if (changes.length > 0) {
             await prisma.module.update({
               where: {
                 mId_version: {
@@ -369,29 +430,41 @@ export async function upsertModules(
               data: module,
             });
             modulesChange.updated++;
+            modulesChange.detailLog.push(
+              `Updated Module ${module.mId}: ${changes.join(", ")}`,
+            );
           }
         }
       }
-      resolve(
-        `Modules: ${modules.length} queried - ${modulesChange.added} added - ${modulesChange.updated} updated`
-      );
+      resolve(modulesChange);
     } catch (error) {
       logError(error);
-      resolve("ERROR - Fehler beim Hinzufügen der Module");
+      modulesChange.error = true;
+      modulesChange.detailLog.push("ERROR - Fehler beim Hinzufügen der Module");
+      resolve(modulesChange);
     }
   });
 }
 
 export async function upsertModuleExams(
-  exams: Prisma.ModuleExamCreateInput[]
-): Promise<string> {
+  exams: Prisma.ModuleExamCreateInput[],
+): Promise<Changelog> {
   return new Promise(async (resolve, reject) => {
-    const examsChange = { added: 0, updated: 0 };
+    const examsChange: Changelog = {
+      queried: 0,
+      added: 0,
+      updated: 0,
+      deleted: 0,
+      error: false,
+      detailLog: [],
+    };
     try {
       exams = exams.filter(
         (exam, index, self) =>
-          index === self.findIndex((d) => d.meId === exam.meId)
+          index === self.findIndex((d) => d.meId === exam.meId),
       );
+      examsChange.queried = exams.length;
+
       for (let exam of exams) {
         if (Number.isNaN(exam.duration)) {
           exam.duration = null;
@@ -407,15 +480,13 @@ export async function upsertModuleExams(
             data: exam,
           });
           examsChange.added++;
+          examsChange.detailLog.push(
+            `Added module exam: ${exam.name} (${exam.meId})`,
+          );
         } else {
           // check for changes and update
-          if (
-            existingExam.shortName !== exam.shortName ||
-            existingExam.name !== exam.name ||
-            existingExam.desc !== exam.desc ||
-            existingExam.duration !== exam.duration ||
-            existingExam.share !== exam.share
-          ) {
+          const changes = checkAndReturnChanges(exam, existingExam);
+          if (changes.length > 0) {
             await prisma.moduleExam.update({
               where: {
                 meId: exam.meId,
@@ -423,28 +494,43 @@ export async function upsertModuleExams(
               data: exam,
             });
             examsChange.updated++;
+            examsChange.detailLog.push(
+              `Updated Exam ${exam.meId}: ${changes.join(", ")}`,
+            );
           }
         }
       }
-      resolve(
-        `Module Exams: ${exams.length} queried - ${examsChange.added} added - ${examsChange.updated} updated`
-      );
+      resolve(examsChange);
     } catch (error) {
       logError(error);
-      resolve("ERROR - Fehler beim Hinzufügen der Prüfungen");
+      examsChange.error = true;
+      examsChange.detailLog.push(
+        "ERROR - Fehler beim Hinzufügen der Prüfungen",
+      );
+      resolve(examsChange);
     }
   });
 }
 
 export async function upsertModuleCourses(
-  mcs: Prisma.ModuleCourseCreateInput[]
-): Promise<string> {
+  mcs: Prisma.ModuleCourseCreateInput[],
+): Promise<Changelog> {
   return new Promise(async (resolve, reject) => {
-    const mcsChange = { added: 0, updated: 0 };
+    const mcsChange: Changelog = {
+      queried: 0,
+      added: 0,
+      updated: 0,
+      deleted: 0,
+      error: false,
+      detailLog: [],
+    };
     try {
       mcs = mcs.filter(
-        (mc, index, self) => index === self.findIndex((d) => d.mcId === mc.mcId)
+        (mc, index, self) =>
+          index === self.findIndex((d) => d.mcId === mc.mcId),
       );
+      mcsChange.queried = mcs.length;
+
       for (let mc of mcs) {
         // filter invalid values in mcs
         if (Number.isNaN(mc.order)) {
@@ -467,20 +553,13 @@ export async function upsertModuleCourses(
             data: mc,
           });
           mcsChange.added++;
+          mcsChange.detailLog.push(
+            `Added Module Course with name ${mc.name} (${mc.mcId})`,
+          );
         } else {
           // check for changes and update
-          if (
-            existingMc.name !== mc.name ||
-            existingMc.type !== mc.type ||
-            existingMc.language !== mc.language ||
-            existingMc.desc !== mc.desc ||
-            existingMc.ects !== mc.ects ||
-            existingMc.term !== mc.term ||
-            existingMc.order !== mc.order ||
-            existingMc.compulsory !== mc.compulsory ||
-            existingMc.literature !== mc.literature ||
-            existingMc.sws !== mc.sws
-          ) {
+          const changes = checkAndReturnChanges(mc, existingMc);
+          if (changes.length > 0) {
             await prisma.moduleCourse.update({
               where: {
                 mcId: mc.mcId,
@@ -488,15 +567,75 @@ export async function upsertModuleCourses(
               data: mc,
             });
             mcsChange.updated++;
+            mcsChange.detailLog.push(
+              `Updated Module Course ${mc.mcId}: ${changes.join(", ")}`,
+            );
           }
         }
       }
-      resolve(
-        `Module Courses: ${mcs.length} queried - ${mcsChange.added} added - ${mcsChange.updated} updated`
-      );
+      resolve(mcsChange);
     } catch (error) {
       logError(error);
-      resolve("ERROR - Fehler beim Hinzufügen der Lehrveranstaltungen");
+      mcsChange.error = true;
+      mcsChange.detailLog.push(
+        "ERROR - Fehler beim Hinzufügen der Lehrveranstaltungen",
+      );
+      resolve(mcsChange);
     }
   });
+}
+
+function checkAndReturnChanges(newEntry: any, oldEntry: any) {
+  const changes: string[] = [];
+
+  for (const key of Object.keys(newEntry)) {
+    if (newEntry[key] !== oldEntry[key] && 
+      // additional conditions where comparison is not working
+      key !== "prevModules" && 
+      key !== "identifier") {
+      changes.push(`${key}: '${oldEntry[key]}' -> '${newEntry[key]}'`);
+    }
+  }
+
+  return changes;
+}
+
+/** Helper functions for Logging  */
+function mergeChangelogs(logs: Changelog[]): Changelog {
+  return logs.reduce<Changelog>(
+    (acc, curr) => {
+      acc.queried += curr.queried;
+      acc.added += curr.added;
+      acc.updated += curr.updated;
+      acc.deleted += curr.deleted;
+      acc.error = acc.error || curr.error;
+      acc.detailLog.push(...curr.detailLog);
+      return acc;
+    },
+    {
+      queried: 0,
+      added: 0,
+      updated: 0,
+      deleted: 0,
+      error: false,
+      detailLog: [],
+    },
+  );
+}
+
+export function generateLogging(logs: MergedChangelog[]): ImportLogMessage {
+  let result: string[] = [];
+  let detailLog: string[] = [];
+  for (const key of Object.keys(logs[0])) {
+    const keyLog = mergeChangelogs(logs.map((el) => el[key]));
+    result.push(
+      `${key}: ${keyLog.queried} queried, ${keyLog.added} added, ${keyLog.updated} updated, ${keyLog.deleted} deleted ${keyLog.error ? ", ERROR OCCURED, see detailed Log!" : ""} `,
+    );
+    detailLog = detailLog.concat(keyLog.detailLog);
+  }
+
+  return {
+    logs: result,
+    detailLog
+  };
 }

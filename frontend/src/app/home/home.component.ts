@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Semester } from '../../../../interfaces/semester';
-import { User } from '../../../../interfaces/user';
+import { Consent, User } from '../../../../interfaces/user';
 import {
   StudyPlanActions,
   TimetableActions,
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
     private userUpdateService: UserUpdateService,
     private api: RestService,
     private indexedDB: IndexedDbService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -71,8 +71,8 @@ export class HomeComponent implements OnInit {
       .catch((error) =>
         console.error(
           'Beim Laden der Lehrveranstaltungen ist ein Fehler aufgetreten! ' +
-            error
-        )
+            error,
+        ),
       );
   }
 
@@ -83,9 +83,13 @@ export class HomeComponent implements OnInit {
         this.user = user;
         this.loadUserData(user);
         const notificationEnabled = user.hints?.find(
-          (hint) => hint.key === 'notification-dialog' && !hint.hasConfirmed
+          (hint) => hint.key === 'notification-dialog' && !hint.hasConfirmed,
         );
-        if (notificationEnabled && this.notificationActive && !user.roles.includes('demo')) {
+        if (
+          notificationEnabled &&
+          this.notificationActive &&
+          !user.roles.includes('demo')
+        ) {
           this.openNotificationDialog();
         }
         if (this.router.url.endsWith('app')) {
@@ -117,7 +121,7 @@ export class HomeComponent implements OnInit {
         ModuleHandbookActions.loadModuleHandbook({
           id: user.sps[0].mhbId,
           version: user.sps[0].mhbVersion,
-        })
+        }),
       );
     }
 
@@ -129,11 +133,12 @@ export class HomeComponent implements OnInit {
         // update privacy change consent
         const privacyConsents =
           updatedUser.consents?.filter(
-            (consent) => consent.ctype === '2512-privacy-change'
+            (consent) => consent.ctype === '2512-privacy-change',
           ) || [];
 
         const latestPrivacyConsent =
           privacyConsents[privacyConsents.length - 1];
+
         if (
           ((latestPrivacyConsent && !latestPrivacyConsent.hasConfirmed) ||
             !latestPrivacyConsent) &&
@@ -145,7 +150,7 @@ export class HomeComponent implements OnInit {
           user.authType === 'saml' &&
           this.isTimestampOlderThanAWeek(user.createdAt ?? new Date())
         ) {
-          // only opens bakule survey, when privacy dialog is not opened, user is not demo user and is created more than one week ago
+          // only opens bakule survey, when privacy dialog is not opened, user is not demo user and is created more than one week ago and if consent is older than three months and in new semester
           this.openBaKuLeSurveyDialog();
         }
       });
@@ -169,21 +174,21 @@ export class HomeComponent implements OnInit {
                   .select(getActiveStudyPlanId)
                   .pipe(
                     takeWhile((id) => id === '', true),
-                    take(1)
+                    take(1),
                   )
                   .subscribe((activeId) => {
                     if (activeId === '') {
                       this.store.dispatch(
-                        StudyPlanActions.loadActiveStudyPlan()
+                        StudyPlanActions.loadActiveStudyPlan(),
                       );
                       // load semester plan
                       const semester = new Semester().name;
                       this.store.dispatch(
-                        TimetableActions.updateActiveSemester({ semester })
+                        TimetableActions.updateActiveSemester({ semester }),
                       );
                     }
                   });
-              })
+              }),
             )
             .subscribe((studyPlans) => {
               // legacy update of study plans
@@ -214,7 +219,7 @@ export class HomeComponent implements OnInit {
       this.store.dispatch(UserActions.setUserData({ user }));
       // dispatch change of sp and mhb to store
       this.store.dispatch(
-        selectStudyProgramme({ studyProgramme: user.sps[0].spId })
+        selectStudyProgramme({ studyProgramme: user.sps[0].spId }),
       );
 
       // set first semester info and load study plan uni template
@@ -237,7 +242,7 @@ export class HomeComponent implements OnInit {
               this.studyPlanTemplate$ =
                 this.api.getLatestTemplateForStudyProgram(
                   spId,
-                  currentSemesterType
+                  currentSemesterType,
                 );
 
               this.studyPlanTemplate$.pipe(take(1)).subscribe({
@@ -301,7 +306,7 @@ export class HomeComponent implements OnInit {
         ...el,
         expanded: true,
         userId: uId,
-      })
+      }),
     );
 
     this.studyPlanService.createStudyPlan(
@@ -309,7 +314,7 @@ export class HomeComponent implements OnInit {
       semesterPlans[0].semester,
       semesterPlans.length,
       semesterPlans,
-      true
+      true,
     );
 
     this.dialog.closeAll();
@@ -321,7 +326,7 @@ export class HomeComponent implements OnInit {
       this.user.startSemester,
       this.user.duration,
       undefined,
-      true
+      true,
     );
 
     this.dialog.closeAll();
@@ -341,21 +346,32 @@ export class HomeComponent implements OnInit {
           UserActions.updateHint({
             key: 'notification-dialog',
             hasConfirmed: true,
-          })
+          }),
         );
       }
     });
   }
 
   openBaKuLeSurveyDialog() {
+    // get latest bakule consent
     // Sort by timestamp in descending order
-    const surveyConsent = this.user.consents.filter(
-      (el) => el.ctype === 'bakule-survey'
-    ).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-    const latestSurveyConsent = surveyConsent.length > 0 ? surveyConsent[0] : null;
-    
-    if (!latestSurveyConsent || !latestSurveyConsent.hasResponded) {
-      const month = new Date().getMonth()+1;
+    const surveyConsent = this.user.consents
+      .filter((el) => el.ctype === 'bakule-survey')
+      .sort(
+        (a, b) =>
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+      );
+    const latestSurveyConsent =
+      surveyConsent.length > 0 ? surveyConsent[0] : undefined;
+
+    if (
+      !latestSurveyConsent ||
+      !latestSurveyConsent.hasResponded ||
+      this.isTimestampOlderThanThreeMonthsOrInNewSemster(
+        new Date(latestSurveyConsent.timestamp),
+      )
+    ) {
+      const month = new Date().getMonth() + 1;
       const year = new Date().getFullYear();
       const dialogRef = this.dialog.open(SurveyComponent, {
         disableClose: true,
@@ -366,9 +382,9 @@ export class HomeComponent implements OnInit {
             : '',
           semester: this.findSemesterCount(
             this.user.startSemester ?? new Semester().name,
-            this.user.duration ?? 6
+            this.user.duration ?? 6,
           ),
-          consentGiven: latestSurveyConsent?.hasConfirmed
+          consentGiven: latestSurveyConsent?.hasConfirmed,
         },
       });
       dialogRef
@@ -377,24 +393,28 @@ export class HomeComponent implements OnInit {
         .subscribe((result: boolean | LongTermEvaluation) => {
           if (typeof result === 'boolean') {
             // in case of true, user does not want to participate this semester update consent to false
-            if(result) {
-              this.store.dispatch(UserActions.addConsent({
-                ctype: 'bakule-survey',
-                hasConfirmed: false,
-                hasResponded: true,
-                timestamp: new Date(),
-              }))
+            if (result) {
+              this.store.dispatch(
+                UserActions.addConsent({
+                  ctype: 'bakule-survey',
+                  hasConfirmed: false,
+                  hasResponded: true,
+                  timestamp: new Date(),
+                }),
+              );
             }
             // else case not exist, when false is returned user not responded this time open dialog again
           } else {
             // user completed survey, when latestSurveyConsent not exists or hasConfirmed is false, than add new consent
-            if(!latestSurveyConsent || !latestSurveyConsent.hasConfirmed) {
-              this.store.dispatch(UserActions.addConsent({
-                ctype: 'bakule-survey',
-                hasConfirmed: true,
-                hasResponded: true,
-                timestamp: new Date(),
-              }))
+            if (!latestSurveyConsent || !latestSurveyConsent.hasConfirmed) {
+              this.store.dispatch(
+                UserActions.addConsent({
+                  ctype: 'bakule-survey',
+                  hasConfirmed: true,
+                  hasResponded: true,
+                  timestamp: new Date(),
+                }),
+              );
             }
             // else do nothing, since nothing changed
           }
@@ -406,7 +426,7 @@ export class HomeComponent implements OnInit {
     const semesters = new Semester(startSemester)
       .getSemesterList(duration)
       .map((el) => el.name);
-    return semesters.indexOf(new Semester().name)+1;
+    return semesters.indexOf(new Semester().name) + 1;
   }
 
   openPrivacyChangeDialog() {
@@ -426,10 +446,10 @@ export class HomeComponent implements OnInit {
               hasConfirmed: true,
               hasResponded: true,
               timestamp: new Date(),
-            })
+            }),
           );
         } else if (result.choice === 'decline') {
-          this.userUpdateService.deleteUser(this.user)
+          this.userUpdateService.deleteUser(this.user);
         }
       }
     });
@@ -443,5 +463,34 @@ export class HomeComponent implements OnInit {
     const dateFromTimestamp = new Date(timestamp);
 
     return dateFromTimestamp < oneWeekAgo;
-}
+  }
+
+  private isTimestampOlderThanThreeMonthsOrInNewSemster(
+    timestamp: Date,
+  ): boolean {
+    const threeMonthsAgo = new Date(
+      new Date().getTime() - 3 * 30 * 24 * 60 * 60 * 1000,
+    ); // Millisekunden von drei Monaten
+    const currentSemester = new Semester().apNr;
+    const year = Number(currentSemester.slice(0, 4));
+    const stampYear = timestamp.getFullYear();
+    const stampMonth = timestamp.getMonth();
+
+    if (timestamp > threeMonthsAgo) {
+      return false;
+    }
+
+    if (stampMonth < 3 && year == stampYear - 1) {
+      // represents winter semester ending
+      return false;
+    } else if (stampMonth >= 3 && stampMonth < 9 && year === stampYear) {
+      // representing summer semester
+      return false;
+    } else if (stampMonth >= 9 && year === stampYear) {
+      // representing winter semester beginning
+      return false;
+    }
+
+    return true;
+  }
 }

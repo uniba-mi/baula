@@ -1,0 +1,240 @@
+{
+  "name": "Musterplan B. Sc. International Information Systems Management (SS26)",
+  "status": true,
+  "semesterPlans": [
+    {
+      "modules": ["MOBI-DBS-B", "WiMa-B-001", "WiMa-B-002"],
+      "userGeneratedModules": [
+        {
+          "name": "ISM-EidWI-B",
+          "ects": 6,
+          "notes": "Einführung in die Wirtschaftsinformatik\n\nFachstudium Wirtschaftsinformatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a012a74135e3561cafa1"
+        },
+        {
+          "name": "EVWL",
+          "ects": 6,
+          "notes": "Einführung in die VWL\nFachstudium BWL/VWL",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a03ca74135e3561cb01a"
+        }
+      ],
+      "courses": [],
+      "semester": "2026s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["Inf-Einf-B"],
+      "userGeneratedModules": [
+        {
+          "name": "CTRL-B-01",
+          "ects": 6,
+          "notes": "Kosten- und Leistungsrechnung\nFachstudium BWL/VWL",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a067a74135e3561cb0ec"
+        },
+        {
+          "name": "ISDL-WAWI-B",
+          "ects": 6,
+          "notes": "Wissenschaftliches Arbeiten in der WI\nÜberfachliche Kompetenzen\n",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a07da74135e3561cb19e"
+        },
+        {
+          "name": "ISDL-ITCon-B",
+          "ects": 6,
+          "notes": "IT-Controlling\nFachstudium IISM",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a090a74135e3561cb1fe"
+        },
+        {
+          "name": "IRWP-B-01",
+          "ects": 6,
+          "notes": "Buchführung\nFachstudium BWL/VWL",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a0b0a74135e3561cb26e"
+        }
+      ],
+      "courses": [],
+      "semester": "2026w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 33,
+      "expanded": true
+    },
+    {
+      "modules": ["EESYS-SaD-B"],
+      "userGeneratedModules": [
+        {
+          "name": "BSL-B-00",
+          "ects": 6,
+          "notes": "Einführung in die Betriebswirtschaftslehre\nFachstudium BWL/VWL\n",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a0cca74135e3561cb2a8"
+        },
+        {
+          "name": "IIS-EBAS-B",
+          "ects": 6,
+          "notes": "Entwicklung betrieblicher AWS\nFachstudium Wirtschaftsinformatik\n",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a0e7a74135e3561cb2e3"
+        },
+        {
+          "name": "ISPL-FIISM",
+          "ects": 6,
+          "notes": "Fundamentals of IISM\nFachstudium IISM",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a101a74135e3561cbc4e"
+        },
+        {
+          "name": "Fremdsprache",
+          "ects": 3,
+          "notes": "Wahlpflichtbereich\nFremdsprachen",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a11ea74135e3561cc128"
+        }
+      ],
+      "courses": [],
+      "semester": "2027s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": [],
+      "userGeneratedModules": [
+        {
+          "name": "Auslandsaufenthalt",
+          "ects": 30,
+          "notes": "Gelenktes Auslandsstudium",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a130a74135e3561cc661"
+        }
+      ],
+      "courses": [],
+      "semester": "2027w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["AIC-IITP-B"],
+      "userGeneratedModules": [
+        {
+          "name": "SNA-WIM-B",
+          "ects": 6,
+          "notes": "Wissens- und Informationsmanagement\nFachstudium Wirtschaftsinformatik\n",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a153a74135e3561cc6dd"
+        },
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt\n",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a161a74135e3561cc71d"
+        },
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a172a74135e3561cc75e"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 3,
+          "notes": "Wahlpflichtbereich\nIISM",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a18aa74135e3561cd031"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 3,
+          "notes": "Wahlpflichtbereich\nIISM",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a192a74135e3561cd074"
+        },
+        {
+          "name": "Fremdsprache",
+          "ects": 3,
+          "notes": "Wahlpflichtbereich Fremdsprachen",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a1a6a74135e3561cd0b8"
+        }
+      ],
+      "courses": [],
+      "semester": "2028s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": [],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich IISM",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a1b6a74135e3561cd0fd"
+        },
+        {
+          "name": "Wahlpflichtmodul",
+          "ects": 6,
+          "notes": "Allgemeine Schlüsselqualifikationen",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a1cda74135e3561cd7a3"
+        },
+        {
+          "name": "Fremdsprache",
+          "ects": 3,
+          "notes": "Wahlpflichtbereich Fremdsprachen",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a1e2a74135e3561ce745"
+        },
+        {
+          "name": "Bachelorarbeit",
+          "ects": 12,
+          "notes": "",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "69d3a1eaa74135e3561ceb11"
+        }
+      ],
+      "courses": [],
+      "semester": "2028w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 27,
+      "expanded": true
+    }
+  ]
+}

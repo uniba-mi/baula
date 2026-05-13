@@ -21,6 +21,18 @@
   margin-left: calc(2rem + 1.2em);
 }
 
+.panel {
+  transition: transform 400ms ease-in-out;
+}
+
+.panel.open {
+  transform: translateX(0);
+}
+
+.panel.closed {
+  transform: translateX(-200%);
+}
+
 mat-sidenav {
   width: 33%;
   height: 100%;

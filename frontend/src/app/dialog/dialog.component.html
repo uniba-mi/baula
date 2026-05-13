@@ -61,20 +61,20 @@
         <div *ngIf="
             data.statusOptions &&
             data.status &&
+            data.moduleData &&
             data.dialogContentId === 'change-status-dialog'
           ">
-          <app-change-status-dialog [statusOptions]="data.statusOptions" [status]="data.status"
+          <app-change-status-dialog [module]="data.moduleData" [statusOptions]="data.statusOptions" [status]="data.status"
             [statusSemester]="data.statusSemester" [semesters$]="data.semesters$" [grade]="data.grade">
           </app-change-status-dialog>
         </div>
         <div *ngIf="
             data.mgId &&
             data.structuredModuleGroups$ &&
-            data.showMgWizard !== undefined &&
             data.dialogContentId === 'change-module-group-dialog'
           ">
-          <app-change-module-group-dialog [mgId]="data.mgId" [showMgWizard]="data.showMgWizard"
-            [structuredModuleGroups$]="data.structuredModuleGroups$"></app-change-module-group-dialog>
+          <app-change-module-group-dialog [mgId]="data.mgId"
+            [structuredModuleGroups$]="data.structuredModuleGroups$" [acronym]="data.acronym"></app-change-module-group-dialog>
         </div>
         <div *ngIf="
             data.modules &&
@@ -158,6 +158,10 @@
 
         @if (data.dialogContentId === 'demo-user-dialog') {
         <app-demo-user-dialog></app-demo-user-dialog>
+        }
+
+        @if (data.dialogContentId === 'update-mhb-dialog' && data.mhb) {
+        <app-update-mhb-dialog [currentMhb]="data.mhb"></app-update-mhb-dialog>
         }
 
         <div *ngIf="data.dialogContentId === 'privacy-change-dialog'">
