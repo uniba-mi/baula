@@ -14,3 +14,4 @@ users.ts
 prisma/*
 /api/dist/*
 export.xml
+mhb_export.xml

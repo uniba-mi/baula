@@ -1160,6 +1160,13 @@ async function crawlFlexNow(semester: string): Promise<string[]> {
       res.on("data", chunk => raw += chunk);
       res.on("end", () => {
         if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+          // save xml on local file system for debugging
+          try {
+            fs.writeFileSync(path.join(__dirname, '../../../../staticdata/mhb_export.xml'), raw)
+          } catch(error) {
+            console.log(error)
+          }
+
           const mhbs = raw.match(/<Modulhandbuch [\s\S]*?<\/Modulhandbuch>/g)
           resolve(mhbs ?? []);
         } else {
