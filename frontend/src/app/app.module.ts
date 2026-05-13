@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ErrorHandler, Inject, NgModule } from '@angular/core';
+import { ErrorHandler, Inject, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import {
@@ -283,7 +282,7 @@ import { ChangeModuleGroupComponent } from './shared/components/change-module-gr
     WordCloudComponent,
     DataPreviewComponent,
     SettingsListComponent,
-    UploadStudentDataConfirmationComponent
+    UploadStudentDataConfirmationComponent,
     UpdateMhbDialogComponent,
     ChangeModuleGroupComponent
   ],
@@ -293,7 +292,6 @@ import { ChangeModuleGroupComponent } from './shared/components/change-module-gr
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     MatSnackBarModule,
     MatExpansionModule,
     MatDialogModule,
@@ -371,12 +369,6 @@ import { ChangeModuleGroupComponent } from './shared/components/change-module-gr
     {
       provide: TraceService,
       deps: [Router],
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: () => () => { },
-      deps: [TraceService],
-      multi: true,
     },
   ],
 })
