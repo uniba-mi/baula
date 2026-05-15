@@ -1116,12 +1116,12 @@ export async function crawlStudentDataViaFlexNow(
     if (url) {
       setTimeout(async () => {
         // read test xml file
-        /* const result = fs.readFileSync(
+        const result = fs.readFileSync(
           __dirname + "../../../../../staticdata/dummy_student.xml",
           "utf8",
-        ); */
+        );
 
-        const result = await new Promise<string>((resolve, reject) => {
+        /* const result = await new Promise<string>((resolve, reject) => {
           const data = new URLSearchParams();
           data.append(
             "login",
@@ -1167,7 +1167,7 @@ export async function crawlStudentDataViaFlexNow(
 
           req.write(data.toString());
           req.end();
-        });
+        }); */
         const metadata: FnStudyProgramme[] = await transform(
           result,
           metaDataTemplate,
@@ -1239,6 +1239,7 @@ export async function crawlStudentDataViaFlexNow(
           }
         }
 
+        
         res.json({
           metadata: userData,
           studypath,

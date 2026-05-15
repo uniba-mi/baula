@@ -291,7 +291,7 @@ export class FlexnowService {
                 new Semester(flexNowOutput.metadata.startSemester).fullName
               }`
             );
-            console.log('Metainformationen:');
+            console.log('Metainformationen (XML):');
             console.log(flexNowOutput.metadata);
             console.log('Studienverlauf:');
             console.log(flexNowOutput.studypath);
