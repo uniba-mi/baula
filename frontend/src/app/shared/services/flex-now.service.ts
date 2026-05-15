@@ -273,8 +273,9 @@ export class FlexnowService {
         withLatestFrom(this.currentUser$),
         map(([flexNowOutput, user]) => {
           if (flexNowOutput) {
+            console.log(flexNowOutput)
             // BEGIN ONLY FOR DEV PURPOSE
-            const sp = flexNowOutput.metadata.sps[0];
+            /* const sp = flexNowOutput.metadata.sps[0];
             let messages = [];
             messages.push(`Studiengang: ${sp.name}`);
             messages.push(
@@ -319,7 +320,7 @@ export class FlexnowService {
                 );
               }
             }
-            window.alert(messages.join('\n'));
+            window.alert(messages.join('\n')); */
             // END ONLY FOR DEV PURPOSE
             let updatedUser = {
               ...user,
