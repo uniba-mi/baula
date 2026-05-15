@@ -322,7 +322,7 @@ export class FlexnowService {
             }
             window.alert(messages.join('\n')); */
             // END ONLY FOR DEV PURPOSE
-            let updatedUser = {
+/*             let updatedUser = {
               ...user,
             };
 
@@ -343,8 +343,8 @@ export class FlexnowService {
                 ...flexNowOutput.metadata
               }
             }
-
-            return updatedUser;
+ */
+            return undefined;
           } else {
             return undefined;
           }
