@@ -1,572 +1,525 @@
 <Studentendaten>
   <Student>
-    <Studentfach Matrnr="1985390" Studfach="MaCiH">
-      <FachsemByAktuellesSemester>-1</FachsemByAktuellesSemester>
-      <PrfsemByAktuellesSemester>3.00</PrfsemByAktuellesSemester>
-      <FachsemOriginalByAktuellesSemester>-1</FachsemOriginalByAktuellesSemester>
-      <Apabschluss>88</Apabschluss>
-      <Apnr>f46</Apnr>
-      <Apstgnr>11</Apstgnr>
-      <IsEquals />
-      <Hrst>H</Hrst>
-      <Kzfa>H</Kzfa>
-      <Pversion>0</Pversion>
-      <Vert>710</Vert>
-      <Stufrm>7</Stufrm>
-      <NoteSchnitt />
-      <RangPlatz />
-      <Kohorte />
-      <Immadatum>01.04.2019</Immadatum>
-      <Exmadatum>30.09.2022</Exmadatum>
-      <ErrechneteNoteAusStudium>1,343</ErrechneteNoteAusStudium>
-      <ErrechneteNoteAusStudiumMitAusnahmeZr>1,343</ErrechneteNoteAusStudiumMitAusnahmeZr>
-      <ErrechnetesVolumenAusStudium>123,000</ErrechnetesVolumenAusStudium>
-      <ErrechnetesVolumenAusStudiumMitAusnahmeZr>123,000</ErrechnetesVolumenAusStudiumMitAusnahmeZr>
-      <ErrechnetesGesamtVolumen>120,000</ErrechnetesGesamtVolumen>
-      <Studfach.SpracheBez>Masterstudiengang Computing in the Humanities</Studfach.SpracheBez>
-      <Studfach.SpracheZeugnisbez>Masterstudiengang Computing in the Humanities</Studfach.SpracheZeugnisbez>
-      <Studfach.SsPrio />
-      <Studfach.Bezkompzeugnis></Studfach.Bezkompzeugnis>
-      <Studfach.Beschreibung></Studfach.Beschreibung>
-      <Studfach.Bez>Masterstudiengang Computing in the Humanities</Studfach.Bez>
-      <Studfach.Zeugnisbez>Masterstudiengang Computing in the Humanities</Studfach.Zeugnisbez>
-      <Studfach.Zeugnistitel>Vorsitzender des Prüfungsausschusses</Studfach.Zeugnistitel>
-      <Studfach.Volumen>120</Studfach.Volumen>
-      <Fak Fak="7" Role="Studfach.Fak">
-        <Zeugnisbez>Fakultät Wirtschaftsinformatik und Angewandte Informatik</Zeugnisbez>
-        <SpracheBez>Wirtschaftsinformatik und Angewandte Informatik</SpracheBez>
-        <SpracheZeugnisbez>Fakultät Wirtschaftsinformatik und Angewandte Informatik</SpracheZeugnisbez>
-        <Zeugnistitel>Dekan der Fakultät</Zeugnistitel>
-        <Bezeichners>
-          <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="7" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="2" Teilprfteil="-1023">
-            <Bez>Dean of the Faculty</Bez>
-            <Zeugnisbez>Dean of the Faculty</Zeugnisbez>
-          </Bezeichner>
-          <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="7" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-1023">
-            <Bez>Dekan der Fakultät</Bez>
-            <Zeugnisbez>Dekan der Fakultät</Zeugnisbez>
-          </Bezeichner>
-          <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="7" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2001">
-            <Bez>Wirtschaftsinformatik und Angewandte Informatik</Bez>
-            <Zeugnisbez>Fakultät Wirtschaftsinformatik und Angewandte Informatik</Zeugnisbez>
-          </Bezeichner>
-          <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="7" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="2" Teilprfteil="-2001">
-            <Bez>Faculty of Information Systems and Applied Computer Sciences</Bez>
-            <Zeugnisbez>Faculty of Information Systems and Applied Computer Sciences</Zeugnisbez>
-          </Bezeichner>
-        </Bezeichners>
-        <Person Personid="39" Role="Person">
-          <Zeugnisbez>Prof. Dr. Andreas Henrich</Zeugnisbez>
-          <Plz></Plz>
-          <Ort>Feldkirchenstraße 21</Ort>
-          <Strasse>F_21</Strasse>
-          <Telefon1>0951/863-2850</Telefon1>
-          <Email>andreas.henrich@uni-bamberg.de</Email>
-          <Url></Url>
-          <Anrede>Sehr geehrter Herr Prof. Dr. Henrich</Anrede>
-          <Nachname>Henrich</Nachname>
-          <Vorname>Andreas</Vorname>
-          <Land></Land>
-          <Telefax1></Telefax1>
-          <Akadgrad>Prof. Dr.</Akadgrad>
-          <KompletterName>Prof. Dr. Andreas Henrich</KompletterName>
-          <Adrfreitxt1 />
-          <Adrfreitxt2 />
-          <Sex Sex="1" Role="Sex">
-            <Apnr>M</Apnr>
-            <Anrede>Herr</Anrede>
-          </Sex>
-        </Person>
+    <Studentfach Studfach="BGes2">
+      <Immadatum>03.05.2011</Immadatum>
+      <Exmadatum>24.07.2019</Exmadatum>
+      <ErrechneteNoteAusStudium />
+      <ErrechneteNoteAusStudiumMitAusnahmeZr />
+      <ErrechnetesVolumenAusStudium>0</ErrechnetesVolumenAusStudium>
+      <ErrechnetesVolumenAusStudiumMitAusnahmeZr>0</ErrechnetesVolumenAusStudiumMitAusnahmeZr>
+      <Studfach.Bez>Bachelorstudiengang Geschichte 87 ECTS 2/3-fächrig (mit Bachelorarbeit)</Studfach.Bez>
+      <Studfach.Zeugnisbez>Bachelorstudiengang Geschichte</Studfach.Zeugnisbez>
+      <Fak Fak="1" Role="Studfach.Fak">
+        <Bez>Geistes- und Kulturwissenschaften</Bez>
+        <Kurzbez>GuK</Kurzbez>
       </Fak>
-      <Person Personid="3555" Role="Studfach.Person">
-        <Zeugnisbez>Prof. Dr. Stefan Ultes</Zeugnisbez>
-        <Plz />
-        <Ort />
-        <Strasse />
-        <Telefon1 />
-        <Email />
-        <Url />
-        <Anrede>Sehr geehrter Herr Prof. Dr. Ultes</Anrede>
-        <Nachname>Ultes</Nachname>
-        <Vorname>Stefan</Vorname>
-        <Land />
-        <Telefax1 />
-        <Akadgrad>Prof. Dr.</Akadgrad>
-        <KompletterName>Prof. Dr. Stefan Ultes</KompletterName>
-        <Adrfreitxt1 />
-        <Adrfreitxt2 />
-        <Sex Sex="1" Role="Sex">
-          <Apnr>M</Apnr>
-          <Anrede>Herr</Anrede>
-        </Sex>
-      </Person>
-      <Studiengang Studiengang="11" Role="Studfach.Studiengang">
-        <Bez>Masterstudiengang</Bez>
-        <SpracheBez>Masterstudiengang</SpracheBez>
-        <SpracheZeugnisbez>Masterstudiengang</SpracheZeugnisbez>
-      </Studiengang>
-      <Studfach.Bezeichners>
-        <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="MaCiH" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-1024">
-          <Bez>Vorsitzender des Prüfungsausschusses</Bez>
-          <Zeugnisbez>Vorsitzender des Prüfungsausschusses</Zeugnisbez>
-        </Bezeichner>
-        <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="MaCiH" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-1">
-          <Bez>Masterstudiengang Computing in the Humanities</Bez>
-          <Zeugnisbez>Masterstudiengang Computing in the Humanities</Zeugnisbez>
-        </Bezeichner>
-        <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="MaCiH" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="2" Teilprfteil="-1024">
-          <Bez>Head of Examination Board</Bez>
-          <Zeugnisbez>Head of Examination Board</Zeugnisbez>
-        </Bezeichner>
-        <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="MaCiH" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="2" Teilprfteil="-1">
-          <Bez>Computing in the Humanities</Bez>
-          <Zeugnisbez>Computing in the Humanities</Zeugnisbez>
-        </Bezeichner>
-      </Studfach.Bezeichners>
-      <Statusstudent Status="200" Role="Statusstudent">
-        <Bez>Exmatrikuliert</Bez>
-        <Bezeichners>
-          <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="200" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2020">
-            <Bez>Exmatrikuliert</Bez>
-            <Zeugnisbez>Exmatrikuliert</Zeugnisbez>
-          </Bezeichner>
-        </Bezeichners>
-      </Statusstudent>
-      <Abschluss Abschluss="8" Role="Abschluss">
-        <Bez>Abschluss: Master</Bez>
-        <Bestanden>1</Bestanden>
-        <Nichtbestanden>0</Nichtbestanden>
-        <Bezeichners>
-          <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="8" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2021">
-            <Bez>Abschluss: Master</Bez>
-            <Zeugnisbez>Abschluss: Master</Zeugnisbez>
-          </Bezeichner>
-        </Bezeichners>
-      </Abschluss>
-      <Semester Semesternr="75" Role="SemesterByExmasem">
-        <Bez>SS22</Bez>
-        <Semesternr>75</Semesternr>
-        <Zeugnisbez>Sommersemester 2022</Zeugnisbez>
-        <Semesterart Role="Semesterart">
-          <Bez>Normales Semester</Bez>
-          <FachsemMinus>0</FachsemMinus>
-          <IndrdauerPlus>0</IndrdauerPlus>
-          <Semesterart>-1</Semesterart>
-          <Default_>1</Default_>
-        </Semesterart>
-      </Semester>
-      <Po Studfach="MaCiH" Po="6" Role="AktuellePo">
-        <Bez>StuFPO vom 20.08.2010 in der ÄS vom 15.09.2022 - Profil 1 (ohne BA NF-AI) (WiMa alt)</Bez>
-        <Regeldauer>4</Regeldauer>
-        <SpracheBez>StuFPO vom 20.08.2010 in der ÄS vom 15.09.2022 - Profil 1 (ohne BA NF-AI) (WiMa alt)</SpracheBez>
-        <Datum>01.10.2010</Datum>
-        <Volumen>120</Volumen>
-        <Orgeinheit Orgeinheit="149" Role="Owner">
-          <Bez>&lt;Aus dem Angebot genommene Teilprüfungen&gt;</Bez>
-          <SpracheBez>&lt;Aus dem Angebot genommene Teilprüfungen&gt;</SpracheBez>
-          <SpracheZeugnisbez>&lt;Aus dem Angebot genommene Teilprüfungen&gt;</SpracheZeugnisbez>
-          <Person Personid="0" Role="Person">
-            <Zeugnisbez>N.N.</Zeugnisbez>
-            <Plz></Plz>
-            <Ort></Ort>
-            <Strasse></Strasse>
-            <Telefon1></Telefon1>
-            <Email></Email>
-            <Url></Url>
-            <Anrede></Anrede>
-            <Nachname>N.N.</Nachname>
-            <Vorname></Vorname>
-            <Land></Land>
-            <Telefax1></Telefax1>
-            <Akadgrad></Akadgrad>
-            <KompletterName>N.N.</KompletterName>
-            <Adrfreitxt1 />
-            <Adrfreitxt2 />
-            <Sex Sex="1" Role="Sex">
-              <Apnr>M</Apnr>
-              <Anrede>Herr</Anrede>
-            </Sex>
-          </Person>
-          <Oetyp Oetyp="0" Role="Oetyp">
-            <Bez>&lt;Sonstige Organisationseinheiten&gt;</Bez>
-          </Oetyp>
-        </Orgeinheit>
-        <Zeugnis>
-          <Zeugni Studfach="MaCiH" Po="6" Zeugnistyp="92">
-            <Isonlyzeugnis>1</Isonlyzeugnis>
-            <Ohnewww>1</Ohnewww>
-            <AkadgradM>Master of Science</AkadgradM>
-            <AkadgradMKurz>(M.Sc.)</AkadgradMKurz>
-            <AkadgradW>Master of Science</AkadgradW>
-            <AkadgradWKurz>(M.Sc.)</AkadgradWKurz>
-            <Statistikects>120</Statistikects>
-            <Abschluss Abschluss="8" Role="Abschluss">
-              <Bez>Abschluss: Master</Bez>
-              <Bestanden>1</Bestanden>
-              <Nichtbestanden>0</Nichtbestanden>
-              <Bezeichners>
-                <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="8" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2021">
-                  <Bez>Abschluss: Master</Bez>
-                  <Zeugnisbez>Abschluss: Master</Zeugnisbez>
-                </Bezeichner>
-              </Bezeichners>
-            </Abschluss>
-          </Zeugni>
-          <Zeugni Studfach="MaCiH" Po="6" Zeugnistyp="14">
-            <Isonlyzeugnis>1</Isonlyzeugnis>
-            <Ohnewww>0</Ohnewww>
-            <AkadgradM />
-            <AkadgradMKurz />
-            <AkadgradW />
-            <AkadgradWKurz />
-            <Statistikects />
-            <Abschluss Abschluss="8" Role="Abschluss">
-              <Bez>Abschluss: Master</Bez>
-              <Bestanden>1</Bestanden>
-              <Nichtbestanden>0</Nichtbestanden>
-              <Bezeichners>
-                <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="8" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2021">
-                  <Bez>Abschluss: Master</Bez>
-                  <Zeugnisbez>Abschluss: Master</Zeugnisbez>
-                </Bezeichner>
-              </Bezeichners>
-            </Abschluss>
-          </Zeugni>
-          <Zeugni Studfach="MaCiH" Po="6" Zeugnistyp="7">
-            <Isonlyzeugnis>1</Isonlyzeugnis>
-            <Ohnewww>0</Ohnewww>
-            <AkadgradM>Master of Science</AkadgradM>
-            <AkadgradMKurz>(M.Sc.)</AkadgradMKurz>
-            <AkadgradW>Master of Science</AkadgradW>
-            <AkadgradWKurz>(M.Sc.)</AkadgradWKurz>
-            <Statistikects>120</Statistikects>
-            <Abschluss Abschluss="8" Role="Abschluss">
-              <Bez>Abschluss: Master</Bez>
-              <Bestanden>1</Bestanden>
-              <Nichtbestanden>0</Nichtbestanden>
-              <Bezeichners>
-                <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="8" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2021">
-                  <Bez>Abschluss: Master</Bez>
-                  <Zeugnisbez>Abschluss: Master</Zeugnisbez>
-                </Bezeichner>
-              </Bezeichners>
-            </Abschluss>
-          </Zeugni>
-        </Zeugnis>
-      </Po>
-      <Notentab Version="1" Notentab="2" Role="Notentab">
-        <Bez>Vawi/Bachelor/Master (ohne 4,3 und 4,7)</Bez>
-        <Dezimal>1</Dezimal>
-      </Notentab>
       <StudentfachSems>
-        <StudentfachSem Semesternr="75" Matrnr="1985390" Studfach="MaCiH">
-          <StudgangAnzahl />
-          <LogElement>studentfach_sem</LogElement>
-          <Semgewichtet />
-          <Exmasem>1</Exmasem>
-          <Semanteil />
-          <AbschlAng />
-          <Teilzeit>0</Teilzeit>
-          <Prfsem>3,00</Prfsem>
+        <StudentfachSem Semesternr="69" Studfach="BGes2">
+          <Fachsem>13</Fachsem>
           <Immasem>0</Immasem>
-          <Exmadatum>30.09.2022</Exmadatum>
-          <FachsemOrig>7</FachsemOrig>
-          <Edited>0</Edited>
-          <Immadatum />
-          <Univ />
-          <Fachsem>3</Fachsem>
-          <Semestertyp Semestertyp="-1" Role="Semestertyp">
-            <Bez>Reguläres Semester</Bez>
-            <Semestertyp>-1</Semestertyp>
-            <Nfsemester>0</Nfsemester>
-            <Wwwanmeldung>1</Wwwanmeldung>
-            <Autoanmeldung>1</Autoanmeldung>
-            <Fristverl>0</Fristverl>
-            <Default_>1</Default_>
-            <Bezeichners>
-              <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2030">
-                <Bez>Reguläres Semester</Bez>
-                <Zeugnisbez>Reguläres Semester</Zeugnisbez>
-              </Bezeichner>
-            </Bezeichners>
-          </Semestertyp>
-          <Semester.Bez>SS22</Semester.Bez>
-          <Semester.Semesternr>75</Semester.Semesternr>
-          <Semester.Zeugnisbez>Sommersemester 2022</Semester.Zeugnisbez>
-          <Semesterart Role="Semester.Semesterart">
-            <Bez>Normales Semester</Bez>
-            <FachsemMinus>0</FachsemMinus>
-            <IndrdauerPlus>0</IndrdauerPlus>
-            <Semesterart>-1</Semesterart>
-            <Default_>1</Default_>
-          </Semesterart>
-        </StudentfachSem>
-        <StudentfachSem Semesternr="74" Matrnr="1985390" Studfach="MaCiH">
-          <StudgangAnzahl />
-          <LogElement>studentfach_sem</LogElement>
-          <Semgewichtet />
           <Exmasem>0</Exmasem>
-          <Semanteil />
-          <AbschlAng>1</AbschlAng>
           <Teilzeit>0</Teilzeit>
-          <Prfsem>2,00</Prfsem>
-          <Immasem>0</Immasem>
-          <Exmadatum />
-          <FachsemOrig>6</FachsemOrig>
-          <Edited>0</Edited>
-          <Immadatum />
-          <Univ />
-          <Fachsem>2</Fachsem>
           <Semestertyp Semestertyp="-1" Role="Semestertyp">
             <Bez>Reguläres Semester</Bez>
-            <Semestertyp>-1</Semestertyp>
-            <Nfsemester>0</Nfsemester>
-            <Wwwanmeldung>1</Wwwanmeldung>
-            <Autoanmeldung>1</Autoanmeldung>
-            <Fristverl>0</Fristverl>
-            <Default_>1</Default_>
-            <Bezeichners>
-              <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2030">
-                <Bez>Reguläres Semester</Bez>
-                <Zeugnisbez>Reguläres Semester</Zeugnisbez>
-              </Bezeichner>
-            </Bezeichners>
-          </Semestertyp>
-          <Semester.Bez>WS21/22</Semester.Bez>
-          <Semester.Semesternr>74</Semester.Semesternr>
-          <Semester.Zeugnisbez>Wintersemester 2021/2022</Semester.Zeugnisbez>
-          <Semesterart Role="Semester.Semesterart">
-            <Bez>Corona-Semester</Bez>
-            <FachsemMinus>1</FachsemMinus>
-            <IndrdauerPlus>0</IndrdauerPlus>
-            <Semesterart>1</Semesterart>
-            <Default_>0</Default_>
-          </Semesterart>
-        </StudentfachSem>
-        <StudentfachSem Semesternr="73" Matrnr="1985390" Studfach="MaCiH">
-          <StudgangAnzahl />
-          <LogElement>studentfach_sem</LogElement>
-          <Semgewichtet />
-          <Exmasem>0</Exmasem>
-          <Semanteil />
-          <AbschlAng />
-          <Teilzeit>0</Teilzeit>
-          <Prfsem>2,00</Prfsem>
-          <Immasem>0</Immasem>
-          <Exmadatum />
-          <FachsemOrig>5</FachsemOrig>
-          <Edited>0</Edited>
-          <Immadatum />
-          <Univ />
-          <Fachsem>2</Fachsem>
-          <Semestertyp Semestertyp="-1" Role="Semestertyp">
-            <Bez>Reguläres Semester</Bez>
-            <Semestertyp>-1</Semestertyp>
-            <Nfsemester>0</Nfsemester>
-            <Wwwanmeldung>1</Wwwanmeldung>
-            <Autoanmeldung>1</Autoanmeldung>
-            <Fristverl>0</Fristverl>
-            <Default_>1</Default_>
-            <Bezeichners>
-              <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2030">
-                <Bez>Reguläres Semester</Bez>
-                <Zeugnisbez>Reguläres Semester</Zeugnisbez>
-              </Bezeichner>
-            </Bezeichners>
-          </Semestertyp>
-          <Semester.Bez>SS21</Semester.Bez>
-          <Semester.Semesternr>73</Semester.Semesternr>
-          <Semester.Zeugnisbez>Sommersemester 2021</Semester.Zeugnisbez>
-          <Semesterart Role="Semester.Semesterart">
-            <Bez>Corona-Semester</Bez>
-            <FachsemMinus>1</FachsemMinus>
-            <IndrdauerPlus>0</IndrdauerPlus>
-            <Semesterart>1</Semesterart>
-            <Default_>0</Default_>
-          </Semesterart>
-        </StudentfachSem>
-        <StudentfachSem Semesternr="72" Matrnr="1985390" Studfach="MaCiH">
-          <StudgangAnzahl />
-          <LogElement>studentfach_sem</LogElement>
-          <Semgewichtet />
-          <Exmasem>0</Exmasem>
-          <Semanteil />
-          <AbschlAng />
-          <Teilzeit>0</Teilzeit>
-          <Prfsem>2,00</Prfsem>
-          <Immasem>0</Immasem>
-          <Exmadatum />
-          <FachsemOrig>4</FachsemOrig>
-          <Edited>0</Edited>
-          <Immadatum />
-          <Univ />
-          <Fachsem>2</Fachsem>
-          <Semestertyp Semestertyp="-1" Role="Semestertyp">
-            <Bez>Reguläres Semester</Bez>
-            <Semestertyp>-1</Semestertyp>
-            <Nfsemester>0</Nfsemester>
-            <Wwwanmeldung>1</Wwwanmeldung>
-            <Autoanmeldung>1</Autoanmeldung>
-            <Fristverl>0</Fristverl>
-            <Default_>1</Default_>
-            <Bezeichners>
-              <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2030">
-                <Bez>Reguläres Semester</Bez>
-                <Zeugnisbez>Reguläres Semester</Zeugnisbez>
-              </Bezeichner>
-            </Bezeichners>
-          </Semestertyp>
-          <Semester.Bez>WS20/21</Semester.Bez>
-          <Semester.Semesternr>72</Semester.Semesternr>
-          <Semester.Zeugnisbez>Wintersemester 2020/2021</Semester.Zeugnisbez>
-          <Semesterart Role="Semester.Semesterart">
-            <Bez>Corona-Semester</Bez>
-            <FachsemMinus>1</FachsemMinus>
-            <IndrdauerPlus>0</IndrdauerPlus>
-            <Semesterart>1</Semesterart>
-            <Default_>0</Default_>
-          </Semesterart>
-        </StudentfachSem>
-        <StudentfachSem Semesternr="71" Matrnr="1985390" Studfach="MaCiH">
-          <StudgangAnzahl />
-          <LogElement>studentfach_sem</LogElement>
-          <Semgewichtet />
-          <Exmasem>0</Exmasem>
-          <Semanteil />
-          <AbschlAng />
-          <Teilzeit>0</Teilzeit>
-          <Prfsem>2,00</Prfsem>
-          <Immasem>0</Immasem>
-          <Exmadatum />
-          <FachsemOrig>3</FachsemOrig>
-          <Edited>0</Edited>
-          <Immadatum />
-          <Univ />
-          <Fachsem>2</Fachsem>
-          <Semestertyp Semestertyp="-1" Role="Semestertyp">
-            <Bez>Reguläres Semester</Bez>
-            <Semestertyp>-1</Semestertyp>
-            <Nfsemester>0</Nfsemester>
-            <Wwwanmeldung>1</Wwwanmeldung>
-            <Autoanmeldung>1</Autoanmeldung>
-            <Fristverl>0</Fristverl>
-            <Default_>1</Default_>
-            <Bezeichners>
-              <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2030">
-                <Bez>Reguläres Semester</Bez>
-                <Zeugnisbez>Reguläres Semester</Zeugnisbez>
-              </Bezeichner>
-            </Bezeichners>
-          </Semestertyp>
-          <Semester.Bez>SS20</Semester.Bez>
-          <Semester.Semesternr>71</Semester.Semesternr>
-          <Semester.Zeugnisbez>Sommersemester 2020</Semester.Zeugnisbez>
-          <Semesterart Role="Semester.Semesterart">
-            <Bez>Corona-Semester</Bez>
-            <FachsemMinus>1</FachsemMinus>
-            <IndrdauerPlus>0</IndrdauerPlus>
-            <Semesterart>1</Semesterart>
-            <Default_>0</Default_>
-          </Semesterart>
-        </StudentfachSem>
-        <StudentfachSem Semesternr="70" Matrnr="1985390" Studfach="MaCiH">
-          <StudgangAnzahl />
-          <LogElement>studentfach_sem</LogElement>
-          <Semgewichtet />
-          <Exmasem>0</Exmasem>
-          <Semanteil />
-          <AbschlAng />
-          <Teilzeit>0</Teilzeit>
-          <Prfsem>2,00</Prfsem>
-          <Immasem>0</Immasem>
-          <Exmadatum />
-          <FachsemOrig>2</FachsemOrig>
-          <Edited />
-          <Immadatum />
-          <Univ />
-          <Fachsem>2</Fachsem>
-          <Semestertyp Semestertyp="-1" Role="Semestertyp">
-            <Bez>Reguläres Semester</Bez>
-            <Semestertyp>-1</Semestertyp>
-            <Nfsemester>0</Nfsemester>
-            <Wwwanmeldung>1</Wwwanmeldung>
-            <Autoanmeldung>1</Autoanmeldung>
-            <Fristverl>0</Fristverl>
-            <Default_>1</Default_>
-            <Bezeichners>
-              <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2030">
-                <Bez>Reguläres Semester</Bez>
-                <Zeugnisbez>Reguläres Semester</Zeugnisbez>
-              </Bezeichner>
-            </Bezeichners>
-          </Semestertyp>
-          <Semester.Bez>WS19/20</Semester.Bez>
-          <Semester.Semesternr>70</Semester.Semesternr>
-          <Semester.Zeugnisbez>Wintersemester 2019/2020</Semester.Zeugnisbez>
-          <Semesterart Role="Semester.Semesterart">
-            <Bez>Normales Semester</Bez>
-            <FachsemMinus>0</FachsemMinus>
-            <IndrdauerPlus>0</IndrdauerPlus>
-            <Semesterart>-1</Semesterart>
-            <Default_>1</Default_>
-          </Semesterart>
-        </StudentfachSem>
-        <StudentfachSem Semesternr="69" Matrnr="1985390" Studfach="MaCiH">
-          <StudgangAnzahl />
-          <LogElement>studentfach_sem</LogElement>
-          <Semgewichtet>1,00</Semgewichtet>
-          <Exmasem />
-          <Semanteil>0</Semanteil>
-          <AbschlAng />
-          <Teilzeit>0</Teilzeit>
-          <Prfsem>1,00</Prfsem>
-          <Immasem>1</Immasem>
-          <Exmadatum />
-          <FachsemOrig>1</FachsemOrig>
-          <Edited />
-          <Immadatum>01.04.2019</Immadatum>
-          <Univ>1</Univ>
-          <Fachsem>1</Fachsem>
-          <Semestertyp Semestertyp="-1" Role="Semestertyp">
-            <Bez>Reguläres Semester</Bez>
-            <Semestertyp>-1</Semestertyp>
-            <Nfsemester>0</Nfsemester>
-            <Wwwanmeldung>1</Wwwanmeldung>
-            <Autoanmeldung>1</Autoanmeldung>
-            <Fristverl>0</Fristverl>
-            <Default_>1</Default_>
-            <Bezeichners>
-              <Bezeichner Studabver="-1" Fachgruppe="-1" Studfach="&lt;x&gt;" Studab="-1" Prffachver="-1" Prffach="-1" Teilprf="-1" Sprache="1" Teilprfteil="-2030">
-                <Bez>Reguläres Semester</Bez>
-                <Zeugnisbez>Reguläres Semester</Zeugnisbez>
-              </Bezeichner>
-            </Bezeichners>
           </Semestertyp>
           <Semester.Bez>SS19</Semester.Bez>
-          <Semester.Semesternr>69</Semester.Semesternr>
-          <Semester.Zeugnisbez>Sommersemester 2019</Semester.Zeugnisbez>
-          <Semesterart Role="Semester.Semesterart">
-            <Bez>Normales Semester</Bez>
-            <FachsemMinus>0</FachsemMinus>
-            <IndrdauerPlus>0</IndrdauerPlus>
-            <Semesterart>-1</Semesterart>
-            <Default_>1</Default_>
-          </Semesterart>
+          <Semester.Apnr>20191</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="64" Studfach="BGes2">
+          <Fachsem>8</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS16/17</Semester.Bez>
+          <Semester.Apnr>20162</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="61" Studfach="BGes2">
+          <Fachsem>5</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem />
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS15</Semester.Bez>
+          <Semester.Apnr>20151</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="60" Studfach="BGes2">
+          <Fachsem>4</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem />
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS14/15</Semester.Bez>
+          <Semester.Apnr>20142</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="59" Studfach="BGes2">
+          <Fachsem>3</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem />
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS14</Semester.Bez>
+          <Semester.Apnr>20141</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="58" Studfach="BGes2">
+          <Fachsem>2</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS13/14</Semester.Bez>
+          <Semester.Apnr>20132</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="57" Studfach="BGes2">
+          <Fachsem>1</Fachsem>
+          <Immasem>1</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS13</Semester.Bez>
+          <Semester.Apnr>20131</Semester.Apnr>
         </StudentfachSem>
       </StudentfachSems>
-      <StudentfachStgs>
-        <StudentfachStg Id="1" Matrnr="1985390" Studfach="MaCiH">
-          <Stgnr>11</Stgnr>
-          <Kzfa>H</Kzfa>
-          <Stufrm>7</Stufrm>
-          <Hrst>H</Hrst>
-          <Vert>710</Vert>
-          <Pversion>0</Pversion>
-          <Stg>f46</Stg>
-          <Bearb>1</Bearb>
-          <Abschl>88</Abschl>
-        </StudentfachStg>
-      </StudentfachStgs>
+      <Po Studfach="BGes2" Po="10" Role="AktuellePo">
+        <Bez>StuFPO vom 05.08.2021 (mit Bachelorarbeit)</Bez>
+        <Regeldauer>6</Regeldauer>
+        <Volumen>180</Volumen>
+      </Po>
+      <Statusstudent Status="100" Role="Statusstudent">
+        <Bez>Immatrikuliert</Bez>
+      </Statusstudent>
+    </Studentfach>
+    <Studentfach Studfach="Test">
+      <Immadatum>22.02.2013</Immadatum>
+      <Exmadatum />
+      <ErrechneteNoteAusStudium />
+      <ErrechneteNoteAusStudiumMitAusnahmeZr />
+      <ErrechnetesVolumenAusStudium>0,000</ErrechnetesVolumenAusStudium>
+      <ErrechnetesVolumenAusStudiumMitAusnahmeZr>0,000</ErrechnetesVolumenAusStudiumMitAusnahmeZr>
+      <Studfach.Bez>Teststudiengang</Studfach.Bez>
+      <Studfach.Zeugnisbez>Bachelorstudiengang Test</Studfach.Zeugnisbez>
+      <Fak Fak="6" Role="Studfach.Fak">
+        <Bez>Fakultätsübergreifende und sonstige Einrichtungen</Bez>
+        <Kurzbez>SUPER</Kurzbez>
+      </Fak>
+      <StudentfachSems>
+        <StudentfachSem Semesternr="80" Studfach="Test">
+          <Fachsem>22</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS24/25</Semester.Bez>
+          <Semester.Apnr>20242</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="56" Studfach="Test">
+          <Fachsem>1</Fachsem>
+          <Immasem>1</Immasem>
+          <Exmasem>1</Exmasem>
+          <Teilzeit />
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS12/13</Semester.Bez>
+          <Semester.Apnr>20122</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="71" Studfach="Test">
+          <Fachsem>16</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS20</Semester.Bez>
+          <Semester.Apnr>20201</Semester.Apnr>
+        </StudentfachSem>
+      </StudentfachSems>
+      <Po Studfach="Test" Po="1" Role="AktuellePo">
+        <Bez>PO 1 - StuFPO vom 01.01.2000</Bez>
+        <Regeldauer>4</Regeldauer>
+        <Volumen />
+      </Po>
+      <Statusstudent Status="100" Role="Statusstudent">
+        <Bez>Immatrikuliert</Bez>
+      </Statusstudent>
+    </Studentfach>
+    <Studentfach Studfach="MaArM">
+      <Immadatum>03.05.2011</Immadatum>
+      <Exmadatum>31.03.2017</Exmadatum>
+      <ErrechneteNoteAusStudium />
+      <ErrechneteNoteAusStudiumMitAusnahmeZr />
+      <ErrechnetesVolumenAusStudium>0</ErrechnetesVolumenAusStudium>
+      <ErrechnetesVolumenAusStudiumMitAusnahmeZr>0</ErrechnetesVolumenAusStudiumMitAusnahmeZr>
+      <Studfach.Bez>Masterstudiengang Archäologie des Mittelalters und der Neuzeit</Studfach.Bez>
+      <Studfach.Zeugnisbez>Masterstudiengang Archäologie des Mittelalters und der Neuzeit</Studfach.Zeugnisbez>
+      <Fak Fak="1" Role="Studfach.Fak">
+        <Bez>Geistes- und Kulturwissenschaften</Bez>
+        <Kurzbez>GuK</Kurzbez>
+      </Fak>
+      <StudentfachSems>
+        <StudentfachSem Semesternr="60" Studfach="MaArM">
+          <Fachsem>1</Fachsem>
+          <Immasem>1</Immasem>
+          <Exmasem />
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS14/15</Semester.Bez>
+          <Semester.Apnr>20142</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="61" Studfach="MaArM">
+          <Fachsem>2</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem />
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS15</Semester.Bez>
+          <Semester.Apnr>20151</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="64" Studfach="MaArM">
+          <Fachsem>5</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>1</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS16/17</Semester.Bez>
+          <Semester.Apnr>20162</Semester.Apnr>
+        </StudentfachSem>
+      </StudentfachSems>
+      <Po Studfach="MaArM" Po="3" Role="AktuellePo">
+        <Bez>StuFPO vom 30.09.2011 in der ÄS vom 30.09.2020</Bez>
+        <Regeldauer>4</Regeldauer>
+        <Volumen>120</Volumen>
+      </Po>
+      <Statusstudent Status="200" Role="Statusstudent">
+        <Bez>Exmatrikuliert</Bez>
+      </Statusstudent>
+    </Studentfach>
+    <Studentfach Studfach="BAAng">
+      <Immadatum>03.05.2011</Immadatum>
+      <Exmadatum />
+      <ErrechneteNoteAusStudium />
+      <ErrechneteNoteAusStudiumMitAusnahmeZr />
+      <ErrechnetesVolumenAusStudium>0</ErrechnetesVolumenAusStudium>
+      <ErrechnetesVolumenAusStudiumMitAusnahmeZr>0</ErrechnetesVolumenAusStudiumMitAusnahmeZr>
+      <Studfach.Bez>Bachelorstudiengang International Information Systems Management</Studfach.Bez>
+      <Studfach.Zeugnisbez>Bachelorstudiengang International Information Systems Management</Studfach.Zeugnisbez>
+      <Fak Fak="7" Role="Studfach.Fak">
+        <Bez>Wirtschaftsinformatik und Angewandte Informatik</Bez>
+        <Kurzbez>WIAI</Kurzbez>
+      </Fak>
+      <StudentfachSems>
+        <StudentfachSem Semesternr="77" Studfach="BAAng">
+          <Fachsem>2</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS23</Semester.Bez>
+          <Semester.Apnr>20231</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="80" Studfach="BAAng">
+          <Fachsem>5</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS24/25</Semester.Bez>
+          <Semester.Apnr>20242</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="79" Studfach="BAAng">
+          <Fachsem>4</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS24</Semester.Bez>
+          <Semester.Apnr>20241</Semester.Apnr>
+        </StudentfachSem>
+      </StudentfachSems>
+      <Po Studfach="BAAng" Po="5" Role="AktuellePo">
+        <Bez>StuFPO vom 28.09.2018 in der Ã„S vom 14.03.2024 (mit WiMa-B-001b)</Bez>
+        <Regeldauer>6</Regeldauer>
+        <Volumen>180</Volumen>
+        <Modulhandbuch Version="14" Modulhandbuch="36553" Role="MhbMaxVersion" />
+      </Po>
+      <Statusstudent Status="100" Role="Statusstudent">
+        <Bez>Immatrikuliert</Bez>
+      </Statusstudent>
+    </Studentfach>
+    <Studentfach Studfach="StGen">
+      <Immadatum>03.05.2011</Immadatum>
+      <Exmadatum />
+      <ErrechneteNoteAusStudium />
+      <ErrechneteNoteAusStudiumMitAusnahmeZr />
+      <ErrechnetesVolumenAusStudium>0</ErrechnetesVolumenAusStudium>
+      <ErrechnetesVolumenAusStudiumMitAusnahmeZr>0</ErrechnetesVolumenAusStudiumMitAusnahmeZr>
+      <Studfach.Bez>Studium Generale (18 ECTS) und Zusatzleistungen</Studfach.Bez>
+      <Studfach.Zeugnisbez>Studium Generale (18 ECTS) und Zusatzleistungen</Studfach.Zeugnisbez>
+      <Fak Fak="6" Role="Studfach.Fak">
+        <Bez>Fakultätsübergreifende und sonstige Einrichtungen</Bez>
+        <Kurzbez>SUPER</Kurzbez>
+      </Fak>
+      <StudentfachSems>
+        <StudentfachSem Semesternr="57" Studfach="StGen">
+          <Fachsem>1</Fachsem>
+          <Immasem>1</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS13</Semester.Bez>
+          <Semester.Apnr>20131</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="71" Studfach="StGen">
+          <Fachsem>15</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS20</Semester.Bez>
+          <Semester.Apnr>20201</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="61" Studfach="StGen">
+          <Fachsem>5</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem />
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS15</Semester.Bez>
+          <Semester.Apnr>20151</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="60" Studfach="StGen">
+          <Fachsem>4</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem />
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS14/15</Semester.Bez>
+          <Semester.Apnr>20142</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="59" Studfach="StGen">
+          <Fachsem>3</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem />
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS14</Semester.Bez>
+          <Semester.Apnr>20141</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="75" Studfach="StGen">
+          <Fachsem>1</Fachsem>
+          <Immasem>1</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS22</Semester.Bez>
+          <Semester.Apnr>20221</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="58" Studfach="StGen">
+          <Fachsem>2</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS13/14</Semester.Bez>
+          <Semester.Apnr>20132</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="64" Studfach="StGen">
+          <Fachsem>8</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS16/17</Semester.Bez>
+          <Semester.Apnr>20162</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="80" Studfach="StGen">
+          <Fachsem>6</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS24/25</Semester.Bez>
+          <Semester.Apnr>20242</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="69" Studfach="StGen">
+          <Fachsem>13</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS19</Semester.Bez>
+          <Semester.Apnr>20191</Semester.Apnr>
+        </StudentfachSem>
+      </StudentfachSems>
+      <Po Studfach="StGen" Po="1" Role="AktuellePo">
+        <Bez>Studium Generale</Bez>
+        <Regeldauer>6</Regeldauer>
+        <Volumen />
+      </Po>
+      <Statusstudent Status="100" Role="Statusstudent">
+        <Bez>Immatrikuliert</Bez>
+      </Statusstudent>
+    </Studentfach>
+    <Studentfach Studfach="BAArc">
+      <Immadatum>01.04.2011</Immadatum>
+      <Exmadatum>31.03.2017</Exmadatum>
+      <ErrechneteNoteAusStudium />
+      <ErrechneteNoteAusStudiumMitAusnahmeZr />
+      <ErrechnetesVolumenAusStudium>0</ErrechnetesVolumenAusStudium>
+      <ErrechnetesVolumenAusStudiumMitAusnahmeZr>0</ErrechnetesVolumenAusStudiumMitAusnahmeZr>
+      <Studfach.Bez>Bachelorstudiengang Archäologie</Studfach.Bez>
+      <Studfach.Zeugnisbez>Bachelorstudiengang Archäologie</Studfach.Zeugnisbez>
+      <Fak Fak="1" Role="Studfach.Fak">
+        <Bez>Geistes- und Kulturwissenschaften</Bez>
+        <Kurzbez>GuK</Kurzbez>
+      </Fak>
+      <StudentfachSems>
+        <StudentfachSem Semesternr="57" Studfach="BAArc">
+          <Fachsem>5</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS13</Semester.Bez>
+          <Semester.Apnr>20131</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="56" Studfach="BAArc">
+          <Fachsem>4</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS12/13</Semester.Bez>
+          <Semester.Apnr>20122</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="53" Studfach="BAArc">
+          <Fachsem>1</Fachsem>
+          <Immasem>1</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit />
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS11</Semester.Bez>
+          <Semester.Apnr>20111</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="59" Studfach="BAArc">
+          <Fachsem>7</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>1</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS14</Semester.Bez>
+          <Semester.Apnr>20141</Semester.Apnr>
+        </StudentfachSem>
+        <StudentfachSem Semesternr="58" Studfach="BAArc">
+          <Fachsem>6</Fachsem>
+          <Immasem>0</Immasem>
+          <Exmasem>0</Exmasem>
+          <Teilzeit>0</Teilzeit>
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>WS13/14</Semester.Bez>
+          <Semester.Apnr>20132</Semester.Apnr>
+        </StudentfachSem>
+      </StudentfachSems>
+      <Po Studfach="BAArc" Po="1" Role="AktuellePo">
+        <Bez>ab PO vom 31.05.2006</Bez>
+        <Regeldauer>6</Regeldauer>
+        <Volumen />
+      </Po>
+      <Statusstudent Status="200" Role="Statusstudent">
+        <Bez>Exmatrikuliert</Bez>
+      </Statusstudent>
+    </Studentfach>
+    <Studentfach Studfach="MAAng">
+      <Immadatum>16.09.2011</Immadatum>
+      <Exmadatum>31.03.2017</Exmadatum>
+      <ErrechneteNoteAusStudium />
+      <ErrechneteNoteAusStudiumMitAusnahmeZr />
+      <ErrechnetesVolumenAusStudium>0</ErrechnetesVolumenAusStudium>
+      <ErrechnetesVolumenAusStudiumMitAusnahmeZr>0</ErrechnetesVolumenAusStudiumMitAusnahmeZr>
+      <Studfach.Bez>Masterstudiengang Angewandte Informatik</Studfach.Bez>
+      <Studfach.Zeugnisbez>Masterstudiengang Angewandte Informatik</Studfach.Zeugnisbez>
+      <Fak Fak="7" Role="Studfach.Fak">
+        <Bez>Wirtschaftsinformatik und Angewandte Informatik</Bez>
+        <Kurzbez>WIAI</Kurzbez>
+      </Fak>
+      <StudentfachSems>
+        <StudentfachSem Semesternr="53" Studfach="MAAng">
+          <Fachsem>1</Fachsem>
+          <Immasem>1</Immasem>
+          <Exmasem>1</Exmasem>
+          <Teilzeit />
+          <Semestertyp Semestertyp="-1" Role="Semestertyp">
+            <Bez>Reguläres Semester</Bez>
+          </Semestertyp>
+          <Semester.Bez>SS11</Semester.Bez>
+          <Semester.Apnr>20111</Semester.Apnr>
+        </StudentfachSem>
+      </StudentfachSems>
+      <Po Studfach="MAAng" Po="3" Role="AktuellePo">
+        <Bez>StuFPO vom 29.04.2011 - ohne Brückenstudium</Bez>
+        <Regeldauer>3</Regeldauer>
+        <Volumen>90</Volumen>
+      </Po>
+      <Statusstudent Status="200" Role="Statusstudent">
+        <Bez>Exmatrikuliert</Bez>
+      </Statusstudent>
     </Studentfach>
   </Student>
   <Lehrveranstaltungen>
@@ -604,7 +557,7 @@
     </LvStudent>
   </Lehrveranstaltungen>
   <Belegung>
-    <StudienModul Version="2" StudienModul="39380">
+    <StudienModul Version="1" StudienModul="42196">
       <KurzBez>WiMa-B-001</KurzBez>
       <Bez>Wirtschaftsmathematik: Lineare Algebra</Bez>
       <EctsPunkte>6,00</EctsPunkte>
@@ -690,7 +643,7 @@
         </Prfstds>
       </Studium>
     </StudienModul>
-    <StudienModul Version="3" StudienModul="3169">
+    <StudienModul Version="4" StudienModul="39380">
       <KurzBez>AI-AuD-B</KurzBez>
       <Bez>Algorithmen und Datenstrukturen</Bez>
       <EctsPunkte>6,00</EctsPunkte>
@@ -768,33 +721,33 @@
         </Prfstds>
       </Studium>
     </StudienModul>
-    <StudienModul Version="5" StudienModul="1203">
-      <KurzBez>EESYS-SaD-B</KurzBez>
-      <Bez>Statistik und Data Science</Bez>
-      <EctsPunkte>9,00</EctsPunkte>
+    <StudienModul Version="1" StudienModul="42199">
+      <KurzBez>WiMa-B-002</KurzBez>
+      <Bez>Wirtschaftsmathematik: Analysis</Bez>
+      <EctsPunkte>6,00</EctsPunkte>
       <Dauer>1</Dauer>
       <ModulLvs>
-        <ModulLv ModulLv="52382">
-          <Bez>Statistik und Data Sciences</Bez>
+        <ModulLv ModulLv="42200">
+          <Bez>Wirtschaftsmathematik: Analysis</Bez>
           <KurzBez/>
           <Sws>2,00</Sws>
         </ModulLv>
-        <ModulLv ModulLv="52383">
-          <Bez>Statistik und Data Science</Bez>
+        <ModulLv ModulLv="42203">
+          <Bez>Übung zur Wirtschaftsmathematik: Analysis</Bez>
           <KurzBez/>
-          <Sws>2,00</Sws>
+          <Sws>1,00</Sws>
         </ModulLv>
       </ModulLvs>
       <ModulPrfs>
-        <ModulPrf ModulPrf="52381">
+        <ModulPrf ModulPrf="42201">
           <Bez>schriftliche Modulprüfung (Klausur)</Bez>
         </ModulPrf>
       </ModulPrfs>
       <ModulGruppen>
-        <GruppeModul StudienModul="48873" VersionModul="2" Modulgruppe="49340" VersionGruppe="2">
+        <GruppeModul StudienModul="42199" VersionModul="1" Modulgruppe="49340" VersionGruppe="1">
           <Modulgruppe Version="2" Modulgruppe="49340" Role="Modulgruppe">
             <GruppeHandbuecher>
-              <HandbuchGruppe Modulgruppe="49340" Modulhandbuch="49360" VersionHandbuch="4" VersionGruppe="1" />
+              <HandbuchGruppe Modulgruppe="49340" Modulhandbuch="49360" VersionHandbuch="2" VersionGruppe="1" />
             </GruppeHandbuecher>
           </Modulgruppe>
         </GruppeModul>
@@ -802,17 +755,17 @@
       <Studium Studentfach="BAAng" Studabver="1" Studfach="BAAng" Fachgruppe="1" Studab="9021" Prffach="90753" Prffachver="2" Role="Studium">
         <Note />
         <VersuchJuengsteAblegung>2</VersuchJuengsteAblegung>
-        <Volumengesamt>9,000</Volumengesamt>
+        <Volumengesamt>6,000</Volumengesamt>
         <StatusStudium Status="1004" Role="StatusStudium">
           <Bez>zugelassen</Bez>
         </StatusStudium>
-        <Semester Semesternr="83" Role="SemesterBySemesterBeginn">
-          <Bez>SS 2026</Bez>
-          <Apnr>20262</Apnr>
+        <Semester Semesternr="72" Role="SemesterBySemesterBeginn">
+          <Bez>WS 2024/25</Bez>
+          <Apnr>20242</Apnr>
         </Semester>
-        <Semester Semesternr="83" Role="SemesterJuengsteAblegung">
-          <Bez>SS 2026</Bez>
-          <Apnr>20262</Apnr>
+        <Semester Semesternr="73" Role="SemesterJuengsteAblegung">
+          <Bez>WS 2025/26</Bez>
+          <Apnr>20252</Apnr>
         </Semester>
         <Prfbem Prfbem="0" Role="PrfbemJuengsteAblegung">
           <Bez>(angemeldet)</Bez>
@@ -887,7 +840,7 @@
         </Prfstds>
       </Studium>
     </StudienModul>
-    <StudienModul Version="6" StudienModul="1845">
+    <StudienModul Version="1" StudienModul="123">
       <KurzBez>Test</KurzBez>
       <Bez>Test</Bez>
       <EctsPunkte>6,00</EctsPunkte>
@@ -1006,7 +959,7 @@
         </Prfstds>
       </Studium>
     </StudienModul>
-    <StudienModul Version="2" StudienModul="48084">
+    <StudienModul Version="5" StudienModul="18222">
       <KurzBez>AI-Thesis-B</KurzBez>
       <Bez>Bachelorarbeit im Studiengang Angewandte Informatik</Bez>
       <EctsPunkte>12,00</EctsPunkte>
@@ -1083,84 +1036,6 @@
             </Prfstdteils>
             <Prfbem Prfbem="0" Role="Prfbem">
               <Bez>(Ohne)</Bez>
-            </Prfbem>
-          </Prfstd>
-        </Prfstds>
-      </Studium>
-    </StudienModul>
-    <StudienModul Version="3" StudienModul="18222">
-      <KurzBez>AI-Thesis-B</KurzBez>
-      <Bez>Bachelorarbeit im Studiengang Angewandte Informatik</Bez>
-      <EctsPunkte>12,00</EctsPunkte>
-      <Dauer>1</Dauer>
-      <ModulLvs />
-      <ModulPrfs>
-        <ModulPrf ModulPrf="49485">
-          <Bez>Hausarbeit mit Kolloquium</Bez>
-        </ModulPrf>
-      </ModulPrfs>
-      <ModulGruppen>
-        <GruppeModul StudienModul="18222" Modulgruppe="18221" VersionGruppe="4" VersionModul="3">
-          <Modulgruppe Version="4" Modulgruppe="18221" Role="Modulgruppe">
-            <GruppeHandbuecher>
-              <HandbuchGruppe Modulgruppe="18221" Modulhandbuch="36553" VersionGruppe="4" VersionHandbuch="15" />
-              <HandbuchGruppe Modulgruppe="18221" Modulhandbuch="36553" VersionGruppe="4" VersionHandbuch="13" />
-              <HandbuchGruppe Modulgruppe="18221" Modulhandbuch="36553" VersionGruppe="4" VersionHandbuch="9" />
-            </GruppeHandbuecher>
-          </Modulgruppe>
-        </GruppeModul>
-        <GruppeModul StudienModul="18222" Modulgruppe="49358" VersionGruppe="1" VersionModul="3">
-          <Modulgruppe Version="1" Modulgruppe="49358" Role="Modulgruppe">
-            <GruppeHandbuecher>
-              <HandbuchGruppe Modulgruppe="49358" Modulhandbuch="49360" VersionGruppe="1" VersionHandbuch="3" />
-              <HandbuchGruppe Modulgruppe="49358" Modulhandbuch="49360" VersionGruppe="1" VersionHandbuch="2" />
-              <HandbuchGruppe Modulgruppe="49358" Modulhandbuch="49360" VersionGruppe="1" VersionHandbuch="1" />
-            </GruppeHandbuecher>
-          </Modulgruppe>
-        </GruppeModul>
-      </ModulGruppen>
-      <Studium Studentfach="BAAng" Studabver="1" Studfach="BAAng" Fachgruppe="1" Studab="9021" Prffach="90749" Prffachver="2" Role="Studium">
-        <Note>3,300</Note>
-        <VersuchJuengsteAblegung>1</VersuchJuengsteAblegung>
-        <Volumengesamt>6,000</Volumengesamt>
-        <StatusStudium Status="1001" Role="StatusStudium">
-          <Bez>bestanden</Bez>
-        </StatusStudium>
-        <Semester Semesternr="73" Role="SemesterBySemesterBeginn">
-          <Bez>SS 2025</Bez>
-          <Apnr>20251</Apnr>
-        </Semester>
-        <Semester Semesternr="73" Role="SemesterBySemesterEnde">
-          <Bez>SS 2025</Bez>
-          <Apnr>20251</Apnr>
-        </Semester>
-        <Semester Semesternr="73" Role="SemesterJuengsteAblegung">
-          <Bez>SS 2025</Bez>
-          <Apnr>20251</Apnr>
-        </Semester>
-        <Prfbem Prfbem="7" Role="PrfbemJuengsteAblegung">
-          <Bez>Bestanden</Bez>
-        </Prfbem>
-        <Prfstds>
-          <Prfstd Prfang="-1" Studentfach="BAAng" Semesternr="73" Studabver="1" Studfach="BAAng" Fachgruppe="1" Studab="9021" Prffach="90749" Prffachver="2" Teilprf="1" Terminnr="1">
-            <Note>3,300</Note>
-            <Anzahl>1</Anzahl>
-            <Prfdatum />
-            <Teilprf Studabver="1" Studfach="BAAng" Studab="9021" Prffach="90749" Prffachver="2" Teilprf="1" Role="Teilprf">
-              <Bez>schriftliche Prüfung (Klausur)</Bez>
-              <ModulPrf ModulPrf="49084" Role="ModulPrf">
-                <Bez>schriftliche Prüfung (Klausur)</Bez>
-              </ModulPrf>
-            </Teilprf>
-            <Semestertermin Semesternr="73" Terminnr="1" Role="Semestertermin">
-              <Semester Semesternr="73" Role="Semester">
-                <Bez>SS 2025</Bez>
-                <Apnr>20251</Apnr>
-              </Semester>
-            </Semestertermin>
-            <Prfstdteils />
-            <Prfbem Prfbem="7" Role="Prfbem">
-              <Bez>Bestanden</Bez>
             </Prfbem>
           </Prfstd>
         </Prfstds>
