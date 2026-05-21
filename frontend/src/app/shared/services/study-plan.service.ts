@@ -13,6 +13,7 @@ import { SnackbarService } from './snackbar.service';
 import { AlertType } from '../classes/alert';
 import { TransformationService } from './transformation.service';
 import { getActiveStudyPlanId } from 'src/app/selectors/study-planning.selectors';
+import { PathModule } from '../../../../../interfaces/study-path';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,7 @@ export class StudyPlanService {
     duration?: number,
     duplSemesterPlans?: SemesterPlan[],
     status?: boolean,
+    modules?: PathModule[]
   ) {
     if (inputName && startSemester && duration) {
       const studyPlan: StudyPlanTemplate = {
@@ -47,6 +49,17 @@ export class StudyPlanService {
         duration,
         duplSemesterPlans,
       );
+
+      if(modules) {
+        for(let module of modules) {
+          const fittingSemesterPlan = semesterPlans.find(plan => plan.semester == module.semester)
+          if(fittingSemesterPlan) {
+            fittingSemesterPlan.modules.push(module.acronym)
+            fittingSemesterPlan.summedEcts += module.ects
+          }
+          
+        }
+      }
 
       // creates study plan and initialises semester plans
       this.store.dispatch(

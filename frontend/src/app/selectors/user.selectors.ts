@@ -12,7 +12,7 @@ export const getUser = createSelector(
 
 export const getUserStudyprogrammes = createSelector(
   getUser,
-  (state) => state.sps
+  (state) => state.sps?.filter(sp => sp.status == 'Immatrikuliert')
 )
 
 // get mhb version and id saved in user state (currently works for one sp)

@@ -56,6 +56,10 @@ export interface MStudyProgramme {
   faculty: string;
   mhbId: string;
   mhbVersion: number;
+  status?: string;
+  startSemester?: string;
+  duration?: number;
+  maxEcts?: number;
 }
 
 export interface Status {

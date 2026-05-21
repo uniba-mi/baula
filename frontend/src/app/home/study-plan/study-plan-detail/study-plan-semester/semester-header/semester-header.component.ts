@@ -139,32 +139,7 @@ export class SemesterHeaderComponent {
   }
 
   async syncWithFlexNow() {
-    this.lastFlexnowApiConsent$
-      .pipe(
-        take(1),
-        concatMap((consent) => {
-          if (consent?.hasConfirmed) {
-            return of(true);
-          }
-          return this.flexnowService.openConsentDialog();
-        }),
-        filter((consentResult) => consentResult === true),
-        withLatestFrom(
-          this.lastFlexNowStudypathConsent$,
-          this.lastFlexNowGradeConsent$
-        ),
-        concatMap(([consent, studypathConsent, gradeConsent]) =>
-          this.flexnowService.openOverwriteConfirmationDialog(
-            'update-studypath',
-            [this.metaSemester.semester],
-            studypathConsent?.hasConfirmed ?? false,
-            gradeConsent?.hasConfirmed ?? false
-          )
-        ),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe();
-
+    this.flexnowService.triggerFlexNowDataLoading('update-studypath', this.metaSemester.semester)
   }
 
   isFutureSemester(semesterName: string): boolean {

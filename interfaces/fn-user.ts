@@ -48,7 +48,7 @@ export interface FnCompletedModule {
     acronym: string,
     name: string,
     ects: number,
-    moduleGroups: { mgId: string, version: string, mhbId: string, mhbVersion: number }[],
+    moduleGroups: { mgId: string, version: string}[],
     grade: number | null,
     status: string,
     semesterBegin: string, // semester as apnr
@@ -58,9 +58,6 @@ export interface FnCompletedModule {
 }
 
 export interface FnCompletedCourse {
-    id: string,
-    nr: string,
-    waitingList: number | null,
     name: string,
     semester: string // semester as apnr
 }

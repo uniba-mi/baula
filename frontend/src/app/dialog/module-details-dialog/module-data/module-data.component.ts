@@ -116,7 +116,7 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
           }
         }
         // Currently, only the first programme is used
-        this.programId = user.sps[0].spId;
+        this.programId = user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId;
       }
     });
 

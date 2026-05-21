@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import {
   concatMap,
   filter,
+  forkJoin,
   map,
   Observable,
   of,
@@ -23,7 +24,9 @@ import { Semester } from '../../../../../interfaces/semester';
 import { Consent, User } from '../../../../../interfaces/user';
 import {
   getLastConsentByType,
+  getSemesterList,
   getUser,
+  getUserStudyPath,
 } from 'src/app/selectors/user.selectors';
 import { RestService } from 'src/app/rest.service';
 import {
@@ -36,9 +39,7 @@ import {
   PathModule,
   StudyPath,
 } from '../../../../../interfaces/study-path';
-import {
-  ModulePlanningActions,
-} from 'src/app/actions/study-planning.actions';
+import { ModulePlanningActions } from 'src/app/actions/study-planning.actions';
 import {
   getActiveStudyPlanId,
   getSemesterPlan,
@@ -61,53 +62,102 @@ export class FlexnowService {
     private rest: RestService,
   ) {
     this.lastFlexnowApiConsent$ = this.store.select(
-      getLastConsentByType('flexnow-api')
+      getLastConsentByType('flexnow-api'),
     );
     this.lastFlexNowStudypathConsent$ = this.store.select(
-      getLastConsentByType('upload-exam-data')
+      getLastConsentByType('upload-exam-data'),
     );
     this.lastFlexNowGradeConsent$ = this.store.select(
-      getLastConsentByType('include-grades')
+      getLastConsentByType('include-grades'),
     );
     this.currentUser$ = this.store.select(getUser);
   }
 
-  triggerFlexNowDataLoading(semesters$: Observable<Semester[]>, mode: 'create-user' | 'update-studypath' | 'update-metadata') {
-    this.lastFlexnowApiConsent$
-      .pipe(
-        take(1),
-        concatMap((flexNowConsent) => {
-          // if user has already consented, we can skip the consent step
-          if (flexNowConsent?.hasConfirmed) {
-            return of(true);
-          } else {
-            return this.openConsentDialog();
-          }
-        }),
-        filter((consentResult) => consentResult === true),
-        concatMap(() =>
-          // open semester selection dialog anyway
-          this.openSemesterSelectionDialog(semesters$)
-        ),
-        filter((selectedSemesters) => selectedSemesters !== null),
-        withLatestFrom(
-          this.lastFlexNowStudypathConsent$,
-          this.lastFlexNowGradeConsent$
-        ),
-        concatMap(([selectedSemesters, studypathConsent, gradeConsent]) =>
-          this.openOverwriteConfirmationDialog(
-            mode,
-            selectedSemesters,
-            studypathConsent?.hasConfirmed ?? false,
-            gradeConsent?.hasConfirmed ?? false
-          )
-        ),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe();
+  triggerFlexNowDataLoading(
+    mode: 'create-user' | 'update-studypath' | 'update-metadata',
+    semester?: string,
+  ) {
+    let semesters$: Observable<Semester[]>;
+    let latestConsents$: Observable<{
+      flexNowImportConfirmed: boolean;
+      studypathConfirmed: boolean;
+      gradesConfirmed: boolean;
+    }> = this.lastFlexNowGradeConsent$.pipe(
+      take(1),
+      withLatestFrom(
+        this.lastFlexNowStudypathConsent$,
+        this.lastFlexNowGradeConsent$,
+      ),
+      concatMap(([consent, studypathConsent, gradeConsent]) => {
+        // if user has already consented, we can skip the consent step
+        if (
+          consent?.hasConfirmed &&
+          studypathConsent?.hasConfirmed &&
+          gradeConsent?.hasConfirmed
+        ) {
+          return of({
+            flexNowImportConfirmed: true,
+            studypathConfirmed: true,
+            gradesConfirmed: true,
+          });
+        } else {
+          return this.openConsentDialog();
+        }
+      }),
+      filter(
+        (consent) =>
+          consent.flexNowImportConfirmed && consent.studypathConfirmed,
+      ),
+    );
+
+    if (!semester) {
+      semesters$ = this.store
+        .select(getSemesterList)
+        .pipe(
+          map((semesters) =>
+            semesters.filter((semester) => !semester.isFutureSemester()),
+          ),
+        );
+
+      forkJoin({
+        consents: latestConsents$,
+        selectedSemesters: this.openSemesterSelectionDialog(semesters$),
+      })
+        .pipe(
+          filter((result) => result.selectedSemesters !== null),
+          concatMap((result) =>
+            this.openOverwriteConfirmationDialog(
+              mode,
+              result.selectedSemesters,
+              result.consents.studypathConfirmed ?? false,
+              result.consents.gradesConfirmed ?? false,
+            ),
+          ),
+          takeUntil(this.unsubscribe$),
+        )
+        .subscribe();
+    } else {
+      latestConsents$
+        .pipe(
+          concatMap((consents) =>
+            this.openOverwriteConfirmationDialog(
+              mode,
+              [semester],
+              consents.studypathConfirmed ?? false,
+              consents.gradesConfirmed ?? false,
+            ),
+          ),
+          takeUntil(this.unsubscribe$),
+        )
+        .subscribe();
+    }
   }
 
-  openConsentDialog(): Observable<boolean> {
+  openConsentDialog(): Observable<{
+    flexNowImportConfirmed: boolean;
+    studypathConfirmed: boolean;
+    gradesConfirmed: boolean;
+  }> {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: <DialogData>{
         dialogContentId: 'upload-student-data-dialog',
@@ -117,14 +167,13 @@ export class FlexnowService {
     return dialogRef.afterClosed().pipe(
       tap((result) => {
         if (result.flexNowImportConfirmed) {
-          console.log(result);
           this.store.dispatch(
             UserActions.addConsent({
               ctype: 'flexnow-api',
               hasConfirmed: true,
               hasResponded: true,
               timestamp: new Date(),
-            })
+            }),
           );
           this.store.dispatch(
             UserActions.addConsent({
@@ -132,7 +181,7 @@ export class FlexnowService {
               hasConfirmed: result.studypathConfirmed ?? false,
               hasResponded: true,
               timestamp: new Date(),
-            })
+            }),
           );
           this.store.dispatch(
             UserActions.addConsent({
@@ -140,11 +189,11 @@ export class FlexnowService {
               hasConfirmed: result.gradesConfirmed ?? false,
               hasResponded: true,
               timestamp: new Date(),
-            })
+            }),
           );
         }
       }),
-      map((result) => !!result) // boolean
+      map((result) => result),
     );
   }
 
@@ -168,7 +217,7 @@ export class FlexnowService {
     mode: 'create-user' | 'update-studypath' | 'update-metadata',
     semesters: string[],
     studypathConsent: boolean,
-    gradeConsent: boolean
+    gradeConsent: boolean,
   ): Observable<boolean> {
     const confirmationDialogInterface: ConfirmationDialogData = {
       dialogTitle: 'Ausgewählte Semester mit den FlexNow-Daten überschreiben?',
@@ -182,7 +231,7 @@ export class FlexnowService {
           mode,
           semesters,
           studypathConsent,
-          gradeConsent
+          gradeConsent,
         );
         this.dialog.closeAll();
       },
@@ -198,11 +247,11 @@ export class FlexnowService {
             mode,
             semesters,
             studypathConsent,
-            gradeConsent
+            gradeConsent,
           );
         }
       }),
-      map((result) => !!result)
+      map((result) => !!result),
     );
   }
 
@@ -210,7 +259,7 @@ export class FlexnowService {
     mode: 'create-user' | 'update-studypath' | 'update-metadata',
     semesters: string[],
     studypathConsent: boolean,
-    gradeConsent: boolean
+    gradeConsent: boolean,
   ) {
     this.getFlexNowData(mode, studypathConsent, gradeConsent, semesters)
       .pipe(take(1))
@@ -218,54 +267,96 @@ export class FlexnowService {
         withLatestFrom(
           this.store.select(getSemesterPlan),
           this.store.select(getActiveStudyPlanId),
-          this.store.select(getModules)
-        )
+          this.store.select(getModules),
+          this.store.select(getUserStudyPath),
+        ),
       )
-      .subscribe(([user, semesterPlan, studyPlanId, mhbModules]) => {
-        if (user) {
-          const modules = user.studyPath.completedModules;
-          const currentSemester = new Semester().name;
-          if (modules.length > 0 && semesterPlan) {
-            const currentModules = modules.filter(
-              (mod) => mod.semester === currentSemester
-            );
-            let userGeneratedModules = [];
-            for (let currentModule of currentModules) {
-              if (!semesterPlan.modules.includes(currentModule.acronym)) {
-                const moduleExistInMhb = mhbModules.find(mod => mod.acronym == currentModule.acronym);
-                if(moduleExistInMhb) {
+      .subscribe(
+        ([user, semesterPlan, studyPlanId, mhbModules, currentStudypath]) => {
+          if (user) {
+            let modulesToUpdate: PathModule[] = [];
+            // only update the modules of the given semesters
+            for (let semester of semesters) {
+              // identify completed modules of semester
+              const modules = user.studyPath.completedModules.filter(
+                (mod) => mod.semester == semester,
+              );
+              const currentPathModules = currentStudypath.completedModules.filter(
+                (mod) => mod.semester == semester
+              )
+              const moduleAcronyms = modules.map(el => el.acronym);
+              // modules, that are not contained in the moduleAcronyms should be deleted
+              const oldModules = currentPathModules.filter(mod => !moduleAcronyms.includes(mod.acronym))
+              for(let oldModule of oldModules) {
+                if(oldModule._id) {
+                  this.store.dispatch(StudyPathActions.deleteModuleFromStudyPath({ id: oldModule._id, semester: oldModule.semester }))
+                }
+              }
+
+
+              // compare both delete old modules, add new modules and update existing ones
+              if (modules.length == 0) {
+                break;
+              }
+              // add new modules (new modules are added automatically in api request)
+              modulesToUpdate = modulesToUpdate.concat(modules);
+
+              // check if semester is current -> add modules to semesterplan
+              if (semester == new Semester().name && semesterPlan) {
+                let userGeneratedModules = [];
+                for (let currentModule of modules) {
+                  if (!semesterPlan.modules.includes(currentModule.acronym)) {
+                    const moduleExistInMhb = mhbModules.find(
+                      (mod) => mod.acronym == currentModule.acronym,
+                    );
+                    if (moduleExistInMhb) {
+                      this.store.dispatch(
+                        ModulePlanningActions.addModuleToSemester({
+                          studyPlanId,
+                          semesterPlanId: semesterPlan._id,
+                          acronym: currentModule.acronym,
+                          ects: currentModule.ects,
+                        }),
+                      );
+                    } else {
+                      userGeneratedModules.push(currentModule);
+                    }
+                  }
+                }
+                if (userGeneratedModules.length > 0) {
                   this.store.dispatch(
-                    ModulePlanningActions.addModuleToSemester({
-                      studyPlanId,
-                      semesterPlanId: semesterPlan._id,
-                      acronym: currentModule.acronym,
-                      ects: currentModule.ects,
-                    })
+                    ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyPlans(
+                      {
+                        modules: userGeneratedModules,
+                        semesterName: new Semester().name,
+                      },
+                    ),
                   );
-                } else {
-                  userGeneratedModules.push(currentModule)
                 }
               }
             }
-            if(userGeneratedModules.length > 0) {
-              this.store.dispatch(
-                ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyPlans({
-                  modules: userGeneratedModules,
-                  semesterName: new Semester().name
-                })
-              )
-            }
+            // add all modules of current studypath that are not included in the selected semesters
+            modulesToUpdate = modulesToUpdate.concat(
+              currentStudypath.completedModules.filter(
+                (mod) => !semesters.includes(mod.semester),
+              ),
+            );
+
+            this.store.dispatch(
+              StudyPathActions.updateStudyPath({
+                completedModules: modulesToUpdate
+              }),
+            );
           }
-          this.store.dispatch(StudyPathActions.updateStudyPath({ completedModules: user.studyPath.completedModules }));
-        }
-      });
+        },
+      );
   }
 
   getFlexNowData(
     mode: 'create-user' | 'update-studypath' | 'update-metadata',
     studypathConsent: boolean,
     gradeConsent: boolean,
-    semesters?: string[]
+    semesters?: string[],
   ): Observable<User | undefined> {
     return this.rest
       .getStudentDataViaFlexNow(studypathConsent, gradeConsent)
@@ -273,89 +364,42 @@ export class FlexnowService {
         withLatestFrom(this.currentUser$),
         map(([flexNowOutput, user]) => {
           if (flexNowOutput) {
-            console.log(flexNowOutput)
-            // BEGIN ONLY FOR DEV PURPOSE
-            /* const sp = flexNowOutput.metadata.sps[0];
-            let messages = [];
-            messages.push(`Studiengang: ${sp.name}`);
-            messages.push(
-              sp.mhbId && sp.mhbVersion
-                ? 'Modulhandbuch gefunden'
-                : 'Kein Modulhandbuch gefunden'
-            );
-            messages.push(
-              `Studiendauer: ${flexNowOutput.metadata.duration} Semester`
-            );
-            messages.push(`${flexNowOutput.metadata.maxEcts} ECTS`);
-            messages.push(
-              `Studienbeginn im ${
-                new Semester(flexNowOutput.metadata.startSemester).fullName
-              }`
-            );
-            console.log('Metainformationen (XML):');
-            console.log(flexNowOutput.metadata);
-            console.log('Studienverlauf:');
-            console.log(flexNowOutput.studypath);
-            if (flexNowOutput.studypath && studypathConsent) {
-              messages.push('');
-              messages.push('Folgende Module gefunden:');
-              for (let module of flexNowOutput.studypath.completedModules) {
-                messages.push(
-                  `  - ${module.acronym} - ${
-                    new Semester(module.semester).fullName
-                  } - ${module.status} ${
-                    gradeConsent && module.grade
-                      ? '- Note: ' + module.grade
-                      : ''
-                  }`
-                );
-              }
-              messages.push('');
-              messages.push('Folgende Lehrveranstaltungen wurden gefunden:');
-              for (let course of flexNowOutput.studypath.completedCourses) {
-                messages.push(
-                  `  - ${course.name} - ${
-                    new Semester(course.semester).fullName
-                  }`
-                );
-              }
-            }
-            window.alert(messages.join('\n')); */
-            // END ONLY FOR DEV PURPOSE
-/*             let updatedUser = {
+            let updatedUser = {
               ...user,
             };
 
-            if(flexNowOutput.studypath && (mode === 'create-user' || mode === 'update-studypath')) {
+            if (
+              flexNowOutput.studypath &&
+              (mode === 'create-user' || mode === 'update-studypath')
+            ) {
               updatedUser = {
                 ...updatedUser,
                 studyPath: this.extractStudypath(
                   flexNowOutput.studypath,
                   user.studyPath,
-                  semesters
-                )
-              }
+                  semesters,
+                ),
+              };
             }
 
-            if(mode === 'create-user' || mode === 'update-metadata') {
+            if (mode === 'create-user' || mode === 'update-metadata') {
               updatedUser = {
                 ...updatedUser,
-                ...flexNowOutput.metadata
-              }
+                ...flexNowOutput.metadata,
+              };
             }
- */
-            return undefined;
+            return updatedUser;
           } else {
             return undefined;
           }
-        })
+        }),
       );
   }
 
   private extractStudypath(
     fnStudypath: FnStudyPath,
     userStudypath: StudyPath,
-    semesters?: string[]
+    semesters?: string[],
   ): StudyPath {
     if (semesters && userStudypath) {
       // define starting variables
@@ -364,17 +408,17 @@ export class FlexnowService {
 
       // filter modules and courses, that are kept
       completedModules = completedModules.filter(
-        (mod) => !semesters.includes(mod.semester)
+        (mod) => !semesters.includes(mod.semester),
       );
       completedCourses = completedCourses.filter(
-        (course) => !semesters.includes(course.semester)
+        (course) => !semesters.includes(course.semester),
       );
 
       let filteredImportedModules = fnStudypath.completedModules.filter((mod) =>
-        semesters.includes(new Semester(mod.semester).name)
+        semesters.includes(new Semester(mod.semester).name),
       );
       let filteredImportedCourses = fnStudypath.completedCourses.filter(
-        (course) => semesters.includes(course.semester)
+        (course) => semesters.includes(course.semester),
       );
 
       let studypath = {
@@ -391,33 +435,27 @@ export class FlexnowService {
     } else {
       return {
         completedModules: this.extractCompletedModules(
-          fnStudypath.completedModules
+          fnStudypath.completedModules,
         ),
         completedCourses: this.extractCompletedCourses(
-          fnStudypath.completedCourses
+          fnStudypath.completedCourses,
         ),
       };
     }
   }
 
-  private extractCompletedModules(
-    modules: FnCompletedModule[]
-  ): PathModule[] {
-    console.log(modules);
+  private extractCompletedModules(modules: FnCompletedModule[]): PathModule[] {
     return modules.map((fnModule) => {
       let mgId = undefined;
-      console.log(`processing data for module ${fnModule.acronym}`);
       let moduleGroups = fnModule.moduleGroups;
       // TODO: if more than one Modulegroup set modulegroup to undefined, user need to set it
-      console.log('Modulegroups');
-      console.log(moduleGroups);
       if (moduleGroups && moduleGroups.length == 1) {
         mgId = moduleGroups[0].mgId;
       } else {
         console.log(
           moduleGroups.length > 1
             ? 'Too much module groups available'
-            : 'No modulegroups available'
+            : 'No modulegroups available',
         );
       }
 
@@ -435,9 +473,7 @@ export class FlexnowService {
     });
   }
 
-  private extractCompletedCourses(
-    courses: FnCompletedCourse[]
-  ): PathCourse[] {
+  private extractCompletedCourses(courses: FnCompletedCourse[]): PathCourse[] {
     // TODO -> courses need to be searched with name
     return [];
   }

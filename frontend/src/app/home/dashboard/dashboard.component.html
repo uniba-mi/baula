@@ -38,7 +38,7 @@
               <mat-card appearance="outlined" *ngSwitchCase="'gpa'" class="dashboard-tile small-tile order-1">
                 <app-dashboard-card-header [key]="chart.key"
                   (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
-                <app-grade-point-average [studyPath]="studyPath"></app-grade-point-average>
+                <app-grade-point-average [semesters]="semesters$ | async" [studyPath]="studyPath"></app-grade-point-average>
               </mat-card>
               <!-- Card with personalisation status -->
               <ng-container *ngIf="user.sps?.[0]?.faculty === 'WIAI'">

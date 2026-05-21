@@ -86,8 +86,8 @@ export class UserDialogComponent {
       this.user.duration &&
       this.user.maxEcts &&
       this.user.fulltime !== undefined &&
-      this.user.sps[0].mhbId &&
-      this.user.sps[0].mhbVersion
+      this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbId &&
+      this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbVersion
     ) {
       return false;
     }
@@ -170,7 +170,7 @@ export class UserDialogComponent {
     // check for valid sps
     if (!data.sps || data.sps.length == 0) {
       return 'Die in deinem FlexNow-Auszug enthaltenen Studiengänge sind in Baula leider nicht verfügbar.';
-    } else if(!data.sps[0].mhbId || !data.sps[0].mhbVersion) {
+    } else if(!data.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbId || !data.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbVersion) {
       return 'Leider konnten wir kein Modulhandbuch extrahieren, wähle daher ein passendes Modulhandbuch aus.';
     }
     return undefined;

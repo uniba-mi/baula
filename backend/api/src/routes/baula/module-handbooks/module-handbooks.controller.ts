@@ -38,7 +38,7 @@ export async function getUpToDateMhb(req: Request, res: Response, next: NextFunc
       },
       where: {
         mhbId: mhbId,
-        spId: user.sps[0].spId
+        spId: user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId
       }, 
       orderBy: {
         version: 'desc'

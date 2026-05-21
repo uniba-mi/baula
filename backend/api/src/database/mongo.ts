@@ -397,6 +397,10 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         faculty: String,
         mhbId: String,
         mhbVersion: Number,
+        status: String,
+        startSemster: String,
+        duration: Number,
+        maxEcts: Number
       },
     ],
     fulltime: {

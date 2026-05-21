@@ -15,3 +15,5 @@ prisma/*
 /api/dist/*
 export.xml
 mhb_export.xml
+dummy_student_bachelor.xml
+dummy_student_master.xml

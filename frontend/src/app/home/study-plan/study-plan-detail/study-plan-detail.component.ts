@@ -107,7 +107,6 @@ export class StudyPlanDetailComponent implements OnInit {
   isSmallScreen: boolean = false;
   expandedSemesters: { [semesterName: string]: boolean } = {};
   closeMode: string;
-  availableSemesters$: Observable<Semester[]>;
 
   constructor(
     private store: Store,
@@ -166,11 +165,6 @@ export class StudyPlanDetailComponent implements OnInit {
 
     this.studyPath$ = this.store.select(getUserStudyPath);
     this.semesters$ = this.store.select(getSemesterList);
-
-    // for flexnow
-    this.availableSemesters$ = this.semesters$.pipe(
-      map(semesters => semesters.filter(semester => !semester.isFutureSemester()))
-    );
 
     this.selectedStudyPlan$ = this.store.select(getSelectedStudyPlan);
 
@@ -316,7 +310,7 @@ export class StudyPlanDetailComponent implements OnInit {
   }
 
   importCompleteFlexNowData() {
-    this.flexnowService.triggerFlexNowDataLoading(this.availableSemesters$, 'update-studypath');
+    this.flexnowService.triggerFlexNowDataLoading('update-studypath');
   }
 
   private setupScrollObserver(): void {

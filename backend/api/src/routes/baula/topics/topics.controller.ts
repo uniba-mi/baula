@@ -65,8 +65,8 @@ export async function recommendModulesByTopicsPreGenerated(req: Request, res: Re
     try {
         // Step 1: Validate user and extract MHB information
         const user = req.user as UserServer;
-        const mhbId = user.sps?.[0]?.mhbId;
-        const mhbVersion = user.sps?.[0]?.mhbVersion;
+        const mhbId = user.sps?.filter(sp => sp.status == 'Immatrikuliert')[0]?.mhbId;
+        const mhbVersion = user.sps?.filter(sp => sp.status == 'Immatrikuliert')[0]?.mhbVersion;
 
         if (
             !mhbId ||

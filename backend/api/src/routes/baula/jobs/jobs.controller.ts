@@ -91,8 +91,8 @@ export async function recommendModulesToJob(
       : undefined;
 
   // get mhbId and mhbVersion from user
-  const mhbId = user.sps?.[0]?.mhbId;
-  const mhbVersion = user.sps?.[0]?.mhbVersion;
+  const mhbId = user.sps?.filter(sp => sp.status == 'Immatrikuliert')[0]?.mhbId;
+  const mhbVersion = user.sps?.filter(sp => sp.status == 'Immatrikuliert')[0]?.mhbVersion;
   if (
     !mhbId ||
     !mhbVersion ||
@@ -110,7 +110,7 @@ export async function recommendModulesToJob(
     keywords: req.body.job.keywords,
   });
 
-  if (!job || !modules || !user.sps || !user.sps[0].spId) {
+  if (!job || !modules || !user.sps || !user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId) {
     next(new BadRequestError("Invalid job input or modules!"));
   } else {
     let savedJob: Job | null | undefined = await saveJob(user._id, job, id);
@@ -124,7 +124,7 @@ export async function recommendModulesToJob(
             }
           | undefined =
           job.inputMode === "mock"
-            ? await getMockedJobRecommendation(job, user.sps[0].spId)
+            ? await getMockedJobRecommendation(job, user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId)
             : await jobModuleProposalKeyWordsRequest(
                 job.title,
                 job.keywords,

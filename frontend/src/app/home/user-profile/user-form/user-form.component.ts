@@ -336,7 +336,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     const studyprogrammes = await firstValueFrom(this.studyprogrammes$);
     // find studyprogramme
     if (user.sps && user.sps.length !== 0) {
-      const spFromUser = user.sps[0];
+      const spFromUser = user.sps.filter(sp => sp.status == 'Immatrikuliert')[0];
       const studyprogramme = studyprogrammes.find((el) => {
         return (
           el.spId == spFromUser.spId && el.poVersion == spFromUser.poVersion
@@ -365,8 +365,8 @@ export class UserFormComponent implements OnInit, OnChanges {
         });
         if (moduleHandbook) {
           if (this.user.sps && this.user.sps.length !== 0) {
-            this.user.sps[0].mhbId = moduleHandbook.mhbId;
-            this.user.sps[0].mhbVersion = moduleHandbook.version;
+            this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbId = moduleHandbook.mhbId;
+            this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbVersion = moduleHandbook.version;
           }
           this.selectedModuleHandbook.setValue(moduleHandbook);
         }
@@ -395,8 +395,8 @@ export class UserFormComponent implements OnInit, OnChanges {
   selectModuleHandbook(mhb: ModuleHandbook) {
     this.userForm.controls['mhb'].addValidators([Validators.required]);
     if (this.user.sps && this.user.sps.length !== 0) {
-      this.user.sps[0].mhbId = mhb.mhbId;
-      this.user.sps[0].mhbVersion = mhb.version;
+      this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbId = mhb.mhbId;
+      this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbVersion = mhb.version;
       this.selectedModuleHandbook.setValue(mhb);
       this.store.dispatch(
         ModuleHandbookActions.loadModuleHandbook({

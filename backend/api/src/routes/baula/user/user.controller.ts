@@ -28,7 +28,7 @@ import {
   User as UserClient,
   UserServer,
 } from "../../../../../../interfaces/user";
-import { PrismaClient } from "@prisma/client";
+import { ModuleGroup, PrismaClient } from "@prisma/client";
 import mongoose from "mongoose";
 import { ExtendedJob, Job } from "../../../../../../interfaces/job";
 import { transform } from "camaro";
@@ -44,9 +44,15 @@ import {
   FnStudyPath,
   FnStudyProgramme,
 } from "../../../../../../interfaces/fn-user";
-import { extractModules } from "../../../shared/helpers/module-helpers";
+import {
+  extractModules,
+  findAndBuildModuleHandbookByIdAndVersion,
+  iterateOverMgsAndReturnMgs,
+  iterateOverMgsAndReturnModules,
+} from "../../../shared/helpers/module-helpers";
 import { Semester } from "../../../../../../interfaces/semester";
 import * as fs from "fs";
+import { Module } from "../../../../../../interfaces/module";
 
 const prisma = new PrismaClient();
 
@@ -1114,14 +1120,13 @@ export async function crawlStudentDataViaFlexNow(
       },
     });
     if (url) {
-      setTimeout(async () => {
-        // read test xml file
-        /* const result = fs.readFileSync(
-          __dirname + "../../../../../staticdata/dummy_student.xml",
-          "utf8",
-        ); */
+      // read test xml file
+      const result = fs.readFileSync(
+        __dirname + "../../../../../staticdata/dummy_student_master.xml",
+        "utf8",
+      );
 
-        const result = await new Promise<string>((resolve, reject) => {
+      /* const result = await new Promise<string>((resolve, reject) => {
           const data = new URLSearchParams();
           data.append(
             "login",
@@ -1167,84 +1172,87 @@ export async function crawlStudentDataViaFlexNow(
 
           req.write(data.toString());
           req.end();
-        });
-        const metadata: FnStudyProgramme[] = await transform(
-          result,
-          metaDataTemplate,
-        );
-        const studypath: FnStudyPath = importStudypath
-          ? await transform(result, studyPathTemplate)
-          : undefined;
+        }); */
 
-        const userData: FnMetaData = extractMetadata(metadata, studyprogrammes);
-        const mhbId =
-          userData.sps.length !== 0 ? userData.sps[0].mhbId : undefined;
-        const mhbVersion =
-          userData.sps.length !== 0 ? userData.sps[0].mhbVersion : undefined;
+      const metadata: FnStudyProgramme[] = await transform(
+        result,
+        metaDataTemplate,
+      );
+      const studypath: FnStudyPath = importStudypath
+        ? await transform(result, studyPathTemplate)
+        : undefined;
 
-        if (studypath) {
-          if (!includeGrades) {
-            for (let module of studypath.completedModules) {
-              module.grade = 0;
-            }
+      const userData: FnMetaData = extractMetadata(metadata, studyprogrammes);
+
+      if (studypath) {
+        if (!includeGrades) {
+          for (let module of studypath.completedModules) {
+            module.grade = 0;
           }
-
-          if (studypath.completedModules) {
-            console.log(studypath.completedCourses);
-            console.log("semesters");
-            console.log(studypath.completedModules.map((mod) => mod.semester));
-            console.log("status");
-            console.log(studypath.completedModules.map((mod) => mod.status));
-          }
-
-          if (studypath.completedModules && mhbId && mhbVersion) {
-            const modules = await extractModules(mhbId.toString(), mhbVersion);
-            for (let module of studypath.completedModules) {
-              // first try to find suitable modulegroups within fn xml
-              const exactMatches = module.moduleGroups.filter(
-                (mod) => mod.mhbId == mhbId && mod.mhbVersion == mhbVersion,
-              );
-              if (exactMatches.length > 0) {
-                module.moduleGroups = exactMatches;
-                continue;
-              }
-              const nearlyMatches = [
-                ...new Map(
-                  module.moduleGroups
-                    .filter((item) => item.mhbId == mhbId)
-                    .map((item) => [item.mgId, item.version]),
-                ).entries(),
-              ].map(([mgId, version]) => ({
-                mgId,
-                version,
-                mhbId,
-                mhbVersion,
-              }));
-              if (nearlyMatches.length > 0) {
-                module.moduleGroups = nearlyMatches;
-                continue;
-              }
-              // find module in modules
-              if (modules) {
-                module.moduleGroups = modules
-                  .filter((el) => el.mId == module.mId)
-                  .map((mod) => ({
-                    mgId: mod.mgId,
-                    version: "0",
-                    mhbId,
-                    mhbVersion,
-                  }));
-              }
-            }
+        }
+        let modules: Module[] = [];
+        let mgs: { mgId: string; version: Number }[] = [];
+        for (let sp of userData.sps) {
+          const mhbId = String(sp.mhbId);
+          const mhbVersion = sp.mhbVersion;
+          const mhb = await findAndBuildModuleHandbookByIdAndVersion(
+            mhbId,
+            mhbVersion,
+          );
+          if (mhb) {
+            modules = modules.concat(
+              await iterateOverMgsAndReturnModules(mhb.mgs),
+            );
+            mgs = mgs.concat(await iterateOverMgsAndReturnMgs(mhb.mgs));
           }
         }
 
-        res.json({
-          metadata: userData,
-          studypath,
-          xml: result,
-        });
-      }, 5000);
+        if (studypath.completedModules) {
+          for (let module of studypath.completedModules) {
+            // first try to find suitable modulegroups within fn xml
+            const exactMatches = module.moduleGroups.filter((mod) =>
+              mgs.find(
+                (mg) =>
+                  mg.mgId == mod.mgId && String(mg.version) == mod.version,
+              ),
+            );
+            if (exactMatches.length > 0) {
+              module.moduleGroups = exactMatches;
+              continue;
+            }
+            // second approach is to find nearly matching modulegroups via mgId
+            const nearlyMatches = [
+              ...new Map(
+                module.moduleGroups
+                  .filter((item) => mgs.find((mg) => mg.mgId == item.mgId))
+                  .map((item) => [item.mgId, item.version]),
+              ).entries(),
+            ].map(([mgId, version]) => ({
+              mgId,
+              version,
+            }));
+            if (nearlyMatches.length > 0) {
+              module.moduleGroups = nearlyMatches;
+              continue;
+            }
+            // last option, find module in modules and take this mgId
+            if (modules) {
+              module.moduleGroups = modules
+                .filter((el) => el.mId == module.mId)
+                .map((mod) => ({
+                  mgId: mod.mgId,
+                  version: "0",
+                }));
+            }
+          }
+        }
+      }
+
+      res.json({
+        metadata: userData,
+        studypath,
+        xml: result,
+      });
     } else {
       res.status(404);
     }
@@ -1260,51 +1268,105 @@ export async function crawlStudentDataViaFlexNow(
       sps: [],
     };
 
-    // filter only active studyprogrammes TODO change when multiple studyprogrammes are available
+    // filter only studyprogrammes that are available in Baula
     fnStudyprogrammes = fnStudyprogrammes.filter(
       (el) =>
-        el.status == "Immatrikuliert" &&
         studyprogrammes.findIndex(
           (sp) => sp.spId == el.spId && sp.poVersion == el.poVersion,
         ) > -1,
     );
-    // TODO: Currently checks only first studyprogamme
-    for (let fnStudyprogramme of fnStudyprogrammes) {
-      metadata.sps = [
-        {
-          spId: fnStudyprogramme.spId,
-          poVersion: fnStudyprogramme.poVersion,
-          name: fnStudyprogramme.name,
-          faculty: fnStudyprogramme.faculty,
-          mhbId: fnStudyprogramme.mhbId,
-          mhbVersion: fnStudyprogramme.mhbVersion,
-        },
-      ];
-      metadata.duration =
-        fnStudyprogramme.duration > fnStudyprogramme.semesters.length
-          ? fnStudyprogramme.duration
-          : fnStudyprogramme.semesters.length; // check maximum semester count
-      metadata.maxEcts = fnStudyprogramme.maxEcts;
-      metadata.fulltime = true; // preset fulltime to true
-      const currentSemester = new Semester();
-      for (let fnSemester of fnStudyprogramme.semesters) {
-        if (fnSemester.startSemester) {
-          metadata.startSemester = new Semester(fnSemester.semester).name;
-        }
-        if (fnSemester.semester == currentSemester.apNr) {
-          metadata.fulltime = !fnSemester.partTime;
-        }
-      }
-      // if startsemester is undefined set to first semester of semesterlist
-      if (!metadata.startSemester) {
-        metadata.startSemester = new Semester(
-          fnStudyprogramme.semesters[0].semester,
-        ).name;
-      }
 
-      break;
+    for (let fnStudyprogramme of fnStudyprogrammes) {
+      const currentSemester = fnStudyprogramme.semesters.find(
+        (sem) => sem.semester == new Semester().apNr,
+      );
+      const startSemester = fnStudyprogramme.semesters.find(
+        (sem) => sem.startSemester,
+      );
+      metadata.sps.push({
+        spId: fnStudyprogramme.spId,
+        poVersion: fnStudyprogramme.poVersion,
+        name: fnStudyprogramme.name,
+        faculty: fnStudyprogramme.faculty,
+        mhbId: fnStudyprogramme.mhbId,
+        mhbVersion: fnStudyprogramme.mhbVersion,
+        status: fnStudyprogramme.status,
+        duration:
+          fnStudyprogramme.duration > fnStudyprogramme.semesters.length
+            ? fnStudyprogramme.duration
+            : fnStudyprogramme.semesters.length,
+        maxEcts: fnStudyprogramme.maxEcts,
+        startSemester: startSemester
+          ? new Semester(startSemester.semester).name
+          : new Semester().name,
+      });
+
+      // set status
+      metadata.fulltime = currentSemester ? !currentSemester.partTime : true;
     }
+    // TODO for future releases take into account multiple studyprogrammes
+    // set startSemester
+    //metadata.startSemester = identifyEarliestSemester(metadata.sps.map(el => el.startSemester ?? ''))
+    // set duration
+    //metadata.duration = calculateDuration(fnStudyprogrammes);
+    // set maxEcts
+    //metadata.maxEcts = metadata.sps.reduce((pv, cv) => cv.maxEcts ? pv + cv.maxEcts : pv + 0, 0)
+
+    // TODO currently select first current studyprogram and set default values
+    const currentSp = metadata.sps.filter(
+      (el) => el.status == "Immatrikuliert",
+    )[0];
+    metadata.startSemester = currentSp.startSemester ?? new Semester().name;
+    metadata.duration = currentSp.duration ?? 6;
+    metadata.maxEcts = currentSp.maxEcts ?? 180;
 
     return metadata;
+  }
+
+  // Helper functions for preselection of values
+  /**
+   * Takes the extracted programs and calculates the duration
+   * For current programs takes the maximum duration, assumption that if student
+   * has more sps the highest duration is taking into account
+   * For past programs the unique semesters were identified and counted
+   * @param sps
+   * @returns
+   */
+  function calculateDuration(sps: FnStudyProgramme[]): number {
+    let currentSps = sps.filter((sp) => sp.status == "Immatrikuliert");
+    let pastSps = sps.filter((sp) => sp.status == "Exmatrikuliert");
+    let highestDurationOfCurrentSps = Math.max(
+      ...currentSps.map((el) => el.duration ?? 0),
+    );
+    let semester: string[] = [];
+    for (let sp of pastSps) {
+      semester = semester.concat(sp.semesters.map((el) => el.semester));
+    }
+    semester = [...new Set([...semester])];
+
+    return highestDurationOfCurrentSps + semester.length;
+  }
+
+  /**
+   * Takes a list of semesters and identifies the earliest semester
+   * @param list of strings containing empty values or semester names in univis style (2026s)
+   */
+  function identifyEarliestSemester(list: string[]): string {
+    let earliestSemester = new Semester();
+    let semesters = list.map((el) => new Semester(el));
+
+    for (let semester of semesters) {
+      if (earliestSemester.year > semester.year) {
+        earliestSemester = semester;
+      } else if (
+        earliestSemester.year == semester.year &&
+        earliestSemester.type == "w" &&
+        semester.type == "s"
+      ) {
+        earliestSemester = semester;
+      }
+    }
+
+    return earliestSemester.name;
   }
 }

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Semester } from '../../../../interfaces/semester';
-import { Consent, User } from '../../../../interfaces/user';
+import { Consent, MStudyProgramme, User } from '../../../../interfaces/user';
 import {
   StudyPlanActions,
   TimetableActions,
@@ -30,6 +30,7 @@ import { Router } from '@angular/router';
 import { SurveyComponent } from '../modules/long-term-evaluation/survey/survey.component';
 import { LongTermEvaluation } from '../../../../interfaces/long-term-evaluation';
 import { StudyPlanService } from '../shared/services/study-plan.service';
+import { PathModule } from '../../../../interfaces/study-path';
 
 @Component({
   selector: 'app-home',
@@ -119,8 +120,8 @@ export class HomeComponent implements OnInit {
     if (user.sps) {
       this.store.dispatch(
         ModuleHandbookActions.loadModuleHandbook({
-          id: user.sps[0].mhbId,
-          version: user.sps[0].mhbVersion,
+          id: user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbId,
+          version: user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbVersion,
         }),
       );
     }
@@ -219,17 +220,17 @@ export class HomeComponent implements OnInit {
       this.store.dispatch(UserActions.setUserData({ user }));
       // dispatch change of sp and mhb to store
       this.store.dispatch(
-        selectStudyProgramme({ studyProgramme: user.sps[0].spId }),
+        selectStudyProgramme({ studyProgramme: user.sps.filter((sp: MStudyProgramme) => sp.status == 'Immatrikuliert')[0].spId }),
       );
 
       // set first semester info and load study plan uni template
       const currentSemester = Semester.getCurrentSemesterName();
       const currentSemesterType = currentSemester.slice(-1) as 'w' | 's';
+      const moduleOfCurrentSemester = this.user.studyPath.completedModules.filter(mod => mod.semester == currentSemester)
       // study plan loading logic for first semester students
       if (this.user.startSemester === currentSemester && this.user.sps) {
         this.isFirstSemesterStudent = true;
-
-        const spId = this.user.sps[0].spId;
+        const spId = this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId;
 
         // check if a template is available for spId
         this.api
@@ -251,11 +252,11 @@ export class HomeComponent implements OnInit {
                 },
               });
             } else {
-              this.createDefaultStudyPlan();
+              this.createDefaultStudyPlan(moduleOfCurrentSemester);
             }
           });
       } else {
-        this.createDefaultStudyPlan();
+        this.createDefaultStudyPlan(moduleOfCurrentSemester);
       }
       this.router.navigate(['app', 'dashboard']);
     });
@@ -320,13 +321,14 @@ export class HomeComponent implements OnInit {
     this.dialog.closeAll();
   }
 
-  createDefaultStudyPlan() {
+  createDefaultStudyPlan(modules?: PathModule[]) {
     this.studyPlanService.createStudyPlan(
       'Mein Studienplan',
       this.user.startSemester,
       this.user.duration,
       undefined,
       true,
+      modules
     );
 
     this.dialog.closeAll();

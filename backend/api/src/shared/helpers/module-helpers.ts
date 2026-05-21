@@ -511,6 +511,23 @@ export function iterateOverMgsAndReturnModules(mgs: ModuleGroup[]): Module[] {
   return modules;
 }
 
+// Helper function to get modules out of mhb
+export function iterateOverMgsAndReturnMgs(mgs: ModuleGroup[]): {mgId: string, version: Number}[] {
+  let moduleGroups: {mgId: string, version: Number}[] = [];
+  //iterate over modulegroups
+  for (let mg of mgs) {
+    moduleGroups.push({
+      mgId: mg.mgId,
+      version: mg.version
+    })
+    if (mg.children) {
+      let children = iterateOverMgsAndReturnMgs(mg.children);
+      moduleGroups = moduleGroups.concat(children);
+    }
+  }
+  return moduleGroups;
+}
+
 // code inspiried by https://stackoverflow.com/questions/36032179/remove-duplicates-in-an-object-array-javascript
 export function removeDuplicates(arr: Module[]): Module[] {
   return arr.reduce(

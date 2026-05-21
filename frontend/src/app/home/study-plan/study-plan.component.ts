@@ -74,7 +74,7 @@ export class StudyPlanComponent implements OnInit {
       this.user = user;
       // load most recent study plan template for user's sp
       if (this.user && this.user.sps && this.user.sps.length > 0) {
-        const spId = this.user.sps[0].spId;
+        const spId = this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId;
 
         // check if a template is available for spId
         this.api.checkTemplateAvailability(spId, currentSemesterType).subscribe((availabilityResponse) => {
