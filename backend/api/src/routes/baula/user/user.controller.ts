@@ -1121,58 +1121,50 @@ export async function crawlStudentDataViaFlexNow(
     });
     if (url) {
       // read test xml file
-      const result = fs.readFileSync(
+      /* const result = fs.readFileSync(
         __dirname + "../../../../../staticdata/dummy_student_master.xml",
         "utf8",
-      );
+      ); */
 
-      /* const result = await new Promise<string>((resolve, reject) => {
-          const data = new URLSearchParams();
-          data.append(
-            "login",
-            process.env.FN_LOGIN ? process.env.FN_LOGIN : "",
-          );
-          data.append(
-            "password",
-            process.env.FN_PW ? process.env.FN_PW : "",
-          );
+      const result = await new Promise<string>((resolve, reject) => {
+        const data = new URLSearchParams();
+        data.append("login", process.env.FN_LOGIN ? process.env.FN_LOGIN : "");
+        data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
 
-          const options = {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          };
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        };
 
-          const req = https.request(url, options, (res) => {
-            const chunks: Buffer[] = [];
-            res.on("data", (chunk) => {
-              chunks.push(
-                Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "utf-8"),
+        const req = https.request(url, options, (res) => {
+          const chunks: Buffer[] = [];
+          res.on("data", (chunk) => {
+            chunks.push(
+              Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "utf-8"),
+            );
+          });
+          res.on("end", () => {
+            if (res.statusCode === 200) {
+              const buffer = Buffer.concat(chunks);
+              const ansiString = buffer.toString("utf-8");
+              resolve(ansiString);
+            } else {
+              reject(
+                new Error(`Request failed with status code ${res.statusCode}`),
               );
-            });
-            res.on("end", () => {
-              if (res.statusCode === 200) {
-                const buffer = Buffer.concat(chunks);
-                const ansiString = buffer.toString("utf-8");
-                resolve(ansiString);
-              } else {
-                reject(
-                  new Error(
-                    `Request failed with status code ${res.statusCode}`,
-                  ),
-                );
-              }
-            });
+            }
           });
+        });
 
-          req.on("error", (e) => {
-            reject(e);
-          });
+        req.on("error", (e) => {
+          reject(e);
+        });
 
-          req.write(data.toString());
-          req.end();
-        }); */
+        req.write(data.toString());
+        req.end();
+      });
 
       const metadata: FnStudyProgramme[] = await transform(
         result,
