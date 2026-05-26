@@ -45,6 +45,7 @@ import {
   getSemesterPlan,
 } from 'src/app/selectors/study-planning.selectors';
 import { getModules } from 'src/app/selectors/module-overview.selectors';
+import { DebugDialogComponent } from '../components/debug-dialog/debug-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -363,6 +364,9 @@ export class FlexnowService {
       .pipe(
         withLatestFrom(this.currentUser$),
         map(([flexNowOutput, user]) => {
+          this.dialog.open(DebugDialogComponent, {
+            data: flexNowOutput
+          })
           if (flexNowOutput) {
             let updatedUser = {
               ...user,

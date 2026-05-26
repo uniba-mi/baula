@@ -170,6 +170,7 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
 import { UploadStudentDataConfirmationComponent } from './modules/student-upload/dialogs/upload-student-data-confirmation/upload-student-data-confirmation.component';
 import { UpdateMhbDialogComponent } from './dialog/update-mhb-dialog/update-mhb-dialog.component';
 import { ChangeModuleGroupComponent } from './shared/components/change-module-group/change-module-group.component';
+import { DebugDialogComponent } from './shared/components/debug-dialog/debug-dialog.component';
 
 
 @NgModule({
@@ -284,7 +285,8 @@ import { ChangeModuleGroupComponent } from './shared/components/change-module-gr
     SettingsListComponent,
     UploadStudentDataConfirmationComponent,
     UpdateMhbDialogComponent,
-    ChangeModuleGroupComponent
+    ChangeModuleGroupComponent,
+    DebugDialogComponent
   ],
   bootstrap: [AppComponent],
   imports: [

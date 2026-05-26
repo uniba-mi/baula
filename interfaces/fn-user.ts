@@ -2,7 +2,8 @@ import { MStudyProgramme } from "./user"
 
 export interface FnUser {
     metadata: FnMetaData,
-    studypath?: FnStudyPath
+    studypath?: FnStudyPath,
+    raw: any
 }
 
 export interface FnStudyPath {
@@ -63,6 +64,7 @@ export interface FnCompletedCourse {
 }
 
 interface ExamAttemp {
+    examId: string,
     count: number,
     grade: number | null,
     semester: string, // semester as apnr

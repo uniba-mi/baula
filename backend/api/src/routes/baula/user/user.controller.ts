@@ -60,8 +60,27 @@ const prisma = new PrismaClient();
 export async function getUser(req: Request, res: Response, next: NextFunction) {
   const user = req.user as UserServer; // Use the user attached by the extractUser middleware
   try {
-    const userClient = await transformUserStudyPath(user);
-    res.status(200).json(userClient);
+    // check users studyprograms and update if empty status for legacy users
+    const userServer = await User.findById({ _id: user._id }).exec();
+    if(userServer && userServer.sps) {
+      for(let sp of userServer.sps) {
+        if(!sp.status) {
+          sp.status = 'Immatrikuliert'
+        } 
+      }
+      await userServer.save()
+      const userClient = await transformUserStudyPath(userServer);
+
+      res.status(200).json(userClient);
+    } else {
+      next(
+        new NotFoundError(
+          "Es konnte kein Nutzer gefunden werden."
+        )
+      )
+    }
+
+    
   } catch (error) {
     logError(error);
     next(
@@ -1121,12 +1140,12 @@ export async function crawlStudentDataViaFlexNow(
     });
     if (url) {
       // read test xml file
-      /* const result = fs.readFileSync(
+      const result = fs.readFileSync(
         __dirname + "../../../../../staticdata/dummy_student_master.xml",
         "utf8",
-      ); */
+      );
 
-      const result = await new Promise<string>((resolve, reject) => {
+      /* const result = await new Promise<string>((resolve, reject) => {
         const data = new URLSearchParams();
         data.append("login", process.env.FN_LOGIN ? process.env.FN_LOGIN : "");
         data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
@@ -1164,7 +1183,7 @@ export async function crawlStudentDataViaFlexNow(
 
         req.write(data.toString());
         req.end();
-      });
+      }); */
 
       const metadata: FnStudyProgramme[] = await transform(
         result,
@@ -1243,7 +1262,10 @@ export async function crawlStudentDataViaFlexNow(
       res.json({
         metadata: userData,
         studypath,
-        xml: result,
+        raw: {
+          metadata,
+          studypath
+        },
       });
     } else {
       res.status(404);
