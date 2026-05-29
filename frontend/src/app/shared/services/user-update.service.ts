@@ -54,6 +54,7 @@ export class UserUpdateService {
     { key: 'calendar', visible: true },
     { key: 'gpa', visible: true },
     { key: 'personalisation', visible: true },
+    { key: 'feature-wish', visible: true}
   ];
 
   private availableConsents: Consent[] = [
