@@ -9,7 +9,8 @@ export const chartMetadata: ChartMetadata[] = [
     { key: 'semester-dates', name: 'Aktuelle Termine', desc: 'Hier werden dir wichtige Termine des aktuellen Semesters angezeigt.', icon: 'bi-calendar-event' },
     { key: 'calendar', name: 'Terminkalender', desc: 'Hier findest du eine kleine Version deines Stundenplans, um schnell die heutigen Termine zu finden.', icon: 'bi-calendar-date' },
     { key: 'gpa', name: 'Notendurchschnitt', desc: 'Hier siehst du deinen angenährten derzeitigen Notendurschnitt', icon: 'bi-slash-circle' },
-    { key: 'personalisation', name: 'Personalisierung', desc: 'Hier siehst du den aktuellen Stand der Personalisierung', icon: 'bi-magic' }
+    { key: 'personalisation', name: 'Personalisierung', desc: 'Hier siehst du den aktuellen Stand der Personalisierung', icon: 'bi-magic' },
+    { key: 'feature-wish', name: "Feature Vorschlag", desc: 'Hier kannst du ein neues Feature für Baula vorschlagen', icon: 'bi-magic'}
 ];
 
 export interface ChartMetadata {
