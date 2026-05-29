@@ -170,6 +170,9 @@ import { HintsSidenavComponent } from './shared/components/hints-sidenav/hints-s
 import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluation-dialog/evaluation-dialog.component';
 import { UpdateMhbDialogComponent } from './dialog/update-mhb-dialog/update-mhb-dialog.component';
 import { ChangeModuleGroupComponent } from './shared/components/change-module-group/change-module-group.component';
+import { FeatureWishComponent } from './home/dashboard/feature-wish/feature-wish.component';
+import { SingleFeatureWishComponent } from './home/dashboard/feature-wish/single-feature-wish/single-feature-wish.component';
+import { IconPickerComponent } from './dialog/icon-picker/icon-picker.component';
 
 
 @NgModule({
@@ -283,7 +286,10 @@ import { ChangeModuleGroupComponent } from './shared/components/change-module-gr
     DataPreviewComponent,
     SettingsListComponent,
     UpdateMhbDialogComponent,
-    ChangeModuleGroupComponent
+    ChangeModuleGroupComponent,
+    FeatureWishComponent,
+    SingleFeatureWishComponent,
+    IconPickerComponent
   ],
   bootstrap: [AppComponent],
   imports: [
