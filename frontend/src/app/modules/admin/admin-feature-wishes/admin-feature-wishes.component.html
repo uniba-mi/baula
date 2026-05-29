@@ -1,0 +1,52 @@
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            <h2> Noch nicht genehmigte Wünsche </h2>
+            @for (wish of unapprovedWishes; track wish) {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @if (wish.icon) {
+                        <i class="{{ wish.icon }}"></i>
+                        } {{ wish.title }}
+                    </h5>
+                    <p class="card-text">{{ wish.description }}</p>
+                    <button class="btn btn-success" (click)="approveWish(wish._id)">Genehmigen</button>
+                    <button class="btn btn-danger ms-2" (click)="deleteWish(wish._id)">Löschen</button>
+
+                    <!-- Footer -->
+                    <div class="card-footer text-muted mt-3">
+                        <div>
+                            <i class="bi bi-calendar-check-fill"></i>{{ wish.createdAt | date:'short' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        <div class="col">
+            <h2> Genehmigte Wünsche </h2>
+            @for (wish of approvedWishes; track wish) {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @if (wish.icon) {
+                        <i class="{{ wish.icon }}"></i>
+                        } {{ wish.title }}
+                    </h5>
+                    <p class="card-text">{{ wish.description }}</p>
+                    <button class="btn btn-warning ms-2" (click)="unapproveWish(wish._id)">Ablehnen</button>
+                    <button class="btn btn-danger ms-2" (click)="deleteWish(wish._id)">Löschen</button>
+
+
+                    <!-- Footer -->
+                    <div class="card-footer text-muted mt-3">
+                        <i class="bi bi-calendar-check-fill"></i>{{ wish.createdAt | date:'short' }};
+                        <i class="bi bi-hand-thumbs-up"></i>{{ wish.likes }}
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
