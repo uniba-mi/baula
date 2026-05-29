@@ -49,6 +49,7 @@ import {
   upsertStudyprogrammes,
 } from "../../../shared/helpers/fn2mod-helper";
 import { MergedChangelog } from "../../../../../../interfaces/logs";
+import { FeatureWish } from "../../../database/mongo";
 
 const prisma = new PrismaClient();
 
@@ -668,10 +669,10 @@ export async function crawlFN2Modules(
       logError(error);
       next(new BadRequestError("Fehler beim Crawlen der FlexNow-Daten"));
     }
-    if(mhbs.length > 0) {
+    if (mhbs.length > 0) {
       try {
         let changelogs: MergedChangelog[] = [];
-        for(let mhb of mhbs) {
+        for (let mhb of mhbs) {
           changelogs.push(await processFlexNowData(mhb))
         }
         let mergedLogs = generateLogging(changelogs);
@@ -679,10 +680,10 @@ export async function crawlFN2Modules(
         let difference = ((Date.now() - startTime) / 1000) | 0;
         let minutes = (difference / 60) | 0;
         let seconds = difference - minutes * 60;
-        
+
         mergedLogs.logs.push(`${minutes} Minutes and ${seconds} Seconds to process`);
         res.status(200).json(mergedLogs);
-      } catch(error) {
+      } catch (error) {
         console.log(error)
         res.status(400)
       }
@@ -692,7 +693,7 @@ export async function crawlFN2Modules(
         new BadRequestError("Es konnten keine Daten von FlexNow geladen werden.")
       )
     }
-    
+
   } else {
     next(
       new BadRequestError("Das übergebene Semester hat das falsche Format."),
@@ -1163,7 +1164,7 @@ async function crawlFlexNow(semester: string): Promise<string[]> {
           // save xml on local file system for debugging
           try {
             fs.writeFileSync(path.join(__dirname, '../../../../staticdata/mhb_export.xml'), raw)
-          } catch(error) {
+          } catch (error) {
             console.log(error)
           }
 
@@ -1305,4 +1306,63 @@ async function processFlexNowData(xml: string): Promise<MergedChangelog> {
   resultLog.per2mc = { queried: person2ModCourse.length, added: resultPer2Mc.count, updated: 0, deleted: 0, error: false, detailLog: [] }
 
   return resultLog;
+}
+
+export async function adminGetUnapprovedWishes(req: Request, res: Response, next: NextFunction) {
+  const unapprovedWishes = await FeatureWish.find({ isAllowed: false });
+  
+  res.status(200).json(unapprovedWishes);
+}
+
+export async function adminApproveWish(req: Request, res: Response, next: NextFunction) {
+  const wishId = req.params.id;
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(new NotFoundError("Es wurde kein Wunsch mit der übergebenen ID gefunden."));
+    return;
+  }
+
+  wish.isAllowed = true;
+  await wish.save();
+  res.status(200).json({ message: "Der Wunsch wurde genehmigt." });
+}
+
+export async function adminUnapproveWish(req: Request, res: Response, next: NextFunction) {
+  const wishId = req.params.id;
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(new NotFoundError("Es wurde kein Wunsch mit der übergebenen ID gefunden."));
+    return;
+  }
+
+  wish.isAllowed = false;
+  await wish.save();
+  res.status(200).json({ message: "Der Wunsch wurde abgelehnt." });
+}
+
+export async function adminDeleteWish(req: Request, res: Response, next: NextFunction) {
+  const wishId = req.params.id;
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(new NotFoundError("Es wurde kein Wunsch mit der übergebenen ID gefunden."));
+    return;
+  }
+
+  await wish.deleteOne();
+  res.status(200).json({ message: "Der Wunsch wurde gelöscht." });
 }

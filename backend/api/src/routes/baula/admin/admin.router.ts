@@ -19,6 +19,10 @@ import {
   updateModuleEmbeddings,
   getReporting,
   crawlFN2Modules,
+  adminGetUnapprovedWishes,
+  adminApproveWish,
+  adminUnapproveWish,
+  adminDeleteWish
 } from "./admin.controller";
 
 const router: Router = express.Router();
@@ -67,5 +71,11 @@ router.post("/crawling/univis", crawlCourses);
 // Add a xml file containing module structure into the database
 router.post('/fnmhb', addModuleStructureToDatabase);
 router.get('/crawling/fnmhbs/:semester', crawlFN2Modules);
+
+// Admin routes for feature wishes
+router.get('/feature-wishes/unapproved', adminGetUnapprovedWishes);
+router.post('/feature-wishes/approve/:id', adminApproveWish);
+router.post('/feature-wishes/unapprove/:id', adminUnapproveWish);
+router.delete('/feature-wishes/delete/:id', adminDeleteWish);
 
 export { router as admin };
