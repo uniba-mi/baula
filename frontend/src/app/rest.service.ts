@@ -29,6 +29,7 @@ import {
 import { config } from 'src/environments/config.local';
 import { AcademicDate, DateType } from '../../../interfaces/academic-date';
 import { FnUser } from '../../../interfaces/fn-user';
+import { FeatureWish } from '../../../interfaces/feature-wish';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -784,5 +785,56 @@ export class RestService {
 
   getStudentDataViaFlexNow(importStudyPath: boolean): Observable<FnUser> {
     return this.http.post<FnUser>(`${this.urlBase}user/fn2student`, { importStudyPath }, httpOptions);
+  }
+
+  /* --------------------------------
+  -- Queries for the feature-wish widget
+  ----------------------------------- */
+  sendFeatureWish(title: string, description: string, icon?: string): Observable<FeatureWish> {
+    return this.http.post<FeatureWish>(
+      `${this.urlBase}feature-wishes/add`,
+      { title, description, icon },
+      httpOptions
+    );
+  }
+
+  getAllFeatureWishes(): Observable<FeatureWish[]> {
+    return this.http.get<FeatureWish[]>(`${this.urlBase}feature-wishes/all`, httpOptions);
+  }
+
+  getTopFeatureWishes(): Observable<FeatureWish[]> {
+    return this.http.get<FeatureWish[]>(`${this.urlBase}feature-wishes/top`, httpOptions);
+  }
+
+  hasLikedFeatureWish(wishId: string): Observable<{ hasLiked: boolean }> {
+    return this.http.get<{ hasLiked: boolean }>(`${this.urlBase}feature-wishes/liked/${wishId}`, httpOptions);
+  }
+
+  likeFeatureWish(wishId: string): Observable<FeatureWish> {
+    return this.http.post<FeatureWish>(`${this.urlBase}feature-wishes/like/${wishId}`, httpOptions);
+  }
+
+  unlikeFeatureWish(wishId: string): Observable<FeatureWish> {
+    return this.http.post<FeatureWish>(`${this.urlBase}feature-wishes/unlike/${wishId}`, httpOptions);
+  }
+
+  isUsersWish(wishId: string): Observable<{ isUsersWish: boolean }> {
+    return this.http.get<{ isUsersWish: boolean }>(`${this.urlBase}feature-wishes/is-users-wish/${wishId}`, httpOptions);
+  }
+
+  adminGetUnapprovedWishes(): Observable<FeatureWish[]> {
+    return this.http.get<FeatureWish[]>(`${this.urlBase}admin/feature-wishes/unapproved`, httpOptions);
+  }
+
+  adminApproveWish(wishId: string): Observable<FeatureWish> {
+    return this.http.post<FeatureWish>(`${this.urlBase}admin/feature-wishes/approve/${wishId}`, httpOptions);
+  }
+
+  adminUnapproveWish(wishId: string): Observable<FeatureWish> {
+    return this.http.post<FeatureWish>(`${this.urlBase}admin/feature-wishes/unapprove/${wishId}`, httpOptions);
+  }
+
+  adminDeleteWish(wishId: string): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.urlBase}admin/feature-wishes/delete/${wishId}`, httpOptions);
   }
 }
