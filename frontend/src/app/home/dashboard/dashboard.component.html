@@ -115,6 +115,12 @@
                 <app-module-group-progress-chart [studyPath]="studyPath"
                   [mgs]="modulegroups$ | async"></app-module-group-progress-chart>
               </mat-card>
+              <!-- feature wish widget -->
+              <mat-card appearance="outlined" *ngSwitchCase="'feature-wish'" class="dashboard-tile small-tile order-1">
+                <app-dashboard-card-header [key]="chart.key"
+                  (changeVisibility)="changeVisibility($event)"></app-dashboard-card-header>
+                <app-feature-wish></app-feature-wish>
+              </mat-card>
             </ng-container>
           </ng-container>
         </ng-container>

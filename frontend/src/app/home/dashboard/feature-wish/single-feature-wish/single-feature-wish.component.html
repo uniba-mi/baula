@@ -1,0 +1,55 @@
+<div class="container text-center single-wish">
+    <div class="row d-flex align-items-center">
+        <!-- Special ranking icons -->
+        <div class="col-1">
+            @if (rank == 1) {
+            <i class="bi bi-1-circle-fill" style="color: gold;"></i>
+            } @else if (rank == 2) {
+            <i class="bi bi-2-circle-fill" style="color: silver;"></i>
+            } @else if (rank == 3) {
+            <i class="bi bi-3-circle-fill" style="color: #cd7f32;"></i>
+            } @else {
+            <!-- Default ranking -->
+            <div class="col">
+                #{{ rank }}
+            </div>
+            }
+        </div>
+        <!-- Title -->
+        <div class="col-8">
+            <div class="wish-title position-relative" [ngClass]="isUsersWish ? 'usersWish' : ''">
+                @if (wish.icon) {
+                    <i class="{{ wish.icon }}"></i>
+                } {{ wish.title }}
+                @if (isUsersWish) {
+                <i class="bi bi-person-fill-check position-absolute translate-middle">
+                </i>
+                }
+            </div>
+        </div>
+        <!-- Likes -->
+        <div class="col d-flex justify-content-end" style="padding-left: 0;">
+            <button (click)="likeOrUnlikeWish()" class="btn likes">
+                <div class="button-element">
+                    {{ wish.likes }}
+                </div>
+                <div class="button-element" [ngClass]="hasLikedThisWish? 'scaleAnimation' : ''">
+
+                    @if (hasLikedThisWish) {
+                    <i class="bi bi-hand-thumbs-up-fill"></i>
+                    } @else {
+                    <i class="bi bi-hand-thumbs-up"></i>
+                    }
+                </div>
+            </button>
+        </div>
+    </div>
+    @if (withDescription) {
+        <br><mat-divider></mat-divider>
+        <div class="row">
+            <div class="description d-flex justify-content-start">
+                {{ wish.description }}
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,78 @@
+// .usersWish {
+//     border: 2px solid goldenrod;
+//     border-radius: 8px;
+// }
+
+.single-wish {
+    padding: 10px;
+    margin-bottom: 12px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.likes {
+    border: 2px solid grey;
+    border-radius: 8px;
+
+    width: 90%;
+    padding: 0px !important;
+    // Other elements should be dispalyed in line
+    display: flex;
+}
+
+.likes > *:first-child {
+    border-right: 2px solid rgb(194, 194, 194);
+}
+
+.wish-title {
+    border: 2px solid darkgrey;
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wish-title > i {
+    rotate: 45deg;
+    top: 0px;
+    right: -10px;
+    font-size: 1.2rem;
+}
+
+.button-element {
+    margin: none;
+    width: 50%;
+}
+
+.description {
+    padding: 0.5rem;
+}
+
+.scaleAnimation {
+  animation: pulseScale 0.5s ease-in-out;
+}
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    color: black;
+  }
+
+  25% {
+    color: goldenrod;
+  }
+
+  50% {
+    transform: scale(1.1);
+    color: goldenrod;
+  }
+
+  75% {
+    color: goldenrod;
+  }
+
+  100% {
+    transform: scale(1);
+    color: black;
+  }
+}
