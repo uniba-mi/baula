@@ -47,7 +47,8 @@ import { TableCardComponent } from '../reporting/table-card/table-card.component
 import { ReportingBaseComponent } from '../reporting/reporting-base.component';
 import { OtherActionsComponent } from './other-actions/other-actions.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import { AdminFeatureWishesComponent } from './admin-feature-wishes/admin-feature-wishes.component';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     AdminRecsComponent,
     ReportingComponent,
     SemesterSelectionFormComponent,
-    OtherActionsComponent
+    OtherActionsComponent,
+    AdminFeatureWishesComponent
   ],
   imports: [
     CommonModule,
@@ -98,7 +100,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     ReportingBaseComponent,
     BarChartCardComponent,
     TableCardComponent,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTabGroup
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
