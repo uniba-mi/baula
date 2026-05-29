@@ -9,13 +9,13 @@ import { SemesterPlan as ISemesterPlan } from "../../../../interfaces/semester-p
 import { ObjectId } from "mongodb";
 import { StudyPlan as IStudyPlan } from "../../../../interfaces/study-plan";
 import { Recommendation as IRecommendation } from "../../../../interfaces/recommendation";
-import { Embedding as IEmbedding, ModuleEmbedding as IModEmbedding  } from "../../../../interfaces/embedding";
+import { Embedding as IEmbedding, ModuleEmbedding as IModEmbedding } from "../../../../interfaces/embedding";
 import { Exam as IExam } from "../../../../interfaces/study-path";
 import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/long-term-evaluation";
 import { Topic as ITopic } from "../../../../interfaces/topic";
 import { UserServer as IUser } from "../../../../interfaces/user";
 import { Evaluation as IEvaluation } from "../../../../interfaces/evaluation";
-
+import { FeatureWish as IFeatureWish } from "../../../../interfaces/feature-wish";
 const uri = process.env.MONGO_DATABASE_URL
   ? process.env.MONGO_DATABASE_URL.toString()
   : "";
@@ -543,6 +543,34 @@ const EvaluationSchema: Schema = new Schema<IEvaluation>(
   { timestamps: true }
 );
 
+// Feature Wish
+const FeatureWishSchema: Schema = new Schema<IFeatureWish>(
+  {
+    _id: {
+      type: String,
+      required: true,
+      default: () => new mongoose.Types.ObjectId().toString(),
+    },
+    createdAt: Date,
+    title: String,
+    description: String,
+    isAllowed: Boolean,
+    likedBy: [
+      {
+        type: ObjectId,
+        reference: "UserSchema",
+        required: true,
+      }
+    ],
+    createdBy: {
+      type: ObjectId,
+      reference: "UserSchema",
+    },
+    icon: String,
+  },
+  { timestamps: true }
+);
+
 // Create models
 export const SemesterPlan = model<ISemesterPlan>(
   "Semesterplan",
@@ -567,4 +595,8 @@ export const Evaluation = mongoose.model<IEvaluation>(
 export const LongTermEvaluation = model<ILongTermEvaluation>(
   "LongTermEvaluation",
   LongTermEvaluationSchema
+);
+export const FeatureWish = model<IFeatureWish>(
+  "FeatureWish",
+  FeatureWishSchema
 );
