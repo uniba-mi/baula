@@ -19,8 +19,12 @@
         <div class="col-8">
             <div class="wish-title position-relative" [ngClass]="isUsersWish ? 'usersWish' : ''">
                 @if (wish.icon) {
+                <div class="title-icon">
                     <i class="{{ wish.icon }}"></i>
-                } {{ wish.title }}
+                </div>
+                }
+                {{ wish.title }}
+
                 @if (isUsersWish) {
                 <i class="bi bi-person-fill-check position-absolute translate-middle">
                 </i>
@@ -45,11 +49,11 @@
         </div>
     </div>
     @if (withDescription) {
-        <br><mat-divider></mat-divider>
-        <div class="row">
-            <div class="description d-flex justify-content-start">
-                {{ wish.description }}
-            </div>
+    <br><mat-divider></mat-divider>
+    <div class="row">
+        <div class="description d-flex justify-content-start">
+            {{ wish.description }}
         </div>
+    </div>
     }
 </div>
