@@ -30,6 +30,8 @@ export class AdminSingleFeatureWishComponent {
   tagToAddErrorMessage: string = "";
   tagToAddSuccessMessage: string = "";
 
+  isHovered: boolean = false;
+
   constructor(private rest: RestService) {
 
   }

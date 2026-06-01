@@ -51,10 +51,10 @@
 
         <!-- Tags -->
         @for (tag of wish.tags; track tag) {
-        <span class="chip me-1"> {{ tag }}
-            <button class="btn" (click)="removeTag(tag)">
-                <i class="bi bi-x-lg"></i>
-            </button>
+        <span class="chip me-2 tag-button"> 
+            <div class="btn" (click)="removeTag(tag)">
+                {{ tag }} <i class="bi bi-x-lg"></i>
+            </div>
         </span>
         }
         <mat-form-field appearance="outline" class="w-100">
