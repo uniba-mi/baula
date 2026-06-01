@@ -837,4 +837,23 @@ export class RestService {
   adminDeleteWish(wishId: string): Observable<{ message: string }> {
     return this.http.delete<{ message: string }>(`${this.urlBase}admin/feature-wishes/delete/${wishId}`, httpOptions);
   }
+
+  adminUpdateAdminMessage(wishId: string, adminMessage: string): Observable<FeatureWish> {
+    console.log("-------------Admin updating admin message for wish with id", wishId, "to", adminMessage);
+    return this.http.post<FeatureWish>(`${this.urlBase}admin/feature-wishes/update-admin-message/${wishId}`, { adminMessage }, httpOptions);
+  }
+
+  adminAddTag(wishId: string, tag: string): Observable<FeatureWish> {
+    return this.http.post<FeatureWish>(`${this.urlBase}admin/feature-wishes/add-tag/${wishId}`, { tag }, httpOptions);
+  }
+
+  adminRemoveTag(wishId: string, tag: string): Observable<FeatureWish> {
+    return this.http.delete<FeatureWish>(
+      `${this.urlBase}admin/feature-wishes/remove-tag/${wishId}`,
+      {
+        body: { tag },
+        ...httpOptions
+      }
+    );
+  }
 }
