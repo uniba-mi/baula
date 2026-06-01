@@ -8,4 +8,6 @@ export interface FeatureWish {
     likes?: number,
     createdBy?: string,
     icon?: string,
+    adminMessage?: string,
+    tags?: string[],
 }

@@ -567,6 +567,8 @@ const FeatureWishSchema: Schema = new Schema<IFeatureWish>(
       reference: "UserSchema",
     },
     icon: String,
+    adminMessage: String,
+    tags: [String]
   },
   { timestamps: true }
 );
