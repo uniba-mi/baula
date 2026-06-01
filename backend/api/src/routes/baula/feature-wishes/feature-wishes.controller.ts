@@ -4,16 +4,27 @@ import { FeatureWish } from "../../../database/mongo";
 import { BadRequestError, NotFoundError, UnauthorizedError } from "../../../shared/error";
 
 import { PrismaClient } from "@prisma/client";
+import { adminGetUnapprovedWishes } from "../admin/admin.controller";
 const prisma = new PrismaClient();
 
 export async function addFeatureWish(req: Request, res: Response, next: NextFunction) {
-    console.log("Got request to add feature wish with body:", req.body);
+    const maxAmountOfUnapprovedWishes = 5;
     const user = req.user as UserServer;
     if (!user) {
         next(new UnauthorizedError());
         console.log("Unauthorized: No user found in request.");
         return;
     };
+
+    const usersUnapprovedWishes = await getUsersUnapprovedWishes(user._id);
+    console.log("Nutzer hat bereits so viele unapproved wishes", usersUnapprovedWishes);
+    if (usersUnapprovedWishes >= maxAmountOfUnapprovedWishes) {
+        next(new BadRequestError(
+            `Du kannt maximal ${maxAmountOfUnapprovedWishes} noch ungenehmigte Wünsche haben. \n` +
+            `Versuche es später noch einmal.`
+        ))
+    }
+
     const title = req.body.title;
     const description = req.body.description;
     const icon = req.body.icon;
@@ -32,6 +43,15 @@ export async function addFeatureWish(req: Request, res: Response, next: NextFunc
         .catch((error) => {
             next(new Error("Failed to create feature wish: " + error.message));
         });
+}
+
+async function getUsersUnapprovedWishes(userId: string): Promise<number> {
+    const unapprovedWishes = await FeatureWish.find({ isAllowed: false });
+
+    const usersUnapprovedWishes: number = unapprovedWishes.filter(
+        wish => wish.createdBy?.toString() == userId.toString())
+        .length;
+    return usersUnapprovedWishes;
 }
 
 export async function getTopWishes(req: Request, res: Response, next: NextFunction) {
@@ -183,7 +203,7 @@ export async function isUsersWish(req: Request, res: Response, next: NextFunctio
     }
 
     const isUsersWish = wish.createdBy?.toString() == user._id.toString();
-    
+
     res.send({ isUsersWish });
 }
 
