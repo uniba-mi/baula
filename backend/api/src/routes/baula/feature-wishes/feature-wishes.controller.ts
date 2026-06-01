@@ -34,7 +34,7 @@ export async function addFeatureWish(req: Request, res: Response, next: NextFunc
         console.log("Bad Request: ", isValid);
         return;
     }
-    console.log("Creating feature wish with title:", title, "description:", description, "icon:", icon, "for user:", user._id);
+    
     await createFeatureWish(title, description, user._id, icon)
         .then((wish) => {
             console.log("WISH: ", wish);
@@ -43,6 +43,55 @@ export async function addFeatureWish(req: Request, res: Response, next: NextFunc
         .catch((error) => {
             next(new Error("Failed to create feature wish: " + error.message));
         });
+}
+
+function validateFeatureWish(title: string, description: string): boolean | string {
+    const maxTitleLength = 200;
+    const minTitleLength = 2;
+    const maxDescriptionLength = 1000;
+    let errorMessage = "Bei dem Feature-Wunsch ist folgendes Problem aufgetreten: ";
+    let isValid = true;
+
+    if (!title || !description) {
+        return "Es muss ein Titel und eine Beschreibung angegeben werden.";
+    }
+
+    if (title.length > maxTitleLength) {
+        errorMessage += `Der Titel darf maximal ${maxTitleLength} Zeichen lang sein. \n`;
+        isValid = false;
+    }
+
+    if (description.length > maxDescriptionLength) {
+        errorMessage += `Die Beschreibung darf maximal ${maxDescriptionLength} Zeichen lang sein. \n`;
+        isValid = false;
+    }
+    if (title.length < minTitleLength) {
+        errorMessage += `Der Titel muss mindestens ${minTitleLength} Zeichen lang sein. \n`;
+        isValid = false;
+    }
+    if (!isValid) return errorMessage;
+    return true;
+}
+
+async function createFeatureWish(title: string, description: string, userId?: string, icon?: string): Promise<typeof FeatureWish> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const newWish = new FeatureWish({
+                title: title,
+                description: description,
+                likedBy: userId ? [userId] : [],
+                createdAt: new Date(),
+                isAllowed: false,
+                createdBy: userId,
+                icon: icon,
+            });
+
+            await newWish.save();
+            resolve((newWish as unknown) as typeof FeatureWish);
+        } catch (error) {
+            reject(error);
+        }
+    });
 }
 
 async function getUsersUnapprovedWishes(userId: string): Promise<number> {
@@ -207,51 +256,3 @@ export async function isUsersWish(req: Request, res: Response, next: NextFunctio
     res.send({ isUsersWish });
 }
 
-function validateFeatureWish(title: string, description: string): boolean | string {
-    const maxTitleLength = 100;
-    const minTitleLength = 5;
-    const maxDescriptionLength = 1000;
-    let errorMessage = "Bei dem Feature-Wunsch ist folgendes Problem aufgetreten: ";
-    let isValid = true;
-
-    if (!title || !description) {
-        return "Es muss ein Titel und eine Beschreibung angegeben werden.";
-    }
-
-    if (title.length > maxTitleLength) {
-        errorMessage += `Der Titel darf maximal ${maxTitleLength} Zeichen lang sein. \n`;
-        isValid = false;
-    }
-
-    if (description.length > maxDescriptionLength) {
-        errorMessage += `Die Beschreibung darf maximal ${maxDescriptionLength} Zeichen lang sein. \n`;
-        isValid = false;
-    }
-    if (title.length < minTitleLength) {
-        errorMessage += `Der Titel muss mindestens ${minTitleLength} Zeichen lang sein. \n`;
-        isValid = false;
-    }
-    if (!isValid) return errorMessage;
-    return true;
-}
-
-async function createFeatureWish(title: string, description: string, userId?: string, icon?: string): Promise<typeof FeatureWish> {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const newWish = new FeatureWish({
-                title: title,
-                description: description,
-                likedBy: userId ? [userId] : [],
-                createdAt: new Date(),
-                isAllowed: false,
-                createdBy: userId,
-                icon: icon,
-            });
-
-            await newWish.save();
-            resolve((newWish as unknown) as typeof FeatureWish);
-        } catch (error) {
-            reject(error);
-        }
-    });
-}
