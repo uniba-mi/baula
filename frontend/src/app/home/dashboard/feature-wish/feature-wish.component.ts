@@ -58,7 +58,7 @@ export class FeatureWishComponent {
         this.title = '';
         this.description = '';
         this.selectedIcon = undefined;
-        this.successMessage = 'Der Feature-Wunsch wurde erfolgreich gesendet! ' +
+        this.successMessage = 'Dein Feature-Wunsch wurde erfolgreich eingereicht! ' +
           'Dieser wird nun geprüft und bei Genehmigung in der Liste der Wünsche erscheinen. \n' +
           'Vielen Dank für dein Feedback!';
         this.errorMessage = '';

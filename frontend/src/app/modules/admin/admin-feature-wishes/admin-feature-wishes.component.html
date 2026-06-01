@@ -1,52 +1,37 @@
-<div class="container text-center">
+<div class="container">
     <div class="row">
+
+        <!-- Unapproved -->
         <div class="col">
-            <h2> Noch nicht genehmigte Wünsche </h2>
-            @for (wish of unapprovedWishes; track wish) {
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        @if (wish.icon) {
-                        <i class="{{ wish.icon }}"></i>
-                        } {{ wish.title }}
-                    </h5>
-                    <p class="card-text">{{ wish.description }}</p>
-                    <button class="btn btn-success" (click)="approveWish(wish._id)">Genehmigen</button>
-                    <button class="btn btn-danger ms-2" (click)="deleteWish(wish._id)">Löschen</button>
+            <h2>Noch nicht genehmigte Wünsche</h2>
 
-                    <!-- Footer -->
-                    <div class="card-footer text-muted mt-3">
-                        <div>
-                            <i class="bi bi-calendar-check-fill"></i>{{ wish.createdAt | date:'short' }}
-                        </div>
-                    </div>
+            <div class="row">
+                @for (wish of unapprovedWishes; track wish) {
+                <div class="col-12 col-lg-6">
+                    <app-admin-single-feature-wish [wish]="wish" [deleteButton]="true" [approveButton]="true"
+                        (delete)="deleteWish($event)" (approve)="approveWish($event)"
+                        (unapprove)="unapproveWish($event)">
+                    </app-admin-single-feature-wish>
                 </div>
+                }
             </div>
-            }
         </div>
+
+        <!-- Approved -->
         <div class="col">
-            <h2> Genehmigte Wünsche </h2>
-            @for (wish of approvedWishes; track wish) {
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        @if (wish.icon) {
-                        <i class="{{ wish.icon }}"></i>
-                        } {{ wish.title }}
-                    </h5>
-                    <p class="card-text">{{ wish.description }}</p>
-                    <button class="btn btn-warning ms-2" (click)="unapproveWish(wish._id)">Ablehnen</button>
-                    <button class="btn btn-danger ms-2" (click)="deleteWish(wish._id)">Löschen</button>
+            <h2>Genehmigte Wünsche</h2>
 
-
-                    <!-- Footer -->
-                    <div class="card-footer text-muted mt-3">
-                        <i class="bi bi-calendar-check-fill"></i>{{ wish.createdAt | date:'short' }};
-                        <i class="bi bi-hand-thumbs-up"></i>{{ wish.likes }}
-                    </div>
+            <div class="row">
+                @for (wish of approvedWishes; track wish) {
+                <div class="col-12 col-lg-6">
+                    <app-admin-single-feature-wish [showLikes]="true" [wish]="wish" [deleteButton]="true"
+                        [unapproveButton]="true" (delete)="deleteWish($event)" (approve)="approveWish($event)"
+                        (unapprove)="unapproveWish($event)">
+                    </app-admin-single-feature-wish>
                 </div>
+                }
             </div>
-            }
         </div>
+
     </div>
 </div>

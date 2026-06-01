@@ -49,6 +49,7 @@ import { OtherActionsComponent } from './other-actions/other-actions.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AdminFeatureWishesComponent } from './admin-feature-wishes/admin-feature-wishes.component';
 import { MatTabGroup } from '@angular/material/tabs';
+import { AdminSingleFeatureWishComponent } from './admin-feature-wishes/admin-single-feature-wish/admin-single-feature-wish.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { MatTabGroup } from '@angular/material/tabs';
     ReportingComponent,
     SemesterSelectionFormComponent,
     OtherActionsComponent,
-    AdminFeatureWishesComponent
+    AdminFeatureWishesComponent,
+    AdminSingleFeatureWishComponent,
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,9 @@ export class AdminFeatureWishesComponent {
   unapprovedWishes: FeatureWish[] = [];
   approvedWishes: FeatureWish[] = [];
 
+  editAdminMessageSuccessMessage: string = "";
+  editAdminMessageErrorMessage: string = "";
+
   constructor(private rest: RestService) {
 
   }
@@ -36,7 +39,8 @@ export class AdminFeatureWishesComponent {
     });
   }
 
-  approveWish(wishId: string) {
+  approveWish(wish: FeatureWish) {
+    const wishId = wish._id;
     this.rest.adminApproveWish(wishId).subscribe({
       next: (response) => {
         this.approvedWishes.push(this.unapprovedWishes.filter(wish => wish._id === wishId)[0]);
@@ -48,7 +52,8 @@ export class AdminFeatureWishesComponent {
     });
   }
 
-  unapproveWish(wishId: string) {
+  unapproveWish(wish: FeatureWish) {
+    const wishId = wish._id;
     this.rest.adminUnapproveWish(wishId).subscribe({
       next: (response) => {
         this.unapprovedWishes.push(this.approvedWishes.filter(wish => wish._id === wishId)[0]);
@@ -60,7 +65,8 @@ export class AdminFeatureWishesComponent {
     });
   }
 
-  deleteWish(wishId: string) {
+  deleteWish(wish: FeatureWish) {
+    const wishId = wish._id;
     this.rest.adminDeleteWish(wishId).subscribe({
       next: (response) => {
         this.unapprovedWishes = this.unapprovedWishes.filter(wish => wish._id !== wishId);
