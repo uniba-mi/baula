@@ -1310,7 +1310,7 @@ async function processFlexNowData(xml: string): Promise<MergedChangelog> {
 
 export async function adminGetUnapprovedWishes(req: Request, res: Response, next: NextFunction) {
   const unapprovedWishes = await FeatureWish.find({ isAllowed: false });
-  
+
   res.status(200).json(unapprovedWishes);
 }
 
@@ -1365,4 +1365,76 @@ export async function adminDeleteWish(req: Request, res: Response, next: NextFun
 
   await wish.deleteOne();
   res.status(200).json({ message: "Der Wunsch wurde gelöscht." });
+}
+
+export async function adminAddMessageToWish(req: Request, res: Response, next: NextFunction) {
+  const wishId = req.params.id;
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const message = req.body.adminMessage;
+  // if (!message) {
+  //   next(new BadRequestError("Es wurde keine Message übergeben."));
+  //   return;
+  // }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(new NotFoundError("Es wurde kein Wunsch mit der übergebenen ID gefunden."));
+    return;
+  }
+
+  wish.adminMessage = message;
+  await wish.save();
+  res.status(200).json({ message: "Die Admin Message wurde gespeichert." });
+}
+
+export async function adminAddTagToWish(req: Request, res: Response, next: NextFunction) {
+  const wishId = req.params.id;
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const tag = req.body.tag;
+  if (!tag) {
+    next(new BadRequestError("Es wurde kein Tag übergeben."));
+    return;
+  }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(new NotFoundError("Es wurde kein Wunsch mit der übergebenen ID gefunden."));
+    return;
+  }
+
+  wish.tags? wish.tags.push(tag) : wish.tags = [tag];
+  await wish.save();
+  res.status(200).json({ message: "Der Tag wurde gespeichert." });
+}
+
+export async function adminRemoveTagFromWish(req: Request, res: Response, next: NextFunction) {
+  const wishId = req.params.id;
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const tag = req.body.tag;
+  if (!tag) {
+    next(new BadRequestError("Es wurde kein Tag übergeben."));
+    return;
+  }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(new NotFoundError("Es wurde kein Wunsch mit der übergebenen ID gefunden."));
+    return;
+  }
+
+  wish.tags? wish.tags = wish.tags.filter((t: string) => t !== tag) : wish.tags = [tag];
+  await wish.save();
+  res.status(200).json({ message: "Der Tag wurde gespeichert." });
 }

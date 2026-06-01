@@ -22,7 +22,10 @@ import {
   adminGetUnapprovedWishes,
   adminApproveWish,
   adminUnapproveWish,
-  adminDeleteWish
+  adminDeleteWish,
+  adminAddMessageToWish,
+  adminAddTagToWish,
+  adminRemoveTagFromWish,
 } from "./admin.controller";
 
 const router: Router = express.Router();
@@ -77,5 +80,9 @@ router.get('/feature-wishes/unapproved', adminGetUnapprovedWishes);
 router.post('/feature-wishes/approve/:id', adminApproveWish);
 router.post('/feature-wishes/unapprove/:id', adminUnapproveWish);
 router.delete('/feature-wishes/delete/:id', adminDeleteWish);
+
+router.post('/feature-wishes/update-admin-message/:id', adminAddMessageToWish);
+router.post('/feature-wishes/add-tag/:id', adminAddTagToWish);
+router.delete('/feature-wishes/remove-tag/:id', adminRemoveTagFromWish);
 
 export { router as admin };
