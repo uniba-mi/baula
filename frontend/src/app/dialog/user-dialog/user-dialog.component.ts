@@ -29,6 +29,7 @@ export class UserDialogComponent {
   currentStep = 'welcome';
   readonly termsConfirmed = model(false);
   flexNowImportConfirmed = false;
+  metadataConfirmed = false;
   studyPathConfirmed = false;
   gradesConfirmed = false;
   steps: string[] = ['welcome'];
@@ -53,10 +54,12 @@ export class UserDialogComponent {
 
   receiveChanges(confirmations: {
     flexNowImportConfirmed: boolean,
+    metadataConfirmed: boolean,
     studypathConfirmed: boolean,
     gradesConfirmed: boolean,
   }) {
     this.flexNowImportConfirmed = confirmations.flexNowImportConfirmed;
+    this.metadataConfirmed = confirmations.metadataConfirmed;
     this.studyPathConfirmed = confirmations.studypathConfirmed;
     this.gradesConfirmed = confirmations.gradesConfirmed;
   }
@@ -146,7 +149,7 @@ export class UserDialogComponent {
   }
 
   async getFlexNowInformation() {
-    if (this.flexNowImportConfirmed) {
+    if (this.metadataConfirmed) {
       this.currentStep = 'loading';
       this.loadingMessage =
         'Wir laden deine Daten von FlexNow, das kann kurz dauern...';
@@ -202,6 +205,11 @@ export class UserDialogComponent {
       {
         ctype: 'flexnow-api',
         hasConfirmed: this.flexNowImportConfirmed,
+        timestamp: new Date(),
+      },
+      {
+        ctype: 'upload-meta-data',
+        hasConfirmed: this.metadataConfirmed,
         timestamp: new Date(),
       },
       {

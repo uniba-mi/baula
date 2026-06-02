@@ -4,7 +4,7 @@
             <app-upload-data-privacy [version]="'bakule'"></app-upload-data-privacy>
         </div>
         <div class="mt-4 mb-2">
-            <app-upload-student-data-confirmation
+            <app-upload-student-data-confirmation [onlyMetaData]="onlyMetaData" [onlyStudypath]="onlyStudypath"
                 (confirmFlexNowImport)="receiveChanges($event)"></app-upload-student-data-confirmation>
         </div>
     </div>

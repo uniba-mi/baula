@@ -92,9 +92,9 @@
         </div>
 
         <div *ngIf="
-        data.dialogContentId === 'upload-student-data-dialog'
+        data.dialogContentId === 'upload-student-data-dialog' && data.onlyMetaData !== undefined && data.onlyStudypath !== undefined
       ">
-          <app-upload-student-data-dialog></app-upload-student-data-dialog>
+          <app-upload-student-data-dialog [onlyMetaData]="data.onlyMetaData" [onlyStudypath]="data.onlyStudypath"></app-upload-student-data-dialog>
         </div>
         <div *ngIf="
             data.semesters$ &&

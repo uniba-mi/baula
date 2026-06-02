@@ -65,7 +65,7 @@
         <app-upload-data-privacy [version]="'bakule'"></app-upload-data-privacy>
       </mat-expansion-panel>
     </div>
-    <app-upload-student-data-confirmation
+    <app-upload-student-data-confirmation [onlyStudypath]="false" [onlyMetaData]="false"
       (confirmFlexNowImport)="receiveChanges($event)"></app-upload-student-data-confirmation>
     <mat-dialog-actions>
       <button class="btn btn-outline" (click)="previousStep()">

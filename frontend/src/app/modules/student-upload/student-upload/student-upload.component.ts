@@ -1,31 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
-  getModuleByAcronym,
   getModules,
   getStructuredModuleGroups,
 } from 'src/app/selectors/module-overview.selectors';
-import {
-  Exam,
-  ExamAttempt,
-  PathModule,
-} from '../../../../../../interfaces/study-path';
 import { StudyPathActions, UserActions } from 'src/app/actions/user.actions';
-import { TransformationService } from 'src/app/shared/services/transformation.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent, DialogData } from 'src/app/dialog/dialog.component';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { AlertType } from 'src/app/shared/classes/alert';
 import { Consent, User } from '../../../../../../interfaces/user';
-import {
-  Observable,
-  Subject,
-  firstValueFrom,
-  map,
-  take,
-  takeUntil,
-  tap,
-} from 'rxjs';
+import { map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import {
   getLastConsentByType,
   getSemesterList,
@@ -36,19 +18,12 @@ import {
 } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
 import { Module } from '../../../../../../interfaces/module';
 import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
-import { UserGeneratedModuleTemplate } from '../../../../../../interfaces/user-generated-module';
 import { Semester } from '../../../../../../interfaces/semester';
-import {
-  ModulePlanningActions,
-  UserGeneratedModuleActions,
-} from 'src/app/actions/study-planning.actions';
+import { UserGeneratedModuleActions } from 'src/app/actions/study-planning.actions';
 import { StudyPlan } from '../../../../../../interfaces/study-plan';
-import {
-  getSemesterPlansOfActiveStudyPlan,
-  getStudyPlans,
-} from 'src/app/selectors/study-planning.selectors';
-import { SemesterPlan } from '../../../../../../interfaces/semester-plan';
+import { getStudyPlans } from 'src/app/selectors/study-planning.selectors';
 import { FlexnowService } from 'src/app/shared/services/flex-now.service';
+import { DialogComponent, DialogData } from 'src/app/dialog/dialog.component';
 
 @Component({
   selector: 'app-student-upload',
@@ -62,20 +37,30 @@ export class StudentUploadComponent {
   modules$: Observable<Module[]>;
   modules: Module[] = [];
   closeMode: string;
-  flexnowApiConsent$: Observable<Consent | null>;
+  importMetadataConsent$: Observable<Consent | null>;
+  importStudypathConsent$: Observable<Consent | null>;
+  importGradeConsent$: Observable<Consent | null>;
+  integrateFnDataConsent$: Observable<Consent | null>;
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
   studyPlans$: Observable<StudyPlan[]>;
   semesters$: Observable<Semester[]>;
 
   constructor(
     private store: Store,
-    private transformationService: TransformationService,
     private dialog: MatDialog,
-    private snackbar: SnackbarService,
     private flexnowService: FlexnowService,
   ) {
-    this.flexnowApiConsent$ = this.store.select(
+    this.integrateFnDataConsent$ = this.store.select(
       getLastConsentByType('flexnow-api'),
+    );
+    this.importMetadataConsent$ = this.store.select(
+      getLastConsentByType('upload-meta-data'),
+    );
+    this.importStudypathConsent$ = this.store.select(
+      getLastConsentByType('upload-exam-data'),
+    );
+    this.importGradeConsent$ = this.store.select(
+      getLastConsentByType('include-grades'),
     );
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);
   }
@@ -89,38 +74,18 @@ export class StudentUploadComponent {
     this.semesters$ = this.store.select(getSemesterList);
   }
 
-  openDeleteStudyPathDialog() {
-    const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Gesamte Studienhistorie löschen?',
-      actionType: 'delete',
-      warningMessage:
-        'Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.',
-      confirmationItem:
-        'deinen gesamten Studienverlauf mit Belegungen und Noten',
-      confirmButtonLabel: 'Löschen',
-      cancelButtonLabel: 'Abbrechen',
-      confirmButtonClass: 'btn btn-danger',
-      callbackMethod: () => {
-        this.deleteStudyPath();
-      },
-    };
-
-    this.dialog.open(ConfirmationDialogComponent, {
-      data: confirmationDialogInterface,
-    });
-  }
-
   importCompleteFlexNowData() {
-    this.flexnowService.triggerFlexNowDataLoading(
-      'create-user',
-    );
+    this.flexnowService.triggerFlexNowDataLoading('update-user');
   }
 
   openConsentWithdrawalDialog() {
     const confirmationDialogInterface: ConfirmationDialogData = {
       dialogTitle: 'Einwilligung widerrufen?',
       actionType: 'delete',
-      confirmationItem: 'deine Einwilligung',
+      warningMessage:
+        'Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.',
+      confirmationItem:
+        'deine Einwilligung inklusive deines gesamten Studienverlauf mit Belegungen und Noten',
       confirmButtonLabel: 'Bestätigen',
       cancelButtonLabel: 'Abbrechen',
       confirmButtonClass: 'btn btn-danger',
@@ -162,10 +127,17 @@ export class StudentUploadComponent {
         }),
       )
       .subscribe();
-
     this.store.dispatch(
       UserActions.addConsent({
         ctype: 'flexnow-api',
+        hasConfirmed: false,
+        hasResponded: true,
+        timestamp: new Date(),
+      }),
+    );
+    this.store.dispatch(
+      UserActions.addConsent({
+        ctype: 'upload-meta-data',
         hasConfirmed: false,
         hasResponded: true,
         timestamp: new Date(),
@@ -188,6 +160,23 @@ export class StudentUploadComponent {
       }),
     );
     this.dialog.closeAll();
+  }
+
+  openConsentDialog(): Observable<{
+    flexNowImportConfirmed: boolean;
+    metadataConfirmed: boolean;
+    studypathConfirmed: boolean;
+    gradesConfirmed: boolean;
+  }> {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: <DialogData>{
+        dialogContentId: 'upload-student-data-dialog',
+        onlyMetaData: false,
+        onlyStudypath: false,
+      },
+    });
+
+    return dialogRef.afterClosed().pipe(map((result) => result));
   }
 
   ngOnDestroy(): void {

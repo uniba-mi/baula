@@ -55,6 +55,8 @@ export interface DialogData {
   isFirstSemesterStudent?: boolean;
   mhb?: ModuleHandbook;
   moduleData?: UserGeneratedModule | Module | PathModule,
+  onlyMetaData?: boolean,
+  onlyStudypath?: boolean,
   content?: any; // just for evaluation
 }
 

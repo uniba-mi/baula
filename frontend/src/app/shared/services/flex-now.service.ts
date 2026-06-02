@@ -52,10 +52,12 @@ import { DebugDialogComponent } from '../components/debug-dialog/debug-dialog.co
 })
 export class FlexnowService {
   lastFlexnowApiConsent$: Observable<Consent | null>;
+  lastFlexNowMetaDataConsent$: Observable<Consent | null>;
   lastFlexNowStudypathConsent$: Observable<Consent | null>;
   lastFlexNowGradeConsent$: Observable<Consent | null>;
   currentUser$: Observable<User>;
   private unsubscribe$ = new Subject<void>();
+  debuggingMode = false;
 
   constructor(
     private dialog: MatDialog,
@@ -64,6 +66,9 @@ export class FlexnowService {
   ) {
     this.lastFlexnowApiConsent$ = this.store.select(
       getLastConsentByType('flexnow-api'),
+    );
+    this.lastFlexNowMetaDataConsent$ = this.store.select(
+      getLastConsentByType('upload-meta-data'),
     );
     this.lastFlexNowStudypathConsent$ = this.store.select(
       getLastConsentByType('upload-exam-data'),
@@ -75,127 +80,206 @@ export class FlexnowService {
   }
 
   triggerFlexNowDataLoading(
-    mode: 'create-user' | 'update-studypath' | 'update-metadata',
+    mode: 'update-user' | 'update-studypath' | 'update-metadata',
     semester?: string,
   ) {
     let semesters$: Observable<Semester[]>;
-    let latestConsents$: Observable<{
-      flexNowImportConfirmed: boolean;
-      studypathConfirmed: boolean;
-      gradesConfirmed: boolean;
-    }> = this.lastFlexNowGradeConsent$.pipe(
-      take(1),
-      withLatestFrom(
-        this.lastFlexNowStudypathConsent$,
-        this.lastFlexNowGradeConsent$,
-      ),
-      concatMap(([consent, studypathConsent, gradeConsent]) => {
-        // if user has already consented, we can skip the consent step
-        if (
-          consent?.hasConfirmed &&
-          studypathConsent?.hasConfirmed &&
-          gradeConsent?.hasConfirmed
-        ) {
-          return of({
-            flexNowImportConfirmed: true,
-            studypathConfirmed: true,
-            gradesConfirmed: true,
+
+    switch (mode) {
+      case 'update-user':
+        // case if user is initalized or updated via user settings
+        this.getLatestConsents(false, false)
+          .pipe(
+            concatMap((consent) =>
+              this.openOverwriteConfirmationDialog(
+                'update-user',
+                consent.flexNowImportConfirmed,
+                consent.metadataConfirmed,
+                consent.studypathConfirmed,
+                consent.gradesConfirmed,
+                [],
+              ),
+            ),
+          )
+          .subscribe();
+        break;
+      case 'update-metadata':
+        // case if user only wants to update metadata in profile
+        this.getLatestConsents(true, false)
+          .pipe(
+            concatMap((consent) =>
+              this.getFlexNowData(
+                'update-metadata',
+                consent.studypathConfirmed,
+                consent.gradesConfirmed,
+              ),
+            ),
+            filter((user) => !!user),
+            takeUntil(this.unsubscribe$),
+          )
+          .subscribe((user) => {
+            this.store.dispatch(UserActions.updateUser({ user }));
+            this.store.dispatch(
+              UserActions.addConsent({
+                ctype: 'flexnow-api',
+                hasConfirmed: true,
+                hasResponded: true,
+                timestamp: new Date(),
+              }),
+            );
+            this.store.dispatch(
+              UserActions.addConsent({
+                ctype: 'upload-meta-data',
+                hasConfirmed: true,
+                hasResponded: true,
+                timestamp: new Date(),
+              }),
+            );
           });
+        break;
+      case 'update-studypath':
+        // case if user wants to update studypath in studyplan
+        const latestConsents$ = this.getLatestConsents(false, true);
+        if (!semester) {
+          semesters$ = this.store
+            .select(getSemesterList)
+            .pipe(
+              map((semesters) =>
+                semesters.filter((semester) => !semester.isFutureSemester()),
+              ),
+            );
+
+          forkJoin({
+            consents: latestConsents$,
+            selectedSemesters: this.openSemesterSelectionDialog(semesters$),
+          })
+            .pipe(
+              filter((result) => result.selectedSemesters !== null),
+              concatMap((result) =>
+                this.openOverwriteConfirmationDialog(
+                  mode,
+                  result.consents.flexNowImportConfirmed,
+                  result.consents.metadataConfirmed,
+                  result.consents.studypathConfirmed,
+                  result.consents.gradesConfirmed,
+                  result.selectedSemesters,
+                ),
+              ),
+              takeUntil(this.unsubscribe$),
+            )
+            .subscribe();
         } else {
-          return this.openConsentDialog();
+          latestConsents$
+            .pipe(
+              concatMap((consents) =>
+                this.openOverwriteConfirmationDialog(
+                  mode,
+                  consents.flexNowImportConfirmed,
+                  consents.metadataConfirmed,
+                  consents.studypathConfirmed,
+                  consents.gradesConfirmed,
+                  [semester],
+                ),
+              ),
+              takeUntil(this.unsubscribe$),
+            )
+            .subscribe();
         }
-      }),
-      filter(
-        (consent) =>
-          consent.flexNowImportConfirmed && consent.studypathConfirmed,
-      ),
-    );
-
-    if (!semester) {
-      semesters$ = this.store
-        .select(getSemesterList)
-        .pipe(
-          map((semesters) =>
-            semesters.filter((semester) => !semester.isFutureSemester()),
-          ),
-        );
-
-      forkJoin({
-        consents: latestConsents$,
-        selectedSemesters: this.openSemesterSelectionDialog(semesters$),
-      })
-        .pipe(
-          filter((result) => result.selectedSemesters !== null),
-          concatMap((result) =>
-            this.openOverwriteConfirmationDialog(
-              mode,
-              result.selectedSemesters,
-              result.consents.studypathConfirmed ?? false,
-              result.consents.gradesConfirmed ?? false,
-            ),
-          ),
-          takeUntil(this.unsubscribe$),
-        )
-        .subscribe();
-    } else {
-      latestConsents$
-        .pipe(
-          concatMap((consents) =>
-            this.openOverwriteConfirmationDialog(
-              mode,
-              [semester],
-              consents.studypathConfirmed ?? false,
-              consents.gradesConfirmed ?? false,
-            ),
-          ),
-          takeUntil(this.unsubscribe$),
-        )
-        .subscribe();
+        break;
     }
   }
 
-  openConsentDialog(): Observable<{
+  private getLatestConsents(
+    onlyMetaData: boolean,
+    onlyStudyPath: boolean,
+  ): Observable<{
     flexNowImportConfirmed: boolean;
+    metadataConfirmed: boolean;
+    studypathConfirmed: boolean;
+    gradesConfirmed: boolean;
+  }> {
+    return this.lastFlexnowApiConsent$.pipe(
+      take(1),
+      withLatestFrom(
+        this.lastFlexNowMetaDataConsent$,
+        this.lastFlexNowStudypathConsent$,
+        this.lastFlexNowGradeConsent$,
+      ),
+      concatMap(
+        ([consent, metadataConsent, studypathConsent, gradeConsent]) => {
+          // check only metadata consent
+          if (onlyMetaData) {
+            if (consent?.hasConfirmed && metadataConsent?.hasConfirmed) {
+              return of({
+                flexNowImportConfirmed: true,
+                metadataConfirmed: true,
+                studypathConfirmed: false,
+                gradesConfirmed: false,
+              });
+            }
+          }
+          // check only studypath consents
+          if (onlyStudyPath) {
+            if (
+              consent?.hasConfirmed &&
+              studypathConsent?.hasConfirmed &&
+              gradeConsent?.hasConfirmed
+            ) {
+              return of({
+                flexNowImportConfirmed: true,
+                metadataConfirmed: false,
+                studypathConfirmed: true,
+                gradesConfirmed: true,
+              });
+            }
+          }
+          // if user has already consented, we can skip the consent step
+          if (
+            consent?.hasConfirmed &&
+            metadataConsent?.hasConfirmed &&
+            studypathConsent?.hasConfirmed &&
+            gradeConsent?.hasConfirmed
+          ) {
+            return of({
+              flexNowImportConfirmed: true,
+              metadataConfirmed: true,
+              studypathConfirmed: true,
+              gradesConfirmed: true,
+            });
+          }
+          return this.openConsentDialog(onlyMetaData, onlyStudyPath);
+        },
+      ),
+      filter((consent) => {
+        if (onlyMetaData) {
+          return consent.flexNowImportConfirmed && consent.metadataConfirmed;
+        }
+        if (onlyStudyPath) {
+          return consent.flexNowImportConfirmed && consent.studypathConfirmed;
+        }
+        return consent.flexNowImportConfirmed;
+      }),
+    );
+  }
+
+  openConsentDialog(
+    onlyMetaData: boolean,
+    onlyStudypath: boolean,
+  ): Observable<{
+    flexNowImportConfirmed: boolean;
+    metadataConfirmed: boolean;
     studypathConfirmed: boolean;
     gradesConfirmed: boolean;
   }> {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: <DialogData>{
         dialogContentId: 'upload-student-data-dialog',
+        onlyMetaData,
+        onlyStudypath,
       },
     });
 
-    return dialogRef.afterClosed().pipe(
-      tap((result) => {
-        if (result.flexNowImportConfirmed) {
-          this.store.dispatch(
-            UserActions.addConsent({
-              ctype: 'flexnow-api',
-              hasConfirmed: true,
-              hasResponded: true,
-              timestamp: new Date(),
-            }),
-          );
-          this.store.dispatch(
-            UserActions.addConsent({
-              ctype: 'upload-exam-data',
-              hasConfirmed: result.studypathConfirmed ?? false,
-              hasResponded: true,
-              timestamp: new Date(),
-            }),
-          );
-          this.store.dispatch(
-            UserActions.addConsent({
-              ctype: 'include-grades',
-              hasConfirmed: result.gradesConfirmed ?? false,
-              hasResponded: true,
-              timestamp: new Date(),
-            }),
-          );
-        }
-      }),
-      map((result) => result),
-    );
+    return dialogRef.afterClosed().pipe(map((result) => result));
   }
 
   // only pass in the semesters we need
@@ -215,52 +299,76 @@ export class FlexnowService {
   }
 
   openOverwriteConfirmationDialog(
-    mode: 'create-user' | 'update-studypath' | 'update-metadata',
-    semesters: string[],
+    mode: 'update-user' | 'update-studypath' | 'update-metadata',
+    flexNowApiConsent: boolean,
+    metadataConsent: boolean,
     studypathConsent: boolean,
     gradeConsent: boolean,
+    semesters: string[],
   ): Observable<boolean> {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Ausgewählte Semester mit den FlexNow-Daten überschreiben?',
+      dialogTitle: `${semesters.length > 0 ? 'Ausgewählte ' : 'Alle '} Semester mit den FlexNow-Daten überschreiben?`,
       actionType: 'overwrite',
-      confirmationItem: 'deine ausgewählten Semester',
+      confirmationItem: `deine ${semesters.length > 0 ? 'ausgewählten' : ''} Semester`,
       confirmButtonLabel: 'Überschreiben',
       cancelButtonLabel: 'Abbrechen',
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
+        this.dialog.closeAll();
+        if (flexNowApiConsent) {
+          this.store.dispatch(
+            UserActions.addConsent({
+              ctype: 'flexnow-api',
+              hasConfirmed: true,
+              hasResponded: true,
+              timestamp: new Date(),
+            }),
+          );
+          this.store.dispatch(
+            UserActions.addConsent({
+              ctype: 'upload-meta-data',
+              hasConfirmed: metadataConsent,
+              hasResponded: true,
+              timestamp: new Date(),
+            }),
+          );
+          this.store.dispatch(
+            UserActions.addConsent({
+              ctype: 'upload-exam-data',
+              hasConfirmed: studypathConsent,
+              hasResponded: true,
+              timestamp: new Date(),
+            }),
+          );
+          this.store.dispatch(
+            UserActions.addConsent({
+              ctype: 'include-grades',
+              hasConfirmed: gradeConsent,
+              hasResponded: true,
+              timestamp: new Date(),
+            }),
+          );
+        }
         this.updateStudypathWithFlexNowData(
           mode,
-          semesters,
           studypathConsent,
           gradeConsent,
+          semesters,
         );
-        this.dialog.closeAll();
       },
     };
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: confirmationDialogInterface,
     });
 
-    return dialogRef.afterClosed().pipe(
-      tap((result) => {
-        if (result) {
-          this.updateStudypathWithFlexNowData(
-            mode,
-            semesters,
-            studypathConsent,
-            gradeConsent,
-          );
-        }
-      }),
-      map((result) => !!result),
-    );
+    return dialogRef.afterClosed().pipe(map((result) => !!result));
   }
 
   updateStudypathWithFlexNowData(
-    mode: 'create-user' | 'update-studypath' | 'update-metadata',
-    semesters: string[],
+    mode: 'update-user' | 'update-studypath' | 'update-metadata',
     studypathConsent: boolean,
     gradeConsent: boolean,
+    semesters: string[],
   ) {
     this.getFlexNowData(mode, studypathConsent, gradeConsent, semesters)
       .pipe(take(1))
@@ -282,18 +390,25 @@ export class FlexnowService {
               const modules = user.studyPath.completedModules.filter(
                 (mod) => mod.semester == semester,
               );
-              const currentPathModules = currentStudypath.completedModules.filter(
-                (mod) => mod.semester == semester
-              )
-              const moduleAcronyms = modules.map(el => el.acronym);
+              const currentPathModules =
+                currentStudypath.completedModules.filter(
+                  (mod) => mod.semester == semester,
+                );
+              const moduleAcronyms = modules.map((el) => el.acronym);
               // modules, that are not contained in the moduleAcronyms should be deleted
-              const oldModules = currentPathModules.filter(mod => !moduleAcronyms.includes(mod.acronym))
-              for(let oldModule of oldModules) {
-                if(oldModule._id) {
-                  this.store.dispatch(StudyPathActions.deleteModuleFromStudyPath({ id: oldModule._id, semester: oldModule.semester }))
+              const oldModules = currentPathModules.filter(
+                (mod) => !moduleAcronyms.includes(mod.acronym),
+              );
+              for (let oldModule of oldModules) {
+                if (oldModule._id) {
+                  this.store.dispatch(
+                    StudyPathActions.deleteModuleFromStudyPath({
+                      id: oldModule._id,
+                      semester: oldModule.semester,
+                    }),
+                  );
                 }
               }
-
 
               // compare both delete old modules, add new modules and update existing ones
               if (modules.length == 0) {
@@ -345,7 +460,7 @@ export class FlexnowService {
 
             this.store.dispatch(
               StudyPathActions.updateStudyPath({
-                completedModules: modulesToUpdate
+                completedModules: modulesToUpdate,
               }),
             );
           }
@@ -354,7 +469,11 @@ export class FlexnowService {
   }
 
   getFlexNowData(
-    mode: 'create-user' | 'update-studypath' | 'update-metadata',
+    mode:
+      | 'create-user'
+      | 'update-user'
+      | 'update-studypath'
+      | 'update-metadata',
     studypathConsent: boolean,
     gradeConsent: boolean,
     semesters?: string[],
@@ -364,18 +483,18 @@ export class FlexnowService {
       .pipe(
         withLatestFrom(this.currentUser$),
         map(([flexNowOutput, user]) => {
-          this.dialog.open(DebugDialogComponent, {
-            data: flexNowOutput
-          })
+          if (this.debuggingMode) {
+            this.dialog.open(DebugDialogComponent, {
+              data: flexNowOutput,
+            });
+          }
+
           if (flexNowOutput) {
             let updatedUser = {
               ...user,
             };
 
-            if (
-              flexNowOutput.studypath &&
-              (mode === 'create-user' || mode === 'update-studypath')
-            ) {
+            if (flexNowOutput.studypath && mode !== 'update-metadata') {
               updatedUser = {
                 ...updatedUser,
                 studyPath: this.extractStudypath(
@@ -386,7 +505,7 @@ export class FlexnowService {
               };
             }
 
-            if (mode === 'create-user' || mode === 'update-metadata') {
+            if (mode !== 'update-studypath') {
               updatedUser = {
                 ...updatedUser,
                 ...flexNowOutput.metadata,
@@ -405,7 +524,7 @@ export class FlexnowService {
     userStudypath: StudyPath,
     semesters?: string[],
   ): StudyPath {
-    if (semesters && userStudypath) {
+    if (semesters && semesters.length > 0 && userStudypath) {
       // define starting variables
       let completedModules = userStudypath.completedModules;
       let completedCourses = userStudypath.completedCourses;

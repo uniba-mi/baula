@@ -5,6 +5,7 @@ import { User } from '../../../../../../interfaces/user';
 import { getUser } from 'src/app/selectors/user.selectors';
 import { UserActions } from 'src/app/actions/user.actions';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
+import { FlexnowService } from 'src/app/shared/services/flex-now.service';
 
 @Component({
   selector: 'app-user-data',
@@ -17,6 +18,7 @@ export class UserDataComponent implements OnInit {
 
   constructor(
     private store: Store,
+    private flexnowService: FlexnowService
   ) { }
 
   ngOnInit(): void {
@@ -27,5 +29,9 @@ export class UserDataComponent implements OnInit {
     // reset search settings to prevent filter issues
     this.store.dispatch(SearchActions.resetSearchSettings({ context: 'module-overview' }));
     this.store.dispatch(UserActions.updateUser({ user }));
+  }
+
+  importFlexNowMetadata() {
+    this.flexnowService.triggerFlexNowDataLoading('update-metadata')
   }
 }
