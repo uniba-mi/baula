@@ -10,14 +10,9 @@ const prisma = new PrismaClient();
 export async function addFeatureWish(req: Request, res: Response, next: NextFunction) {
     const maxAmountOfUnapprovedWishes = 5;
     const user = req.user as UserServer;
-    if (!user) {
-        next(new UnauthorizedError());
-        console.log("Unauthorized: No user found in request.");
-        return;
-    };
 
     const usersUnapprovedWishes = await getUsersUnapprovedWishes(user._id);
-    console.log("Nutzer hat bereits so viele unapproved wishes", usersUnapprovedWishes);
+    
     if (usersUnapprovedWishes >= maxAmountOfUnapprovedWishes) {
         next(new BadRequestError(
             `Du kannt maximal ${maxAmountOfUnapprovedWishes} noch ungenehmigte Wünsche haben. \n` +
@@ -148,10 +143,6 @@ export async function getAllWishes(req: Request, res: Response, next: NextFuncti
 
 export async function hasLikedWish(req: Request, res: Response, next: NextFunction) {
     const user = req.user as UserServer;
-    if (!user) {
-        next(new UnauthorizedError());
-        return;
-    }
 
     const wishId = req.params.id;
     if (!wishId) {
@@ -171,10 +162,6 @@ export async function hasLikedWish(req: Request, res: Response, next: NextFuncti
 
 export async function likeWish(req: Request, res: Response, next: NextFunction) {
     const user = req.user as UserServer;
-    if (!user) {
-        next(new UnauthorizedError());
-        return;
-    }
 
     const wishId = req.params.id;
     if (!wishId) {
@@ -199,12 +186,7 @@ export async function likeWish(req: Request, res: Response, next: NextFunction) 
 }
 
 export async function unlikeWish(req: Request, res: Response, next: NextFunction) {
-    console.log("Got request to unlike feature wish with ID:", req.params.id);
     const user = req.user as UserServer;
-    if (!user) {
-        next(new UnauthorizedError());
-        return;
-    }
 
     const wishId = req.params.id;
     if (!wishId) {
@@ -234,10 +216,6 @@ export async function unlikeWish(req: Request, res: Response, next: NextFunction
 
 export async function isUsersWish(req: Request, res: Response, next: NextFunction) {
     const user = req.user as UserServer;
-    if (!user) {
-        next(new UnauthorizedError());
-        return;
-    }
 
     const wishId = req.params.id;
     if (!wishId) {
