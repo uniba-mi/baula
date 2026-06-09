@@ -3,7 +3,8 @@ import { MStudyProgramme } from "./user"
 export interface FnUser {
     metadata: FnMetaData,
     studypath?: FnStudyPath,
-    raw: any
+    raw: any,
+    xml: string
 }
 
 export interface FnStudyPath {

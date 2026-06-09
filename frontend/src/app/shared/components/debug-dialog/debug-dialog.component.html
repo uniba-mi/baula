@@ -80,11 +80,22 @@
             }
             }
             <hr class="my-2" />
-            <h3>Rohdaten:</h3>
+            <div class="d-flex justify-content-between">
+                <h3>Extrahierte JSON-Daten:</h3>
+                <button class="btn btn-secondary" (click)="copyToClipboard(data.raw)"><i class="bi bi-clipboard"></i></button>
+            </div>
+            
             <pre>
                 {{ data.raw | json}}
             </pre>
+            <hr class="my-2" />
+            <div class="d-flex justify-content-between">
+                <h3>FlexNow Daten:</h3>
+                <button class="btn btn-secondary" (click)="copyToClipboard(data.xml)"><i class="bi bi-clipboard"></i></button>
+            </div>
+            <pre>
+                {{ data.xml }}
+            </pre>
         </mat-dialog-content>
-
     </div>
 </div>
