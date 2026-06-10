@@ -61,29 +61,25 @@ export async function getUser(req: Request, res: Response, next: NextFunction) {
   const user = req.user as UserServer; // Use the user attached by the extractUser middleware
   try {
     // check users studyprograms and update if empty status for legacy users
-    if(user._id) {
+    if (user._id) {
       const userServer = await User.findById({ _id: user._id }).exec();
-      if(userServer && userServer.sps) {
-        for(let sp of userServer.sps) {
-          if(!sp.status) {
-            sp.status = 'Immatrikuliert'
-          } 
+      if (userServer && userServer.sps) {
+        for (let sp of userServer.sps) {
+          if (!sp.status) {
+            sp.status = "Immatrikuliert";
+          }
         }
-        await userServer.save()
+        await userServer.save();
         const userClient = await transformUserStudyPath(userServer);
 
         res.status(200).json(userClient);
       } else {
-        next(
-          new NotFoundError(
-            "Es konnte kein Nutzer gefunden werden."
-          )
-        )
+        next(new NotFoundError("Es konnte kein Nutzer gefunden werden."));
       }
     } else {
       const userClient = await transformUserStudyPath(user);
       res.status(200).json(userClient);
-    }    
+    }
   } catch (error) {
     logError(error);
     next(
@@ -1267,9 +1263,9 @@ export async function crawlStudentDataViaFlexNow(
         studypath,
         raw: {
           metadata,
-          studypath
+          studypath,
         },
-        xml: result
+        xml: result,
       });
     } else {
       res.status(404);
@@ -1331,12 +1327,10 @@ export async function crawlStudentDataViaFlexNow(
     //metadata.maxEcts = metadata.sps.reduce((pv, cv) => cv.maxEcts ? pv + cv.maxEcts : pv + 0, 0)
 
     // TODO currently select first current studyprogram and set default values
-    const currentSp = metadata.sps.filter(
-      (el) => el.status == "Immatrikuliert",
-    )[0];
-    metadata.startSemester = currentSp.startSemester ?? new Semester().name;
-    metadata.duration = currentSp.duration ?? 6;
-    metadata.maxEcts = currentSp.maxEcts ?? 180;
+    const currentSp = metadata.sps.find((el) => el.status == "Immatrikuliert");
+    metadata.startSemester = currentSp && currentSp.startSemester ?? new Semester().name;
+    metadata.duration = currentSp && currentSp.duration ?? 6;
+    metadata.maxEcts = currentSp && currentSp.maxEcts ?? 180;
 
     return metadata;
   }
