@@ -67,7 +67,7 @@
                                 @if(findModuleGroup(mg.mgId) | async; as matchingMg) {
                                 <div>{{ matchingMg.name }}</div>
                                 } @else {
-                                <div>Die Modulgruppe ist nicht in deinem Modulhandbuch vorhanden.</div>
+                                <div>Die Modulgruppe ist nicht in deinem Modulhandbuch vorhanden oder das Modulhandbuch ist noch nicht geladen.</div>
                                 }
                             </li>
                             }

@@ -1139,12 +1139,12 @@ export async function crawlStudentDataViaFlexNow(
     });
     if (url) {
       // read test xml file
-      /* const result = fs.readFileSync(
+      const result = fs.readFileSync(
         __dirname + "../../../../../staticdata/dummy_student_bachelor.xml",
         "utf8",
-      ); */
+      );
 
-      const result = await new Promise<string>((resolve, reject) => {
+      /* const result = await new Promise<string>((resolve, reject) => {
         const data = new URLSearchParams();
         data.append("login", process.env.FN_LOGIN ? process.env.FN_LOGIN : "");
         data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
@@ -1182,7 +1182,7 @@ export async function crawlStudentDataViaFlexNow(
 
         req.write(data.toString());
         req.end();
-      });
+      }); */
 
       const metadata: FnStudyProgramme[] = await transform(
         result,
@@ -1253,6 +1253,28 @@ export async function crawlStudentDataViaFlexNow(
                   mgId: mod.mgId,
                   version: "0",
                 }));
+              // if no moduleGroup is found here, another case could be that module is not in mhb anymore
+              if (module.moduleGroups.length == 0) {
+                const oldModule = await prisma.module.findFirst({
+                  where: {
+                    mId: module.mId,
+                    version: Number(module.version),
+                  },
+                  include: {
+                    mgs: true,
+                  },
+                });
+                module.moduleGroups = oldModule
+                  ? oldModule.mgs.filter((item) =>
+                      mgs.find((mg) => mg.mgId == item.mgId),
+                    ).map(item => {
+                      return {
+                        mgId: item.mgId,
+                        version: String(item.mgVersion)
+                      }
+                    })
+                  : [];
+              }
             }
           }
         }
@@ -1328,9 +1350,10 @@ export async function crawlStudentDataViaFlexNow(
 
     // TODO currently select first current studyprogram and set default values
     const currentSp = metadata.sps.find((el) => el.status == "Immatrikuliert");
-    metadata.startSemester = currentSp && currentSp.startSemester ?? new Semester().name;
-    metadata.duration = currentSp && currentSp.duration ?? 6;
-    metadata.maxEcts = currentSp && currentSp.maxEcts ?? 180;
+    metadata.startSemester =
+      (currentSp && currentSp.startSemester) ?? new Semester().name;
+    metadata.duration = (currentSp && currentSp.duration) ?? 6;
+    metadata.maxEcts = (currentSp && currentSp.maxEcts) ?? 180;
 
     return metadata;
   }

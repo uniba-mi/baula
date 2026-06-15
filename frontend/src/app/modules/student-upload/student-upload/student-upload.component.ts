@@ -7,7 +7,7 @@ import {
 import { StudyPathActions, UserActions } from 'src/app/actions/user.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { Consent, User } from '../../../../../../interfaces/user';
-import { map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
+import { forkJoin, map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import {
   getLastConsentByType,
   getSemesterList,

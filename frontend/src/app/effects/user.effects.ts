@@ -219,7 +219,7 @@ export class UserEffects {
   addConsent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions.addConsent),
-      mergeMap((props) =>
+      concatMap((props) =>
         this.rest
           .addConsent(props.ctype, props.hasConfirmed, props.hasResponded, props.timestamp)
           .pipe(
