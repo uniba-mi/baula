@@ -1139,12 +1139,12 @@ export async function crawlStudentDataViaFlexNow(
     });
     if (url) {
       // read test xml file
-      const result = fs.readFileSync(
+      /* const result = fs.readFileSync(
         __dirname + "../../../../../staticdata/dummy_student_bachelor.xml",
         "utf8",
-      );
+      ); */
 
-      /* const result = await new Promise<string>((resolve, reject) => {
+      const result = await new Promise<string>((resolve, reject) => {
         const data = new URLSearchParams();
         data.append("login", process.env.FN_LOGIN ? process.env.FN_LOGIN : "");
         data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
@@ -1182,7 +1182,7 @@ export async function crawlStudentDataViaFlexNow(
 
         req.write(data.toString());
         req.end();
-      }); */
+      });
 
       const metadata: FnStudyProgramme[] = await transform(
         result,
