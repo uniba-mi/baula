@@ -10,14 +10,14 @@
                 <div class="row my-1">
                     <div class="col" *ngIf="term.startdate || term.enddate">
                         <span *ngIf="term.startdate">{{
-                            term.startdate | date : "EE, dd.MM.YYYY"
+                            term.startdate | date : "EEEE, dd.MM.yyyy"
                             }}</span>
                         <span *ngIf="
                     term.startdate &&
                     term.enddate &&
                     term.startdate !== term.enddate
                   ">
-                            bis {{ term.enddate | date : "EE, dd.MM.YYYY" }}</span>
+                            bis {{ term.enddate | date : "EEEE, dd.MM.yyyy" }}</span>
                     </div>
                     <div class="col" *ngIf="term.repeat && term.repeat !== ''">
                         {{ term.repeat }}
@@ -122,7 +122,7 @@
         <div class="col-12 fw-bold" [class.col-xl-3]="context == 'detail-dialog'">Organisatorisches</div>
         <div [ngClass]="course.organizational.length > 300 ? 'truncate' : ''" class="col-12"
             [class.col-xl-9]="context == 'detail-dialog'">
-            <span id="{{ course.id }}-organisation"
+            <span id="{{ course.id }}-{{context}}-organisation"
                 [ngClass]="course.organizational.length > 300 ? 'truncate-text' : ''"
                 [innerHtml]="course.organizational | markdown"></span>
             <span role="button" class="px-2" *ngIf="course.organizational.length > 300"><i
@@ -138,7 +138,7 @@
         <div class="col-12" [ngClass]="course.desc.length > 300 ? 'truncate' : ''"
             [class.col-xl-9]="context == 'detail-dialog'">
             <!-- {{ course.desc }} -->
-            <span id="{{ course.id }}-description" [ngClass]="course.desc.length > 300 ? 'truncate-text' : ''"
+            <span id="{{ course.id }}-{{context}}-description" [ngClass]="course.desc.length > 300 ? 'truncate-text' : ''"
                 [innerHtml]="course.desc | markdown"></span>
             <span role="button" class="px-2" *ngIf="course.desc.length > 300"><i *ngIf="!expandedCourseDescription"
                     class="bi bi-chevron-down show-more-icon" (click)="toggleCourseDescription(course, 'expand')"

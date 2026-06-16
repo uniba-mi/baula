@@ -50,7 +50,7 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   toggleCourseOrganisation(course: Course, mode: string) {
-    const element = document.getElementById(`${course.id}-organisation`);
+    const element = document.getElementById(`${course.id}-${this.context}-organisation`);
     if (element !== null) {
       if (mode === 'expand') {
         element.classList.remove('truncate-text');
@@ -64,7 +64,7 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   toggleCourseDescription(course: Course, mode: string) {
-    const element = document.getElementById(`${course.id}-description`);
+    const element = document.getElementById(`${course.id}-${this.context}-description`);
     if (element !== null) {
       if (mode === 'expand') {
         element.classList.remove('truncate-text');
