@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, concatMap, Observable, of, take } from 'rxjs';
+import {  Observable } from 'rxjs';
 import { User } from '../../../../../interfaces/user';
 import { getUser } from 'src/app/selectors/user.selectors';
 import { StudyPlan } from '../../../../../interfaces/study-plan';
@@ -14,16 +14,12 @@ import {
   ConfirmationDialogData,
   ConfirmationDialogComponent,
 } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
-import { RestService } from 'src/app/rest.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { config } from 'src/environments/config.local';
-import { AlertType } from 'src/app/shared/classes/alert';
-import { AuthService } from 'src/app/shared/auth/auth.service';
 import { StudyPath } from '../../../../../interfaces/study-path';
 import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
 
 import type { DownloadService } from 'src/app/shared/services/download.service';
 import { UserUpdateService } from 'src/app/shared/services/user-update.service';
+import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
 
 @Component({
   selector: 'app-user-profile',
@@ -106,12 +102,20 @@ export class UserProfileComponent implements OnInit {
         completedModules: result.completedModules,
       }
       if (result) {
-        const updatedUser = {
+        const updatedUser: User = {
           ...user,
           ...result,
           excludedModulesAcronyms: result.excludedModulesAcronyms || result.notInterestingModulesAcronyms, // catch legacy cases
           studyPath
         };
+
+        // TODO: filter by program status "Immatrikuliert" when fn-branch is merged
+        // Currently first program is selected
+        const sp = updatedUser.sps ? updatedUser.sps[0] : undefined
+        if(sp) {
+          this.store.dispatch(ModuleHandbookActions.loadModuleHandbook({ id: sp.mhbId, version: sp.mhbVersion }))
+        }
+
         this.store.dispatch(UserActions.updateUser({ user: updatedUser }));
       }
       this.dialog.closeAll();
