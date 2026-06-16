@@ -370,14 +370,16 @@ export class FlexnowService {
               timestamp: new Date(),
             }),
           );
-          this.store.dispatch(
-            UserActions.addConsent({
-              ctype: 'upload-meta-data',
-              hasConfirmed: metadataConsent,
-              hasResponded: true,
-              timestamp: new Date(),
-            }),
-          );
+          if(mode !== 'update-studypath') {
+            this.store.dispatch(
+              UserActions.addConsent({
+                ctype: 'upload-meta-data',
+                hasConfirmed: metadataConsent,
+                hasResponded: true,
+                timestamp: new Date(),
+              }),
+            );
+          }
           this.store.dispatch(
             UserActions.addConsent({
               ctype: 'upload-exam-data',

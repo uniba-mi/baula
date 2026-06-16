@@ -26,6 +26,18 @@ export class UploadStudentDataConfirmationComponent implements OnInit {
     }
   }
 
+  confirmGrade() {
+    this.StudypathConfirmed.set(this.GradesConfirmed())
+    this.emitChange()
+  }
+
+  confirmPath() {
+    if(this.GradesConfirmed() && !this.StudypathConfirmed()) {
+      this.GradesConfirmed.set(false)
+    }
+    this.emitChange()
+  }
+
   emitChange() {
     this.confirmFlexNowImport.emit({
       flexNowImportConfirmed: this.FlexNowImportConfirmed(),

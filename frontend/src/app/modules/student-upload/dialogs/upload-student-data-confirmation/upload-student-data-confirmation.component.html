@@ -16,12 +16,12 @@
             }
             @if(!onlyMetaData) {
             <li>
-                <mat-checkbox [(ngModel)]="StudypathConfirmed" (change)="emitChange()" [disabled]="onlyStudypath">Verlaufsinformationen (Abgelegte
+                <mat-checkbox [(ngModel)]="StudypathConfirmed" (change)="confirmPath()" [disabled]="onlyStudypath">Verlaufsinformationen (Abgelegte
                     Prüfungen, Module und
                     Lehrveranstaltungen)</mat-checkbox>
             </li>
             <li>
-                <mat-checkbox [(ngModel)]="GradesConfirmed" (change)="emitChange()">Noten (berechnete Abschlussnote,
+                <mat-checkbox [(ngModel)]="GradesConfirmed" (change)="confirmGrade()">Noten (berechnete Abschlussnote,
                     Modul- bzw.
                     Prüfungsnoten)</mat-checkbox>
             </li>
