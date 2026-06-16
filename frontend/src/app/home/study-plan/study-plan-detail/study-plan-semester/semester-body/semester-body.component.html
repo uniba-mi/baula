@@ -53,7 +53,7 @@
         <ng-container *ngIf="metaSemester.isPastSemester && semesterStudyPath[0].modules.length > 0">
             <ng-container *ngFor="let pathModule of semesterStudyPath[0].modules">
                 <app-semester-card [moduleData]="pathModule" [moduleType]="'pathModule'" [metaSemester]="metaSemester"
-                    [modType]="'path'" [availableActions]="['feedback', 'edit', 'delete', 'changeMG', 'editGrade']"
+                    [modType]="'path'" [availableActions]="['select', 'feedback', 'edit', 'delete', 'changeMG', 'editGrade']"
                     (actionTriggered)="handleModuleAction($event)" [mgId]="pathModule.mgId ?? 'init'">
                 </app-semester-card>
             </ng-container>

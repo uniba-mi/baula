@@ -1,8 +1,8 @@
 <mat-card class="p-3 mb-2 rounded module-item semester-card"
     [ngClass]="{'old-module': moduleType === 'module' && moduleData?.isOld === true}" tabindex="0"
     aria-label="Tabellenzeile mit Modulinformationen"
-    (click)="availableActions.includes('select') && moduleType === 'module' && !moduleData?.isOld && triggerAction('select')"
-    (keyup.enter)="availableActions.includes('select') && moduleType === 'module' && !moduleData?.isOld && triggerAction('select')"
+    (click)="availableActions.includes('select') && moduleType !== 'userGeneratedModule' && triggerAction('select') && !moduleData?.isOld"
+    (keyup.enter)="availableActions.includes('select') && moduleType !== 'userGeneratedModule' && triggerAction('select') && !moduleData?.isOld"
     cdkDrag [cdkDragDisabled]="!canDrag()" [cdkDragData]="moduleData" (cdkDragStarted)="onDragStarted()"
     (cdkDragEnded)="onDragEnded()" (mousedown)="onDragAttempt($event)" (touchstart)="onDragAttempt($event)">
 

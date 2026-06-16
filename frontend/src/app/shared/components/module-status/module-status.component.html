@@ -3,14 +3,18 @@
   <!-- for the case if status options property status is passed -->
   <button class="btn-icon" *ngSwitchCase="'passed'">
     <i class="bi bi-check-lg text-success"></i>
+    <span class="ms-2" *ngIf="showStatusText">Bestanden</span>
   </button>
   <button class="btn-icon" *ngSwitchCase="'failed'">
     <i class="bi bi-x-lg text-danger"></i>
+    <span class="ms-2" *ngIf="showStatusText">Nicht bestanden</span>
   </button>
   <button class="btn-icon" *ngSwitchCase="'taken'">
     <i class="bi bi-dash-lg"></i>
+    <span class="ms-2" *ngIf="showStatusText">Belegt</span>
   </button>
   <button class="btn-icon" *ngSwitchDefault>
     <i class="bi bi-question-circle"></i>
+    <span class="ms-2" *ngIf="showStatusText">Nicht belegt</span>
   </button>
 </span>

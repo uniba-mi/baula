@@ -171,6 +171,7 @@ import { UploadStudentDataConfirmationComponent } from './modules/student-upload
 import { UpdateMhbDialogComponent } from './dialog/update-mhb-dialog/update-mhb-dialog.component';
 import { ChangeModuleGroupComponent } from './shared/components/change-module-group/change-module-group.component';
 import { DebugDialogComponent } from './shared/components/debug-dialog/debug-dialog.component';
+import { ManageStatusComponent } from './dialog/module-details-dialog/manage-status/manage-status.component';
 
 
 @NgModule({
@@ -286,7 +287,8 @@ import { DebugDialogComponent } from './shared/components/debug-dialog/debug-dia
     UploadStudentDataConfirmationComponent,
     UpdateMhbDialogComponent,
     ChangeModuleGroupComponent,
-    DebugDialogComponent
+    DebugDialogComponent,
+    ManageStatusComponent
   ],
   bootstrap: [AppComponent],
   imports: [

@@ -32,6 +32,7 @@ export class ModuleStatusComponent implements OnInit {
   @Input() statusSemester: string | undefined;
   @Input() openedWithSemesterSet: boolean; // true for opening from study plan
   @Input() mgId: string;
+  @Input() showStatusText: boolean = false;
   status: string | undefined;
   grade: number | undefined;
   activePlan$: Observable<StudyPlan | undefined>;

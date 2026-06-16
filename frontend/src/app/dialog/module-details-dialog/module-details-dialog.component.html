@@ -26,8 +26,11 @@
   }
   <mat-tab-group #tabGroup animationDuration="0ms">
     <mat-tab label="Details">
-      <app-module-data [selectedModule]="selectedModule" [dialog]="dialog"></app-module-data>
+      <app-module-data [selectedModule]="selectedModule" [dialog]="dialog" [allowPlanning]="allowPlanning"></app-module-data>
     </mat-tab>
+    <!-- <mat-tab label="Verlauf und Planung">
+      <app-manage-status [selectedModule]="selectedModule"></app-manage-status>
+    </mat-tab> -->
     <mat-tab label="Abhängigkeiten"
       *ngIf="focusModule && priorModules && extractedPriorModules && advancedModules && (priorModules.length > 0 || advancedModules.length > 0 || extractedPriorModules.length > 0)">
       <ng-template matTabContent>

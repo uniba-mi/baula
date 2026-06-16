@@ -32,18 +32,23 @@ export class ModService {
   currentAcronym$ = this.moduleAcronymSource.asObservable();
 
   moduleChanges = moduleChanges;
-  newModules = moduleChanges.map(el => el.newModuleAcronym)
-  oldModules = moduleChanges.map(el => el.oldModuleAcronym)
+  newModules = moduleChanges.map((el) => el.newModuleAcronym);
+  oldModules = moduleChanges.map((el) => el.oldModuleAcronym);
 
   constructor(
     private store: Store,
     private snackbar: SnackbarService,
     private dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
-  selectModuleFromAcronymString(acronym: string, activeTab: string = 'details', mgId?: string) {
+  selectModuleFromAcronymString(
+    acronym: string,
+    activeTab: string = 'details',
+    allowPlanning: boolean = true,
+    mgId?: string,
+  ) {
     // select module from state where acronym matches the given acronym
     this.modulesInState$ = this.store.select(getAllModules);
 
@@ -54,7 +59,7 @@ export class ModService {
         module = modules.find((mod: Module) => mod.acronym === acronym);
       } else {
         module = modules.find(
-          (mod: Module) => mod.acronym === acronym && mod.mgId === mgId
+          (mod: Module) => mod.acronym === acronym && mod.mgId === mgId,
         );
       }
 
@@ -65,7 +70,7 @@ export class ModService {
             queryParams: { id: module.mId, mgId: module.mgId },
           });
         } else {
-          this.openDetailsDialog(module, activeTab)
+          this.openDetailsDialog(module, activeTab, allowPlanning);
         }
       } else {
         this.router.navigate([], {
@@ -82,20 +87,28 @@ export class ModService {
 
   // Function to compare mhbs
   compareMhbs(baseMhb: ModuleHandbook, targetMhb: ModuleHandbook): string {
-    return 'Es hat sich nichts geändert.'
+    return 'Es hat sich nichts geändert.';
   }
 
   // Function to identify if a module is included in the module mapping, returns oldAcronym
-  isEquivalent (newAcronym: string): string | undefined {
-    const mapping = moduleChanges.find(el => el.newModuleAcronym == newAcronym)
+  isEquivalent(newAcronym: string): string | undefined {
+    const mapping = moduleChanges.find(
+      (el) => el.newModuleAcronym == newAcronym,
+    );
     return mapping ? mapping.oldModuleAcronym : undefined;
   }
 
   // Function to identify possible modulegroups of given acronym
   findModuleGroups(acronym: string): Observable<string[]> {
-    return this.store.select(getModules).pipe(
-      map(modules => modules.filter(el => el.acronym == acronym && !el.hasIssue && !el.isOld).map(el => el.mgId))
-    )
+    return this.store
+      .select(getModules)
+      .pipe(
+        map((modules) =>
+          modules
+            .filter((el) => el.acronym == acronym && !el.hasIssue && !el.isOld)
+            .map((el) => el.mgId),
+        ),
+      );
   }
 
   // retrieve modules based on acronyms
@@ -103,14 +116,19 @@ export class ModService {
     return this.store.pipe(
       select(getDistinctModules),
       map((modules) =>
-        modules.filter((module) => acronyms.includes(module.acronym))
-      )
+        modules.filter((module) => acronyms.includes(module.acronym)),
+      ),
     );
   }
 
   // pass activeTab if other tab than details should appear, e. g. 'feedback' for feedback tab
   // keep is used to check, if module should selected untrimmed or if mgId should be trimmed
-  openDetailsDialog(module: Module, activeTab: string = 'details', keep?: boolean) {
+  openDetailsDialog(
+    module: Module,
+    activeTab: string = 'details',
+    allowPlanning?: boolean,
+    keep?: boolean,
+  ) {
     if (!keep) {
       const courses = module.mCourses;
       const extractedPreviousModules = module.extractedPrevModules;
@@ -136,10 +154,13 @@ export class ModService {
         module.offerEnd,
         module.workload,
       );
-      
+
       module.addCourses(courses);
       module.addExtractedPrevModules(extractedPreviousModules);
-      module.addAllPriorModules([...module.extractedPrevModules, ...module.prevModules.map((mod: Module) => mod.acronym)]);
+      module.addAllPriorModules([
+        ...module.extractedPrevModules,
+        ...module.prevModules.map((mod: Module) => mod.acronym),
+      ]);
     }
 
     this.store.dispatch(ModuleInteractionActions.setSelectedModule({ module }));
@@ -148,12 +169,13 @@ export class ModService {
       data: {
         dialogContentId: 'module-details-dialog',
         selectedModule: module,
+        allowPlanning: allowPlanning ?? true,
         activeTab,
       },
-              enterAnimationDuration: 100,
-        exitAnimationDuration: 100,
-        minWidth: '80vw',
-        minHeight: '80vh',
+      enterAnimationDuration: 100,
+      exitAnimationDuration: 100,
+      minWidth: '80vw',
+      minHeight: '80vh',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

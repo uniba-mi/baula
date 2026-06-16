@@ -242,7 +242,7 @@
             <div class="row">
                 <!-- add module to study plan -->
                 <!-- only show if user does not study teacher education TODO: change when study planning is available for teacher education! -->
-                <ng-container *ngIf="!userStudiesLA && !selectedModule.isOld">
+                <ng-container *ngIf="!userStudiesLA && !selectedModule.isOld && allowPlanning"> <!-- allowPlanning prevents past modules -->
                     <div class="row module-information-studyPlan justify-content-between"
                         *ngIf="studyPlans$ | async as studyPlans">
                         <div *ngIf="studyPlans.length > 0">

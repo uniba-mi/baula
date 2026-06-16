@@ -57,6 +57,7 @@ export interface DialogData {
   moduleData?: UserGeneratedModule | Module | PathModule,
   onlyMetaData?: boolean,
   onlyStudypath?: boolean,
+  allowPlanning?: boolean;
   content?: any; // just for evaluation
 }
 

@@ -22,6 +22,7 @@ import { AnalyticsService } from 'src/app/shared/services/analytics.service';
 })
 export class ModuleDetailsDialogComponent implements OnInit, OnDestroy {
   @Input() selectedModule: Module;
+  @Input() allowPlanning: boolean | undefined;
   @Input() dialog: MatDialogRef<DialogComponent>;
   @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
   private destroy$ = new Subject<void>();
@@ -110,7 +111,25 @@ export class ModuleDetailsDialogComponent implements OnInit, OnDestroy {
 
     // set active tab
     setTimeout(() => {
-      const tabIndex = this.activeTab === 'feedback' ? 2 : 0;
+      let tabIndex = 0;
+
+      switch (this.activeTab) {
+        case 'details':
+          tabIndex = 0;
+          break;
+        case 'status':
+          tabIndex = 1;
+          break;
+        case 'dependency':
+          tabIndex = 2;
+          break;
+        case 'feedback':
+          tabIndex = 3;
+          break;
+        default:
+          tabIndex = 0;
+      }
+
       this.tabGroup.selectedIndex = tabIndex;
     });
   }

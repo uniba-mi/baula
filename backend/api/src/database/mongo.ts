@@ -317,6 +317,31 @@ interface UserQueryHelpers {
   byShibId(this: UserModelQuery, shibId: String): UserModelQuery;
 }
 
+
+/* const ExamSchema: Schema = new Schema<IExam>(
+  {
+    name: {
+      type: String,
+      required: true
+    },
+    attempts: [{
+      semester: {
+        type: String,
+        required: true
+      },
+      status: {
+        type: String,
+        required: true,
+        // match: /(taken|failed|passed|open)/
+      },
+      grade: {
+        type: Number,
+        required: true
+      }
+    }]
+  }
+); */
+
 // UserSchema
 const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
   {
@@ -361,7 +386,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
           type: String,
           match: /(taken)|(failed)|(passed)|(open)/g,
         },
-        // exams: [ExamSchema],
+        //exams: [ExamSchema],
         semester: {
           type: String,
           match: /(\d{4}((w)|(s)))/g,

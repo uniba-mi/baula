@@ -129,11 +129,21 @@ export class SemesterBodyComponent {
 
     switch (action) {
       case 'select':
-        this.selectModule(data);
+        if (!data.isUserGenerated) { // no select for ug modules
+          if (!this.metaSemester.isPastSemester) {
+            this.selectModule(data);
+          } else {
+            this.openModuleDetailsDialog(data.acronym || data, 'details', false);
+          }
+        }
         break;
 
       case 'feedback':
-        this.openModuleDetailsDialog(data.acronym || data);
+        if (!this.metaSemester.isPastSemester) {
+          this.openModuleDetailsDialog(data.acronym || data, 'feedback', true); // allowPlanning true for type Module
+        } else {
+          this.openModuleDetailsDialog(data.acronym || data, 'feedback', false); // allowPlanning false for type pathModule
+        }
         break;
 
       case 'moveToSem':
@@ -205,9 +215,9 @@ export class SemesterBodyComponent {
     return this.store.select(getOldModuleByAcronym(acronym));
   }
 
-  openModuleDetailsDialog(acronym: string) {
+  openModuleDetailsDialog(acronym: string, activeTab: string, allowPlanning: boolean) {
     // open on tab feedback
-    this.modService.selectModuleFromAcronymString(acronym, 'feedback');
+    this.modService.selectModuleFromAcronymString(acronym, activeTab, allowPlanning);
   }
 
   openChangeModuleGroupDialog(event: any, module: PathModule): void {

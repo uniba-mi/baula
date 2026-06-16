@@ -49,6 +49,7 @@ export class ModuleCardComponent implements OnInit {
       this.modService.selectModuleFromAcronymString(
         module.acronym,
         undefined,
+        true,
         module.mgId,
       );
     }

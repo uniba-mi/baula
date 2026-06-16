@@ -36,7 +36,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Module } from '../../../../../../interfaces/module';
 import { Exam } from '../../../../../../interfaces/exam';
 import { DialogComponent } from '../../dialog.component';
-import { AuthService } from 'src/app/shared/auth/auth.service';
 import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
 
 @Component({
@@ -46,7 +45,7 @@ import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
   standalone: false,
 })
 export class ModuleDataComponent implements OnInit, OnDestroy {
-
+  @Input() allowPlanning: boolean | undefined;
   @Input() selectedModule: Module;
   @Input() dialog: MatDialogRef<DialogComponent>;
 
