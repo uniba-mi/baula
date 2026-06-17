@@ -411,7 +411,10 @@ function transformTerms(terms: any): Term[] {
 export function transformDozs(dozs: { person: Person }[]): Person[] {
   let result: Person[] = [];
   for (let person of dozs) {
-    result.push(person.person);
+    const duplicate = result.find(el => el.pId == person.person.pId)
+    if(!duplicate) {
+      result.push(person.person);
+    }
   }
   return result;
 }
