@@ -137,11 +137,17 @@ export class RestService {
   }
 
   updateTimetableSettings(
-    showWeekends: boolean
+    timetableId: 'dashboard' | 'semesterplan',
+    showWeekends?: boolean,
+    selectedView?: string
   ): Observable<TimetableSettings[]> {
     return this.http.put<TimetableSettings[]>(
       this.urlBase + 'user/timetable-settings',
-      { showWeekends },
+      { 
+        timetableId,
+        showWeekends,
+        selectedView 
+      },
       httpOptions
     );
   }

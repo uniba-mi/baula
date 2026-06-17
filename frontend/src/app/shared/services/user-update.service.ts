@@ -72,7 +72,16 @@ export class UserUpdateService {
   ];
 
   private availableTimetableSettings: TimetableSettings[] = [
-    { showWeekends: true },
+    { 
+      timetableId: 'dashboard',
+      showWeekends: true,
+      selectedView: 'timeGridDay',
+    },
+    {
+      timetableId: 'semesterplan',
+      showWeekends: true,
+      selectedView: 'timeGridWeek'
+    }
     // add future settings here
   ];
 
@@ -224,29 +233,15 @@ export class UserUpdateService {
 
     const updatedSettings = this.availableTimetableSettings.reduce(
       (acc: TimetableSettings[], setting: TimetableSettings) => {
-        const settingKey = Object.keys(setting)[0];
-
-        const existingSetting = currentSettings.find(
-          (el) => Object.keys(el)[0] === settingKey
-        );
+        const existingSetting = currentSettings.find(el => el.timetableId == setting.timetableId);
 
         // add to settings if does not exist yet
         if (!existingSetting) {
           acc.push(setting);
           updated = true;
         } else {
-          // check if the value is the same
-          const existingValue = existingSetting[settingKey];
-          const newValue = setting[settingKey];
-
-          if (existingValue !== newValue) {
-            // update the setting if value has changed
-            acc.push(setting);
-            updated = true;
-          } else {
-            // keep setting
-            acc.push(existingSetting);
-          }
+          // keep setting
+          acc.push(existingSetting);
         }
         return acc;
       },

@@ -144,12 +144,14 @@ export class FullCalendarComponent
       .select(getTimetableSettings)
       .pipe(take(1))
       .subscribe((timetableSettings) => {
-        const showWeekendsSetting = timetableSettings.find((setting) =>
-          setting.hasOwnProperty('showWeekends')
+        const timetableId = this.isWidget ? 'dashboard' : 'semesterplan';
+        const setting = timetableSettings.find((setting) =>
+          setting.timetableId == timetableId
         );
 
-        if (showWeekendsSetting) {
-          this.calendarOptions.weekends = showWeekendsSetting.showWeekends;
+        if (setting) {
+          this.calendarOptions.weekends = setting.showWeekends;
+          this.calendarOptions.initialView = setting.selectedView;
         }
       });
 
@@ -325,6 +327,13 @@ export class FullCalendarComponent
 
   changeView(view: string) {
     this.fullCalendar.getApi().changeView(view);
+    // update the timetable settings in the db
+    this.store.dispatch(
+      TimetableActions.updateTimetableSettings({
+        timetableId: this.isWidget ? 'dashboard' : 'semesterplan',
+        selectedView: view,
+      })
+    );
     this.updateDate();
   }
 
@@ -334,6 +343,7 @@ export class FullCalendarComponent
     // update the timetable settings in the db
     this.store.dispatch(
       TimetableActions.updateTimetableSettings({
+        timetableId: this.isWidget ? 'dashboard' : 'semesterplan',
         showWeekends: this.calendarOptions.weekends,
       })
     );

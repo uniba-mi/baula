@@ -438,7 +438,16 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         visible: Boolean,
       },
     ],
-    timetableSettings: [{ showWeekends: Boolean }],
+    timetableSettings: [
+      { 
+        timetableId: {
+          type: String,
+          enum: ["dashboard", "semesterplan"],
+        },
+        showWeekends: Boolean,
+        selectedView: String
+      }
+    ],
     favouriteModulesAcronyms: [String],
     excludedModulesAcronyms: [String],
     hints: [

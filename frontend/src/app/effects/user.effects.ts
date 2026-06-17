@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, mergeMap, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, concatMap, filter, map, mergeMap, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { RestService } from '../rest.service';
 import { AlertType } from '../shared/classes/alert';
@@ -287,7 +287,7 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(TimetableActions.updateTimetableSettings),
       switchMap((props) =>
-        this.rest.updateTimetableSettings(props.showWeekends).pipe(
+        this.rest.updateTimetableSettings(props.timetableId, props.showWeekends, props.selectedView).pipe(
           map((settings) =>
             TimetableActions.updateTimetableSettingsSuccess({ settings })
           ),

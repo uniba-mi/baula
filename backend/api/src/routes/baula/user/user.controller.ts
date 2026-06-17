@@ -641,18 +641,25 @@ export async function updateTimetableSettings(
   next: NextFunction,
 ) {
   const userReq = req.user as UserServer;
+  const timetableId = validator.matches(req.body.timetableId, /(dashboard)|(semesterplan)/g) ? req.body.timetableId : undefined;
   const showWeekends = Boolean(req.body.showWeekends);
+  const selectedView = req.body.selectedView && validator.isAlpha(req.body.selectedView) ? req.body.selectedView : undefined;
 
   try {
     const user = await User.findById(userReq._id);
-    if (user) {
-      let setting = user.timetableSettings.find((el) => "showWeekends" in el);
+    if (user && timetableId) {
+      let setting = user.timetableSettings.find((el) => el.timetableId == timetableId);
 
       if (setting) {
-        setting.showWeekends = showWeekends;
+        setting.showWeekends = showWeekends !== undefined ? showWeekends : setting.showWeekends;
+        setting.selectedView = selectedView ?? setting.selectedView
       } else {
         // add showWeekends setting if it does not exist
-        user.timetableSettings.push({ showWeekends });
+        user.timetableSettings.push({ 
+          timetableId,
+          showWeekends,
+          selectedView 
+        });
       }
 
       const result = await user.save();
