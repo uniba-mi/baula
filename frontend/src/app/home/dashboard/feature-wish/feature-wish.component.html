@@ -55,4 +55,24 @@
             }
         </div>
     </mat-tab>
+    <!-- Unapproved Wishes -->
+    <mat-tab label="Deine ungenehmigten Wünsche">
+        <div class="alert alert-danger p-2 m-2" role="alert" *ngIf="usersUnapprovedWishesErrorMessage">
+            {{ usersUnapprovedWishesErrorMessage }}
+        </div>
+
+        <div class="all-wishes">
+            @for (wish of usersUnapprovedWishes; track wish) {
+            <div class="m-3">
+                <app-single-feature-wish [wish]="wish" [rank]="usersUnapprovedWishes.indexOf(wish) + 1"
+                    [withDescription]="true" [withLikeButton]="false"></app-single-feature-wish>
+            </div>
+            }
+        </div>
+        @if (usersUnapprovedWishes.length == 0) {
+        <div class="alert alert-info p-2 m-2">
+            Du hast derzeit keine ungenehmigten Wünsche vorliegen.
+        </div>
+        }
+    </mat-tab>
 </mat-tab-group>

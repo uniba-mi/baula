@@ -822,6 +822,12 @@ export class RestService {
     return this.http.get<{ isUsersWish: boolean }>(`${this.urlBase}feature-wishes/is-users-wish/${wishId}`, httpOptions);
   }
 
+  getUsersUnapprovedWishes(): Observable<FeatureWish[]> {
+    return this.http.get<FeatureWish[]>(`${this.urlBase}feature-wishes/unapproved`, httpOptions);
+  }
+
+  // Admin Requests
+
   adminGetUnapprovedWishes(): Observable<FeatureWish[]> {
     return this.http.get<FeatureWish[]>(`${this.urlBase}admin/feature-wishes/unapproved`, httpOptions);
   }

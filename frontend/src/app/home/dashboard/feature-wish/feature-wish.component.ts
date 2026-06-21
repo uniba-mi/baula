@@ -18,12 +18,15 @@ export class FeatureWishComponent {
 
   allWishesErrorMessage = '';
 
+  usersUnapprovedWishesErrorMessage = '';
+
   constructor(private rest: RestService,) {
 
   }
 
   topFeaturesWished: FeatureWish[] = [];
   allFeaturesWished: FeatureWish[] = [];
+  usersUnapprovedWishes: FeatureWish[] = [];
 
 
   ngOnInit() {
@@ -48,13 +51,22 @@ export class FeatureWishComponent {
         this.allWishesErrorMessage = error.error?.error?.message || 'Fehler beim Abrufen aller Feature-Wünsche. Bitte versuche es später erneut.';
       }
     });
+
+    // Get all unapproved wishes of user
+    this.rest.getUsersUnapprovedWishes().subscribe({
+      next: (response) => {
+        this.usersUnapprovedWishes = response;
+      },
+      error: (error) => {
+        this.usersUnapprovedWishesErrorMessage = error.error?.error?.message || 'Fehler beim Abrufen deiner ungenehmigten Feature-Wünsche. Bitte versuche es später erneut.';
+        console.error('Error retrieving user\'s unapproved feature wishes:', error);
+      }
+    });
   }
 
   submitFeatureWish() {
     this.rest.sendFeatureWish(this.title, this.description, this.selectedIcon).subscribe({
       next: (response) => {
-        console.log('Feature wish successfully sent:', response);
-
         this.title = '';
         this.description = '';
         this.selectedIcon = undefined;
@@ -64,7 +76,8 @@ export class FeatureWishComponent {
         this.errorMessage = '';
       },
       error: (error) => {
-        console.error('Error sending feature wish:', error.error.error.message);
+        console.error('Error sending feature wish:', error);
+        console.error('Error sending feature wish:', error.error?.error?.message);
         this.errorMessage = error.error?.error?.message || 'Ein Fehler ist aufgetreten. Bitte versuche es später erneut.';
         this.successMessage = '';
       }
