@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FeatureWish } from '../../../../../../interfaces/feature-wish';
 import { RestService } from 'src/app/rest.service';
 
@@ -8,15 +8,17 @@ import { RestService } from 'src/app/rest.service';
   templateUrl: './admin-feature-wishes.component.html',
   styleUrl: './admin-feature-wishes.component.scss',
 })
-export class AdminFeatureWishesComponent {
+export class AdminFeatureWishesComponent implements OnInit {
   unapprovedWishes: FeatureWish[] = [];
   approvedWishes: FeatureWish[] = [];
 
   editAdminMessageSuccessMessage: string = "";
   editAdminMessageErrorMessage: string = "";
 
-  constructor(private rest: RestService) {
+  simpleView: boolean = false;
 
+
+  constructor(private rest: RestService) {
   }
 
   ngOnInit() {

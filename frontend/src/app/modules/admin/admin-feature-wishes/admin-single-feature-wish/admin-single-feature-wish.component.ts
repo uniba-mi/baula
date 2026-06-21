@@ -16,6 +16,8 @@ export class AdminSingleFeatureWishComponent {
   @Input() wish!: FeatureWish;
   @Input() showLikes: boolean = false;
 
+  @Input() simpleView: boolean = false;
+
   @Output() delete = new EventEmitter<FeatureWish>();
   @Output() approve = new EventEmitter<FeatureWish>();
   @Output() unapprove = new EventEmitter<FeatureWish>();
@@ -63,8 +65,8 @@ export class AdminSingleFeatureWishComponent {
       error: (error) => {
         console.error('Error updating admin message for feature wish:', error);
         // TODO: Passt das error.error?.error? ??
-        console.log(error.error?.error?.message);
-        this.adminMessageErrorMessage = error.error?.error?.message || 'An error occurred while updating the admin message.';
+        console.log(error.error?.message);
+        this.adminMessageErrorMessage = error.error?.message || 'An error occurred while updating the admin message.';
       }
     });
   }
@@ -78,7 +80,7 @@ export class AdminSingleFeatureWishComponent {
       },
       error: (error) => {
         console.error('Error removing tag from feature wish:', error);
-        this.tagToAddErrorMessage = error.error?.error?.message || "Der Tag konnte nicht entfernt werden.";
+        this.tagToAddErrorMessage = error.error?.message || "Der Tag konnte nicht entfernt werden.";
         this.tagToAddSuccessMessage = "";
       }
     });
@@ -94,7 +96,7 @@ export class AdminSingleFeatureWishComponent {
       },
       error: (error) => {
         console.error('Error adding tag to feature wish:', error);
-        this.tagToAddErrorMessage = error.error?.error?.message || "Der Tag konnte nicht hinzugefügt werden.";
+        this.tagToAddErrorMessage = error.error?.message || "Der Tag konnte nicht hinzugefügt werden.";
         this.tagToAddSuccessMessage = "";
       }
     });

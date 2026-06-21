@@ -1,4 +1,8 @@
 <div class="container">
+    <section>
+        <mat-checkbox (change)="simpleView = $event.checked">Simple Ansicht verwenden</mat-checkbox>
+    </section>
+
     <div class="row">
 
         <!-- Unapproved -->
@@ -10,7 +14,7 @@
                 <div class="col-12 col-lg-6">
                     <app-admin-single-feature-wish [wish]="wish" [deleteButton]="true" [approveButton]="true"
                         (delete)="deleteWish($event)" (approve)="approveWish($event)"
-                        (unapprove)="unapproveWish($event)">
+                        (unapprove)="unapproveWish($event)" [simpleView]="simpleView">
                     </app-admin-single-feature-wish>
                 </div>
                 }
@@ -26,7 +30,7 @@
                 <div class="col-12 col-lg-6">
                     <app-admin-single-feature-wish [showLikes]="true" [wish]="wish" [deleteButton]="true"
                         [unapproveButton]="true" (delete)="deleteWish($event)" (approve)="approveWish($event)"
-                        (unapprove)="unapproveWish($event)">
+                        (unapprove)="unapproveWish($event)" [simpleView]="simpleView">
                     </app-admin-single-feature-wish>
                 </div>
                 }

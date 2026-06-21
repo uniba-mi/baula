@@ -26,6 +26,7 @@
             }
         </div>
 
+        @if (!simpleView) {
         <!-- Admin message -->
         <mat-divider class="my-3"></mat-divider>
         <mat-form-field appearance="outline" class="w-100">
@@ -82,5 +83,6 @@
             ;<i class="bi bi-hand-thumbs-up"></i>{{ wish.likes }}
             }
         </div>
+        }
     </div>
 </div>
