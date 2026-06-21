@@ -25,7 +25,7 @@
 
 .labeled-box {
   position: relative;
-  border: 2px solid grey;
+  border: 3px solid grey;
   border-radius: 4px;
   padding-top: .5rem;
   margin-top: 1rem;
@@ -43,7 +43,7 @@
 }
 
 .admin-box {
-  border-color: red;
+  border-color: var(--ub-blue);
 }
 
 .scaleAnimation {

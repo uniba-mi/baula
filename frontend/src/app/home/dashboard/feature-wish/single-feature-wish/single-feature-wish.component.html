@@ -33,6 +33,7 @@
                         </span>
                     </div>
                     <!-- Likes -->
+                    @if (withLikeButton) {
                     <div class="col d-flex justify-content-end">
                         <button (click)="likeOrUnlikeWish()" class="btn likes">
                             <div class="button-element">
@@ -48,6 +49,7 @@
                             </div>
                         </button>
                     </div>
+                    }
                 </div>
                 <!-- END Header -->
                 <!-- Tags -->
@@ -71,7 +73,7 @@
                 <!-- Admin Message -->
                 @if (wish.adminMessage) {
                 <div class="labeled-box s-text text-muted admin-box">
-                    <span class="labeled-box-label mat-caption">Admin Message</span>
+                    <span class="labeled-box-label mat-caption">Notiz von Team-Baula</span>
                     <div>
                         <p class="text-start p-2 m-0">{{ wish.adminMessage }}</p>
                     </div>
