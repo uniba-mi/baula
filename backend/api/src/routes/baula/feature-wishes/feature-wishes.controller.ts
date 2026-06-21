@@ -3,21 +3,18 @@ import { UserServer } from "../../../../../../interfaces/user";
 import { FeatureWish } from "../../../database/mongo";
 import { BadRequestError, NotFoundError, UnauthorizedError } from "../../../shared/error";
 
-import { PrismaClient } from "@prisma/client";
-import { adminGetUnapprovedWishes } from "../admin/admin.controller";
-const prisma = new PrismaClient();
-
 export async function addFeatureWish(req: Request, res: Response, next: NextFunction) {
     const maxAmountOfUnapprovedWishes = 5;
     const user = req.user as UserServer;
 
-    const usersUnapprovedWishes = await getUsersUnapprovedWishes(user._id);
-    
+    const usersUnapprovedWishes = await getUnapprovedWishesOfUser(user._id);
+
     if (usersUnapprovedWishes >= maxAmountOfUnapprovedWishes) {
         next(new BadRequestError(
             `Du kannt maximal ${maxAmountOfUnapprovedWishes} noch ungenehmigte Wünsche haben. \n` +
             `Versuche es später noch einmal.`
-        ))
+        ));
+        return;
     }
 
     const title = req.body.title;
@@ -29,10 +26,9 @@ export async function addFeatureWish(req: Request, res: Response, next: NextFunc
         console.log("Bad Request: ", isValid);
         return;
     }
-    
+
     await createFeatureWish(title, description, user._id, icon)
         .then((wish) => {
-            console.log("WISH: ", wish);
             res.send(wish);
         })
         .catch((error) => {
@@ -89,7 +85,7 @@ async function createFeatureWish(title: string, description: string, userId?: st
     });
 }
 
-async function getUsersUnapprovedWishes(userId: string): Promise<number> {
+async function getUnapprovedWishesOfUser(userId: string): Promise<number> {
     const unapprovedWishes = await FeatureWish.find({ isAllowed: false });
 
     const usersUnapprovedWishes: number = unapprovedWishes.filter(
@@ -99,7 +95,7 @@ async function getUsersUnapprovedWishes(userId: string): Promise<number> {
 }
 
 export async function getTopWishes(req: Request, res: Response, next: NextFunction) {
-    const topWishesAmount: number = 5;
+    const topWishesAmount: number = 3;
     const allWished = await FeatureWish.find({ isAllowed: true }).sort({ likedBy: -1, createdAt: -1 }).limit(topWishesAmount).exec();
 
     if (!allWished) {
@@ -234,3 +230,19 @@ export async function isUsersWish(req: Request, res: Response, next: NextFunctio
     res.send({ isUsersWish });
 }
 
+export async function getUsersUnapprovedWishes(req: Request, res: Response, next: NextFunction) {
+    const user = req.user as UserServer;
+
+    const wishes = await FeatureWish.find({ isAllowed: false, createdBy: user._id }).exec();
+
+    const response = wishes.map(wish => {
+        const obj = (wish as any).toObject ? (wish as any).toObject() : { ...wish };
+        return {
+            ...obj,
+            likes: obj.likedBy?.length || 0,
+            likedBy: undefined,
+        };
+    });
+
+    res.send(response);
+}

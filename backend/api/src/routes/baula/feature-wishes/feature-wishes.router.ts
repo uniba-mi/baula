@@ -6,26 +6,20 @@ import {
     hasLikedWish,
     unlikeWish,
     likeWish,
-    isUsersWish
+    isUsersWish,
+    getUsersUnapprovedWishes
 } from "./feature-wishes.controller";
 
 const router: Router = express.Router();
 router.get('/all', getAllWishes);
-
+router.get('/is-users-wish/:id', isUsersWish);
+router.get('/liked/:id', hasLikedWish);
 router.get('/top', getTopWishes);
-
+router.get('/unapproved', getUsersUnapprovedWishes);
 
 router.post('/add', addFeatureWish);
-
-router.get('/is-users-wish/:id', isUsersWish);
-
-router.get('/liked/:id', hasLikedWish);
-
 router.post('/like/:id', likeWish);
-
 router.post('/unlike/:id', unlikeWish);
 
-// Admin
-router.post('/allow/:id');
 
 export { router as featureWishes };
