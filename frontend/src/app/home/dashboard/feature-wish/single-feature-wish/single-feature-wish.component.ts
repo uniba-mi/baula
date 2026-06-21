@@ -12,6 +12,8 @@ export class SingleFeatureWishComponent {
   @Input() wish: FeatureWish;
   @Input() rank?: number;
   @Input() withDescription: boolean = false;
+  @Input() withLikeButton: boolean = true;
+
   hasLikedThisWish: boolean = false;
   isUsersWish: boolean = false;
 
