@@ -13,16 +13,17 @@
 <!-- Section for the charts / structure -->
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-lg-12">
-    <div class="alert alert-primary" *ngIf="!(this.selectedStandard$ | async); else chartSection">
-      Bitte wählen Sie einen Standard aus!
-    </div>
-    <ng-template #chartSection>
-      <ng-container *ngIf="this.competences$ | async as comp">
-        <ng-container *ngIf="this.courses$ | async as courses">
+    @if (!(this.selectedStandard$ | async)) {
+      <div class="alert alert-primary">
+        Bitte wählen Sie einen Standard aus!
+      </div>
+    } @else {
+      @if (this.competences$ | async; as comp) {
+        @if (this.courses$ | async; as courses) {
           <!-- Chart section -->
           <compvis-chart [competences]="comp" [selectedCourses]="courses"> </compvis-chart>
-        </ng-container>
-      </ng-container>
-    </ng-template>
+        }
+      }
+    }
   </div>
 </div>

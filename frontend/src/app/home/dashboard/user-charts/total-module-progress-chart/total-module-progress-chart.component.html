@@ -1,9 +1,12 @@
-<mat-card-content *ngIf="modulProgressData">
-    <canvas baseChart *ngIf="noDataMessage; else noData" [data]="modulProgressData" [options]="moduleProgressOptions"
+@if (modulProgressData) {
+  <mat-card-content>
+    @if (noDataMessage) {
+      <canvas baseChart [data]="modulProgressData" [options]="moduleProgressOptions"
         [type]="'bar'" [legend]="false">
-    </canvas>
-</mat-card-content>
+      </canvas>
+    } @else {
+      <app-no-data [diagram]=true noDataBtnText="Studienverlauf aus FlexNow laden" noDataLinkText="/app/profil/integrationen-verwalten"></app-no-data>
+    }
+  </mat-card-content>
+}
 
-<ng-template #noData>
-    <app-no-data [diagram]=true noDataBtnText="Studienverlauf aus FlexNow laden" noDataLinkText="/app/profil/integrationen-verwalten"></app-no-data>
-</ng-template>

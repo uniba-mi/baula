@@ -8,7 +8,7 @@ import {
   Renderer2,
   AfterViewInit,
 } from '@angular/core';
-import { concat, mergeMap, Observable, of, skipWhile, Subject, switchMap, take, takeUntil } from 'rxjs';
+import { concat, Observable, of, skipWhile, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
   getAllModules,
@@ -31,8 +31,7 @@ import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.s
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
-import { StudyProgrammeActions, UserActions } from 'src/app/actions/user.actions';
-import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
+import { StudyProgrammeActions } from 'src/app/actions/user.actions';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -43,7 +42,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ModuleOverviewComponent
   implements OnInit, OnDestroy, AfterViewInit {
-  @HostListener('window:resize', ['$event.target.innerWidth'])
+  //@HostListener('window:resize', ['$event.target.innerWidth'])
   onResize(width: number) {
     if (width < 992) {
       this.sideNavOpened = false;

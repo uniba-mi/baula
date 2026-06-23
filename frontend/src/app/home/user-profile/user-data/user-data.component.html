@@ -1,12 +1,14 @@
-<div *ngIf="user$ | async as user" class="row mb-4">
+@if (user$ | async; as user) {
+  <div class="row mb-4">
     <div class="menu-box d-flex justify-content-end align-items-center gap-2 mb-2">
-        <button class="sync-with-fn btn btn-primary btn-sm" aria-label="Nutzerdaten aus FlexNow synchronisieren"
-            (click)="importFlexNowMetadata()" (keyup.enter)="importFlexNowMetadata()">
-            <i class="bi bi-arrow-repeat me-2"></i>
-            Nutzerdaten aus FlexNow synchronisieren
-        </button>
+      <button class="sync-with-fn btn btn-primary btn-sm" aria-label="Nutzerdaten aus FlexNow synchronisieren"
+        (click)="importFlexNowMetadata()" (keyup.enter)="importFlexNowMetadata()">
+        <i class="bi bi-arrow-repeat me-2"></i>
+        Nutzerdaten aus FlexNow synchronisieren
+      </button>
     </div>
     <mat-card class="p-5">
-        <app-user-form [user]="user" [isEdit]="true" (submitUser)="updateUserData($event)"></app-user-form>
+      <app-user-form [user]="user" [isEdit]="true" (submitUser)="updateUserData($event)"></app-user-form>
     </mat-card>
-</div>
+  </div>
+}

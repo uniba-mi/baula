@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input, Self } from '@angular/core';
+import { Directive, HostListener, Self } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 
 @Directive({
@@ -10,7 +10,7 @@ export class TooltipDirective {
     constructor(@Self() private tooltip: MatTooltip) { }
 
     @HostListener('click')
-    onClick(event: Event): void {
+    onClick(): void {
         this.tooltip.show();
     }
 }
