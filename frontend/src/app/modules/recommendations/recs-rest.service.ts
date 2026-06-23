@@ -2,10 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/config.local';
-import { Recommendation } from '../../../../../interfaces/recommendation';
-import { Topic, TopicTree } from '../../../../../interfaces/topic';
-import { ModuleFeedback } from '../../../../../interfaces/user';
-import { ExtendedJob, Jobtemplate } from '../../../../../interfaces/job';
+import { Recommendation } from '@interfaces/recommendation';
+import { Topic, TopicTree } from '@interfaces/topic';
+import { ModuleFeedback } from '@interfaces/user';
+import { ExtendedJob, Jobtemplate } from '@interfaces/job';
 
 const httpOptions = {
   headers: new HttpHeaders({

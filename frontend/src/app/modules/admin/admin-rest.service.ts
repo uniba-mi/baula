@@ -2,9 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/config.local';
-import { AcademicDateTemplate, AcademicDate, DateType } from '../../../../../interfaces/academic-date';
-import { ImportLogMessage, Logmessage } from '../../../../../interfaces/logs';
-import { ModuleCourse2CourseConnection } from '../../../../../interfaces/connection';
+import { AcademicDateTemplate, AcademicDate, DateType } from '@interfaces/academic-date';
+import { ImportLogMessage, Logmessage } from '@interfaces/logs';
+import { ModuleCourse2CourseConnection } from '@interfaces/connection';
 import { AdminReport } from './reporting';
 
 const httpOptions = {

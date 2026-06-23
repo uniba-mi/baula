@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { PlanCourse } from '../../../../../../../interfaces/semester-plan';
-import { ExpandedCourse, Course } from '../../../../../../../interfaces/course';
+import { PlanCourse } from '@interfaces/semester-plan';
+import { ExpandedCourse, Course } from '@interfaces/course';
 import { State as CourseState } from '../reducer/course.reducers';
 
 export const getCourseState = createFeatureSelector<CourseState>('course');

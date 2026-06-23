@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
-import { SemesterStudyPath, StudyPath } from '../../../../../../../interfaces/study-path';
-import { Semester } from '../../../../../../../interfaces/semester';
-import { StudyPlan } from '../../../../../../../interfaces/study-plan';
+import { SemesterStudyPath, StudyPath } from '@interfaces/study-path';
+import { Semester } from '@interfaces/semester';
+import { StudyPlan } from '@interfaces/study-plan';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
 
 @Component({

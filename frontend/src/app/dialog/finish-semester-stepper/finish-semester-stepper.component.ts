@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { PathModule } from '../../../../../interfaces/study-path';
+import { PathModule } from '@interfaces/study-path';
 import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { ExtendedModuleGroup } from '../../../../../interfaces/module-group';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
-import { Semester } from '../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 
 @Component({
   selector: 'app-finish-semester-stepper',

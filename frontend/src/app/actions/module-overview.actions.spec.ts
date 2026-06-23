@@ -1,5 +1,5 @@
 import * as fromModuleOverview from './module-overview.actions';
-import { Module } from '../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 
 const mockModule = new Module(
   'mockId',

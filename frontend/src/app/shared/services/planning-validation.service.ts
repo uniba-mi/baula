@@ -5,24 +5,24 @@ import { map, skipWhile, take } from 'rxjs/operators';
 import { getModuleHandbook } from 'src/app/selectors/module-overview.selectors';
 import { getStudyPlans } from 'src/app/selectors/study-planning.selectors';
 import { getUser, getUserStudyPath } from 'src/app/selectors/user.selectors';
-import { Module } from '../../../../../interfaces/module';
-import { ModuleGroup } from '../../../../../interfaces/module-group';
-import { ModuleHandbook } from '../../../../../interfaces/module-handbook';
-import { StudyPath, PathModule } from '../../../../../interfaces/study-path';
+import { Module } from '@interfaces/module';
+import { ModuleGroup } from '@interfaces/module-group';
+import { ModuleHandbook } from '@interfaces/module-handbook';
+import { StudyPath, PathModule } from '@interfaces/study-path';
 import {
   CollidingEvent,
   PlanCourse,
   PlanningHints,
-} from '../../../../../interfaces/semester-plan';
+} from '@interfaces/semester-plan';
 import { ModService } from './module.service';
 import { TimetableActions } from 'src/app/actions/study-planning.actions';
-import { Course } from '../../../../../interfaces/course';
+import { Course } from '@interfaces/course';
 import { EventInput } from '@fullcalendar/core';
-import { AcademicDate } from '../../../../../interfaces/academic-date';
+import { AcademicDate } from '@interfaces/academic-date';
 import { datetime, RRule, RRuleSet } from 'rrule';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
+import { StudyPlan } from '@interfaces/study-plan';
 import { AnalyticsService } from './analytics.service';
-import { Semester } from '../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 
 @Injectable({
   providedIn: 'root',

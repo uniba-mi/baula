@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ExtendedJob, Job } from '../../../../../../../interfaces/job';
+import { ExtendedJob, Job } from '@interfaces/job';
 import { MatDialog } from '@angular/material/dialog';
 import { ModService } from 'src/app/shared/services/module.service';
 import { Store } from '@ngrx/store';
@@ -10,8 +10,8 @@ import {
   ConfirmationDialogComponent,
   ConfirmationDialogData,
 } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
-import { PathModule } from '../../../../../../../interfaces/study-path';
-import { Module } from '../../../../../../../interfaces/module';
+import { PathModule } from '@interfaces/study-path';
+import { Module } from '@interfaces/module';
 
 @Component({
   selector: 'app-job-card',

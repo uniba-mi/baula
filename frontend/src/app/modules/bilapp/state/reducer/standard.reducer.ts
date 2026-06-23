@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { Competence } from '../../../../../../../interfaces/competence';
+import { Competence } from '@interfaces/competence';
 import { Standard } from '../../interfaces/standard';
 import * as StandardActions from '../actions/standard.actions';
 

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Observable, map, take } from 'rxjs';
-import { Semester } from '../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';

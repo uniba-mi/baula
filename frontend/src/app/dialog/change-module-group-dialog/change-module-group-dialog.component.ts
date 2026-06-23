@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ExtendedModuleGroup } from '../../../../../interfaces/module-group';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';

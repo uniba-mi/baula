@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ItemActionName, MetaSemester } from '../../../../../../../../../interfaces/semester-plan';
-import { StudyPath } from '../../../../../../../../../interfaces/study-path';
+import { ItemActionName, MetaSemester } from '@interfaces/semester-plan';
+import { StudyPath } from '@interfaces/study-path';
 import { getUserStudyPath, isModuleInStudyPath } from 'src/app/selectors/user.selectors';
 import { map, Observable, of, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
-import { ExtendedModuleGroup } from '../../../../../../../../../interfaces/module-group';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
 

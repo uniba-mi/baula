@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModuleHandbook } from '../../../../../interfaces/module-handbook';
+import { ModuleHandbook } from '@interfaces/module-handbook';
 import { ModService } from 'src/app/shared/services/module.service';
 import { RestService } from 'src/app/rest.service';
 import { take } from 'rxjs';

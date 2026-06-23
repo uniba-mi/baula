@@ -8,11 +8,11 @@ import {
 import {
   MetaSemester,
   SemesterPlan,
-} from '../../../../../../../interfaces/semester-plan';
+} from '@interfaces/semester-plan';
 import { getSelectedStudyPlanId, getSemesterPlansOfSelectedStudyPlan } from 'src/app/selectors/study-planning.selectors';
-import { SemesterStudyPath } from '../../../../../../../interfaces/study-path';
+import { SemesterStudyPath } from '@interfaces/study-path';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
-import { Semester } from '../../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropService } from 'src/app/shared/services/drag-drop.service';
 

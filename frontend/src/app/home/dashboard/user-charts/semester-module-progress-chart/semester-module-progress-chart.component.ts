@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartData } from 'chart.js';
-import { SemesterStudyPath } from '../../../../../../../interfaces/study-path';
-import { Semester } from '../../../../../../../interfaces/semester';
-import { StudyPlan } from '../../../../../../../interfaces/study-plan';
+import { SemesterStudyPath } from '@interfaces/study-path';
+import { Semester } from '@interfaces/semester';
+import { StudyPlan } from '@interfaces/study-plan';
 
 @Component({
     selector: 'app-semester-module-progress-chart',

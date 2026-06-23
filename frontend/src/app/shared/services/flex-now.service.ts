@@ -18,8 +18,8 @@ import {
   ConfirmationDialogData,
 } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
 import { DialogComponent, DialogData } from 'src/app/dialog/dialog.component';
-import { Semester } from '../../../../../interfaces/semester';
-import { Consent, User } from '../../../../../interfaces/user';
+import { Semester } from '@interfaces/semester';
+import { Consent, User } from '@interfaces/user';
 import {
   getLastConsentByType,
   getSemesterList,
@@ -31,12 +31,12 @@ import {
   FnCompletedCourse,
   FnCompletedModule,
   FnStudyPath,
-} from '../../../../../interfaces/fn-user';
+} from '@interfaces/fn-user';
 import {
   PathCourse,
   PathModule,
   StudyPath,
-} from '../../../../../interfaces/study-path';
+} from '@interfaces/study-path';
 import { ModulePlanningActions } from 'src/app/actions/study-planning.actions';
 import {
   getActiveStudyPlanId,

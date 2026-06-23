@@ -7,12 +7,12 @@ import { getStudyPlans } from 'src/app/selectors/study-planning.selectors';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { getSemesterList, getUser } from 'src/app/selectors/user.selectors';
-import { User } from '../../../../../interfaces/user';
-import { Semester } from '../../../../../interfaces/semester';
+import { User } from '@interfaces/user';
+import { Semester } from '@interfaces/semester';
 import {
   StudyPlan,
   StudyPlanTemplate,
-} from '../../../../../interfaces/study-plan';
+} from '@interfaces/study-plan';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import {
   ConfirmationDialogData,
@@ -21,8 +21,8 @@ import {
 import { getCloseDialogMode } from 'src/app/selectors/dialog.selectors';
 import { AlertType } from 'src/app/shared/classes/alert';
 import type { DownloadService } from 'src/app/shared/services/download.service';
-import { SemesterPlanTemplate } from '../../../../../interfaces/semester-plan';
-import { StudyPath } from '../../../../../interfaces/study-path';
+import { SemesterPlanTemplate } from '@interfaces/semester-plan';
+import { StudyPath } from '@interfaces/study-path';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { RestService } from 'src/app/rest.service';

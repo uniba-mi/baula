@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {  Observable } from 'rxjs';
-import { User } from '../../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import { getUser } from 'src/app/selectors/user.selectors';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
+import { StudyPlan } from '@interfaces/study-plan';
 import { getStudyPlans } from 'src/app/selectors/study-planning.selectors';
 import { MatDialog } from '@angular/material/dialog';
 import { UserActions } from 'src/app/actions/user.actions';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
-import { Semester } from '../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { Router } from '@angular/router';
 import {
   ConfirmationDialogData,
   ConfirmationDialogComponent,
 } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
-import { StudyPath } from '../../../../../interfaces/study-path';
+import { StudyPath } from '@interfaces/study-path';
 import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
 
 import type { DownloadService } from 'src/app/shared/services/download.service';

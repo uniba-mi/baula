@@ -1,9 +1,10 @@
-/* To learn more about this file see: https://angular.io/guide/typescript-configuration. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "paths": {
+      "@interfaces/*": ["../interfaces/*"]
+    },
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "strict": true,
@@ -24,5 +25,12 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "include": [
+    "src/**/*.ts",
+    "../interfaces/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

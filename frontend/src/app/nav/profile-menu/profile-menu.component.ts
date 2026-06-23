@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { MStudyProgramme, User } from '../../../../../interfaces/user';
+import { MStudyProgramme, User } from '@interfaces/user';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { take } from 'rxjs';
 import { config } from 'src/environments/config.local';

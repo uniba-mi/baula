@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Course } from '../../../../../interfaces/course';
+import { Course } from '@interfaces/course';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { Store } from '@ngrx/store';

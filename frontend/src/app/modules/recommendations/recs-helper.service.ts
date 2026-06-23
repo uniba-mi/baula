@@ -7,8 +7,8 @@ import { getUserStudyPath } from 'src/app/selectors/user.selectors';
 import { PlanningValidationService } from '../../shared/services/planning-validation.service';
 import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.service';
 import { ModService } from 'src/app/shared/services/module.service';
-import { Module } from '../../../../../interfaces/module';
-import { StudyPath } from '../../../../../interfaces/study-path';
+import { Module } from '@interfaces/module';
+import { StudyPath } from '@interfaces/study-path';
 
 @Injectable({
     providedIn: 'root',

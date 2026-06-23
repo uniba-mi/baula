@@ -11,8 +11,8 @@ import { select, Store } from '@ngrx/store';
 import * as d3 from 'd3';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
-import { Competence } from '../../../../../../../interfaces/competence';
-import { ExpandedCourse } from '../../../../../../../interfaces/course';
+import { Competence } from '@interfaces/competence';
+import { ExpandedCourse } from '@interfaces/course';
 import { Bar } from '../../interfaces/chart';
 import { selectBar, setBars } from '../../state/chart.actions';
 import {
@@ -22,7 +22,7 @@ import {
   getUnit,
   getView,
 } from '../../state/chart.selectors';
-import { CompAim, User } from '../../../../../../../interfaces/user';
+import { CompAim, User } from '@interfaces/user';
 import { getUser, getUserAims } from 'src/app/selectors/user.selectors';
 import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
 

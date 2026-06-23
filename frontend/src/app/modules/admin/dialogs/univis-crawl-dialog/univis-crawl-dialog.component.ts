@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ImportLogMessage } from '../../../../../../../interfaces/logs';
+import { ImportLogMessage } from '@interfaces/logs';
 
 @Component({
     selector: 'admin-univis-crawl-dialog',

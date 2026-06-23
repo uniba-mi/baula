@@ -4,11 +4,11 @@ import {
   Consent,
   Hint,
   User,
-} from '../../../../../interfaces/user';
+} from '@interfaces/user';
 import { UserActions } from 'src/app/actions/user.actions';
 import { Store } from '@ngrx/store';
-import { PathModule } from '../../../../../interfaces/study-path';
-import { TimetableSettings } from '../../../../../interfaces/semester-plan';
+import { PathModule } from '@interfaces/study-path';
+import { TimetableSettings } from '@interfaces/semester-plan';
 import { catchError, concatMap, of, take } from 'rxjs';
 import { SnackbarService } from './snackbar.service';
 import { RestService } from 'src/app/rest.service';

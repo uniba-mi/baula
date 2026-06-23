@@ -7,16 +7,16 @@ import {
   getDistinctModules,
   getModules,
 } from 'src/app/selectors/module-overview.selectors';
-import { Module } from '../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { AlertType } from '../classes/alert';
 import { SnackbarService } from './snackbar.service';
 import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ModuleInteractionActions } from 'src/app/actions/module-overview.actions';
-import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
-import { PathModule } from '../../../../../interfaces/study-path';
-import { ModuleHandbook } from '../../../../../interfaces/module-handbook';
+import { UserGeneratedModule } from '@interfaces/user-generated-module';
+import { PathModule } from '@interfaces/study-path';
+import { ModuleHandbook } from '@interfaces/module-handbook';
 import { moduleChanges } from '../constants/module-mapping';
 
 @Injectable({

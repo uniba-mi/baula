@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { User } from '../../../../../interfaces/user';
+import { User } from '@interfaces/user';
 import {
   PathCourse,
   PathModule,
-} from '../../../../../interfaces/study-path';
+} from '@interfaces/study-path';
 import { TransformationService } from './transformation.service';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
-import { SemesterPlan } from '../../../../../interfaces/semester-plan';
+import { StudyPlan } from '@interfaces/study-plan';
+import { SemesterPlan } from '@interfaces/semester-plan';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -163,7 +163,7 @@ export class DownloadService {
 
     /* lazy load pdfmake to prevent load issues */
     const documentDefinition = { content, styles };
-    pdfMake.createPdf(documentDefinition, undefined, undefined, pdfFonts.vfs).download('user.pdf');
+    pdfMake.createPdf(documentDefinition, undefined, undefined, pdfFonts).download(filename);
   }
 
   /*###################################################### 

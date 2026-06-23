@@ -4,7 +4,7 @@ import { take } from 'rxjs';
 import { EvaluationRestService } from './evaluation-rest.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
-import { Evaluation, EvaluationJob, JobEvaluation, ModuleCandidate, Organisation, RankedModule } from '../../../../../interfaces/evaluation';
+import { Evaluation, EvaluationJob, JobEvaluation, ModuleCandidate, Organisation, RankedModule } from '@interfaces/evaluation';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';

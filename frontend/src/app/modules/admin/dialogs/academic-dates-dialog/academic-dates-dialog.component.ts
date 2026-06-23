@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AcademicDate, DateType } from '../../../../../../../interfaces/academic-date';
+import { AcademicDate, DateType } from '@interfaces/academic-date';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Semester } from '../../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { RestService } from 'src/app/rest.service';
 
 @Component({

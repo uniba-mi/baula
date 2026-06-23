@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { Semester } from '../../../../../interfaces/semester';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
+import { Semester } from '@interfaces/semester';
+import { StudyPlan } from '@interfaces/study-plan';
 import { Observable, take } from 'rxjs';
 import { AnalyticsService } from 'src/app/shared/services/analytics.service';
 

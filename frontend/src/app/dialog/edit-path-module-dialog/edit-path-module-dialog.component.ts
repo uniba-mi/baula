@@ -2,10 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
-import { PathModule } from '../../../../../interfaces/study-path';
+import { PathModule } from '@interfaces/study-path';
 import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
 import { Observable } from 'rxjs';
-import { ExtendedModuleGroup } from '../../../../../interfaces/module-group';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
 
 @Component({
   selector: 'app-edit-path-module-dialog',

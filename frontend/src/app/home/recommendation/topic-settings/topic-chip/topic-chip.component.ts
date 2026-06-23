@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getUserTopics } from 'src/app/selectors/user.selectors';
 import { UserActions } from 'src/app/actions/user.actions';
-import { Topic } from '../../../../../../../interfaces/topic';
+import { Topic } from '@interfaces/topic';
 
 @Component({
   selector: 'app-topic-chip',
