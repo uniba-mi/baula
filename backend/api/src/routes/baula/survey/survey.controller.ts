@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response, Router } from "express";
-import { BadRequestError, NotFoundError } from "../../../shared/error";
+import { BadRequestError } from "../../../shared/error";
 import { validateAndReturnSurveyResult } from "../../../shared/helpers/custom-validator";
-import { LongTermEvaluation, User } from "../../../database/mongo";
+import { LongTermEvaluation } from "../../../database/mongo";
 import validator from "validator";
 
 const router: Router = express.Router();
@@ -30,35 +30,6 @@ export async function saveResult(
         }
 
     } else {
-        next(new BadRequestError())
-    }
-}
-
-export async function resetConsentResponse(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) { 
-    try {
-        const users = await User.find(
-            { "consents.ctype": "bakule-survey" }, 
-        )
-        if(users.length !== 0) {
-            for(let user of users) {
-                user.consents.forEach(consent => {
-                    if(consent.ctype === 'bakule-survey') {
-                        consent.hasResponded = false;
-                    }
-                })
-                await user.save();
-            }
-            res.status(200).json('Consent wurde erfolgreich zurückgesetzt.')
-        } else {
-            next(new NotFoundError("Es konnten keine Consents gefunden werden."))
-        }
-        
-    } catch(error) {
-        console.log(error)
         next(new BadRequestError())
     }
 }

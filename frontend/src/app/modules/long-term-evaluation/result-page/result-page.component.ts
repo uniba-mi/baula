@@ -134,20 +134,6 @@ export class ResultPageComponent implements OnInit {
     };
   }
 
-  resetConsentResponse() {
-    this.api
-      .resetConsentResponse()
-      .pipe(take(1))
-      .subscribe({
-        next: (mes) => {
-          console.log(mes);
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-  }
-
   private getSemesterFromSurveyCode(surveyCode: string): string {
     const [month, year] = surveyCode.split('-').map(Number);
 

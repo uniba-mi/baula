@@ -42,6 +42,6 @@ import { checkAndReturnAdminUser } from "../../shared/middleware/admin-middlewar
 router.use('/admin', checkAndReturnAdminUser, admin);
 
 import { survey } from "./survey/survey.router";
-router.use('/survey', survey);
+router.use('/survey', checkAndReturnAdminUser, survey);
 
 export { router as baula };
