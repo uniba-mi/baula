@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "target": "ES2019",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "module": "CommonJS",                                /* Specify what module code is generated. */
+    "target": "ES2023",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "module": "esnext",                                /* Specify what module code is generated. */
+    "moduleResolution": "bundler",
     "lib": ["ES2019"],
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
     "resolveJsonModule": false,

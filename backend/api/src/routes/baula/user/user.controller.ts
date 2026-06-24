@@ -1191,11 +1191,11 @@ export async function crawlStudentDataViaFlexNow(
         req.end();
       });
 
-      const metadata: FnStudyProgramme[] = await transform(
+      const metadata: any[] = await transform(
         result,
         metaDataTemplate,
       );
-      const studypath: FnStudyPath = importStudypath
+      const studypath: any = importStudypath
         ? await transform(result, studyPathTemplate)
         : undefined;
 
@@ -1227,7 +1227,7 @@ export async function crawlStudentDataViaFlexNow(
         if (studypath.completedModules) {
           for (let module of studypath.completedModules) {
             // first try to find suitable modulegroups within fn xml
-            const exactMatches = module.moduleGroups.filter((mod) =>
+            const exactMatches = module.moduleGroups.filter((mod: { mgId: string, version: string }) =>
               mgs.find(
                 (mg) =>
                   mg.mgId == mod.mgId && String(mg.version) == mod.version,
@@ -1241,8 +1241,8 @@ export async function crawlStudentDataViaFlexNow(
             const nearlyMatches = [
               ...new Map(
                 module.moduleGroups
-                  .filter((item) => mgs.find((mg) => mg.mgId == item.mgId))
-                  .map((item) => [item.mgId, item.version]),
+                  .filter((item: { mgId: string, version: string }) => mgs.find((mg) => mg.mgId == item.mgId))
+                  .map((item: { mgId: string, version: string }) => [item.mgId, item.version]),
               ).entries(),
             ].map(([mgId, version]) => ({
               mgId,
