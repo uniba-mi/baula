@@ -1,4 +1,12 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import {
   catchError,
   Observable,
@@ -16,10 +24,7 @@ import {
   getUserStudyPath,
   getVisibleCharts,
 } from 'src/app/selectors/user.selectors';
-import {
-  SemesterStudyPath,
-  StudyPath,
-} from '@interfaces/study-path';
+import { SemesterStudyPath, StudyPath } from '@interfaces/study-path';
 import { Semester } from '@interfaces/semester';
 import {
   getActiveStudyPlan,
@@ -36,10 +41,7 @@ import { TransformationService } from 'src/app/shared/services/transformation.se
 import { DashboardActions } from 'src/app/actions/user.actions';
 import { AcademicDate } from '@interfaces/academic-date';
 import { RestService } from 'src/app/rest.service';
-import {
-  PlanCourse,
-  SemesterPlan,
-} from '@interfaces/semester-plan';
+import { PlanCourse, SemesterPlan } from '@interfaces/semester-plan';
 import { chartMetadata } from 'src/app/shared/constants/chart-metadata';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -51,6 +53,12 @@ import { MatTooltip } from '@angular/material/tooltip';
   standalone: false,
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+  private store = inject(Store);
+  private transform = inject(TransformationService);
+  private rest = inject(RestService);
+  private auth = inject(AuthService);
+  private cd = inject(ChangeDetectorRef);
+
   @ViewChild('feedbackTooltip') feedbackTooltip: MatTooltip;
   maintenance = false; // Variable to disable features and make maintenance message visible
   private destroy$ = new Subject<void>();
@@ -77,14 +85,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   showFinishSemesterHint$: Observable<boolean>;
   isPersonalisationComplete = false;
 
-  constructor(
-    private store: Store,
-    private transform: TransformationService,
-    private rest: RestService,
-    private auth: AuthService,
-    private cd: ChangeDetectorRef
-  ) {}
-
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);
     this.studyPath$ = this.store.select(getUserStudyPath);
@@ -99,13 +99,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     combineLatest([this.studyPath$, this.semesters$])
       .pipe(
         switchMap(([path, semester]) =>
-          this.transform.transformStudyPath(path, semester)
-        )
+          this.transform.transformStudyPath(path, semester),
+        ),
       )
       .subscribe((semesterStudyPath) => {
         this.semesterStudyPath = semesterStudyPath;
         this.splitIndex = this.semesterStudyPath.findIndex(
-          (el) => el.semester === new Semester().fullName
+          (el) => el.semester === new Semester().fullName,
         );
       });
     this.showFinishSemesterHint$ = this.store.select(getShowFinishSemesterInfo);
@@ -118,7 +118,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             catchError((error) => {
               this.auth.forceReload(error);
               return of([]); // Return an empty array or handle the error as needed
-            })
+            }),
           );
       }
     });
@@ -142,14 +142,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   changeVisibility(key: string) {
     this.store.dispatch(
-      DashboardActions.updateDashboardView({ chartName: key })
+      DashboardActions.updateDashboardView({ chartName: key }),
     );
   }
 
   navigateToVC() {
-    window.open(
-      'https://vc.uni-bamberg.de/course/view.php?id=71480'
-    );
+    window.open('https://vc.uni-bamberg.de/course/view.php?id=71480');
   }
 
   onPersonalisationComplete(isComplete: boolean) {

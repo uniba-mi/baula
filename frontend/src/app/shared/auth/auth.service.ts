@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -10,10 +10,8 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(
-    private http: HttpClient,
-    private dialog: MatDialog
-  ) {}
+  private http = inject(HttpClient);
+  private dialog = inject(MatDialog);
 
   localLogin(username: string, password: string): Observable<boolean> {
     return this.http
@@ -22,7 +20,7 @@ export class AuthService {
         { username, password },
         {
           withCredentials: true,
-        }
+        },
       )
       .pipe(
         map((user) => {
@@ -32,7 +30,7 @@ export class AuthService {
             return false;
           }
         }),
-        catchError(() => of(false))
+        catchError(() => of(false)),
       );
   }
 
@@ -47,13 +45,13 @@ export class AuthService {
         {},
         {
           withCredentials: true,
-        }
+        },
       )
       .pipe(
         map((response) => {
           return response.success;
         }),
-        catchError(() => of(false))
+        catchError(() => of(false)),
       );
   }
 
@@ -64,15 +62,15 @@ export class AuthService {
         map((response) => {
           return response;
         }),
-        catchError(() => of({ success: false }))
+        catchError(() => of({ success: false })),
       );
   }
 
   isAuthenticated(): Observable<boolean> {
     return this.http
-      .get<{ user: { shibId: string; roles: string[]; authType: string } }>(
-        `${config.apiUrl}`
-      )
+      .get<{
+        user: { shibId: string; roles: string[]; authType: string };
+      }>(`${config.apiUrl}`)
       .pipe(
         map((response) => {
           if (response.user) {
@@ -81,22 +79,25 @@ export class AuthService {
             return false;
           }
         }),
-        catchError(() => of(false))
+        catchError(() => of(false)),
       );
   }
 
   forceReload(error: any): void {
-    if(error.status && (error.status === 401 || error.status === 0)) {
-      this.dialog.open(DialogComponent, {
-        data: {
-          dialogTitle: 'Bitte Seite neu laden!',
-          dialogContentId: 'force-reload',
-        },
-        minWidth: '80vw',
-        disableClose: true,
-      }).afterClosed().subscribe(() => {
-        window.location.reload();
-      });
+    if (error.status && (error.status === 401 || error.status === 0)) {
+      this.dialog
+        .open(DialogComponent, {
+          data: {
+            dialogTitle: 'Bitte Seite neu laden!',
+            dialogContentId: 'force-reload',
+          },
+          minWidth: '80vw',
+          disableClose: true,
+        })
+        .afterClosed()
+        .subscribe(() => {
+          window.location.reload();
+        });
     }
   }
 }

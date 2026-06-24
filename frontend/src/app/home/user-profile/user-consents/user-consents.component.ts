@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Consent, ConsentType, User } from '../../../../../../interfaces/user';
 import { getLastConsentByType } from 'src/app/selectors/user.selectors';
@@ -18,15 +18,15 @@ import { PrivacyStatementComponent } from 'src/app/modules/long-term-evaluation/
   styleUrl: './user-consents.component.scss',
 })
 export class UserConsentsComponent {
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+
   lastBaKuLeSurveyConsent$: Observable<Consent | null>;
   lastTermsOfUseConsent$: Observable<Consent | null>;
   latestsConsents$: Observable<(Consent | null)[]>;
   user$: Observable<User>;
 
-  constructor(
-    private store: Store,
-    private dialog: MatDialog,
-  ) {
+  constructor() {
     this.lastBaKuLeSurveyConsent$ = this.store.select(
       getLastConsentByType('bakule-survey'),
     );

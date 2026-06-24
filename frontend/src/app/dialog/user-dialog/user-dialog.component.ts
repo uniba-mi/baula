@@ -1,4 +1,4 @@
-import { Component, Input, model } from '@angular/core';
+import { Component, Input, model, inject } from '@angular/core';
 import { MStudyProgramme, User } from '@interfaces/user';
 import { firstValueFrom, Observable, take } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth/auth.service';
@@ -17,7 +17,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { StudyProgramme } from '@interfaces/study-programme';
 import { FlexnowService } from 'src/app/shared/services/flex-now.service';
 
-
 @Component({
   selector: 'app-user-dialog',
   templateUrl: './user-dialog.component.html',
@@ -25,6 +24,12 @@ import { FlexnowService } from 'src/app/shared/services/flex-now.service';
   standalone: false,
 })
 export class UserDialogComponent {
+  private auth = inject(AuthService);
+  private rest = inject(RestService);
+  private userUpdateService = inject(UserUpdateService);
+  dialogRef = inject<MatDialogRef<UserDialogComponent>>(MatDialogRef);
+  private flexNowService = inject(FlexnowService);
+
   @Input() user: User;
   currentStep = 'welcome';
   readonly termsConfirmed = model(false);
@@ -41,22 +46,15 @@ export class UserDialogComponent {
   errorMessage: string | undefined;
   studyProgrammes$: Observable<StudyProgramme[]>;
 
-
-  constructor(
-    private auth: AuthService,
-    private rest: RestService,
-    private userUpdateService: UserUpdateService,
-    public dialogRef: MatDialogRef<UserDialogComponent>,
-    private flexNowService: FlexnowService
-  ) {
+  constructor() {
     this.studyProgrammes$ = this.rest.getStudyprogrammes();
   }
 
   receiveChanges(confirmations: {
-    flexNowImportConfirmed: boolean,
-    metadataConfirmed: boolean,
-    studypathConfirmed: boolean,
-    gradesConfirmed: boolean,
+    flexNowImportConfirmed: boolean;
+    metadataConfirmed: boolean;
+    studypathConfirmed: boolean;
+    gradesConfirmed: boolean;
   }) {
     this.flexNowImportConfirmed = confirmations.flexNowImportConfirmed;
     this.metadataConfirmed = confirmations.metadataConfirmed;
@@ -89,8 +87,8 @@ export class UserDialogComponent {
       this.user.duration &&
       this.user.maxEcts &&
       this.user.fulltime !== undefined &&
-      this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbId &&
-      this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbVersion
+      this.user.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbId &&
+      this.user.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbVersion
     ) {
       return false;
     }
@@ -99,7 +97,7 @@ export class UserDialogComponent {
 
   // if step is empty user is on welcome screen and further step depends on role
   nextStep(step?: string) {
-    if(this.termsConfirmed()) {
+    if (this.termsConfirmed()) {
       if (step) {
         this.currentStep = step;
         this.steps.push(step);
@@ -114,7 +112,7 @@ export class UserDialogComponent {
         }
       }
     } else {
-      this.errorMessage = "Stimme bitte den Nutzungsbedingungen zu."
+      this.errorMessage = 'Stimme bitte den Nutzungsbedingungen zu.';
     }
   }
 
@@ -153,9 +151,15 @@ export class UserDialogComponent {
       this.currentStep = 'loading';
       this.loadingMessage =
         'Wir laden deine Daten von FlexNow, das kann kurz dauern...';
-      this.flexNowService.getFlexNowData('create-user', this.studyPathConfirmed, this.gradesConfirmed).pipe(take(1)).subscribe(
-        user => {
-          if(user) {
+      this.flexNowService
+        .getFlexNowData(
+          'create-user',
+          this.studyPathConfirmed,
+          this.gradesConfirmed,
+        )
+        .pipe(take(1))
+        .subscribe((user) => {
+          if (user) {
             this.user = user;
             this.errorMessage = this.checkMetaDataForErrors(this.user);
           } else {
@@ -164,8 +168,7 @@ export class UserDialogComponent {
           }
           this.loadingMessage = undefined;
           this.nextStep('createUser');
-        }
-      )
+        });
     }
   }
 
@@ -173,7 +176,10 @@ export class UserDialogComponent {
     // check for valid sps
     if (!data.sps || data.sps.length == 0) {
       return 'Die in deinem FlexNow-Auszug enthaltenen Studiengänge sind in Baula leider nicht verfügbar.';
-    } else if(!data.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbId || !data.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbVersion) {
+    } else if (
+      !data.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbId ||
+      !data.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbVersion
+    ) {
       return 'Leider konnten wir kein Modulhandbuch extrahieren, wähle daher ein passendes Modulhandbuch aus.';
     }
     return undefined;

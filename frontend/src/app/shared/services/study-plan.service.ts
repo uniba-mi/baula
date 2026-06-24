@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getHintByKey, getUser } from 'src/app/selectors/user.selectors';
 import { Semester } from '@interfaces/semester';
 import { User } from '@interfaces/user';
 import { SemesterPlan, SemesterPlanTemplate } from '@interfaces/semester-plan';
-import { ModulePlanningActions, SemesterPlanActions, StudyPlanActions } from 'src/app/actions/study-planning.actions';
+import {
+  ModulePlanningActions,
+  SemesterPlanActions,
+  StudyPlanActions,
+} from 'src/app/actions/study-planning.actions';
 import { StudyPlan, StudyPlanTemplate } from '@interfaces/study-plan';
 import { filter, from, Observable, take, tap } from 'rxjs';
 import { Module } from '@interfaces/module';
@@ -19,12 +23,15 @@ import { PathModule } from '@interfaces/study-path';
   providedIn: 'root',
 })
 export class StudyPlanService {
+  private store = inject(Store);
+  private planningValidation = inject(PlanningValidationService);
+  private snackbar = inject(SnackbarService);
+  private transform = inject(TransformationService);
+
   user$: Observable<User>;
   user: User;
 
-  constructor(private store: Store, private planningValidation: PlanningValidationService, private snackbar: SnackbarService, private transform: TransformationService) { }
-
-  ngOnInit() { }
+  ngOnInit() {}
 
   /** contains functions that are needed in several components related to the study planning component **/
   createStudyPlan(
@@ -33,7 +40,7 @@ export class StudyPlanService {
     duration?: number,
     duplSemesterPlans?: SemesterPlan[],
     status?: boolean,
-    modules?: PathModule[]
+    modules?: PathModule[],
   ) {
     if (inputName && startSemester && duration) {
       const studyPlan: StudyPlanTemplate = {
@@ -50,14 +57,15 @@ export class StudyPlanService {
         duplSemesterPlans,
       );
 
-      if(modules) {
-        for(let module of modules) {
-          const fittingSemesterPlan = semesterPlans.find(plan => plan.semester == module.semester)
-          if(fittingSemesterPlan) {
-            fittingSemesterPlan.modules.push(module.acronym)
-            fittingSemesterPlan.summedEcts += module.ects
+      if (modules) {
+        for (let module of modules) {
+          const fittingSemesterPlan = semesterPlans.find(
+            (plan) => plan.semester == module.semester,
+          );
+          if (fittingSemesterPlan) {
+            fittingSemesterPlan.modules.push(module.acronym);
+            fittingSemesterPlan.summedEcts += module.ects;
           }
-          
         }
       }
 
@@ -66,7 +74,7 @@ export class StudyPlanService {
         StudyPlanActions.createStudyPlan({
           studyPlan: studyPlan,
           semesterPlans: semesterPlans,
-        })
+        }),
       );
     }
   }
@@ -87,9 +95,11 @@ export class StudyPlanService {
 
     // find current semester to determine past/future semesters and set isPastSemester correctly
     const currentSemesterIndex = semesterList.findIndex((sem) =>
-      sem.isCurrentSemester()
+      sem.isCurrentSemester(),
     );
-    const startSemesterIndex = semesterList.findIndex((sem) => sem.name === start);
+    const startSemesterIndex = semesterList.findIndex(
+      (sem) => sem.name === start,
+    );
 
     for (let i = 0; i < semesterList.length; i++) {
       const sem = semesterList[i];
@@ -127,15 +137,17 @@ export class StudyPlanService {
 
     // if study plan is duplicated, fill initial structure
     if (duplSemesterPlans) {
-      if(duplSemesterPlans.length === result.length) {
+      if (duplSemesterPlans.length === result.length) {
         // if semester plans are equal, just copy them
-        result = duplSemesterPlans
+        result = duplSemesterPlans;
       } else {
-        let semesterPlans = []
-        for(let semester of semesterList) {
-          let importedSemester = duplSemesterPlans.find(duplSemester => duplSemester.semester === semester.name)
-          if(importedSemester) {
-            semesterPlans.push(importedSemester)
+        let semesterPlans = [];
+        for (let semester of semesterList) {
+          let importedSemester = duplSemesterPlans.find(
+            (duplSemester) => duplSemester.semester === semester.name,
+          );
+          if (importedSemester) {
+            semesterPlans.push(importedSemester);
           } else {
             semesterPlans.push({
               semester: semester.name,
@@ -146,11 +158,11 @@ export class StudyPlanService {
               summedEcts: 0,
               isPastSemester: false,
               userId: this.user._id,
-              expanded: true
-            })
+              expanded: true,
+            });
           }
         }
-        result = semesterPlans
+        result = semesterPlans;
       }
     }
     return result;
@@ -161,8 +173,8 @@ export class StudyPlanService {
     this.store.dispatch(
       StudyPlanActions.updateStudyPlan({
         studyPlanId: studyPlanId,
-        studyPlan: studyPlan
-      })
+        studyPlan: studyPlan,
+      }),
     );
   }
 
@@ -170,21 +182,26 @@ export class StudyPlanService {
   updateStudyPlans(studyPlans: StudyPlan[]) {
     // change is used to identify, if study plan needs to be updated
     let changed = false;
-    studyPlans.forEach(studyPlan => {
-      studyPlan.semesterPlans.forEach(semesterPlan => {
+    studyPlans.forEach((studyPlan) => {
+      studyPlan.semesterPlans.forEach((semesterPlan) => {
         // check if modules array is legacy and update with acronym
         if (semesterPlan.modules && semesterPlan.modules.length !== 0) {
           // check if entry is number, then transform entry to acronym
           for (let index in semesterPlan.modules) {
             if (!Number.isNaN(Number(semesterPlan.modules[index]))) {
-              semesterPlan.modules[index] = this.transform.transformModuleId(semesterPlan.modules[index])
+              semesterPlan.modules[index] = this.transform.transformModuleId(
+                semesterPlan.modules[index],
+              );
               changed = true;
             }
           }
         }
         // append flexNowImported to legacy placeholders
-        if (semesterPlan.userGeneratedModules && semesterPlan.userGeneratedModules.length !== 0) {
-          semesterPlan.userGeneratedModules.forEach(module => {
+        if (
+          semesterPlan.userGeneratedModules &&
+          semesterPlan.userGeneratedModules.length !== 0
+        ) {
+          semesterPlan.userGeneratedModules.forEach((module) => {
             if (module.flexNowImported === undefined) {
               if (module.notes === 'Importiert aus meinem FlexNow-Auszug') {
                 module.flexNowImported = true;
@@ -197,7 +214,12 @@ export class StudyPlanService {
         }
       });
       if (changed) {
-        this.store.dispatch(StudyPlanActions.updateStudyPlan({ studyPlanId: studyPlan._id, studyPlan: studyPlan }))
+        this.store.dispatch(
+          StudyPlanActions.updateStudyPlan({
+            studyPlanId: studyPlan._id,
+            studyPlan: studyPlan,
+          }),
+        );
       }
       // reset changed for next loop iteration
       changed = false;
@@ -209,34 +231,42 @@ export class StudyPlanService {
     this.store
       .select(getActiveStudyPlanId)
       .pipe(
-        filter((activeStudyPlanId) => activeStudyPlanId != null && activeStudyPlanId !== ''),
-        take(1)
-      ).subscribe((activeStudyPlanId) => {
-
+        filter(
+          (activeStudyPlanId) =>
+            activeStudyPlanId != null && activeStudyPlanId !== '',
+        ),
+        take(1),
+      )
+      .subscribe((activeStudyPlanId) => {
         // update stuyplans after active id is available
-        from(studyPlans).pipe(
-          tap((studyPlan) => {
+        from(studyPlans)
+          .pipe(
+            tap((studyPlan) => {
+              if (studyPlan._id === activeStudyPlanId) {
+                studyPlan.semesterPlans.forEach((semesterPlan) => {
+                  const semester = new Semester(semesterPlan.semester);
+                  const isPast = semester.isPastSemester();
 
-            if (studyPlan._id === activeStudyPlanId) {
-
-              studyPlan.semesterPlans.forEach(semesterPlan => {
-
-                const semester = new Semester(semesterPlan.semester);
-                const isPast = semester.isPastSemester();
-
-                // check if isPastSemester has changed
-                if (isPast !== semesterPlan.isPastSemester) {
-
-                  this.store.select(getHintByKey('finishSemester-hint')).pipe(take(1)).subscribe(hint => {
-                    if (hint && !hint.hasConfirmed) {
-                      this.store.dispatch(SemesterPlanActions.updateShowFinishSemesterHint({ showFinishSemesterHint: true }));
-                    }
-                  });
-                }
-              });
-            }
-          })
-        ).subscribe();
+                  // check if isPastSemester has changed
+                  if (isPast !== semesterPlan.isPastSemester) {
+                    this.store
+                      .select(getHintByKey('finishSemester-hint'))
+                      .pipe(take(1))
+                      .subscribe((hint) => {
+                        if (hint && !hint.hasConfirmed) {
+                          this.store.dispatch(
+                            SemesterPlanActions.updateShowFinishSemesterHint({
+                              showFinishSemesterHint: true,
+                            }),
+                          );
+                        }
+                      });
+                  }
+                });
+              }
+            }),
+          )
+          .subscribe();
       });
   }
 
@@ -246,10 +276,18 @@ export class StudyPlanService {
     return aimedEcts;
   }
 
-  addModuleToPlan(selectedModule: Module, semesterPlanId: string, studyPlanId: string) {
+  addModuleToPlan(
+    selectedModule: Module,
+    semesterPlanId: string,
+    studyPlanId: string,
+  ) {
     // check for duplicates within semester plan
     this.planningValidation
-      .isModuleInSemesterPlan(selectedModule.acronym, semesterPlanId, studyPlanId)
+      .isModuleInSemesterPlan(
+        selectedModule.acronym,
+        semesterPlanId,
+        studyPlanId,
+      )
       .subscribe((isModuleContainedResult) => {
         if (!isModuleContainedResult.alreadyContained) {
           if (semesterPlanId && studyPlanId) {
@@ -259,7 +297,7 @@ export class StudyPlanService {
                 semesterPlanId: semesterPlanId,
                 acronym: selectedModule.acronym,
                 ects: selectedModule.ects,
-              })
+              }),
             );
           } else {
             this.snackbar.openSnackBar({

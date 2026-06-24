@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
 import { AdminReport } from '../reporting';
 import { map, Observable } from 'rxjs';
@@ -14,6 +14,8 @@ import { Semester } from '../../../../../../interfaces/semester';
   styleUrl: './reporting.component.scss',
 })
 export class ReportingComponent implements OnInit {
+  private adminRestService = inject(AdminRestService);
+
   reportNew$: Observable<Report>;
   colorMapping = {
     taken: 'rgba(102, 144, 177, 0.8)',
@@ -39,8 +41,6 @@ export class ReportingComponent implements OnInit {
       },
     },
   };
-
-  constructor(private adminRestService: AdminRestService) {}
 
   ngOnInit(): void {
     this.reportNew$ = this.adminRestService.getReport().pipe(
@@ -87,7 +87,7 @@ export class ReportingComponent implements OnInit {
             title: 'Häufigkeit Modulstatus',
             data: {
               labels: report.frequencyModuleStatus.map((item) =>
-                item.name.toString()
+                item.name.toString(),
               ),
               datasets: [
                 {
@@ -95,7 +95,7 @@ export class ReportingComponent implements OnInit {
                     (item) =>
                       this.colorMapping[
                         item.name.toLowerCase() as keyof typeof this.colorMapping
-                      ]
+                      ],
                   ),
                   data: report.frequencyModuleStatus.map((item) => item.count),
                 },
@@ -113,13 +113,13 @@ export class ReportingComponent implements OnInit {
             title: 'Häufigkeit Studienpläne (Cluster)',
             data: {
               labels: report.frequencyStudyPlansClustered.map((item) =>
-                item.name.toString()
+                item.name.toString(),
               ),
               datasets: [
                 {
                   backgroundColor: 'rgba(102, 144, 177, 0.8)',
                   data: report.frequencyStudyPlansClustered.map(
-                    (item) => item.count
+                    (item) => item.count,
                   ),
                 },
               ],
@@ -172,7 +172,7 @@ export class ReportingComponent implements OnInit {
             title: 'Häufigkeit Studienpläne (Cluster)',
             data: {
               labels: report.frequencyDuration.map((item) =>
-                item.name ? item.name.toString() : 'Null'
+                item.name ? item.name.toString() : 'Null',
               ),
               datasets: [
                 {
@@ -193,13 +193,13 @@ export class ReportingComponent implements OnInit {
             title: 'Häufigkeit Abgeschlossene Module (Cluster)',
             data: {
               labels: report.frequencyCompletedModules.map((item) =>
-                item.name.toString()
+                item.name.toString(),
               ),
               datasets: [
                 {
                   backgroundColor: 'rgba(102, 144, 177, 0.8)',
                   data: report.frequencyCompletedModules.map(
-                    (item) => item.count
+                    (item) => item.count,
                   ),
                 },
               ],
@@ -235,7 +235,7 @@ export class ReportingComponent implements OnInit {
         return {
           cards,
         };
-      })
+      }),
     );
   }
 
@@ -248,12 +248,12 @@ export class ReportingComponent implements OnInit {
           name: new Semester(el.name).shortName,
         };
       }),
-      frequencyPlannedCourses: report.frequencyPlannedCourses.map(el => {
+      frequencyPlannedCourses: report.frequencyPlannedCourses.map((el) => {
         return {
           ...el,
-          name: `${el.name ?? ''} (${new Semester(el.semester).shortName})`
-        }
-      })
+          name: `${el.name ?? ''} (${new Semester(el.semester).shortName})`,
+        };
+      }),
     };
   }
 }

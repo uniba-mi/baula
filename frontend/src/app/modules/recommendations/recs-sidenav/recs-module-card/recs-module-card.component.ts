@@ -1,15 +1,34 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges, OnChanges, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+  OnChanges,
+  OnInit,
+  ChangeDetectorRef,
+  inject,
+} from '@angular/core';
 import { Module } from '@interfaces/module';
 import { EMPTY, map, Observable, switchMap, take, tap } from 'rxjs';
 import { ModService } from 'src/app/shared/services/module.service';
 import { StudyPath } from '@interfaces/study-path';
 import { Store } from '@ngrx/store';
-import { getFavouriteModuleAcronyms, getExcludedModulesAcronyms, getSemesterList, getUser, getUserStudyPath } from 'src/app/selectors/user.selectors';
+import {
+  getFavouriteModuleAcronyms,
+  getExcludedModulesAcronyms,
+  getSemesterList,
+  getUser,
+  getUserStudyPath,
+} from 'src/app/selectors/user.selectors';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
 import { Semester } from '@interfaces/semester';
-import { getActiveStudyPlanId, getSemesterPlanIdBySemester } from 'src/app/selectors/study-planning.selectors';
+import {
+  getActiveStudyPlanId,
+  getSemesterPlanIdBySemester,
+} from 'src/app/selectors/study-planning.selectors';
 import { ExcludedModuleActions } from 'src/app/actions/user.actions';
 import { ListType } from '../../interfaces/list-types';
 import { User } from '@interfaces/user';
@@ -24,6 +43,12 @@ import { Topic } from '@interfaces/topic';
   standalone: false,
 })
 export class RecsModuleCardComponent implements OnInit, OnChanges {
+  private modService = inject(ModService);
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+  private studyPlanService = inject(StudyPlanService);
+  private cdr = inject(ChangeDetectorRef);
+
   @Input() module: Module | ModuleWithMetadata;
   @Input() allJobs: Job[] | null;
   @Input() allTopics: Topic[] | null;
@@ -40,7 +65,6 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
   isDragging: boolean = false;
   isSmallScreen: boolean;
 
-
   modType: string = 'notPath';
   closeMode: string;
   relevantJobs: Job[] | undefined;
@@ -48,27 +72,24 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
 
   private dragEndTime = 0;
 
-  constructor(
-    private modService: ModService,
-    private store: Store,
-    private dialog: MatDialog,
-    private studyPlanService: StudyPlanService,
-    private cdr: ChangeDetectorRef
-  ) { }
-
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);
     this.studyPath$ = this.store.select(getUserStudyPath);
     this.semesters$ = this.store.select(getSemesterList);
-    this.store.select(getActiveStudyPlanId).pipe(take(1)).subscribe((id) => this.activePlanId = id)
+    this.store
+      .select(getActiveStudyPlanId)
+      .pipe(take(1))
+      .subscribe((id) => (this.activePlanId = id));
 
     this.updateRelevantJobsAndTopics();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.module?.currentValue ||
+    if (
+      changes.module?.currentValue ||
       changes.allJobs?.currentValue ||
-      changes.allTopics?.currentValue) {
+      changes.allTopics?.currentValue
+    ) {
       this.updateRelevantJobsAndTopics();
     }
 
@@ -77,7 +98,9 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
     }
   }
 
-  hasMetadata(module: Module | ModuleWithMetadata): module is ModuleWithMetadata {
+  hasMetadata(
+    module: Module | ModuleWithMetadata,
+  ): module is ModuleWithMetadata {
     return module && 'metadata' in module;
   }
 
@@ -93,16 +116,22 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
 
     // use moduleWithMeta instead of this.module
     if (this.allTopics && this.allTopics.length > 0) {
-      const allTopicSources = moduleWithMeta.metadata?.source?.filter(source => source.type === 'topic') || [];
+      const allTopicSources =
+        moduleWithMeta.metadata?.source?.filter(
+          (source) => source.type === 'topic',
+        ) || [];
       this.relevantTopics = this.allTopics.filter((topic: Topic) => {
-        return allTopicSources.some(source => source.identifier === topic.tId);
+        return allTopicSources.some(
+          (source) => source.identifier === topic.tId,
+        );
       });
     }
 
     if (this.allJobs && this.allJobs.length > 0) {
       this.relevantJobs = this.allJobs.filter((job: Job) => {
         return moduleWithMeta.metadata?.source?.some(
-          (source: Source) => source.type === 'job' && source.identifier === job._id
+          (source: Source) =>
+            source.type === 'job' && source.identifier === job._id,
         );
       });
     }
@@ -110,7 +139,7 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
     this.cdr.detectChanges();
   }
 
-  getFirstChip(): { displayText: string, type: string } | null {
+  getFirstChip(): { displayText: string; type: string } | null {
     if (this.relevantJobs && this.relevantJobs?.length > 0) {
       return { displayText: this.relevantJobs[0].title, type: 'job' };
     }
@@ -120,7 +149,10 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
     return null;
   }
 
-  getFirstChipTooltip(firstChip: { displayText: string, type: string }): string {
+  getFirstChipTooltip(firstChip: {
+    displayText: string;
+    type: string;
+  }): string {
     const typeLabel = firstChip.type === 'job' ? 'Job' : 'Interesse';
     return `Passt zu ${typeLabel}: ${firstChip.displayText}`;
   }
@@ -132,8 +164,12 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
   }
 
   getAllChipsTooltip(): string {
-    const jobItems = (this.relevantJobs || []).map(job => `${job.title} (Job)`);
-    const topicItems = (this.relevantTopics || []).map(topic => `${topic.name} (Interesse)`);
+    const jobItems = (this.relevantJobs || []).map(
+      (job) => `${job.title} (Job)`,
+    );
+    const topicItems = (this.relevantTopics || []).map(
+      (topic) => `${topic.name} (Interesse)`,
+    );
 
     const allItems = [...jobItems, ...topicItems];
     return `Passt zu:\n ${allItems.join(', ')}`;
@@ -146,31 +182,35 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
   getJobName(jobId: string): string {
     if (!this.allJobs || !this.allJobs.length) return jobId;
 
-    const job = this.allJobs.find(j => j._id === jobId);
+    const job = this.allJobs.find((j) => j._id === jobId);
     return job ? job.title : jobId;
   }
 
   getTopicName(topicId: string): string {
     if (!this.allTopics || !this.allTopics.length) return topicId;
 
-    const topic = this.allTopics.find(t => t.tId === topicId);
+    const topic = this.allTopics.find((t) => t.tId === topicId);
     return topic ? topic.name : topicId;
   }
 
   isFavourite(acronym: string): Observable<boolean> {
-    return this.store.select(getFavouriteModuleAcronyms).pipe(
-      map((acronyms) => acronyms.includes(acronym))
-    );
+    return this.store
+      .select(getFavouriteModuleAcronyms)
+      .pipe(map((acronyms) => acronyms.includes(acronym)));
   }
 
   isExcluded(acronym: string): Observable<boolean> {
-    return this.store.select(getExcludedModulesAcronyms).pipe(
-      map((acronyms) => acronyms.includes(acronym))
-    );
+    return this.store
+      .select(getExcludedModulesAcronyms)
+      .pipe(map((acronyms) => acronyms.includes(acronym)));
   }
 
   isModuleDropped(): boolean {
-    return this.module && this.droppedModules && this.droppedModules.has(this.module.acronym);
+    return (
+      this.module &&
+      this.droppedModules &&
+      this.droppedModules.has(this.module.acronym)
+    );
   }
 
   isDropped(acronym: string): boolean {
@@ -188,20 +228,21 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
 
   markAsExcluded(event: any, acronym: string): void {
     event.stopPropagation();
-    this.store.dispatch(ExcludedModuleActions.toggleExcludedModule({ acronym: acronym }))
+    this.store.dispatch(
+      ExcludedModuleActions.toggleExcludedModule({ acronym: acronym }),
+    );
     this.moduleMarkedExcluded.emit(acronym);
   }
 
   // open module details dialog
   selectModule(module: Module): void {
-
     const timeSinceDragEnd = Date.now() - this.dragEndTime;
 
     // not if the user is dragging stuff and shortly after
     if (this.isDragging || timeSinceDragEnd < 500) {
       return;
     }
-    this.modService.openDetailsDialog(module)
+    this.modService.openDetailsDialog(module);
   }
 
   onDragStarted() {
@@ -224,26 +265,35 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
       },
     });
 
-    dialogRef.afterClosed().pipe(
-      switchMap((semester) => {
-        if (semester) {
-          return this.store.select(getSemesterPlanIdBySemester(semester)).pipe(
-            take(1),
-            tap((semesterPlanId) => {
-              if (semesterPlanId) {
-                this.studyPlanService.addModuleToPlan(module, semesterPlanId, this.activePlanId);
-                this.markModuleAsDropped(module.acronym);
-              } else {
-                console.error('Keine ID gefunden für Semester:', semester);
-              }
-            })
-          );
-        } else {
-          return EMPTY;
-        }
-      }),
-      take(1)
-    ).subscribe();
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((semester) => {
+          if (semester) {
+            return this.store
+              .select(getSemesterPlanIdBySemester(semester))
+              .pipe(
+                take(1),
+                tap((semesterPlanId) => {
+                  if (semesterPlanId) {
+                    this.studyPlanService.addModuleToPlan(
+                      module,
+                      semesterPlanId,
+                      this.activePlanId,
+                    );
+                    this.markModuleAsDropped(module.acronym);
+                  } else {
+                    console.error('Keine ID gefunden für Semester:', semester);
+                  }
+                }),
+              );
+          } else {
+            return EMPTY;
+          }
+        }),
+        take(1),
+      )
+      .subscribe();
   }
 
   markModuleAsDropped(acronym: string) {
@@ -257,9 +307,11 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
       return [];
     }
     const moduleWithMeta = this.module;
-    return moduleWithMeta.metadata?.source?.filter(
-      (source: Source) => source.type === 'feedback_similarmods'
-    ) || [];
+    return (
+      moduleWithMeta.metadata?.source?.filter(
+        (source: Source) => source.type === 'feedback_similarmods',
+      ) || []
+    );
   }
 
   hasFeedbackSource(): boolean {
@@ -271,7 +323,7 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
     if (feedbackSources.length === 0) return null;
 
     // chip styling uses highest score
-    return Math.max(...feedbackSources.map(s => s.score || 0));
+    return Math.max(...feedbackSources.map((s) => s.score || 0));
   }
 
   getFeedbackIcon(): string {
@@ -287,7 +339,7 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
     if (score !== 1.0) {
       return 'feedback-chip-light';
     }
-    return 'feedback-chip'
+    return 'feedback-chip';
   }
 
   // identifier is rated acronym
@@ -296,7 +348,7 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
     if (feedbackSources.length === 1) {
       return `Könnte dir aufgrund deines Feedbacks zu ${feedbackSources[0].identifier} gefallen`;
     }
-    const identifiers = feedbackSources.map(s => s.identifier).join(' und ');
+    const identifiers = feedbackSources.map((s) => s.identifier).join(' und ');
     return `Könnte dir aufgrund deines Feedbacks zu ${identifiers} gefallen`;
   }
 }

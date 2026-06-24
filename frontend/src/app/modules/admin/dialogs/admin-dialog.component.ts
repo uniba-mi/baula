@@ -1,5 +1,8 @@
-import { Component, Inject } from '@angular/core';
-import { AcademicDate, DateType } from '../../../../../../interfaces/academic-date';
+import { Component, inject } from '@angular/core';
+import {
+  AcademicDate,
+  DateType,
+} from '../../../../../../interfaces/academic-date';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ModuleCourse } from '../../../../../../interfaces/module-course';
@@ -21,14 +24,12 @@ export interface AdminDialogData {
 }
 
 @Component({
-    selector: 'admin-dialog',
-    templateUrl: './admin-dialog.component.html',
-    styleUrl: './admin-dialog.component.scss',
-    standalone: false
+  selector: 'admin-dialog',
+  templateUrl: './admin-dialog.component.html',
+  styleUrl: './admin-dialog.component.scss',
+  standalone: false,
 })
 export class AdminDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<AdminDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: AdminDialogData
-  ) { }
+  dialogRef = inject<MatDialogRef<AdminDialogComponent>>(MatDialogRef);
+  data = inject<AdminDialogData>(MAT_DIALOG_DATA);
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
@@ -12,13 +12,11 @@ import { AdminDialogComponent } from '../dialogs/admin-dialog.component';
   standalone: false,
 })
 export class Fn2xmlDndComponent implements OnInit {
-  selectedSemester: string = '';
+  private rest = inject(AdminRestService);
+  private snackbar = inject(SnackbarService);
+  private dialog = inject(MatDialog);
 
-  constructor(
-    private rest: AdminRestService,
-    private snackbar: SnackbarService,
-    private dialog: MatDialog
-  ) {}
+  selectedSemester: string = '';
 
   ngOnInit(): void {}
 

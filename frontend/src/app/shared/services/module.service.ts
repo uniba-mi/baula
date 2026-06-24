@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
@@ -23,6 +23,12 @@ import { moduleChanges } from '../constants/module-mapping';
   providedIn: 'root',
 })
 export class ModService {
+  private store = inject(Store);
+  private snackbar = inject(SnackbarService);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   modulesInState$: any;
 
   // for status updates everywhere without reloading
@@ -34,14 +40,6 @@ export class ModService {
   moduleChanges = moduleChanges;
   newModules = moduleChanges.map((el) => el.newModuleAcronym);
   oldModules = moduleChanges.map((el) => el.oldModuleAcronym);
-
-  constructor(
-    private store: Store,
-    private snackbar: SnackbarService,
-    private dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {}
 
   selectModuleFromAcronymString(
     acronym: string,

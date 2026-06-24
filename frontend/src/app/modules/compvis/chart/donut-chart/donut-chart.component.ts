@@ -1,21 +1,21 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, inject } from '@angular/core';
 import { Competence, Fulfillment } from '@interfaces/competence';
 import { Bar } from '../../interfaces/chart';
 import * as d3 from 'd3';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { deselectBar } from '../../state/chart.actions';
-import {
-  ExpandedCourse
-} from '@interfaces/course';
+import { ExpandedCourse } from '@interfaces/course';
 
 @Component({
-    selector: 'app-donut-chart',
-    templateUrl: './donut-chart.component.html',
-    styleUrls: ['./donut-chart.component.scss'],
-    standalone: false
+  selector: 'app-donut-chart',
+  templateUrl: './donut-chart.component.html',
+  styleUrls: ['./donut-chart.component.scss'],
+  standalone: false,
 })
 export class DonutChartComponent {
+  private store = inject<Store<State>>(Store);
+
   @Input() competences: Competence[];
   @Input() bars: Bar[] | null;
   @Input() selectedBar: Bar | null | undefined;
@@ -63,8 +63,6 @@ export class DonutChartComponent {
     }
   });
 
-  constructor(private store: Store<State>) {}
-
   ngOnInit() {
     //initialize donutChartData
     this.donutChartData = this.updateDonutChartData();
@@ -74,11 +72,11 @@ export class DonutChartComponent {
     // trigger deselect when competences change
     if (
       changes.competences &&
-      (!changes.competences.firstChange &&
-        (changes.competences.currentValue &&
-          changes.competences.previousValue &&
-          changes.competences.currentValue.length !==
-            changes.competences.previousValue.length))
+      !changes.competences.firstChange &&
+      changes.competences.currentValue &&
+      changes.competences.previousValue &&
+      changes.competences.currentValue.length !==
+        changes.competences.previousValue.length
     ) {
       this.store.dispatch(deselectBar());
     }
@@ -179,19 +177,19 @@ export class DonutChartComponent {
 
       this.childCompetences.forEach((comp) => {
         donutChartData.push(
-          this.fulfillment.find((c) => c.compId == comp.compId)
+          this.fulfillment.find((c) => c.compId == comp.compId),
         );
       });
 
       d3.select('#donut-chart svg').attr(
         'viewBox',
-        '0 0 ' + this.width + ' ' + this.height
+        '0 0 ' + this.width + ' ' + this.height,
       );
 
       // translate into center of box
       d3.select('#donut-chart svg g').attr(
         'transform',
-        'translate(' + this.width / 2 + ', ' + this.height / 2 + ')'
+        'translate(' + this.width / 2 + ', ' + this.height / 2 + ')',
       );
       return this.pie(donutChartData);
     }

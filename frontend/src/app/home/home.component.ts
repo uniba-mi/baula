@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -39,6 +39,14 @@ import { PathModule } from '../../../../interfaces/study-path';
   standalone: false,
 })
 export class HomeComponent implements OnInit {
+  private dialog = inject(MatDialog);
+  private store = inject(Store);
+  private studyPlanService = inject(StudyPlanService);
+  private userUpdateService = inject(UserUpdateService);
+  private api = inject(RestService);
+  private indexedDB = inject(IndexedDbService);
+  private router = inject(Router);
+
   semesters$: Observable<Semester[]>;
   user$: Observable<User>;
   user: User;
@@ -49,16 +57,6 @@ export class HomeComponent implements OnInit {
   templatesAvailable: boolean = false;
   notificationActive: boolean = false;
   privacyDialogActive: boolean = true;
-
-  constructor(
-    private dialog: MatDialog,
-    private store: Store,
-    private studyPlanService: StudyPlanService,
-    private userUpdateService: UserUpdateService,
-    private api: RestService,
-    private indexedDB: IndexedDbService,
-    private router: Router,
-  ) {}
 
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);
@@ -120,8 +118,9 @@ export class HomeComponent implements OnInit {
     if (user.sps) {
       this.store.dispatch(
         ModuleHandbookActions.loadModuleHandbook({
-          id: user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbId,
-          version: user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].mhbVersion,
+          id: user.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbId,
+          version: user.sps.filter((sp) => sp.status == 'Immatrikuliert')[0]
+            .mhbVersion,
         }),
       );
     }
@@ -220,17 +219,26 @@ export class HomeComponent implements OnInit {
       this.store.dispatch(UserActions.setUserData({ user }));
       // dispatch change of sp and mhb to store
       this.store.dispatch(
-        selectStudyProgramme({ studyProgramme: user.sps.filter((sp: MStudyProgramme) => sp.status == 'Immatrikuliert')[0].spId }),
+        selectStudyProgramme({
+          studyProgramme: user.sps.filter(
+            (sp: MStudyProgramme) => sp.status == 'Immatrikuliert',
+          )[0].spId,
+        }),
       );
 
       // set first semester info and load study plan uni template
       const currentSemester = Semester.getCurrentSemesterName();
       const currentSemesterType = currentSemester.slice(-1) as 'w' | 's';
-      const moduleOfCurrentSemester = this.user.studyPath.completedModules.filter(mod => mod.semester == currentSemester)
+      const moduleOfCurrentSemester =
+        this.user.studyPath.completedModules.filter(
+          (mod) => mod.semester == currentSemester,
+        );
       // study plan loading logic for first semester students
       if (this.user.startSemester === currentSemester && this.user.sps) {
         this.isFirstSemesterStudent = true;
-        const spId = this.user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId;
+        const spId = this.user.sps.filter(
+          (sp) => sp.status == 'Immatrikuliert',
+        )[0].spId;
 
         // check if a template is available for spId
         this.api
@@ -328,7 +336,7 @@ export class HomeComponent implements OnInit {
       this.user.duration,
       undefined,
       true,
-      modules
+      modules,
     );
 
     this.dialog.closeAll();

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   getModules,
@@ -32,6 +32,10 @@ import { DialogComponent, DialogData } from 'src/app/dialog/dialog.component';
   standalone: false,
 })
 export class StudentUploadComponent {
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+  private flexnowService = inject(FlexnowService);
+
   @Input() user: User;
   private unsubscribe$ = new Subject<void>();
   modules$: Observable<Module[]>;
@@ -45,11 +49,7 @@ export class StudentUploadComponent {
   studyPlans$: Observable<StudyPlan[]>;
   semesters$: Observable<Semester[]>;
 
-  constructor(
-    private store: Store,
-    private dialog: MatDialog,
-    private flexnowService: FlexnowService,
-  ) {
+  constructor() {
     this.integrateFnDataConsent$ = this.store.select(
       getLastConsentByType('flexnow-api'),
     );

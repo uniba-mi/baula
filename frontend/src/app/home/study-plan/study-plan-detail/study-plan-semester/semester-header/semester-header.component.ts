@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Module } from '../../../../../../../../interfaces/module';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
@@ -49,6 +49,11 @@ import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
   styleUrl: './semester-header.component.scss',
 })
 export class SemesterHeaderComponent {
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+  private studyPlanService = inject(StudyPlanService);
+  private flexnowService = inject(FlexnowService);
+
   @Input() metaSemester: MetaSemester;
   @Input() semesterNumber: number;
   @Input() studyPlanId: string;
@@ -72,20 +77,15 @@ export class SemesterHeaderComponent {
   lastFlexNowStudypathConsent$: Observable<Consent | null>;
   lastFlexNowGradeConsent$: Observable<Consent | null>;
 
-  constructor(
-    private store: Store,
-    private dialog: MatDialog,
-    private studyPlanService: StudyPlanService,
-    private flexnowService: FlexnowService,
-  ) {
+  constructor() {
     this.lastFlexnowApiConsent$ = this.store.select(
       getLastConsentByType('flexnow-api'),
     );
     this.lastFlexNowStudypathConsent$ = this.store.select(
-      getLastConsentByType('upload-exam-data')
+      getLastConsentByType('upload-exam-data'),
     );
     this.lastFlexNowGradeConsent$ = this.store.select(
-      getLastConsentByType('include-grades')
+      getLastConsentByType('include-grades'),
     );
   }
 
@@ -97,7 +97,6 @@ export class SemesterHeaderComponent {
       .subscribe((modules) => {
         this.modules = modules;
       });
-
 
     combineLatest([
       this.store.select(getActiveStudyPlanId),
@@ -139,7 +138,10 @@ export class SemesterHeaderComponent {
   }
 
   async syncWithFlexNow() {
-    this.flexnowService.triggerFlexNowDataLoading('update-studypath', this.metaSemester.semester)
+    this.flexnowService.triggerFlexNowDataLoading(
+      'update-studypath',
+      this.metaSemester.semester,
+    );
   }
 
   isFutureSemester(semesterName: string): boolean {
@@ -185,7 +187,7 @@ export class SemesterHeaderComponent {
               ? pathModule.flexNowImported
               : false,
           };
-          
+
           this.store.dispatch(
             StudyPathActions.updateModuleInStudyPath({ module: newPathModule }),
           );

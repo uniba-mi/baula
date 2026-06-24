@@ -1,10 +1,5 @@
-import { Injectable } from '@angular/core';
-import {
-  ChartVisibility,
-  Consent,
-  Hint,
-  User,
-} from '@interfaces/user';
+import { Injectable, inject } from '@angular/core';
+import { ChartVisibility, Consent, Hint, User } from '@interfaces/user';
 import { UserActions } from 'src/app/actions/user.actions';
 import { Store } from '@ngrx/store';
 import { PathModule } from '@interfaces/study-path';
@@ -20,12 +15,10 @@ import { AlertType } from '../classes/alert';
   providedIn: 'root',
 })
 export class UserUpdateService {
-  constructor(
-    private store: Store,
-    private snackbar: SnackbarService,
-    private rest: RestService,
-    private auth: AuthService
-  ) {}
+  private store = inject(Store);
+  private snackbar = inject(SnackbarService);
+  private rest = inject(RestService);
+  private auth = inject(AuthService);
 
   private availableHints: Hint[] = [
     { key: 'module-hint', hasConfirmed: false },
@@ -72,7 +65,7 @@ export class UserUpdateService {
   ];
 
   private availableTimetableSettings: TimetableSettings[] = [
-    { 
+    {
       timetableId: 'dashboard',
       showWeekends: true,
       selectedView: 'timeGridDay',
@@ -80,8 +73,8 @@ export class UserUpdateService {
     {
       timetableId: 'semesterplan',
       showWeekends: true,
-      selectedView: 'timeGridWeek'
-    }
+      selectedView: 'timeGridWeek',
+    },
     // add future settings here
   ];
 
@@ -160,7 +153,7 @@ export class UserUpdateService {
         }),
         catchError(() => {
           return of(false);
-        })
+        }),
       )
       .subscribe((success) => {
         if (success) {
@@ -189,7 +182,7 @@ export class UserUpdateService {
         }
         return acc;
       },
-      []
+      [],
     );
 
     if (updated) {
@@ -216,7 +209,7 @@ export class UserUpdateService {
         }
         return acc;
       },
-      []
+      [],
     );
 
     if (updated) {
@@ -233,7 +226,9 @@ export class UserUpdateService {
 
     const updatedSettings = this.availableTimetableSettings.reduce(
       (acc: TimetableSettings[], setting: TimetableSettings) => {
-        const existingSetting = currentSettings.find(el => el.timetableId == setting.timetableId);
+        const existingSetting = currentSettings.find(
+          (el) => el.timetableId == setting.timetableId,
+        );
 
         // add to settings if does not exist yet
         if (!existingSetting) {
@@ -245,7 +240,7 @@ export class UserUpdateService {
         }
         return acc;
       },
-      []
+      [],
     );
 
     if (updated) {
@@ -271,7 +266,7 @@ export class UserUpdateService {
         }
         return acc;
       },
-      []
+      [],
     );
 
     if (updated) {

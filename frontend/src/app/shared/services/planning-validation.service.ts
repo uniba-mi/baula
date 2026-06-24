@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, skipWhile, take } from 'rxjs/operators';
@@ -28,6 +28,10 @@ import { Semester } from '@interfaces/semester';
   providedIn: 'root',
 })
 export class PlanningValidationService {
+  private store = inject(Store);
+  private mod = inject(ModService);
+  private analytics = inject(AnalyticsService);
+
   studyPath$: Observable<StudyPath>;
   moduleHandbook$: Observable<ModuleHandbook | undefined>;
   moduleHandbook: ModuleHandbook;
@@ -45,7 +49,7 @@ export class PlanningValidationService {
    * Course check has to be added
       ---------------------------------------*/
 
-  constructor(private store: Store, private mod: ModService, private analytics: AnalyticsService) {
+  constructor() {
     // reverse study path so the latest status of the module is returned with find method
     this.studyPath$ = this.store.select(getUserStudyPath);
     this.moduleHandbook$ = this.store.select(getModuleHandbook);
@@ -109,14 +113,14 @@ export class PlanningValidationService {
   isModuleInSemesterPlan(
     moduleAcronym: string,
     semesterPlanId: string,
-    studyPlanId: string
+    studyPlanId: string,
   ): Observable<{ alreadyContained: boolean; message: string }> {
     return this.store.select(getStudyPlans).pipe(
       take(1),
       map((studyPlans: StudyPlan[]) => {
         const studyPlan = studyPlans.find((plan) => plan._id === studyPlanId);
         const semesterPlan = studyPlan?.semesterPlans.find(
-          (plan) => plan._id === semesterPlanId
+          (plan) => plan._id === semesterPlanId,
         );
         if (semesterPlan?.modules.includes(moduleAcronym)) {
           return {
@@ -129,7 +133,7 @@ export class PlanningValidationService {
           alreadyContained: false,
           message: '',
         };
-      })
+      }),
     );
   }
 
@@ -187,14 +191,15 @@ export class PlanningValidationService {
   }
 
   /**
- * Check for module planning hints in study plan
- * @param studyPlan The active study plan to check
- */
+   * Check for module planning hints in study plan
+   * @param studyPlan The active study plan to check
+   */
   checkForModulePlanningHints(studyPlan: StudyPlan) {
-
     let hints: PlanningHints[] = [];
 
-    const allModuleAcronyms = studyPlan.semesterPlans.flatMap(sp => sp.modules);
+    const allModuleAcronyms = studyPlan.semesterPlans.flatMap(
+      (sp) => sp.modules,
+    );
     const uniqueAcronyms = Array.from(new Set(allModuleAcronyms));
 
     if (uniqueAcronyms.length === 0) {
@@ -202,57 +207,63 @@ export class PlanningValidationService {
       return;
     }
 
-    this.store.select(getUser).pipe(take(1)).subscribe(user => {
+    this.store
+      .select(getUser)
+      .pipe(take(1))
+      .subscribe((user) => {
+        if (user && user.sps && user.sps.length > 0) {
+          const spName = user.sps[0].name;
+          const startSemester = user.startSemester;
+          const fulltime = user.fulltime;
 
-      if (user && user.sps && user.sps.length > 0) {
-        const spName = user.sps[0].name;
-        const startSemester = user.startSemester;
-        const fulltime = user.fulltime;
+          if (startSemester && spName && fulltime && fulltime === true) {
+            // get full module data for planned modules
+            this.mod
+              .getFullModulesByAcronyms(uniqueAcronyms)
+              .pipe(
+                skipWhile((modules) => modules.length === 0),
+                take(1),
+              )
+              .subscribe((modules) => {
+                for (const semesterPlan of studyPlan.semesterPlans) {
+                  const semester = new Semester(semesterPlan.semester);
 
-        if (startSemester && spName && fulltime && fulltime === true) {
-
-          // get full module data for planned modules
-          this.mod
-            .getFullModulesByAcronyms(uniqueAcronyms)
-            .pipe(
-              skipWhile((modules) => modules.length === 0),
-              take(1)
-            )
-            .subscribe((modules) => {
-
-              for (const semesterPlan of studyPlan.semesterPlans) {
-                const semester = new Semester(semesterPlan.semester);
-
-                for (const moduleAcronym of semesterPlan.modules) {
-                  const module = modules.find(m => m.acronym === moduleAcronym);
-
-                  if (module) {
-
-                    // wrong semester type
-                    const wrongSemesterHint = this.checkModuleSemesterType(module, semester);
-                    if (wrongSemesterHint) {
-                      hints.push(wrongSemesterHint);
-                    }
-
-                    // differs from recTerm
-                    const recTermHint = this.checkWithRecommendedSemester(
-                      module,
-                      semesterPlan.semester,
-                      startSemester
+                  for (const moduleAcronym of semesterPlan.modules) {
+                    const module = modules.find(
+                      (m) => m.acronym === moduleAcronym,
                     );
-                    if (recTermHint) {
-                      hints.push(recTermHint);
+
+                    if (module) {
+                      // wrong semester type
+                      const wrongSemesterHint = this.checkModuleSemesterType(
+                        module,
+                        semester,
+                      );
+                      if (wrongSemesterHint) {
+                        hints.push(wrongSemesterHint);
+                      }
+
+                      // differs from recTerm
+                      const recTermHint = this.checkWithRecommendedSemester(
+                        module,
+                        semesterPlan.semester,
+                        startSemester,
+                      );
+                      if (recTermHint) {
+                        hints.push(recTermHint);
+                      }
                     }
                   }
                 }
-              }
 
-              // save all hints
-              this.store.dispatch(TimetableActions.updatePlanningHints({ hints }));
-            });
+                // save all hints
+                this.store.dispatch(
+                  TimetableActions.updatePlanningHints({ hints }),
+                );
+              });
+          }
         }
-      }
-    })
+      });
   }
 
   /**
@@ -264,11 +275,10 @@ export class PlanningValidationService {
   private checkWithRecommendedSemester(
     module: Module,
     plannedSemesterName: string,
-    startSemesterName: string
+    startSemesterName: string,
   ): PlanningHints | null {
-
     // Skip if module has no recommended term
-    if (!module.recTerm || module.recTerm === "0") {
+    if (!module.recTerm || module.recTerm === '0') {
       return null;
     }
 
@@ -277,7 +287,7 @@ export class PlanningValidationService {
     const allSemesters = startSemester.getSemesterList(20);
 
     const plannedSemesterIndex = allSemesters.findIndex(
-      sem => sem.name === plannedSemesterName
+      (sem) => sem.name === plannedSemesterName,
     );
 
     if (plannedSemesterIndex === -1) {
@@ -287,7 +297,8 @@ export class PlanningValidationService {
     const plannedSemesterNumber = plannedSemesterIndex + 1; // first sem is 1 not 0
 
     const deviation = Math.abs(plannedSemesterNumber - Number(module.recTerm));
-    if (deviation >= 2) { // hint if deviation is min. 2
+    if (deviation >= 2) {
+      // hint if deviation is min. 2
 
       return {
         type: 'warning',
@@ -308,7 +319,7 @@ export class PlanningValidationService {
    */
   private checkModuleSemesterType(
     module: Module,
-    semester: Semester
+    semester: Semester,
   ): PlanningHints | null {
     const isWinterSemester = semester.type === 'w';
     const isSummerSemester = semester.type === 's';
@@ -346,7 +357,7 @@ export class PlanningValidationService {
     mg: ModuleGroup,
     mId: string,
     mVersion: number,
-    ects: number
+    ects: number,
   ) {
     // define return object
     let returnResult = {
@@ -370,7 +381,7 @@ export class PlanningValidationService {
           mg.children[i],
           mId,
           mVersion,
-          ects
+          ects,
         );
 
         if (isAllowed.success) {
@@ -392,7 +403,7 @@ export class PlanningValidationService {
     mg: ModuleGroup,
     mId: string,
     mVersion: number,
-    ects: number
+    ects: number,
   ): ModuleGroup | null {
     if (this.isModuleContainedInModules(mId, mVersion, mg)) {
       return mg;
@@ -404,7 +415,7 @@ export class PlanningValidationService {
           mg.children[i],
           mId,
           mVersion,
-          ects
+          ects,
         );
         if (group !== null) {
           return group;
@@ -432,7 +443,7 @@ export class PlanningValidationService {
         let isInEctsRange = this.isModuleInEctsRange(
           mg.name,
           mg.modules,
-          Number(mg.ectsMax)
+          Number(mg.ectsMax),
         );
 
         if (isInEctsRange.success) {
@@ -454,7 +465,7 @@ export class PlanningValidationService {
   isModuleContainedInModules(
     mId: string,
     mVersion: number,
-    mg: ModuleGroup | undefined
+    mg: ModuleGroup | undefined,
   ): boolean {
     let isContained = false;
     if (mg) {
@@ -542,17 +553,17 @@ export class PlanningValidationService {
           map((path) =>
             path.completedModules.reduce(
               (acc: any, val: any) => acc.concat(val),
-              []
-            )
-          )
+              [],
+            ),
+          ),
         )
         //  filter for modules where acronym matches
         .pipe(
           map((modules) =>
             modules.filter(
-              (module: PathModule) => module.acronym === moduleAcronym
-            )
-          )
+              (module: PathModule) => module.acronym === moduleAcronym,
+            ),
+          ),
         )
         // select return status of first item in array
         .pipe(
@@ -562,7 +573,7 @@ export class PlanningValidationService {
             } else {
               return undefined;
             }
-          })
+          }),
         )
     );
   }
@@ -580,12 +591,11 @@ export class PlanningValidationService {
     plannedCourses: PlanCourse[],
     studyPlanModules: string[],
     events: EventInput[],
-    teachingPeriod: AcademicDate
+    teachingPeriod: AcademicDate,
   ) {
-
     let hints: PlanningHints[] = this.createOverlapsHints(
       events,
-      teachingPeriod
+      teachingPeriod,
     ); // set variable for storing hints
 
     // tracking overlap hints
@@ -595,7 +605,7 @@ export class PlanningValidationService {
       const collisionCount = collisions.length;
       const collisionDetails = collisions.map((collision) => {
         const courseNames = collision.courses
-          .map(course => course ? course.name : 'Unknown')
+          .map((course) => (course ? course.name : 'Unknown'))
           .join(' & ');
         return courseNames;
       });
@@ -619,29 +629,29 @@ export class PlanningValidationService {
     const moduleContributions = plannedCourses.map((el) => el.contributeTo);
     // combine all module acronyms from study plan and from planned courses
     const modulesAsString = Array.from(
-      new Set(moduleContributions.concat(studyPlanModules))
+      new Set(moduleContributions.concat(studyPlanModules)),
     );
     this.mod
       .getFullModulesByAcronyms(modulesAsString)
       .pipe(skipWhile((modules) => modules.length == 0))
       .subscribe((modules) => {
         const modulesForStudyPlanCheck = modules.filter((mod) =>
-          studyPlanModules.includes(mod.acronym)
+          studyPlanModules.includes(mod.acronym),
         );
         const modulesForContributedModuleCheck = modules.filter((mod) =>
-          moduleContributions.includes(mod.acronym)
+          moduleContributions.includes(mod.acronym),
         );
         hints = hints.concat(
           this.checkForMissingCoursesOfStudyPlan(
             moduleContributions,
-            modulesForStudyPlanCheck
-          )
+            modulesForStudyPlanCheck,
+          ),
         );
         hints = hints.concat(
           this.checkForMissingCoursesOfPlannedModules(
             plannedCourses,
-            modulesForContributedModuleCheck
-          )
+            modulesForContributedModuleCheck,
+          ),
         );
 
         this.store.dispatch(TimetableActions.updatePlanningHints({ hints }));
@@ -662,11 +672,11 @@ export class PlanningValidationService {
   // identifies modules that are not adressed in current timetable -> gets only modules, that are in study plan
   private checkForMissingCoursesOfStudyPlan(
     moduleContributions: string[],
-    modules: Module[]
+    modules: Module[],
   ): PlanningHints[] {
     if (modules.length !== 0) {
       const notAdressedModules = modules.filter(
-        (mod) => !moduleContributions.includes(mod.acronym)
+        (mod) => !moduleContributions.includes(mod.acronym),
       );
       let hints: PlanningHints[] = [];
       // check for each module, if all needed courses are planned
@@ -688,10 +698,10 @@ export class PlanningValidationService {
   // checks if courses are missing to fully fulfill modulecourses -> gets modules that are contributet by the currently planned courses
   private checkForMissingCoursesOfPlannedModules(
     plannedCourses: PlanCourse[],
-    modules: Module[]
+    modules: Module[],
   ): PlanningHints[] {
     const courseContributions = plannedCourses.map(
-      (course) => course.contributeAs
+      (course) => course.contributeAs,
     );
     let hints: PlanningHints[] = [];
     // check for each module, if all needed courses are planned
@@ -718,7 +728,7 @@ export class PlanningValidationService {
   // checks if course is contributing to a module course that allready is adressed by another course
   isCoursePlannable(course: Course, plannedCourses: PlanCourse[]): boolean {
     const moduleCourseContributions = plannedCourses.map(
-      (el) => el.contributeAs
+      (el) => el.contributeAs,
     );
     if (course.mCourses) {
       for (let mCourse of course.mCourses) {
@@ -736,7 +746,7 @@ export class PlanningValidationService {
   // main function to detect overlapses
   private detectEventOverlaps(
     events: EventInput[],
-    teachingPeriod: AcademicDate
+    teachingPeriod: AcademicDate,
   ): { pair: string; count: number; courses: (Course | undefined)[] }[] {
     // set range to lecture time
     const rangeStart = new Date(teachingPeriod.startdate);
@@ -749,7 +759,7 @@ export class PlanningValidationService {
     const expandedEvents = this.expandRecurringEvents(
       filteredEvents,
       rangeStart,
-      rangeEnd
+      rangeEnd,
     );
 
     // check for collisions
@@ -759,7 +769,7 @@ export class PlanningValidationService {
 
   private createOverlapsHints(
     events: EventInput[],
-    teachingPeriod: AcademicDate
+    teachingPeriod: AcademicDate,
   ): PlanningHints[] {
     let collisions = this.detectEventOverlaps(events, teachingPeriod);
     let hints: PlanningHints[] = [];
@@ -778,7 +788,7 @@ export class PlanningValidationService {
             (collision.count == 1
               ? 'einem Termin!'
               : `${collision.count} Terminen!`),
-          courses: [course1, course2]
+          courses: [course1, course2],
         });
       }
     }
@@ -791,7 +801,7 @@ export class PlanningValidationService {
   private expandRecurringEvents(
     events: any[],
     rangeStart: Date,
-    rangeEnd: Date
+    rangeEnd: Date,
   ): CollidingEvent[] {
     const expandedEvents: CollidingEvent[] = [];
     events.forEach((event) => {
@@ -813,16 +823,16 @@ export class PlanningValidationService {
               start.getMonth() + 1,
               start.getDate(),
               start.getHours() - 2,
-              start.getMinutes()
+              start.getMinutes(),
             ),
             until: datetime(
               end.getFullYear(),
               end.getMonth() + 1,
               end.getDate(),
               end.getHours(),
-              end.getMinutes()
+              end.getMinutes(),
             ),
-          })
+          }),
         );
 
         // define exclusion dates
@@ -849,16 +859,16 @@ export class PlanningValidationService {
               d.getUTCMonth(),
               d.getUTCDate(),
               d.getUTCHours() + 2,
-              d.getUTCMinutes()
-            )
+              d.getUTCMinutes(),
+            ),
         );
 
         // check if dates occure while exlusion times
         const filteredDates = dates.filter(
           (date) =>
             !exclusiondates.some(
-              (exDate) => exDate.getTime() === date.getTime()
-            )
+              (exDate) => exDate.getTime() === date.getTime(),
+            ),
         );
 
         // convert each date into collision date
@@ -881,14 +891,14 @@ export class PlanningValidationService {
             start.getMonth() + 1,
             start.getDate(),
             start.getHours() - 1,
-            start.getMinutes()
+            start.getMinutes(),
           ),
           end: datetime(
             end.getFullYear(),
             end.getMonth() + 1,
             end.getDate(),
             end.getHours() - 1,
-            end.getMinutes()
+            end.getMinutes(),
           ),
           course: event.extendedProps.course,
         });
@@ -905,13 +915,13 @@ export class PlanningValidationService {
 
   // collision detection -> inspired by ChatGPT
   private findCollidingEvents(
-    events: CollidingEvent[]
+    events: CollidingEvent[],
   ): { pair: string; count: number; courses: (Course | undefined)[] }[] {
     const collisions: [CollidingEvent, CollidingEvent][] = [];
 
     // sort events by starting time
     const sortedEvents = events.sort(
-      (a, b) => a.start.getTime() - b.start.getTime()
+      (a, b) => a.start.getTime() - b.start.getTime(),
     );
 
     // compare each event with next event and check for collision
@@ -955,10 +965,10 @@ export class PlanningValidationService {
     return Object.entries(groupedCollisions).map(([pair, count]) => {
       let courseIds = pair.split('&');
       const course1 = events.find(
-        (el) => el.course?.id === courseIds[0]
+        (el) => el.course?.id === courseIds[0],
       )?.course;
       const course2 = events.find(
-        (el) => el.course?.id === courseIds[1]
+        (el) => el.course?.id === courseIds[1],
       )?.course;
       return {
         pair,

@@ -1,5 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
 import { PathModule } from '@interfaces/study-path';
@@ -11,9 +16,12 @@ import { ExtendedModuleGroup } from '@interfaces/module-group';
   selector: 'app-edit-path-module-dialog',
   templateUrl: './edit-path-module-dialog.component.html',
   styleUrls: ['./edit-path-module-dialog.component.scss'],
-  standalone: false
+  standalone: false,
 })
 export class EditPathModuleDialogComponent implements OnInit {
+  private store = inject(Store);
+  private fb = inject(FormBuilder);
+
   @Input() pathModule: PathModule;
   pathModuleForm: FormGroup;
   gradeControl: FormControl;
@@ -21,10 +29,7 @@ export class EditPathModuleDialogComponent implements OnInit {
   showNoGradeHint: boolean = false;
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
 
-  constructor(private store: Store, private fb: FormBuilder) { }
-
   ngOnInit(): void {
-
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);
     this.initializeForm();
   }
@@ -35,16 +40,18 @@ export class EditPathModuleDialogComponent implements OnInit {
       acronym: [this.pathModule?.acronym || '', Validators.required],
       name: [this.pathModule?.name || '', Validators.required],
       status: [this.pathModule?.status || 'open', Validators.required],
-      ects: [this.pathModule?.ects || '', [
-        Validators.required,
-        Validators.min(1),
-        Validators.max(30),
-      ]],
-      grade: [this.pathModule?.grade ? this.pathModule.grade.toString() : '', [
-        Validators.min(1),
-        Validators.max(5),
-        Validators.pattern(/^[1-5]((\.|,)[0-9])?$/),
-      ]],
+      ects: [
+        this.pathModule?.ects || '',
+        [Validators.required, Validators.min(1), Validators.max(30)],
+      ],
+      grade: [
+        this.pathModule?.grade ? this.pathModule.grade.toString() : '',
+        [
+          Validators.min(1),
+          Validators.max(5),
+          Validators.pattern(/^[1-5]((\.|,)[0-9])?$/),
+        ],
+      ],
       mgId: [this.pathModule?.mgId || ''],
     });
 
@@ -53,8 +60,8 @@ export class EditPathModuleDialogComponent implements OnInit {
     }
 
     this.gradeControl = this.pathModuleForm.get('grade') as FormControl;
-    this.gradeControl.valueChanges.subscribe(value => {
-      if(value) {
+    this.gradeControl.valueChanges.subscribe((value) => {
+      if (value) {
         this.reformatAndValidateInput(value);
       }
     });
@@ -65,7 +72,7 @@ export class EditPathModuleDialogComponent implements OnInit {
   private setupStatusChanges(formGroup: FormGroup): void {
     const statusControl = formGroup.get('status') as FormControl;
 
-    statusControl.valueChanges.subscribe(status => {
+    statusControl.valueChanges.subscribe((status) => {
       this.showNoEditHint = false;
       this.showNoGradeHint = false;
 
@@ -76,12 +83,18 @@ export class EditPathModuleDialogComponent implements OnInit {
           this.showNoGradeHint = true;
           break;
         case 'passed':
-          this.gradeControl.setValidators([Validators.min(1), Validators.max(4)]);
+          this.gradeControl.setValidators([
+            Validators.min(1),
+            Validators.max(4),
+          ]);
           this.gradeControl.enable();
           break;
         case 'failed':
           this.gradeControl.setValue('5');
-          this.gradeControl.setValidators([Validators.min(5), Validators.max(5)]);
+          this.gradeControl.setValidators([
+            Validators.min(5),
+            Validators.max(5),
+          ]);
           this.gradeControl.disable();
           this.showNoEditHint = true;
           break;

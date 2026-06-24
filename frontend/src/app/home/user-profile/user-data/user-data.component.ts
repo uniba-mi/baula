@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User } from '../../../../../../interfaces/user';
@@ -11,15 +11,13 @@ import { FlexnowService } from 'src/app/shared/services/flex-now.service';
   selector: 'app-user-data',
   templateUrl: './user-data.component.html',
   styleUrl: './user-data.component.scss',
-  standalone: false
+  standalone: false,
 })
 export class UserDataComponent implements OnInit {
-  user$: Observable<User>;
+  private store = inject(Store);
+  private flexnowService = inject(FlexnowService);
 
-  constructor(
-    private store: Store,
-    private flexnowService: FlexnowService
-  ) { }
+  user$: Observable<User>;
 
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);
@@ -27,11 +25,13 @@ export class UserDataComponent implements OnInit {
 
   updateUserData(user: User) {
     // reset search settings to prevent filter issues
-    this.store.dispatch(SearchActions.resetSearchSettings({ context: 'module-overview' }));
+    this.store.dispatch(
+      SearchActions.resetSearchSettings({ context: 'module-overview' }),
+    );
     this.store.dispatch(UserActions.updateUser({ user }));
   }
 
   importFlexNowMetadata() {
-    this.flexnowService.triggerFlexNowDataLoading('update-metadata')
+    this.flexnowService.triggerFlexNowDataLoading('update-metadata');
   }
 }

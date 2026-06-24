@@ -1,10 +1,20 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, map, of, switchMap } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { ModService } from 'src/app/shared/services/module.service';
 import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
 import { Store, select } from '@ngrx/store';
 import { getNewModules } from 'src/app/selectors/module-overview.selectors';
-import { getFavouriteModuleAcronyms, getExcludedModulesAcronyms } from 'src/app/selectors/user.selectors';
+import {
+  getFavouriteModuleAcronyms,
+  getExcludedModulesAcronyms,
+} from 'src/app/selectors/user.selectors';
 import { RecsRestService } from './recs-rest.service';
 import { RecsHelperService } from './recs-helper.service';
 import { Module } from '@interfaces/module';
@@ -13,9 +23,14 @@ import { Topic } from '@interfaces/topic';
 import { ExtendedJob } from '@interfaces/job';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RecsTabService {
+  private store = inject(Store);
+  private modService = inject(ModService);
+  private recsService = inject(RecsRestService);
+  private recsHelperService = inject(RecsHelperService);
+  private fuseSearchService = inject(FuseSearchService);
 
   // search and filter state
   private searchTerm$ = new BehaviorSubject<string>('');
@@ -27,46 +42,49 @@ export class RecsTabService {
   private hideTakenAndPassedSubject = new BehaviorSubject<boolean>(false);
   hideTakenAndPassed$ = this.hideTakenAndPassedSubject.asObservable();
 
-  constructor(
-    private store: Store,
-    private modService: ModService,
-    private recsService: RecsRestService,
-    private recsHelperService: RecsHelperService,
-    private fuseSearchService: FuseSearchService
-  ) {
+  constructor() {
     // initialise excluded modules
-    this.store.select(getExcludedModulesAcronyms).subscribe(modules => {
+    this.store.select(getExcludedModulesAcronyms).subscribe((modules) => {
       this.excludedModules$.next(modules);
     });
   }
 
   initializeNewModules(): Observable<Module[]> {
-    return this.store.select(getNewModules).pipe(
-      switchMap(modules => this.applyFiltersAndSearch(modules))
-    );
+    return this.store
+      .select(getNewModules)
+      .pipe(switchMap((modules) => this.applyFiltersAndSearch(modules)));
   }
 
   initializeSerendipitousModules(spId: string): Observable<Module[]> {
-    return this.recsHelperService.getSerendipitousModules(spId).pipe(
-      switchMap(modules => this.applyFiltersAndSearch(modules))
-    );
+    return this.recsHelperService
+      .getSerendipitousModules(spId)
+      .pipe(switchMap((modules) => this.applyFiltersAndSearch(modules)));
   }
 
-  initializePersonalModules(allTopics$: Observable<Topic[] | undefined>, allJobs$: Observable<ExtendedJob[] | undefined>): Observable<ModuleWithMetadata[]> {
+  initializePersonalModules(
+    allTopics$: Observable<Topic[] | undefined>,
+    allJobs$: Observable<ExtendedJob[] | undefined>,
+  ): Observable<ModuleWithMetadata[]> {
     return combineLatest([
       this.recsService.getPersonalRecommendations().pipe(
-        map(recommendations => recommendations[0]?.recommendedMods || []),
-        map(modules => modules.map(module => ({
-          acronym: module.acronym,
-          frequency: module.source.filter((s: any) => !s.type?.includes('feedback')).length,
-          source: module.source,
-        }))),
-        switchMap(modules => {
-          const acronyms = modules.map(m => m.acronym);
+        map((recommendations) => recommendations[0]?.recommendedMods || []),
+        map((modules) =>
+          modules.map((module) => ({
+            acronym: module.acronym,
+            frequency: module.source.filter(
+              (s: any) => !s.type?.includes('feedback'),
+            ).length,
+            source: module.source,
+          })),
+        ),
+        switchMap((modules) => {
+          const acronyms = modules.map((m) => m.acronym);
           return this.modService.getFullModulesByAcronyms(acronyms).pipe(
-            map(fullModules => {
-              const modulesWithMetadata = fullModules.map(fullModule => {
-                const rec = modules.find(r => r.acronym === fullModule.acronym);
+            map((fullModules) => {
+              const modulesWithMetadata = fullModules.map((fullModule) => {
+                const rec = modules.find(
+                  (r) => r.acronym === fullModule.acronym,
+                );
                 return {
                   ...fullModule,
                   metadata: {
@@ -77,7 +95,6 @@ export class RecsTabService {
               });
 
               const sorted = modulesWithMetadata.sort((a, b) => {
-
                 const freqDiff = b.metadata!.frequency - a.metadata!.frequency;
                 if (freqDiff !== 0) return freqDiff;
 
@@ -86,23 +103,30 @@ export class RecsTabService {
               });
 
               return sorted;
-            })
+            }),
           );
-        })
+        }),
       ),
       allTopics$ || of([]),
-      allJobs$ || of([])
+      allJobs$ || of([]),
     ]).pipe(
       map(([modules]) => modules),
-      switchMap(modules => this.applyFiltersAndSearch(modules as unknown as Module[]) as unknown as Observable<ModuleWithMetadata[]>)
+      switchMap(
+        (modules) =>
+          this.applyFiltersAndSearch(
+            modules as unknown as Module[],
+          ) as unknown as Observable<ModuleWithMetadata[]>,
+      ),
     );
   }
 
   initializeFavoriteModules(): Observable<Module[]> {
     return this.store.pipe(
       select(getFavouriteModuleAcronyms),
-      switchMap(acronyms => this.modService.getFullModulesByAcronyms(acronyms)),
-      switchMap(modules => this.applyFiltersAndSearch(modules))
+      switchMap((acronyms) =>
+        this.modService.getFullModulesByAcronyms(acronyms),
+      ),
+      switchMap((modules) => this.applyFiltersAndSearch(modules)),
     );
   }
 
@@ -135,28 +159,38 @@ export class RecsTabService {
       this.excludedModules$,
       this.hideTakenAndPassedSubject,
     ]).pipe(
-      map(([modules, searchTerm, filters, passedModules, excludedModules, hideTakenAndPassed]) => {
-        // filter out passed modules, excluded modules, and thesis modules
-        let filteredModules = modules.filter(module =>
-          !excludedModules.includes(module.acronym) &&
-          !this.recsHelperService.isThesis(module.name) &&
-          (!hideTakenAndPassed || !passedModules.includes(module.acronym))
-        );
-
-        if (searchTerm.trim() !== '') {
-          filteredModules = this.fuseSearchService.search(
-            filteredModules,
-            searchTerm,
-            ['name', 'acronym']
+      map(
+        ([
+          modules,
+          searchTerm,
+          filters,
+          passedModules,
+          excludedModules,
+          hideTakenAndPassed,
+        ]) => {
+          // filter out passed modules, excluded modules, and thesis modules
+          let filteredModules = modules.filter(
+            (module) =>
+              !excludedModules.includes(module.acronym) &&
+              !this.recsHelperService.isThesis(module.name) &&
+              (!hideTakenAndPassed || !passedModules.includes(module.acronym)),
           );
-        }
 
-        if (filters.length > 0) {
-          filteredModules = this.applyFilters(filteredModules, filters);
-        }
+          if (searchTerm.trim() !== '') {
+            filteredModules = this.fuseSearchService.search(
+              filteredModules,
+              searchTerm,
+              ['name', 'acronym'],
+            );
+          }
 
-        return filteredModules;
-      })
+          if (filters.length > 0) {
+            filteredModules = this.applyFilters(filteredModules, filters);
+          }
+
+          return filteredModules;
+        },
+      ),
     );
   }
 
@@ -167,7 +201,6 @@ export class RecsTabService {
   private applyFilters(modules: Module[], filters: any[]): Module[] {
     return modules.filter((module: Module | ModuleWithMetadata) => {
       return filters.every((filter) => {
-
         // skip hideTakenPassed
         if (filter.key === 'hideTakenPassed') {
           return true;
@@ -178,11 +211,12 @@ export class RecsTabService {
             const filterValueToSourceTypeMap: { [key: string]: string } = {
               Jobs: 'job',
               Interesse: 'topic',
-              Feedback: 'feedback_similarmods'
+              Feedback: 'feedback_similarmods',
             };
-            const mappedSourceType = filterValueToSourceTypeMap[filter.value as string];
+            const mappedSourceType =
+              filterValueToSourceTypeMap[filter.value as string];
             return (module as ModuleWithMetadata).metadata!.source.some(
-              (source: { type: string; }) => source.type === mappedSourceType
+              (source: { type: string }) => source.type === mappedSourceType,
             );
           }
           return false;

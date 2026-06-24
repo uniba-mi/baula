@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { ModuleHandbook } from '@interfaces/module-handbook';
 import { ModService } from 'src/app/shared/services/module.service';
 import { RestService } from 'src/app/rest.service';
@@ -11,17 +11,20 @@ import { take } from 'rxjs';
   styleUrl: './update-mhb-dialog.component.scss',
 })
 export class UpdateMhbDialogComponent implements OnInit {
+  private modService = inject(ModService);
+  private rest = inject(RestService);
+
   @Input() currentMhb: ModuleHandbook;
   changeLog: string;
   upToDateMhb: ModuleHandbook;
 
-  constructor(private modService: ModService, private rest: RestService) {}
-
   ngOnInit(): void {
-    this.rest.getUpToDateModulehandbook(this.currentMhb.mhbId).pipe(take(1)).subscribe(mhb => {
-      this.upToDateMhb = mhb;
-      this.changeLog = this.modService.compareMhbs(this.currentMhb, mhb)
-    })
+    this.rest
+      .getUpToDateModulehandbook(this.currentMhb.mhbId)
+      .pipe(take(1))
+      .subscribe((mhb) => {
+        this.upToDateMhb = mhb;
+        this.changeLog = this.modService.compareMhbs(this.currentMhb, mhb);
+      });
   }
-
 }

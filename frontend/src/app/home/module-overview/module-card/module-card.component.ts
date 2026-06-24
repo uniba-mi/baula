@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
@@ -17,6 +17,10 @@ import { AnalyticsService } from 'src/app/shared/services/analytics.service';
   standalone: false,
 })
 export class ModuleCardComponent implements OnInit {
+  private store = inject<Store<State>>(Store);
+  private modService = inject(ModService);
+  private analytics = inject(AnalyticsService);
+
   @Input() module: Module;
   @Input() structure: ExtendedModuleGroup[] | null;
   studyPath$: Observable<StudyPath>;
@@ -24,12 +28,6 @@ export class ModuleCardComponent implements OnInit {
   openedFromModuleOffer: boolean;
   modType: string = 'notPath';
   path: string;
-
-  constructor(
-    private store: Store<State>,
-    private modService: ModService,
-    private analytics: AnalyticsService,
-  ) {}
 
   ngOnInit(): void {
     this.studyPath$ = this.store.select(getUserStudyPath);

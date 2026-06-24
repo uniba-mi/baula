@@ -1,4 +1,4 @@
-import { ErrorHandler, Inject, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, inject } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
@@ -32,7 +32,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import {
+  BaseChartDirective,
+  provideCharts,
+  withDefaultRegisterables,
+} from 'ng2-charts';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -49,7 +53,7 @@ import { UserEffects } from './effects/user.effects';
 import * as fromModuleOverview from './reducers/module-overview.reducer';
 import * as fromDialog from './reducers/dialog.reducer';
 import * as fromSearchSettings from './reducers/search-settings.reducer';
-import * as fromEvaluation from './reducers/evaluation.reducer'
+import * as fromEvaluation from './reducers/evaluation.reducer';
 import { ModuleOverviewEffects } from './effects/module-overview.effects';
 import { environment } from '../environments/environment';
 import * as fromStudyPlanning from './reducers/study-planning.reducers';
@@ -165,14 +169,14 @@ import { PersonalisationStatusComponent } from './home/dashboard/personalisation
 import { WordCloudComponent } from './shared/components/word-cloud/word-cloud.component';
 import { DataPreviewComponent } from './home/recommendation/data-preview/data-preview.component';
 import { SettingsListComponent } from './home/recommendation/settings-list/settings-list.component';
-import { HintsSidenavComponent } from './shared/components/hints-sidenav/hints-sidenav.component';import { NotFoundComponent } from './public/not-found/not-found.component';
+import { HintsSidenavComponent } from './shared/components/hints-sidenav/hints-sidenav.component';
+import { NotFoundComponent } from './public/not-found/not-found.component';
 import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluation-dialog/evaluation-dialog.component';
 import { UploadStudentDataConfirmationComponent } from './modules/student-upload/dialogs/upload-student-data-confirmation/upload-student-data-confirmation.component';
 import { UpdateMhbDialogComponent } from './dialog/update-mhb-dialog/update-mhb-dialog.component';
 import { ChangeModuleGroupComponent } from './shared/components/change-module-group/change-module-group.component';
 import { DebugDialogComponent } from './shared/components/debug-dialog/debug-dialog.component';
 import { ManageStatusComponent } from './dialog/module-details-dialog/manage-status/manage-status.component';
-
 
 @NgModule({
   declarations: [
@@ -288,7 +292,7 @@ import { ManageStatusComponent } from './dialog/module-details-dialog/manage-sta
     UpdateMhbDialogComponent,
     ChangeModuleGroupComponent,
     DebugDialogComponent,
-    ManageStatusComponent
+    ManageStatusComponent,
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -322,20 +326,20 @@ import { ManageStatusComponent } from './dialog/module-details-dialog/manage-sta
     ]),
     StoreModule.forFeature(
       fromModuleOverview.moduleOverviewFeatureKey,
-      fromModuleOverview.reducer
+      fromModuleOverview.reducer,
     ),
     StoreModule.forFeature(fromDialog.dialogFeatureKey, fromDialog.reducer),
     StoreModule.forFeature(
       fromStudyPlanning.studyPlanningFeatureKey,
-      fromStudyPlanning.reducer
+      fromStudyPlanning.reducer,
     ),
     StoreModule.forFeature(
       fromSearchSettings.searchSettingsFeatureKey,
-      fromSearchSettings.reducer
+      fromSearchSettings.reducer,
     ),
     StoreModule.forFeature(
       fromEvaluation.evaluationFeatureKey,
-      fromEvaluation.reducer
+      fromEvaluation.reducer,
     ),
     MatExpansionModule,
     MatSnackBarModule,
@@ -377,7 +381,7 @@ import { ManageStatusComponent } from './dialog/module-details-dialog/manage-sta
   ],
 })
 export class AppModule {
-  constructor(@Inject(LOCALE_ID) locale: string) {
+  constructor() {
     registerLocaleData(localeDe);
   }
 }

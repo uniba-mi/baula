@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { ItemActionName, MetaSemester } from '@interfaces/semester-plan';
 import { StudyPath } from '@interfaces/study-path';
-import { getUserStudyPath, isModuleInStudyPath } from 'src/app/selectors/user.selectors';
+import {
+  getUserStudyPath,
+  isModuleInStudyPath,
+} from 'src/app/selectors/user.selectors';
 import { map, Observable, of, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
@@ -21,8 +24,10 @@ interface ActionConfig {
   styleUrl: './semester-card.component.scss',
   standalone: false,
 })
-
 export class SemesterCardComponent {
+  private store = inject(Store);
+  private snackbarService = inject(SnackbarService);
+
   @Input() metaSemester: MetaSemester;
   @Input() moduleData: any;
   @Input() moduleType: 'module' | 'userGeneratedModule' | 'pathModule';
@@ -31,7 +36,10 @@ export class SemesterCardComponent {
   @Input() availableActions: ItemActionName[] = []; // available for card type
   @Input() mgId: string;
 
-  @Output() actionTriggered = new EventEmitter<{ action: ItemActionName, data: any }>();
+  @Output() actionTriggered = new EventEmitter<{
+    action: ItemActionName;
+    data: any;
+  }>();
 
   openedWithSemesterSet: boolean = true;
   studyPath$: Observable<StudyPath>;
@@ -40,31 +48,41 @@ export class SemesterCardComponent {
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
 
   actionConfig: Record<ItemActionName, ActionConfig> = {
-    'feedback': { icon: 'bi-chat-dots', text: 'Feedback', showInMenu: true },
-    'edit': { icon: 'bi-pencil', text: 'Bearbeiten', showInMenu: true },
-    'delete': { icon: 'bi-trash3', text: 'Löschen', showInMenu: true },
-    'changeMG': { icon: 'bi-pencil', text: 'Modulgruppe bearbeiten', showInMenu: false },
-    'editGrade': { icon: 'bi-pencil', text: 'Note bearbeiten', showInMenu: false },
-    'select': { icon: 'bi-cursor', text: 'Auswählen', showInMenu: false },
-    'drag': { icon: 'bi-arrows-move', text: 'Verschieben', showInMenu: false },
-    'moveToSem': { icon: 'bi-arrows-move', text: 'Verschieben', showInMenu: true }
+    feedback: { icon: 'bi-chat-dots', text: 'Feedback', showInMenu: true },
+    edit: { icon: 'bi-pencil', text: 'Bearbeiten', showInMenu: true },
+    delete: { icon: 'bi-trash3', text: 'Löschen', showInMenu: true },
+    changeMG: {
+      icon: 'bi-pencil',
+      text: 'Modulgruppe bearbeiten',
+      showInMenu: false,
+    },
+    editGrade: {
+      icon: 'bi-pencil',
+      text: 'Note bearbeiten',
+      showInMenu: false,
+    },
+    select: { icon: 'bi-cursor', text: 'Auswählen', showInMenu: false },
+    drag: { icon: 'bi-arrows-move', text: 'Verschieben', showInMenu: false },
+    moveToSem: {
+      icon: 'bi-arrows-move',
+      text: 'Verschieben',
+      showInMenu: true,
+    },
   };
-
-  constructor(
-    private store: Store,
-    private snackbarService: SnackbarService
-  ) { }
 
   ngOnInit() {
     this.studyPath$ = this.store.select(getUserStudyPath);
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);
     // for conditional displayal of feedback
-    this.moduleInStudyPath$ = this.store.select(isModuleInStudyPath(this.moduleData.acronym));
+    this.moduleInStudyPath$ = this.store.select(
+      isModuleInStudyPath(this.moduleData.acronym),
+    );
   }
 
   canDrag(): boolean {
     const isOldModule = this.moduleType === 'module' && this.moduleData?.isOld;
-    const canDragResult = this.availableActions.includes('drag') &&
+    const canDragResult =
+      this.availableActions.includes('drag') &&
       !this.isSmallScreen &&
       this.moduleType !== 'pathModule' &&
       !isOldModule &&
@@ -86,14 +104,14 @@ export class SemesterCardComponent {
       return of(null);
     }
     return this.structuredModuleGroups$.pipe(
-      map(groups => {
-        const group = groups.find(g => g.mgId === mgId);
+      map((groups) => {
+        const group = groups.find((g) => g.mgId === mgId);
         if (group) {
           return group.path;
         } else {
           return null;
         }
-      })
+      }),
     );
   }
 
@@ -109,20 +127,27 @@ export class SemesterCardComponent {
 
     this.actionTriggered.emit({
       action: action,
-      data: data || this.moduleData
+      data: data || this.moduleData,
     });
   }
 
   // actions for context menu
   get menuActions(): ItemActionName[] {
-    return this.availableActions.filter(action => this.actionConfig[action].showInMenu);
+    return this.availableActions.filter(
+      (action) => this.actionConfig[action].showInMenu,
+    );
   }
 
   // make sure hint is displayed to users if they drag an old module
   onDragAttempt(event: Event): void {
-    if (this.moduleType === 'module' && this.moduleData?.isOld && this.availableActions.includes('drag')) {
+    if (
+      this.moduleType === 'module' &&
+      this.moduleData?.isOld &&
+      this.availableActions.includes('drag')
+    ) {
       this.snackbarService.openSnackBar({
-        message: 'Dieses Modul ist nicht mehr in der aktuellen Version vorhanden und kann nicht verschoben oder angesehen werden. Wenn du es entfernen möchtest, kannst du es löschen oder stattdessen einen Platzhalter anlegen.',
+        message:
+          'Dieses Modul ist nicht mehr in der aktuellen Version vorhanden und kann nicht verschoben oder angesehen werden. Wenn du es entfernen möchtest, kannst du es löschen oder stattdessen einen Platzhalter anlegen.',
         type: AlertType.DANGER,
       });
     }
@@ -138,7 +163,7 @@ export class SemesterCardComponent {
     }
 
     let moduleInStudyPath = false;
-    this.moduleInStudyPath$.pipe(take(1)).subscribe(inPath => {
+    this.moduleInStudyPath$.pipe(take(1)).subscribe((inPath) => {
       moduleInStudyPath = inPath;
     });
 
@@ -146,17 +171,26 @@ export class SemesterCardComponent {
       case 'feedback':
         return (
           ((this.moduleType === 'module' && !this.moduleData.isOld) ||
-            (this.moduleType === 'pathModule' && !this.moduleData.isUserGenerated)) &&
+            (this.moduleType === 'pathModule' &&
+              !this.moduleData.isUserGenerated)) &&
           moduleInStudyPath
         );
       case 'edit':
-        return this.moduleType === 'userGeneratedModule' ||
-          (this.moduleType === 'pathModule' && this.moduleData.isUserGenerated);
+        return (
+          this.moduleType === 'userGeneratedModule' ||
+          (this.moduleType === 'pathModule' && this.moduleData.isUserGenerated)
+        );
       case 'select':
       case 'drag':
-        return this.moduleType === 'module' && !('isOld' in this.moduleData && this.moduleData.isOld);
+        return (
+          this.moduleType === 'module' &&
+          !('isOld' in this.moduleData && this.moduleData.isOld)
+        );
       case 'moveToSem':
-        return this.moduleType !== 'pathModule' && !('isOld' in this.moduleData && this.moduleData.isOld);
+        return (
+          this.moduleType !== 'pathModule' &&
+          !('isOld' in this.moduleData && this.moduleData.isOld)
+        );
       default:
         return true;
     }

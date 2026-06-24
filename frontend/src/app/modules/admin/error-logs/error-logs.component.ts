@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
 import { Logmessage } from '../../../../../../interfaces/logs';
 import { Observable } from 'rxjs';
@@ -7,10 +7,11 @@ import { Observable } from 'rxjs';
   selector: 'admin-error-logs',
   templateUrl: './error-logs.component.html',
   styleUrl: './error-logs.component.scss',
-  standalone: false
+  standalone: false,
 })
 export class ErrorLogsComponent implements OnInit {
-  constructor(private rest: AdminRestService) { }
+  private rest = inject(AdminRestService);
+
   errorLogs$: Observable<Logmessage[]>;
 
   ngOnInit(): void {

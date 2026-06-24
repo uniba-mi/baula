@@ -8,6 +8,7 @@ import {
   ViewChild,
   HostListener,
   ElementRef,
+  inject,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
@@ -22,12 +23,16 @@ import { Semester } from '../../../../../../interfaces/semester';
 import { getPlanCourses } from 'src/app/selectors/study-planning.selectors';
 
 @Component({
-    selector: 'app-course-list',
-    templateUrl: './course-list.component.html',
-    styleUrls: ['./course-list.component.scss'],
-    standalone: false
+  selector: 'app-course-list',
+  templateUrl: './course-list.component.html',
+  styleUrls: ['./course-list.component.scss'],
+  standalone: false,
 })
 export class CourseListComponent implements OnInit, OnChanges {
+  private fuseSearch = inject(FuseSearchService);
+  private store = inject(Store);
+  private screenSizeService = inject(ScreenSizeService);
+
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('bulkActionsBar') bulkActionsBar: ElementRef;
   @Input() courses: Course[];
@@ -45,8 +50,6 @@ export class CourseListComponent implements OnInit, OnChanges {
   screenIsXXL = false;
   activePlanCourses$: Observable<PlanCourse[]>;
 
-  constructor(private fuseSearch: FuseSearchService, private store: Store, private screenSizeService: ScreenSizeService) { }
-
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.setStickyBarWidth();
@@ -57,18 +60,20 @@ export class CourseListComponent implements OnInit, OnChanges {
     this.searchResult = this.searchCourses(
       this.courses,
       this.searchSettings?.term,
-      this.searchSettings?.searchIn
+      this.searchSettings?.searchIn,
     );
-    this.viewResult = this.searchResult.slice(0, this.pageSize)
+    this.viewResult = this.searchResult.slice(0, this.pageSize);
     //this.notify.emit();
 
     // observe sidenav width for css adjustments
-    this.screenSizeService.isSidenavFullScreen$.pipe(take(1)).subscribe(isFullScreen => {
-      this.isSidenavFullScreen = isFullScreen;
-    });
+    this.screenSizeService.isSidenavFullScreen$
+      .pipe(take(1))
+      .subscribe((isFullScreen) => {
+        this.isSidenavFullScreen = isFullScreen;
+      });
 
     // observe screensize for css adjustments
-    this.screenSizeService.isXXLScreen$.pipe(take(1)).subscribe(isXXL => {
+    this.screenSizeService.isXXLScreen$.pipe(take(1)).subscribe((isXXL) => {
       this.screenIsXXL = isXXL;
     });
   }
@@ -86,13 +91,12 @@ export class CourseListComponent implements OnInit, OnChanges {
     }
   }
 
-
   ngOnChanges(): void {
     if (this.courses && this.searchSettings) {
       this.searchResult = this.searchCourses(
         this.courses,
         this.searchSettings.term,
-        this.searchSettings.searchIn
+        this.searchSettings.searchIn,
       );
       // reset view after search is executed
       this.viewResult = this.searchResult.slice(0, this.pageSize);
@@ -123,7 +127,7 @@ export class CourseListComponent implements OnInit, OnChanges {
   }
 
   onCourseDeselected(course: Course) {
-    this.selectedItems = this.selectedItems.filter(c => c.id !== course.id);
+    this.selectedItems = this.selectedItems.filter((c) => c.id !== course.id);
   }
 
   // Method to select all visible courses
@@ -134,19 +138,27 @@ export class CourseListComponent implements OnInit, OnChanges {
   // adding several courses at once (bulk action)
   planSelectedCourses() {
     const plannedCourses: PlanCourse[] = [];
-    const semester = this.selectedItems[0] ? this.selectedItems[0].semester : new Semester().name;
+    const semester = this.selectedItems[0]
+      ? this.selectedItems[0].semester
+      : new Semester().name;
 
-    this.selectedItems.forEach(univisCourse => {
-
+    this.selectedItems.forEach((univisCourse) => {
       let plannedCourse: PlanCourse;
 
       // need to do this for the conversion from Course to PlanCourse
       if (univisCourse.mCourses && univisCourse.mCourses.length !== 0) {
         // hard fix: set contributeTo to the last modCourse, make selectable in the future
-        const mcId = univisCourse.mCourses[univisCourse.mCourses.length-1].modCourse.mcId;
-        const acronym = univisCourse.mCourses[univisCourse.mCourses.length-1].modCourse.identifier.acronym;
-        const ects = univisCourse.mCourses[univisCourse.mCourses.length-1].modCourse.ects;
-        const sws = univisCourse.mCourses[univisCourse.mCourses.length-1].modCourse.sws;
+        const mcId =
+          univisCourse.mCourses[univisCourse.mCourses.length - 1].modCourse
+            .mcId;
+        const acronym =
+          univisCourse.mCourses[univisCourse.mCourses.length - 1].modCourse
+            .identifier.acronym;
+        const ects =
+          univisCourse.mCourses[univisCourse.mCourses.length - 1].modCourse
+            .ects;
+        const sws =
+          univisCourse.mCourses[univisCourse.mCourses.length - 1].modCourse.sws;
 
         plannedCourse = {
           id: univisCourse.id,
@@ -155,7 +167,7 @@ export class CourseListComponent implements OnInit, OnChanges {
           contributeTo: acronym,
           status: 'open',
           sws: sws,
-          ects: ects
+          ects: ects,
         };
       } else {
         plannedCourse = {
@@ -165,7 +177,7 @@ export class CourseListComponent implements OnInit, OnChanges {
           contributeTo: '',
           status: 'open',
           sws: univisCourse.sws,
-          ects: univisCourse.ects
+          ects: univisCourse.ects,
         };
       }
 
@@ -174,17 +186,27 @@ export class CourseListComponent implements OnInit, OnChanges {
       this.allSelected = false;
     });
 
-    this.store.dispatch(CoursePlanningActions.selectCourses({ courses: plannedCourses, isPastSemester: false, semester }));
+    this.store.dispatch(
+      CoursePlanningActions.selectCourses({
+        courses: plannedCourses,
+        isPastSemester: false,
+        semester,
+      }),
+    );
     this.clearSelections();
   }
 
   // removing several courses at once (bulk action)
   unplanSelectedCourses() {
-    const courseIds = this.selectedItems.map(course => course.id);
-    const semester = this.selectedItems[0] ? this.selectedItems[0].semester : new Semester().name;
+    const courseIds = this.selectedItems.map((course) => course.id);
+    const semester = this.selectedItems[0]
+      ? this.selectedItems[0].semester
+      : new Semester().name;
 
     if (courseIds.length > 0) {
-      this.store.dispatch(CoursePlanningActions.deselectCourses({ courseIds, semester }));
+      this.store.dispatch(
+        CoursePlanningActions.deselectCourses({ courseIds, semester }),
+      );
     }
     this.clearSelections();
     this.allSelected = false;
@@ -197,13 +219,13 @@ export class CourseListComponent implements OnInit, OnChanges {
   handlePageEvent(event: PageEvent) {
     const start = event.pageIndex * event.pageSize;
     const end = start + event.pageSize;
-    this.viewResult = this.searchResult.slice(start, end)
+    this.viewResult = this.searchResult.slice(start, end);
   }
 
   private searchCourses(
     courses: Course[],
     term: string,
-    searchIn: string[]
+    searchIn: string[],
   ): Course[] {
     if (term) {
       return this.fuseSearch.search(courses, term, searchIn);

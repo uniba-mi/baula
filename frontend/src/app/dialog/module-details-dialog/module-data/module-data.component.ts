@@ -2,13 +2,16 @@ import { Observable } from 'rxjs';
 import { User } from '../../../../../../interfaces/user';
 import { Semester } from '../../../../../../interfaces/semester';
 import { StudyPlan } from '../../../../../../interfaces/study-plan';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { of, Subject } from 'rxjs';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { getUser, getUserStudyprogrammes } from 'src/app/selectors/user.selectors';
+import {
+  getUser,
+  getUserStudyprogrammes,
+} from 'src/app/selectors/user.selectors';
 import {
   getSemesterPlanSemesterByStudyPlanId,
   getActiveStudyPlan,
@@ -45,6 +48,14 @@ import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
   standalone: false,
 })
 export class ModuleDataComponent implements OnInit, OnDestroy {
+  private store = inject<Store<State>>(Store);
+  private snackbar = inject(SnackbarService);
+  private modService = inject(ModService);
+  private planningValidation = inject(PlanningValidationService);
+  private router = inject(Router);
+  private studyPlanService = inject(StudyPlanService);
+  private fb = inject(FormBuilder);
+
   @Input() allowPlanning: boolean | undefined;
   @Input() selectedModule: Module;
   @Input() dialog: MatDialogRef<DialogComponent>;
@@ -89,18 +100,10 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
   displayPriorModuleWarning: boolean;
   priorModuleWarningMessage: string;
 
-  constructor(
-    private store: Store<State>,
-    private snackbar: SnackbarService,
-    private modService: ModService,
-    private planningValidation: PlanningValidationService,
-    private router: Router,
-    private studyPlanService: StudyPlanService,
-    private fb: FormBuilder,
-  ) {
+  constructor() {
     this.form = this.fb.group({
       selectedStudyPlanId: [null],
-      selectedSemesterPlanId: [null]
+      selectedSemesterPlanId: [null],
     });
   }
 
@@ -115,7 +118,9 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
           }
         }
         // Currently, only the first programme is used
-        this.programId = user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId;
+        this.programId = user.sps.filter(
+          (sp) => sp.status == 'Immatrikuliert',
+        )[0].spId;
       }
     });
 
@@ -144,13 +149,19 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
       });
 
     // set current semester for highlighting later
-    this.store.select(getActiveSemester).pipe(take(1)).subscribe((semester) => {
-      this.activeSemester = semester;
-    });
+    this.store
+      .select(getActiveSemester)
+      .pipe(take(1))
+      .subscribe((semester) => {
+        this.activeSemester = semester;
+      });
 
-    this.store.select(getAllModules).pipe(takeUntil(this.destroy$)).subscribe((modules) => {
-      this.allModules = modules.map(module => module.acronym);
-    });
+    this.store
+      .select(getAllModules)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((modules) => {
+        this.allModules = modules.map((module) => module.acronym);
+      });
 
     // initial highlighting
     this.checkConstraints();
@@ -163,9 +174,10 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
 
   updateHighlightingOptions() {
     if (this.selectedStudyPlan && this.selectedStudyPlan.semesterPlans) {
-      const matchingPlan = this.selectedStudyPlan.semesterPlans.find(plan => plan.semester === this.activeSemester);
+      const matchingPlan = this.selectedStudyPlan.semesterPlans.find(
+        (plan) => plan.semester === this.activeSemester,
+      );
       if (matchingPlan) {
-
         // for highlighting option in dropdown
         this.activeSemesterId = matchingPlan._id;
       }
@@ -175,16 +187,20 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
   // for notification when modules might have already been planned in active plan
   getPlannedSemesters(): void {
     this.plannedSemesters$ = this.store.select(
-      getPlannedSemestersForModule(this.selectedModule.acronym)
+      getPlannedSemestersForModule(this.selectedModule.acronym),
     );
   }
 
   // set up clickable acronyms after the view has initialized
   private setUpClickableAcronyms(): void {
-    const priorKnowledgeElements = document.querySelectorAll('.module-information-priorKnowledge');
+    const priorKnowledgeElements = document.querySelectorAll(
+      '.module-information-priorKnowledge',
+    );
     if (priorKnowledgeElements && priorKnowledgeElements.length > 0) {
       for (let i = 0; i < priorKnowledgeElements.length; i++) {
-        priorKnowledgeElements[i].addEventListener('click', (event) => this.handleAcronymClick(event));
+        priorKnowledgeElements[i].addEventListener('click', (event) =>
+          this.handleAcronymClick(event),
+        );
       }
     }
   }
@@ -204,10 +220,13 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
     if (!acronyms || acronyms.length === 0 || !text) {
       return text; // Return original text if no acronyms or text is empty
     }
-    
-    acronyms.forEach(acronym => {
+
+    acronyms.forEach((acronym) => {
       const regex = new RegExp(`\\b${acronym}\\b`, 'g');
-      text = text.replace(regex, `<span class="clickable-acronym" role="button" tabindex="0">${acronym}</span>`);
+      text = text.replace(
+        regex,
+        `<span class="clickable-acronym" role="button" tabindex="0">${acronym}</span>`,
+      );
     });
     return text;
   }
@@ -215,7 +234,7 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
   // styles application after view init (doesn't apply otherwise)
   private applyStylesToAcronyms(): void {
     const acronyms = document.querySelectorAll('.clickable-acronym');
-    acronyms.forEach(acronym => {
+    acronyms.forEach((acronym) => {
       (acronym as HTMLElement).style.padding = '0.25rem';
       (acronym as HTMLElement).style.borderRadius = '10px';
       (acronym as HTMLElement).style.border = '1px solid #ddf3f5';
@@ -223,8 +242,14 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
 
       // check if module is unknown and load it
       const acronymText = acronym.textContent;
-      if (acronymText && this.allModules && !this.allModules.includes(acronymText)) {
-        this.store.dispatch(UnknownModulesActions.loadUnknownModule({ acronym: acronymText }));
+      if (
+        acronymText &&
+        this.allModules &&
+        !this.allModules.includes(acronymText)
+      ) {
+        this.store.dispatch(
+          UnknownModulesActions.loadUnknownModule({ acronym: acronymText }),
+        );
       }
     });
   }
@@ -234,14 +259,14 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
       return of(null);
     }
     return this.moduleGroups$.pipe(
-      map(groups => {
-        const group = groups?.find(g => g.mgId === mgId);
+      map((groups) => {
+        const group = groups?.find((g) => g.mgId === mgId);
         if (group) {
           return String(group.name);
         } else {
           return null;
         }
-      })
+      }),
     );
   }
 
@@ -260,13 +285,16 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
 
   // check if module is offered in the selected study plan semester
   checkConstraints() {
-
     const selectedStudyPlanId = this.form.get('selectedStudyPlanId')?.value;
-    const selectedSemesterPlanId = this.form.get('selectedSemesterPlanId')?.value;
+    const selectedSemesterPlanId = this.form.get(
+      'selectedSemesterPlanId',
+    )?.value;
 
     // set selected study plan
     this.studyPlans$.pipe(take(1)).subscribe((studyPlans) => {
-      const selectedStudyPlan = studyPlans.find(plan => plan._id === selectedStudyPlanId);
+      const selectedStudyPlan = studyPlans.find(
+        (plan) => plan._id === selectedStudyPlanId,
+      );
       if (selectedStudyPlan) {
         this.selectedStudyPlan = selectedStudyPlan;
       }
@@ -276,18 +304,18 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
     this.updateHighlightingOptions();
 
     this.store.dispatch(
-      StudyPlanActions.selectStudyPlan({ studyPlanId: selectedStudyPlanId })
+      StudyPlanActions.selectStudyPlan({ studyPlanId: selectedStudyPlanId }),
     );
 
     // get selected semester plan semester
     this.semesterPlanSemester$ = this.store.select(
       getSemesterPlanSemesterByStudyPlanId(
         selectedStudyPlanId,
-        selectedSemesterPlanId
-      )
+        selectedSemesterPlanId,
+      ),
     );
     this.semesterPlanSemester$.subscribe(
-      (semester) => (this.semesterPlanSemester = semester)
+      (semester) => (this.semesterPlanSemester = semester),
     );
 
     // if both study plan and semester are selected
@@ -297,7 +325,7 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
       if (this.semesterPlanSemester != undefined) {
         let planningValidationResult = this.planningValidation.isModuleOffered(
           this.selectedModule,
-          this.semesterPlanSemester
+          this.semesterPlanSemester,
         );
 
         if (!planningValidationResult.success) {
@@ -314,7 +342,7 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
       if (this.selectedModule) {
         if (this.selectedModule.allPriorModules.length > 0) {
           let priorModuleCheck = this.planningValidation.priorModulesTaken(
-            this.selectedModule
+            this.selectedModule,
           );
           if (!priorModuleCheck.success) {
             this.displayPriorModuleWarning = true;
@@ -345,9 +373,15 @@ export class ModuleDataComponent implements OnInit, OnDestroy {
 
   addModuleToPlan(selectedModule: Module): void {
     const selectedStudyPlanId = this.form.get('selectedStudyPlanId')?.value;
-    const selectedSemesterPlanId = this.form.get('selectedSemesterPlanId')?.value;
+    const selectedSemesterPlanId = this.form.get(
+      'selectedSemesterPlanId',
+    )?.value;
     if (selectedStudyPlanId && selectedSemesterPlanId) {
-      this.studyPlanService.addModuleToPlan(selectedModule, selectedSemesterPlanId, selectedStudyPlanId);
+      this.studyPlanService.addModuleToPlan(
+        selectedModule,
+        selectedSemesterPlanId,
+        selectedStudyPlanId,
+      );
     }
   }
 

@@ -1,5 +1,10 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, Input, inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { PathModule } from '@interfaces/study-path';
 import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
 import { Store } from '@ngrx/store';
@@ -12,14 +17,17 @@ import { Semester } from '@interfaces/semester';
   selector: 'app-finish-semester-stepper',
   templateUrl: './finish-semester-stepper.component.html',
   styleUrl: './finish-semester-stepper.component.scss',
-  standalone: false
+  standalone: false,
 })
 export class FinishSemesterStepperComponent {
+  private fb = inject(FormBuilder);
+  private store = inject(Store);
+  private cdr = inject(ChangeDetectorRef);
 
   @Input() missingModules: PathModule[];
   stepperForm: FormGroup;
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
-  semesters$: Observable<Semester[]>
+  semesters$: Observable<Semester[]>;
   private subscriptions: Subscription = new Subscription();
   showNoEditHint: boolean = false;
   showNoGradeHint: boolean = false;
@@ -32,11 +40,7 @@ export class FinishSemesterStepperComponent {
   // Module index map to help with debugging duplicate acronyms
   moduleIndexMap: Map<string, number> = new Map<string, number>();
 
-  constructor(
-    private fb: FormBuilder,
-    private store: Store,
-    private cdr: ChangeDetectorRef,
-  ) {
+  constructor() {
     this.stepperForm = this.fb.group({});
   }
 
@@ -44,7 +48,7 @@ export class FinishSemesterStepperComponent {
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);
 
     // select all missing modules by default
-    this.missingModules.forEach(module => {
+    this.missingModules.forEach((module) => {
       const key = module.isUserGenerated ? module._id : module.acronym;
       if (key) {
         this.selectedModules.add(key);
@@ -96,7 +100,9 @@ export class FinishSemesterStepperComponent {
         }
 
         // Store mapping from selection key to form control key
-        const selectionKey = module.isUserGenerated ? module._id : module.acronym;
+        const selectionKey = module.isUserGenerated
+          ? module._id
+          : module.acronym;
         if (selectionKey) {
           this.moduleFormKeys.set(selectionKey, uniqueKey);
         }
@@ -105,16 +111,21 @@ export class FinishSemesterStepperComponent {
         const isEditable = module.isUserGenerated;
 
         const moduleFormGroup = this.fb.group({
-          acronym: [{ value: module.acronym, disabled: !isEditable }, Validators.required],
-          name: [{ value: module.name, disabled: !isEditable }, Validators.required],
+          acronym: [
+            { value: module.acronym, disabled: !isEditable },
+            Validators.required,
+          ],
+          name: [
+            { value: module.name, disabled: !isEditable },
+            Validators.required,
+          ],
           notes: [module.notes],
           status: [module.status, Validators.required],
-          ects: [module.ects, [
-            Validators.required,
-            Validators.min(1),
-            Validators.max(30)
-          ]],
-          grade: [(module.grade).toString(), []],
+          ects: [
+            module.ects,
+            [Validators.required, Validators.min(1), Validators.max(30)],
+          ],
+          grade: [module.grade.toString(), []],
           semester: module.semester,
           mgId: [module.mgId ? module.mgId : ''],
           isUserGenerated: [module.isUserGenerated], // retain property
@@ -123,7 +134,10 @@ export class FinishSemesterStepperComponent {
         });
 
         this.stepperForm.addControl(uniqueKey, moduleFormGroup);
-        this.setupAcronymSubscription(moduleFormGroup.get('acronym') as FormControl, module.acronym);
+        this.setupAcronymSubscription(
+          moduleFormGroup.get('acronym') as FormControl,
+          module.acronym,
+        );
         this.setupStatusChanges(moduleFormGroup);
       });
     } else {
@@ -132,14 +146,17 @@ export class FinishSemesterStepperComponent {
   }
 
   // to remove the suggestions on subform change
-  private setupAcronymSubscription(control: FormControl, initialAcronym: string): void {
+  private setupAcronymSubscription(
+    control: FormControl,
+    initialAcronym: string,
+  ): void {
     this.subscriptions.add(
-      control.valueChanges.subscribe(value => {
+      control.valueChanges.subscribe((value) => {
         if (value !== initialAcronym) {
           this.showNoEditHint = false;
           this.showNoGradeHint = false;
         }
-      })
+      }),
     );
   }
 
@@ -164,7 +181,7 @@ export class FinishSemesterStepperComponent {
   }
 
   getSelectedModules(): PathModule[] {
-    return this.missingModules.filter(module => {
+    return this.missingModules.filter((module) => {
       const key = module.isUserGenerated ? module._id : module.acronym;
       return key && this.selectedModules.has(key);
     });
@@ -176,15 +193,15 @@ export class FinishSemesterStepperComponent {
 
     // handle comma input
     this.subscriptions.add(
-      gradeControl.valueChanges.subscribe(value => {
+      gradeControl.valueChanges.subscribe((value) => {
         if (value && typeof value === 'string' && value.includes(',')) {
           const normalizedValue = value.replace(',', '.');
           gradeControl.setValue(normalizedValue, { emitEvent: false });
         }
-      })
+      }),
     );
 
-    statusControl.valueChanges.subscribe(status => {
+    statusControl.valueChanges.subscribe((status) => {
       this.showNoEditHint = false;
       this.showNoGradeHint = false;
 
@@ -261,12 +278,13 @@ export class FinishSemesterStepperComponent {
 
       // Use the selected modules to get the right order and include all modules
       for (const module of this.getSelectedModules()) {
-        const selectionKey = module.isUserGenerated ? module._id : module.acronym;
+        const selectionKey = module.isUserGenerated
+          ? module._id
+          : module.acronym;
         if (selectionKey) {
           const formKey = this.moduleFormKeys.get(selectionKey);
 
           if (formKey && rawValues[formKey]) {
-
             // Add to array
             pathModules.push(rawValues[formKey]);
           }

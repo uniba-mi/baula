@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { openDB, IDBPDatabase } from 'idb';
 import { RestService } from 'src/app/rest.service';
 import { firstValueFrom } from 'rxjs';
@@ -17,10 +17,12 @@ interface IndexedDB {
   providedIn: 'root',
 })
 export class IndexedDbService {
+  private rest = inject(RestService);
+
   private maxCacheAge = 8 * 60 * 60 * 1000; // 8 hours maximum cache age
   private dbPromise: Promise<IDBPDatabase<IndexedDB>>;
 
-  constructor(private rest: RestService) {
+  constructor() {
     this.dbPromise = openDB<IndexedDB>('CourseDB', 1, {
       upgrade(db) {
         if (!db.objectStoreNames.contains('courses')) {
@@ -36,12 +38,12 @@ export class IndexedDbService {
   private async getSemester(): Promise<string | null> {
     const db = await this.dbPromise;
     const semester = await db.get('metadata', 'semester');
-    return semester
+    return semester;
   }
 
   private async setSemester(semester: string): Promise<void> {
     const db = await this.dbPromise;
-    await db.put('metadata',semester, 'semester');
+    await db.put('metadata', semester, 'semester');
   }
 
   private async getLastUpdated(): Promise<Date | null> {
@@ -61,10 +63,7 @@ export class IndexedDbService {
     return now - lastUpdated.getTime() > this.maxCacheAge;
   }
 
-  async getCourses(
-    semester: string,
-    reload?: boolean
-  ): Promise<Course[]> { 
+  async getCourses(semester: string, reload?: boolean): Promise<Course[]> {
     const db = await this.dbPromise;
     const lastUpdated = await this.getLastUpdated();
     const dbSemester = await this.getSemester();
@@ -72,7 +71,7 @@ export class IndexedDbService {
       console.info('Daten werden neu geladen.');
       // Daten sind veraltet, lade sie neu
       const courses = await firstValueFrom(
-        this.rest.getCoursesBySemester(semester)
+        this.rest.getCoursesBySemester(semester),
       );
 
       // Aktualisiere IndexedDB
@@ -96,7 +95,7 @@ export class IndexedDbService {
   async searchCourses(
     semester: string,
     searchSetting?: SearchSettings,
-    reload?: boolean
+    reload?: boolean,
   ): Promise<Course[]> {
     let courses: Course[] = await this.getCourses(semester, reload);
 
@@ -108,13 +107,17 @@ export class IndexedDbService {
         // filter for time options
         if (filter.time) {
           const day = filter.time.day;
-          const startTime = filter.time.timeStart ? Date.parse(`01/01/2024 ${filter.time.timeStart}`) : undefined;
-          const endTime = filter.time.timeEnd ? Date.parse(`01/01/2024 ${filter.time.timeEnd}`) : undefined;
+          const startTime = filter.time.timeStart
+            ? Date.parse(`01/01/2024 ${filter.time.timeStart}`)
+            : undefined;
+          const endTime = filter.time.timeEnd
+            ? Date.parse(`01/01/2024 ${filter.time.timeEnd}`)
+            : undefined;
           if (day) {
             courses = courses.filter((course) => {
               if (course.terms && course.terms.length !== 0) {
                 let dayResult = course.terms.filter((term) =>
-                  term.repeat.includes(day)
+                  term.repeat.includes(day),
                 );
                 return dayResult.length !== 0 ? course : undefined;
               } else {
@@ -160,7 +163,7 @@ export class IndexedDbService {
         if (filter.departments && Array.isArray(filter.departments)) {
           const departments = filter.departments;
           courses = courses.filter((course) =>
-            departments.includes(course.orgname)
+            departments.includes(course.orgname),
           );
         }
       }
@@ -175,22 +178,22 @@ export class IndexedDbService {
             switch (option.searchIn) {
               case 'name':
                 courses = courses.filter((course) =>
-                  course.name.includes(searchTerm)
+                  course.name.includes(searchTerm),
                 );
                 break;
               case 'desc':
                 courses = courses.filter((course) =>
-                  course.desc?.includes(searchTerm)
+                  course.desc?.includes(searchTerm),
                 );
                 break;
               case 'short':
                 courses = courses.filter((course) =>
-                  course.short?.includes(searchTerm)
+                  course.short?.includes(searchTerm),
                 );
                 break;
               case 'organizational':
                 courses = courses.filter((course) =>
-                  course.organizational?.includes(searchTerm)
+                  course.organizational?.includes(searchTerm),
                 );
                 break;
               case 'mId':
@@ -198,7 +201,7 @@ export class IndexedDbService {
                   if (course.mCourses) {
                     const modules = course.mCourses.filter((mCourse) => {
                       return mCourse.modCourse.identifier.acronym.includes(
-                        searchTerm
+                        searchTerm,
                       )
                         ? mCourse
                         : undefined;

@@ -1,8 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, map, Observable } from 'rxjs';
 import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.service';
-import { getJobs, getUserTopics, getExcludedModulesAcronyms } from 'src/app/selectors/user.selectors';
+import {
+  getJobs,
+  getUserTopics,
+  getExcludedModulesAcronyms,
+} from 'src/app/selectors/user.selectors';
 import { ExtendedJob } from '../../../../../../interfaces/job';
 import { Topic } from '../../../../../../interfaces/topic';
 import { ModService } from 'src/app/shared/services/module.service';
@@ -11,9 +15,12 @@ import { ModService } from 'src/app/shared/services/module.service';
   selector: 'app-data-preview',
   standalone: false,
   templateUrl: './data-preview.component.html',
-  styleUrl: './data-preview.component.scss'
+  styleUrl: './data-preview.component.scss',
 })
 export class DataPreviewComponent {
+  private store = inject(Store);
+  private recsService = inject(RecsRestService);
+  private modService = inject(ModService);
 
   @Input() type: 'jobs' | 'topics';
 
@@ -24,27 +31,22 @@ export class DataPreviewComponent {
   topicKeywords$: Observable<string[]>;
   recommendedAcronyms$: Observable<string[]>;
 
-  constructor(private store: Store, private recsService: RecsRestService, private modService: ModService) { }
-
-
   ngOnInit() {
-
-    this.jobs$ = this.store.select(getJobs).pipe(
-      map(jobs => jobs || [])
-    );
+    this.jobs$ = this.store.select(getJobs).pipe(map((jobs) => jobs || []));
 
     this.topics$ = combineLatest([
       this.store.select(getUserTopics),
-      this.recsService.getTopicChildren()
+      this.recsService.getTopicChildren(),
     ]).pipe(
-      map(([userTopicIds, allTopics]) =>
-        allTopics?.filter(topic => userTopicIds?.includes(topic.tId)) || []
-      )
+      map(
+        ([userTopicIds, allTopics]) =>
+          allTopics?.filter((topic) => userTopicIds?.includes(topic.tId)) || [],
+      ),
     );
 
     this.recommendedAcronyms$ = combineLatest([
       this.recsService.getPersonalRecommendations(),
-      this.store.select(getExcludedModulesAcronyms)
+      this.store.select(getExcludedModulesAcronyms),
     ]).pipe(
       map(([recs, blacklist]) => {
         if (!recs || recs.length === 0) return [];
@@ -53,11 +55,12 @@ export class DataPreviewComponent {
         const targetType = this.type === 'jobs' ? 'job' : 'topic';
         const acronyms: string[] = [];
 
-        recommendations.forEach(mod => {
-
+        recommendations.forEach((mod) => {
           if (blacklist.includes(mod.acronym)) return;
 
-          const matchingSourcesCount = mod.source?.filter((src: any) => src.type === targetType).length || 0;
+          const matchingSourcesCount =
+            mod.source?.filter((src: any) => src.type === targetType).length ||
+            0;
 
           for (let i = 0; i < matchingSourcesCount; i++) {
             acronyms.push(mod.acronym);
@@ -65,7 +68,7 @@ export class DataPreviewComponent {
         });
 
         return acronyms.sort(() => Math.random() - 0.5);
-      })
+      }),
     );
 
     this.displayItems$ = this.type === 'jobs' ? this.jobs$ : this.topics$;

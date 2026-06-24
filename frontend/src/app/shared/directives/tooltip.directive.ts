@@ -1,16 +1,15 @@
-import { Directive, HostListener, Self } from '@angular/core';
+import { Directive, HostListener, inject } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 
 @Directive({
-    selector: '[appTooltip]',
-    standalone: false
+  selector: '[appTooltip]',
+  standalone: false,
 })
 export class TooltipDirective {
+  private tooltip = inject(MatTooltip, { self: true });
 
-    constructor(@Self() private tooltip: MatTooltip) { }
-
-    @HostListener('click')
-    onClick(): void {
-        this.tooltip.show();
-    }
+  @HostListener('click')
+  onClick(): void {
+    this.tooltip.show();
+  }
 }

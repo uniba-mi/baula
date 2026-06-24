@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { ExtendedJob, Job } from '@interfaces/job';
 import { MatDialog } from '@angular/material/dialog';
 import { ModService } from 'src/app/shared/services/module.service';
@@ -20,15 +20,13 @@ import { Module } from '@interfaces/module';
   styleUrl: './job-card.component.scss',
 })
 export class JobCardComponent implements OnInit {
+  private dialog = inject(MatDialog);
+  private modService = inject(ModService);
+  private store = inject(Store);
+
   @Input() job: ExtendedJob | undefined;
   @Input() studyPathModules: PathModule[] | null;
   recModules$: Observable<Module[]> | undefined;
-
-  constructor(
-    private dialog: MatDialog,
-    private modService: ModService,
-    private store: Store
-  ) {}
 
   ngOnInit(): void {
     if (this.job && this.job.recModules && this.studyPathModules) {
@@ -36,7 +34,7 @@ export class JobCardComponent implements OnInit {
       this.recModules$ = this.modService.getFullModulesByAcronyms(
         this.job.recModules
           .filter((module) => !acronyms.includes(module.acronym))
-          .map((module) => module.acronym)
+          .map((module) => module.acronym),
       );
     }
   }

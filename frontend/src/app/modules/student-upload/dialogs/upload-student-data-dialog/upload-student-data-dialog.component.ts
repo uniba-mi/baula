@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
 
@@ -9,6 +9,8 @@ import { closeDialogMode } from 'src/app/actions/dialog.actions';
   standalone: false,
 })
 export class UploadStudentDataDialogComponent {
+  private store = inject(Store);
+
   @Input() onlyStudypath: boolean;
   @Input() onlyMetaData: boolean;
   flexNowImportConfirmed = false;
@@ -16,8 +18,6 @@ export class UploadStudentDataDialogComponent {
   studypathConfirmed = false;
   gradesConfirmed = false;
   fileToUpload: File | null = null;
-
-  constructor(private store: Store) {}
 
   receiveChanges(confirmations: {
     flexNowImportConfirmed: boolean;
@@ -44,7 +44,7 @@ export class UploadStudentDataDialogComponent {
         gradesConfirmed: this.gradesConfirmed,
       };
     } else {
-      return undefined
+      return undefined;
     }
   }
 }

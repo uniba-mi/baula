@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import {
@@ -32,11 +32,7 @@ import {
   FnCompletedModule,
   FnStudyPath,
 } from '@interfaces/fn-user';
-import {
-  PathCourse,
-  PathModule,
-  StudyPath,
-} from '@interfaces/study-path';
+import { PathCourse, PathModule, StudyPath } from '@interfaces/study-path';
 import { ModulePlanningActions } from 'src/app/actions/study-planning.actions';
 import {
   getActiveStudyPlanId,
@@ -50,6 +46,10 @@ import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
   providedIn: 'root',
 })
 export class FlexnowService {
+  private dialog = inject(MatDialog);
+  private store = inject(Store);
+  private rest = inject(RestService);
+
   lastFlexnowApiConsent$: Observable<Consent | null>;
   lastFlexNowMetaDataConsent$: Observable<Consent | null>;
   lastFlexNowStudypathConsent$: Observable<Consent | null>;
@@ -58,11 +58,7 @@ export class FlexnowService {
   private unsubscribe$ = new Subject<void>();
   debuggingMode = true;
 
-  constructor(
-    private dialog: MatDialog,
-    private store: Store,
-    private rest: RestService,
-  ) {
+  constructor() {
     this.lastFlexnowApiConsent$ = this.store.select(
       getLastConsentByType('flexnow-api'),
     );
@@ -370,7 +366,7 @@ export class FlexnowService {
               timestamp: new Date(),
             }),
           );
-          if(mode !== 'update-studypath') {
+          if (mode !== 'update-studypath') {
             this.store.dispatch(
               UserActions.addConsent({
                 ctype: 'upload-meta-data',

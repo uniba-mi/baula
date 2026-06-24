@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {  Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from '@interfaces/user';
 import { getUser } from 'src/app/selectors/user.selectors';
 import { StudyPlan } from '@interfaces/study-plan';
@@ -25,22 +25,20 @@ import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss',
-  standalone: false
+  standalone: false,
 })
 export class UserProfileComponent implements OnInit {
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
+  private lazyInject = inject(LazyInjectService);
+  private userUpdateService = inject(UserUpdateService);
+
   user$: Observable<User>;
   semesters$: Observable<Semester[]>;
   studyPlans$: Observable<StudyPlan[]>;
   disableDownload: boolean = false;
   activeRoute: string;
-
-  constructor(
-    private store: Store,
-    private dialog: MatDialog,
-    private router: Router,
-    private lazyInject: LazyInjectService,
-    private userUpdateService: UserUpdateService
-  ) { }
 
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);
@@ -52,8 +50,10 @@ export class UserProfileComponent implements OnInit {
   async downloadUserdata(user: User, studyPlans: StudyPlan[], format: string) {
     this.disableDownload = true;
     const download = await this.lazyInject.get<DownloadService>(() =>
-      import('../../shared/services/download.service').then((m) => m.DownloadService)
-    )
+      import('../../shared/services/download.service').then(
+        (m) => m.DownloadService,
+      ),
+    );
     if (format === 'pdf') {
       await download.downloadUserData(user, studyPlans);
     } else if (format === 'json') {
@@ -65,7 +65,7 @@ export class UserProfileComponent implements OnInit {
 
   navigate(url: string) {
     this.activeRoute = url;
-    this.router.navigate(['app', 'profil', url])
+    this.router.navigate(['app', 'profil', url]);
   }
 
   openDeleteDialog(user: User) {
@@ -73,7 +73,8 @@ export class UserProfileComponent implements OnInit {
       dialogTitle: 'Account löschen?',
       actionType: 'delete',
       confirmationItem: 'deinen Account',
-      warningMessage: 'Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.',
+      warningMessage:
+        'Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.',
       confirmButtonLabel: 'Ja, ich möchte meinen Account löschen',
       cancelButtonLabel: 'Abbrechen',
       confirmButtonClass: 'btn btn-danger',
@@ -100,20 +101,27 @@ export class UserProfileComponent implements OnInit {
       const studyPath: StudyPath = {
         ...user.studyPath,
         completedModules: result.completedModules,
-      }
+      };
       if (result) {
         const updatedUser: User = {
           ...user,
           ...result,
-          excludedModulesAcronyms: result.excludedModulesAcronyms || result.notInterestingModulesAcronyms, // catch legacy cases
-          studyPath
+          excludedModulesAcronyms:
+            result.excludedModulesAcronyms ||
+            result.notInterestingModulesAcronyms, // catch legacy cases
+          studyPath,
         };
 
         // TODO: filter by program status "Immatrikuliert" when fn-branch is merged
         // Currently first program is selected
-        const sp = updatedUser.sps ? updatedUser.sps[0] : undefined
-        if(sp) {
-          this.store.dispatch(ModuleHandbookActions.loadModuleHandbook({ id: sp.mhbId, version: sp.mhbVersion }))
+        const sp = updatedUser.sps ? updatedUser.sps[0] : undefined;
+        if (sp) {
+          this.store.dispatch(
+            ModuleHandbookActions.loadModuleHandbook({
+              id: sp.mhbId,
+              version: sp.mhbVersion,
+            }),
+          );
         }
 
         this.store.dispatch(UserActions.updateUser({ user: updatedUser }));
