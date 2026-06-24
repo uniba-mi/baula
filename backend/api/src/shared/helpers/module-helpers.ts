@@ -4,8 +4,8 @@ import { ModuleGroup } from "../../../../../interfaces/module-group";
 import { Module } from "../../../../../interfaces/module";
 import { ModuleCourse } from "../../../../../interfaces/module-course";
 import { ModuleHandbook } from "../../../../../interfaces/module-handbook";
-import { UserServer } from "../../../../../interfaces/user";
-import { PathModule } from "../../../../../interfaces/study-path";
+import { UserServer } from "@interfaces/user";
+import { PathModule } from "@interfaces/study-path";
 
 const prisma = new PrismaClient();
 

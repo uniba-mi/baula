@@ -1,12 +1,12 @@
 import { generateTopicModuleRecommendationsPreGenerated } from "../../../services/topic-service";
 import { Embedding, ModEmbedding, Recommendation, TopicM } from "../../../database/mongo";
-import { Recommendation as IRecommendation, TopicRecommendationResult } from '../../../../../../interfaces/recommendation';
-import { Topic } from "../../../../../../interfaces/topic";
+import { Recommendation as IRecommendation, TopicRecommendationResult } from '@interfaces/recommendation';
+import { Topic } from "@interfaces/topic";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
-import { UserServer } from "../../../../../../interfaces/user";
+import { UserServer } from "@interfaces/user";
 import validator from "validator";
 import { extractModules } from "../../../shared/helpers/module-helpers";
-import { RecommendedModule, Source } from "../../../../../../interfaces/recommendation";
+import { RecommendedModule, Source } from "@interfaces/recommendation";
 import { NextFunction, Request, Response } from "express";
 
 export async function getTopicTree(req: Request, res: Response, next: NextFunction) {

@@ -15,7 +15,7 @@ import { Types } from "mongoose";
 import {
   PathCourse,
   PathModule,
-} from "../../../../../../interfaces/study-path";
+} from "@interfaces/study-path";
 import {
   BadRequestError,
   logError,
@@ -27,10 +27,10 @@ import {
   MStudyProgramme,
   User as UserClient,
   UserServer,
-} from "../../../../../../interfaces/user";
+} from "@interfaces/user";
 import { ModuleGroup, PrismaClient } from "@prisma/client";
 import mongoose from "mongoose";
-import { ExtendedJob, Job } from "../../../../../../interfaces/job";
+import { ExtendedJob, Job } from "@interfaces/job";
 import { transform } from "camaro";
 import {
   studyPathTemplate,
@@ -43,7 +43,7 @@ import {
   FnMetaData,
   FnStudyPath,
   FnStudyProgramme,
-} from "../../../../../../interfaces/fn-user";
+} from "@interfaces/fn-user";
 import {
   extractModules,
   findAndBuildModuleHandbookByIdAndVersion,

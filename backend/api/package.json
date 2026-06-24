@@ -15,7 +15,6 @@
   },
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@node-saml/passport-saml": "^5.1.0",
     "@prisma/client": "^6.18.0",

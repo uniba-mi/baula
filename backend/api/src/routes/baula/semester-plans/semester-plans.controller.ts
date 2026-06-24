@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { PlanCourse, SemesterPlan, SemesterPlanTemplate } from "../../../../../../interfaces/semester-plan";
+import { PlanCourse, SemesterPlan, SemesterPlanTemplate } from "@interfaces/semester-plan";
 import { StudyPlan } from "../../../database/mongo";
 import {
   validateAndReturnCourse,
@@ -11,8 +11,8 @@ import {
 import validator from "validator";
 import { BadRequestError, logError, NotFoundError } from "../../../shared/error";
 import { PrismaClient } from "@prisma/client";
-import { UserGeneratedModule } from "../../../../../../interfaces/user-generated-module";
-import { UserServer } from "../../../../../../interfaces/user";
+import { UserGeneratedModule } from "@interfaces/user-generated-module";
+import { UserServer } from "@interfaces/user";
 import { logger } from "../../../shared/utils/logger";
 import { findActiveStudyPlan, findStudyPlan } from "../../../shared/helpers/plan-helper";
 

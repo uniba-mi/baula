@@ -7,7 +7,7 @@ import {
 import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import { ModuleHandbook } from "../../../../../../interfaces/module-handbook";
-import { StudyProgramme } from "../../../../../../interfaces/study-programme";
+import { StudyProgramme } from "@interfaces/study-programme";
 
 const prisma = new PrismaClient();
 
