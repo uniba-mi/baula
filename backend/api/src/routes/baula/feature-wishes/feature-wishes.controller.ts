@@ -3,8 +3,16 @@ import { UserServer } from "../../../../../../interfaces/user";
 import { FeatureWish } from "../../../database/mongo";
 import { BadRequestError, NotFoundError, UnauthorizedError } from "../../../shared/error";
 
+// Variables
+const maxAmountOfUnapprovedWishes = 10;
+
+const topWishesAmount: number = 3;
+
+const maxTitleLength = 200;
+const minTitleLength = 2;
+const maxDescriptionLength = 1000;
+
 export async function addFeatureWish(req: Request, res: Response, next: NextFunction) {
-    const maxAmountOfUnapprovedWishes = 5;
     const user = req.user as UserServer;
 
     const usersUnapprovedWishes = await getUnapprovedWishesOfUser(user._id);
@@ -37,9 +45,6 @@ export async function addFeatureWish(req: Request, res: Response, next: NextFunc
 }
 
 function validateFeatureWish(title: string, description: string): boolean | string {
-    const maxTitleLength = 200;
-    const minTitleLength = 2;
-    const maxDescriptionLength = 1000;
     let errorMessage = "Bei dem Feature-Wunsch ist folgendes Problem aufgetreten: ";
     let isValid = true;
 
@@ -95,7 +100,6 @@ async function getUnapprovedWishesOfUser(userId: string): Promise<number> {
 }
 
 export async function getTopWishes(req: Request, res: Response, next: NextFunction) {
-    const topWishesAmount: number = 3;
     const allWished = await FeatureWish.find({ isAllowed: true }).sort({ likedBy: -1, createdAt: -1 }).limit(topWishesAmount).exec();
 
     if (!allWished) {
@@ -245,4 +249,33 @@ export async function getUsersUnapprovedWishes(req: Request, res: Response, next
     });
 
     res.send(response);
+}
+
+export async function deleteUsersUnapprovedWish(req: Request, res: Response, next: NextFunction) {
+    const user = req.user as UserServer;
+
+    const wishId = req.params.id;
+    if (!wishId) {
+        next(new BadRequestError("Es muss eine ID für den Feature-Wunsch angegeben werden."));
+        return;
+    }
+
+    const wish = await FeatureWish.findById(wishId).exec();
+    if (!wish) {
+        next(new NotFoundError("Der angegebene Feature-Wunsch wurde nicht gefunden."));
+        return;
+    }
+
+    if (wish.createdBy?.toString() != user._id.toString()) {
+        next(new UnauthorizedError("Du bist nicht berechtigt, diesen Wunsch zu löschen."));
+        return;
+    }
+
+    if (wish.isAllowed) {
+        next(new BadRequestError("Genehmigte Wünsche können nicht gelöscht werden."));
+        return;
+    }
+
+    await wish.deleteOne();
+    res.send(wish);
 }
