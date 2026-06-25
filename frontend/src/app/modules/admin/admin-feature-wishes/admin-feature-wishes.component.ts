@@ -12,6 +12,9 @@ export class AdminFeatureWishesComponent implements OnInit {
   unapprovedWishes: FeatureWish[] = [];
   approvedWishes: FeatureWish[] = [];
 
+  showUnapprovedWishes = true;
+  showApprovedWishes = true;
+
   editAdminMessageSuccessMessage: string = "";
   editAdminMessageErrorMessage: string = "";
 
