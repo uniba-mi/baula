@@ -79,6 +79,14 @@
                     </div>
                 </div>
                 }
+                <!-- Delete Button -->
+                @if (withDeleteButton) {
+                <div class="col-12 text-end p-2">
+                    <button (click)="deleteFunction?.(wish)" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Löschen
+                    </button>
+                </div>
+                }
             </div>
         </div>
     </div>

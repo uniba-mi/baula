@@ -14,6 +14,9 @@ export class SingleFeatureWishComponent {
   @Input() withDescription: boolean = false;
   @Input() withLikeButton: boolean = true;
 
+  @Input() withDeleteButton: boolean = false;
+  @Input() deleteFunction?: (wish: FeatureWish) => void;
+
   hasLikedThisWish: boolean = false;
   isUsersWish: boolean = false;
 

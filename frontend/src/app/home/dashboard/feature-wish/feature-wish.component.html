@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group class="feature-wish-component">
     <!-- Make a wish + top wishes -->
     <mat-tab label="Feature-Wunsch">
         <br>
@@ -65,7 +65,8 @@
             @for (wish of usersUnapprovedWishes; track wish) {
             <div class="m-3">
                 <app-single-feature-wish [wish]="wish" [rank]="usersUnapprovedWishes.indexOf(wish) + 1"
-                    [withDescription]="true" [withLikeButton]="false"></app-single-feature-wish>
+                    [withDescription]="true" [withLikeButton]="false" [withDeleteButton]="true"
+                    [deleteFunction]="deleteUsersUnapprovedWish"></app-single-feature-wish>
             </div>
             }
         </div>

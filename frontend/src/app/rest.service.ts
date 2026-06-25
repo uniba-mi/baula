@@ -826,6 +826,10 @@ export class RestService {
     return this.http.get<FeatureWish[]>(`${this.urlBase}feature-wishes/unapproved`, httpOptions);
   }
 
+  deleteUsersUnapprovedWish(wishId: string): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.urlBase}feature-wishes/delete/${wishId}`, httpOptions);
+  }
+
   // Admin Requests
 
   adminGetUnapprovedWishes(): Observable<FeatureWish[]> {

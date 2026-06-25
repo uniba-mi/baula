@@ -83,5 +83,16 @@ export class FeatureWishComponent {
       }
     });
   }
+
+  deleteUsersUnapprovedWish = (wish: FeatureWish) => {
+    this.rest.deleteUsersUnapprovedWish(wish._id).subscribe({
+      next: (response) => {
+        this.usersUnapprovedWishes = this.usersUnapprovedWishes.filter(w => w._id !== wish._id);
+      },
+      error: (error) => {
+        this.usersUnapprovedWishesErrorMessage = error.error?.error?.message || 'Fehler beim Löschen deines ungenehmigten Feature-Wunsches. Bitte versuche es später erneut.';
+      }
+    });
+  }
   
 }
