@@ -7,7 +7,8 @@ import {
     unlikeWish,
     likeWish,
     isUsersWish,
-    getUsersUnapprovedWishes
+    getUsersUnapprovedWishes,
+    deleteUsersUnapprovedWish
 } from "./feature-wishes.controller";
 
 const router: Router = express.Router();
@@ -20,6 +21,8 @@ router.get('/unapproved', getUsersUnapprovedWishes);
 router.post('/add', addFeatureWish);
 router.post('/like/:id', likeWish);
 router.post('/unlike/:id', unlikeWish);
+
+router.delete('/delete/:id', deleteUsersUnapprovedWish);
 
 
 export { router as featureWishes };
