@@ -80,6 +80,8 @@ export class UserDialogComponent {
   }
 
   validateUserData(): boolean {
+    const program = this.user.sps?.filter((sp) => sp.status == 'Immatrikuliert')[0]
+
     if (
       this.user &&
       this.user.sps &&
@@ -87,8 +89,9 @@ export class UserDialogComponent {
       this.user.duration &&
       this.user.maxEcts &&
       this.user.fulltime !== undefined &&
-      this.user.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbId &&
-      this.user.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbVersion
+      program &&
+      program.mhbId &&
+      program.mhbVersion
     ) {
       return false;
     }

@@ -124,7 +124,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         };
       }),
     );
-    this.dashboardData$.subscribe((test) => console.log(test));
     this.semesterStudyPath$
       .subscribe((semesterStudyPath) => {
         console.log(semesterStudyPath)

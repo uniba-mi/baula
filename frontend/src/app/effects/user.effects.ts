@@ -60,27 +60,39 @@ export class UserEffects {
   updateUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions.updateUser),
-      switchMap((props) =>
-        this.rest.updateUser(props.user).pipe(
-          map((user: User) =>
-            UserActions.updateUserSuccess({
-              user,
-            }),
-          ),
-          tap(() => {
-            this.snackbar.openSnackBar({
-              type: AlertType.SUCCESS,
-              message: 'Nutzereinstellungen erfolgreich aktualisiert.',
-            });
-          }),
-          catchError((error) => {
-            this.snackbar.openSnackBar({
-              type: AlertType.DANGER,
-              message: 'Nutzereinstellungen konnten nicht gespeichert werden!',
-            });
-            return of(UserActions.updateUserFailure({ error }));
-          }),
-        ),
+      withLatestFrom(this.store.select(getUser)),
+      map(([props, user]) => {
+        // check if sps is not empty due to update
+        if(!props.user.sps || props.user.sps.length === 0) {
+          return {
+            ...props.user,
+            sps: user.sps
+          }
+        } else {
+          return props.user
+        }
+      }),
+      switchMap((user) => 
+        this.rest.updateUser(user).pipe(
+                  map((user: User) =>
+                    UserActions.updateUserSuccess({
+                      user,
+                    }),
+                  ),
+                  tap(() => {
+                    this.snackbar.openSnackBar({
+                      type: AlertType.SUCCESS,
+                      message: 'Nutzereinstellungen erfolgreich aktualisiert.',
+                    });
+                  }),
+                  catchError((error) => {
+                    this.snackbar.openSnackBar({
+                      type: AlertType.DANGER,
+                      message: 'Nutzereinstellungen konnten nicht gespeichert werden!',
+                    });
+                    return of(UserActions.updateUserFailure({ error }));
+                  }),
+                ),
       ),
     ),
   );
