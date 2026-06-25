@@ -10,7 +10,7 @@
             <mat-error>
               @if (gradeForm.get('grade')?.errors?.min || gradeForm.get('grade')?.errors?.max) {
                 <span>
-                  Die Zahl muss zwischen {{minGrade}}.0 und {{maxGrade}}.0 liegen.
+                  Die Zahl muss zwischen 0 und {{maxGrade}}.0 liegen.
                 </span>
               }
               @if (gradeForm.get('grade')?.errors?.pattern) {
