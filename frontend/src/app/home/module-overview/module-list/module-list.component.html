@@ -1,5 +1,9 @@
-<div *ngIf="searchResult.length !== 0">
-  <div *ngFor="let module of searchResult">
-    <app-module-card [module]="module" [structure]="structure$ | async"></app-module-card>
+@if (searchResult.length !== 0) {
+  <div>
+    @for (module of searchResult; track module) {
+      <div>
+        <app-module-card [module]="module" [structure]="structure$ | async"></app-module-card>
+      </div>
+    }
   </div>
-</div>
+}

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -13,18 +13,25 @@ import { getSelectedSemesterPlanSemesterById } from 'src/app/selectors/study-pla
 import { AlertType } from 'src/app/shared/classes/alert';
 import { PlanningValidationService } from 'src/app/shared/services/planning-validation.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { Module } from '../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
-import { PathModule } from '../../../../../interfaces/study-path';
+import { PathModule } from '@interfaces/study-path';
 import { ModService } from 'src/app/shared/services/module.service';
 
 @Component({
   selector: 'app-add-module-dialog',
   templateUrl: './add-module-dialog.component.html',
   styleUrls: ['./add-module-dialog.component.scss'],
-  standalone: false
+  standalone: false,
 })
 export class AddModuleDialogComponent implements OnInit {
+  private store = inject(Store);
+  private planningValidation = inject(PlanningValidationService);
+  private snackbar = inject(SnackbarService);
+  private formBuilder = inject(FormBuilder);
+  private recsHelperService = inject(RecsHelperService);
+  private modService = inject(ModService);
+
   @Input() modules: Module[];
   @Input() semesterPlanId: string;
   selectedModule: Module | undefined;
@@ -40,17 +47,10 @@ export class AddModuleDialogComponent implements OnInit {
   priorModuleWarningMessage: string;
   passedOrTakenModules: PathModule[];
 
-  constructor(
-    private store: Store,
-    private planningValidation: PlanningValidationService,
-    private snackbar: SnackbarService,
-    private formBuilder: FormBuilder,
-    private recsHelperService: RecsHelperService,
-    private modService: ModService,
-  ) { }
-
   ngOnInit(): void {
-    this.modules = this.modules.filter(mod => !mod.isOld && !mod.hasIssue && !mod.notExistingModule)
+    this.modules = this.modules.filter(
+      (mod) => !mod.isOld && !mod.hasIssue && !mod.notExistingModule,
+    );
 
     this.addModuleForm = this.formBuilder.group({
       moduleName: this.selectedModuleName,
@@ -59,7 +59,7 @@ export class AddModuleDialogComponent implements OnInit {
     this.moduleNames = this.modules.map((mod) => mod.name);
     this.filteredModules = this.selectedModuleName.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filter(value || ''))
+      map((value) => this._filter(value || '')),
     );
 
     // get passed modules from study path
@@ -76,7 +76,7 @@ export class AddModuleDialogComponent implements OnInit {
     return this.modules.filter(
       (mod) =>
         mod.name.toLowerCase().includes(filterValue) ||
-        mod.acronym.toLowerCase().includes(filterValue)
+        mod.acronym.toLowerCase().includes(filterValue),
     );
   }
 
@@ -104,7 +104,7 @@ export class AddModuleDialogComponent implements OnInit {
     if (this.selectedModule && this.semesterPlanSemester) {
       let planningValidationResult = this.planningValidation.isModuleOffered(
         this.selectedModule,
-        this.semesterPlanSemester
+        this.semesterPlanSemester,
       );
       if (!planningValidationResult.success) {
         this.snackbar.openSnackBar({
@@ -118,7 +118,7 @@ export class AddModuleDialogComponent implements OnInit {
     if (this.selectedModule) {
       if (this.selectedModule.allPriorModules.length > 0) {
         let priorModuleCheck = this.planningValidation.priorModulesTaken(
-          this.selectedModule
+          this.selectedModule,
         );
         if (!priorModuleCheck.success) {
           this.displayPriorModuleWarning = true;
@@ -156,7 +156,7 @@ export class AddModuleDialogComponent implements OnInit {
   getSelectedModuleFromDialog() {
     if (this.selectedModuleName) {
       this.selectedModule = this.modules.find(
-        (mod) => mod.name == this.selectedModuleName.value
+        (mod) => mod.name == this.selectedModuleName.value,
       );
       return {
         module: this.selectedModule,

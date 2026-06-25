@@ -75,7 +75,7 @@ export const DashboardActions = createActionGroup({
 export const TimetableActions = createActionGroup({
   source: 'Timetable',
   events: {
-    'Update Timetable Settings': props<{ showWeekends: boolean; }>(),
+    'Update Timetable Settings': props<{ timetableId: 'dashboard' | 'semesterplan', showWeekends?: boolean; selectedView?: string }>(),
     'Update Timetable Settings Success': props<{ settings: TimetableSettings[]; }>(),
     'Update Timetable Settings Failure': props<{ error: HttpErrorResponse }>()
   }

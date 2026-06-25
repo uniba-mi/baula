@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core';
 import {
   Option,
@@ -13,20 +14,19 @@ import {
   SearchSettings,
 } from '../../../../../../interfaces/search';
 import { ActivatedRoute } from '@angular/router';
-import {
-  BehaviorSubject,
-  debounceTime,
-  fromEvent,
-} from 'rxjs';
+import { BehaviorSubject, debounceTime, fromEvent } from 'rxjs';
 import { AnalyticsService } from '../../services/analytics.service';
 
 @Component({
   selector: 'app-search-panel',
   templateUrl: './search-panel.component.html',
   styleUrls: ['./search-panel.component.scss'],
-  standalone: false
+  standalone: false,
 })
 export class SearchPanelComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private analytics = inject(AnalyticsService);
+
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
   @Input() searchSettings: SearchSettings | undefined | null;
   @Input() filterOptions: OptionGroup[];
@@ -45,11 +45,9 @@ export class SearchPanelComponent implements OnInit {
   selectedFiltersCount$ = new BehaviorSubject<number>(0);
 
   // tracking search terms
-  debounceTimer: any = null;   // timer for debounce effekt
-  debounceDelay: number = 5000;   // delay
-  lastTrackedQuery: string = ''; // store tracked term - passed from html
-
-  constructor(private route: ActivatedRoute, private analytics: AnalyticsService) { }
+  debounceTimer: any = null; // timer for debounce effekt
+  debounceDelay: number = 5000; // delay
+  lastTrackedQuery: string = '';
 
   ngOnInit(): void {
     fromEvent(this.searchInput.nativeElement, 'input')
@@ -130,14 +128,15 @@ export class SearchPanelComponent implements OnInit {
 
     // set new debounce timer for tracking
     this.debounceTimer = setTimeout(() => {
-
       // only track if search term has changed and is not empty
-      if (this.searchTerm.trim() !== '' && this.searchTerm !== this.lastTrackedQuery) {
-
+      if (
+        this.searchTerm.trim() !== '' &&
+        this.searchTerm !== this.lastTrackedQuery
+      ) {
         this.analytics.trackEvent('ModuleSearch', {
           action: 'Search Module',
           term: this.panelSearchSettings.term,
-          filters: JSON.stringify(this.getSelectedFilters())
+          filters: JSON.stringify(this.getSelectedFilters()),
         });
 
         this.lastTrackedQuery = this.searchTerm; // store last tracked query
@@ -169,11 +168,11 @@ export class SearchPanelComponent implements OnInit {
   private patchFilterOptions(options: Option[]) {
     let filterOptions = this.filterOptions.reduce(
       (pv: Option[], cv: OptionGroup) => pv.concat(cv.options),
-      []
+      [],
     );
     for (let opt of options) {
       filterOptions.map((filter) =>
-        filter.value === opt.value ? (filter.selected = true) : filter
+        filter.value === opt.value ? (filter.selected = true) : filter,
       );
     }
     this.emitFiltering();

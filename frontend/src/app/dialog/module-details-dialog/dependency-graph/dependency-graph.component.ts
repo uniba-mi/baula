@@ -4,6 +4,7 @@ import {
   Input,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core';
 import cytoscape, { NodeSingular } from 'cytoscape';
 import dagre from 'cytoscape-dagre';
@@ -24,6 +25,8 @@ import { Semester } from '../../../../../../interfaces/semester';
   styleUrl: './dependency-graph.component.scss',
 })
 export class DependencyGraphComponent implements OnInit, AfterViewInit {
+  private modService = inject(ModService);
+
   @Input() focusModule: ModuleDetailsDependencyVisNodeSchema;
   @Input() priorModules: ModuleDetailsDependencyVisNodeSchema[];
   @Input() extractedPriorModules: ModuleDetailsDependencyVisNodeSchema[];
@@ -56,8 +59,6 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
   ];
   tooltip = { visible: false, x: 0, y: 0, content: '' };
 
-  constructor(private modService: ModService) {}
-
   ngOnInit(): void {
     cytoscape.use(dagre);
   }
@@ -80,7 +81,7 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
     });
 
     let missingPriorModuleNodes = this.cytoscapeInstance.nodes(
-      '.missing-prior-module'
+      '.missing-prior-module',
     );
     this.transitivelyHighlightMissingPriorModules(missingPriorModuleNodes);
 
@@ -88,12 +89,12 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
 
     // Open the module details modal if a node is tapped.
     this.cytoscapeInstance.on('tap', 'node', (event) =>
-      this.handleTapEvent(event)
+      this.handleTapEvent(event),
     );
 
     // On mouseover, display a tooltip, highlight the node and its neighbors, and grey out all other nodes and edges.
     this.cytoscapeInstance.on('mouseover', 'node', (event) =>
-      this.handleMouseOverEvent(event)
+      this.handleMouseOverEvent(event),
     );
 
     // On mouseout, remove the tooltip and reset the highlighting / greying out.
@@ -156,11 +157,11 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
    * @param missingPriorModuleNodes
    */
   transitivelyHighlightMissingPriorModules(
-    missingPriorModuleNodes: cytoscape.NodeCollection
+    missingPriorModuleNodes: cytoscape.NodeCollection,
   ): void {
     if (!this.cytoscapeInstance) {
       throw new Error(
-        'This function can only be executed when cytoscapeInstance is defined.'
+        'This function can only be executed when cytoscapeInstance is defined.',
       );
     }
     for (const node of missingPriorModuleNodes) {
@@ -196,7 +197,7 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
   resetVisualization(): void {
     if (!this.cytoscapeInstance) {
       throw new Error(
-        'This function can only be executed when cytoscapeInstance is defined.'
+        'This function can only be executed when cytoscapeInstance is defined.',
       );
     }
     this.cytoscapeInstance.elements().layout(this.layout).run();
@@ -294,7 +295,7 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
 
   createEdge(
     source: ModuleDetailsDependencyVisNodeSchema,
-    target: ModuleDetailsDependencyVisNodeSchema
+    target: ModuleDetailsDependencyVisNodeSchema,
   ): cytoscape.ElementDefinition {
     return {
       group: 'edges',
@@ -339,11 +340,11 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
   }
 
   createStatus(
-    node: ModuleDetailsDependencyVisNodeSchema | undefined
+    node: ModuleDetailsDependencyVisNodeSchema | undefined,
   ): ModuleStatusSchema | undefined {
     if (this.studyPath) {
       const studyPathModule = this.studyPath.completedModules.find(
-        (module) => module.acronym === node?.acronym
+        (module) => module.acronym === node?.acronym,
       );
       if (studyPathModule) {
         return {
@@ -357,7 +358,7 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
     if (this.semesterPlans) {
       for (const semesterPlan of this.semesterPlans) {
         const semesterPlanModule = semesterPlan.modules.find(
-          (module) => module === node?.acronym
+          (module) => module === node?.acronym,
         );
         if (semesterPlanModule) {
           return {
@@ -373,14 +374,14 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
 
   nodeIsFocusModuleNode(
     node: ModuleDetailsDependencyVisNodeSchema,
-    focusModuleNodeData: ModuleDetailsDependencyVisNodeSchema
+    focusModuleNodeData: ModuleDetailsDependencyVisNodeSchema,
   ): boolean {
     return node.id === focusModuleNodeData.id;
   }
 
   nodeIsAPriorModuleNode(
     node: ModuleDetailsDependencyVisNodeSchema,
-    focusModuleNodeData: ModuleDetailsDependencyVisNodeSchema
+    focusModuleNodeData: ModuleDetailsDependencyVisNodeSchema,
   ): boolean {
     return (
       !this.nodeIsFocusModuleNode(node, focusModuleNodeData) &&
@@ -389,16 +390,16 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
   }
 
   nodeIsAExtractedPriorModuleNode(
-    node: ModuleDetailsDependencyVisNodeSchema
+    node: ModuleDetailsDependencyVisNodeSchema,
   ): boolean {
     return this.extractedPriorModules.some(
-      (extractedPriorModule) => extractedPriorModule.acronym === node.acronym
+      (extractedPriorModule) => extractedPriorModule.acronym === node.acronym,
     );
   }
 
   assignClassesToEdge(
     source: ModuleDetailsDependencyVisNodeSchema,
-    target: ModuleDetailsDependencyVisNodeSchema
+    target: ModuleDetailsDependencyVisNodeSchema,
   ): string[] {
     if (target.advancedModule.isAdvancedModule) {
       return this.assignClassesToNode(target);
@@ -408,7 +409,7 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
   }
 
   assignMhbAndTypeClassToNode(
-    node: ModuleDetailsDependencyVisNodeSchema
+    node: ModuleDetailsDependencyVisNodeSchema,
   ): string | undefined {
     if (!node.isInStudentsMhb) {
       return 'not-in-mhb';

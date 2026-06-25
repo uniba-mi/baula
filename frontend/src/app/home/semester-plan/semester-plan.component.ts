@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild,
   HostListener,
+  inject,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { catchError, Observable, of, Subject, take, takeUntil } from 'rxjs';
@@ -16,15 +17,15 @@ import {
   SemesterPlan,
   PlanningHints,
   DeletedCourse,
-} from '../../../../../interfaces/semester-plan';
-import { Course } from '../../../../../interfaces/course';
+} from '@interfaces/semester-plan';
+import { Course } from '@interfaces/course';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
-import { AcademicDate } from '../../../../../interfaces/academic-date';
-import { Semester } from '../../../../../interfaces/semester';
+import { AcademicDate } from '@interfaces/academic-date';
+import { Semester } from '@interfaces/semester';
 import { getSemesterList } from 'src/app/selectors/user.selectors';
 import { MatSidenav } from '@angular/material/sidenav';
 import {
@@ -46,7 +47,6 @@ import { AuthService } from 'src/app/shared/auth/auth.service';
 import type { DownloadService } from 'src/app/shared/services/download.service';
 import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
 
-
 @Component({
   selector: 'app-semester-plan',
   templateUrl: './semester-plan.component.html',
@@ -54,6 +54,17 @@ import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
   standalone: false,
 })
 export class SemesterPlanComponent implements OnInit, OnDestroy {
+  private store = inject<Store<State>>(Store);
+  private rest = inject(RestService);
+  private lazyInject = inject(LazyInjectService);
+  private dialog = inject(MatDialog);
+  private snackbar = inject(SnackbarService);
+  private transform = inject(TransformationService);
+  private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
+  private mService = inject(ModService);
+  private auth = inject(AuthService);
+
   @ViewChild('coursesearch') coursesearch: MatSidenav;
 
   maintenance = false; // Variable to disable features and make maintenance message visible
@@ -79,19 +90,6 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
   hints: PlanningHints[] = [];
   collisionHints: PlanningHints[];
 
-  constructor(
-    private store: Store<State>,
-    private rest: RestService,
-    private lazyInject: LazyInjectService,
-    private dialog: MatDialog,
-    private snackbar: SnackbarService,
-    private transform: TransformationService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    private mService: ModService,
-    private auth: AuthService
-  ) {}
-
   ngOnInit(): void {
     this.semesters$ = this.store.select(getSemesterList);
     this.activeSemester$ = this.store.select(getActiveSemester);
@@ -107,7 +105,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
               catchError((error) => {
                 this.auth.forceReload(error);
                 return of([]); // Return an empty array or handle the error as needed
-              })
+              }),
             );
         }
       });
@@ -219,9 +217,15 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
         return { ...el, _id: undefined };
       }),
     };
-    this.lazyInject.get<DownloadService>(() => 
-      import('../../shared/services/download.service').then((m) => m.DownloadService)
-    ).then(download => download.downloadJSONFile(exportPlan, 'stundenplan.json'));
+    this.lazyInject
+      .get<DownloadService>(() =>
+        import('../../shared/services/download.service').then(
+          (m) => m.DownloadService,
+        ),
+      )
+      .then((download) =>
+        download.downloadJSONFile(exportPlan, 'stundenplan.json'),
+      );
   }
 
   importTimetable(oldplan: SemesterPlan) {
@@ -249,13 +253,13 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
             this.store.dispatch(
               TimetableActions.importSemesterPlan({
                 newSemesterPlan: { ...oldplan, ...result },
-              })
+              }),
             );
           } else {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
               message: `Der Stundenplan konnte nicht importiert werden. Wechsel zunächst in das ${this.transform.transformUnivIsSemester(
-                result.semester
+                result.semester,
               )}!`,
             });
           }
@@ -295,7 +299,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
                 CoursePlanningActions.deselectCourse({
                   semester: this.activeSemester,
                   courseId: id,
-                })
+                }),
               );
             }
           }

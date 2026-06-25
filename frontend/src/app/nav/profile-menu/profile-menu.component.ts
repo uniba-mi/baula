@@ -1,5 +1,5 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { MStudyProgramme, User } from '../../../../../interfaces/user';
+import { Component, Input, SimpleChanges, inject } from '@angular/core';
+import { MStudyProgramme, User } from '@interfaces/user';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { take } from 'rxjs';
 import { config } from 'src/environments/config.local';
@@ -12,10 +12,11 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class ProfileMenuComponent {
+  private auth = inject(AuthService);
+  router = inject(Router);
+
   @Input() user: User;
   bilappAvailable: boolean = false;
-
-  constructor(private auth: AuthService, public router: Router) {}
 
   logout() {
     if (this.user.authType === 'saml') {

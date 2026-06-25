@@ -1,20 +1,17 @@
-import { Injectable } from '@angular/core';
-import {
-  StudyPath,
-  SemesterStudyPath,
-} from '../../../../../interfaces/study-path';
-import { Semester } from '../../../../../interfaces/semester';
-import { MStudyProgramme } from '../../../../../interfaces/user';
-import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
+import { Injectable, inject } from '@angular/core';
+import { StudyPath, SemesterStudyPath } from '@interfaces/study-path';
+import { Semester } from '@interfaces/semester';
+import { MStudyProgramme } from '@interfaces/user';
+import { UserGeneratedModule } from '@interfaces/user-generated-module';
 import { Store } from '@ngrx/store';
 import { getModuleById } from 'src/app/selectors/module-overview.selectors';
 import { filter, map, take } from 'rxjs/operators';
 import { RestService } from 'src/app/rest.service';
 import { combineLatest, firstValueFrom, Observable, of } from 'rxjs';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
+import { StudyPlan } from '@interfaces/study-plan';
 import { EventInput } from '@fullcalendar/core';
-import { AcademicDate } from '../../../../../interfaces/academic-date';
-import { Course, Term } from '../../../../../interfaces/course';
+import { AcademicDate } from '@interfaces/academic-date';
+import { Course, Term } from '@interfaces/course';
 import { RRule, Weekday } from 'rrule';
 import { getSemesterPlansOfActiveStudyPlan } from 'src/app/selectors/study-planning.selectors';
 
@@ -28,10 +25,13 @@ import { getSemesterPlansOfActiveStudyPlan } from 'src/app/selectors/study-plann
   from a complete list into a list by semester 
   ##############################################################*/
 export class TransformationService {
-  constructor(private store: Store, private rest: RestService) { }
+  private store = inject(Store);
+  private rest = inject(RestService);
 
-  transformStudyPath(path: StudyPath, semesters: Semester[]): Observable<SemesterStudyPath[]> {
-
+  transformStudyPath(
+    path: StudyPath,
+    semesters: Semester[],
+  ): Observable<SemesterStudyPath[]> {
     // NOTE: we use the past semester information of the user (past semesters are set by user's active semester plan, not the objective date)
     return combineLatest([
       this.store.select(getSemesterPlansOfActiveStudyPlan).pipe(
@@ -39,25 +39,31 @@ export class TransformationService {
         //take(1)
       ),
       of(path),
-      of(semesters)
+      of(semesters),
     ]).pipe(
       map(([semesterPlans, path, semesters]) => {
         const result: SemesterStudyPath[] = [];
 
         for (let sem of semesters) {
           const matchingSemesterPlan = semesterPlans?.find(
-            (semesterPlan) => semesterPlan.semester === sem.name
+            (semesterPlan) => semesterPlan.semester === sem.name,
           );
 
           // default value if semesterList contains more semesters than the semesterPlans of the active plan
-          const isPast = matchingSemesterPlan ? matchingSemesterPlan.isPastSemester : false;
+          const isPast = matchingSemesterPlan
+            ? matchingSemesterPlan.isPastSemester
+            : false;
 
-          const modules = path.completedModules.filter((el) => el.semester === sem.name);
-          const courses = path.completedCourses.filter((el) => el.semester === sem.name);
+          const modules = path.completedModules.filter(
+            (el) => el.semester === sem.name,
+          );
+          const courses = path.completedCourses.filter(
+            (el) => el.semester === sem.name,
+          );
           // count only passed modules
           const ects = modules
-            .filter(el => el.status === "passed")
-            .map(el => el.ects)
+            .filter((el) => el.status === 'passed')
+            .map((el) => el.ects)
             .reduce((pv, cv) => pv + cv, 0);
 
           result.push({
@@ -72,7 +78,7 @@ export class TransformationService {
         }
 
         return result;
-      })
+      }),
     );
   }
 
@@ -126,7 +132,7 @@ export class TransformationService {
           const name = sp.name;
           const poDesc = (
             await firstValueFrom(
-              this.rest.getStudyprogrammeByIdAndVersion(sp.spId, sp.poVersion)
+              this.rest.getStudyprogrammeByIdAndVersion(sp.spId, sp.poVersion),
             )
           ).desc;
           output.push(`${name} - ${poDesc}`);
@@ -155,7 +161,7 @@ export class TransformationService {
   /* transforms placheholders into a string containing name, desc and 
   ects of the module and separates the modules via a line break */
   transformUserGeneratedModulesToString(
-    placholders: UserGeneratedModule[]
+    placholders: UserGeneratedModule[],
   ): string {
     if (placholders.length !== 0) {
       let output = '';
@@ -192,7 +198,7 @@ export class TransformationService {
   // gets details of a course and returns the name of the course as promise
   async transformUnivIsKeys(key: string, semester: string): Promise<string> {
     return firstValueFrom(
-      this.rest.getCourseDetails(key, semester).pipe(map((el) => el.name))
+      this.rest.getCourseDetails(key, semester).pipe(map((el) => el.name)),
     );
   }
 
@@ -200,13 +206,13 @@ export class TransformationService {
   transferPlanToAnotherStudyPlan(
     base: StudyPlan,
     target: StudyPlan,
-    semester: string
+    semester: string,
   ): StudyPlan {
     const basePlan = base.semesterPlans.find(
-      (plan) => plan.semester === semester
+      (plan) => plan.semester === semester,
     );
     const targetPlanIndex = target.semesterPlans.findIndex(
-      (plan) => plan.semester === semester
+      (plan) => plan.semester === semester,
     );
     if (basePlan && targetPlanIndex !== -1) {
       target.semesterPlans[targetPlanIndex] = basePlan;
@@ -220,28 +226,30 @@ export class TransformationService {
       ----------------------------------------------*/
   transformCourses(
     courses: Course[],
-    academicDates: AcademicDate[]
+    academicDates: AcademicDate[],
   ): EventInput[] {
     let result: EventInput[] =
       this.transformAcademicDatesToEvent(academicDates);
     let lectureTime = academicDates.find((el) =>
-      el.dateType.name.includes('Vorlesungszeit')
+      el.dateType.name.includes('Vorlesungszeit'),
     );
     let holidays = academicDates.filter((el) =>
-      el.dateType.name.includes('Vorlesungsfrei')
+      el.dateType.name.includes('Vorlesungsfrei'),
     );
     for (let course of courses) {
       let courseEvents: EventInput[] = this.transformCourseToEvent(
         course,
         holidays,
-        lectureTime
+        lectureTime,
       );
       result = result.concat(courseEvents);
     }
     return result;
   }
 
-  private transformAcademicDatesToEvent(academicDates: AcademicDate[]): EventInput[] {
+  private transformAcademicDatesToEvent(
+    academicDates: AcademicDate[],
+  ): EventInput[] {
     let dates: EventInput[] = [];
     for (let date of academicDates) {
       if (date.dateType.name === 'Vorlesungsfrei') {
@@ -260,7 +268,7 @@ export class TransformationService {
   private transformCourseToEvent(
     course: Course,
     holidays: AcademicDate[],
-    lectureTime?: AcademicDate
+    lectureTime?: AcademicDate,
   ): EventInput[] {
     let events: EventInput[] = [];
     for (let term of course.terms) {
@@ -317,8 +325,9 @@ export class TransformationService {
           rrule: {
             freq: RRule.WEEKLY,
             byweekday: this.checkAndReturnWeekdayForRRule(term.repeat),
-            dtstart: `${lectureTime.startdate.slice(0, 10)}T${term.starttime
-              }:00`,
+            dtstart: `${lectureTime.startdate.slice(0, 10)}T${
+              term.starttime
+            }:00`,
             until: lectureTime.enddate.slice(0, 10),
           },
         });
@@ -336,8 +345,9 @@ export class TransformationService {
             freq: RRule.WEEKLY,
             interval: 2,
             byweekday: this.checkAndReturnWeekdayForRRule(term.repeat),
-            dtstart: `${lectureTime.startdate.slice(0, 10)}T${term.starttime
-              }:00`,
+            dtstart: `${lectureTime.startdate.slice(0, 10)}T${
+              term.starttime
+            }:00`,
             until: lectureTime.enddate,
           },
         });
@@ -449,7 +459,7 @@ export class TransformationService {
           dtstart: `${el.startdate.slice(0, 10)}T${term.starttime ? term.starttime + ':00' : '00:00:00'}`,
           until: `${el.enddate.slice(0, 10)}T${term.endtime ? term.endtime + ':00' : '00:00:00'}`,
         };
-      })
+      }),
     );
 
     return excludedDates;
@@ -469,13 +479,13 @@ export class TransformationService {
         parseInt(startTimeMatch[1], 10),
         parseInt(startTimeMatch[2], 10),
         0,
-        0
+        0,
       );
       endDate.setHours(
         parseInt(endTimeMatch[1], 10),
         parseInt(endTimeMatch[2], 10),
         0,
-        0
+        0,
       );
     }
 

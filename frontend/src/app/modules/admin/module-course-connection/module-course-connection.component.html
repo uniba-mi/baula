@@ -12,28 +12,37 @@
 
   <!-- Kanban Board for Modules of the currently selected studyprogramme -->
   <div class="row my-4">
-    <ng-container *ngIf="courses$ | async as courses; else LoadingSpinner">
-      <div id="not-connected-container" class="col" *ngIf="noConnectedCourses$ | async as noConnectedCourses; else LoadingSpinner">
-        <h3>Nicht verknüpfte Module</h3>
-        <admin-connection-card [containers]="noConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
+    @if (courses$ | async; as courses) {
+      @if (noConnectedCourses$ | async; as noConnectedCourses) {
+        <div id="not-connected-container" class="col">
+          <h3>Nicht verknüpfte Module</h3>
+          <admin-connection-card [containers]="noConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
+        </div>
+      } @else {
+        <div class="col">
+          <mat-spinner></mat-spinner>
+        </div>
+      }
+      @if (partiallyConnectedCourses$ | async; as partiallyConnectedCourses) {
+        <div id="part-connected-container" class="col"
+          >
+          <h3>Teilweise verknüpfte Module</h3>
+          <admin-connection-card [containers]="partiallyConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
+        </div>
+      }
+      @if (fullyConnectedCourses$ | async; as fullyConnectedCourses) {
+        <div id="full-connected-container" class="col">
+          <h3>Vollständig verknüpfte Module</h3>
+          <admin-connection-card [containers]="fullyConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
+        </div>
+      }
+    } @else {
+      <div class="col">
+        <mat-spinner></mat-spinner>
       </div>
-      <div id="part-connected-container" class="col"
-        *ngIf="partiallyConnectedCourses$ | async as partiallyConnectedCourses">
-        <h3>Teilweise verknüpfte Module</h3>
-        <admin-connection-card [containers]="partiallyConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
-      </div>
-      <div id="full-connected-container" class="col" *ngIf="fullyConnectedCourses$ | async as fullyConnectedCourses">
-        <h3>Vollständig verknüpfte Module</h3>
-        <admin-connection-card [containers]="fullyConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
-      </div>
-    </ng-container>
-    
+    }
+
   </div>
 </div>
 
 <!-- Spinner while loading the connection data -->
-<ng-template #LoadingSpinner>
-  <div class="col">
-    <mat-spinner></mat-spinner>
-  </div>
-</ng-template>

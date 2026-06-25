@@ -3,8 +3,8 @@ import { transform } from "camaro";
 import { IncomingMessage } from "http";
 import https from "https";
 import { courses, rooms, persons } from "../../templates/univis-template";
-import { CompetenceFulfillment } from "../../../../../interfaces/competence";
-import { Course, Term, UnivISCourse } from "../../../../../interfaces/course";
+import { CompetenceFulfillment } from "@interfaces/competence";
+import { Course, Term, UnivISCourse } from "@interfaces/course";
 import { BadRequestError } from "../error";
 import {
   addCompetences,
@@ -18,8 +18,8 @@ import {
   transformEntry,
   transformUnivISCourse,
 } from "./univis-helpers";
-import { Person } from "../../../../../interfaces/person";
-import { ImportLogMessage } from "../../../../../interfaces/logs";
+import { Person } from "@interfaces/person";
+import { ImportLogMessage } from "@interfaces/logs";
 
 const prisma = new PrismaClient();
 
@@ -58,9 +58,9 @@ export async function processUnivisData(
     
     try {
       // take crawled xml and transform input to courses, rooms and persons, templates given in parent-folder 'templates/univis_template.ts'
-      const newCourses: UnivISCourse[] = await transform(data, courses);
-      const resultRooms = await transform(data, rooms);
-      const resultPersons = await transform(data, persons);
+      const newCourses: any[] = await transform(data, courses);
+      const resultRooms: any = await transform(data, rooms);
+      const resultPersons: any = await transform(data, persons);
 
       // add rooms to database
       const addedRooms = await addRooms(resultRooms);
@@ -120,7 +120,7 @@ export async function processUnivisData(
         // itterate over courses
         for (let unvisCourse of newCourses) {
           // before everthing transform organization since it is separated by multiple <br>
-          let organizational = unvisCourse.organizational.split('<split>').filter(el => el !== '')
+          let organizational = unvisCourse.organizational.split('<split>').filter((el: string) => el !== '')
           unvisCourse.organizational = organizational.join('<br>')
           // if course is a copy, skip course
           if (!unvisCourse.participationCopy && !unvisCourse.importCopy) {

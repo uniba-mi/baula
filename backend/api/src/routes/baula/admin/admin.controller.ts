@@ -48,7 +48,7 @@ import {
   upsertPersons,
   upsertStudyprogrammes,
 } from "../../../shared/helpers/fn2mod-helper";
-import { MergedChangelog } from "../../../../../../interfaces/logs";
+import { MergedChangelog } from "@interfaces/logs";
 import { FeatureWish } from "../../../database/mongo";
 
 const prisma = new PrismaClient();
@@ -1184,22 +1184,22 @@ async function crawlFlexNow(semester: string): Promise<string[]> {
 }
 
 async function processFlexNowData(xml: string): Promise<MergedChangelog> {
-  const dep = await transform(xml, depTemplate);
-  const persons = await transform(xml, personTemplate);
-  const sps = await transform(xml, spTemplate);
-  const mhbs = await transform(xml, mhbTemplate);
-  const mgs = await transform(xml, mgTemplate);
-  const modules = await transform(xml, modTemplate);
-  const mc = await transform(xml, mcTemplate);
-  const sp2mhb = await transform(xml, sp2mhbTemplate);
-  const mhb2mg = await transform(xml, mhb2mgTemplate);
-  const mg2mg = await transform(xml, mg2mgTemplate);
-  const mg2mod = await transform(xml, mg2modTemplate);
-  const m2mc = await transform(xml, m2mcTemplate);
-  const per2mc = await transform(xml, per2mcTemplate);
-  const modExams = await transform(xml, moduleExamTemplate);
+  const dep: any = await transform(xml, depTemplate);
+  const persons: any = await transform(xml, personTemplate);
+  const sps: any = await transform(xml, spTemplate);
+  const mhbs: any = await transform(xml, mhbTemplate);
+  const mgs: any = await transform(xml, mgTemplate);
+  const modules: any = await transform(xml, modTemplate);
+  const mc: any = await transform(xml, mcTemplate);
+  const sp2mhb: any = await transform(xml, sp2mhbTemplate);
+  const mhb2mg: any = await transform(xml, mhb2mgTemplate);
+  const mg2mg: any = await transform(xml, mg2mgTemplate);
+  const mg2mod: any = await transform(xml, mg2modTemplate);
+  const m2mc: any = await transform(xml, m2mcTemplate);
+  const per2mc: any = await transform(xml, per2mcTemplate);
+  const modExams: any = await transform(xml, moduleExamTemplate);
   // module dependencies via own n:m relational table, currently not in use but available.
-  const modDepend = await transform(xml, modDepTemplate);
+  const modDepend: any = await transform(xml, modDepTemplate);
   let resultLog: MergedChangelog = {}
 
   // add or update departments in database

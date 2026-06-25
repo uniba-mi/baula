@@ -1,3 +1,5 @@
-<div *ngIf="user$ | async as user" class="row">
+@if (user$ | async; as user) {
+  <div class="row">
     <app-student-upload [user]="user"></app-student-upload>
-</div>
+  </div>
+}

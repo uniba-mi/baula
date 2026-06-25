@@ -1,43 +1,55 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Module } from '../../../../../../../interfaces/module';
-import { ModuleCourse2CourseConnection } from '../../../../../../../interfaces/connection';
-import { ModuleCourse } from '../../../../../../../interfaces/module-course';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Module } from '@interfaces/module';
+import { ModuleCourse2CourseConnection } from '@interfaces/connection';
+import { ModuleCourse } from '@interfaces/module-course';
 import { MatDialog } from '@angular/material/dialog';
 import { AdminDialogComponent } from '../../dialogs/admin-dialog.component';
-import { Course } from '../../../../../../../interfaces/course';
+import { Course } from '@interfaces/course';
 import { ModService } from 'src/app/shared/services/module.service';
 import { CourseService } from 'src/app/shared/services/course.service';
 
 @Component({
-    selector: 'admin-connection-card',
-    templateUrl: './connection-card.component.html',
-    styleUrl: './connection-card.component.scss',
-    standalone: false
+  selector: 'admin-connection-card',
+  templateUrl: './connection-card.component.html',
+  styleUrl: './connection-card.component.scss',
+  standalone: false,
 })
 export class ConnectionCardComponent {
-  @Input() containers: { module: Module, connection: ModuleCourse2CourseConnection[] }[]; // contains module with their connection -> connection is the moduleCourse with the connected courses
+  private dialog = inject(MatDialog);
+  private modService = inject(ModService);
+  private cService = inject(CourseService);
+
+  @Input() containers: {
+    module: Module;
+    connection: ModuleCourse2CourseConnection[];
+  }[]; // contains module with their connection -> connection is the moduleCourse with the connected courses
   @Input() semester: string;
   @Input() courses: Course[];
-  @Output() update = new EventEmitter<void>(); // fires when dialog is closed to enable reload of connections
-
-  constructor(private dialog: MatDialog, private modService: ModService, private cService: CourseService) {}
+  @Output() update = new EventEmitter<void>();
 
   // return no or yes depending if connection exist
-  checkStatus(connection: ModuleCourse2CourseConnection[], id: string): boolean {
-    if(connection.length == 0) {
-      return false
+  checkStatus(
+    connection: ModuleCourse2CourseConnection[],
+    id: string,
+  ): boolean {
+    if (connection.length == 0) {
+      return false;
     } else {
-      const existingConnection = connection.find(el => el.mcId == id);
-      if(existingConnection) {
-        return true
+      const existingConnection = connection.find((el) => el.mcId == id);
+      if (existingConnection) {
+        return true;
       } else {
-        return false
+        return false;
       }
     }
   }
 
   // opens the edit dialog
-  openEditDialog(mCourse: ModuleCourse, chair: string, connection: ModuleCourse2CourseConnection[]) {
+  openEditDialog(
+    mCourse: ModuleCourse,
+    chair: string,
+    connection: ModuleCourse2CourseConnection[],
+  ) {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {
         dialogTitle: 'Verknüfpung von Modul zu Lehrveranstaltung bearbeiten',
@@ -45,21 +57,21 @@ export class ConnectionCardComponent {
         mCourse,
         semester: this.semester,
         chair,
-        connection: connection.filter(el => el.mcId == mCourse.mcId), //pass only connections of the selected modulCourse
-        courses: this.courses
+        connection: connection.filter((el) => el.mcId == mCourse.mcId), //pass only connections of the selected modulCourse
+        courses: this.courses,
       },
-      minWidth: '80vw'
+      minWidth: '80vw',
     });
 
     dialogRef.afterClosed().subscribe(() => {
       // fire update event to enable reload in the parent component
       this.update.emit();
-    })
+    });
   }
 
   // function to open details of the clicked module
   openModule(module: Module) {
-    this.modService.openDetailsDialog(module)
+    this.modService.openDetailsDialog(module);
   }
 
   // function to open details of the clicked course

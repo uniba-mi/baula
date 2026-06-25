@@ -1,36 +1,59 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Module } from '../../../../../../../../interfaces/module';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { combineLatest, concatMap, filter, Observable, of, Subject, take, takeUntil, takeWhile } from 'rxjs';
+import {
+  combineLatest,
+  map,
+  Observable,
+  Subject,
+  take,
+  takeWhile,
+} from 'rxjs';
 import { getAllDistinctModules } from 'src/app/selectors/module-overview.selectors';
 import { getCloseDialogMode } from 'src/app/selectors/dialog.selectors';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
-import { SemesterPlan, MetaSemester } from '../../../../../../../../interfaces/semester-plan';
+import {
+  SemesterPlan,
+  MetaSemester,
+} from '../../../../../../../../interfaces/semester-plan';
 import { Semester } from '../../../../../../../../interfaces/semester';
-import { SemesterPlanActions, UserGeneratedModuleActions } from 'src/app/actions/study-planning.actions';
+import {
+  SemesterPlanActions,
+  UserGeneratedModuleActions,
+} from 'src/app/actions/study-planning.actions';
 import { UserGeneratedModuleTemplate } from '../../../../../../../../interfaces/user-generated-module';
 import { StudyPathActions } from 'src/app/actions/user.actions';
-import { PathModule, SemesterStudyPath } from '../../../../../../../../interfaces/study-path';
-import { getActiveStudyPlanId, getSelectedStudyPlanId } from 'src/app/selectors/study-planning.selectors';
+import {
+  PathModule,
+  SemesterStudyPath,
+} from '../../../../../../../../interfaces/study-path';
+import {
+  getActiveStudyPlanId,
+  getSelectedStudyPlanId,
+} from 'src/app/selectors/study-planning.selectors';
 import { FlexnowService } from 'src/app/shared/services/flex-now.service';
-import { getLastConsentByType } from 'src/app/selectors/user.selectors';
+import { getLastConsentByType, getUserType } from 'src/app/selectors/user.selectors';
 import { Consent } from '../../../../../../../../interfaces/user';
 import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
 
 @Component({
   selector: 'app-semester-header',
   standalone: false,
-
   templateUrl: './semester-header.component.html',
-  styleUrl: './semester-header.component.scss'
+  styleUrl: './semester-header.component.scss',
 })
 export class SemesterHeaderComponent {
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+  private studyPlanService = inject(StudyPlanService);
+  private flexnowService = inject(FlexnowService);
+
   @Input() metaSemester: MetaSemester;
   @Input() semesterNumber: number;
   @Input() studyPlanId: string;
   @Input() semesterPlan: SemesterPlan;
-  @Input() semesterStudyPath$: Observable<SemesterStudyPath[]>
+  @Input() semesterStudyPath$: Observable<SemesterStudyPath[]>;
   @Input() isEligibleForFinish: boolean;
   @Input() isExpanded: boolean;
   @Output() toggleExpanded = new EventEmitter<string>(); // emits semester name
@@ -46,38 +69,58 @@ export class SemesterHeaderComponent {
   pathModule: PathModule | undefined;
   showFinishSemesterHint: boolean = false;
   lastFlexnowApiConsent$: Observable<Consent | null>;
+  lastFlexNowStudypathConsent$: Observable<Consent | null>;
+  lastFlexNowGradeConsent$: Observable<Consent | null>;
+  flexNowImportAvailabe$: Observable<boolean>;
 
-  constructor(
-    private store: Store,
-    private dialog: MatDialog,
-    private studyPlanService: StudyPlanService,
-    private flexnowService: FlexnowService,
-  ) {
-    this.lastFlexnowApiConsent$ = this.store.select(getLastConsentByType('flexnow-api'));
+  constructor() {
+    this.lastFlexnowApiConsent$ = this.store.select(
+      getLastConsentByType('flexnow-api'),
+    );
+    this.lastFlexNowStudypathConsent$ = this.store.select(
+      getLastConsentByType('upload-exam-data'),
+    );
+    this.lastFlexNowGradeConsent$ = this.store.select(
+      getLastConsentByType('include-grades'),
+    );
   }
 
   ngOnInit() {
-
     // as input for addModuleDialog
     this.modules$ = this.store.select(getAllDistinctModules);
-    this.modules$.pipe(takeWhile((mod) => mod.length === 0, true)).subscribe((modules) => {
-      this.modules = modules;
-    });
+    this.modules$
+      .pipe(takeWhile((mod) => mod.length === 0, true))
+      .subscribe((modules) => {
+        this.modules = modules;
+      });
+
+    this.flexNowImportAvailabe$ = this.store.select(getUserType).pipe(
+      map((type: string) => {
+        return type !== 'local' ? true : false;
+      })
+    )
 
     combineLatest([
       this.store.select(getActiveStudyPlanId),
-      this.store.select(getSelectedStudyPlanId)
+      this.store.select(getSelectedStudyPlanId),
     ]).subscribe(([activeStudyPlanId, selectedStudyPlanId]) => {
-
       if (activeStudyPlanId && selectedStudyPlanId) {
-        this.initializeFinishSemesterLogic(activeStudyPlanId, selectedStudyPlanId);
+        this.initializeFinishSemesterLogic(
+          activeStudyPlanId,
+          selectedStudyPlanId,
+        );
       }
     });
-
   }
 
-  initializeFinishSemesterLogic(activeStudyPlanId: string, currentStudyPlanId: string): void {
-    if (this.checkForIsPastSemesterMismatches(this.semesterPlan) && activeStudyPlanId === currentStudyPlanId) {
+  initializeFinishSemesterLogic(
+    activeStudyPlanId: string,
+    currentStudyPlanId: string,
+  ): void {
+    if (
+      this.checkForIsPastSemesterMismatches(this.semesterPlan) &&
+      activeStudyPlanId === currentStudyPlanId
+    ) {
       this.showFinishSemesterHint = true;
     } else {
       this.showFinishSemesterHint = false;
@@ -97,20 +140,10 @@ export class SemesterHeaderComponent {
   }
 
   async syncWithFlexNow() {
-    this.lastFlexnowApiConsent$.pipe(
-      take(1),
-      concatMap(consent => {
-        if (consent?.hasConfirmed) {
-          return of(true);
-        }
-        return this.flexnowService.openConsentDialog();
-      }),
-      filter(consentResult => consentResult === true),
-      concatMap(() =>
-        this.flexnowService.openOverwriteConfirmationDialog([this.metaSemester.semester])
-      ),
-      takeUntil(this.unsubscribe$)
-    ).subscribe();
+    this.flexnowService.triggerFlexNowDataLoading(
+      'update-studypath',
+      this.metaSemester.semester,
+    );
   }
 
   isFutureSemester(semesterName: string): boolean {
@@ -119,7 +152,6 @@ export class SemesterHeaderComponent {
   }
 
   openAddPathModuleDialog(semester: string, pathModule?: PathModule) {
-
     // either exists (update) or create new with the following details
     const pathModuleData: PathModule = pathModule || {
       acronym: '',
@@ -141,22 +173,28 @@ export class SemesterHeaderComponent {
       },
     });
 
-    dialogRef.afterClosed().pipe(take(1)).subscribe(pathModule => {
-      if (pathModule) {
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((pathModule) => {
+        if (pathModule) {
+          const newPathModule = {
+            ...pathModule,
+            semester: pathModule.semester ? pathModule.semester : semester,
+            grade: Number(pathModule.grade),
+            ects: Number(pathModule.ects),
+            mgId: pathModule.mgId ? pathModule.mgId : 'init',
+            isUserGenerated: true,
+            flexNowImported: pathModule.flexNowImported
+              ? pathModule.flexNowImported
+              : false,
+          };
 
-        const newPathModule = {
-          ...pathModule,
-          semester: pathModule.semester ? pathModule.semester : semester,
-          grade: Number(pathModule.grade),
-          ects: Number(pathModule.ects),
-          mgId: pathModule.mgId ? pathModule.mgId : 'init',
-          isUserGenerated: true,
-          flexNowImported: pathModule.flexNowImported ? pathModule.flexNowImported : false,
-        };
-
-        this.store.dispatch(StudyPathActions.updateModuleInStudyPath({ module: newPathModule }))
-      }
-    });
+          this.store.dispatch(
+            StudyPathActions.updateModuleInStudyPath({ module: newPathModule }),
+          );
+        }
+      });
   }
 
   openAimedEctsDialog(event: any, semesterPlanId: string, aimedEcts: number) {
@@ -184,10 +222,14 @@ export class SemesterHeaderComponent {
   updateAimedEcts(
     studyPlanId: string,
     semesterPlanId: string,
-    aimedEcts: number
+    aimedEcts: number,
   ) {
     this.store.dispatch(
-      SemesterPlanActions.updateAimedEcts({ studyPlanId, semesterPlanId, aimedEcts })
+      SemesterPlanActions.updateAimedEcts({
+        studyPlanId,
+        semesterPlanId,
+        aimedEcts,
+      }),
     );
     this.dialog.closeAll();
   }
@@ -207,15 +249,16 @@ export class SemesterHeaderComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.studyPlanService.addModuleToPlan(result.module, ppId, this.studyPlanId);
+        this.studyPlanService.addModuleToPlan(
+          result.module,
+          ppId,
+          this.studyPlanId,
+        );
       }
     });
   }
 
-  openUserGeneratedModuleDialog(
-    ppId: string,
-  ) {
-
+  openUserGeneratedModuleDialog(ppId: string) {
     // add new user generated module
     const newModule: UserGeneratedModuleTemplate = {
       name: '',
@@ -255,7 +298,7 @@ export class SemesterHeaderComponent {
               studyPlanId: this.studyPlanId,
               semesterPlanId: this.semesterPlan._id,
               module: inputModule,
-            })
+            }),
           );
         }
       }

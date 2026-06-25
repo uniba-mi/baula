@@ -42,7 +42,9 @@ export interface DeletedCourse extends PlanCourse {
 }
 
 export interface TimetableSettings {
+    timetableId: 'dashboard' | 'semesterplan',
     showWeekends: boolean;
+    selectedView: string;
     [key: string]: boolean | string | number | undefined; // extend in the future if needed
 }
 

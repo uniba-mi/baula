@@ -1,25 +1,42 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
-import { Status } from '../../../../../interfaces/user';
+import { Status } from '@interfaces/user';
 import { Observable } from 'rxjs';
-import { Semester } from '../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { map, take } from 'rxjs/operators';
 import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
-import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
-import { Module } from '../../../../../interfaces/module';
-import { PathModule } from '../../../../../interfaces/study-path';
-import { ExtendedModuleGroup } from '../../../../../interfaces/module-group';
+import { UserGeneratedModule } from '@interfaces/user-generated-module';
+import { Module } from '@interfaces/module';
+import { PathModule } from '@interfaces/study-path';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
 import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
 
 @Component({
-    selector: 'app-change-status-dialog',
-    templateUrl: './change-status-dialog.component.html',
-    styleUrls: ['./change-status-dialog.component.scss'],
-    standalone: false
+  selector: 'app-change-status-dialog',
+  templateUrl: './change-status-dialog.component.html',
+  styleUrls: ['./change-status-dialog.component.scss'],
+  standalone: false,
 })
 export class ChangeStatusDialogComponent implements OnInit, OnChanges {
+  private store = inject(Store);
+  private formBuilder = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
+
   @Input() statusOptions: Status[];
   @Input() status: string;
   @Input() statusSemester: string | undefined;
@@ -33,14 +50,14 @@ export class ChangeStatusDialogComponent implements OnInit, OnChanges {
   minGrade: number = 1;
   maxGrade: number = 5;
   showNoEditHint: boolean = false;
-  structuredModuleGroups$: Observable<ExtendedModuleGroup[]>
+  structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
 
-  constructor(private store: Store, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor() {
     this.changeStatusForm = this.formBuilder.group({
       semester: this.statusSemester,
       moduleStatus: this.selectedModuleStatus,
       grade: ['', [Validators.pattern(/^[1-5]((\.|,)[0-9])?$/)]],
-      mgId: ['']
+      mgId: [''],
     });
 
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);
@@ -56,13 +73,18 @@ export class ChangeStatusDialogComponent implements OnInit, OnChanges {
 
     if (this.semesters$) {
       this.semesters$ = this.semesters$.pipe(
-        map(semesters => semesters.filter(semester => !semester.isFutureSemester()))
+        map((semesters) =>
+          semesters.filter((semester) => !semester.isFutureSemester()),
+        ),
       );
     }
 
-    this.store.select(getActiveSemester).pipe(take(1)).subscribe(semester => {
-      this.activeSemester = semester;
-    });
+    this.store
+      .select(getActiveSemester)
+      .pipe(take(1))
+      .subscribe((semester) => {
+        this.activeSemester = semester;
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -71,19 +93,21 @@ export class ChangeStatusDialogComponent implements OnInit, OnChanges {
       this.cdr.detectChanges();
     }
     if (changes['grade'] && changes['grade'].currentValue !== undefined) {
-      this.changeStatusForm.get('grade')?.setValue(changes['grade'].currentValue);
+      this.changeStatusForm
+        .get('grade')
+        ?.setValue(changes['grade'].currentValue);
       this.cdr.detectChanges();
     }
   }
 
   initForm(): void {
-    this.changeStatusForm.get('grade')?.valueChanges.subscribe(value => {
+    this.changeStatusForm.get('grade')?.valueChanges.subscribe((value) => {
       if (typeof value === 'string') {
         this.reformatAndValidateInput(value);
       }
     });
 
-    this.selectedModuleStatus.valueChanges.subscribe(status => {
+    this.selectedModuleStatus.valueChanges.subscribe((status) => {
       this.updateFormBasedOnStatus(status || 'open');
     });
 
@@ -93,12 +117,14 @@ export class ChangeStatusDialogComponent implements OnInit, OnChanges {
   reformatAndValidateInput(value: string): void {
     const formattedValue = value.replace(',', '.');
     if (formattedValue !== value) {
-      this.changeStatusForm.get('grade')?.setValue(formattedValue, { emitEvent: false });
+      this.changeStatusForm
+        .get('grade')
+        ?.setValue(formattedValue, { emitEvent: false });
     }
   }
 
   setupFormValidators(): void {
-    this.selectedModuleStatus.valueChanges.subscribe(status => {
+    this.selectedModuleStatus.valueChanges.subscribe((status) => {
       const safeStatus = status || 'open';
       this.updateFormBasedOnStatus(safeStatus);
     });
@@ -106,8 +132,8 @@ export class ChangeStatusDialogComponent implements OnInit, OnChanges {
 
   fillForm(): void {
     this.selectedModuleStatus.setValue(this.status);
-    if(this.module.mgId) {
-      this.selectModuleGroup(this.module.mgId)
+    if (this.module.mgId) {
+      this.selectModuleGroup(this.module.mgId);
     }
   }
 
@@ -119,15 +145,21 @@ export class ChangeStatusDialogComponent implements OnInit, OnChanges {
     if (status === 'failed') {
       this.minGrade = 5;
       this.maxGrade = 5;
-      gradeControl?.setValidators([Validators.min(this.minGrade), Validators.max(this.maxGrade)]);
+      gradeControl?.setValidators([
+        Validators.min(this.minGrade),
+        Validators.max(this.maxGrade),
+      ]);
       gradeControl?.setValue(5);
       gradeControl?.disable();
       this.showNoEditHint = true;
-      this.cdr.detectChanges()
+      this.cdr.detectChanges();
     } else if (status === 'passed') {
       this.minGrade = 1;
       this.maxGrade = 4;
-      gradeControl?.setValidators([Validators.min(this.minGrade), Validators.max(this.maxGrade)]);
+      gradeControl?.setValidators([
+        Validators.min(this.minGrade),
+        Validators.max(this.maxGrade),
+      ]);
       gradeControl?.enable();
     } else {
       gradeControl?.clearValidators();
@@ -142,7 +174,6 @@ export class ChangeStatusDialogComponent implements OnInit, OnChanges {
 
   getModuleStatus() {
     if (this.changeStatusForm.valid) {
-
       const status = this.selectedModuleStatus.value;
       let grade = this.changeStatusForm.controls['grade'].value;
 
@@ -158,7 +189,7 @@ export class ChangeStatusDialogComponent implements OnInit, OnChanges {
         status: this.selectedModuleStatus.value,
         semester: this.statusSemester,
         grade: grade,
-        mgId: mgId
+        mgId: mgId,
       };
     }
     return null;

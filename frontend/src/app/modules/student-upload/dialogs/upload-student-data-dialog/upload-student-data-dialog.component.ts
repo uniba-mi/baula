@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
 
@@ -7,17 +6,29 @@ import { closeDialogMode } from 'src/app/actions/dialog.actions';
   selector: 'app-upload-student-data-dialog',
   templateUrl: './upload-student-data-dialog.component.html',
   styleUrl: './upload-student-data-dialog.component.scss',
-  standalone: false
+  standalone: false,
 })
 export class UploadStudentDataDialogComponent {
+  private store = inject(Store);
 
-  consentForm: FormGroup;
+  @Input() onlyStudypath: boolean;
+  @Input() onlyMetaData: boolean;
+  flexNowImportConfirmed = false;
+  metadataConfirmed = false;
+  studypathConfirmed = false;
+  gradesConfirmed = false;
   fileToUpload: File | null = null;
 
-  constructor(private fb: FormBuilder, private store: Store) {
-    this.consentForm = this.fb.group({
-      agreeToTerms: [false, Validators.requiredTrue],
-    });
+  receiveChanges(confirmations: {
+    flexNowImportConfirmed: boolean;
+    metadataConfirmed: boolean;
+    studypathConfirmed: boolean;
+    gradesConfirmed: boolean;
+  }) {
+    this.flexNowImportConfirmed = confirmations.flexNowImportConfirmed;
+    this.metadataConfirmed = confirmations.metadataConfirmed;
+    this.studypathConfirmed = confirmations.studypathConfirmed;
+    this.gradesConfirmed = confirmations.gradesConfirmed;
   }
 
   close(mode: string) {
@@ -25,6 +36,15 @@ export class UploadStudentDataDialogComponent {
   }
 
   getConsent() {
-    return this.consentForm.valid && this.consentForm.get('agreeToTerms')?.value;
+    if (this.flexNowImportConfirmed) {
+      return {
+        flexNowImportConfirmed: this.flexNowImportConfirmed,
+        metadataConfirmed: this.metadataConfirmed,
+        studypathConfirmed: this.studypathConfirmed,
+        gradesConfirmed: this.gradesConfirmed,
+      };
+    } else {
+      return undefined;
+    }
   }
 }

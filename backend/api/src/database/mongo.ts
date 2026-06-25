@@ -5,16 +5,16 @@ import mongoose, {
   Schema,
   Model,
 } from "mongoose";
-import { SemesterPlan as ISemesterPlan } from "../../../../interfaces/semester-plan";
+import { SemesterPlan as ISemesterPlan } from "@interfaces/semester-plan";
 import { ObjectId } from "mongodb";
-import { StudyPlan as IStudyPlan } from "../../../../interfaces/study-plan";
-import { Recommendation as IRecommendation } from "../../../../interfaces/recommendation";
-import { Embedding as IEmbedding, ModuleEmbedding as IModEmbedding } from "../../../../interfaces/embedding";
-import { Exam as IExam } from "../../../../interfaces/study-path";
-import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/long-term-evaluation";
-import { Topic as ITopic } from "../../../../interfaces/topic";
-import { UserServer as IUser } from "../../../../interfaces/user";
-import { Evaluation as IEvaluation } from "../../../../interfaces/evaluation";
+import { StudyPlan as IStudyPlan } from "@interfaces/study-plan";
+import { Recommendation as IRecommendation } from "@interfaces/recommendation";
+import { Embedding as IEmbedding, ModuleEmbedding as IModEmbedding } from "@interfaces/embedding";
+import { Exam as IExam } from "@interfaces/study-path";
+import { LongTermEvaluation as ILongTermEvaluation } from "@interfaces/long-term-evaluation";
+import { Topic as ITopic } from "@interfaces/topic";
+import { UserServer as IUser } from "@interfaces/user";
+import { Evaluation as IEvaluation } from "@interfaces/evaluation";
 import { FeatureWish as IFeatureWish } from "../../../../interfaces/feature-wish";
 const uri = process.env.MONGO_DATABASE_URL
   ? process.env.MONGO_DATABASE_URL.toString()
@@ -317,6 +317,31 @@ interface UserQueryHelpers {
   byShibId(this: UserModelQuery, shibId: String): UserModelQuery;
 }
 
+
+/* const ExamSchema: Schema = new Schema<IExam>(
+  {
+    name: {
+      type: String,
+      required: true
+    },
+    attempts: [{
+      semester: {
+        type: String,
+        required: true
+      },
+      status: {
+        type: String,
+        required: true,
+        // match: /(taken|failed|passed|open)/
+      },
+      grade: {
+        type: Number,
+        required: true
+      }
+    }]
+  }
+); */
+
 // UserSchema
 const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
   {
@@ -361,7 +386,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
           type: String,
           match: /(taken)|(failed)|(passed)|(open)/g,
         },
-        // exams: [ExamSchema],
+        //exams: [ExamSchema],
         semester: {
           type: String,
           match: /(\d{4}((w)|(s)))/g,
@@ -397,6 +422,10 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         faculty: String,
         mhbId: String,
         mhbVersion: Number,
+        status: String,
+        startSemster: String,
+        duration: Number,
+        maxEcts: Number
       },
     ],
     fulltime: {
@@ -409,7 +438,16 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         visible: Boolean,
       },
     ],
-    timetableSettings: [{ showWeekends: Boolean }],
+    timetableSettings: [
+      { 
+        timetableId: {
+          type: String,
+          enum: ["dashboard", "semesterplan"],
+        },
+        showWeekends: Boolean,
+        selectedView: String
+      }
+    ],
     favouriteModulesAcronyms: [String],
     excludedModulesAcronyms: [String],
     hints: [

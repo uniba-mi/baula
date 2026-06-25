@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { LongTermEvaluation } from '../../../../../interfaces/long-term-evaluation';
+import { LongTermEvaluation } from '@interfaces/long-term-evaluation';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/config.local';
 
@@ -22,11 +22,6 @@ export class LteRestService {
   // query to save survey result to database
   saveResult(result: LongTermEvaluation): Observable<any> {
     return this.http.post<any>(`${this.urlBase}survey/`, { result }, httpOptions);
-  }
-
-  // query to reset survey consent response
-  resetConsentResponse(): Observable<string> {
-    return this.http.put<string>(`${this.urlBase}survey/reset/response`, {}, httpOptions);
   }
 
   // get results from survey

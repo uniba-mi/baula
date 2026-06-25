@@ -1,0 +1,101 @@
+<div class="dialog-container" role="dialog" aria-label="Dialogfenster">
+    <div class="dialog-body">
+        <mat-dialog-content>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>Allgemeine Informationen:</h3>
+                <button mat-dialog-close class="btn btn-outline text-gray" tabindex="0" aria-label="Schließen"> <i
+                        class="bi bi-x-lg text-gray fs-4"></i>
+                </button>
+            </div>
+
+            <div class="alert alert-info">
+                Die "Allgemeinen Informationen" sind aus dem aktuell immatrikulierten Studiengang entnommen.
+                Sofern es mehrere Studiengänge sind, wurden die Angaben des ersten Studiengangs übernommen.
+                Sobald Baula mehrere Studiengänge unterstützt, würden hier die Angaben kombiniert werden.
+            </div>
+            <ul>
+                <li><span class="fw-bold">Startsemester: </span>{{ (data.metadata.startSemester ?
+                    data.metadata.startSemester : '') | Semester}}</li>
+                <li><span class="fw-bold">Dauer: </span>{{ data.metadata.duration }}</li>
+                <li><span class="fw-bold">angestrebte ECTS: </span>{{ data.metadata.maxEcts }}</li>
+                <li><span class="fw-bold">Vollzeit? </span>{{ data.metadata.fulltime ? 'Ja' : 'Nein' }}</li>
+            </ul>
+            <hr class="my-2" />
+            <h3>Angaben zu Studiengängen:</h3>
+            @for (sp of data.metadata.sps; track sp.spId) {
+            <mat-card appearance="outlined" class="m-2 p-2">
+                <mat-card-header>
+                    <mat-card-title>{{ sp.name }} ({{ sp.faculty }})</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div>Status: {{ sp.status }}</div>
+                    <div>Studiendauer: {{ sp.duration }}</div>
+                    <div>ECTS: {{ sp.maxEcts }}</div>
+                </mat-card-content>
+            </mat-card>
+            } @empty {
+            <div class="alert alert-warning">Keine Studiengänge im FlexNow-Auszug gefunden.</div>
+            }
+            @if(data.studypath) {
+            <hr class="my-2" />
+            <h3>Studienverlauf:</h3>
+            @for (module of data.studypath.completedModules; track module.mId) {
+            <mat-card appearance="outlined" class="m-2 p-2">
+                <mat-card-header>
+                    <mat-card-title>{{ module.acronym }}</mat-card-title>
+                    <mat-card-subtitle>{{ module.semester | Semester }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <div>Status: {{ module.status }}</div>
+                    <div>Note: {{ module.grade }}</div>
+                    <div>ECTS: {{ module.ects }}</div>
+                    <div>
+                        <div>Versuche:</div>
+                        @for(attempt of module.examAttempts; track trackByCombinedKey(attempt.examId, attempt.semester))
+                        {
+                        <ul>
+                            <li>{{ attempt.name }} ({{ attempt.count }}. Versuch) - {{ attempt.semester | Semester }} -
+                                {{ attempt.remark }} - {{ attempt.grade ?? 'Keine Note gefunden!' }}</li>
+                        </ul>
+                        }
+                    </div>
+                    <div>
+                        <div>Modulgruppen:</div>
+                        <ul>
+                            @for(mg of module.moduleGroups; track mg.mgId) {
+                            <li>{{ mg.mgId }} (Version {{ mg.version }})
+                                @if(findModuleGroup(mg.mgId) | async; as matchingMg) {
+                                <div>{{ matchingMg.name }}</div>
+                                } @else {
+                                <div>Die Modulgruppe ist nicht in deinem Modulhandbuch vorhanden oder das Modulhandbuch ist noch nicht geladen.</div>
+                                }
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            } @empty {
+            <div class="alert alert-warning">Keine abgeschlossenen Module im FlexNow-Auszug gefunden.</div>
+            }
+            }
+            <hr class="my-2" />
+            <div class="d-flex justify-content-between">
+                <h3>Extrahierte JSON-Daten:</h3>
+                <button class="btn btn-secondary" (click)="copyToClipboard(data.raw)"><i class="bi bi-clipboard"></i></button>
+            </div>
+            
+            <pre>
+                {{ data.raw | json}}
+            </pre>
+            <hr class="my-2" />
+            <div class="d-flex justify-content-between">
+                <h3>FlexNow Daten:</h3>
+                <button class="btn btn-secondary" (click)="copyToClipboard(data.xml)"><i class="bi bi-clipboard"></i></button>
+            </div>
+            <pre>
+                {{ data.xml }}
+            </pre>
+        </mat-dialog-content>
+    </div>
+</div>

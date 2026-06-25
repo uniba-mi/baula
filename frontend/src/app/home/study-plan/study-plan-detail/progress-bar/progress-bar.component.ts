@@ -5,8 +5,8 @@ import {
 } from '@angular/core';
 import {
   SemesterStudyPath,
-} from '../../../../../../../interfaces/study-path';
-import { SemesterPlan } from '../../../../../../../interfaces/semester-plan';
+} from '@interfaces/study-path';
+import { SemesterPlan } from '@interfaces/semester-plan';
 import { combineLatest, map, Observable, startWith } from 'rxjs';
 
 @Component({

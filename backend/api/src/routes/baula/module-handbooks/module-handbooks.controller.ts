@@ -4,7 +4,7 @@ import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import { addAllPriorModules, addExtractedModules, addModuleCourses, findAndBuildModuleHandbookByIdAndVersion } from "../../../shared/helpers/module-helpers";
 import { Module } from "../../../../../../interfaces/module";
-import { UserServer } from "../../../../../../interfaces/user";
+import { UserServer } from "@interfaces/user";
 
 const prisma = new PrismaClient();
 
@@ -38,7 +38,7 @@ export async function getUpToDateMhb(req: Request, res: Response, next: NextFunc
       },
       where: {
         mhbId: mhbId,
-        spId: user.sps[0].spId
+        spId: user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId
       }, 
       orderBy: {
         version: 'desc'

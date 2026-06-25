@@ -1,47 +1,46 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, inject } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
-import { SemesterStudyPath, StudyPath } from '../../../../../../../interfaces/study-path';
-import { Semester } from '../../../../../../../interfaces/semester';
-import { StudyPlan } from '../../../../../../../interfaces/study-plan';
+import { SemesterStudyPath, StudyPath } from '@interfaces/study-path';
+import { Semester } from '@interfaces/semester';
+import { StudyPlan } from '@interfaces/study-plan';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
 
 @Component({
-    selector: 'app-semester-ects-progress-chart',
-    templateUrl: './semester-ects-progress-chart.component.html',
-    styleUrls: ['./semester-ects-progress-chart.component.scss'],
-    standalone: false
+  selector: 'app-semester-ects-progress-chart',
+  templateUrl: './semester-ects-progress-chart.component.html',
+  styleUrls: ['./semester-ects-progress-chart.component.scss'],
+  standalone: false,
 })
 export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
+  private transform = inject(TransformationService);
+
   @Input() studyPath: StudyPath;
   @Input() semesters: Semester[];
   @Input() studyPlan: StudyPlan | undefined | null;
   studyPathInSemester: SemesterStudyPath[] = [];
-
-  constructor(private transform: TransformationService) { }
 
   public lineChartData: ChartConfiguration['data'];
 
   public lineChartOptions: ChartConfiguration['options'] = {
     elements: {
       line: {
-        tension: 0.5
-      }
+        tension: 0.5,
+      },
     },
     scales: {
-      y:
-        {
-          position: 'left',
-        }
+      y: {
+        position: 'left',
+      },
     },
 
     plugins: {
-      legend: { display: true }
-    }
+      legend: { display: true },
+    },
   };
 
-
   ngOnInit(): void {
-    this.transform.transformStudyPath(this.studyPath, this.semesters)
+    this.transform
+      .transformStudyPath(this.studyPath, this.semesters)
       .subscribe((studyPathInSemester) => {
         this.studyPathInSemester = studyPathInSemester;
       });
@@ -49,19 +48,22 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.transform.transformStudyPath(this.studyPath, this.semesters)
+    this.transform
+      .transformStudyPath(this.studyPath, this.semesters)
       .subscribe((studyPathInSemester) => {
         this.studyPathInSemester = studyPathInSemester;
       });
     this.calculateDataForLineChart();
   }
-  
 
   calculateDataForLineChart() {
     this.lineChartData = {
       datasets: [
         {
-          data: this.getEctsProgressFromStudyPath(this.studyPathInSemester, 'taken'),
+          data: this.getEctsProgressFromStudyPath(
+            this.studyPathInSemester,
+            'taken',
+          ),
           label: 'Belegte ECTS (Ist)',
           backgroundColor: 'rgba(102, 144, 177, 0.2)',
           borderColor: 'rgb(51, 106, 151)',
@@ -72,7 +74,10 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
           fill: 'origin',
         },
         {
-          data: this.getEctsProgressFromStudyPath(this.studyPathInSemester, 'passed'),
+          data: this.getEctsProgressFromStudyPath(
+            this.studyPathInSemester,
+            'passed',
+          ),
           label: 'Bestandene ECTS (Ist)',
           backgroundColor: 'rgba(172, 204, 61, 0.2)',
           borderColor: '#97bf0d',
@@ -83,7 +88,10 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
           fill: 'origin',
         },
         {
-          data: this.getEctsProgressFromStudyPath(this.studyPathInSemester, 'failed'),
+          data: this.getEctsProgressFromStudyPath(
+            this.studyPathInSemester,
+            'failed',
+          ),
           label: 'Nicht bestandene ECTS (Ist)',
           backgroundColor: 'rgba(235, 105, 114, 0.2)',
           borderColor: '#e6444f',
@@ -92,11 +100,11 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
           pointHoverBackgroundColor: 'rgb(235, 105, 114)',
           pointHoverBorderColor: '#e6444f',
           fill: 'origin',
-        }
+        },
       ],
-      labels: this.semesters.map(semester => semester.shortName)
+      labels: this.semesters.map((semester) => semester.shortName),
     };
-    if(this.studyPathInSemester) {
+    if (this.studyPathInSemester) {
       this.lineChartData.datasets = this.lineChartData.datasets.concat([
         {
           data: this.getEctsProgressFromStudyPlan('aim'),
@@ -119,8 +127,8 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
           pointHoverBackgroundColor: 'rgb(159, 159, 156)',
           pointHoverBorderColor: 'rgb(207, 207, 206)',
           fill: 'origin',
-        }
-      ])
+        },
+      ]);
     }
   }
 
@@ -130,20 +138,19 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
    * @returns array with ects for each semester (length is same as semesters)
      ------------------------------- */
   private getEctsProgressFromStudyPlan(status: string): number[] {
-    if(this.studyPlan) {
+    if (this.studyPlan) {
       // check if aimed or planned ects are requested
-      if(status == 'aim') {
-        return this.studyPlan.semesterPlans.map(plan => plan.aimedEcts);;
-      } else if(status == 'planned') {
-        return this.studyPlan.semesterPlans.map(plan => plan.summedEcts);
+      if (status == 'aim') {
+        return this.studyPlan.semesterPlans.map((plan) => plan.aimedEcts);
+      } else if (status == 'planned') {
+        return this.studyPlan.semesterPlans.map((plan) => plan.summedEcts);
       } else {
         // invalid status, return empty array
         return [];
       }
     } else {
-      return []
+      return [];
     }
-    
   }
 
   /** ------------------------------
@@ -151,13 +158,16 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
    * @param status defines which data should be returned, stands for status of modules that should be combined (e.g. 'passed' for all modules that were passed in this semester)
    * @returns array with ects for each semester (length is same as semesters)
       ------------------------------ */
-  private getEctsProgressFromStudyPath(path: SemesterStudyPath[], status: string): number[] {
-    return path.map(el => {
-      const passedModulesEcts = el.modules.filter(mod => mod.status == status).map(module => module.ects).reduce(
-        (accumulator, currentValue) => accumulator + currentValue, 0
-      );
+  private getEctsProgressFromStudyPath(
+    path: SemesterStudyPath[],
+    status: string,
+  ): number[] {
+    return path.map((el) => {
+      const passedModulesEcts = el.modules
+        .filter((mod) => mod.status == status)
+        .map((module) => module.ects)
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
       return passedModulesEcts;
     });
   }
-
 }

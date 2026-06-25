@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ExtendedJob, Job, Jobtemplate } from '../../../../../interfaces/job';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { ExtendedJob, Job, Jobtemplate } from '@interfaces/job';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable, take } from 'rxjs';
 import { MockJob, mockJobs } from './mocked-jobs';
@@ -15,12 +15,15 @@ import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.servi
   standalone: false,
 })
 export class EditJobDialogComponent implements OnInit {
+  private recsService = inject(RecsRestService);
+  private store = inject(Store);
+
   @Input() job: Job | Jobtemplate | undefined;
   jobs$: Observable<ExtendedJob[] | undefined>;
   inputMode: 'url' | 'mock' | undefined;
   mockedJobs: MockJob[] = mockJobs;
   selectedJob: MockJob | undefined;
-  editedJob: Job | Jobtemplate |undefined;
+  editedJob: Job | Jobtemplate | undefined;
   searchUrl: string;
   loading = false;
   loadingKeywords = false;
@@ -30,8 +33,6 @@ export class EditJobDialogComponent implements OnInit {
   readonly addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-  constructor(private recsService: RecsRestService, private store: Store) { }
-
   ngOnInit() {
     this.jobs$ = this.store.select(getJobs);
 
@@ -39,39 +40,43 @@ export class EditJobDialogComponent implements OnInit {
     this.jobs$.pipe(take(1)).subscribe((jobs) => {
       if (jobs) {
         this.mockedJobs.forEach((mockJob) => {
-          const exists = jobs.some(
-            (job) =>
-              job.title === mockJob.title
-          );
+          const exists = jobs.some((job) => job.title === mockJob.title);
           this.existingJobMap.set(mockJob.title, exists);
         });
       }
     });
 
-    this.editMode = this.job && Object.keys(this.job).includes('_id') ? true : false; 
-    this.editedJob = this.job ? JSON.parse(JSON.stringify(this.job)) : undefined;
+    this.editMode =
+      this.job && Object.keys(this.job).includes('_id') ? true : false;
+    this.editedJob = this.job
+      ? JSON.parse(JSON.stringify(this.job))
+      : undefined;
 
     // Mock input mode until url is disabled
-    this.inputMode = 'mock'
+    this.inputMode = 'mock';
   }
 
   crawlJob() {
-    if(this.searchUrl) {
+    if (this.searchUrl) {
       this.loading = true;
       this.editedJob = undefined;
-      this.recsService.crawlJob(this.searchUrl).pipe(take(1)).subscribe((value: any) => {
-        if(!value) {
-          this.errorMessage = "Die Jobanzeige konnte leider nicht geladen werden."
-        } else {
-          this.editedJob = {
-            title: value.title,
-            description: value.description,
-            inputMode: this.inputMode || 'url',
-            keywords: value.keywords || []
+      this.recsService
+        .crawlJob(this.searchUrl)
+        .pipe(take(1))
+        .subscribe((value: any) => {
+          if (!value) {
+            this.errorMessage =
+              'Die Jobanzeige konnte leider nicht geladen werden.';
+          } else {
+            this.editedJob = {
+              title: value.title,
+              description: value.description,
+              inputMode: this.inputMode || 'url',
+              keywords: value.keywords || [],
+            };
           }
-        }
-        this.loading = false;
-      });
+          this.loading = false;
+        });
     }
   }
 
@@ -83,41 +88,45 @@ export class EditJobDialogComponent implements OnInit {
     const value = (event.value || '').trim();
 
     if (value && this.editedJob) {
-      this.editedJob.keywords.push(value)
+      this.editedJob.keywords.push(value);
     }
 
     event.chipInput!.clear();
   }
 
   generateKeywords() {
-    if(this.editedJob && this.editedJob.title && this.editedJob.description) {
+    if (this.editedJob && this.editedJob.title && this.editedJob.description) {
       this.loadingKeywords = true;
       this.editedJob.keywords = [];
-      this.recsService.generateJobKeywords(this.editedJob).pipe(take(1)).subscribe((value: any) => {
-        if(this.editedJob && value && value.keywords) {
-          this.editedJob.keywords = value.keywords;
-        } else {
-          this.errorMessage = "Die Keywords konnten leider nicht generiert werden.";
-        }
-        this.loadingKeywords = false;
-      });
+      this.recsService
+        .generateJobKeywords(this.editedJob)
+        .pipe(take(1))
+        .subscribe((value: any) => {
+          if (this.editedJob && value && value.keywords) {
+            this.editedJob.keywords = value.keywords;
+          } else {
+            this.errorMessage =
+              'Die Keywords konnten leider nicht generiert werden.';
+          }
+          this.loadingKeywords = false;
+        });
     }
   }
 
   removeKeyword(index: number) {
-    if(this.editedJob && this.editedJob.keywords[index]) {
+    if (this.editedJob && this.editedJob.keywords[index]) {
       this.editedJob.keywords.splice(index, 1);
     }
   }
 
   selectJob() {
-    if(this.selectedJob) {
+    if (this.selectedJob) {
       this.editedJob = {
         title: this.selectedJob.title,
-        description: `${this.selectedJob.description}\n${this.selectedJob.requirements.map(req => `- ${req}`).join('\n')}`,
+        description: `${this.selectedJob.description}\n${this.selectedJob.requirements.map((req) => `- ${req}`).join('\n')}`,
         inputMode: this.inputMode || 'mock',
-        keywords: this.selectedJob.keywords
-      }
+        keywords: this.selectedJob.keywords,
+      };
     }
   }
 

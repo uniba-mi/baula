@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "rootDir": "../../",
+    "paths": {
+      "@interfaces/*": ["../../interfaces/*"]
+    },
     "target": "ES2019",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "module": "CommonJS",                                /* Specify what module code is generated. */
     "lib": ["ES2019"],
@@ -14,6 +18,6 @@
     /* Completeness */
     "skipLibCheck": true                                       /* Enable all strict type-checking options. */
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "../../interfaces/*.ts"],
   "exclude": ["./node_modules", "./dist"]
 }

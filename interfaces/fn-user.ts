@@ -1,12 +1,27 @@
+import { MStudyProgramme } from "./user"
+
 export interface FnUser {
-    metadata: FnStudyprogramme[],
-    studyPath?: {
-        completedModules: FnCompletedModule[],
-        completedCourses: FnCompletedCourse[]
-    }
+    metadata: FnMetaData,
+    studypath?: FnStudyPath,
+    raw: any,
+    xml: string
 }
 
-export interface FnStudyprogramme {
+export interface FnStudyPath {
+    completedModules: FnCompletedModule[],
+    completedCourses: FnCompletedCourse[]
+}
+
+export interface FnMetaData {
+    sps: MStudyProgramme[];
+    startSemester?: string;
+    duration?: number;
+    maxEcts?: number;
+    fulltime?: boolean;
+}
+
+
+export interface FnStudyProgramme {
     spId: string,
     poVersion: number,
     name: string,
@@ -35,7 +50,7 @@ export interface FnCompletedModule {
     acronym: string,
     name: string,
     ects: number,
-    moduleGroups: { mgId: string, version: string }[],
+    moduleGroups: { mgId: string, version: string}[],
     grade: number | null,
     status: string,
     semesterBegin: string, // semester as apnr
@@ -45,14 +60,12 @@ export interface FnCompletedModule {
 }
 
 export interface FnCompletedCourse {
-    id: string,
-    nr: string,
-    waitingList: number | null,
     name: string,
     semester: string // semester as apnr
 }
 
 interface ExamAttemp {
+    examId: string,
     count: number,
     grade: number | null,
     semester: string, // semester as apnr

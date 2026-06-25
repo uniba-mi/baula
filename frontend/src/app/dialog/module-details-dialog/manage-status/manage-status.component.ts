@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { Module } from '../../../../../../interfaces/module';
@@ -8,7 +8,10 @@ import { getStudyPlans } from 'src/app/selectors/study-planning.selectors';
 import { StudyPath } from '../../../../../../interfaces/study-path';
 import { getUserStudyPath } from 'src/app/selectors/user.selectors';
 import { Semester } from '../../../../../../interfaces/semester';
-import { ConfirmationDialogComponent, ConfirmationDialogData } from '../../confirmation-dialog/confirmation-dialog.component';
+import {
+  ConfirmationDialogComponent,
+  ConfirmationDialogData,
+} from '../../confirmation-dialog/confirmation-dialog.component';
 import { ModulePlanningActions } from 'src/app/actions/study-planning.actions';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -16,9 +19,11 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-manage-status',
   standalone: false,
   templateUrl: './manage-status.component.html',
-  styleUrl: './manage-status.component.scss'
+  styleUrl: './manage-status.component.scss',
 })
 export class ManageStatusComponent {
+  private store = inject<Store<State>>(Store);
+  private dialog = inject(MatDialog);
 
   @Input() selectedModule: Module;
   @Input() openedWithSemesterSet: boolean = true;
@@ -28,40 +33,48 @@ export class ManageStatusComponent {
   studyPlans$: Observable<StudyPlan[]>;
   studyPath$: Observable<StudyPath>;
 
-  history = [ // mocking this for now
+  history = [
+    // mocking this for now
     { semester: 'SoSe 2025', attempt: 2, grade: '', note: 'Ausstehend' },
-    { semester: 'WiSe 2024/25', attempt: 1, grade: '5,0', note: 'Anerkannt am XY' },
+    {
+      semester: 'WiSe 2024/25',
+      attempt: 1,
+      grade: '5,0',
+      note: 'Anerkannt am XY',
+    },
   ];
 
-  constructor(
-    private store: Store<State>,
-    private dialog: MatDialog,
-  ) { }
-
   ngOnInit() {
-
     this.studyPlans$ = this.store.select(getStudyPlans);
     this.studyPath$ = this.store.select(getUserStudyPath);
   }
 
   hasModuleInPlan(studyPlan: StudyPlan): boolean {
-    return studyPlan.semesterPlans?.some(sp =>
-      sp.modules?.includes(this.selectedModule.acronym) &&
-      !new Semester(sp.semester).isPastSemester()
-    ) || false;
+    return (
+      studyPlan.semesterPlans?.some(
+        (sp) =>
+          sp.modules?.includes(this.selectedModule.acronym) &&
+          !new Semester(sp.semester).isPastSemester(),
+      ) || false
+    );
   }
 
   getModuleSemesterPlans(studyPlan: StudyPlan) {
     if (!studyPlan.semesterPlans) return [];
 
-    return studyPlan.semesterPlans.filter(semesterPlan =>
-      semesterPlan.modules?.includes(this.selectedModule.acronym) &&
-      !new Semester(semesterPlan.semester).isPastSemester()
+    return studyPlan.semesterPlans.filter(
+      (semesterPlan) =>
+        semesterPlan.modules?.includes(this.selectedModule.acronym) &&
+        !new Semester(semesterPlan.semester).isPastSemester(),
     );
   }
 
-  openDeleteDialog(studyPlanId: string, studyPlanName: string, semesterPlanId: string, semester: string) {
-
+  openDeleteDialog(
+    studyPlanId: string,
+    studyPlanName: string,
+    semesterPlanId: string,
+    semester: string,
+  ) {
     const confirmationDialogInterface: ConfirmationDialogData = {
       dialogTitle: `Modul wirklich aus dem Studienplan "${studyPlanName}" löschen?`,
       actionType: 'delete',
@@ -77,7 +90,7 @@ export class ManageStatusComponent {
             semesterPlanSemester: semester,
             acronym: this.selectedModule.acronym,
             ects: this.selectedModule.ects,
-          })
+          }),
         );
         this.dialog.closeAll(); // TODO closes also module details!
       },

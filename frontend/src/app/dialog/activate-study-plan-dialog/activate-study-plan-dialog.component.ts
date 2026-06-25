@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
+import { StudyPlan } from '@interfaces/study-plan';
 import { FormControl } from '@angular/forms';
 
 @Component({

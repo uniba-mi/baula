@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { SimilarityService } from '../../services/similarity.service';
@@ -12,33 +19,34 @@ import { Observable, take } from 'rxjs';
   styleUrl: './change-module-group.component.scss',
 })
 export class ChangeModuleGroupComponent implements OnInit {
+  private modService = inject(ModService);
+
   @Input() mgId: string | undefined;
   @Input() structuredModuleGroups: ExtendedModuleGroup[] | null;
   @Input() acronym: string | undefined;
   @Output() selectModuleGroup = new EventEmitter<string>();
 
-  selectedModuleGroup = new FormControl('', Validators.required)
+  selectedModuleGroup = new FormControl('', Validators.required);
   similarGroups: ExtendedModuleGroup[];
   possibleMgIdsBasedOnAcronym$: Observable<string[]>;
 
-  constructor(private modService: ModService) {}
-
   ngOnInit(): void {
-    if(this.acronym) {
-      this.possibleMgIdsBasedOnAcronym$ = this.modService.findModuleGroups(this.acronym)
+    if (this.acronym) {
+      this.possibleMgIdsBasedOnAcronym$ = this.modService.findModuleGroups(
+        this.acronym,
+      );
     }
-    if(this.mgId) {
-      this.selectedModuleGroup.setValue(this.mgId)
+    if (this.mgId) {
+      this.selectedModuleGroup.setValue(this.mgId);
     }
   }
 
   select(mgId: string) {
-    this.selectModuleGroup.emit(mgId)
+    this.selectModuleGroup.emit(mgId);
   }
-
 
   selectSimilarGroup(mgId: string): void {
     this.selectedModuleGroup.setValue(mgId);
-    this.select(mgId)
+    this.select(mgId);
   }
 }

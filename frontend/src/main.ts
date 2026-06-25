@@ -1,4 +1,4 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
@@ -48,5 +48,5 @@ if (environment.googleSiteVerificationCode) {
   document.head.append(meta)
 }
 
-platformBrowser().bootstrapModule(AppModule)
+platformBrowser().bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()], })
   .catch(err => console.error(err));

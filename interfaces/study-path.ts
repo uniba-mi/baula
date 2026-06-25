@@ -18,7 +18,7 @@ export interface PathModule extends UserGeneratedModuleTemplate {
   isUserGenerated: boolean;
   flexNowImported: boolean;
   grade: number;
-  // exams: Exam[];
+  //exams: Exam[];
 }
 
 // each exam can have several attempts

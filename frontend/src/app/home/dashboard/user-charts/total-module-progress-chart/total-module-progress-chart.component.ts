@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
-import { StudyPath } from '../../../../../../../interfaces/study-path';
+import { StudyPath } from '@interfaces/study-path';
 
 @Component({
     selector: 'app-total-module-progress-chart',

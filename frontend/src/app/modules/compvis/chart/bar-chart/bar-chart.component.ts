@@ -6,13 +6,14 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import * as d3 from 'd3';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
-import { Competence } from '../../../../../../../interfaces/competence';
-import { ExpandedCourse } from '../../../../../../../interfaces/course';
+import { Competence } from '@interfaces/competence';
+import { ExpandedCourse } from '@interfaces/course';
 import { Bar } from '../../interfaces/chart';
 import { selectBar, setBars } from '../../state/chart.actions';
 import {
@@ -22,28 +23,28 @@ import {
   getUnit,
   getView,
 } from '../../state/chart.selectors';
-import { CompAim, User } from '../../../../../../../interfaces/user';
+import { CompAim, User } from '@interfaces/user';
 import { getUser, getUserAims } from 'src/app/selectors/user.selectors';
 import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
 
 @Component({
-    selector: 'app-bar-chart',
-    templateUrl: './bar-chart.component.html',
-    styleUrls: ['./bar-chart.component.scss'],
-    standalone: false
+  selector: 'app-bar-chart',
+  templateUrl: './bar-chart.component.html',
+  styleUrls: ['./bar-chart.component.scss'],
+  standalone: false,
 })
 export class BarChartComponent implements OnInit, OnChanges {
+  private store = inject<Store<State>>(Store);
+
   @Input() competences: Competence[];
   @Input() courses: ExpandedCourse[];
   @Input() bars: Bar[] | null;
-
-  constructor(private store: Store<State>) {}
   // variables for statemanagement
   unit$: Observable<string> = this.store.pipe(select(getUnit));
   view$: Observable<string> = this.store.pipe(select(getView));
   hoverBars$: Observable<Bar[]> = this.store.pipe(select(getHoverBars));
   hoverSelectBars$: Observable<Bar[]> = this.store.pipe(
-    select(getHoverSelectBars)
+    select(getHoverSelectBars),
   );
   semester$: Observable<string> = this.store.pipe(select(getActiveSemester));
   compAims$: Observable<CompAim[] | undefined> = this.store.select(getUserAims);
@@ -83,18 +84,18 @@ export class BarChartComponent implements OnInit, OnChanges {
     this.semester$.subscribe((sem) => (this.semester = sem));
     this.view$.subscribe((view) => (this.view = view));
     // subscribe to competence aims
-    this.user$.subscribe(user => {
+    this.user$.subscribe((user) => {
       if (user.compAims) {
         this.compAims = user.compAims;
         this.assignAimsToBars();
       }
-    })
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.competences.length != 0) {
       this.competences = this.competences.filter(
-        (competence) => competence.parentId === '' || !competence.parentId
+        (competence) => competence.parentId === '' || !competence.parentId,
       );
       this.unit$.subscribe((unit) => {
         if (this.currentUnit !== unit) {
@@ -120,7 +121,7 @@ export class BarChartComponent implements OnInit, OnChanges {
           selectedCourses: this.courses,
           view: this.view,
           semester: this.semester,
-        })
+        }),
       );
       this.assignAimsToBars();
     }
@@ -131,7 +132,7 @@ export class BarChartComponent implements OnInit, OnChanges {
       // assign aims to bars
       for (let bar of this.bars) {
         const aim = this.compAims.find(
-          (compAim) => compAim.compId == bar.competence.compId
+          (compAim) => compAim.compId == bar.competence.compId,
         );
         if (aim) {
           bar.aim = aim.aim;
@@ -147,8 +148,8 @@ export class BarChartComponent implements OnInit, OnChanges {
     if (this.bars) {
       const max = this.bars
         .map((el) => {
-          if(el.aim) {
-            return el.aim > el.fulfillment ? el.aim : el.fulfillment
+          if (el.aim) {
+            return el.aim > el.fulfillment ? el.aim : el.fulfillment;
           } else {
             return el.fulfillment;
           }
@@ -189,7 +190,7 @@ export class BarChartComponent implements OnInit, OnChanges {
             } else {
               return d.name;
             }
-          })
+          }),
         );
 
       this.yScale = d3
@@ -221,7 +222,7 @@ export class BarChartComponent implements OnInit, OnChanges {
         .call(
           d3
             .axisLeft(this.yScale)
-            .tickFormat((d, i) => d + ' ' + this.currentUnit.toUpperCase())
+            .tickFormat((d, i) => d + ' ' + this.currentUnit.toUpperCase()),
         )
         .append('text')
         .attr('transform', 'rotate(-90)')

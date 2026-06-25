@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RestService } from '../rest.service';
 import { SnackbarService } from '../shared/services/snackbar.service';
@@ -30,12 +30,10 @@ import { StudyPathActions } from '../actions/user.actions';
 
 @Injectable()
 export class StudyPlanningEffects {
-  constructor(
-    private actions$: Actions,
-    private rest: RestService,
-    private snackbar: SnackbarService,
-    private store: Store,
-  ) { }
+  private actions$ = inject(Actions);
+  private rest = inject(RestService);
+  private snackbar = inject(SnackbarService);
+  private store = inject(Store);
 
   /********STUDYPLANS CRUD***********/
 
@@ -46,7 +44,7 @@ export class StudyPlanningEffects {
       exhaustMap(() =>
         this.rest.getStudyPlans().pipe(
           map((studyPlans) =>
-            StudyPlanActions.loadStudyPlansSuccess({ studyPlans })
+            StudyPlanActions.loadStudyPlansSuccess({ studyPlans }),
           ),
           catchError((error) => {
             this.snackbar.openSnackBar({
@@ -54,10 +52,10 @@ export class StudyPlanningEffects {
               message: 'Die Studienpläne konnten nicht geladen werden!',
             });
             return of(StudyPlanActions.loadStudyPlansFailure({ error }));
-          })
-        )
-      )
-    )
+          }),
+        ),
+      ),
+    ),
   );
 
   loadActiveStudyPlanId$ = createEffect(() =>
@@ -66,14 +64,14 @@ export class StudyPlanningEffects {
       switchMap(() =>
         this.rest.getActiveStudyPlan().pipe(
           map((studyPlan) =>
-            StudyPlanActions.loadActiveStudyPlanSuccess({ studyPlan })
+            StudyPlanActions.loadActiveStudyPlanSuccess({ studyPlan }),
           ),
           catchError((error) =>
-            of(StudyPlanActions.loadActiveStudyPlanFailure(error))
-          )
-        )
-      )
-    )
+            of(StudyPlanActions.loadActiveStudyPlanFailure(error)),
+          ),
+        ),
+      ),
+    ),
   );
 
   updateIsPastSemester$ = createEffect(() =>
@@ -84,16 +82,16 @@ export class StudyPlanningEffects {
           .updateIsPastSemester(
             props.studyPlanId,
             props.semesterPlanId,
-            props.isPast
+            props.isPast,
           )
           .pipe(
             map(() => SemesterPlanActions.updateIsPastSemesterSuccess(props)),
             catchError((error) =>
-              of(SemesterPlanActions.updateIsPastSemesterFailure({ error }))
-            )
-          )
-      )
-    )
+              of(SemesterPlanActions.updateIsPastSemesterFailure({ error })),
+            ),
+          ),
+      ),
+    ),
   );
 
   // create study plan
@@ -106,7 +104,7 @@ export class StudyPlanningEffects {
             StudyPlanActions.createStudyPlanSuccess({
               studyPlan: studyPlan,
               semesterPlans: props.semesterPlans,
-            })
+            }),
           ),
           tap(() => {
             this.snackbar.openSnackBar({
@@ -120,10 +118,10 @@ export class StudyPlanningEffects {
               message: 'Der Studienplan konnte nicht angelegt werden!',
             });
             return of(StudyPlanActions.createStudyPlanFailure({ error }));
-          })
-        )
-      )
-    )
+          }),
+        ),
+      ),
+    ),
   );
 
   // init semester plans
@@ -138,14 +136,14 @@ export class StudyPlanningEffects {
               SemesterPlanActions.initSemesterPlansSuccess({
                 studyPlanId: props.studyPlan._id,
                 semesterPlans: semesterPlans,
-              })
+              }),
             ),
             catchError((error) =>
-              of(StudyPlanActions.createStudyPlanFailure({ error }))
-            )
-          )
-      )
-    )
+              of(StudyPlanActions.createStudyPlanFailure({ error })),
+            ),
+          ),
+      ),
+    ),
   );
 
   // add semester plan to study plan
@@ -160,16 +158,18 @@ export class StudyPlanningEffects {
               SemesterPlanActions.addSemesterPlanToStudyPlanSuccess({
                 studyPlanId: props.studyPlanId,
                 studyPlan,
-              })
+              }),
             ),
             catchError((error) =>
               of(
-                SemesterPlanActions.addSemesterPlanToStudyPlanFailure({ error })
-              )
-            )
-          )
-      )
-    )
+                SemesterPlanActions.addSemesterPlanToStudyPlanFailure({
+                  error,
+                }),
+              ),
+            ),
+          ),
+      ),
+    ),
   );
 
   // update study plan
@@ -177,31 +177,29 @@ export class StudyPlanningEffects {
     this.actions$.pipe(
       ofType(StudyPlanActions.updateStudyPlan),
       concatMap((props) =>
-        this.rest
-          .updateStudyPlan(props.studyPlanId, props.studyPlan)
-          .pipe(
-            map(() =>
-              StudyPlanActions.updateStudyPlanSuccess({
-                studyPlanId: props.studyPlanId,
-                studyPlan: props.studyPlan,
-              })
-            ),
-            tap(() => {
-              this.snackbar.openSnackBar({
-                type: AlertType.SUCCESS,
-                message: 'Der Studienplan wurde erfolgreich aktualisiert.',
-              });
+        this.rest.updateStudyPlan(props.studyPlanId, props.studyPlan).pipe(
+          map(() =>
+            StudyPlanActions.updateStudyPlanSuccess({
+              studyPlanId: props.studyPlanId,
+              studyPlan: props.studyPlan,
             }),
-            catchError((error) => {
-              this.snackbar.openSnackBar({
-                type: AlertType.DANGER,
-                message: 'Der Studienplan konnte nicht aktualisiert werden!',
-              });
-              return of(StudyPlanActions.updateStudyPlanFailure({ error }));
-            })
-          )
-      )
-    )
+          ),
+          tap(() => {
+            this.snackbar.openSnackBar({
+              type: AlertType.SUCCESS,
+              message: 'Der Studienplan wurde erfolgreich aktualisiert.',
+            });
+          }),
+          catchError((error) => {
+            this.snackbar.openSnackBar({
+              type: AlertType.DANGER,
+              message: 'Der Studienplan konnte nicht aktualisiert werden!',
+            });
+            return of(StudyPlanActions.updateStudyPlanFailure({ error }));
+          }),
+        ),
+      ),
+    ),
   );
 
   // delete study plan
@@ -213,7 +211,7 @@ export class StudyPlanningEffects {
           map(() =>
             StudyPlanActions.deleteStudyPlanSuccess({
               studyPlanId: props.studyPlanId,
-            })
+            }),
           ),
           tap(() => {
             this.snackbar.openSnackBar({
@@ -227,10 +225,10 @@ export class StudyPlanningEffects {
               type: AlertType.DANGER,
             });
             return of(StudyPlanActions.deleteStudyPlanFailure({ error }));
-          })
-        )
-      )
-    )
+          }),
+        ),
+      ),
+    ),
   );
 
   // add module to semester plan
@@ -243,7 +241,7 @@ export class StudyPlanningEffects {
             props.studyPlanId,
             props.semesterPlanId,
             props.acronym,
-            props.ects
+            props.ects,
           )
           .pipe(
             map(() =>
@@ -252,7 +250,7 @@ export class StudyPlanningEffects {
                 semesterPlanId: props.semesterPlanId,
                 acronym: props.acronym,
                 ects: props.ects,
-              })
+              }),
             ),
             tap(() => {
               this.snackbar.openSnackBar({
@@ -269,12 +267,12 @@ export class StudyPlanningEffects {
               return of(
                 ModulePlanningActions.addModuleToSemesterFailure({
                   error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   addModulesToAllStudyPlans$ = createEffect(() =>
@@ -284,24 +282,24 @@ export class StudyPlanningEffects {
         this.rest
           .addModulesToCurrentSemesterOfAllStudyPlans(
             props.modules,
-            props.semesterName
+            props.semesterName,
           )
           .pipe(
             map((studyPlans) =>
               ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyPlansSuccess(
-                { studyPlans }
-              )
+                { studyPlans },
+              ),
             ),
             catchError((error) =>
               of(
                 ModulePlanningActions.addModulesToCurrentSemesterOfAllStudyPlansFailure(
-                  { error }
-                )
-              )
-            )
-          )
-      )
-    )
+                  { error },
+                ),
+              ),
+            ),
+          ),
+      ),
+    ),
   );
 
   // transfer module between two semester plans
@@ -317,7 +315,7 @@ export class StudyPlanningEffects {
             props.newSemesterPlanId,
             props.newSemesterPlanSemester,
             props.acronym,
-            props.ects
+            props.ects,
           )
           .pipe(
             map((result) =>
@@ -327,35 +325,37 @@ export class StudyPlanningEffects {
                 oldSemesterPlanSemester: props.oldSemesterPlanSemester,
                 newSemesterPlan: result.newSemesterPlan,
                 newSemesterPlanSemester: props.newSemesterPlanSemester,
-              })
+              }),
             ),
             tap(() => {
-              this.store.select(getUserStudyPath).pipe(take(1)).subscribe((sp) => {
-                const updatedModules: PathModule[] = [];
+              this.store
+                .select(getUserStudyPath)
+                .pipe(take(1))
+                .subscribe((sp) => {
+                  const updatedModules: PathModule[] = [];
 
-                if (props.oldSemesterPlanSemester !== '') {
-                  const existingModule = sp.completedModules.find(
-                    (mod) =>
-                      mod.acronym === props.acronym &&
-                      mod.semester === props.oldSemesterPlanSemester
-                  );
+                  if (props.oldSemesterPlanSemester !== '') {
+                    const existingModule = sp.completedModules.find(
+                      (mod) =>
+                        mod.acronym === props.acronym &&
+                        mod.semester === props.oldSemesterPlanSemester,
+                    );
 
-                  if (existingModule) {
-                    updatedModules.push({
-                      ...existingModule,
-                      semester: props.newSemesterPlanSemester
-                    });
+                    if (existingModule) {
+                      updatedModules.push({
+                        ...existingModule,
+                        semester: props.newSemesterPlanSemester,
+                      });
+                    }
                   }
-                }
-                if (updatedModules.length > 0) {
-                  this.store.dispatch(
-                    StudyPathActions.updateStudyPath({
-                      completedModules: updatedModules,
-                    })
-                  );
-                }
-
-              });
+                  if (updatedModules.length > 0) {
+                    this.store.dispatch(
+                      StudyPathActions.updateStudyPath({
+                        completedModules: updatedModules,
+                      }),
+                    );
+                  }
+                });
             }),
             tap(() => {
               this.snackbar.openSnackBar({
@@ -371,12 +371,12 @@ export class StudyPlanningEffects {
               return of(
                 ModulePlanningActions.addModuleToSemesterFailure({
                   error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   // transfer userGeneratedModule between two semester plans
@@ -390,7 +390,7 @@ export class StudyPlanningEffects {
             props.oldSemesterPlanId,
             props.newSemesterPlanId,
             props.newSemesterPlanSemester,
-            props.module
+            props.module,
           )
           .pipe(
             map((result) =>
@@ -398,33 +398,34 @@ export class StudyPlanningEffects {
                 studyPlanId: props.studyPlanId,
                 oldSemesterPlan: result.oldSemesterPlan,
                 newSemesterPlan: result.newSemesterPlan,
-              })
+              }),
             ),
             tap(() => {
-              this.store.select(getUserStudyPath).pipe(take(1)).subscribe((sp) => {
-                const updatedModules: PathModule[] = [];
+              this.store
+                .select(getUserStudyPath)
+                .pipe(take(1))
+                .subscribe((sp) => {
+                  const updatedModules: PathModule[] = [];
 
-                const existingModule = sp.completedModules.find(
-                  (mod) =>
-                    mod._id === props.module._id
-                );
-
-                if (existingModule) {
-                  updatedModules.push({
-                    ...existingModule,
-                    semester: props.newSemesterPlanSemester
-                  });
-                }
-
-                if (updatedModules.length > 0) {
-                  this.store.dispatch(
-                    StudyPathActions.updateStudyPath({
-                      completedModules: updatedModules,
-                    })
+                  const existingModule = sp.completedModules.find(
+                    (mod) => mod._id === props.module._id,
                   );
-                }
 
-              });
+                  if (existingModule) {
+                    updatedModules.push({
+                      ...existingModule,
+                      semester: props.newSemesterPlanSemester,
+                    });
+                  }
+
+                  if (updatedModules.length > 0) {
+                    this.store.dispatch(
+                      StudyPathActions.updateStudyPath({
+                        completedModules: updatedModules,
+                      }),
+                    );
+                  }
+                });
             }),
             tap(() => {
               this.snackbar.openSnackBar({
@@ -440,12 +441,12 @@ export class StudyPlanningEffects {
               return of(
                 UserGeneratedModuleActions.transferUserGeneratedModuleFailure({
                   error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   // delete module from semester plan
@@ -459,7 +460,7 @@ export class StudyPlanningEffects {
             props.semesterPlanId,
             props.semesterPlanSemester,
             props.acronym,
-            props.ects
+            props.ects,
           )
           .pipe(
             map(() =>
@@ -469,26 +470,29 @@ export class StudyPlanningEffects {
                 semesterPlanSemester: props.semesterPlanSemester,
                 acronym: props.acronym,
                 ects: props.ects,
-              })
+              }),
             ),
             // also remove in study path
             tap(() => {
-              this.store.select(getUserStudyPath).pipe(take(1)).subscribe((sp) => {
-                const existingModule = sp.completedModules.find(
-                  (mod) =>
-                    mod.acronym === props.acronym &&
-                    mod.semester === props.semesterPlanSemester
-                );
-
-                if (existingModule) {
-                  this.store.dispatch(
-                    StudyPathActions.deleteModuleFromStudyPath({
-                      id: existingModule._id!,
-                      semester: props.semesterPlanSemester,
-                    })
+              this.store
+                .select(getUserStudyPath)
+                .pipe(take(1))
+                .subscribe((sp) => {
+                  const existingModule = sp.completedModules.find(
+                    (mod) =>
+                      mod.acronym === props.acronym &&
+                      mod.semester === props.semesterPlanSemester,
                   );
-                }
-              });
+
+                  if (existingModule) {
+                    this.store.dispatch(
+                      StudyPathActions.deleteModuleFromStudyPath({
+                        id: existingModule._id!,
+                        semester: props.semesterPlanSemester,
+                      }),
+                    );
+                  }
+                });
             }),
             tap(() => {
               this.snackbar.openSnackBar({
@@ -504,12 +508,12 @@ export class StudyPlanningEffects {
               return of(
                 ModulePlanningActions.deleteModuleFromSemesterPlanFailure({
                   error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   // aimedEcts
@@ -521,7 +525,7 @@ export class StudyPlanningEffects {
           .updateAimedEcts(
             props.studyPlanId,
             props.semesterPlanId,
-            props.aimedEcts
+            props.aimedEcts,
           )
           .pipe(
             map(() =>
@@ -529,7 +533,7 @@ export class StudyPlanningEffects {
                 studyPlanId: props.studyPlanId,
                 semesterPlanId: props.semesterPlanId,
                 aimedEcts: props.aimedEcts,
-              })
+              }),
             ),
             tap(() => {
               this.snackbar.openSnackBar({
@@ -543,10 +547,10 @@ export class StudyPlanningEffects {
                 message: 'ECTS konnten nicht aktualisiert werden!',
               });
               return of(SemesterPlanActions.updateAimedEctsFailure({ error }));
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   // create user generated module
@@ -558,7 +562,7 @@ export class StudyPlanningEffects {
           .createUserGeneratedModule(
             props.studyPlanId,
             props.semesterPlanId,
-            props.module
+            props.module,
           )
           .pipe(
             map((module) =>
@@ -566,7 +570,7 @@ export class StudyPlanningEffects {
                 studyPlanId: props.studyPlanId,
                 semesterPlanId: props.semesterPlanId,
                 module: module,
-              })
+              }),
             ),
             tap(() => {
               this.snackbar.openSnackBar({
@@ -584,12 +588,12 @@ export class StudyPlanningEffects {
               return of(
                 UserGeneratedModuleActions.createUserGeneratedModuleFailure({
                   error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   // update user generated module
@@ -603,7 +607,7 @@ export class StudyPlanningEffects {
             props.semesterPlanId,
             props.semesterPlanSemester,
             props.moduleId,
-            props.module
+            props.module,
           )
           .pipe(
             map((module: UserGeneratedModule) =>
@@ -613,34 +617,43 @@ export class StudyPlanningEffects {
                 semesterPlanSemester: props.semesterPlanSemester,
                 moduleId: props.moduleId,
                 module: module,
-              })
+              }),
             ),
             tap(() => {
               // update study path too in case the module exists
-              this.store.select(getUserStudyPath).pipe(take(1)).subscribe((sp) => {
-                const existingModule = sp.completedModules.find(
-                  (mod) => mod._id === props.moduleId
-                );
-
-                if (existingModule) {
-                  const updatedModule: PathModule = {
-                    ...existingModule,
-                    acronym: props.module.acronym ? props.module.acronym : props.module.name,
-                    name: props.module.notes ? props.module.notes : props.module.name,
-                    ects: props.module.ects,
-                    mgId: existingModule.mgId,
-                    status: existingModule.status,
-                    grade: existingModule.grade,
-                    semester: props.semesterPlanSemester,
-                    isUserGenerated: true,
-                    flexNowImported: props.module.flexNowImported,
-                  };
-
-                  this.store.dispatch(
-                    StudyPathActions.updateModuleInStudyPath({ module: updatedModule })
+              this.store
+                .select(getUserStudyPath)
+                .pipe(take(1))
+                .subscribe((sp) => {
+                  const existingModule = sp.completedModules.find(
+                    (mod) => mod._id === props.moduleId,
                   );
-                }
-              });
+
+                  if (existingModule) {
+                    const updatedModule: PathModule = {
+                      ...existingModule,
+                      acronym: props.module.acronym
+                        ? props.module.acronym
+                        : props.module.name,
+                      name: props.module.notes
+                        ? props.module.notes
+                        : props.module.name,
+                      ects: props.module.ects,
+                      mgId: existingModule.mgId,
+                      status: existingModule.status,
+                      grade: existingModule.grade,
+                      semester: props.semesterPlanSemester,
+                      isUserGenerated: true,
+                      flexNowImported: props.module.flexNowImported,
+                    };
+
+                    this.store.dispatch(
+                      StudyPathActions.updateModuleInStudyPath({
+                        module: updatedModule,
+                      }),
+                    );
+                  }
+                });
             }),
             catchError((error) => {
               this.snackbar.openSnackBar({
@@ -650,12 +663,12 @@ export class StudyPlanningEffects {
               return of(
                 UserGeneratedModuleActions.updateUserGeneratedModuleFailure({
                   error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   // delete update user generated module
@@ -668,7 +681,7 @@ export class StudyPlanningEffects {
             props.studyPlanId,
             props.semesterPlanId,
             props.semesterPlanSemester,
-            props.module
+            props.module,
           )
           .pipe(
             map(() =>
@@ -677,23 +690,26 @@ export class StudyPlanningEffects {
                 semesterPlanId: props.semesterPlanId,
                 semesterPlanSemester: props.semesterPlanSemester,
                 module: props.module,
-              })
+              }),
             ),
             tap(() => {
-              this.store.select(getUserStudyPath).pipe(take(1)).subscribe((sp) => {
-                const existingModule = sp.completedModules.find(
-                  (mod) => mod._id === props.module._id
-                );
-
-                if (existingModule) {
-                  this.store.dispatch(
-                    StudyPathActions.deleteModuleFromStudyPath({
-                      id: existingModule._id!,
-                      semester: props.semesterPlanSemester,
-                    })
+              this.store
+                .select(getUserStudyPath)
+                .pipe(take(1))
+                .subscribe((sp) => {
+                  const existingModule = sp.completedModules.find(
+                    (mod) => mod._id === props.module._id,
                   );
-                }
-              });
+
+                  if (existingModule) {
+                    this.store.dispatch(
+                      StudyPathActions.deleteModuleFromStudyPath({
+                        id: existingModule._id!,
+                        semester: props.semesterPlanSemester,
+                      }),
+                    );
+                  }
+                });
             }),
             catchError((error) => {
               this.snackbar.openSnackBar({
@@ -703,12 +719,12 @@ export class StudyPlanningEffects {
               return of(
                 UserGeneratedModuleActions.deleteUserGeneratedModuleFailure({
                   error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   // delete several user generated modules at once
@@ -716,20 +732,26 @@ export class StudyPlanningEffects {
     this.actions$.pipe(
       ofType(UserGeneratedModuleActions.deleteUserGeneratedModules),
       mergeMap(({ studyPlanId, semesterPlanId, moduleIds }) =>
-        this.rest.deleteUserGeneratedModules(studyPlanId, semesterPlanId, moduleIds).pipe(
-          map((deletedModules) =>
-            UserGeneratedModuleActions.deleteUserGeneratedModulesSuccess({
-              studyPlanId,
-              semesterPlanId,
-              deletedModules,
-            })
+        this.rest
+          .deleteUserGeneratedModules(studyPlanId, semesterPlanId, moduleIds)
+          .pipe(
+            map((deletedModules) =>
+              UserGeneratedModuleActions.deleteUserGeneratedModulesSuccess({
+                studyPlanId,
+                semesterPlanId,
+                deletedModules,
+              }),
+            ),
+            catchError((error) =>
+              of(
+                UserGeneratedModuleActions.deleteUserGeneratedModulesFailure({
+                  error,
+                }),
+              ),
+            ),
           ),
-          catchError((error) =>
-            of(UserGeneratedModuleActions.deleteUserGeneratedModulesFailure({ error }))
-          )
-        )
-      )
-    )
+      ),
+    ),
   );
 
   // Courseplanning Effects
@@ -749,7 +771,7 @@ export class StudyPlanningEffects {
               sws: props.sws ? props.sws : props.course.sws,
               ects: props.ects ? props.ects : props.course.ects,
             },
-            props.isPastSemester
+            props.isPastSemester,
           )
           .pipe(
             tap(() => {
@@ -762,14 +784,14 @@ export class StudyPlanningEffects {
             map((courses) =>
               CoursePlanningActions.updateCoursesArrayInSemesterPlan({
                 courses,
-              })
+              }),
             ),
             catchError((error) =>
-              of(CoursePlanningActions.selectCourseFailure({ error }))
-            )
-          )
-      )
-    )
+              of(CoursePlanningActions.selectCourseFailure({ error })),
+            ),
+          ),
+      ),
+    ),
   );
 
   deselectCourse$ = createEffect(() =>
@@ -789,14 +811,14 @@ export class StudyPlanningEffects {
             map((courses) =>
               CoursePlanningActions.updateCoursesArrayInSemesterPlan({
                 courses,
-              })
+              }),
             ),
             catchError((error) =>
-              of(CoursePlanningActions.deselectCourseFailure({ error }))
-            )
-          )
-      )
-    )
+              of(CoursePlanningActions.deselectCourseFailure({ error })),
+            ),
+          ),
+      ),
+    ),
   );
 
   selectCourses$ = createEffect(() =>
@@ -807,7 +829,7 @@ export class StudyPlanningEffects {
           .addCoursesToSemesterPlan(
             props.semester,
             props.courses,
-            props.isPastSemester
+            props.isPastSemester,
           )
           .pipe(
             tap(() => {
@@ -820,14 +842,14 @@ export class StudyPlanningEffects {
             map((courses) =>
               CoursePlanningActions.updateCoursesArrayInSemesterPlan({
                 courses,
-              })
+              }),
             ),
             catchError((error) =>
-              of(CoursePlanningActions.selectCoursesFailure({ error }))
-            )
-          )
-      )
-    )
+              of(CoursePlanningActions.selectCoursesFailure({ error })),
+            ),
+          ),
+      ),
+    ),
   );
 
   deselectCourses$ = createEffect(() =>
@@ -847,14 +869,14 @@ export class StudyPlanningEffects {
             map((courses) =>
               CoursePlanningActions.updateCoursesArrayInSemesterPlan({
                 courses,
-              })
+              }),
             ),
             catchError((error) =>
-              of(CoursePlanningActions.deselectCoursesFailure({ error }))
-            )
-          )
-      )
-    )
+              of(CoursePlanningActions.deselectCoursesFailure({ error })),
+            ),
+          ),
+      ),
+    ),
   );
 
   // timetable effects
@@ -865,7 +887,7 @@ export class StudyPlanningEffects {
         this.rest
           .updateSemesterPlan(
             props.newSemesterPlan.semester,
-            props.newSemesterPlan
+            props.newSemesterPlan,
           )
           .pipe(
             tap(() => {
@@ -877,13 +899,13 @@ export class StudyPlanningEffects {
             map((semesterPlan) =>
               TimetableActions.importSemesterPlanSuccess({
                 newSemesterPlan: semesterPlan,
-              })
+              }),
             ),
             catchError((error) =>
-              of(TimetableActions.importSemesterPlanFailure({ error }))
-            )
-          )
-      )
-    )
+              of(TimetableActions.importSemesterPlanFailure({ error })),
+            ),
+          ),
+      ),
+    ),
   );
 }

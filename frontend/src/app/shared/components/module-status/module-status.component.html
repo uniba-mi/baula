@@ -1,16 +1,38 @@
-<span [ngSwitch]="this.status" (click)="openChangeStatusDialog($event, modType)" matTooltip={{displayStatusOnHover}}
+<span (click)="openChangeStatusDialog($event, modType)" matTooltip={{displayStatusOnHover}}
   matTooltipClass="custom-tooltip">
-  <!-- for the case if status options property status is passed -->
-  <button class="btn-icon" *ngSwitchCase="'passed'">
-    <i class="bi bi-check-lg text-success"></i>
-  </button>
-  <button class="btn-icon" *ngSwitchCase="'failed'">
-    <i class="bi bi-x-lg text-danger"></i>
-  </button>
-  <button class="btn-icon" *ngSwitchCase="'taken'">
-    <i class="bi bi-dash-lg"></i>
-  </button>
-  <button class="btn-icon" *ngSwitchDefault>
-    <i class="bi bi-question-circle"></i>
-  </button>
+  @switch (this.status) {
+    <!-- for the case if status options property status is passed -->
+    @case ('passed') {
+      <button class="btn-icon">
+        <i class="bi bi-check-lg text-success"></i>
+        @if (showStatusText) {
+          <span class="ms-2">Bestanden</span>
+        }
+      </button>
+    }
+    @case ('failed') {
+      <button class="btn-icon">
+        <i class="bi bi-x-lg text-danger"></i>
+        @if (showStatusText) {
+          <span class="ms-2">Nicht bestanden</span>
+        }
+      </button>
+    }
+    @case ('taken') {
+      <button class="btn-icon">
+        <i class="bi bi-dash-lg"></i>
+        @if (showStatusText) {
+          <span class="ms-2">Belegt</span>
+        }
+      </button>
+    }
+    @default {
+      <button class="btn-icon">
+        <i class="bi bi-question-circle"></i>
+        @if (showStatusText) {
+          <span class="ms-2">Nicht belegt</span>
+        }
+      </button>
+    }
+  }
 </span>

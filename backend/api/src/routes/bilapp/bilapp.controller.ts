@@ -4,7 +4,7 @@ import { BadRequestError, logError, NotFoundError } from "../../shared/error";
 import validator from "validator";
 import { checkSemester, transformCourses } from "../../shared/helpers/univis-helpers";
 import { findActiveStudyPlan } from "../../shared/helpers/plan-helper";
-import { UserServer } from "../../../../../interfaces/user";
+import { UserServer } from "@interfaces/user";
 
 const prisma = new PrismaClient();
 

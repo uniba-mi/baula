@@ -1,13 +1,19 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Module } from '../../../../interfaces/module';
 import { UserGeneratedModule } from '../../../../interfaces/user-generated-module';
 import { Semester } from '../../../../interfaces/semester';
-import { StudyPlan, StudyPlanTemplate } from '../../../../interfaces/study-plan';
+import {
+  StudyPlan,
+  StudyPlanTemplate,
+} from '../../../../interfaces/study-plan';
 import { Status, User } from '../../../../interfaces/user';
 import { Standard } from '../modules/bilapp/interfaces/standard';
-import { PathModule, SemesterStudyPath } from '../../../../interfaces/study-path';
+import {
+  PathModule,
+  SemesterStudyPath,
+} from '../../../../interfaces/study-path';
 import { ExtendedModuleGroup } from '../../../../interfaces/module-group';
 import { AcademicDate } from '../../../../interfaces/academic-date';
 import { Course } from '../../../../interfaces/course';
@@ -51,24 +57,25 @@ export interface DialogData {
   course?: Course;
   courses?: Course[];
   deselectOption?: boolean;
-  options?: { value: string, label: string }[]; // for generic choose option dialog
+  options?: { value: string; label: string }[]; // for generic choose option dialog
   isFirstSemesterStudent?: boolean;
   mhb?: ModuleHandbook;
-  moduleData?: UserGeneratedModule | Module | PathModule,
+  moduleData?: UserGeneratedModule | Module | PathModule;
+  onlyMetaData?: boolean;
+  onlyStudypath?: boolean;
+  allowPlanning?: boolean;
   content?: any; // just for evaluation
 }
 
 @Component({
-    selector: 'app-dialog',
-    templateUrl: './dialog.component.html',
-    styleUrls: ['./dialog.component.scss'],
-    standalone: false
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss'],
+  standalone: false,
 })
 export class DialogComponent implements OnInit {
-  constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) { }
+  dialogRef = inject<MatDialogRef<DialogComponent>>(MatDialogRef);
+  data = inject<DialogData>(MAT_DIALOG_DATA);
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

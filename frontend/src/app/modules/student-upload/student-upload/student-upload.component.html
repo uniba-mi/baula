@@ -1,46 +1,105 @@
-<mat-card class="p-5 mb-2">
-  <!-- <h3 class="info-box-title">Importiere hier deinen Studienverlauf aus FlexNow</h3>
-  <div class="mb-2">
-    Hier kannst du deine aktuellen und vergangenen Belegungen aus FlexNow in Baula importieren, sodass dein
-    Studienfortschritt sichtbar ist.
-  </div> -->
-  <!-- TODO remove this as soon as FlexNow api works here -->
-  <div class="warning-box mb-2">
-    Derzeit ist aufgrund von Umbauten leider kein Abruf deines Studienverlaufs aus FlexNow möglich. Sobald die
-    Schnittstelle zu FlexNow mit dem nächsten Release eingerichtet ist, kannst du hier deinen Studienverlauf automatisch
-    abrufen lassen.
-  </div>
-
-  <div class="d-flex justify-content-start">
-    <div class="d-flex gap-2 align-items-stretch">
-      <!-- removed (click)="startHTMLUpload()"
-        (keyup.enter)="startHTMLUpload()" -->
-      <!-- TODO uncomment this and make it work for FlexNow API -->
-      <!-- <button id="study_prog_upload_button"
-        class="upload btn btn-primary plausible-event-name=Studyprogression-upload+Button"
-        (click)="importCompleteFlexNowData()" (keyup.enter)="importCompleteFlexNowData()"
-        aria-label="Studienverlauf aus FlexNow importieren">
-        Studienverlauf aus FlexNow importieren
-      </button> -->
-      <button class="btn btn-danger" aria-label="Studienverlauf löschen" (click)="openDeleteStudyPathDialog()"
-        (keyup.enter)="openDeleteStudyPathDialog()">
-        Studienverlauf löschen
-      </button>
-    </div>
-  </div>
-
-  <ng-container *ngIf="flexnowApiConsent$ | async as flexnowApiConsent">
-    <div *ngIf="flexnowApiConsent.hasConfirmed">
-      <div class="withdraw-flexnow-consent on-card-info-box">
-        <p>Einwilligung zum Abruf deines Studienverlaufs über die FlexNow-Schnittstelle akzeptiert am {{
-          flexnowApiConsent.timestamp | date: 'medium' }}</p>
-        Die Einwilligung kannst du jederzeit auf unserer <a class="link" href="/datenschutz" class="redirect link"
-          aria-label="Zur Datenschutzseite">Datenschutzseite</a> einsehen.
+@if (integrateFnDataConsent$ | async; as integrateFnDataConsent) {
+  <mat-card class="p-4 mb-2">
+    <mat-card-title>
+      <h3 class="mt-0">Integration von Daten aus FlexNow</h3>
+    </mat-card-title>
+    @if (integrateFnDataConsent && integrateFnDataConsent.hasConfirmed) {
+      <div>
+        <div class="d-grid gap-2 withdraw-flexnow-consent on-card-info-box">
+          <div>
+            Einwilligung zum Abruf deiner Studierendendaten über die
+            FlexNow-Schnittstelle zuletzt akzeptiert am
+            {{ integrateFnDataConsent.timestamp | date: "medium" }}
+          </div>
+          <div>
+            Die Einwilligung kannst du jederzeit auf unserer
+            <a
+              class="link"
+              href="/datenschutz"
+              class="redirect link"
+              aria-label="Zur Datenschutzseite"
+              >Datenschutzseite</a
+            >
+            einsehen.
+          </div>
+        </div>
+        <h4>Einwilligung zu einzelnen Datenkategorien:</h4>
+        <div class="d-grid gap-2 on-card-info-box">
+          @if (importMetadataConsent$ | async; as importMetadataConsent) {
+            <div>
+              <i
+                class="bi me-2"
+                [class.bi-x-lg]="!importMetadataConsent.hasConfirmed"
+                [class.bi-check-lg]="importMetadataConsent.hasConfirmed"
+              ></i>
+              <span
+                >Allgemeine Informationen (Studiengang, Startsemester, ...)
+              </span>
+            </div>
+          }
+          @if (importStudypathConsent$ | async; as importStudypathConsent) {
+            <div>
+              <i
+                class="bi me-2"
+                [class.bi-x-lg]="!importStudypathConsent.hasConfirmed"
+                [class.bi-check-lg]="importStudypathConsent.hasConfirmed"
+              ></i>
+              <span
+                >Verlaufsinformationen (Abgelegte Prüfungen, Module und
+                Lehrveranstaltungen)</span
+              >
+            </div>
+          }
+          @if (importGradeConsent$ | async; as importGradeConsent) {
+            <div>
+              <i
+                class="bi me-2"
+                [class.bi-x-lg]="!importGradeConsent.hasConfirmed"
+                [class.bi-check-lg]="importGradeConsent.hasConfirmed"
+              ></i>
+              <span
+                >Noten (berechnete Abschlussnote, Modul- bzw.
+                Prüfungsnoten)</span
+              >
+            </div>
+          }
+        </div>
       </div>
-      <button class="btn btn-outline withdrawal-link my-1 p-2" (click)="openConsentWithdrawalDialog()"
-        (keyup.enter)="openConsentWithdrawalDialog()">
-        <span>Einwilligung widerrufen</span>
-      </button>
-    </div>
-  </ng-container>
-</mat-card>
+    }
+    @if (user.authType !== "local") {
+      <div>
+        @if (!integrateFnDataConsent || !integrateFnDataConsent.hasConfirmed) {
+          <button
+            id="study_prog_upload_button"
+            class="upload btn btn-primary plausible-event-name=Studyprogression-upload+Button"
+            (click)="importCompleteFlexNowData()"
+            (keyup.enter)="importCompleteFlexNowData()"
+            aria-label="Daten aus FlexNow importieren"
+          >
+            Daten aus FlexNow importieren
+          </button>
+        }
+        @if (integrateFnDataConsent && integrateFnDataConsent.hasConfirmed) {
+          <div>
+            <!-- <button class="btn btn-primary me-4" aria-label="Einwilligungen bearbeiten"
+          (click)="openConsentDialog()" (keyup.enter)="openConsentDialog()">
+          Einwilligung bearbeiten
+        </button> -->
+            <button
+              class="btn btn-danger"
+              aria-label="Einwilligung widerrufen"
+              (click)="openConsentWithdrawalDialog()"
+              (keyup.enter)="openConsentWithdrawalDialog()"
+            >
+              Einwilligung widerrufen und importierten Studienverlauf löschen
+            </button>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="alert alert-info">
+        Du bist mit einem lokalen Nutzer eingeloggt. Hier können keine Daten aus FlexNow integriert werden.
+      </div>
+    }
+  </mat-card>
+}

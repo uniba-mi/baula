@@ -7,8 +7,18 @@ import {
   ViewChild,
   Renderer2,
   AfterViewInit,
+  inject,
 } from '@angular/core';
-import { concat, mergeMap, Observable, of, skipWhile, Subject, switchMap, take, takeUntil } from 'rxjs';
+import {
+  concat,
+  Observable,
+  of,
+  skipWhile,
+  Subject,
+  switchMap,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
   getAllModules,
@@ -17,22 +27,17 @@ import {
   getModules,
 } from 'src/app/selectors/module-overview.selectors';
 import { State } from 'src/app/reducers';
-import { ModuleHandbook } from '../../../../../interfaces/module-handbook';
-import { Module } from '../../../../../interfaces/module';
-import {
-  OptionGroup,
-  Option,
-  SearchSettings,
-} from '../../../../../interfaces/search';
+import { ModuleHandbook } from '@interfaces/module-handbook';
+import { Module } from '@interfaces/module';
+import { OptionGroup, Option, SearchSettings } from '@interfaces/search';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModService } from 'src/app/shared/services/module.service';
-import { ModuleGroup } from '../../../../../interfaces/module-group';
+import { ModuleGroup } from '@interfaces/module-group';
 import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
-import { StudyProgrammeActions, UserActions } from 'src/app/actions/user.actions';
-import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
+import { StudyProgrammeActions } from 'src/app/actions/user.actions';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -42,8 +47,17 @@ import { MatDialog } from '@angular/material/dialog';
   standalone: false,
 })
 export class ModuleOverviewComponent
-  implements OnInit, OnDestroy, AfterViewInit {
-  @HostListener('window:resize', ['$event.target.innerWidth'])
+  implements OnInit, OnDestroy, AfterViewInit
+{
+  private store = inject<Store<State>>(Store);
+  private route = inject(ActivatedRoute);
+  private modService = inject(ModService);
+  private router = inject(Router);
+  private renderer = inject(Renderer2);
+  private recsHelper = inject(RecsHelperService);
+  private dialog = inject(MatDialog);
+
+  //@HostListener('window:resize', ['$event.target.innerWidth'])
   onResize(width: number) {
     if (width < 992) {
       this.sideNavOpened = false;
@@ -117,9 +131,15 @@ export class ModuleOverviewComponent
     {
       name: 'Sonstige',
       options: [
-        { value: 'hideTakenPassed', name: 'Belegte und bestandene verstecken', key: 'hideTakenPassed', selected: false, metadata: false }
-      ]
-    }
+        {
+          value: 'hideTakenPassed',
+          name: 'Belegte und bestandene verstecken',
+          key: 'hideTakenPassed',
+          selected: false,
+          metadata: false,
+        },
+      ],
+    },
   ];
 
   // variables only for component
@@ -141,16 +161,6 @@ export class ModuleOverviewComponent
   elementObserver$: ResizeObserver;
   passedOrTakenAcronyms: string[] = [];
 
-  constructor(
-    private store: Store<State>,
-    private route: ActivatedRoute,
-    private modService: ModService,
-    private router: Router,
-    private renderer: Renderer2,
-    private recsHelper: RecsHelperService,
-    private dialog: MatDialog
-  ) { }
-
   ngOnInit(): void {
     // Scroll to top of the page on component initialization
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -159,19 +169,24 @@ export class ModuleOverviewComponent
     this.moduleHandbook$ = this.store.select(getModuleHandbook);
     this.modules$ = this.store.select(getModules);
     this.acronyms$ = this.store.select(getModuleAcronyms);
-    this.searchSettings$ = this.store.select(getSearchSettingsByContext('module-overview'));
+    this.searchSettings$ = this.store.select(
+      getSearchSettingsByContext('module-overview'),
+    );
 
     // subscribe to searchSettings to preset grouping
-    const mhbSub = this.moduleHandbook$.pipe(skipWhile(mhb => !mhb)).pipe(take(1))
-    const soSub = this.searchSettings$.pipe(take(1))
+    const mhbSub = this.moduleHandbook$
+      .pipe(skipWhile((mhb) => !mhb))
+      .pipe(take(1));
+    const soSub = this.searchSettings$.pipe(take(1));
     const modSub = this.store
       .select(getModules)
-      .pipe(skipWhile(modules => !modules)).pipe(take(1))
+      .pipe(skipWhile((modules) => !modules))
+      .pipe(take(1));
 
-    concat(mhbSub, modSub, soSub).subscribe(value => {
+    concat(mhbSub, modSub, soSub).subscribe((value) => {
       if (value && 'mhbId' in value) {
         this.mhb = value;
-        if(!this.mhb.upToDate) {
+        if (!this.mhb.upToDate) {
           this.openUpdateMhbDialog(this.mhb);
         }
       } else if (value && Array.isArray(value)) {
@@ -180,32 +195,34 @@ export class ModuleOverviewComponent
         if (value?.selectedGrouping) {
           this.onGroupingSelectionChange(value.selectedGrouping);
         } else {
-          this.onGroupingSelectionChange(this.selectedGroup)
+          this.onGroupingSelectionChange(this.selectedGroup);
         }
       }
-    })
+    });
 
-    this.searchSettings$.pipe(takeUntil(this.destroy$)).subscribe(options => {
+    this.searchSettings$.pipe(takeUntil(this.destroy$)).subscribe((options) => {
       if (options && options.filter && options.filter.length !== 0) {
-        this.selectedGroupFilter = options.filter.find(el => el.key === 'mgId' || el.key === 'chair')
+        this.selectedGroupFilter = options.filter.find(
+          (el) => el.key === 'mgId' || el.key === 'chair',
+        );
       } else {
         this.selectedGroupFilter = undefined;
       }
-    })
+    });
 
     // needed to open module if reload at open dialog
     this.store
       .select(getAllModules)
-      .pipe(skipWhile(modules => !modules || modules.length === 0))
+      .pipe(skipWhile((modules) => !modules || modules.length === 0))
       .pipe(takeUntil(this.destroy$))
       .pipe(
         switchMap((modules) => {
           if (this.allModules?.length === modules.length) {
-            return of(undefined)
+            return of(undefined);
           }
           this.allModules = modules;
-          return this.route.queryParams
-        })
+          return this.route.queryParams;
+        }),
       )
       .subscribe((params) => {
         // react on route params if id is set open module
@@ -221,11 +238,14 @@ export class ModuleOverviewComponent
     this.onResize(window.innerWidth);
 
     // get study path information for child
-    this.recsHelper.getPassedOrTakenModulesFromStudyPath().pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(passedOrTakenModules => {
-      this.passedOrTakenAcronyms = passedOrTakenModules.map(module => module.acronym);
-    });
+    this.recsHelper
+      .getPassedOrTakenModulesFromStudyPath()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((passedOrTakenModules) => {
+        this.passedOrTakenAcronyms = passedOrTakenModules.map(
+          (module) => module.acronym,
+        );
+      });
   }
 
   ngAfterViewInit(): void {
@@ -236,7 +256,7 @@ export class ModuleOverviewComponent
         this.renderer.setStyle(
           this.sidenavContainer.nativeElement,
           'min-height',
-          (entry.contentRect.height + 100).toString() + 'px'
+          (entry.contentRect.height + 100).toString() + 'px',
         );
       }
     });
@@ -250,15 +270,13 @@ export class ModuleOverviewComponent
   openModule(id: string, mgId: string | undefined) {
     if (this.allModules && this.allModules.length !== 0) {
       const module = this.allModules.find(
-        (mod) => mod.mId === id && mod.mgId === mgId
+        (mod) => mod.mId === id && mod.mgId === mgId,
       );
       if (module) {
         this.modService.openDetailsDialog(module, undefined, true);
       } else {
         // try to find module only with mId
-        const broaderModule = this.allModules.find(
-          (mod) => mod.mId == id
-        );
+        const broaderModule = this.allModules.find((mod) => mod.mId == id);
         if (broaderModule) {
           this.modService.openDetailsDialog(broaderModule, undefined, true);
         } else {
@@ -274,7 +292,10 @@ export class ModuleOverviewComponent
 
   searchModules(searchSettings: SearchSettings) {
     this.store.dispatch(
-      SearchActions.updateSearchSettings({ context: 'module-overview', searchSettings: searchSettings })
+      SearchActions.updateSearchSettings({
+        context: 'module-overview',
+        searchSettings: searchSettings,
+      }),
     );
   }
 
@@ -287,17 +308,17 @@ export class ModuleOverviewComponent
       if ((value == 'chair' || value == 'term') && this.modules) {
         let groups: ModuleGroup[] = [];
         const possibleValues = [
-          ...new Set(this.modules.map((module) => module[value]))
-        ]
+          ...new Set(this.modules.map((module) => module[value])),
+        ];
         let i = 0;
         for (let pvalue of possibleValues) {
           // startsWith-Condition to filter out all occurences where no chair is adressed
           if (!pvalue.startsWith('Modul')) {
             const index = groups.push(
-              new ModuleGroup(i.toString(), 0, '', pvalue, '', 0, 0, 0)
+              new ModuleGroup(i.toString(), 0, '', pvalue, '', 0, 0, 0),
             );
             let filteredModules = this.modules.filter(
-              (module) => module[value] == pvalue
+              (module) => module[value] == pvalue,
             );
             if (filteredModules) {
               groups[index - 1].addModules(filteredModules);
@@ -306,13 +327,18 @@ export class ModuleOverviewComponent
           }
         }
         groups = groups.sort((a, b) =>
-          a.fullName < b.fullName ? -1 : a.fullName > b.fullName ? 1 : 0
+          a.fullName < b.fullName ? -1 : a.fullName > b.fullName ? 1 : 0,
         );
         this.groups = groups;
       } else if (value === 'struktur' && this.mhb) {
         this.groups = this.mhb.mgs;
       }
-      this.store.dispatch(SearchActions.updateGroupingOption({ context: 'module-overview', grouping: value }))
+      this.store.dispatch(
+        SearchActions.updateGroupingOption({
+          context: 'module-overview',
+          grouping: value,
+        }),
+      );
     }
   }
 
@@ -322,20 +348,26 @@ export class ModuleOverviewComponent
   }
 
   private openUpdateMhbDialog(mhb: ModuleHandbook) {
-    const dialogRef = this.dialog.open(DialogComponent, 
-      {
-        data: {
-          dialogContentId: 'update-mhb-dialog',
-          mhb
-        }
-      }
-    )
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        dialogContentId: 'update-mhb-dialog',
+        mhb,
+      },
+    });
 
-    dialogRef.afterClosed().pipe(take(1)).subscribe((mhb: ModuleHandbook) => {
-      if(mhb.version !== this.mhb.version) {
-        this.store.dispatch(StudyProgrammeActions.changeModulehandbook({ mhbId: mhb.mhbId, version: mhb.version }))
-      }
-    })
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((mhb: ModuleHandbook) => {
+        if (mhb.version !== this.mhb.version) {
+          this.store.dispatch(
+            StudyProgrammeActions.changeModulehandbook({
+              mhbId: mhb.mhbId,
+              version: mhb.version,
+            }),
+          );
+        }
+      });
   }
 
   ngOnDestroy() {

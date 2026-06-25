@@ -3,12 +3,19 @@
   <div class="col d-flex justify-content-between align-items-end">
     <div class="main-nav navbar-nav me-auto align-items-start">
       <div class="nav-item">
-        <button class="nav-link" role="button" tabindex="0" aria-haspopup="true" aria-label="Profil"
-          [class.active]="router.isActive('/app/profil', false)" [matMenuTriggerFor]="profil"
-          *ngIf="user.shibId !== ''; else loginButton">
-          <i class="bi bi-person-circle"></i>
-          <span class="d-none mx-2">Profil</span>
-        </button>
+        @if (user.shibId !== '') {
+          <button class="nav-link" role="button" tabindex="0" aria-haspopup="true" aria-label="Profil"
+            [class.active]="router.isActive('/app/profil', false)" [matMenuTriggerFor]="profil"
+            >
+            <i class="bi bi-person-circle"></i>
+            <span class="d-none mx-2">Profil</span>
+          </button>
+        } @else {
+          <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Login" (click)="login()">
+            <i class="bi bi-person-fill-lock me-2"></i>
+            <span class="d-none d-lg-inline">Login</span>
+          </span>
+        }
         <mat-menu #profil="matMenu" xPosition="before">
           <button mat-menu-item tabindex="0" aria-haspopup="false" aria-label="Profil bearbeiten"
             routerLink="app/profil/daten">
@@ -25,9 +32,3 @@
   </div>
 </nav>
 
-<ng-template #loginButton>
-  <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Login" (click)="login()">
-    <i class="bi bi-person-fill-lock me-2"></i>
-    <span class="d-none d-lg-inline">Login</span>
-  </span>
-</ng-template>

@@ -5,6 +5,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  inject,
 } from '@angular/core';
 import { User } from '../../../../../../interfaces/user';
 import {
@@ -29,6 +30,11 @@ import { AuthService } from 'src/app/shared/auth/auth.service';
   standalone: false,
 })
 export class UserFormComponent implements OnInit, OnChanges {
+  private rest = inject(RestService);
+  private formBuilder = inject(FormBuilder);
+  private store = inject(Store);
+  private auth = inject(AuthService);
+
   @Input() user: User;
   @Input() isEdit: boolean = false; // if is edit (= update profile) semester should not be editable
   @Output() submitUser = new EventEmitter<User>();
@@ -57,17 +63,10 @@ export class UserFormComponent implements OnInit, OnChanges {
   teacherEducation: string[];
   others: string[];
 
-  constructor(
-    private rest: RestService,
-    private formBuilder: FormBuilder,
-    private store: Store,
-    private auth: AuthService
-  ) {}
-
   ngOnInit(): void {
     // fallback is current semester
     this.selectedStartSemester = new FormControl(
-      this.user?.startSemester ? this.user.startSemester : new Semester().name
+      this.user?.startSemester ? this.user.startSemester : new Semester().name,
     );
 
     this.startSemesters = this.returnInitialSemesterList();
@@ -118,7 +117,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       catchError((error) => {
         this.auth.forceReload(error);
         return of([]); // Return an empty array or handle the error as needed
-      })
+      }),
     );
 
     if (
@@ -135,7 +134,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       .pipe(
         map((sps) => sps.map((el) => el.name)),
         map((names) => [...new Set(names)]),
-        take(1)
+        take(1),
       )
       .subscribe((names) => {
         this.spNames = names;
@@ -146,7 +145,7 @@ export class UserFormComponent implements OnInit, OnChanges {
           (el) =>
             !el.startsWith('Bachelor') &&
             !el.startsWith('Master') &&
-            !el.startsWith('Lehramt')
+            !el.startsWith('Lehramt'),
         );
       });
   }
@@ -177,11 +176,11 @@ export class UserFormComponent implements OnInit, OnChanges {
   selectSpName(name: string) {
     this.userForm.controls['spName'].addValidators([Validators.required]);
     this.possiblePOs$ = this.studyprogrammes$.pipe(
-      map((sps) => sps.filter((el) => el.name == name))
+      map((sps) => sps.filter((el) => el.name == name)),
     );
 
     this.spVersions$ = this.possiblePOs$.pipe(
-      map((sps) => sps.map((el) => el.desc))
+      map((sps) => sps.map((el) => el.desc)),
     );
 
     this.presetStudyprogramme(name);
@@ -212,11 +211,11 @@ export class UserFormComponent implements OnInit, OnChanges {
 
         // select po with the highest version (should be the newest)
         const highestPoVersion = Math.max(
-          ...selectedPos.map((el) => el.poVersion)
+          ...selectedPos.map((el) => el.poVersion),
         );
 
         this.selectedStudyprogramme = pos.find(
-          (el) => el.poVersion === highestPoVersion
+          (el) => el.poVersion === highestPoVersion,
         );
       } else {
         this.selectedStudyprogramme = pos[0];
@@ -231,6 +230,7 @@ export class UserFormComponent implements OnInit, OnChanges {
             poVersion: this.selectedStudyprogramme.poVersion,
             name: this.selectedStudyprogramme.name,
             faculty: this.selectedStudyprogramme.faculty,
+            status: 'Immatrikuliert',
             mhbId: '',
             mhbVersion: 0,
           },
@@ -251,8 +251,8 @@ export class UserFormComponent implements OnInit, OnChanges {
       const programmeType = spName.startsWith('Bachelor')
         ? 'Bachelor'
         : spName.startsWith('Master')
-        ? 'Master'
-        : 'Lehramt';
+          ? 'Master'
+          : 'Lehramt';
       const semesterDate = new Semester().semesterDate;
 
       // transform semester strings into Date
@@ -273,7 +273,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       // if more than one mhb is possible prefilter handbooks by programmeType
       if (possibleMhbs.length > 1) {
         possibleMhbs = possibleMhbs.filter((el) =>
-          el.name.startsWith(programmeType)
+          el.name.startsWith(programmeType),
         );
       }
 
@@ -309,7 +309,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     const studyprogrammes = await firstValueFrom(this.studyprogrammes$);
     // find studyprogramme
     this.selectedStudyprogramme = studyprogrammes.find(
-      (el) => el.desc == version && el.name == spName
+      (el) => el.desc == version && el.name == spName,
     );
     if (this.selectedStudyprogramme) {
       this.user.sps = [
@@ -318,6 +318,7 @@ export class UserFormComponent implements OnInit, OnChanges {
           poVersion: this.selectedStudyprogramme.poVersion,
           name: this.selectedStudyprogramme.name,
           faculty: this.selectedStudyprogramme.faculty,
+          status: 'Immatrikuliert',
           mhbId: '',
           mhbVersion: 0,
         },
@@ -326,7 +327,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       if (this.selectedStudyprogramme.mhbs) {
         this.preselectModuleHandbook(
           this.selectedStudyprogramme.mhbs,
-          this.selectedStudyprogramme.name
+          this.selectedStudyprogramme.name,
         );
       }
     }
@@ -336,7 +337,9 @@ export class UserFormComponent implements OnInit, OnChanges {
     const studyprogrammes = await firstValueFrom(this.studyprogrammes$);
     // find studyprogramme
     if (user.sps && user.sps.length !== 0) {
-      const spFromUser = user.sps[0];
+      const spFromUser = user.sps.filter(
+        (sp) => sp.status == 'Immatrikuliert',
+      )[0];
       const studyprogramme = studyprogrammes.find((el) => {
         return (
           el.spId == spFromUser.spId && el.poVersion == spFromUser.poVersion
@@ -344,11 +347,11 @@ export class UserFormComponent implements OnInit, OnChanges {
       });
       if (studyprogramme) {
         this.possiblePOs$ = of(
-          studyprogrammes.filter((el) => el.name == studyprogramme.name)
+          studyprogrammes.filter((el) => el.name == studyprogramme.name),
         );
 
         this.spVersions$ = this.possiblePOs$.pipe(
-          map((sps) => sps.map((el) => el.desc))
+          map((sps) => sps.map((el) => el.desc)),
         );
 
         // set studyprogramme value
@@ -365,8 +368,12 @@ export class UserFormComponent implements OnInit, OnChanges {
         });
         if (moduleHandbook) {
           if (this.user.sps && this.user.sps.length !== 0) {
-            this.user.sps[0].mhbId = moduleHandbook.mhbId;
-            this.user.sps[0].mhbVersion = moduleHandbook.version;
+            this.user.sps.filter(
+              (sp) => sp.status == 'Immatrikuliert',
+            )[0].mhbId = moduleHandbook.mhbId;
+            this.user.sps.filter(
+              (sp) => sp.status == 'Immatrikuliert',
+            )[0].mhbVersion = moduleHandbook.version;
           }
           this.selectedModuleHandbook.setValue(moduleHandbook);
         }
@@ -377,7 +384,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   // TODO: Currently only the first entry, where the smallest Distance occurs is returned, this may lead to a wrong selection!
   private getIndexWithSmallestDistance(
     dateArray: Date[],
-    targedDate: Date
+    targedDate: Date,
   ): number[] {
     const distance = dateArray.map((el) => {
       return Math.abs(targedDate.valueOf() - el.valueOf());
@@ -395,14 +402,17 @@ export class UserFormComponent implements OnInit, OnChanges {
   selectModuleHandbook(mhb: ModuleHandbook) {
     this.userForm.controls['mhb'].addValidators([Validators.required]);
     if (this.user.sps && this.user.sps.length !== 0) {
-      this.user.sps[0].mhbId = mhb.mhbId;
-      this.user.sps[0].mhbVersion = mhb.version;
+      this.user.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbId =
+        mhb.mhbId;
+      this.user.sps.filter(
+        (sp) => sp.status == 'Immatrikuliert',
+      )[0].mhbVersion = mhb.version;
       this.selectedModuleHandbook.setValue(mhb);
       this.store.dispatch(
         ModuleHandbookActions.loadModuleHandbook({
           id: mhb.mhbId,
           version: mhb.version,
-        })
+        }),
       );
       this.emitChanges();
     }

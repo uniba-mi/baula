@@ -1,18 +1,26 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { filter, map, Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
+import {
+  filter,
+  map,
+  Observable,
+  Subject,
+  switchMap,
+  take,
+  takeUntil,
+} from 'rxjs';
 import {
   getSemesterList,
   getUserStudyPath,
 } from 'src/app/selectors/user.selectors';
+import { MetaSemester, SemesterPlan } from '@interfaces/semester-plan';
 import {
-  MetaSemester,
-  SemesterPlan,
-} from '../../../../../../../interfaces/semester-plan';
-import { getSelectedStudyPlanId, getSemesterPlansOfSelectedStudyPlan } from 'src/app/selectors/study-planning.selectors';
-import { SemesterStudyPath } from '../../../../../../../interfaces/study-path';
+  getSelectedStudyPlanId,
+  getSemesterPlansOfSelectedStudyPlan,
+} from 'src/app/selectors/study-planning.selectors';
+import { SemesterStudyPath } from '@interfaces/study-path';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
-import { Semester } from '../../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropService } from 'src/app/shared/services/drag-drop.service';
 
@@ -20,9 +28,13 @@ import { DragDropService } from 'src/app/shared/services/drag-drop.service';
   selector: 'app-study-plan-semester',
   templateUrl: './study-plan-semester.component.html',
   styleUrls: ['./study-plan-semester.component.scss'],
-  standalone: false
+  standalone: false,
 })
 export class StudyPlanSemesterComponent {
+  private store = inject(Store);
+  private transform = inject(TransformationService);
+  private dragDropService = inject(DragDropService);
+
   @Input() metaSemester: MetaSemester;
   @Input() semesterNumber: number;
   @Input() isPastSemester: boolean = false;
@@ -42,56 +54,65 @@ export class StudyPlanSemesterComponent {
   connectedDropListIds: string[];
   isEligibleForFinish: boolean = false;
 
-  constructor(
-    private store: Store,
-    private transform: TransformationService,
-    private dragDropService: DragDropService,
-  ) { }
-
   ngOnInit() {
-    this.activeSemesters$ = this.store.select(getSemesterList).pipe(
-      map((semesterList) => semesterList.map((semester) => semester.name))
-    );
+    this.activeSemesters$ = this.store
+      .select(getSemesterList)
+      .pipe(
+        map((semesterList) => semesterList.map((semester) => semester.name)),
+      );
 
     // fetch studyPlanId for both children
-    this.store.select(getSelectedStudyPlanId).pipe(take(1)).subscribe((studyPlanId) => {
-      this.studyPlanId = studyPlanId
-    })
+    this.store
+      .select(getSelectedStudyPlanId)
+      .pipe(take(1))
+      .subscribe((studyPlanId) => {
+        this.studyPlanId = studyPlanId;
+      });
 
     // set current semester plan by fetching full details with MetaSemester for both children
-    this.store.select(getSemesterPlansOfSelectedStudyPlan)
+    this.store
+      .select(getSemesterPlansOfSelectedStudyPlan)
       .pipe(
-        filter(semesterPlans => !!semesterPlans && semesterPlans.length > 0),
-        map(semesterPlans => {
-
+        filter((semesterPlans) => !!semesterPlans && semesterPlans.length > 0),
+        map((semesterPlans) => {
           // set connected drop lists (no past semesters)
           this.connectedDropListIds = semesterPlans
-            .filter(plan => plan.semester !== this.metaSemester.semester && !plan.isPastSemester)
-            .map(plan => plan._id);
+            .filter(
+              (plan) =>
+                plan.semester !== this.metaSemester.semester &&
+                !plan.isPastSemester,
+            )
+            .map((plan) => plan._id);
 
           // add sidenav list
           if (!this.metaSemester.isPastSemester) {
             this.connectedDropListIds.push('sidenav-drop-list');
           }
 
-          return semesterPlans.find(plan => plan.semester === this.metaSemester.semester);
+          return semesterPlans.find(
+            (plan) => plan.semester === this.metaSemester.semester,
+          );
         }),
-        filter(plan => !!plan),
-        takeUntil(this.destroy$)
+        filter((plan) => !!plan),
+        takeUntil(this.destroy$),
       )
-      .subscribe(plan => {
+      .subscribe((plan) => {
         this.semesterPlan = plan;
 
         // pass eligible state down to children
-        this.isEligibleForFinish = (plan._id === this.eligibleSemesterId);
+        this.isEligibleForFinish = plan._id === this.eligibleSemesterId;
       });
 
     // get study path data for this semester for target ects in header and study path cards
-    this.semesterStudyPath$ = this.store.select(getUserStudyPath).pipe(
-      switchMap((studyPath) =>
-        this.transform.transformStudyPath(studyPath, [new Semester(this.metaSemester.semester)])
-      )
-    );
+    this.semesterStudyPath$ = this.store
+      .select(getUserStudyPath)
+      .pipe(
+        switchMap((studyPath) =>
+          this.transform.transformStudyPath(studyPath, [
+            new Semester(this.metaSemester.semester),
+          ]),
+        ),
+      );
   }
 
   handleFinishSemester(semesterPlan: SemesterPlan): void {
@@ -104,11 +125,12 @@ export class StudyPlanSemesterComponent {
   }
 
   isOldestPastSemester(): boolean {
-    return (this.semesterNumber === 1 && this.metaSemester.isPastSemester) ? true : false;
+    return this.semesterNumber === 1 && this.metaSemester.isPastSemester
+      ? true
+      : false;
   }
 
   onDrop(event: CdkDragDrop<any>) {
-
     if (event.previousContainer === event.container) {
       return;
     }
@@ -127,7 +149,7 @@ export class StudyPlanSemesterComponent {
       targetContainerId,
       targetSemester,
       this.studyPlanId,
-      this.metaSemester.isPastSemester
+      this.metaSemester.isPastSemester,
     );
   }
 

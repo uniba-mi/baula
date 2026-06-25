@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Module } from '../../../../../../../../interfaces/module';
 import { ModService } from 'src/app/shared/services/module.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -67,6 +67,13 @@ import { DragDropService } from 'src/app/shared/services/drag-drop.service';
   styleUrl: './semester-body.component.scss',
 })
 export class SemesterBodyComponent {
+  private modService = inject(ModService);
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+  private snackbarService = inject(SnackbarService);
+  private screenSizeService = inject(ScreenSizeService);
+  private dragDropService = inject(DragDropService);
+
   @Input() metaSemester: MetaSemester;
   @Input() studyPlanId: string;
   @Input() semesterPlan: SemesterPlan;
@@ -84,15 +91,6 @@ export class SemesterBodyComponent {
   modules$: Observable<Module[]>;
   modules: Module[];
   semesters$: Observable<Semester[]>;
-
-  constructor(
-    private modService: ModService,
-    private store: Store,
-    private dialog: MatDialog,
-    private snackbarService: SnackbarService,
-    private screenSizeService: ScreenSizeService,
-    private dragDropService: DragDropService,
-  ) {}
 
   ngOnInit() {
     this.screenSizeService.isSmallScreen$.pipe(take(1)).subscribe((isSmall) => {
@@ -129,11 +127,26 @@ export class SemesterBodyComponent {
 
     switch (action) {
       case 'select':
-        this.selectModule(data);
+        if (!data.isUserGenerated) {
+          // no select for ug modules
+          if (!this.metaSemester.isPastSemester) {
+            this.selectModule(data);
+          } else {
+            this.openModuleDetailsDialog(
+              data.acronym || data,
+              'details',
+              false,
+            );
+          }
+        }
         break;
 
       case 'feedback':
-        this.openModuleDetailsDialog(data.acronym || data);
+        if (!this.metaSemester.isPastSemester) {
+          this.openModuleDetailsDialog(data.acronym || data, 'feedback', true); // allowPlanning true for type Module
+        } else {
+          this.openModuleDetailsDialog(data.acronym || data, 'feedback', false); // allowPlanning false for type pathModule
+        }
         break;
 
       case 'moveToSem':
@@ -205,9 +218,17 @@ export class SemesterBodyComponent {
     return this.store.select(getOldModuleByAcronym(acronym));
   }
 
-  openModuleDetailsDialog(acronym: string) {
+  openModuleDetailsDialog(
+    acronym: string,
+    activeTab: string,
+    allowPlanning: boolean,
+  ) {
     // open on tab feedback
-    this.modService.selectModuleFromAcronymString(acronym, 'feedback');
+    this.modService.selectModuleFromAcronymString(
+      acronym,
+      activeTab,
+      allowPlanning,
+    );
   }
 
   openChangeModuleGroupDialog(event: any, module: PathModule): void {
@@ -217,7 +238,7 @@ export class SemesterBodyComponent {
         dialogContentId: 'change-module-group-dialog',
         mgId: module.mgId,
         structuredModuleGroups$: this.structuredModuleGroups$,
-        acronym: module.acronym
+        acronym: module.acronym,
       },
     });
 

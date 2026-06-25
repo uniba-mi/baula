@@ -1,14 +1,13 @@
 <mat-card-content class="container-fluid d-block pt-0">
-    <ng-container *ngIf="currentGrade; else noGrade">
-        <h1 class="d-flex justify-content-center mb-2">{{ currentGrade.toFixed(1) | number }}</h1>
-        <div class="alert alert-sm alert-warning" role="alert">
-            Der Notendurchschnitt ist nur eine Annäherung, da alle bestandenen Module gewichtet nach ihren ECTS einbezogen wurden. 
-            Sonderregelungen einzelner Studiengänge konnten nicht berücksichtigt werden. Mehr zur Berechnung deiner Abschlussnote findest du in der 
-            <a href="https://www.uni-bamberg.de/abt-studium/aufgaben/pruefungs-studienordnungen/" target="_blank">APO deiner Fakultät</a>.
-        </div>
-    </ng-container>
+  @if (currentGrade) {
+    <h1 class="d-flex justify-content-center mb-2">{{ currentGrade.toFixed(1) | number }}</h1>
+    <div class="alert alert-sm alert-warning" role="alert">
+      Der Notendurchschnitt ist nur eine Annäherung, da alle bestandenen Module gewichtet nach ihren ECTS einbezogen wurden.
+      Sonderregelungen einzelner Studiengänge konnten nicht berücksichtigt werden. Mehr zur Berechnung deiner Abschlussnote findest du in der
+      <a href="https://www.uni-bamberg.de/abt-studium/aufgaben/pruefungs-studienordnungen/" target="_blank">APO deiner Fakultät</a>.
+    </div>
+  } @else {
+    <app-no-data [diagram]=false noDataBtnText="Studienverlauf aus FlexNow laden" noDataLinkText="/app/profil/integrationen-verwalten"></app-no-data>
+  }
 </mat-card-content>
 
-<ng-template #noGrade>
-    <app-no-data [diagram]=false noDataBtnText="Studienverlauf aus FlexNow laden" noDataLinkText="/app/profil/verlauf-verwalten"></app-no-data>
-</ng-template>

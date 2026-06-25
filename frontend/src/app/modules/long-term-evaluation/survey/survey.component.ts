@@ -42,12 +42,20 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatIconModule,
     MatCheckboxModule,
     PrivacyStatementComponent,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   providers: [LteRestService],
 })
 export class SurveyComponent implements OnInit, OnDestroy {
-  data: { evaluationCode: string; spName: string; semester: number, consentGiven: boolean | undefined } = inject(MAT_DIALOG_DATA);
+  dialogRef = inject<MatDialogRef<SurveyComponent>>(MatDialogRef);
+  private screenSizeService = inject(ScreenSizeService);
+
+  data: {
+    evaluationCode: string;
+    spName: string;
+    semester: number;
+    consentGiven: boolean | undefined;
+  } = inject(MAT_DIALOG_DATA);
   private api = inject(LteRestService);
   readonly dismiss = model(false);
   likertScale = [
@@ -77,7 +85,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
       id: 'pu4',
       text: 'Insgesamt ist Baula für meine Studienplanung nützlich.',
     },
-    
   ];
   peouLikertQuestions = [
     {
@@ -95,26 +102,21 @@ export class SurveyComponent implements OnInit, OnDestroy {
     {
       id: 'peou4',
       text: 'Es ist für mich unkompliziert, Baula so zu nutzen, wie ich es möchte.',
-    }
+    },
   ];
   biLikertQuestion = {
-      id: 'bi',
-      text: 'Ich habe vor, Baula auch in den kommenden Semestern zu nutzen.',
-  }
-  
+    id: 'bi',
+    text: 'Ich habe vor, Baula auch in den kommenden Semestern zu nutzen.',
+  };
+
   isLargeScreen: boolean;
   private subscriptions: Subscription = new Subscription();
-
-  constructor(
-    public dialogRef: MatDialogRef<SurveyComponent>,
-    private screenSizeService: ScreenSizeService
-  ) {}
 
   ngOnInit(): void {
     this.subscriptions.add(
       this.screenSizeService.isLargeScreen$.subscribe((isLargeScreen) => {
         this.isLargeScreen = isLargeScreen;
-      })
+      }),
     );
   }
 
@@ -221,7 +223,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
           error: (error) => {
             console.log(error);
             this.dialogRef.close(result);
-          }
+          },
         });
     }
   }

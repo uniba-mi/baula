@@ -7,24 +7,23 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { UntypedFormControl } from '@angular/forms';
 import { Course } from '../../../../../../interfaces/course';
-import {
-  Option,
-  SearchSettings,
-} from '../../../../../../interfaces/search';
+import { Option, SearchSettings } from '../../../../../../interfaces/search';
 import { takeUntil } from 'rxjs/operators';
 import { getModuleAcronyms } from 'src/app/selectors/module-overview.selectors';
 import { ModuleCourse } from '../../../../../../interfaces/module-course';
-import { PlanCourse, SemesterPlan } from '../../../../../../interfaces/semester-plan';
-import { getLoadingState } from 'src/app/selectors/study-planning.selectors';
 import {
-  LoadingActions,
-} from 'src/app/actions/study-planning.actions';
+  PlanCourse,
+  SemesterPlan,
+} from '../../../../../../interfaces/semester-plan';
+import { getLoadingState } from 'src/app/selectors/study-planning.selectors';
+import { LoadingActions } from 'src/app/actions/study-planning.actions';
 import { IndexedDbService } from 'src/app/shared/services/indexed-db.service';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 
@@ -32,9 +31,12 @@ import { SearchActions } from 'src/app/actions/search-settings.actions';
   selector: 'app-course-overview',
   templateUrl: './course-overview.component.html',
   styleUrls: ['./course-overview.component.scss'],
-  standalone: false
+  standalone: false,
 })
 export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
+  private store = inject<Store<State>>(Store);
+  private indexedDB = inject(IndexedDbService);
+
   @Input() activePlan: SemesterPlan;
   @Input() selectedCourses?: PlanCourse[] | null;
   @Input() isSticky: boolean;
@@ -54,11 +56,6 @@ export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
   spinner$: Observable<boolean>;
   acronyms: string[];
   types: string | undefined;
-
-  constructor(
-    private store: Store<State>,
-    private indexedDB: IndexedDbService
-  ) { }
 
   ngOnInit(): void {
     this.spinner$ = this.store.select(getLoadingState);
@@ -97,7 +94,7 @@ export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
   private getCoursesFromUnivis(
     semester: string,
     searchsettings?: SearchSettings,
-    reload?: boolean
+    reload?: boolean,
   ) {
     this.store.dispatch(LoadingActions.startLoading());
     this.indexedDB
@@ -120,7 +117,7 @@ export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
                 (course) =>
                   course.mCourses &&
                   course.mCourses.length !== 0 &&
-                  this.extractModulesFromCourse(course)
+                  this.extractModulesFromCourse(course),
               );
             }
 
@@ -129,8 +126,8 @@ export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
               if (this.selectedCourses) {
                 this.courses = this.courses.filter((course) =>
                   this.selectedCourses?.find(
-                    (planCourse) => planCourse.id == course.id
-                  )
+                    (planCourse) => planCourse.id == course.id,
+                  ),
                 );
               } else {
                 this.courses = [];
@@ -156,13 +153,13 @@ export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
         SearchActions.updateSearchSettings({
           context: 'course-search',
           searchSettings: this.searchSettings,
-        })
+        }),
       );
     }
   }
 
   extractModulesFromCourse(
-    course: Course
+    course: Course,
   ): { modCourse: ModuleCourse }[] | undefined {
     let result: { modCourse: ModuleCourse }[] = [];
     if (course.mCourses && course.mCourses.length !== 0 && this.acronyms) {

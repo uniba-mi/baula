@@ -1,12 +1,9 @@
-import { Injectable } from '@angular/core';
-import { User } from '../../../../../interfaces/user';
-import {
-  PathCourse,
-  PathModule,
-} from '../../../../../interfaces/study-path';
+import { Injectable, inject } from '@angular/core';
+import { User } from '@interfaces/user';
+import { PathCourse, PathModule } from '@interfaces/study-path';
 import { TransformationService } from './transformation.service';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
-import { SemesterPlan } from '../../../../../interfaces/semester-plan';
+import { StudyPlan } from '@interfaces/study-plan';
+import { SemesterPlan } from '@interfaces/semester-plan';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -14,12 +11,14 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
   providedIn: 'root',
 })
 export class DownloadService {
-  constructor(private transform: TransformationService) { }
+  private transform = inject(TransformationService);
 
   // function to export data for reimport -> export json-file
   downloadJSONFile(content: any, filename: string) {
     // Use FileService to generate a file (optional)
-    const fileBlob = new Blob([JSON.stringify(content)], { type: 'application/json' });
+    const fileBlob = new Blob([JSON.stringify(content)], {
+      type: 'application/json',
+    });
 
     // Create a Blob URL for the file and trigger the download
     const blobUrl = URL.createObjectURL(fileBlob);
@@ -35,14 +34,18 @@ export class DownloadService {
   async downloadUserData(userData: User, studyPlans: StudyPlan[]) {
     // preload courses and studyprogrammes asyncronisly
     const courses = await this.generateTableOfCourses(
-      userData.studyPath.completedCourses
+      userData.studyPath.completedCourses,
     );
     const studprogrammes = await this.transform.transformStudyProgramme(
-      userData.sps
+      userData.sps,
     );
 
-    const favouriteModules = this.transform.transformModuleIdsToAcronyms(userData.favouriteModulesAcronyms)
-    const excludedModules = this.transform.transformModuleIdsToAcronyms(userData.excludedModulesAcronyms)
+    const favouriteModules = this.transform.transformModuleIdsToAcronyms(
+      userData.favouriteModulesAcronyms,
+    );
+    const excludedModules = this.transform.transformModuleIdsToAcronyms(
+      userData.excludedModulesAcronyms,
+    );
 
     // Consents table
     const consentsTable = {
@@ -52,15 +55,15 @@ export class DownloadService {
         widths: ['*', '*', '*', '*'],
         body: [
           ['Typ', 'Eingewilligt', 'Gesehen', 'Zeitstempel'],
-          ...userData.consents.map(consent => [
+          ...userData.consents.map((consent) => [
             consent.ctype,
             consent.hasConfirmed ? 'Ja' : 'Nein',
             consent.hasResponded ? 'Ja' : 'Nein',
-            this.transform.transformDate(consent.timestamp)
-          ])
-        ]
+            this.transform.transformDate(consent.timestamp),
+          ]),
+        ],
       },
-      margin: [0, 10, 0, 10]
+      margin: [0, 10, 0, 10],
       // TODO module feedback
     };
 
@@ -79,15 +82,15 @@ export class DownloadService {
           `Rollen: ${userData.roles.join(', ')}`,
           `Studiengang: ${studprogrammes}`,
           `Start Semester: ${this.transform.transformUnivIsSemester(
-            userData.startSemester
+            userData.startSemester,
           )}`,
           `Studiendauer (geplant): ${userData.duration}`,
           `ECTS (gesamt): ${userData.maxEcts}`,
           `Account erstellt am ${this.transform.transformDate(
-            userData.createdAt
+            userData.createdAt,
           )}`,
           `Account zuletzt aktualisiert am ${this.transform.transformDate(
-            userData.updatedAt
+            userData.updatedAt,
           )}`,
           `Deine gemerkten Module: ${favouriteModules}`,
           `Module, die nicht mehr vorgeschlagen werden: ${excludedModules}`,
@@ -119,7 +122,7 @@ export class DownloadService {
           headerRows: 1,
           width: ['*', '*', '*', '*'],
           body: this.generateTableOfModules(
-            userData.studyPath.completedModules
+            userData.studyPath.completedModules,
           ),
         },
         margin: [0, 0, 0, 20],
@@ -136,7 +139,7 @@ export class DownloadService {
         text: 'Einwilligungen (Datenschutz)',
         style: 'subheader',
       },
-      consentsTable
+      consentsTable,
     ];
 
     // generate the pdf file
@@ -163,7 +166,9 @@ export class DownloadService {
 
     /* lazy load pdfmake to prevent load issues */
     const documentDefinition = { content, styles };
-    pdfMake.createPdf(documentDefinition, undefined, undefined, pdfFonts.vfs).download('user.pdf');
+    pdfMake
+      .createPdf(documentDefinition, undefined, undefined, pdfFonts)
+      .download(filename);
   }
 
   /*###################################################### 
@@ -197,8 +202,10 @@ export class DownloadService {
           this.transform.transformStatus(entry.status),
           this.transform.transformUnivIsSemester(entry.semester),
         ]);
-      } catch(error) {
-        console.error(`Die Lehrveranstaltung mit der Id ${entry.id} ist leider nicht mehr im UnivIS vorhanden und kann daher im Export nicht angezeigt werden.`)
+      } catch (error) {
+        console.error(
+          `Die Lehrveranstaltung mit der Id ${entry.id} ist leider nicht mehr im UnivIS vorhanden und kann daher im Export nicht angezeigt werden.`,
+        );
         continue;
       }
     }
@@ -213,10 +220,11 @@ export class DownloadService {
     for (let studyPlan of studyPlans) {
       output.push(
         {
-          text: `${studyPlan.name} (${studyPlan.status ? 'aktiv' : 'passiv'
-            }) - erstellt am ${this.transform.transformDate(
-              studyPlan.createdAt
-            )}`,
+          text: `${studyPlan.name} (${
+            studyPlan.status ? 'aktiv' : 'passiv'
+          }) - erstellt am ${this.transform.transformDate(
+            studyPlan.createdAt,
+          )}`,
           margin: [0, 0, 0, 10],
         },
         {
@@ -236,7 +244,7 @@ export class DownloadService {
             ],
           },
           margin: [0, 0, 0, 20],
-        }
+        },
       );
     }
     return output;
@@ -249,7 +257,9 @@ export class DownloadService {
       output.push([
         this.transform.transformUnivIsSemester(semesterPlan.semester),
         this.transform.transformModuleIdsToAcronyms(semesterPlan.modules),
-        this.transform.transformUserGeneratedModulesToString(semesterPlan.userGeneratedModules),
+        this.transform.transformUserGeneratedModulesToString(
+          semesterPlan.userGeneratedModules,
+        ),
         semesterPlan.aimedEcts,
         semesterPlan.summedEcts,
       ]);

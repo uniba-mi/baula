@@ -5,19 +5,27 @@
         <mat-form-field appearance="outline">
           <mat-label>ECTS:</mat-label>
           <input matInput #aimedEcts formControlName="aimedEcts" type="number" min="1" max="300" [value]="aimedEcts" />
-          <mat-error *ngIf="
-              aimedEctsForm.controls.aimedEcts.touched &&
-              aimedEctsForm.controls.aimedEcts.invalid
-            "><span *ngIf="
-                aimedEctsForm.controls.aimedEcts.errors?.min ||
-                aimedEctsForm.controls.aimedEcts.errors?.max
-              ">Die ECTS müssen mindestens 1 und maximal 300 sein.</span><span
-              *ngIf="aimedEctsForm.controls.aimedEcts.errors?.pattern">Bitte gib hier nur Ganzzahlen an.</span><span
-              *ngIf="aimedEctsForm.controls.aimedEcts.errors?.required">Das ist ein Pflichtfeld.</span></mat-error>
+          @if (
+            aimedEctsForm.controls.aimedEcts.touched &&
+            aimedEctsForm.controls.aimedEcts.invalid
+            ) {
+            <mat-error>@if (
+              aimedEctsForm.controls.aimedEcts.errors?.min ||
+              aimedEctsForm.controls.aimedEcts.errors?.max
+              ) {
+              <span>Die ECTS müssen mindestens 1 und maximal 300 sein.</span>
+              }@if (aimedEctsForm.controls.aimedEcts.errors?.pattern) {
+              <span
+              >Bitte gib hier nur Ganzzahlen an.</span>
+              }@if (aimedEctsForm.controls.aimedEcts.errors?.required) {
+              <span
+              >Das ist ein Pflichtfeld.</span>
+            }</mat-error>
+          }
         </mat-form-field>
         <i class="bi bi-info-circle"
           matTooltip="Gib hier die ECTS ein, die du in dem gewählten Semester erreichen möchtest."
-          matTooltipClass="custom-tooltip" appTooltip></i>
+        matTooltipClass="custom-tooltip" appTooltip></i>
       </div>
     </div>
     <mat-dialog-actions>
