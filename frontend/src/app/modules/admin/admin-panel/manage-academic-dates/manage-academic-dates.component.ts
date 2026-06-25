@@ -119,7 +119,7 @@ export class ManageAcademicDatesComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {
         dialogTitle: 'Zeitraum löschen',
-        dialogContentId: 'delete-academic-date-dialog',
+        dialogContentId: 'delete-dialog',
       },
     });
 

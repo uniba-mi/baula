@@ -273,8 +273,7 @@
       (keyup.enter)="startStepper()">
       Weiter
     </button>
-  }
-  @if (formInitialised) {
+  } @else {
     <button mat-raised-button class="btn btn-outline mt-3" (click)="stopStepper()"
       (keyup.enter)="stopStepper()">
       Zurück

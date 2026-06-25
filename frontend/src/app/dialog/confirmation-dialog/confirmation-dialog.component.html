@@ -5,45 +5,50 @@
         <!-- displays title if there is one -->
         @if (data.dialogTitle) {
           <div>
-            <p mat-dialog-title class="pl-0 text-gray">{{ data.dialogTitle }}</p>
+            <p mat-dialog-title class="pl-0 text-gray">
+              {{ data.dialogTitle }}
+            </p>
           </div>
         }
 
         <!-- dynamic message based on actionType -->
         <p>
-          <!-- delete action -->
-          @if (data.actionType === 'delete') {
-            <span>
-              Bist du sicher, dass du <b>{{ data.confirmationItem }}</b> löschen möchtest?
-            </span>
-          }
-
-          <!-- add action -->
-          @if (data.actionType === 'add') {
-            <span>
-              Bist du sicher, dass du <b>{{ data.confirmationItem }}</b> hinzufügen möchtest?
-            </span>
-          }
-
-          <!-- update action -->
-          @if (data.actionType === 'update') {
-            <span>
-              Bist du sicher, dass du <b>{{ data.confirmationItem }}</b> aktualisieren möchtest?
-            </span>
-          }
-
-          <!-- overwrite action -->
-          @if (data.actionType === 'overwrite') {
-            <span>
-              Bist du sicher, dass du <b>{{ data.confirmationItem }}</b> überschreiben möchtest?
-            </span>
-          }
-
-          <!-- other possible actions / fallback -->
-          @if (!data.actionType) {
-            <span>
-              Bist du sicher, dass du mit <b>{{ data.confirmationItem }}</b> fortfahren möchtest?
-            </span>
+          @switch (data.actionType) {
+            @case ("delete") {
+              <!-- delete action -->
+              <span>
+                Bist du sicher, dass du
+                <b>{{ data.confirmationItem }}</b> löschen möchtest?
+              </span>
+            }
+            @case ("add") {
+              <!-- add action -->
+              <span>
+                Bist du sicher, dass du
+                <b>{{ data.confirmationItem }}</b> hinzufügen möchtest?
+              </span>
+            }
+            @case ("update") {
+              <!-- update action -->
+              <span>
+                Bist du sicher, dass du
+                <b>{{ data.confirmationItem }}</b> aktualisieren möchtest?
+              </span>
+            }
+            @case ("overwrite") {
+              <!-- overwrite action -->
+              <span>
+                Bist du sicher, dass du
+                <b>{{ data.confirmationItem }}</b> überschreiben möchtest?
+              </span>
+            }
+            @default {
+              <!-- other possible actions / fallback -->
+              <span>
+                Bist du sicher, dass du mit
+                <b>{{ data.confirmationItem }}</b> fortfahren möchtest?
+              </span>
+            }
           }
         </p>
 
@@ -57,7 +62,11 @@
 
     <div mat-dialog-actions>
       <!-- Dynamic button classes based on action type -->
-      <button mat-raised-button [ngClass]="data.confirmButtonClass" (click)="handleDialogSubmit()">
+      <button
+        mat-raised-button
+        [ngClass]="data.confirmButtonClass"
+        (click)="handleDialogSubmit()"
+      >
         {{ data.confirmButtonLabel }}
       </button>
       <button mat-raised-button class="btn btn-outline" mat-dialog-close>

@@ -5,56 +5,66 @@
         <!-- displays title if there is one -->
         @if (data.dialogTitle) {
           <div>
-            <p mat-dialog-title class="pl-0 text-gray">{{ data.dialogTitle }}</p>
+            <p mat-dialog-title class="pl-0 text-gray">
+              {{ data.dialogTitle }}
+            </p>
           </div>
         }
 
-        @if (data.univisCrawl$ && data.dialogContentId === 'univis-crawl-dialog') {
-          <div>
-            <admin-univis-crawl-dialog
-              [univisCrawl$]="data.univisCrawl$"
-            ></admin-univis-crawl-dialog>
-          </div>
-        }
-
-        <!-- Dialog for academic date -->
-        @if (data.dialogContentId === 'academic-date-dialog') {
-          <div>
-            <admin-academic-dates-dialog
-              [academicDate]="data.academicDate"
-            ></admin-academic-dates-dialog>
-          </div>
-        }
-
-        <!-- Dialog for date type -->
-        @if (data.dialogContentId === 'date-type-dialog') {
-          <div>
-            <admin-date-type-dialog
-              [dateType]="data.dateType"
-            ></admin-date-type-dialog>
-          </div>
-        }
-
-        <!-- Delete Dialog -->
-        @if (data.dialogContentId.startsWith('delete')) {
-          <div>
-            <admin-delete-dialog
-              [dialogContentId]="data.dialogContentId"
-            ></admin-delete-dialog>
-          </div>
-        }
-
-        <!-- Edit Connection Dialog -->
-        @if (data.dialogContentId === 'edit-connection-dialog' && data.mCourse && data.semester && data.chair && data.connection && data.courses) {
-          <div>
-            <admin-edit-connection-dialog
-              [mCourse]="data.mCourse"
-              [semester]="data.semester"
-              [chair]="data.chair"
-              [connection]="data.connection"
-              [courses]="data.courses"
-            ></admin-edit-connection-dialog>
-          </div>
+        @switch (data.dialogContentId) {
+          @case ("univis-crawl-dialog") {
+            @if (data.univisCrawl$) {
+              <div>
+                <admin-univis-crawl-dialog
+                  [univisCrawl$]="data.univisCrawl$"
+                ></admin-univis-crawl-dialog>
+              </div>
+            }
+          }
+          @case ("academic-date-dialog") {
+            <!-- Dialog for academic date -->
+            <div>
+              <admin-academic-dates-dialog
+                [academicDate]="data.academicDate"
+              ></admin-academic-dates-dialog>
+            </div>
+          }
+          @case ("date-type-dialog") {
+            <!-- Dialog for date type -->
+            <div>
+              <admin-date-type-dialog
+                [dateType]="data.dateType"
+              ></admin-date-type-dialog>
+            </div>
+          }
+          @case ("delete-dialog") {
+            <!-- Delete Dialog -->
+            <div>
+              <admin-delete-dialog
+                [dialogContentId]="data.dialogContentId"
+              ></admin-delete-dialog>
+            </div>
+          }
+          @case ("edit-connection-dialog") {
+            <!-- Edit Connection Dialog -->
+            @if (
+              data.mCourse &&
+              data.semester &&
+              data.chair &&
+              data.connection &&
+              data.courses
+            ) {
+              <div>
+                <admin-edit-connection-dialog
+                  [mCourse]="data.mCourse"
+                  [semester]="data.semester"
+                  [chair]="data.chair"
+                  [connection]="data.connection"
+                  [courses]="data.courses"
+                ></admin-edit-connection-dialog>
+              </div>
+            }
+          }
         }
       </ng-container>
     </mat-dialog-content>

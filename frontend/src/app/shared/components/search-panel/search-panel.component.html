@@ -28,7 +28,7 @@
             @if (!customStyle) {
               <span class="d-none d-sm-inline">Filter</span>
             }
-            @if (customStyle) {
+            @else {
               <span class="d-none d-xl-inline">Filter</span>
             }
             @if (((selectedFiltersCount$ | async) ?? 0) > 0) {

@@ -87,7 +87,7 @@ export class ManageDateTypesComponent {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {
         dialogTitle: 'Zeitraumtyp löschen',
-        dialogContentId: 'delete-academic-date-dialog',
+        dialogContentId: 'delete-dialog',
       },
     });
 

@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import {
   catchError,
+  map,
   Observable,
   of,
   Subject,
@@ -46,6 +47,12 @@ import { chartMetadata } from 'src/app/shared/constants/chart-metadata';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { MatTooltip } from '@angular/material/tooltip';
 
+interface DashboardData {
+  visibleCharts: ChartVisibility[];
+  studyPath: StudyPath;
+  semesterStudyPath: SemesterStudyPath[];
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -67,10 +74,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   semesters$: Observable<Semester[]>;
   activeStudyPlan$: Observable<StudyPlan | undefined>;
   maxEcts: number = 180;
-  visibleCharts$: Observable<ChartVisibility[]>;
   dashboardSettings$: Observable<ChartVisibility[]>;
   modulegroups$: Observable<ModuleGroup[] | undefined>;
   studyPlans$: Observable<StudyPlan[]>;
+  semesterStudyPath$: Observable<SemesterStudyPath[]>;
   semesterStudyPath: SemesterStudyPath[]; // variable for study path separted by semester
   splitIndex: number = 0;
   activePlan$: Observable<SemesterPlan | undefined>;
@@ -84,25 +91,43 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     'Es ist Zeit, dein Semester abzuschließen. Navigiere über "Studienverlaufsplan" zu deinem Plan und schließe das Semester ab, indem du auf "Jetzt Semester abschließen" klickst. Nur so können deine Module und Platzhalter aus dem vergangenen Semester zum Studienverlauf hinzugefügt und deine aktuellen Leistungen berücksichtigt werden.';
   showFinishSemesterHint$: Observable<boolean>;
   isPersonalisationComplete = false;
+  dashboardData$: Observable<DashboardData>;
 
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);
     this.studyPath$ = this.store.select(getUserStudyPath);
     this.semesters$ = this.store.select(getSemesterList);
     this.activeStudyPlan$ = this.store.select(getActiveStudyPlan);
-    this.visibleCharts$ = this.store.select(getVisibleCharts);
     this.dashboardSettings$ = this.store.select(getDashboardSettings);
     this.modulegroups$ = this.store.select(getFirstLevelModuleGroups);
     this.activePlan$ = this.store.select(getSemesterPlan);
     this.studyPlans$ = this.store.select(getStudyPlans);
     this.planCourses$ = this.store.select(getPlanCourses);
-    combineLatest([this.studyPath$, this.semesters$])
-      .pipe(
-        switchMap(([path, semester]) =>
-          this.transform.transformStudyPath(path, semester),
-        ),
-      )
+    this.semesterStudyPath$ = combineLatest([
+      this.studyPath$,
+      this.semesters$,
+    ]).pipe(
+      switchMap(([path, semester]) =>
+        this.transform.transformStudyPath(path, semester),
+      ),
+    );
+    this.dashboardData$ = combineLatest([
+      this.store.select(getVisibleCharts),
+      this.studyPath$,
+      this.semesterStudyPath$,
+    ]).pipe(
+      map(([visibleCharts, studyPath, semesterStudyPath]) => {
+        return {
+          visibleCharts,
+          studyPath,
+          semesterStudyPath,
+        };
+      }),
+    );
+    this.dashboardData$.subscribe((test) => console.log(test));
+    this.semesterStudyPath$
       .subscribe((semesterStudyPath) => {
+        console.log(semesterStudyPath)
         this.semesterStudyPath = semesterStudyPath;
         this.splitIndex = this.semesterStudyPath.findIndex(
           (el) => el.semester === new Semester().fullName,

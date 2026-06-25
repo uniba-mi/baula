@@ -4,317 +4,327 @@
     <div class="meta-box">
       @if (selectedModule.respPerson) {
         <div class="row module-information-prof-row">
-          <span class="fw-bold col-12 col-md-3"><i class="bi bi-person"></i> Modulverantwortl.</span>
-          <span class="col-12 col-md-3">{{ selectedModule.respPerson.firstname }}
+          <span class="fw-bold col-12 col-md-3"
+            ><i class="bi bi-person"></i> Modulverantwortl.</span
+          >
+          <span class="col-12 col-md-3"
+            >{{ selectedModule.respPerson.firstname }}
             {{ selectedModule.respPerson.lastname }}
           </span>
-          <span class="fw-bold col-12 col-md-3"><i class="bi bi-house"></i> Lehrstuhl</span>
+          <span class="fw-bold col-12 col-md-3"
+            ><i class="bi bi-house"></i> Lehrstuhl</span
+          >
           <span class="col-12 col-md-3">{{ selectedModule.chair }}</span>
         </div>
       }
       <div class="row my-2">
-        <span class="fw-bold col-12 col-md-3"><i class="bi bi-arrow-clockwise"></i> Angebotshäufigkeit</span>
+        <span class="fw-bold col-12 col-md-3"
+          ><i class="bi bi-arrow-clockwise"></i> Angebotshäufigkeit</span
+        >
         <span class="col-12 col-md-3">{{ selectedModule.term }}</span>
-        <span class="fw-bold col-12 col-md-3"><i class="bi bi-alarm"></i> Moduldauer</span>
-        <span class="col-12 col-md-3">{{ selectedModule.duration }} Semester</span>
+        <span class="fw-bold col-12 col-md-3"
+          ><i class="bi bi-alarm"></i> Moduldauer</span
+        >
+        <span class="col-12 col-md-3"
+          >{{ selectedModule.duration }} Semester</span
+        >
       </div>
       <div class="row my-2">
         @if (selectedModule.recTerm) {
-          <span class="fw-bold col-12 col-md-3"><i class="bi bi-calendar"></i>
-        Empfohlenes Semester</span>
-      }
-      @if (selectedModule.recTerm) {
-        <span class="col-12 col-md-3">@if (selectedModule.recTerm !== '0') {
-          <span
-            >{{
-            selectedModule.recTerm
-          }}</span>
-        } @else {
-          Keine Angabe
-        }</span>
-      }
-      <span class="fw-bold col-12 col-md-3">@if (selectedModule.type !== '') {
-        <span><i
-        class="bi bi-exclamation-circle"></i> Modulart</span>
-      }</span>
-      @if (selectedModule.type !== '') {
-        <span class="col-12 col-md-3">
-          <span class="chip" [ngClass]="selectedModule.type === 'Pflichtmodul' ? 'compulsory-chip' : ''">{{
-            selectedModule.type
-          }}</span>
-        </span>
-      }
-    </div>
-    <div class="row my-2">
-      @if (getFullModuleGroup(selectedModule.mgId) | async; as mg) {
-        <span class="fw-bold col-12 col-md-3"><i class="bi bi-grid"></i> Modulgruppe</span>
-        @if (mg) {
-          <span class="col-12 col-md-3">{{ mg }}</span>
+          <span class="fw-bold col-12 col-md-3"
+            ><i class="bi bi-calendar"></i> Empfohlenes Semester</span
+          >
         }
-      }
-    </div>
-  </div>
-  <div class="row module-information-description-row">
-    <div class="col-12 col-md-3 fw-bold">Inhalte</div>
-    <div class="col-12 col-md-9" [ngClass]="selectedModule.content.length > 500 ? 'truncate' : ''">
-                <span id="{{ selectedModule.mId }}-content" class="module-information-description" [ngClass]="
-              selectedModule.content.length > 500 ? 'truncate-text' : ''
-            " [innerHtml]="selectedModule.content"></span>
-      @if (selectedModule.content.length > 500) {
-        <span role="button" class="px-2">@if (!expandedModuleContent) {
-          <i
-            class="bi bi-chevron-down show-more-icon"
-            (click)="toggleContent(selectedModule, 'expand')"
-          (keyup.enter)="toggleContent(selectedModule, 'expand')"></i>
-          }@if (expandedModuleContent) {
-          <i
-            class="bi bi-chevron-up" (click)="toggleContent(selectedModule, 'collapse')"
-          (keyup.enter)="toggleContent(selectedModule, 'collapse')"></i>
+        @if (selectedModule.recTerm) {
+          <span class="col-12 col-md-3">
+            @if (selectedModule.recTerm !== "0") {
+              <span>{{ selectedModule.recTerm }}</span>
+            } @else {
+              Keine Angabe
+            }
+          </span>
         }
-      </span>
-    }
-  </div>
-</div>
-<div class="row">
-  <div class="col-12 col-md-3 fw-bold">Lernziele</div>
-  <div class="col-12 col-md-9" [ngClass]="selectedModule.skills.length > 500 ? 'truncate' : ''">
-                <span id="{{ selectedModule.mId }}-goals" class="module-information-description" [ngClass]="
-              selectedModule.skills.length > 500 ? 'truncate-text' : ''
-            " [innerHtml]="selectedModule.skills">
-    </span>
-    @if (selectedModule.skills.length > 500) {
-      <span role="button" class="px-2">
-        @if (!expandedModuleGoals) {
-          <i class="bi bi-chevron-down show-more-icon"
-            (click)="toggleModuleGoals(selectedModule, 'expand')"
-            (keyup.enter)="toggleModuleGoals(selectedModule, 'expand')">
-          </i>
-        }
-        @if (expandedModuleGoals) {
-          <i class="bi bi-chevron-up"
-            (click)="toggleModuleGoals(selectedModule, 'collapse')"
-            (keyup.enter)="toggleModuleGoals(selectedModule, 'collapse')">
-          </i>
-        }
-      </span>
-    }
-  </div>
-</div>
-@if (selectedModule.skills != selectedModule.addInfo && selectedModule.addInfo) {
-  <div class="row">
-    <span class="col-12 col-md-3 fw-bold">Zusatz&shy;informationen</span>
-    <span class="col-12 col-md-9" [innerHtml]="selectedModule.addInfo"></span>
-  </div>
-}
-@if (selectedModule.workload && selectedModule.workload != '') {
-  <div class="row">
-    <span class="col-12 col-md-3 fw-bold">Arbeitsaufwand</span>
-    <span class="col-12 col-md-9" [innerHtml]="selectedModule.workload"></span>
-  </div>
-}
-@if (selectedModule.prevModules.length > 0) {
-  <div class="row">
-    @if (selectedModule.prevModules) {
-      <div class="row">
-        <span class="fw-bold col-12 col-md-3">Vorkenntnisse</span>
-        <span class="col-12 col-md-9">
-          @for (prevMod of selectedModule.prevModules; track prevMod) {
-            <span>
-              <button class="prev-chip chip me-2" (click)="selectModuleWithAcronym(prevMod.acronym)"
-                (keyup.enter)="selectModuleWithAcronym(prevMod.acronym)" [mat-dialog-close]="'next'"
-                [matTooltip]="prevMod.name">
-                {{ prevMod.acronym }}
-              </button>
-            </span>
+        <span class="fw-bold col-12 col-md-3">
+          @if (selectedModule.type !== "") {
+            <span><i class="bi bi-exclamation-circle"></i> Modulart</span>
           }
         </span>
+        @if (selectedModule.type !== "") {
+          <span class="col-12 col-md-3">
+            <span
+              class="chip"
+              [ngClass]="
+                selectedModule.type === 'Pflichtmodul' ? 'compulsory-chip' : ''
+              "
+              >{{ selectedModule.type }}</span
+            >
+          </span>
+        }
+      </div>
+      <div class="row my-2">
+        @if (getFullModuleGroup(selectedModule.mgId) | async; as mg) {
+          <span class="fw-bold col-12 col-md-3"
+            ><i class="bi bi-grid"></i> Modulgruppe</span
+          >
+          @if (mg) {
+            <span class="col-12 col-md-3">{{ mg }}</span>
+          }
+        }
+      </div>
+    </div>
+    <div class="row module-information-description-row">
+      <div class="col-12 col-md-3 fw-bold">Inhalte</div>
+      <div
+        class="col-12 col-md-9"
+        [ngClass]="selectedModule.content.length > 500 ? 'truncate' : ''"
+      >
+        <span
+          id="{{ selectedModule.mId }}-content"
+          class="module-information-description"
+          [ngClass]="selectedModule.content.length > 500 ? 'truncate-text' : ''"
+          [innerHtml]="selectedModule.content"
+        ></span>
+        @if (selectedModule.content.length > 500) {
+          <span role="button" class="px-2">
+            @if (!expandedModuleContent) {
+              <i
+                class="bi bi-chevron-down show-more-icon"
+                (click)="toggleContent(selectedModule, 'expand')"
+                (keyup.enter)="toggleContent(selectedModule, 'expand')"
+              ></i>
+            }
+            @if (expandedModuleContent) {
+              <i
+                class="bi bi-chevron-up"
+                (click)="toggleContent(selectedModule, 'collapse')"
+                (keyup.enter)="toggleContent(selectedModule, 'collapse')"
+              ></i>
+            }
+          </span>
+        }
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-3 fw-bold">Lernziele</div>
+      <div
+        class="col-12 col-md-9"
+        [ngClass]="selectedModule.skills.length > 500 ? 'truncate' : ''"
+      >
+        <span
+          id="{{ selectedModule.mId }}-goals"
+          class="module-information-description"
+          [ngClass]="selectedModule.skills.length > 500 ? 'truncate-text' : ''"
+          [innerHtml]="selectedModule.skills"
+        >
+        </span>
+        @if (selectedModule.skills.length > 500) {
+          <span role="button" class="px-2">
+            @if (!expandedModuleGoals) {
+              <i
+                class="bi bi-chevron-down show-more-icon"
+                (click)="toggleModuleGoals(selectedModule, 'expand')"
+                (keyup.enter)="toggleModuleGoals(selectedModule, 'expand')"
+              >
+              </i>
+            }
+            @if (expandedModuleGoals) {
+              <i
+                class="bi bi-chevron-up"
+                (click)="toggleModuleGoals(selectedModule, 'collapse')"
+                (keyup.enter)="toggleModuleGoals(selectedModule, 'collapse')"
+              >
+              </i>
+            }
+          </span>
+        }
+      </div>
+    </div>
+    @if (
+      selectedModule.skills != selectedModule.addInfo && selectedModule.addInfo
+    ) {
+      <div class="row">
+        <span class="col-12 col-md-3 fw-bold">Zusatz&shy;informationen</span>
+        <span
+          class="col-12 col-md-9"
+          [innerHtml]="selectedModule.addInfo"
+        ></span>
       </div>
     }
-  </div>
-}
-@if (selectedModule.priorKnowledge) {
-  <div class="row">
-    <span class="fw-bold col-12 col-md-3">Empfohlene Vorkenntnisse</span>
-    <span class="col-12 col-md-9 module-information-priorKnowledge"
-      [innerHTML]="highlightAcronyms(selectedModule.allPriorModules, selectedModule.priorKnowledge)">
-    </span>
-  </div>
-}
-@if (moduleClasses$ | async; as moduleClasses) {
-  <div class="row">
-    @if (moduleClasses.length > 0) {
-      <div class="module-information-classes">
-        <div class="module-information-classes">
-          <div class="row module-information-classes-header">
-            <div class="fw-bold col-12 col-md-3">
-              Lehrveranstaltungen
-              <span class="col-auto px-2" role="button" (click)="expandedClasses = !expandedClasses"
-                (keyup.enter)="expandedClasses = !expandedClasses">
-                @if (!expandedClasses) {
-                  <i class="bi bi-chevron-down show-more-icon"></i>
-                }
-                @if (expandedClasses) {
-                  <i class="bi bi-chevron-up"></i>
-                }
-              </span>
-            </div>
-            <div class="col-12 col-md-9">
-                            <button class="btn btn-primary btn-sm d-xl-inline" [disabled]="expandedClasses" (click)="
-                      findCourses(
-                        selectedModule.acronym
-                      )
-                    " [mat-dialog-close]="'jump'">
-                <i class="bi bi-search d-none d-sm-inline me-2"></i>
-                Finde passende Lehrveranstaltungen
-              </button>
-              <i class="bi bi-info-circle icon"
-                matTooltip="Module können einen oder mehrere Lehrveranstaltungen enthalten. Finde passende Lehrveranstaltungen, die du für dein Modul belegen kannst."
-              appTooltip></i>
-            </div>
-          </div>
-        </div>
-        @if (expandedClasses) {
-          <div>
-            @for (class of moduleClasses; track class) {
-              <div class="module-information-classes-content py-4">
-                <!-- show class informations, currently just key -->
-                <div class="row module-information-classes-name-row">
-                  <div class="fw-bold col-12 col-md-3">{{ class.type }}</div>
-                  <div class="fw-bold col-12 col-md-6">{{ class.name }}</div>
-                  <div class="fw-bold col-12 col-md-3">
-                    <button class="btn btn-primary btn-sm d-xl-inline"
-                      (click)="findCourses(selectedModule.acronym, class.type)"
-                      [mat-dialog-close]="'jump'">
-                      <i class="bi bi-search d-xl-none d-inline"></i>
-                      Finde passende Lehrveranstaltung
-                    </button>
-                  </div>
-                </div>
-                <div class="row module-information-classes-details-row">
-                  <div class="col-12">
-                    <div class="row">
-                      <div class="col-12 col-md-3 module-information-classes-titleCol fw-bold">
-                        Lehrperson
-                      </div>
-                      <div class="col-12 col-md-3 module-information-classes-titleCol fw-bold">
-                        Angebotshäufigkeit
-                      </div>
-                      <div class="col-12 col-md-3 module-information-classes-titleCol fw-bold">
-                        Sprache
-                      </div>
-                      <div class="col-12 col-md-3 module-information-classes-titleCol fw-bold">
-                        SWS
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-md-3">
-                        @for (prof of class.lecturers; track prof) {
-                          <div>
-                            {{ prof.firstname }} {{ prof.lastname }}
-                          </div>
-                        }
-                      </div>
-                      <div class="col-12 col-md-3">{{ class.term }}</div>
-                      <div class="col-12 col-md-3">{{ class.language }}</div>
-                      <div class="col-12 col-md-3">{{ class.sws }}</div>
-                    </div>
-                  </div>
-                  @if (class.desc) {
-                    <div class="col-12 col-xxl-6 mt-2">
-                      <div class="module-information-classes-titleCol fw-bold">Inhalte</div>
-                      <div [innerHtml]="class.desc"></div>
-                    </div>
-                  }
-                  @if (class.literature) {
-                    <div class="col-12 col-xxl-6 mt-2">
-                      <div class="module-information-classes-titleCol fw-bold">Literatur</div>
-                      <div [innerHtml]="class.literature"></div>
-                    </div>
-                  }
-                </div>
-              </div>
-            }
+    @if (selectedModule.workload && selectedModule.workload != "") {
+      <div class="row">
+        <span class="col-12 col-md-3 fw-bold">Arbeitsaufwand</span>
+        <span
+          class="col-12 col-md-9"
+          [innerHtml]="selectedModule.workload"
+        ></span>
+      </div>
+    }
+    @if (selectedModule.prevModules.length > 0) {
+      <div class="row">
+        @if (selectedModule.prevModules) {
+          <div class="row">
+            <span class="fw-bold col-12 col-md-3">Vorkenntnisse</span>
+            <span class="col-12 col-md-9">
+              @for (prevMod of selectedModule.prevModules; track prevMod) {
+                <span>
+                  <button
+                    class="prev-chip chip me-2"
+                    (click)="selectModuleWithAcronym(prevMod.acronym)"
+                    (keyup.enter)="selectModuleWithAcronym(prevMod.acronym)"
+                    [mat-dialog-close]="'next'"
+                    [matTooltip]="prevMod.name"
+                  >
+                    {{ prevMod.acronym }}
+                  </button>
+                </span>
+              }
+            </span>
           </div>
         }
       </div>
     }
-  </div>
-}
-<div class="row">
-  <!-- exam info -->
-  @if (selectedModule.exams.length > 0) {
-    <div class="module-information-exam">
-      <div class="module-information-classes">
-        <div class="row module-information-classes-header">
-          <div class="fw-bold col-12 col-md-3">
-            Prüfungen
-            <span class="col-auto px-2" role="button" (click)="expandedExams = !expandedExams"
-              (keyup.enter)="expandedExams = !expandedExams">
-              @if (!expandedExams) {
-                <i class="bi bi-chevron-down show-more-icon"></i>
-              }
-              @if (expandedExams) {
-                <i class="bi bi-chevron-up"></i>
-              }
-            </span>
-          </div>
-        </div>
+    @if (selectedModule.priorKnowledge) {
+      <div class="row">
+        <span class="fw-bold col-12 col-md-3">Empfohlene Vorkenntnisse</span>
+        <span
+          class="col-12 col-md-9 module-information-priorKnowledge"
+          [innerHTML]="
+            highlightAcronyms(
+              selectedModule.allPriorModules,
+              selectedModule.priorKnowledge
+            )
+          "
+        >
+        </span>
       </div>
-      @if (expandedExams) {
-        <div>
-          @for (exam of selectedModule.exams; track exam) {
-            <div class="module-information-classes-content py-4">
-              <div class="row pb-2">
-                <div class="col-12 col-md-3 fw-bold">
-                  {{ exam.shortName }} {{ exam.name }}
+    }
+    @if (moduleClasses$ | async; as moduleClasses) {
+      <div class="row">
+        @if (moduleClasses.length > 0) {
+          <div class="module-information-classes">
+            <div class="module-information-classes">
+              <div class="row module-information-classes-header">
+                <div class="fw-bold col-12 col-md-3">
+                  Lehrveranstaltungen
+                  <span
+                    class="col-auto px-2"
+                    role="button"
+                    (click)="expandedClasses = !expandedClasses"
+                    (keyup.enter)="expandedClasses = !expandedClasses"
+                  >
+                    @if (!expandedClasses) {
+                      <i class="bi bi-chevron-down show-more-icon"></i>
+                    }
+                    @if (expandedClasses) {
+                      <i class="bi bi-chevron-up"></i>
+                    }
+                  </span>
                 </div>
-                <div class="col-12 col-md-9 truncate">
-                  @if (exam.desc) {
-                    <span id="{{ exam.meId }}-description"
-                    class="module-information-description truncate-text" [innerHtml]="exam.desc"></span>
-                  }
-                  @if (exam.desc) {
-                    <span role="button">@if (!expandedExamDescription) {
-                      <i
-                        class="bi bi-chevron-down show-more-icon"
-                        (click)="toggleExamDescription(exam, 'expand')"
-                      (keyup.enter)="toggleExamDescription(exam, 'expand')"></i>
-                      }@if (expandedExamDescription) {
-                      <i
-                        class="bi bi-chevron-up"
-                        (click)="toggleExamDescription(exam, 'collapse')"
-                      (keyup.enter)="toggleExamDescription(exam, 'collapse')"></i>
-                    }</span>
-                  }
+                <div class="col-12 col-md-9">
+                  <button
+                    class="btn btn-primary btn-sm d-xl-inline"
+                    [disabled]="expandedClasses"
+                    (click)="findCourses(selectedModule.acronym)"
+                    [mat-dialog-close]="'jump'"
+                  >
+                    <i class="bi bi-search d-none d-sm-inline me-2"></i>
+                    Finde passende Lehrveranstaltungen
+                  </button>
+                  <i
+                    class="bi bi-info-circle icon"
+                    matTooltip="Module können einen oder mehrere Lehrveranstaltungen enthalten. Finde passende Lehrveranstaltungen, die du für dein Modul belegen kannst."
+                    appTooltip
+                  ></i>
                 </div>
               </div>
-              <div class="row p-0">
-                <div class="col-md-3"></div>
-                <div class="col-12 col-md-9">
-                  <div class="row">
-                    <div class="col-12 col-md-4">
-                      <span class="fw-bold">
-                        <i class="bi bi-alarm"></i> Prüfungsdauer: </span>@if (exam.duration) {
-                        <span
-                        ></span>
-                      } @else {
-                        Keine Angabe
-                        }{{ exam.duration }} Minuten
+            </div>
+            @if (expandedClasses) {
+              <div>
+                @for (class of moduleClasses; track class) {
+                  <div class="module-information-classes-content py-4">
+                    <!-- show class informations, currently just key -->
+                    <div class="row module-information-classes-name-row">
+                      <div class="fw-bold col-12 col-md-3">
+                        {{ class.type }}
                       </div>
-                      <div class="col-12 col-md-5">
-                        <span class="fw-bold">
-                          <i class="bi bi-pie-chart"></i> Anteil an Modulnote: </span>@if (exam.share && exam.share !== '0' && exam.share !== '0,0') {
-                          <span
-                            class="col-12 col-md-5">
-                            {{ exam.share }}%
-                          </span>
-                        } @else {
-                          Keine Angabe
-                        }
+                      <div class="fw-bold col-12 col-md-6">
+                        {{ class.name }}
+                      </div>
+                      <div class="fw-bold col-12 col-md-3">
+                        <button
+                          class="btn btn-primary btn-sm d-xl-inline"
+                          (click)="
+                            findCourses(selectedModule.acronym, class.type)
+                          "
+                          [mat-dialog-close]="'jump'"
+                        >
+                          <i class="bi bi-search d-xl-none d-inline"></i>
+                          Finde passende Lehrveranstaltung
+                        </button>
                       </div>
                     </div>
+                    <div class="row module-information-classes-details-row">
+                      <div class="col-12">
+                        <div class="row">
+                          <div
+                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold"
+                          >
+                            Lehrperson
+                          </div>
+                          <div
+                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold"
+                          >
+                            Angebotshäufigkeit
+                          </div>
+                          <div
+                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold"
+                          >
+                            Sprache
+                          </div>
+                          <div
+                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold"
+                          >
+                            SWS
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12 col-md-3">
+                            @for (prof of class.lecturers; track prof) {
+                              <div>
+                                {{ prof.firstname }} {{ prof.lastname }}
+                              </div>
+                            }
+                          </div>
+                          <div class="col-12 col-md-3">{{ class.term }}</div>
+                          <div class="col-12 col-md-3">
+                            {{ class.language }}
+                          </div>
+                          <div class="col-12 col-md-3">{{ class.sws }}</div>
+                        </div>
+                      </div>
+                      @if (class.desc) {
+                        <div class="col-12 col-xxl-6 mt-2">
+                          <div
+                            class="module-information-classes-titleCol fw-bold"
+                          >
+                            Inhalte
+                          </div>
+                          <div [innerHtml]="class.desc"></div>
+                        </div>
+                      }
+                      @if (class.literature) {
+                        <div class="col-12 col-xxl-6 mt-2">
+                          <div
+                            class="module-information-classes-titleCol fw-bold"
+                          >
+                            Literatur
+                          </div>
+                          <div [innerHtml]="class.literature"></div>
+                        </div>
+                      }
+                    </div>
                   </div>
-                </div>
+                }
               </div>
             }
           </div>
@@ -322,102 +332,243 @@
       </div>
     }
     <div class="row">
-      <!-- add module to study plan -->
-      <!-- only show if user does not study teacher education TODO: change when study planning is available for teacher education! -->
-      @if (!userStudiesLA && !selectedModule.isOld && allowPlanning) {
-        <!-- allowPlanning prevents past modules -->
-        @if (studyPlans$ | async; as studyPlans) {
-          <div class="row module-information-studyPlan justify-content-between"
-            >
-            @if (studyPlans.length > 0) {
-              <div>
-                @if (user$ | async; as user) {
-                  <div class="row d-flex flex-row align-items-center justify-content-center"
-                    >
-                    <div class="col-12 fw-bold">Einplanen</div>
-                    @if (plannedSemesters$ | async; as plannedSemesters) {
-                      <div class="col-12">
-                        @if (plannedSemesters && plannedSemesters.length > 0) {
-                          <div
-                            class="module-planning-notification mt-2 d-flex flex-wrap align-items-center">
-                            <i class="bi bi-check-lg me-2 text-success"></i>
-                            <span class="text-break">
-                              Das Modul ist im aktiven Plan "{{ activeStudyPlan?.name }}" eingeplant:
-                              @for (semester of plannedSemesters; track semester; let last = $last) {
-                                <span>
-                                  <strong>{{ semester | Semester }}</strong>@if (!last) {
-                                  <span>, </span>
-                                }
-                              </span>
-                            }
-                          </span>
-                        </div>
+      <!-- exam info -->
+      @if (selectedModule.exams.length > 0) {
+        <div class="module-information-exam">
+          <div class="module-information-classes">
+            <div class="row module-information-classes-header">
+              <div class="fw-bold col-12 col-md-3">
+                Prüfungen
+                <span
+                  class="col-auto px-2"
+                  role="button"
+                  (click)="expandedExams = !expandedExams"
+                  (keyup.enter)="expandedExams = !expandedExams"
+                >
+                  @if (!expandedExams) {
+                    <i class="bi bi-chevron-down show-more-icon"></i>
+                  }
+                  @if (expandedExams) {
+                    <i class="bi bi-chevron-up"></i>
+                  }
+                </span>
+              </div>
+            </div>
+          </div>
+          @if (expandedExams) {
+            <div>
+              @for (exam of selectedModule.exams; track exam) {
+                <div class="module-information-classes-content py-4">
+                  <div class="row pb-2">
+                    <div class="col-12 col-md-3 fw-bold">
+                      {{ exam.shortName }} {{ exam.name }}
+                    </div>
+                    <div class="col-12 col-md-9 truncate">
+                      @if (exam.desc) {
+                        <span
+                          id="{{ exam.meId }}-description"
+                          class="module-information-description truncate-text"
+                          [innerHtml]="exam.desc"
+                        ></span>
+                      }
+                      @if (exam.desc) {
+                        <span role="button">
+                          @if (!expandedExamDescription) {
+                            <i
+                              class="bi bi-chevron-down show-more-icon"
+                              (click)="toggleExamDescription(exam, 'expand')"
+                              (keyup.enter)="
+                                toggleExamDescription(exam, 'expand')
+                              "
+                            ></i>
+                          }
+                          @if (expandedExamDescription) {
+                            <i
+                              class="bi bi-chevron-up"
+                              (click)="toggleExamDescription(exam, 'collapse')"
+                              (keyup.enter)="
+                                toggleExamDescription(exam, 'collapse')
+                              "
+                            ></i>
+                          }
+                        </span>
                       }
                     </div>
-                  }
-                  <form [formGroup]="form" class="mt-2">
-                    <div class="row d-flex align-items-center">
-                      <div class="col-12 col-md-4">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>Studienplan</mat-label>
-                          <mat-select formControlName="selectedStudyPlanId"
-                            (selectionChange)="checkConstraints()"
-                            aria-label="Dropdown zur Studienplanwahl" required>
-                            @for (studyPlan of studyPlans; track studyPlan) {
-                              <mat-option
-                                                        [value]="studyPlan._id" [ngClass]="{
-                                    'active-option': studyPlan?._id === activeStudyPlan?._id
-                                  }">
-                                {{ studyPlan.name }}
-                              </mat-option>
-                            }
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                      <div class="col-12 col-md-4">
-                        <span>
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Semester</mat-label>
-                            <mat-select formControlName="selectedSemesterPlanId"
-                              (selectionChange)="checkConstraints()"
-                              aria-label="Dropdown zur Semesterwahl" required>
-                              @for (plan of (selectedStudyPlan.semesterPlans ||[]); track plan) {
-                                <mat-option
-                                                            [value]="plan._id" [ngClass]="{
-                              'active-option': plan._id === activeSemesterId
-                            }">
-                                  {{ plan.semester | Semester }}
-                                </mat-option>
-                              }
-                            </mat-select>
-                          </mat-form-field>
-                        </span>
-                      </div>
-                      <div class="col-12 col-md-4 d-flex align-items-start align-items-md-center">
-                        <button class="btn btn-primary module-information-study-plan-btn"
-                          (click)="addModuleToPlan(selectedModule)"
-                          (keyup.enter)="addModuleToPlan(selectedModule)"
-                          aria-label="In den Studienplan einplanen">
-                          Einplanen
-                        </button>
+                  </div>
+                  <div class="row p-0">
+                    <div class="col-md-3"></div>
+                    <div class="col-12 col-md-9">
+                      <div class="row">
+                        <div class="col-12 col-md-4">
+                          <span class="fw-bold">
+                            <i class="bi bi-alarm"></i> Prüfungsdauer:
+                          </span>
+                          @if (exam.duration) {
+                            <span></span>
+                          } @else {
+                            Keine Angabe
+                          }
+                          {{ exam.duration }} Minuten
+                        </div>
+                        <div class="col-12 col-md-5">
+                          <span class="fw-bold">
+                            <i class="bi bi-pie-chart"></i> Anteil an Modulnote:
+                          </span>
+                          @if (
+                            exam.share &&
+                            exam.share !== "0" &&
+                            exam.share !== "0,0"
+                          ) {
+                            <span class="col-12 col-md-5">
+                              {{ exam.share }}%
+                            </span>
+                          } @else {
+                            Keine Angabe
+                          }
+                        </div>
                       </div>
                     </div>
-                  </form>
-                  @if (displayPriorModuleWarning) {
-                    <div class="warning-box">
-                      <i class="bi bi-exclamation-circle"></i>
-                      {{ warningMessage }}
-                    </div>
-                  }
+                  </div>
                 </div>
               }
             </div>
           }
         </div>
       }
-    }
+      <div class="row">
+        <!-- add module to study plan -->
+        <!-- only show if user does not study teacher education TODO: change when study planning is available for teacher education! -->
+        @if (!userStudiesLA && !selectedModule.isOld && allowPlanning) {
+          <!-- allowPlanning prevents past modules -->
+          @if (studyPlans$ | async; as studyPlans) {
+            <div
+              class="row module-information-studyPlan justify-content-between"
+            >
+              @if (studyPlans.length > 0) {
+                <div>
+                  @if (user$ | async; as user) {
+                    <div
+                      class="row d-flex flex-row align-items-center justify-content-center"
+                    >
+                      <div class="col-12 fw-bold">Einplanen</div>
+                      @if (plannedSemesters$ | async; as plannedSemesters) {
+                        <div class="col-12">
+                          @if (
+                            plannedSemesters && plannedSemesters.length > 0
+                          ) {
+                            <div
+                              class="module-planning-notification mt-2 d-flex flex-wrap align-items-center"
+                            >
+                              <i class="bi bi-check-lg me-2 text-success"></i>
+                              <span class="text-break">
+                                Das Modul ist im aktiven Plan "{{
+                                  activeStudyPlan?.name
+                                }}" eingeplant:
+                                @for (
+                                  semester of plannedSemesters;
+                                  track semester;
+                                  let last = $last
+                                ) {
+                                  <span>
+                                    <strong>{{ semester | Semester }}</strong>
+                                    @if (!last) {
+                                      <span>, </span>
+                                    }
+                                  </span>
+                                }
+                              </span>
+                            </div>
+                          }
+                        </div>
+                      }
+                      <form [formGroup]="form" class="mt-2">
+                        <div class="row d-flex align-items-center">
+                          <div class="col-12 col-md-4">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Studienplan</mat-label>
+                              <mat-select
+                                formControlName="selectedStudyPlanId"
+                                (selectionChange)="checkConstraints()"
+                                aria-label="Dropdown zur Studienplanwahl"
+                                required
+                              >
+                                @for (
+                                  studyPlan of studyPlans;
+                                  track studyPlan
+                                ) {
+                                  <mat-option
+                                    [value]="studyPlan._id"
+                                    [ngClass]="{
+                                      'active-option':
+                                        studyPlan?._id === activeStudyPlan?._id,
+                                    }"
+                                  >
+                                    {{ studyPlan.name }}
+                                  </mat-option>
+                                }
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 col-md-4">
+                            <span>
+                              <mat-form-field
+                                appearance="outline"
+                                class="w-100"
+                              >
+                                <mat-label>Semester</mat-label>
+                                <mat-select
+                                  formControlName="selectedSemesterPlanId"
+                                  (selectionChange)="checkConstraints()"
+                                  aria-label="Dropdown zur Semesterwahl"
+                                  required
+                                >
+                                  @for (
+                                    plan of selectedStudyPlan.semesterPlans ||
+                                      [];
+                                    track plan
+                                  ) {
+                                    <mat-option
+                                      [value]="plan._id"
+                                      [ngClass]="{
+                                        'active-option':
+                                          plan._id === activeSemesterId,
+                                      }"
+                                    >
+                                      {{ plan.semester | Semester }}
+                                    </mat-option>
+                                  }
+                                </mat-select>
+                              </mat-form-field>
+                            </span>
+                          </div>
+                          <div
+                            class="col-12 col-md-4 d-flex align-items-start align-items-md-center"
+                          >
+                            <button
+                              class="btn btn-primary module-information-study-plan-btn"
+                              (click)="addModuleToPlan(selectedModule)"
+                              (keyup.enter)="addModuleToPlan(selectedModule)"
+                              aria-label="In den Studienplan einplanen"
+                            >
+                              Einplanen
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                      @if (displayPriorModuleWarning) {
+                        <div class="warning-box">
+                          <i class="bi bi-exclamation-circle"></i>
+                          {{ warningMessage }}
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+        }
+      </div>
+    </div>
   </div>
-</div>
-</div>
-
 </div>

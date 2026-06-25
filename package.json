@@ -20,7 +20,7 @@
     "stopLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml down",
     "stopServerDocker": "docker-compose -f docker-compose.yml -f docker-compose.server.yml down",
     "startBackend": "cd backend/api && npm run startApi",
-    "startFrontend": "cd frontend && ng serve --open --no-hmr",
+    "startFrontend": "cd frontend && ng serve --open",
     "buildFrontendProd": "cd frontend && ng build --configuration=production",
     "buildFrontendTest": "cd frontend && ng build --configuration=test",
     "buildBackend": "cd backend/api && npm run build",

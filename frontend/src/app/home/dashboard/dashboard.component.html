@@ -7,225 +7,214 @@
         [hintType]="'danger'"
       ></app-hint>
     }
-    <div class="d-flex flex-row justify-content-end align-items-end mb-1">
-      @if (user$ | async; as user) {
-        <div>
-          @if (dashboardSettings$ | async; as settings) {
-            <button
-              class="btn btn-outline btn-sm mb-0"
-              [matMenuTriggerFor]="addWidgetMenu"
-              aria-label="Widgets managen"
-            >
-              <i class="icon bi bi-sliders fw-bold me-2"></i
-              ><span class="manage-widget-text d-md-inline d-none"
-                >Widgets managen</span
-              >
-            </button>
-            <mat-menu #addWidgetMenu="matMenu">
-              @for (item of settings; track item) {
-                <button
-                  mat-menu-item
-                  tabindex="0"
-                  class="mb-0"
-                  (click)="changeVisibility(item.key)"
-                  (keyup.enter)="changeVisibility(item.key)"
-                >
-                  @if (item.visible) {
-                    <div>
-                      <i class="icon bi bi-eye"></i>
-                      {{ findEntryName(item.key) }}
-                    </div>
-                  } @else {
-                    <i class="icon bi bi-eye-slash text-danger"></i>
-                    {{ findEntryName(item.key) }}
-                  }
-                </button>
-              }
-            </mat-menu>
-          }
-        </div>
-      }
-    </div>
-    <!-- Dashboard-Area -->
     @if (user$ | async; as user) {
+      <div class="d-flex flex-row justify-content-end align-items-end mb-1">
+        @if (dashboardSettings$ | async; as settings) {
+          <button
+            class="btn btn-outline btn-sm mb-0"
+            [matMenuTriggerFor]="addWidgetMenu"
+            aria-label="Widgets managen"
+          >
+            <i class="icon bi bi-sliders fw-bold me-2"></i
+            ><span class="manage-widget-text d-md-inline d-none"
+              >Widgets managen</span
+            >
+          </button>
+          <mat-menu #addWidgetMenu="matMenu">
+            @for (item of settings; track item.key) {
+              <button
+                mat-menu-item
+                tabindex="0"
+                class="mb-0"
+                (click)="changeVisibility(item.key)"
+                (keyup.enter)="changeVisibility(item.key)"
+              >
+                @if (item.visible) {
+                  <div>
+                    <i class="icon bi bi-eye"></i>
+                    {{ findEntryName(item.key) }}
+                  </div>
+                } @else {
+                  <i class="icon bi bi-eye-slash text-danger"></i>
+                  {{ findEntryName(item.key) }}
+                }
+              </button>
+            }
+          </mat-menu>
+        }
+      </div>
+      <!-- Dashboard-Area -->
       <div class="dashboard-container">
-        @if (visibleCharts$ | async; as visibleCharts) {
-          @if (studyPath$ | async; as studyPath) {
-            @if (semesterStudyPath) {
-              @for (chart of visibleCharts; track chart) {
-                @switch (chart.key) {
-                  <!-- Card with Quick Links -->
-                  @case ("quick-links") {
+        @if (dashboardData$ | async; as data) {
+          @for (chart of data.visibleCharts; track chart.key) {
+            @switch (chart.key) {
+              <!-- Card with Quick Links -->
+              @case ("quick-links") {
+                <mat-card appearance="outlined" class="dashboard-tile order-0">
+                  <app-quick-links
+                    [key]="chart.key"
+                    (changeVisibility)="changeVisibility($event)"
+                  ></app-quick-links>
+                </mat-card>
+              }
+              <!-- chart with gpa -->
+              @case ("gpa") {
+                <mat-card
+                  appearance="outlined"
+                  class="dashboard-tile small-tile order-1"
+                >
+                  <app-dashboard-card-header
+                    [key]="chart.key"
+                    (changeVisibility)="changeVisibility($event)"
+                  ></app-dashboard-card-header>
+                  <app-grade-point-average
+                    [semesters]="semesters$ | async"
+                    [studyPath]="data.studyPath"
+                  ></app-grade-point-average>
+                </mat-card>
+              }
+              <!-- Card with personalisation status -->
+              @case ("personalisation") {
+                @if (user.sps?.[0]?.faculty === "WIAI") {
+                  <mat-card
+                    appearance="outlined"
+                    class="dashboard-tile small-tile order-1"
+                  >
+                    <app-dashboard-card-header
+                      [key]="chart.key"
+                      [showCompletionBadge]="isPersonalisationComplete"
+                      (changeVisibility)="changeVisibility($event)"
+                    ></app-dashboard-card-header>
+                    <app-personalisation-status
+                      (allComplete)="onPersonalisationComplete($event)"
+                    ></app-personalisation-status>
+                  </mat-card>
+                }
+              }
+              <!-- Card with semester dates-->
+              @case ("semester-dates") {
+                <mat-card
+                  appearance="outlined"
+                  class="dashboard-tile medium-tile order-1"
+                >
+                  <app-dashboard-card-header
+                    [key]="chart.key"
+                    (changeVisibility)="changeVisibility($event)"
+                  ></app-dashboard-card-header>
+                  <app-semester-dates></app-semester-dates>
+                </mat-card>
+              }
+              <!-- Card with semester dates-->
+              @case ("calendar") {
+                @if (activePlan$ | async; as activePlan) {
+                  @if (academicDates$ | async; as academicDates) {
                     <mat-card
                       appearance="outlined"
-                      class="dashboard-tile order-0"
-                    >
-                      <app-quick-links
-                        [key]="chart.key"
-                        (changeVisibility)="changeVisibility($event)"
-                      ></app-quick-links>
-                    </mat-card>
-                  }
-                  <!-- chart with gpa -->
-                  @case ("gpa") {
-                    <mat-card
-                      appearance="outlined"
-                      class="dashboard-tile small-tile order-1"
-                    >
-                      <app-dashboard-card-header
-                        [key]="chart.key"
-                        (changeVisibility)="changeVisibility($event)"
-                      ></app-dashboard-card-header>
-                      <app-grade-point-average
-                        [semesters]="semesters$ | async"
-                        [studyPath]="studyPath"
-                      ></app-grade-point-average>
-                    </mat-card>
-                  }
-                  <!-- Card with personalisation status -->
-                  @case ("personalisation") {
-                    @if (user.sps?.[0]?.faculty === "WIAI") {
-                      <mat-card
-                        appearance="outlined"
-                        class="dashboard-tile small-tile order-1"
-                      >
-                        <app-dashboard-card-header
-                          [key]="chart.key"
-                          [showCompletionBadge]="isPersonalisationComplete"
-                          (changeVisibility)="changeVisibility($event)"
-                        ></app-dashboard-card-header>
-                        <app-personalisation-status
-                          (allComplete)="onPersonalisationComplete($event)"
-                        ></app-personalisation-status>
-                      </mat-card>
-                    }
-                  }
-                  <!-- Card with semester dates-->
-                  @case ("semester-dates") {
-                    <mat-card
-                      appearance="outlined"
-                      class="dashboard-tile medium-tile order-1"
-                    >
-                      <app-dashboard-card-header
-                        [key]="chart.key"
-                        (changeVisibility)="changeVisibility($event)"
-                      ></app-dashboard-card-header>
-                      <app-semester-dates></app-semester-dates>
-                    </mat-card>
-                  }
-                  <!-- Card with semester dates-->
-                  @case ("calendar") {
-                    @if (activePlan$ | async; as activePlan) {
-                      @if (academicDates$ | async; as academicDates) {
-                        <mat-card
-                          appearance="outlined"
-                          class="dashboard-tile large-tile order-2"
-                        >
-                          <app-dashboard-card-header
-                            [key]="chart.key"
-                            (changeVisibility)="changeVisibility($event)"
-                          ></app-dashboard-card-header>
-                          <app-full-calendar
-                            [initalView]="initialView"
-                            [isWidget]="isWidget"
-                            [activePlan]="activePlan"
-                            [academicDates]="academicDates"
-                            [planCourses]="planCourses$ | async"
-                          ></app-full-calendar>
-                        </mat-card>
-                      }
-                    }
-                  }
-                  <!-- Chart with total ects progress -->
-                  @case ("total-ects-progress") {
-                    @if (semesters$ | async; as semesters) {
-                      <mat-card
-                        appearance="outlined"
-                        class="dashboard-tile large-tile order-3"
-                      >
-                        <app-dashboard-card-header
-                          [key]="chart.key"
-                          (changeVisibility)="changeVisibility($event)"
-                        ></app-dashboard-card-header>
-                        <app-total-ects-progress-chart
-                          [studyPath]="semesterStudyPath"
-                          [aimedEcts]="user.maxEcts"
-                          [semesters]="semesters"
-                          [studyPlan]="activeStudyPlan$ | async"
-                        ></app-total-ects-progress-chart>
-                      </mat-card>
-                    }
-                  }
-                  <!-- chart with total module progress -->
-                  @case ("total-module-progress") {
-                    <mat-card
-                      appearance="outlined"
-                      class="dashboard-tile medium-tile order-3"
+                      class="dashboard-tile large-tile order-2"
                     >
                       <app-dashboard-card-header
                         [key]="chart.key"
                         (changeVisibility)="changeVisibility($event)"
                       ></app-dashboard-card-header>
-                      <app-total-module-progress-chart
-                        [studyPath]="studyPath"
-                      ></app-total-module-progress-chart>
-                    </mat-card>
-                  }
-                  <!-- card with ects progress for each semester -->
-                  @case ("semester-ects-progress") {
-                    @if (semesters$ | async; as semesters) {
-                      <mat-card
-                        appearance="outlined"
-                        class="dashboard-tile large-tile order-3"
-                      >
-                        <app-dashboard-card-header
-                          [key]="chart.key"
-                          (changeVisibility)="changeVisibility($event)"
-                        ></app-dashboard-card-header>
-                        <app-semester-ects-progress-chart
-                          [studyPath]="studyPath"
-                          [semesters]="semesters"
-                          [studyPlan]="activeStudyPlan$ | async"
-                        ></app-semester-ects-progress-chart>
-                      </mat-card>
-                    }
-                  }
-                  <!-- card with module progress for each semester -->
-                  @case ("semester-module-progress") {
-                    @if (semesters$ | async; as semesters) {
-                      <mat-card
-                        appearance="outlined"
-                        class="dashboard-tile large-tile order-3"
-                      >
-                        <app-dashboard-card-header
-                          [key]="chart.key"
-                          (changeVisibility)="changeVisibility($event)"
-                        ></app-dashboard-card-header>
-                        <app-semester-module-progress-chart
-                          [studyPath]="semesterStudyPath"
-                          [semesters]="semesters"
-                          [studyPlan]="activeStudyPlan$ | async"
-                        ></app-semester-module-progress-chart>
-                      </mat-card>
-                    }
-                  }
-                  <!-- chart with total module progress -->
-                  @case ("module-group-progress") {
-                    <mat-card
-                      appearance="outlined"
-                      class="dashboard-tile medium-tile order-3"
-                    >
-                      <app-dashboard-card-header
-                        [key]="chart.key"
-                        (changeVisibility)="changeVisibility($event)"
-                      ></app-dashboard-card-header>
-                      <app-module-group-progress-chart
-                        [studyPath]="studyPath"
-                        [mgs]="modulegroups$ | async"
-                      ></app-module-group-progress-chart>
+                      <app-full-calendar
+                        [initalView]="initialView"
+                        [isWidget]="isWidget"
+                        [activePlan]="activePlan"
+                        [academicDates]="academicDates"
+                        [planCourses]="planCourses$ | async"
+                      ></app-full-calendar>
                     </mat-card>
                   }
                 }
+              }
+              <!-- Chart with total ects progress -->
+              @case ("total-ects-progress") {
+                @if (semesters$ | async; as semesters) {
+                  <mat-card
+                    appearance="outlined"
+                    class="dashboard-tile large-tile order-3"
+                  >
+                    <app-dashboard-card-header
+                      [key]="chart.key"
+                      (changeVisibility)="changeVisibility($event)"
+                    ></app-dashboard-card-header>
+                    <app-total-ects-progress-chart
+                      [studyPath]="data.semesterStudyPath"
+                      [aimedEcts]="user.maxEcts"
+                      [semesters]="semesters"
+                      [studyPlan]="activeStudyPlan$ | async"
+                    ></app-total-ects-progress-chart>
+                  </mat-card>
+                }
+              }
+              <!-- chart with total module progress -->
+              @case ("total-module-progress") {
+                <mat-card
+                  appearance="outlined"
+                  class="dashboard-tile medium-tile order-3"
+                >
+                  <app-dashboard-card-header
+                    [key]="chart.key"
+                    (changeVisibility)="changeVisibility($event)"
+                  ></app-dashboard-card-header>
+                  <app-total-module-progress-chart
+                    [studyPath]="data.studyPath"
+                  ></app-total-module-progress-chart>
+                </mat-card>
+              }
+              <!-- card with ects progress for each semester -->
+              @case ("semester-ects-progress") {
+                @if (semesters$ | async; as semesters) {
+                  <mat-card
+                    appearance="outlined"
+                    class="dashboard-tile large-tile order-3"
+                  >
+                    <app-dashboard-card-header
+                      [key]="chart.key"
+                      (changeVisibility)="changeVisibility($event)"
+                    ></app-dashboard-card-header>
+                    <app-semester-ects-progress-chart
+                      [studyPath]="data.studyPath"
+                      [semesters]="semesters"
+                      [studyPlan]="activeStudyPlan$ | async"
+                    ></app-semester-ects-progress-chart>
+                  </mat-card>
+                }
+              }
+              <!-- card with module progress for each semester -->
+              @case ("semester-module-progress") {
+                @if (semesters$ | async; as semesters) {
+                  <mat-card
+                    appearance="outlined"
+                    class="dashboard-tile large-tile order-3"
+                  >
+                    <app-dashboard-card-header
+                      [key]="chart.key"
+                      (changeVisibility)="changeVisibility($event)"
+                    ></app-dashboard-card-header>
+                    <app-semester-module-progress-chart
+                      [studyPath]="data.semesterStudyPath"
+                      [semesters]="semesters"
+                      [studyPlan]="activeStudyPlan$ | async"
+                    ></app-semester-module-progress-chart>
+                  </mat-card>
+                }
+              }
+              <!-- chart with total module progress -->
+              @case ("module-group-progress") {
+                <mat-card
+                  appearance="outlined"
+                  class="dashboard-tile medium-tile order-3"
+                >
+                  <app-dashboard-card-header
+                    [key]="chart.key"
+                    (changeVisibility)="changeVisibility($event)"
+                  ></app-dashboard-card-header>
+                  <app-module-group-progress-chart
+                    [studyPath]="data.studyPath"
+                    [mgs]="modulegroups$ | async"
+                  ></app-module-group-progress-chart>
+                </mat-card>
               }
             }
           }
