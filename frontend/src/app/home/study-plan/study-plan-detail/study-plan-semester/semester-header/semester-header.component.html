@@ -99,7 +99,7 @@ Passe die Einstellungen an oder lege über "Studienpläne verwalten" einen neuen
             </div>
           }
         }
-        @if (!isFutureSemester(metaSemester.semester)) {
+        @if (!isFutureSemester(metaSemester.semester) && (flexNowImportAvailabe$ | async)) {
           <button class="flex-now-sync btn btn-icon btn-outline position-absolute"
             matTooltip="Mit FlexNow synchronisieren"
             aria-label="Semester mit FlexNow synchronisieren" (click)="syncWithFlexNow()" (keyup.enter)="syncWithFlexNow()">

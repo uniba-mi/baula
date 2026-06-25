@@ -19,7 +19,7 @@ import {
   getUserStudyPath,
   getUserStudyprogrammes,
 } from 'src/app/selectors/user.selectors';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {
   PathModule,
   SemesterStudyPath,

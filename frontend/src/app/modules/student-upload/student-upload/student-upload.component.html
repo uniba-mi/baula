@@ -1,4 +1,4 @@
-@if(integrateFnDataConsent$ | async; as integrateFnDataConsent) {
+@if (integrateFnDataConsent$ | async; as integrateFnDataConsent) {
   <mat-card class="p-4 mb-2">
     <mat-card-title>
       <h3 class="mt-0">Integration von Daten aus FlexNow</h3>
@@ -6,66 +6,100 @@
     @if (integrateFnDataConsent && integrateFnDataConsent.hasConfirmed) {
       <div>
         <div class="d-grid gap-2 withdraw-flexnow-consent on-card-info-box">
-          <div>Einwilligung zum Abruf deiner Studierendendaten über die FlexNow-Schnittstelle zuletzt akzeptiert am {{
-          integrateFnDataConsent.timestamp | date: 'medium' }}</div>
-          <div>Die Einwilligung kannst du jederzeit auf unserer <a class="link" href="/datenschutz" class="redirect link"
-          aria-label="Zur Datenschutzseite">Datenschutzseite</a> einsehen.</div>
+          <div>
+            Einwilligung zum Abruf deiner Studierendendaten über die
+            FlexNow-Schnittstelle zuletzt akzeptiert am
+            {{ integrateFnDataConsent.timestamp | date: "medium" }}
+          </div>
+          <div>
+            Die Einwilligung kannst du jederzeit auf unserer
+            <a
+              class="link"
+              href="/datenschutz"
+              class="redirect link"
+              aria-label="Zur Datenschutzseite"
+              >Datenschutzseite</a
+            >
+            einsehen.
+          </div>
         </div>
         <h4>Einwilligung zu einzelnen Datenkategorien:</h4>
         <div class="d-grid gap-2 on-card-info-box">
-          @if(importMetadataConsent$ | async; as importMetadataConsent) {
+          @if (importMetadataConsent$ | async; as importMetadataConsent) {
             <div>
-              <i class="bi me-2" [class.bi-x-lg]="!importMetadataConsent.hasConfirmed"
-              [class.bi-check-lg]="importMetadataConsent.hasConfirmed"></i>
-              <span>Allgemeine
-                Informationen (Studiengang,
-                Startsemester,
-              ...) </span>
+              <i
+                class="bi me-2"
+                [class.bi-x-lg]="!importMetadataConsent.hasConfirmed"
+                [class.bi-check-lg]="importMetadataConsent.hasConfirmed"
+              ></i>
+              <span
+                >Allgemeine Informationen (Studiengang, Startsemester, ...)
+              </span>
             </div>
           }
-          @if(importStudypathConsent$ | async; as importStudypathConsent) {
+          @if (importStudypathConsent$ | async; as importStudypathConsent) {
             <div>
-              <i class="bi me-2" [class.bi-x-lg]="!importStudypathConsent.hasConfirmed"
-              [class.bi-check-lg]="importStudypathConsent.hasConfirmed"></i>
-              <span>Verlaufsinformationen (Abgelegte
-                Prüfungen, Module und
-              Lehrveranstaltungen)</span>
+              <i
+                class="bi me-2"
+                [class.bi-x-lg]="!importStudypathConsent.hasConfirmed"
+                [class.bi-check-lg]="importStudypathConsent.hasConfirmed"
+              ></i>
+              <span
+                >Verlaufsinformationen (Abgelegte Prüfungen, Module und
+                Lehrveranstaltungen)</span
+              >
             </div>
           }
-          @if(importGradeConsent$ | async; as importGradeConsent) {
+          @if (importGradeConsent$ | async; as importGradeConsent) {
             <div>
-              <i class="bi me-2" [class.bi-x-lg]="!importGradeConsent.hasConfirmed"
-              [class.bi-check-lg]="importGradeConsent.hasConfirmed"></i>
-              <span>Noten (berechnete
-                Abschlussnote,
-                Modul- bzw.
-              Prüfungsnoten)</span>
+              <i
+                class="bi me-2"
+                [class.bi-x-lg]="!importGradeConsent.hasConfirmed"
+                [class.bi-check-lg]="importGradeConsent.hasConfirmed"
+              ></i>
+              <span
+                >Noten (berechnete Abschlussnote, Modul- bzw.
+                Prüfungsnoten)</span
+              >
             </div>
           }
         </div>
       </div>
     }
-    <div>
-      @if (!integrateFnDataConsent || !integrateFnDataConsent.hasConfirmed) {
-        <button id="study_prog_upload_button"
-          class="upload btn btn-primary plausible-event-name=Studyprogression-upload+Button"
-          (click)="importCompleteFlexNowData()" (keyup.enter)="importCompleteFlexNowData()"
-          aria-label="Daten aus FlexNow importieren">
-          Daten aus FlexNow importieren
-        </button>
-      }
-      @if (integrateFnDataConsent && integrateFnDataConsent.hasConfirmed) {
-        <div>
-          <!-- <button class="btn btn-primary me-4" aria-label="Einwilligungen bearbeiten"
+    @if (user.authType !== "local") {
+      <div>
+        @if (!integrateFnDataConsent || !integrateFnDataConsent.hasConfirmed) {
+          <button
+            id="study_prog_upload_button"
+            class="upload btn btn-primary plausible-event-name=Studyprogression-upload+Button"
+            (click)="importCompleteFlexNowData()"
+            (keyup.enter)="importCompleteFlexNowData()"
+            aria-label="Daten aus FlexNow importieren"
+          >
+            Daten aus FlexNow importieren
+          </button>
+        }
+        @if (integrateFnDataConsent && integrateFnDataConsent.hasConfirmed) {
+          <div>
+            <!-- <button class="btn btn-primary me-4" aria-label="Einwilligungen bearbeiten"
           (click)="openConsentDialog()" (keyup.enter)="openConsentDialog()">
           Einwilligung bearbeiten
         </button> -->
-        <button class="btn btn-danger" aria-label="Einwilligung widerrufen" (click)="openConsentWithdrawalDialog()"
-          (keyup.enter)="openConsentWithdrawalDialog()">
-          Einwilligung widerrufen und importierten Studienverlauf löschen
-        </button>
+            <button
+              class="btn btn-danger"
+              aria-label="Einwilligung widerrufen"
+              (click)="openConsentWithdrawalDialog()"
+              (keyup.enter)="openConsentWithdrawalDialog()"
+            >
+              Einwilligung widerrufen und importierten Studienverlauf löschen
+            </button>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="alert alert-info">
+        Du bist mit einem lokalen Nutzer eingeloggt. Hier können keine Daten aus FlexNow integriert werden.
       </div>
     }
-  </div>
-</mat-card>
+  </mat-card>
 }

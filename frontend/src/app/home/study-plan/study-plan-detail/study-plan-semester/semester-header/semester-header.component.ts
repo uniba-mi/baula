@@ -4,15 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import {
   combineLatest,
-  concatMap,
-  filter,
+  map,
   Observable,
-  of,
   Subject,
   take,
-  takeUntil,
   takeWhile,
-  withLatestFrom,
 } from 'rxjs';
 import { getAllDistinctModules } from 'src/app/selectors/module-overview.selectors';
 import { getCloseDialogMode } from 'src/app/selectors/dialog.selectors';
@@ -37,14 +33,13 @@ import {
   getSelectedStudyPlanId,
 } from 'src/app/selectors/study-planning.selectors';
 import { FlexnowService } from 'src/app/shared/services/flex-now.service';
-import { getLastConsentByType } from 'src/app/selectors/user.selectors';
+import { getLastConsentByType, getUserType } from 'src/app/selectors/user.selectors';
 import { Consent } from '../../../../../../../../interfaces/user';
 import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
 
 @Component({
   selector: 'app-semester-header',
   standalone: false,
-
   templateUrl: './semester-header.component.html',
   styleUrl: './semester-header.component.scss',
 })
@@ -76,6 +71,7 @@ export class SemesterHeaderComponent {
   lastFlexnowApiConsent$: Observable<Consent | null>;
   lastFlexNowStudypathConsent$: Observable<Consent | null>;
   lastFlexNowGradeConsent$: Observable<Consent | null>;
+  flexNowImportAvailabe$: Observable<boolean>;
 
   constructor() {
     this.lastFlexnowApiConsent$ = this.store.select(
@@ -97,6 +93,12 @@ export class SemesterHeaderComponent {
       .subscribe((modules) => {
         this.modules = modules;
       });
+
+    this.flexNowImportAvailabe$ = this.store.select(getUserType).pipe(
+      map((type: string) => {
+        return type !== 'local' ? true : false;
+      })
+    )
 
     combineLatest([
       this.store.select(getActiveStudyPlanId),

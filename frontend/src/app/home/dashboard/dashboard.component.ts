@@ -126,7 +126,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     );
     this.semesterStudyPath$
       .subscribe((semesterStudyPath) => {
-        console.log(semesterStudyPath)
         this.semesterStudyPath = semesterStudyPath;
         this.splitIndex = this.semesterStudyPath.findIndex(
           (el) => el.semester === new Semester().fullName,
