@@ -31,7 +31,6 @@ export class EditGradeDialogComponent {
       grade: [
         initialGrade,
         [
-          Validators.required,
           Validators.min(this.minGrade),
           Validators.max(this.maxGrade),
           Validators.pattern(/^[1-5]((\.|,)[0-9])?$/),

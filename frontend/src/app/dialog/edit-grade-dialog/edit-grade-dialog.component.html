@@ -13,11 +13,6 @@
                   Die Zahl muss zwischen {{minGrade}}.0 und {{maxGrade}}.0 liegen.
                 </span>
               }
-              @if (gradeForm.get('grade')?.errors?.required) {
-                <span>
-                  Das ist ein Pflichtfeld.
-                </span>
-              }
               @if (gradeForm.get('grade')?.errors?.pattern) {
                 <span>
                   Bitte gib eine gültige Zahl ein (z. B. 2, 2.5).
