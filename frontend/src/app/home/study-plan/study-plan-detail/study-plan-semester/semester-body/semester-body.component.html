@@ -40,7 +40,7 @@
 }
 <!-- User Generated Modules -->
 @if (!metaSemester.isPastSemester && semesterPlan.userGeneratedModules.length > 0) {
-  @for (module of semesterPlan.userGeneratedModules; track module) {
+  @for (module of semesterPlan.userGeneratedModules; track module._id) {
     <app-semester-card [moduleData]="module" [moduleType]="'userGeneratedModule'" [mgId]="'init'"
       [metaSemester]="metaSemester" [modType]="'notPath'" [isSmallScreen]="isSmallScreen"
       [availableActions]="['edit', 'drag', 'moveToSem', 'delete']"
@@ -50,7 +50,7 @@
 }
 <!-- Path Modules -->
 @if (metaSemester.isPastSemester && semesterStudyPath[0].modules.length > 0) {
-  @for (pathModule of semesterStudyPath[0].modules; track pathModule) {
+  @for (pathModule of semesterStudyPath[0].modules; track pathModule._id) {
     <app-semester-card [moduleData]="pathModule" [moduleType]="'pathModule'" [metaSemester]="metaSemester"
       [modType]="'path'" [availableActions]="['select', 'feedback', 'edit', 'delete', 'changeMG', 'editGrade']"
       (actionTriggered)="handleModuleAction($event)" [mgId]="pathModule.mgId ?? 'init'">

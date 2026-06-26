@@ -5,7 +5,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Note:</mat-label>
           <!-- input text, otherwise trouble with ,0 and .0 number validation, also with step: any -->
-          <input matInput #grade formControlName="grade" type="text" pattern="^[1-5]((\.|,)[0-9])?$"/>
+          <input matInput #grade formControlName="grade" type="text" pattern="^[0-5]((\.|,)[0-9])?$"/>
           @if (gradeForm.get('grade')?.errors) {
             <mat-error>
               @if (gradeForm.get('grade')?.errors?.min || gradeForm.get('grade')?.errors?.max) {

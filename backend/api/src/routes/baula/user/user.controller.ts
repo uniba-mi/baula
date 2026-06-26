@@ -642,7 +642,7 @@ export async function updateTimetableSettings(
 ) {
   const userReq = req.user as UserServer;
   const timetableId = validator.matches(req.body.timetableId, /(dashboard)|(semesterplan)/g) ? req.body.timetableId : undefined;
-  const showWeekends = Boolean(req.body.showWeekends);
+  const showWeekends = req.body.showWeekends !== undefined ? Boolean(req.body.showWeekends) : undefined;
   const selectedView = req.body.selectedView && validator.isAlpha(req.body.selectedView) ? req.body.selectedView : undefined;
 
   try {
@@ -657,7 +657,7 @@ export async function updateTimetableSettings(
         // add showWeekends setting if it does not exist
         user.timetableSettings.push({ 
           timetableId,
-          showWeekends,
+          showWeekends: showWeekends !== undefined ? showWeekends : true,
           selectedView 
         });
       }
