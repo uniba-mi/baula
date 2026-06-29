@@ -1,13 +1,31 @@
-<mat-card class="p-3 mb-2 rounded module-item semester-card"
-  [ngClass]="{'old-module': moduleType === 'module' && moduleData?.isOld === true}" tabindex="0"
+<mat-card
+  class="p-3 mb-2 rounded module-item semester-card"
+  [ngClass]="{
+    'old-module': moduleType === 'module' && moduleData?.isOld === true,
+  }"
+  tabindex="0"
   aria-label="Tabellenzeile mit Modulinformationen"
-  (click)="availableActions.includes('select') && moduleType !== 'userGeneratedModule' && triggerAction('select') && !moduleData?.isOld"
-  (keyup.enter)="availableActions.includes('select') && moduleType !== 'userGeneratedModule' && triggerAction('select') && !moduleData?.isOld"
-  cdkDrag [cdkDragDisabled]="!canDrag()" [cdkDragData]="moduleData" (cdkDragStarted)="onDragStarted()"
-  (cdkDragEnded)="onDragEnded()" (mousedown)="onDragAttempt($event)" (touchstart)="onDragAttempt($event)">
-
+  (click)="
+    availableActions.includes('select') &&
+      moduleType !== 'userGeneratedModule' &&
+      triggerAction('select') &&
+      !moduleData?.isOld
+  "
+  (keyup.enter)="
+    availableActions.includes('select') &&
+      moduleType !== 'userGeneratedModule' &&
+      triggerAction('select') &&
+      !moduleData?.isOld
+  "
+  cdkDrag
+  [cdkDragDisabled]="!canDrag()"
+  [cdkDragData]="moduleData"
+  (cdkDragStarted)="onDragStarted()"
+  (cdkDragEnded)="onDragEnded()"
+  (mousedown)="onDragAttempt($event)"
+  (touchstart)="onDragAttempt($event)"
+>
   <div class="d-flex align-items-center justify-content-between mb-2">
-
     <!-- First Row -->
     <div class="d-flex align-items-center flex-grow-1">
       <!-- Drag Indicator -->
@@ -21,15 +39,24 @@
       @if (studyPath$) {
         <div class="d-flex align-items-center me-3">
           @if (!moduleData.isOld) {
-            <app-module-status [studyPath$]="studyPath$" [module]="moduleType === 'module' ? moduleData : null"
-              [userGeneratedModule]="moduleType === 'userGeneratedModule' ? moduleData : null"
+            <app-module-status
+              [studyPath$]="studyPath$"
+              [module]="moduleType === 'module' ? moduleData : null"
+              [userGeneratedModule]="
+                moduleType === 'userGeneratedModule' ? moduleData : null
+              "
               [pathModule]="moduleType === 'pathModule' ? moduleData : null"
-              [statusSemester]="metaSemester.semester" [openedWithSemesterSet]="openedWithSemesterSet"
-              [modType]="modType" [mgId]="mgId">
+              [statusSemester]="metaSemester.semester"
+              [openedWithSemesterSet]="openedWithSemesterSet"
+              [modType]="modType"
+              [mgId]="mgId"
+            >
             </app-module-status>
           } @else {
-            <i class="bi bi-exclamation-triangle ms-2 text-red"
-              matTooltip="Dieses Modul ist in deinem aktuellen Modulhandbuch nicht mehr vorhanden.">
+            <i
+              class="bi bi-exclamation-triangle ms-2 text-red"
+              matTooltip="Dieses Modul ist in deinem aktuellen Modulhandbuch nicht mehr vorhanden."
+            >
             </i>
           }
         </div>
@@ -37,7 +64,7 @@
 
       <!-- Acronym/Name Column -->
       <div class="text-gray fw-bold">
-        @if (moduleType === 'userGeneratedModule') {
+        @if (moduleType === "userGeneratedModule") {
           {{ moduleData.name }}
         } @else {
           {{ moduleData.acronym }}
@@ -48,19 +75,40 @@
     <!-- Context Menu -->
     @if (menuActions.length > 0) {
       <div class="d-flex align-items-center offset-right">
-        <button mat-button class="btn-icon" role="button" aria-haspopup="true" aria-expanded="false" tabindex="0"
-          aria-label="Kontextmenu für weitere Aktionen öffnen" (click)="$event.stopPropagation()"
-          (keyup.enter)="$event.stopPropagation()" [matMenuTriggerFor]="contextMenu">
+        <button
+          mat-button
+          class="btn-icon"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          tabindex="0"
+          aria-label="Kontextmenu für weitere Aktionen öffnen"
+          (click)="$event.stopPropagation()"
+          (keyup.enter)="$event.stopPropagation()"
+          [matMenuTriggerFor]="contextMenu"
+        >
           <i class="icon bi bi-three-dots-vertical text-gray"></i>
         </button>
         <!-- Context Menu Options -->
-        <mat-menu #contextMenu="matMenu" class="action-menu d-flex justify-content-center">
+        <mat-menu
+          #contextMenu="matMenu"
+          class="action-menu d-flex justify-content-center"
+        >
           @for (action of menuActions; track action) {
             @if (canShowAction(action)) {
-              <button mat-menu-item class="btn-icon" role="menuitem" tabindex="0"
+              <button
+                mat-menu-item
+                class="btn-icon"
+                role="menuitem"
+                tabindex="0"
                 (click)="triggerAction(action, null, $event)"
-                (keyup.enter)="triggerAction(action, null, $event)">
-                <i class="icon bi {{ actionConfig[action].icon }} text-end text-gray"></i>
+                (keyup.enter)="triggerAction(action, null, $event)"
+              >
+                <i
+                  class="icon bi {{
+                    actionConfig[action].icon
+                  }} text-end text-gray"
+                ></i>
                 {{ actionConfig[action].text }}
               </button>
             }
@@ -74,13 +122,13 @@
   <div class="d-flex mb-2">
     @switch (moduleType) {
       <!-- Regular Module Name -->
-      @case ('module') {
+      @case ("module") {
         <div class="flex-fill smaller-name-on-cards">
           {{ moduleData.name }}
         </div>
       }
       <!-- User Generated Module Notes -->
-      @case ('userGeneratedModule') {
+      @case ("userGeneratedModule") {
         <div class="text-start flex-fill text-gray">
           <div class="notes-field border">
             <b>Notizen:</b> {{ moduleData.notes }}
@@ -88,7 +136,7 @@
         </div>
       }
       <!-- Path Module Name -->
-      @case ('pathModule') {
+      @case ("pathModule") {
         <div class="flex-fill">
           {{ moduleData.name }}
         </div>
@@ -98,11 +146,14 @@
 
   <!-- Third Row -->
   @switch (moduleType) {
-    @case ('pathModule') {
+    @case ("pathModule") {
       <div class="d-flex mb-2">
-        <div class="mg-div flex-fill" (click)="triggerAction('changeMG', null, $event)"
+        <div
+          class="mg-div flex-fill"
+          (click)="triggerAction('changeMG', null, $event)"
           (keyup.enter)="triggerAction('changeMG', null, $event)"
-          matTooltip="Bitte wähle eine Modulgruppe, damit Modulgruppengrenzen bei der Einplanung berücksichtigt werden können.">
+          matTooltip="Bitte wähle eine Modulgruppe, damit Modulgruppengrenzen bei der Einplanung berücksichtigt werden können."
+        >
           @if (getModulePath(moduleData.mgId) | async; as modulePath) {
             <span>{{ modulePath }}</span>
           } @else {
@@ -118,20 +169,23 @@
 
   <!-- Fourth Row -->
   <div class="d-flex align-items-center justify-content-between gap-3">
-    <div> <!-- so ECTS stick to the right in any case -->
-      @if (moduleType === 'module' && moduleData.type === 'Pflichtmodul') {
-        <span matTooltip="Das ist ein Pflichtmodul"
-          class="compulsory-icon">
+    <div>
+      <!-- so ECTS stick to the right in any case -->
+      @if (moduleType === "module" && moduleData.type === "Pflichtmodul") {
+        <span matTooltip="Das ist ein Pflichtmodul" class="compulsory-icon">
           <i>P</i>
         </span>
       }
 
       <!-- Grade Column -->
       @switch (moduleType) {
-        <!-- Path Module Grade -->
-        @case ('pathModule') {
-          <div class="grade-div" (click)="triggerAction('editGrade', null, $event)"
-            (keyup.enter)="triggerAction('editGrade', null, $event)">
+        @case ("pathModule") {
+          <!-- Path Module Grade -->
+          <div
+            class="grade-div"
+            (click)="triggerAction('editGrade', null, $event)"
+            (keyup.enter)="triggerAction('editGrade', null, $event)"
+          >
             @if (moduleData.grade) {
               <span class="grade">Note: {{ moduleData.grade }}</span>
             } @else {
@@ -141,6 +195,13 @@
         }
       }
     </div>
+
+    <!-- Badge for flexNowImported -->
+    @if(moduleData.flexNowImported) {
+      <button class="btn btn-outline chip secondary-chip px-2" disabled>
+        Quelle: FlexNow
+      </button>
+    }
 
     <!-- ECTS Column -->
     <button class="btn btn-outline chip ects-chip px-2" disabled>

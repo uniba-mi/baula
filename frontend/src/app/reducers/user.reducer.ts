@@ -145,13 +145,15 @@ export const reducer = createReducer(
   }),
 
   on(StudyPathActions.deleteStudyPathSuccess, (state, props) => {
+    let completedModules = props.onlyFlexNowImported ? state.currentUser.studyPath.completedModules.filter(mod => !mod.flexNowImported) : []
+
     return {
       ...state,
       currentUser: {
         ...state.currentUser,
         studyPath: {
           ...state.currentUser.studyPath,
-          completedModules: [],
+          completedModules,
         },
       },
     };

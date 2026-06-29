@@ -496,13 +496,18 @@ export async function deleteStudyPath(
   next: NextFunction,
 ) {
   const user = req.user as UserServer;
+  const onlyFlexNowImported = Boolean(req.body.onlyFlexNowImported) ?? undefined; 
   try {
     if (user.completedModules) {
+      let completedModules: PathModule[] = [];
+      if(onlyFlexNowImported) {
+        completedModules = user.completedModules.filter(mod => !mod.flexNowImported)
+      }
       const result = await User.updateOne(
         { _id: user._id },
         {
           $set: {
-            completedModules: [],
+            completedModules: completedModules,
           },
         },
       );

@@ -94,7 +94,7 @@ export class StudentUploadComponent {
       warningMessage:
         'Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.',
       confirmationItem:
-        'deine Einwilligung inklusive deines gesamten Studienverlauf mit Belegungen und Noten',
+        'deine Einwilligung inklusive deines importierten Studienverlauf mit Belegungen und Noten',
       confirmButtonLabel: 'Bestätigen',
       cancelButtonLabel: 'Abbrechen',
       confirmButtonClass: 'btn btn-danger',
@@ -108,7 +108,7 @@ export class StudentUploadComponent {
   }
 
   deleteStudyPath() {
-    this.store.dispatch(StudyPathActions.deleteStudyPath());
+    this.store.dispatch(StudyPathActions.deleteStudyPath({ onlyFlexNowImported: true }));
 
     // remove modules flagged with flexNowImported from all study plans
     this.store

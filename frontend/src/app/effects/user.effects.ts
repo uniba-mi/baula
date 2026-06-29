@@ -507,9 +507,9 @@ export class UserEffects {
   deleteStudyPath$ = createEffect(() =>
     this.actions$.pipe(
       ofType(StudyPathActions.deleteStudyPath),
-      mergeMap(() =>
-        this.rest.deleteStudyPath().pipe(
-          map(() => StudyPathActions.deleteStudyPathSuccess()),
+      mergeMap((props) =>
+        this.rest.deleteStudyPath(props.onlyFlexNowImported).pipe(
+          map(() => StudyPathActions.deleteStudyPathSuccess({ onlyFlexNowImported: props.onlyFlexNowImported })),
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,

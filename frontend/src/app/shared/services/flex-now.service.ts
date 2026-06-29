@@ -451,10 +451,12 @@ export class FlexnowService {
             let modulesToUpdate: PathModule[] = [];
             // only update the modules of the given semesters
             for (let semester of semesters) {
-              // identify completed modules of semester
+              // identify imported completed modules of semester
               const modules = user.studyPath.completedModules.filter(
                 (mod) => mod.semester == semester,
               );
+
+              // identify current completed modules of semester
               const currentPathModules =
                 currentStudypath.completedModules.filter(
                   (mod) => mod.semester == semester,
@@ -549,6 +551,7 @@ export class FlexnowService {
       .pipe(
         withLatestFrom(this.currentUser$),
         map(([flexNowOutput, user]) => {
+          
           if (this.debuggingMode && mode == 'update-studypath') {
             this.dialog.open(DebugDialogComponent, {
               data: flexNowOutput,
@@ -610,7 +613,7 @@ export class FlexnowService {
 
       // filter modules and courses, that are kept
       completedModules = completedModules.filter(
-        (mod) => !semesters.includes(mod.semester),
+        (mod) => !semesters.includes(mod.semester) || !mod.flexNowImported,
       );
       completedCourses = completedCourses.filter(
         (course) => !semesters.includes(course.semester),

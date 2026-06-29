@@ -57,8 +57,8 @@ export const StudyPathActions = createActionGroup({
     'Delete Module From Study Path': props<{ id: string; semester: string }>(),
     'Delete Module From Study Path Success': props<{ studyPath: StudyPath }>(),
     'Delete Module From Study Path Failure': props<{ error: any }>(),
-    'Delete Study Path': emptyProps(),
-    'Delete Study Path Success': emptyProps(),
+    'Delete Study Path': props<{ onlyFlexNowImported: boolean }>(),
+    'Delete Study Path Success': props<{ onlyFlexNowImported: boolean }>(),
     'Delete Study Path Failure': props<{ error: any }>(),
   },
 });

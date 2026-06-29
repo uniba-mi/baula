@@ -407,10 +407,15 @@ export class RestService {
     );
   }
 
-  deleteStudyPath(): Observable<any> {
+  deleteStudyPath(onlyFlexNowImported: boolean): Observable<any> {
     return this.http.delete<StudyPath>(
       `${this.urlBase}user/study-path`,
-      httpOptions,
+      {
+        ...httpOptions,
+        body: {
+          onlyFlexNowImported
+        }
+      }
     );
   }
 

@@ -25007,6 +25007,11 @@ input:invalid {
     font-size: .8rem !important
 }
 
+.secondary-chip {
+    background-color: var(--ub-gray-20) !important;
+    border: 1px solid var(--ub-gray-40) !important
+}
+
 .danger-chip {
     background-color: var(--ub-red-20) !important;
     border: 1px solid var(--ub-red-40) !important;
