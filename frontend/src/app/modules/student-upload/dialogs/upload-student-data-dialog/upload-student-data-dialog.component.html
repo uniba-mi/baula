@@ -9,13 +9,13 @@
         </div>
     </div>
     <mat-dialog-actions>
-        <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
-            (keyup)="close('noData')">
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close()"
+            (keyup)="close()">
             Abbrechen
         </button>
         <button mat-raised-button class="btn btn-primary plausible-event-name=Studyprogression-Save+Button"
             [mat-dialog-close]="getConsent()" id="study_prog_save_button" [disabled]="!flexNowImportConfirmed"
-            (click)="close('data')" (keyup)="close('data')">
+            (click)="close()" (keyup)="close()">
             Weiter
         </button>
     </mat-dialog-actions>

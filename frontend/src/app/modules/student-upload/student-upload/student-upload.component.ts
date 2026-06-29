@@ -11,6 +11,7 @@ import { forkJoin, map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import {
   getLastConsentByType,
   getSemesterList,
+  getUser,
 } from 'src/app/selectors/user.selectors';
 import {
   ConfirmationDialogData,
@@ -48,7 +49,7 @@ export class StudentUploadComponent {
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
   studyPlans$: Observable<StudyPlan[]>;
   semesters$: Observable<Semester[]>;
-  flexNowAvailable: boolean;
+  flexNowAvailable$: Observable<boolean>;
 
   constructor() {
     this.integrateFnDataConsent$ = this.store.select(
@@ -67,13 +68,19 @@ export class StudentUploadComponent {
   }
 
   ngOnInit(): void {
-    this.flexNowAvailable = this.flexnowService.flexNowImportEnabled(this.user);
+    this.flexNowAvailable$ = this.store.select(getUser).pipe(
+      map(user => this.flexnowService.flexNowImportEnabled(user))
+    )
     this.modules$ = this.store.select(getModules);
     this.modules$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((modules: Module[]) => (this.modules = modules));
 
     this.semesters$ = this.store.select(getSemesterList);
+  }
+
+  checkFlexNowAvailability(user: User): boolean {
+    return this.flexnowService.flexNowImportEnabled(user);
   }
 
   importCompleteFlexNowData() {

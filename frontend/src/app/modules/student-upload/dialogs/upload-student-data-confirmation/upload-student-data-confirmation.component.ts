@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, model, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, model, Output } from '@angular/core';
 
 @Component({
   selector: 'app-upload-student-data-confirmation',
@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, model, OnInit, Output } from '@angular/
   templateUrl: './upload-student-data-confirmation.component.html',
   styleUrl: './upload-student-data-confirmation.component.scss'
 })
-export class UploadStudentDataConfirmationComponent implements OnInit {
+export class UploadStudentDataConfirmationComponent {
   @Input() onlyStudypath: boolean;
   @Input() onlyMetaData: boolean;
   @Output() confirmFlexNowImport = new EventEmitter<{
@@ -20,14 +20,10 @@ export class UploadStudentDataConfirmationComponent implements OnInit {
   readonly StudypathConfirmed = model(false);
   readonly GradesConfirmed = model(false);
 
-  ngOnInit(): void {
-    if(this.onlyStudypath) {
-      this.StudypathConfirmed.set(true)
-    }
-  }
-
   confirmGrade() {
-    this.StudypathConfirmed.set(this.GradesConfirmed())
+    if(!this.StudypathConfirmed()) {
+      this.StudypathConfirmed.set(this.GradesConfirmed())
+    }
     this.emitChange()
   }
 
@@ -40,7 +36,7 @@ export class UploadStudentDataConfirmationComponent implements OnInit {
 
   emitChange() {
     this.confirmFlexNowImport.emit({
-      flexNowImportConfirmed: this.FlexNowImportConfirmed(),
+      flexNowImportConfirmed: this.onlyStudypath && !this.StudypathConfirmed() ? false : this.FlexNowImportConfirmed(),
       metadataConfirmed: this.onlyStudypath ? false : true,
       studypathConfirmed: this.StudypathConfirmed(),
       gradesConfirmed: this.GradesConfirmed()

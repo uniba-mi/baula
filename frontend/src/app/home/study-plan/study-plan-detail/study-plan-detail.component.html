@@ -174,7 +174,7 @@
                       ></i>
                     </button>
                   }
-                  @if (flexNowAvailable) {
+                  @if (flexNowAvailable$ | async) {
                     <button
                       class="sync-with-fn btn btn-primary btn-sm"
                       matTooltip="FlexNow-Auszug laden"

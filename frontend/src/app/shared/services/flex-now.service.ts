@@ -76,15 +76,15 @@ export class FlexnowService {
 
   flexNowImportEnabled(user: User): boolean {
     //if user is admin -> true
-    if(user.roles.includes('admin')) {
+    if (user.roles.includes('admin')) {
       return true;
     }
     //if user is student but no local account
-    if(user.authType !== 'local' && user.roles.includes('student')) {
+    if (user.authType !== 'local' && user.roles.includes('student')) {
       return true;
-    } 
+    }
     // all other cases return false
-    return false
+    return false;
   }
 
   triggerFlexNowDataLoading(
@@ -306,13 +306,17 @@ export class FlexnowService {
         },
       ),
       filter((consent) => {
-        if (onlyMetaData) {
-          return consent.flexNowImportConfirmed && consent.metadataConfirmed;
+        if (typeof consent == 'object') {
+          if (onlyMetaData) {
+            return consent.flexNowImportConfirmed && consent.metadataConfirmed;
+          }
+          if (onlyStudyPath) {
+            return consent.flexNowImportConfirmed && consent.studypathConfirmed;
+          }
+          return consent.flexNowImportConfirmed;
+        } else {
+          return consent;
         }
-        if (onlyStudyPath) {
-          return consent.flexNowImportConfirmed && consent.studypathConfirmed;
-        }
-        return consent.flexNowImportConfirmed;
       }),
     );
   }

@@ -31,7 +31,8 @@ export class UploadStudentDataDialogComponent {
     this.gradesConfirmed = confirmations.gradesConfirmed;
   }
 
-  close(mode: string) {
+  close() {
+    const mode = this.flexNowImportConfirmed ? 'data' : 'noData';
     this.store.dispatch(closeDialogMode({ mode }));
   }
 
