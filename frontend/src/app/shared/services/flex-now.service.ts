@@ -442,17 +442,17 @@ export class FlexnowService {
         ),
       )
       .subscribe(
-        ([user, semesterPlan, studyPlanId, mhbModules, currentStudypath]) => {
-          if (user) {
+        ([importedUser, semesterPlan, studyPlanId, mhbModules, currentStudypath]) => {
+          if (importedUser) {
             if (mode == 'update-user') {
-              this.store.dispatch(UserActions.updateUser({ user }));
+              this.store.dispatch(UserActions.updateUser({ user: importedUser }));
             }
 
             let modulesToUpdate: PathModule[] = [];
             // only update the modules of the given semesters
             for (let semester of semesters) {
               // identify imported completed modules of semester
-              const modules = user.studyPath.completedModules.filter(
+              const modules = importedUser.studyPath.completedModules.filter(
                 (mod) => mod.semester == semester,
               );
 
@@ -606,11 +606,11 @@ export class FlexnowService {
     userStudypath: StudyPath,
     semesters?: string[],
   ): StudyPath {
-    if (semesters && semesters.length > 0 && userStudypath) {
-      // define starting variables
-      let completedModules = userStudypath.completedModules;
-      let completedCourses = userStudypath.completedCourses;
+    // define starting variables
+    let completedModules = userStudypath.completedModules;
+    let completedCourses = userStudypath.completedCourses;
 
+    if (semesters && semesters.length > 0 && userStudypath) {
       // filter modules and courses, that are kept
       completedModules = completedModules.filter(
         (mod) => !semesters.includes(mod.semester) || !mod.flexNowImported,
@@ -627,21 +627,21 @@ export class FlexnowService {
       );
 
       let studypath = {
-        completedModules: [
-          ...completedModules,
-          ...this.extractCompletedModules(filteredImportedModules),
-        ],
+        completedModules: this.extractCompletedModules(completedModules, filteredImportedModules),
         completedCourses: [
           ...completedCourses,
           ...this.extractCompletedCourses(filteredImportedCourses),
         ],
       };
+
       return studypath;
     } else {
+      // filter modules and courses, that are kept
+      completedModules = completedModules.filter(
+        (mod) => !mod.flexNowImported,
+      );
       return {
-        completedModules: this.extractCompletedModules(
-          fnStudypath.completedModules,
-        ),
+        completedModules: this.extractCompletedModules(completedModules, fnStudypath.completedModules),
         completedCourses: this.extractCompletedCourses(
           fnStudypath.completedCourses,
         ),
@@ -649,8 +649,8 @@ export class FlexnowService {
     }
   }
 
-  private extractCompletedModules(modules: FnCompletedModule[]): PathModule[] {
-    return modules.map((fnModule) => {
+  private extractCompletedModules(modulesToKeep: PathModule[], modules: FnCompletedModule[]): PathModule[] {
+    const flexNowImportedModules = modules.map((fnModule) => {
       let mgId = undefined;
       let moduleGroups = fnModule.moduleGroups;
       // TODO: if more than one Modulegroup set modulegroup to undefined, user need to set it
@@ -676,6 +676,13 @@ export class FlexnowService {
         grade: fnModule.grade ?? 0,
       };
     });
+    const flexNowImportedAcronyms = modules.map(mod => mod.acronym)
+    modulesToKeep = modulesToKeep.filter(mod => !flexNowImportedAcronyms.includes(mod.acronym))
+
+    return [
+      ...modulesToKeep,
+      ...flexNowImportedModules
+    ]
   }
 
   private extractCompletedCourses(courses: FnCompletedCourse[]): PathCourse[] {
