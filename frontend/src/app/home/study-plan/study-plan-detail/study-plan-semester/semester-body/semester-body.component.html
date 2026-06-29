@@ -5,57 +5,107 @@
     @if (
       semesterPlan.modules.length === 0 &&
       semesterPlan.userGeneratedModules.length === 0 &&
-      (!metaSemester.isPastSemester || (metaSemester.isPastSemester && semesterStudyPath[0].modules.length === 0))
-      ) {
+      (!metaSemester.isPastSemester ||
+        (metaSemester.isPastSemester &&
+          semesterStudyPath[0].modules.length === 0))
+    ) {
       <div class="text-center p-4">
         <i class="plus-icon bi bi-plus-square-dotted text-gray"></i>
         @if (!metaSemester.isPastSemester) {
           <span>
-            <p class="empty-state-header">Noch keine Module für dieses Semester eingeplant.</p>
-            <p class="empty-state-description">Füge über den <a class="link"
-            routerLink="../../../modulkatalog">Modulkatalog</a>
-          Module zu deinem Plan hinzu oder erstelle einen eigenen Platzhalter.</p>
-        </span>
-      } @else {
-        <p class="empty-state-header">Noch keine Module in diesem Semester absolviert.</p>
-        <p class="empty-state-description">Lade im Profil deinen <a class="link"
-        routerLink="/app/profil/integrationen-verwalten">FlexNow-Auszug</a>
-        mit deinem bisherigen Studienverlauf hoch oder füge deine Leistungen manuell über das Plus
-        hinzu.
-      </p>
+            <p class="empty-state-header">
+              Noch keine Module für dieses Semester eingeplant.
+            </p>
+            <p class="empty-state-description">
+              Füge über den
+              <a class="link" routerLink="../../../modulkatalog"
+                >Modulkatalog</a
+              >
+              Module zu deinem Plan hinzu oder erstelle einen eigenen
+              Platzhalter.
+            </p>
+          </span>
+        } @else {
+          <p class="empty-state-header">
+            Noch keine Module in diesem Semester absolviert.
+          </p>
+          <p class="empty-state-description">
+            Lade im Profil deinen
+            <a class="link" routerLink="/app/profil/integrationen-verwalten"
+              >FlexNow-Auszug</a
+            >
+            mit deinem bisherigen Studienverlauf hoch oder füge deine Leistungen
+            manuell über das Plus hinzu.
+          </p>
+        }
+      </div>
     }
-  </div>
-}
-<!-- MHB Modules -->
-@for (acronym of semesterPlan.modules; track acronym) {
-  @if (!metaSemester.isPastSemester) {
-    @if (getModuleInformation(acronym) | async; as module;) {
-      <app-semester-card [moduleData]="module" [moduleType]="'module'" [metaSemester]="metaSemester"
-        [modType]="'notPath'" [isSmallScreen]="isSmallScreen" [mgId]="'init'"
-        [availableActions]="['select', 'feedback', 'drag', 'moveToSem', 'delete']"
-        (actionTriggered)="handleModuleAction($event)">
-      </app-semester-card>
+    <!-- MHB Modules -->
+    @for (acronym of semesterPlan.modules; track acronym) {
+      @if (!metaSemester.isPastSemester) {
+        @if (getModuleInformation(acronym) | async; as module) {
+          <app-semester-card
+            [moduleData]="module"
+            [moduleType]="'module'"
+            [metaSemester]="metaSemester"
+            [modType]="'notPath'"
+            [isSmallScreen]="isSmallScreen"
+            [mgId]="'init'"
+            [availableActions]="[
+              'select',
+              'feedback',
+              'drag',
+              'moveToSem',
+              'delete',
+            ]"
+            (actionTriggered)="handleModuleAction($event)"
+          >
+          </app-semester-card>
+        }
+      }
+    }
+    <!-- User Generated Modules -->
+    @if (
+      !metaSemester.isPastSemester &&
+      semesterPlan.userGeneratedModules.length > 0
+    ) {
+      @for (module of semesterPlan.userGeneratedModules; track module._id) {
+        <app-semester-card
+          [moduleData]="module"
+          [moduleType]="'userGeneratedModule'"
+          [mgId]="'init'"
+          [metaSemester]="metaSemester"
+          [modType]="'notPath'"
+          [isSmallScreen]="isSmallScreen"
+          [availableActions]="['edit', 'drag', 'moveToSem', 'delete']"
+          (actionTriggered)="handleModuleAction($event)"
+        >
+        </app-semester-card>
+      }
+    }
+    <!-- Path Modules -->
+    @if (
+      metaSemester.isPastSemester && semesterStudyPath[0].modules.length > 0
+    ) {
+      @for (pathModule of semesterStudyPath[0].modules; track pathModule._id) {
+        <app-semester-card
+          [moduleData]="pathModule"
+          [moduleType]="'pathModule'"
+          [metaSemester]="metaSemester"
+          [modType]="'path'"
+          [availableActions]="[
+            'select',
+            'feedback',
+            'edit',
+            'delete',
+            'changeMG',
+            'editGrade',
+          ]"
+          (actionTriggered)="handleModuleAction($event)"
+          [mgId]="pathModule.mgId ?? 'init'"
+        >
+        </app-semester-card>
+      }
     }
   }
-}
-<!-- User Generated Modules -->
-@if (!metaSemester.isPastSemester && semesterPlan.userGeneratedModules.length > 0) {
-  @for (module of semesterPlan.userGeneratedModules; track module._id) {
-    <app-semester-card [moduleData]="module" [moduleType]="'userGeneratedModule'" [mgId]="'init'"
-      [metaSemester]="metaSemester" [modType]="'notPath'" [isSmallScreen]="isSmallScreen"
-      [availableActions]="['edit', 'drag', 'moveToSem', 'delete']"
-      (actionTriggered)="handleModuleAction($event)">
-    </app-semester-card>
-  }
-}
-<!-- Path Modules -->
-@if (metaSemester.isPastSemester && semesterStudyPath[0].modules.length > 0) {
-  @for (pathModule of semesterStudyPath[0].modules; track pathModule._id) {
-    <app-semester-card [moduleData]="pathModule" [moduleType]="'pathModule'" [metaSemester]="metaSemester"
-      [modType]="'path'" [availableActions]="['select', 'feedback', 'edit', 'delete', 'changeMG', 'editGrade']"
-      (actionTriggered)="handleModuleAction($event)" [mgId]="pathModule.mgId ?? 'init'">
-    </app-semester-card>
-  }
-}
-}
 </div>

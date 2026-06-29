@@ -74,6 +74,19 @@ export class FlexnowService {
     this.currentUser$ = this.store.select(getUser);
   }
 
+  flexNowImportEnabled(user: User): boolean {
+    //if user is admin -> true
+    if(user.roles.includes('admin')) {
+      return true;
+    }
+    //if user is student but no local account
+    if(user.authType !== 'local' && user.roles.includes('student')) {
+      return true;
+    } 
+    // all other cases return false
+    return false
+  }
+
   triggerFlexNowDataLoading(
     mode: 'update-user' | 'update-studypath' | 'update-metadata',
     semester?: string,

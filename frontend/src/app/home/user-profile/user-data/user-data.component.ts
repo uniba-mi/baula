@@ -34,4 +34,8 @@ export class UserDataComponent implements OnInit {
   importFlexNowMetadata() {
     this.flexnowService.triggerFlexNowDataLoading('update-metadata');
   }
+
+  checkFlexNowAvailability(user: User): boolean {
+    return this.flexnowService.flexNowImportEnabled(user)
+  }
 }

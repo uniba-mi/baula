@@ -1,6 +1,6 @@
 <div class="course-list-container">
   @if (searchResult.length !== 0) {
-    @for (course of viewResult; track course) {
+    @for (course of viewResult; track course.id) {
       <app-course-item [course]="course" [isSelected]="selectedItems.includes(course)" [planCourses]="activePlanCourses$ | async"
         (selectionChange)="onCourseSelected($event)" (deselectionChange)="onCourseDeselected($event)">
       </app-course-item>

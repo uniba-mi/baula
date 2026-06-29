@@ -131,11 +131,13 @@ export class StudyPlanDetailComponent implements OnInit {
   isSmallScreen: boolean = false;
   expandedSemesters: { [semesterName: string]: boolean } = {};
   closeMode: string;
+  flexNowAvailable: boolean;
 
   ngOnInit(): void {
     this.user$ = this.store.pipe(select(getUser));
     this.user$.pipe(take(1)).subscribe((user) => {
       this.user = user;
+      this.flexNowAvailable = this.flexnowService.flexNowImportEnabled(user)
     });
     this.semesterPlans$ = this.store.select(
       getSemesterPlansOfSelectedStudyPlan,

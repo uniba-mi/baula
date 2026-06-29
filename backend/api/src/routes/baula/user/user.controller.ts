@@ -12,10 +12,7 @@ import {
   validateObjectId,
 } from "../../../shared/helpers/custom-validator";
 import { Types } from "mongoose";
-import {
-  PathCourse,
-  PathModule,
-} from "@interfaces/study-path";
+import { PathCourse, PathModule } from "@interfaces/study-path";
 import {
   BadRequestError,
   logError,
@@ -39,11 +36,7 @@ import {
 import https from "https";
 import { findMatchingModuleIndex } from "../../../shared/helpers/plan-helper";
 import { decrypt } from "../../../shared/utils/crypto";
-import {
-  FnMetaData,
-  FnStudyPath,
-  FnStudyProgramme,
-} from "@interfaces/fn-user";
+import { FnMetaData, FnStudyPath, FnStudyProgramme } from "@interfaces/fn-user";
 import {
   extractModules,
   findAndBuildModuleHandbookByIdAndVersion,
@@ -641,24 +634,38 @@ export async function updateTimetableSettings(
   next: NextFunction,
 ) {
   const userReq = req.user as UserServer;
-  const timetableId = validator.matches(req.body.timetableId, /(dashboard)|(semesterplan)/g) ? req.body.timetableId : undefined;
-  const showWeekends = req.body.showWeekends !== undefined ? Boolean(req.body.showWeekends) : undefined;
-  const selectedView = req.body.selectedView && validator.isAlpha(req.body.selectedView) ? req.body.selectedView : undefined;
+  const timetableId = validator.matches(
+    req.body.timetableId,
+    /(dashboard)|(semesterplan)/g,
+  )
+    ? req.body.timetableId
+    : undefined;
+  const showWeekends =
+    req.body.showWeekends !== undefined
+      ? Boolean(req.body.showWeekends)
+      : undefined;
+  const selectedView =
+    req.body.selectedView && validator.isAlpha(req.body.selectedView)
+      ? req.body.selectedView
+      : undefined;
 
   try {
     const user = await User.findById(userReq._id);
     if (user && timetableId) {
-      let setting = user.timetableSettings.find((el) => el.timetableId == timetableId);
+      let setting = user.timetableSettings.find(
+        (el) => el.timetableId == timetableId,
+      );
 
       if (setting) {
-        setting.showWeekends = showWeekends !== undefined ? showWeekends : setting.showWeekends;
-        setting.selectedView = selectedView ?? setting.selectedView
+        setting.showWeekends =
+          showWeekends !== undefined ? showWeekends : setting.showWeekends;
+        setting.selectedView = selectedView ?? setting.selectedView;
       } else {
         // add showWeekends setting if it does not exist
-        user.timetableSettings.push({ 
+        user.timetableSettings.push({
           timetableId,
           showWeekends: showWeekends !== undefined ? showWeekends : true,
-          selectedView 
+          selectedView,
         });
       }
 
@@ -1144,57 +1151,64 @@ export async function crawlStudentDataViaFlexNow(
         poVersion: true,
       },
     });
+    const user = req.user as UserServer;
     if (url) {
-      // read test xml file
-      /* const result = fs.readFileSync(
-        __dirname + "../../../../../staticdata/dummy_student_bachelor.xml",
-        "utf8",
-      ); */
+      let result;
+      if (user && user.roles.includes("admin")) {
+        // read test xml file if user is admin
+        result = fs.readFileSync(
+          __dirname + "../../../../../staticdata/dummy_student_bachelor.xml",
+          "utf8",
+        );
+      } else {
+        // crawl results from flexnow api
+        result = await new Promise<string>((resolve, reject) => {
+          const data = new URLSearchParams();
+          data.append(
+            "login",
+            process.env.FN_LOGIN ? process.env.FN_LOGIN : "",
+          );
+          data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
 
-      const result = await new Promise<string>((resolve, reject) => {
-        const data = new URLSearchParams();
-        data.append("login", process.env.FN_LOGIN ? process.env.FN_LOGIN : "");
-        data.append("password", process.env.FN_PW ? process.env.FN_PW : "");
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          };
 
-        const options = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        };
-
-        const req = https.request(url, options, (res) => {
-          const chunks: Buffer[] = [];
-          res.on("data", (chunk) => {
-            chunks.push(
-              Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "utf-8"),
-            );
-          });
-          res.on("end", () => {
-            if (res.statusCode === 200) {
-              const buffer = Buffer.concat(chunks);
-              const ansiString = buffer.toString("utf-8");
-              resolve(ansiString);
-            } else {
-              reject(
-                new Error(`Request failed with status code ${res.statusCode}`),
+          const req = https.request(url, options, (res) => {
+            const chunks: Buffer[] = [];
+            res.on("data", (chunk) => {
+              chunks.push(
+                Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, "utf-8"),
               );
-            }
+            });
+            res.on("end", () => {
+              if (res.statusCode === 200) {
+                const buffer = Buffer.concat(chunks);
+                const ansiString = buffer.toString("utf-8");
+                resolve(ansiString);
+              } else {
+                reject(
+                  new Error(
+                    `Request failed with status code ${res.statusCode}`,
+                  ),
+                );
+              }
+            });
           });
+
+          req.on("error", (e) => {
+            reject(e);
+          });
+
+          req.write(data.toString());
+          req.end();
         });
+      }
 
-        req.on("error", (e) => {
-          reject(e);
-        });
-
-        req.write(data.toString());
-        req.end();
-      });
-
-      const metadata: any[] = await transform(
-        result,
-        metaDataTemplate,
-      );
+      const metadata: any[] = await transform(result, metaDataTemplate);
       const studypath: any = importStudypath
         ? await transform(result, studyPathTemplate)
         : undefined;
@@ -1227,11 +1241,12 @@ export async function crawlStudentDataViaFlexNow(
         if (studypath.completedModules) {
           for (let module of studypath.completedModules) {
             // first try to find suitable modulegroups within fn xml
-            const exactMatches = module.moduleGroups.filter((mod: { mgId: string, version: string }) =>
-              mgs.find(
-                (mg) =>
-                  mg.mgId == mod.mgId && String(mg.version) == mod.version,
-              ),
+            const exactMatches = module.moduleGroups.filter(
+              (mod: { mgId: string; version: string }) =>
+                mgs.find(
+                  (mg) =>
+                    mg.mgId == mod.mgId && String(mg.version) == mod.version,
+                ),
             );
             if (exactMatches.length > 0) {
               module.moduleGroups = exactMatches;
@@ -1241,8 +1256,13 @@ export async function crawlStudentDataViaFlexNow(
             const nearlyMatches = [
               ...new Map(
                 module.moduleGroups
-                  .filter((item: { mgId: string, version: string }) => mgs.find((mg) => mg.mgId == item.mgId))
-                  .map((item: { mgId: string, version: string }) => [item.mgId, item.version]),
+                  .filter((item: { mgId: string; version: string }) =>
+                    mgs.find((mg) => mg.mgId == item.mgId),
+                  )
+                  .map((item: { mgId: string; version: string }) => [
+                    item.mgId,
+                    item.version,
+                  ]),
               ).entries(),
             ].map(([mgId, version]) => ({
               mgId,
@@ -1272,14 +1292,14 @@ export async function crawlStudentDataViaFlexNow(
                   },
                 });
                 module.moduleGroups = oldModule
-                  ? oldModule.mgs.filter((item) =>
-                      mgs.find((mg) => mg.mgId == item.mgId),
-                    ).map(item => {
-                      return {
-                        mgId: item.mgId,
-                        version: String(item.mgVersion)
-                      }
-                    })
+                  ? oldModule.mgs
+                      .filter((item) => mgs.find((mg) => mg.mgId == item.mgId))
+                      .map((item) => {
+                        return {
+                          mgId: item.mgId,
+                          version: String(item.mgVersion),
+                        };
+                      })
                   : [];
               }
             }

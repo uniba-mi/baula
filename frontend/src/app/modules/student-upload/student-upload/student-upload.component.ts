@@ -48,6 +48,7 @@ export class StudentUploadComponent {
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
   studyPlans$: Observable<StudyPlan[]>;
   semesters$: Observable<Semester[]>;
+  flexNowAvailable: boolean;
 
   constructor() {
     this.integrateFnDataConsent$ = this.store.select(
@@ -66,6 +67,7 @@ export class StudentUploadComponent {
   }
 
   ngOnInit(): void {
+    this.flexNowAvailable = this.flexnowService.flexNowImportEnabled(this.user);
     this.modules$ = this.store.select(getModules);
     this.modules$
       .pipe(takeUntil(this.unsubscribe$))

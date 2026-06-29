@@ -1,6 +1,6 @@
 @if (user$ | async; as user) {
   <div class="row mb-4">
-    @if (user.authType !== "local") {
+    @if (checkFlexNowAvailability(user)) {
       <div
         class="menu-box d-flex justify-content-end align-items-center gap-2 mb-2"
       >
