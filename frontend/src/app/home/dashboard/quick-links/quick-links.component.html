@@ -31,7 +31,7 @@
           </div>
           <!-- Link to mail -->
           <div class="icon">
-            <a href="https://o365.uni-bamberg.de/" target="_blank">
+            <a href="https://o365.uni-bamberg.de/" target="_blank" aria-label="Zur Uni-Mail (Office 365)">
               <i class="fs-4 bi bi-envelope text-blue" matTooltip="Zur Uni-Mail (Office 365)"></i>
             </a>
           </div>
@@ -44,19 +44,19 @@
             </div>
             <!-- Link to teams -->
             <div class="icon">
-              <a href="https://teams.microsoft.com/" target="_blank">
+              <a href="https://teams.microsoft.com/" target="_blank" aria-label="Zu MS Teams">
                 <i class="fs-4 bi bi-microsoft-teams text-blue" matTooltip="Zu MS Teams"></i>
               </a>
             </div>
             <!-- Link to online services -->
             <div class="icon">
-              <a href="https://qis.uni-bamberg.de/qisserver/rds?state=user&type=0" target="_blank">
+              <a href="https://qis.uni-bamberg.de/qisserver/rds?state=user&type=0" target="_blank" aria-label="Zu den Online-Diensten">
                 <i class="fs-4 bi bi-person-square text-blue" matTooltip="Zu den Online-Diensten"></i>
               </a>
             </div>
             <!-- Link to campus print -->
             <div class="icon">
-              <a href="https://campusprint.uni-bamberg.de/#/login" target="_blank">
+              <a href="https://campusprint.uni-bamberg.de/#/login" target="_blank" aria-label="Zu Campus-Print">
                 <i class="fs-4 bi bi-printer text-blue" matTooltip="Zu Campus-Print"></i>
               </a>
             </div>
@@ -93,7 +93,7 @@
 
 
                   <!-- Gear for settings -->
-                  <button class="btn-icon ms-auto order-1 order-xl-2" [matMenuTriggerFor]="widgetSettingsMenu">
+                  <button class="btn-icon ms-auto order-1 order-xl-2" aria-label="Widget-Einstellungen öffnen" [matMenuTriggerFor]="widgetSettingsMenu">
                     <i class="icon bi bi-gear-fill text-gray"></i>
                   </button>
                   <mat-menu #widgetSettingsMenu="matMenu">
