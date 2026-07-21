@@ -105,8 +105,7 @@ export class UserDialogComponent {
         this.currentStep = step;
         this.steps.push(step);
       } else {
-        const isStudent = this.user.roles.includes('student') && this.user.authType !== 'local';
-        if (isStudent) {
+        if (this.flexNowService.flexNowImportEnabled(this.user)) {
           this.currentStep = 'selection';
           this.steps.push('selection');
         } else {
