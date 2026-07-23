@@ -46,6 +46,7 @@ import {
 import { Semester } from "../../../../../../interfaces/semester";
 import * as fs from "fs";
 import { Module } from "../../../../../../interfaces/module";
+import { verbose } from "winston";
 
 const prisma = new PrismaClient();
 
@@ -496,12 +497,15 @@ export async function deleteStudyPath(
   next: NextFunction,
 ) {
   const user = req.user as UserServer;
-  const onlyFlexNowImported = Boolean(req.body.onlyFlexNowImported) ?? undefined; 
+  const onlyFlexNowImported =
+    Boolean(req.body.onlyFlexNowImported) ?? undefined;
   try {
     if (user.completedModules) {
       let completedModules: PathModule[] = [];
-      if(onlyFlexNowImported) {
-        completedModules = user.completedModules.filter(mod => !mod.flexNowImported)
+      if (onlyFlexNowImported) {
+        completedModules = user.completedModules.filter(
+          (mod) => !mod.flexNowImported,
+        );
       }
       const result = await User.updateOne(
         { _id: user._id },
@@ -1162,7 +1166,7 @@ export async function crawlStudentDataViaFlexNow(
       if (user && user.roles.includes("admin")) {
         // read test xml file if user is admin
         result = fs.readFileSync(
-          __dirname + "../../../../../staticdata/dummy_student_bachelor.xml",
+          __dirname + "../../../../../staticdata/flexnow-auszug_isosysc.xml",
           "utf8",
         );
       } else {
@@ -1244,47 +1248,40 @@ export async function crawlStudentDataViaFlexNow(
         }
 
         if (studypath.completedModules) {
+          let modulesWithoutAcronymCount = 1;
           for (let module of studypath.completedModules) {
-            // first try to find suitable modulegroups within fn xml
-            const exactMatches = module.moduleGroups.filter(
-              (mod: { mgId: string; version: string }) =>
-                mgs.find(
-                  (mg) =>
-                    mg.mgId == mod.mgId && String(mg.version) == mod.version,
-                ),
-            );
-            if (exactMatches.length > 0) {
-              module.moduleGroups = exactMatches;
-              continue;
+            if (!module.acronym) {
+              if (module.examAttempts && module.examAttempts.length > 0) {
+                module.acronym = `${module.examAttempts[0].remark}-${modulesWithoutAcronymCount}`;
+              } else {
+                module.acronym = `Sonstige Leistung ${modulesWithoutAcronymCount}`;
+              }
+              modulesWithoutAcronymCount++
             }
-            // second approach is to find nearly matching modulegroups via mgId
-            const nearlyMatches = [
-              ...new Map(
-                module.moduleGroups
-                  .filter((item: { mgId: string; version: string }) =>
-                    mgs.find((mg) => mg.mgId == item.mgId),
-                  )
-                  .map((item: { mgId: string; version: string }) => [
-                    item.mgId,
-                    item.version,
-                  ]),
-              ).entries(),
-            ].map(([mgId, version]) => ({
-              mgId,
-              version,
-            }));
-            if (nearlyMatches.length > 0) {
-              module.moduleGroups = nearlyMatches;
-              continue;
+
+            // check if semester is set, otherwise set it to semesterEnd or as last fallback to current semester
+            if (!module.semester) {
+              module.semester = module.semesterEnd ?? new Semester().apNr;
             }
-            // last option, find module in modules and take this mgId
+
+            // find module in modules and take this mgId - information of xml is not sufficient enough since modulegroup list is incomplete
             if (modules) {
               module.moduleGroups = modules
                 .filter((el) => el.mId == module.mId)
-                .map((mod) => ({
-                  mgId: mod.mgId,
-                  version: "0",
-                }));
+                .map((mod) => {
+                  const mg = mgs.find((mg) => mg.mgId === mod.mgId);
+                  if (mg) {
+                    return {
+                      mgId: mg.mgId,
+                      version: mg.version,
+                    };
+                  } else {
+                    return {
+                      mgId: mod.mgId,
+                      version: "0",
+                    };
+                  }
+                });
               // if no moduleGroup is found here, another case could be that module is not in mhb anymore
               if (module.moduleGroups.length == 0) {
                 const oldModule = await prisma.module.findFirst({

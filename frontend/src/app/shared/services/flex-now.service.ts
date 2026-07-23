@@ -56,7 +56,7 @@ export class FlexnowService {
   lastFlexNowGradeConsent$: Observable<Consent | null>;
   currentUser$: Observable<User>;
   private unsubscribe$ = new Subject<void>();
-  debuggingMode = true;
+  debuggingMode = false;
 
   constructor() {
     this.lastFlexnowApiConsent$ = this.store.select(
@@ -455,6 +455,8 @@ export class FlexnowService {
               const modules = importedUser.studyPath.completedModules.filter(
                 (mod) => mod.semester == semester,
               );
+
+              console.log(modules)
 
               // identify current completed modules of semester
               const currentPathModules =
