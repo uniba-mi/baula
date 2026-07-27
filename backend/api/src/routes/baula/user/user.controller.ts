@@ -22,6 +22,7 @@ import validator from "validator";
 import {
   ModuleFeedback,
   MStudyProgramme,
+  StudyPlanSettings,
   User as UserClient,
   UserServer,
 } from "@interfaces/user";
@@ -141,6 +142,7 @@ export async function updateUser(
         userServer.completedModules = user.completedModules;
         userServer.dashboardSettings = user.dashboardSettings;
         userServer.timetableSettings = user.timetableSettings;
+        userServer.studyPlanSettings = user.studyPlanSettings;
         userServer.favouriteModulesAcronyms = user.favouriteModulesAcronyms;
         userServer.excludedModulesAcronyms = user.excludedModulesAcronyms;
         userServer.topics = user.topics;
@@ -636,6 +638,38 @@ export async function updateDashboardView(
   }
 }
 
+export async function updateStudyPlanSettings(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const userReq = req.user as UserServer;
+  const settings =
+    typeof req.body.settings == "object" &&
+    Object.keys(req.body.settings).includes("displayGrades") &&
+    Object.keys(req.body.settings).includes("displayProgressBar")
+      ? (req.body.settings as StudyPlanSettings)
+      : undefined;
+
+  if (settings) {
+    try {
+      const user = await User.findById(userReq._id);
+      if (user) {
+        user.studyPlanSettings = settings;
+        const result = await user.save();
+
+        res.status(200).send(result.studyPlanSettings);
+      } else {
+        next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
+      }
+    } catch (error) {
+      next(new BadRequestError());
+    }
+  } else {
+    next(new BadRequestError());
+  }
+}
+
 // TODO: currently just updates current setting, extend if needed
 export async function updateTimetableSettings(
   req: Request,
@@ -1078,6 +1112,7 @@ async function transformUserStudyPath(user: UserServer): Promise<UserClient> {
       fulltime: user.fulltime,
       dashboardSettings: user.dashboardSettings,
       timetableSettings: user.timetableSettings,
+      studyPlanSettings: user.studyPlanSettings,
       favouriteModulesAcronyms: user.favouriteModulesAcronyms,
       excludedModulesAcronyms: user.excludedModulesAcronyms,
       hints: user.hints,
@@ -1153,7 +1188,6 @@ export async function crawlStudentDataViaFlexNow(
       ? process.env.FN_STUDENT_URL + baId
       : "";
     const importStudypath = req.body.importStudypath;
-    const includeGrades = req.body.includeGrades;
     const studyprogrammes = await prisma.studyProgramme.findMany({
       select: {
         spId: true,
@@ -1225,11 +1259,6 @@ export async function crawlStudentDataViaFlexNow(
       const userData: FnMetaData = extractMetadata(metadata, studyprogrammes);
 
       if (studypath) {
-        if (!includeGrades) {
-          for (let module of studypath.completedModules) {
-            module.grade = 0;
-          }
-        }
         let modules: Module[] = [];
         let mgs: { mgId: string; version: Number }[] = [];
         for (let sp of userData.sps) {
@@ -1256,7 +1285,7 @@ export async function crawlStudentDataViaFlexNow(
               } else {
                 module.acronym = `Sonstige Leistung ${modulesWithoutAcronymCount}`;
               }
-              modulesWithoutAcronymCount++
+              modulesWithoutAcronymCount++;
             }
 
             // check if semester is set, otherwise set it to semesterEnd or as last fallback to current semester

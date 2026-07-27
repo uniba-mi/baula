@@ -7,7 +7,7 @@ import {
 import { StudyPathActions, UserActions } from 'src/app/actions/user.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { Consent, User } from '../../../../../../interfaces/user';
-import { forkJoin, map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
+import { map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import {
   getLastConsentByType,
   getSemesterList,
@@ -44,7 +44,6 @@ export class StudentUploadComponent {
   closeMode: string;
   importMetadataConsent$: Observable<Consent | null>;
   importStudypathConsent$: Observable<Consent | null>;
-  importGradeConsent$: Observable<Consent | null>;
   integrateFnDataConsent$: Observable<Consent | null>;
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
   studyPlans$: Observable<StudyPlan[]>;
@@ -60,9 +59,6 @@ export class StudentUploadComponent {
     );
     this.importStudypathConsent$ = this.store.select(
       getLastConsentByType('upload-exam-data'),
-    );
-    this.importGradeConsent$ = this.store.select(
-      getLastConsentByType('include-grades'),
     );
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);
   }
@@ -160,14 +156,6 @@ export class StudentUploadComponent {
         timestamp: new Date(),
       }),
     );
-    this.store.dispatch(
-      UserActions.addConsent({
-        ctype: 'include-grades',
-        hasConfirmed: false,
-        hasResponded: true,
-        timestamp: new Date(),
-      }),
-    );
     this.dialog.closeAll();
   }
 
@@ -175,7 +163,6 @@ export class StudentUploadComponent {
     flexNowImportConfirmed: boolean;
     metadataConfirmed: boolean;
     studypathConfirmed: boolean;
-    gradesConfirmed: boolean;
   }> {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: <DialogData>{

@@ -151,12 +151,3 @@ export const CoursePlanningActions = createActionGroup({
     'Update Courses Array In Semester Plan': props<{ courses: PlanCourse[] }>()
   }
 });
-
-/************ LOADING **************** */
-export const LoadingActions = createActionGroup({
-  source: 'Loading',
-  events: {
-    'Start Loading': emptyProps(),
-    'Stop Loading': emptyProps()
-  }
-})

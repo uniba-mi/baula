@@ -5,7 +5,7 @@
   </app-course-search-panel>
 
   <!-- Container for result depending on data -->
-  @if (!(spinner$ | async)) {
+  @if (!(spinner())) {
     <div class="row w-100 mx-0">
       <ng-container>
         <app-course-list class="course-list" [courses]="courses" [searchSettings]="searchSettings" [isSticky]="isSticky"

@@ -1,11 +1,12 @@
 import { User } from '../../../../interfaces/user';
 import { createReducer, on } from '@ngrx/store';
-import { CompetenceAimsActions, DashboardActions, FavoriteModulesActions, JobActions, ExcludedModuleActions, ExcludedModulesActions, StudyPathActions, TimetableActions, UserActions } from '../actions/user.actions';
+import { CompetenceAimsActions, FavoriteModulesActions, JobActions, ExcludedModuleActions, ExcludedModulesActions, StudyPathActions, UserActions, LoadingActions, SettingsActions } from '../actions/user.actions';
 
 export const userFeatureKey = 'user';
 
 export interface State {
   currentUser: User;
+  loading: boolean;
 }
 
 export const initialState: State = {
@@ -28,7 +29,9 @@ export const initialState: State = {
     excludedModulesAcronyms: [],
     dashboardSettings: [],
     timetableSettings: [],
+    studyPlanSettings: undefined,
   },
+  loading: false,
 };
 
 export const reducer = createReducer(
@@ -159,7 +162,7 @@ export const reducer = createReducer(
     };
   }),
 
-  on(DashboardActions.updateDashboardViewSuccess, (state, props) => {
+  on(SettingsActions.updateDashboardViewSuccess, (state, props) => {
     return {
       ...state,
       currentUser: {
@@ -169,12 +172,22 @@ export const reducer = createReducer(
     };
   }),
 
-  on(TimetableActions.updateTimetableSettingsSuccess, (state, props) => {
+  on(SettingsActions.updateTimetableSettingsSuccess, (state, props) => {
     return {
       ...state,
       currentUser: {
         ...state.currentUser,
         timetableSettings: props.settings,
+      },
+    };
+  }),
+
+  on(SettingsActions.updateStudyPlanSettingsSuccess, (state, props) => {
+    return {
+      ...state,
+      currentUser: {
+        ...state.currentUser,
+        studyPlanSettings: props.settings,
       },
     };
   }),
@@ -335,6 +348,21 @@ export const reducer = createReducer(
         jobs: jobs,
       }
     }
+  }),
+
+  // Loading 
+  on(LoadingActions.startLoading, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+
+  on(LoadingActions.stopLoading, (state) => {
+    return {
+      ...state,
+      loading: false,
+    };
   })
 
 

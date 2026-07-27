@@ -240,12 +240,6 @@ export const getSwsSumOfSemesterPlan = createSelector(getPlanCourses, (state) =>
     }, 0)
 );
 
-// selectors for additional features
-export const getLoadingState = createSelector(
-  selectStudyPlanningState,
-  (state) => state.loading
-);
-
 export const getPlanningHints = createSelector(
   selectStudyPlanningState,
   (state) => state.hints

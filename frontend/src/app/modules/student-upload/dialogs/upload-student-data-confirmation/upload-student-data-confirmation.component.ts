@@ -13,24 +13,12 @@ export class UploadStudentDataConfirmationComponent {
     flexNowImportConfirmed: boolean,
     metadataConfirmed: boolean,
     studypathConfirmed: boolean,
-    gradesConfirmed: boolean,
   }>();
 
   readonly FlexNowImportConfirmed = model(false);
   readonly StudypathConfirmed = model(false);
-  readonly GradesConfirmed = model(false);
-
-  confirmGrade() {
-    if(!this.StudypathConfirmed()) {
-      this.StudypathConfirmed.set(this.GradesConfirmed())
-    }
-    this.emitChange()
-  }
 
   confirmPath() {
-    if(this.GradesConfirmed() && !this.StudypathConfirmed()) {
-      this.GradesConfirmed.set(false)
-    }
     this.emitChange()
   }
 
@@ -39,7 +27,6 @@ export class UploadStudentDataConfirmationComponent {
       flexNowImportConfirmed: this.onlyStudypath && !this.StudypathConfirmed() ? false : this.FlexNowImportConfirmed(),
       metadataConfirmed: this.onlyStudypath ? false : true,
       studypathConfirmed: this.StudypathConfirmed(),
-      gradesConfirmed: this.GradesConfirmed()
     })
   }
 }

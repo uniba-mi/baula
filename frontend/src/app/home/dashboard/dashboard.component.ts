@@ -39,13 +39,13 @@ import { ModuleGroup } from '@interfaces/module-group';
 import { getFirstLevelModuleGroups } from 'src/app/selectors/module-overview.selectors';
 import { combineLatest } from 'rxjs';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
-import { DashboardActions } from 'src/app/actions/user.actions';
 import { AcademicDate } from '@interfaces/academic-date';
 import { RestService } from 'src/app/rest.service';
 import { PlanCourse, SemesterPlan } from '@interfaces/semester-plan';
 import { chartMetadata } from 'src/app/shared/constants/chart-metadata';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { MatTooltip } from '@angular/material/tooltip';
+import { SettingsActions } from 'src/app/actions/user.actions';
 
 interface DashboardData {
   visibleCharts: ChartVisibility[];
@@ -165,7 +165,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   changeVisibility(key: string) {
     this.store.dispatch(
-      DashboardActions.updateDashboardView({ chartName: key }),
+      SettingsActions.updateDashboardView({ chartName: key }),
     );
   }
 

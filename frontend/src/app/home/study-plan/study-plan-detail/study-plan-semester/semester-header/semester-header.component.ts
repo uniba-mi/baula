@@ -70,7 +70,6 @@ export class SemesterHeaderComponent {
   showFinishSemesterHint: boolean = false;
   lastFlexnowApiConsent$: Observable<Consent | null>;
   lastFlexNowStudypathConsent$: Observable<Consent | null>;
-  lastFlexNowGradeConsent$: Observable<Consent | null>;
   flexNowImportAvailabe$: Observable<boolean>;
 
   constructor() {
@@ -79,9 +78,6 @@ export class SemesterHeaderComponent {
     );
     this.lastFlexNowStudypathConsent$ = this.store.select(
       getLastConsentByType('upload-exam-data'),
-    );
-    this.lastFlexNowGradeConsent$ = this.store.select(
-      getLastConsentByType('include-grades'),
     );
   }
 

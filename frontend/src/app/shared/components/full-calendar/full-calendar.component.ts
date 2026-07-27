@@ -43,7 +43,6 @@ import {
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { FullCalendarComponent as FullCalendar } from '@fullcalendar/angular';
-import { TimetableActions } from 'src/app/actions/user.actions';
 import { getTimetableSettings } from 'src/app/selectors/user.selectors';
 import { CoursePlanningActions } from 'src/app/actions/study-planning.actions';
 import { CourseService } from '../../services/course.service';
@@ -54,6 +53,7 @@ import { getPlanningHints } from 'src/app/selectors/study-planning.selectors';
 import { AlertType } from '../../classes/alert';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { AnalyticsService } from '../../services/analytics.service';
+import { SettingsActions } from 'src/app/actions/user.actions';
 
 @Component({
   selector: 'app-full-calendar',
@@ -328,7 +328,7 @@ export class FullCalendarComponent
     this.fullCalendar.getApi().changeView(view);
     // update the timetable settings in the db
     this.store.dispatch(
-      TimetableActions.updateTimetableSettings({
+      SettingsActions.updateTimetableSettings({
         timetableId: this.isWidget ? 'dashboard' : 'semesterplan',
         selectedView: view,
       }),
@@ -341,7 +341,7 @@ export class FullCalendarComponent
 
     // update the timetable settings in the db
     this.store.dispatch(
-      TimetableActions.updateTimetableSettings({
+      SettingsActions.updateTimetableSettings({
         timetableId: this.isWidget ? 'dashboard' : 'semesterplan',
         showWeekends: this.calendarOptions.weekends,
       }),
