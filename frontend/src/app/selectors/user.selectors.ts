@@ -54,6 +54,11 @@ export const getTimetableSettings = createSelector(
   (state) => state.timetableSettings,
 );
 
+export const getStudyPlanSettings = createSelector(
+  getUser,
+  (state) => state.studyPlanSettings
+)
+
 export const getHints = createSelector(getUser, (state) => state.hints);
 
 export const getHintByKey = (key: string) =>

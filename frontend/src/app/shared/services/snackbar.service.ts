@@ -1,14 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Alert } from '../classes/alert';
-import { Router } from '@angular/router';
+import { LoadingComponent } from '../components/loading/loading.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SnackbarService {
   private _snackBar = inject(MatSnackBar);
-  private router = inject(Router);
 
   openSnackBar(
     alert: Alert,
@@ -29,5 +28,18 @@ export class SnackbarService {
         actionHandler();
       });
     }
+  }
+
+  openLoaderSnackbar(
+    message: string
+  ) {
+    this._snackBar.openFromComponent(
+      LoadingComponent, {
+        data: {
+          message
+        },
+        panelClass: ['alert', 'alert-primary']
+      }
+    )
   }
 }

@@ -93,7 +93,7 @@
               [hintMessage]="studyPlanDetailMessage"
             ></app-hint>
             <div class="row justify-content-center mb-2">
-              @if (displayProgressBar) {
+              @if (displayProgressBar$ | async) {
                 <div class="col-12 mb-2">
                   <app-progress-bar
                     [totalCredits]="user.maxEcts ? user.maxEcts : 0"
@@ -125,24 +125,46 @@
                 <div
                   class="menu-box d-flex justify-content-end align-items-center gap-2 mb-2"
                 >
-                  @if (semesterPlans$ | async; as semesterPlans) {
+                  @if(studyPlanSettings$ | async; as studyPlanSettings) {
+                    <!-- Toggle to display/hide grade -->
                     <button
-                      class="study-progress btn btn-outline btn-sm"
-                      (click)="toggleProgressBar()"
-                      (keyup.enter)="toggleProgressBar()"
-                      matTooltip="Studienfortschritt anzeigen"
+                      class="btn btn-outline btn-sm"
+                      (click)="toggleGradeVisibility(studyPlanSettings)"
+                      (keyup.enter)="toggleGradeVisibility(studyPlanSettings)"
+                      matTooltip="Noten ein- und ausblenden"
                       matTooltipClass="custom-tooltip"
                     >
-                      <i class="bi bi-graph-up-arrow"></i>
-                      {{
-                        displayProgressBar
-                          ? "ECTS Fortschritt verstecken"
-                          : "ECTS
+                      @if (studyPlanSettings.displayGrades) {
+                        <i class="bi bi-eye-slash-fill"></i>
+                      } @else {
+                        <i class="bi bi-eye-fill"></i>
+                      }
+                      <span class="mx-2"
+                        >Noten
+                        {{ studyPlanSettings.displayGrades ? "ausblenden" : "einblenden" }}</span
+                      >
+                    </button>
+
+                    @if (semesterPlans$ | async; as semesterPlans) {
+                      <button
+                        class="study-progress btn btn-outline btn-sm"
+                        (click)="toggleProgressBar(studyPlanSettings)"
+                        (keyup.enter)="toggleProgressBar(studyPlanSettings)"
+                        matTooltip="Studienfortschritt anzeigen"
+                        matTooltipClass="custom-tooltip"
+                      >
+                        <i class="bi bi-graph-up-arrow"></i>
+                        {{
+                          studyPlanSettings.displayProgressBar
+                            ? "ECTS Fortschritt verstecken"
+                            : "ECTS
                       Fortschritt
                       anzeigen"
-                      }}
-                    </button>
+                        }}
+                      </button>
+                    }
                   }
+
                   @if (
                     isLastSemesterActive(metaSemesters, activeSemesters) &&
                     metaSemesters.length < 20

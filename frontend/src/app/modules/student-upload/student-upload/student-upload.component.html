@@ -45,20 +45,8 @@
                 [class.bi-check-lg]="importStudypathConsent.hasConfirmed"
               ></i>
               <span
-                >Verlaufsinformationen (Abgelegte Prüfungen, Module und
-                Lehrveranstaltungen)</span
-              >
-            </div>
-          }
-          @if (importGradeConsent$ | async; as importGradeConsent) {
-            <div>
-              <i
-                class="bi me-2"
-                [class.bi-x-lg]="!importGradeConsent.hasConfirmed"
-                [class.bi-check-lg]="importGradeConsent.hasConfirmed"
-              ></i>
-              <span
-                >Noten (berechnete Abschlussnote, Modul- bzw.
+                >Verlaufsinformationen inkl. Noten (Abgelegte Prüfungen, Module und
+                Lehrveranstaltungen, berechnete Abschlussnote, Modul- bzw.
                 Prüfungsnoten)</span
               >
             </div>

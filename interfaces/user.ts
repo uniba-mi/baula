@@ -18,6 +18,7 @@ export interface MetaUser {
   fulltime: boolean;
   dashboardSettings: ChartVisibility[];
   timetableSettings: TimetableSettings[];
+  studyPlanSettings: StudyPlanSettings | undefined;
   favouriteModulesAcronyms: string[];
   excludedModulesAcronyms: string[];
   moduleFeedback?: ModuleFeedback[];
@@ -41,6 +42,11 @@ export interface User extends MetaUser {
   studyPath: StudyPath;
   // additional attribute to mark if user is sync with database
   sync?: boolean;
+}
+
+export interface StudyPlanSettings {
+  displayGrades: boolean;
+  displayProgressBar: boolean;
 }
 
 export interface ChartVisibility {
@@ -99,7 +105,7 @@ export interface ModuleFeedback extends Feedback {
   acronym: string,
 }
 
-export type ConsentType = 'upload-exam-data' | '2512-privacy-change' | 'flexnow-api' | 'include-grades' | 'terms-of-use' | 'bakule-survey' | 'upload-meta-data'; // add further options with |
+export type ConsentType = 'upload-exam-data' | '2512-privacy-change' | 'flexnow-api' | 'terms-of-use' | 'bakule-survey' | 'upload-meta-data'; // add further options with |
 
 export function convertUserRole(userRole: string | string[]): string[] {
   // Konvertierer @ in eindeutige Nutzerrollen (z.B. employee, student usw.) und trenne vorher beim ; oder ,

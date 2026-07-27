@@ -9,7 +9,10 @@ import { SemesterPlan as ISemesterPlan } from "@interfaces/semester-plan";
 import { ObjectId } from "mongodb";
 import { StudyPlan as IStudyPlan } from "@interfaces/study-plan";
 import { Recommendation as IRecommendation } from "@interfaces/recommendation";
-import { Embedding as IEmbedding, ModuleEmbedding as IModEmbedding } from "@interfaces/embedding";
+import {
+  Embedding as IEmbedding,
+  ModuleEmbedding as IModEmbedding,
+} from "@interfaces/embedding";
 import { Exam as IExam } from "@interfaces/study-path";
 import { LongTermEvaluation as ILongTermEvaluation } from "@interfaces/long-term-evaluation";
 import { Topic as ITopic } from "@interfaces/topic";
@@ -92,7 +95,7 @@ const LongTermEvaluationSchema: Schema = new Schema<ILongTermEvaluation>(
       maxlength: 1000,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const SemesterPlanSchema: Schema = new Schema<ISemesterPlan>(
@@ -165,7 +168,7 @@ const SemesterPlanSchema: Schema = new Schema<ISemesterPlan>(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const StudyPlanSchema: Schema = new Schema<IStudyPlan>(
@@ -179,7 +182,7 @@ const StudyPlanSchema: Schema = new Schema<IStudyPlan>(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Recommendation
@@ -198,8 +201,9 @@ const RecommendationSchema: Schema = new Schema<IRecommendation>(
           {
             type: {
               type: String,
-              match: /(job)|(topic)|(interest)|(cohort)|(feedback_similarmods)/g, // or others
-              required: true
+              match:
+                /(job)|(topic)|(interest)|(cohort)|(feedback_similarmods)/g, // or others
+              required: true,
             },
             identifier: {
               type: String,
@@ -233,7 +237,7 @@ const RecommendationSchema: Schema = new Schema<IRecommendation>(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const TopicSchema: Schema = new Schema<ITopic>(
@@ -264,7 +268,7 @@ const TopicSchema: Schema = new Schema<ITopic>(
       type: String,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // all embeddings except for module embeddings with id as identifier, e. g. jobId
@@ -286,7 +290,7 @@ const EmbeddingSchema: Schema = new Schema<IEmbedding>(
       max: 1.0,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const ModEmbeddingSchema: Schema = new Schema<IModEmbedding>(
@@ -306,7 +310,7 @@ const ModEmbeddingSchema: Schema = new Schema<IModEmbedding>(
       max: 1.0,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Query helpers for UserSchema
@@ -316,7 +320,6 @@ type UserModelQuery = Query<any, HydratedDocument<IUser>, UserQueryHelpers> &
 interface UserQueryHelpers {
   byShibId(this: UserModelQuery, shibId: String): UserModelQuery;
 }
-
 
 /* const ExamSchema: Schema = new Schema<IExam>(
   {
@@ -425,7 +428,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         status: String,
         startSemster: String,
         duration: Number,
-        maxEcts: Number
+        maxEcts: Number,
       },
     ],
     fulltime: {
@@ -439,15 +442,19 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
       },
     ],
     timetableSettings: [
-      { 
+      {
         timetableId: {
           type: String,
           enum: ["dashboard", "semesterplan"],
         },
         showWeekends: Boolean,
-        selectedView: String
-      }
+        selectedView: String,
+      },
     ],
+    studyPlanSettings: {
+      displayGrades: Boolean,
+      displayProgressBar: Boolean,
+    },
     favouriteModulesAcronyms: [String],
     excludedModulesAcronyms: [String],
     hints: [
@@ -542,7 +549,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 UserSchema.query.byShibId = function (shibId: String): UserModelQuery {
   return this.findOne({ shibId: shibId });
@@ -578,7 +585,7 @@ const EvaluationSchema: Schema = new Schema<IEvaluation>(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Feature Wish
@@ -598,7 +605,7 @@ const FeatureWishSchema: Schema = new Schema<IFeatureWish>(
         type: ObjectId,
         reference: "UserSchema",
         required: true,
-      }
+      },
     ],
     createdBy: {
       type: ObjectId,
@@ -606,37 +613,37 @@ const FeatureWishSchema: Schema = new Schema<IFeatureWish>(
     },
     icon: String,
     adminMessage: String,
-    tags: [String]
+    tags: [String],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Create models
 export const SemesterPlan = model<ISemesterPlan>(
   "Semesterplan",
-  SemesterPlanSchema
+  SemesterPlanSchema,
 );
 export const StudyPlan = model<IStudyPlan>("Studyplan", StudyPlanSchema);
 export const User = model<IUser, UserModelType>("User", UserSchema);
 export const TopicM = model<ITopic>("Topic", TopicSchema);
 export const Recommendation = model<IRecommendation>(
   "Recommendation",
-  RecommendationSchema
+  RecommendationSchema,
 );
 export const Embedding = model<IEmbedding>("Embedding", EmbeddingSchema);
 export const ModEmbedding = model<IModEmbedding>(
   "ModEmbedding",
-  ModEmbeddingSchema
+  ModEmbeddingSchema,
 );
 export const Evaluation = mongoose.model<IEvaluation>(
   "Evaluation",
-  EvaluationSchema
+  EvaluationSchema,
 );
 export const LongTermEvaluation = model<ILongTermEvaluation>(
   "LongTermEvaluation",
-  LongTermEvaluationSchema
+  LongTermEvaluationSchema,
 );
 export const FeatureWish = model<IFeatureWish>(
   "FeatureWish",
-  FeatureWishSchema
+  FeatureWishSchema,
 );

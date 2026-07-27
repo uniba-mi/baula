@@ -19,6 +19,7 @@ import {
   User,
   ConsentType,
   ModuleFeedback,
+  StudyPlanSettings,
 } from '@interfaces/user';
 import {
   PlanCourse,
@@ -144,6 +145,18 @@ export class RestService {
         timetableId,
         showWeekends,
         selectedView,
+      },
+      httpOptions,
+    );
+  }
+
+  updateStudyPlanSettings(
+    settings: StudyPlanSettings
+  ): Observable<StudyPlanSettings> {
+    return this.http.put<StudyPlanSettings>(
+      this.urlBase + 'user/study-plan-settings',
+      {
+        settings
       },
       httpOptions,
     );
@@ -805,11 +818,10 @@ export class RestService {
 
   getStudentDataViaFlexNow(
     importStudypath: boolean,
-    includeGrades: boolean,
   ): Observable<FnUser | undefined> {
     return this.http.post<FnUser | undefined>(
       `${this.urlBase}user/fn2student`,
-      { importStudypath, includeGrades },
+      { importStudypath },
       httpOptions,
     );
   }

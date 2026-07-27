@@ -15,13 +15,12 @@ import {
 } from '../actions/study-planning.actions';
 import {
   CompetenceAimsActions,
-  DashboardActions,
   FavoriteModulesActions,
   ExcludedModuleActions,
   ExcludedModulesActions,
   StudyPathActions,
-  TimetableActions,
   UserActions,
+  SettingsActions,
 } from '../actions/user.actions';
 
 @Injectable()
@@ -44,7 +43,6 @@ export class ErrorEffects {
           SemesterPlanActions.addSemesterPlanToStudyPlanFailure,
           SemesterPlanActions.updateIsPastSemesterFailure,
           SemesterPlanActions.updateAimedEctsFailure,
-          TimetableActions.updateTimetableSettingsFailure,
           UserGeneratedModuleActions.createUserGeneratedModuleFailure,
           UserGeneratedModuleActions.updateUserGeneratedModuleFailure,
           UserGeneratedModuleActions.transferUserGeneratedModuleFailure,
@@ -63,8 +61,9 @@ export class ErrorEffects {
           StudyPathActions.updateStudyPathFailure,
           StudyPathActions.deleteModuleFromStudyPathFailure,
           StudyPathActions.deleteStudyPathFailure,
-          DashboardActions.updateDashboardViewFailure,
-          TimetableActions.updateTimetableSettingsFailure,
+          SettingsActions.updateDashboardViewFailure,
+          SettingsActions.updateTimetableSettingsFailure,
+          SettingsActions.updateStudyPlanSettingsFailure,
           FavoriteModulesActions.deleteFavouriteModulesFailure,
           FavoriteModulesActions.toggleFavouriteModuleFailure,
           ExcludedModuleActions.deleteExcludedModuleFailure,

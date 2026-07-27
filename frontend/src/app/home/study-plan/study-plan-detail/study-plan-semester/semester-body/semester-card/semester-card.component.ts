@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { ItemActionName, MetaSemester } from '@interfaces/semester-plan';
 import { StudyPath } from '@interfaces/study-path';
 import {
+  getStudyPlanSettings,
   getUserStudyPath,
   isModuleInStudyPath,
 } from 'src/app/selectors/user.selectors';
@@ -46,6 +47,7 @@ export class SemesterCardComponent {
   isDragging: boolean = false;
   moduleInStudyPath$: Observable<boolean>;
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
+  displayGrades$: Observable<boolean>;
 
   actionConfig: Record<ItemActionName, ActionConfig> = {
     feedback: { icon: 'bi-chat-dots', text: 'Feedback', showInMenu: true },
@@ -77,6 +79,9 @@ export class SemesterCardComponent {
     this.moduleInStudyPath$ = this.store.select(
       isModuleInStudyPath(this.moduleData.acronym),
     );
+    this.displayGrades$ = this.store.select(getStudyPlanSettings).pipe(
+      map(el => el?.displayGrades ?? false)
+    )
   }
 
   canDrag(): boolean {

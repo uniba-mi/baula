@@ -16,19 +16,16 @@ export class UploadStudentDataDialogComponent {
   flexNowImportConfirmed = false;
   metadataConfirmed = false;
   studypathConfirmed = false;
-  gradesConfirmed = false;
   fileToUpload: File | null = null;
 
   receiveChanges(confirmations: {
     flexNowImportConfirmed: boolean;
     metadataConfirmed: boolean;
     studypathConfirmed: boolean;
-    gradesConfirmed: boolean;
   }) {
     this.flexNowImportConfirmed = confirmations.flexNowImportConfirmed;
     this.metadataConfirmed = confirmations.metadataConfirmed;
     this.studypathConfirmed = confirmations.studypathConfirmed;
-    this.gradesConfirmed = confirmations.gradesConfirmed;
   }
 
   close() {
@@ -42,7 +39,6 @@ export class UploadStudentDataDialogComponent {
         flexNowImportConfirmed: this.flexNowImportConfirmed,
         metadataConfirmed: this.metadataConfirmed,
         studypathConfirmed: this.studypathConfirmed,
-        gradesConfirmed: this.gradesConfirmed,
       };
     } else {
       return undefined;

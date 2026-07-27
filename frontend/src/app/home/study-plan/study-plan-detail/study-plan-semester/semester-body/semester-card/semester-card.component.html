@@ -169,35 +169,37 @@
 
   <!-- Fourth Row -->
   <div class="d-flex align-items-center justify-content-between gap-3">
-    <div>
+
       <!-- so ECTS stick to the right in any case -->
       @if (moduleType === "module" && moduleData.type === "Pflichtmodul") {
-        <span matTooltip="Das ist ein Pflichtmodul" class="compulsory-icon">
+        <div matTooltip="Das ist ein Pflichtmodul" class="compulsory-icon">
           <i>P</i>
-        </span>
+        </div>
       }
 
       <!-- Grade Column -->
       @switch (moduleType) {
         @case ("pathModule") {
           <!-- Path Module Grade -->
-          <div
-            class="grade-div"
-            (click)="triggerAction('editGrade', null, $event)"
-            (keyup.enter)="triggerAction('editGrade', null, $event)"
-          >
-            @if (moduleData.grade) {
-              <span class="grade">Note: {{ moduleData.grade }}</span>
-            } @else {
-              <i class="bi bi-question-circle"></i>
-            }
-          </div>
+          @if (displayGrades$ | async) {
+            <div
+              class="grade-div"
+              (click)="triggerAction('editGrade', null, $event)"
+              (keyup.enter)="triggerAction('editGrade', null, $event)"
+            >
+              @if (moduleData.grade) {
+                <span class="grade">Note: {{ moduleData.grade }}</span>
+              } @else {
+                <i class="bi bi-question-circle"></i>
+              }
+            </div>
+          }
         }
       }
-    </div>
+
 
     <!-- Badge for flexNowImported -->
-    @if(moduleData.flexNowImported) {
+    @if (moduleData.flexNowImported) {
       <button class="btn btn-outline chip secondary-chip px-2" disabled>
         Quelle: FlexNow
       </button>
