@@ -1,6 +1,6 @@
 import { User } from '../../../../interfaces/user';
 import { createReducer, on } from '@ngrx/store';
-import { CompetenceAimsActions, FavoriteModulesActions, JobActions, ExcludedModuleActions, ExcludedModulesActions, StudyPathActions, UserActions, LoadingActions, SettingsActions } from '../actions/user.actions';
+import { CompetenceAimsActions, FavoriteModulesActions, JobActions, ExcludedModuleActions, ExcludedModulesActions, StudyPathActions, UserActions, SettingsActions } from '../actions/user.actions';
 
 export const userFeatureKey = 'user';
 
@@ -349,21 +349,4 @@ export const reducer = createReducer(
       }
     }
   }),
-
-  // Loading 
-  on(LoadingActions.startLoading, (state) => {
-    return {
-      ...state,
-      loading: true,
-    };
-  }),
-
-  on(LoadingActions.stopLoading, (state) => {
-    return {
-      ...state,
-      loading: false,
-    };
-  })
-
-
 );

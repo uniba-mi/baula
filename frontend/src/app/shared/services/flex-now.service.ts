@@ -41,6 +41,7 @@ import {
 import { getModules } from 'src/app/selectors/module-overview.selectors';
 import { DebugDialogComponent } from '../components/debug-dialog/debug-dialog.component';
 import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,7 @@ export class FlexnowService {
   private dialog = inject(MatDialog);
   private store = inject(Store);
   private rest = inject(RestService);
+  private snackbar = inject(SnackbarService);
 
   lastFlexnowApiConsent$: Observable<Consent | null>;
   lastFlexNowMetaDataConsent$: Observable<Consent | null>;
@@ -519,6 +521,9 @@ export class FlexnowService {
     studypathConsent: boolean,
     semesters?: string[],
   ): Observable<User | undefined> {
+    if(mode !== 'create-user') {
+      this.snackbar.openLoaderSnackbar('Deine FlexNow-Daten werden geladen.')
+    }
     return this.rest
       .getStudentDataViaFlexNow(studypathConsent)
       .pipe(

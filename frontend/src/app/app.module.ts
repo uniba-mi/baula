@@ -180,6 +180,7 @@ import { ManageStatusComponent } from './dialog/module-details-dialog/manage-sta
 import { FeatureWishComponent } from './home/dashboard/feature-wish/feature-wish.component';
 import { SingleFeatureWishComponent } from './home/dashboard/feature-wish/single-feature-wish/single-feature-wish.component';
 import { IconPickerComponent } from './dialog/icon-picker/icon-picker.component';
+import { LoadingComponent } from './shared/components/loading/loading.component';
 
 
 @NgModule({
@@ -299,7 +300,8 @@ import { IconPickerComponent } from './dialog/icon-picker/icon-picker.component'
     ManageStatusComponent,
     FeatureWishComponent,
     SingleFeatureWishComponent,
-    IconPickerComponent
+    IconPickerComponent,
+    LoadingComponent
   ],
   bootstrap: [AppComponent],
   imports: [

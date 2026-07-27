@@ -136,10 +136,4 @@ export const getUserTopics = createSelector(getUser, (state) =>
   state.topics ? state.topics : [],
 );
 
-// selectors for additional features
-export const getLoadingState = createSelector(
-  getUserState,
-  (state) => state.loading
-);
-
 export const getJobs = createSelector(getUser, (state) => state.jobs);

@@ -132,12 +132,3 @@ export const JobActions = createActionGroup({
     'Delete Job Failure': props<{ error: HttpErrorResponse }>(),
   }
 });
-
-/************ LOADING **************** */
-export const LoadingActions = createActionGroup({
-  source: 'Loading',
-  events: {
-    'Start Loading': emptyProps(),
-    'Stop Loading': emptyProps()
-  }
-})
