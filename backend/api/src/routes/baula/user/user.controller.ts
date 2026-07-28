@@ -21,12 +21,11 @@ import {
 import validator from "validator";
 import {
   ModuleFeedback,
-  MStudyProgramme,
   StudyPlanSettings,
   User as UserClient,
   UserServer,
 } from "@interfaces/user";
-import { ModuleGroup, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import mongoose from "mongoose";
 import { ExtendedJob, Job } from "@interfaces/job";
 import { transform } from "camaro";
@@ -37,9 +36,8 @@ import {
 import https from "https";
 import { findMatchingModuleIndex } from "../../../shared/helpers/plan-helper";
 import { decrypt } from "../../../shared/utils/crypto";
-import { FnMetaData, FnStudyPath, FnStudyProgramme } from "@interfaces/fn-user";
+import { FnMetaData, FnStudyProgramme } from "@interfaces/fn-user";
 import {
-  extractModules,
   findAndBuildModuleHandbookByIdAndVersion,
   iterateOverMgsAndReturnMgs,
   iterateOverMgsAndReturnModules,
@@ -47,7 +45,6 @@ import {
 import { Semester } from "../../../../../../interfaces/semester";
 import * as fs from "fs";
 import { Module } from "../../../../../../interfaces/module";
-import { verbose } from "winston";
 
 const prisma = new PrismaClient();
 
@@ -92,9 +89,14 @@ export async function createUser(
   next: NextFunction,
 ) {
   const sentUser = req.body.user;
+  // shibId and roles must come from the authenticated session (set by passport from
+  // SAML/local login), never from the client body, to prevent role/identity spoofing
+  const sessionUser = req.user as UserServer;
 
   const user = validateAndReturnUser({
     ...sentUser,
+    shibId: sessionUser.shibId,
+    roles: sessionUser.roles,
     studyPath: undefined,
     completedModules: sentUser.studyPath.completedModules,
     topics: [],
@@ -126,14 +128,18 @@ export async function updateUser(
   res: Response,
   next: NextFunction,
 ) {
+  // the authenticated session's _id is the only trustworthy identifier for which
+  // record may be updated - the client-supplied user._id must never be used for lookup,
+  // otherwise any user could overwrite another user's document
+  const sessionUser = req.user as UserServer;
   const user = validateAndReturnUser(req.body.user);
   //check validity of user
   if (user) {
     try {
-      const userServer = await User.findById({ _id: user._id }).exec();
+      const userServer = await User.findById({ _id: sessionUser._id }).exec();
       if (userServer) {
-        userServer.shibId = user.shibId;
-        userServer.roles = user.roles;
+        // shibId and roles are identity/authorization attributes managed by the
+        // login provider (SAML/local) - never accept them from the request body
         userServer.startSemester = user.startSemester;
         userServer.duration = user.duration;
         userServer.maxEcts = user.maxEcts;
