@@ -113,8 +113,8 @@ export class Semester {
     }
 
     private currentSemester() {
-        const today = new Date();
-        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        // const today = new Date();
+        const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const year = today.getFullYear();
         // get month starts from 0 (january) to 11 (december)
         // current WS: Sept (8) - Feb (1)
@@ -140,8 +140,8 @@ export class Semester {
 
     // is a semester a past semester
     isPastSemester(): boolean {
-        const today = new Date();
-        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        // const today = new Date();
+        const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth();
 
@@ -159,8 +159,8 @@ export class Semester {
 
     // is a semester a future semester
     isFutureSemester(): boolean {
-        const today = new Date();
-        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        //const today = new Date();
+        const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth();
 
@@ -178,8 +178,8 @@ export class Semester {
 
     // current semester based on date
     isCurrentSemester(): boolean {
-        const today = new Date();
-        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        // const today = new Date();
+        const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth();
 
