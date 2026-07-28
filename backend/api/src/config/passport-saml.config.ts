@@ -36,7 +36,7 @@ export const samlStrategy = new SamlStrategy(
     ],
     signatureAlgorithm: "sha256",
     digestAlgorithm: "sha256",
-    wantAssertionsSigned: true,
+    wantAssertionsSigned: false,
     forceAuthn: true,
     wantAuthnResponseSigned: true,
   },
