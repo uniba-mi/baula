@@ -484,10 +484,18 @@ export async function deleteModuleFromStudyPath(
       const user = await User.findById(userReq._id);
       if (user) {
         const index = user.completedModules.findIndex((el) => el._id == id);
-        user.completedModules.splice(index, 1);
-        const result = await user.save();
-        const userClient = await transformUserStudyPath(result);
-        res.status(200).json(userClient.studyPath);
+        if (index >= 0) {
+          user.completedModules.splice(index, 1);
+          const result = await user.save();
+          const userClient = await transformUserStudyPath(result);
+          res.status(200).json(userClient.studyPath);
+        } else {
+          next(
+            new NotFoundError(
+              "Das angefragte Modul existiert nicht mehr im Studienverlauf.",
+            ),
+          );
+        }
       } else {
         next(new NotFoundError("Es wurde kein vergangenes Semester gefunden."));
       }
@@ -739,20 +747,24 @@ export async function updateFavouriteModule(
     typeof req.body.acronym == "string" ? req.body.acronym : undefined;
 
   if (userReq._id && acronym) {
-    const user = await User.findById(userReq._id);
-    if (user) {
-      const index = user.favouriteModulesAcronyms.indexOf(acronym);
-      if (index === -1) {
-        // add module if it is not a favourite yet
-        user.favouriteModulesAcronyms.push(acronym);
+    try {
+      const user = await User.findById(userReq._id);
+      if (user) {
+        const index = user.favouriteModulesAcronyms.indexOf(acronym);
+        if (index === -1) {
+          // add module if it is not a favourite yet
+          user.favouriteModulesAcronyms.push(acronym);
+        } else {
+          // delete module if it is already there
+          user.favouriteModulesAcronyms.splice(index, 1);
+        }
+        const result = await user.save();
+        res.status(200).send(result.favouriteModulesAcronyms);
       } else {
-        // delete module if it is already there
-        user.favouriteModulesAcronyms.splice(index, 1);
+        next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
       }
-      const result = await user.save();
-      res.status(200).send(result.favouriteModulesAcronyms);
-    } else {
-      next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
+    } catch (error) {
+      next(new BadRequestError());
     }
   } else {
     next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
@@ -769,20 +781,24 @@ export async function updateExcludedModule(
     typeof req.body.acronym == "string" ? req.body.acronym : undefined;
 
   if (user._id && acronym) {
-    const userDb = await User.findById(user._id);
-    if (userDb) {
-      const index = user.excludedModulesAcronyms.indexOf(acronym);
-      if (index === -1) {
-        // add module if it is not a favourite yet
-        userDb.excludedModulesAcronyms.push(acronym);
+    try {
+      const userDb = await User.findById(user._id);
+      if (userDb) {
+        const index = user.excludedModulesAcronyms.indexOf(acronym);
+        if (index === -1) {
+          // add module if it is not a favourite yet
+          userDb.excludedModulesAcronyms.push(acronym);
+        } else {
+          // delete module if it is already there
+          userDb.excludedModulesAcronyms.splice(index, 1);
+        }
+        const result = await userDb.save();
+        res.status(200).send(result.excludedModulesAcronyms);
       } else {
-        // delete module if it is already there
-        userDb.excludedModulesAcronyms.splice(index, 1);
+        next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
       }
-      const result = await userDb.save();
-      res.status(200).send(result.excludedModulesAcronyms);
-    } else {
-      next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
+    } catch (error) {
+      next(new BadRequestError());
     }
   } else {
     next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
@@ -827,9 +843,12 @@ export async function updateHint(
 ) {
   const userReq = req.user as UserServer;
   const key = typeof req.body.key == "string" ? req.body.key : undefined;
-  const hasConfirmed = Boolean(req.body.hasConfirmed);
+  const hasConfirmed =
+    req.body.hasConfirmed !== undefined
+      ? Boolean(req.body.hasConfirmed)
+      : undefined;
 
-  if (userReq._id && key && hasConfirmed) {
+  if (userReq._id && key && hasConfirmed !== undefined) {
     const user = await User.findById(userReq._id);
     if (user && user.hints) {
       const hintIndex = user.hints.findIndex((hint) => hint.key === key);

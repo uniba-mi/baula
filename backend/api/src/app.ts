@@ -17,6 +17,9 @@ import { errorHandler, notFoundHandler } from "./shared/middleware/error-handler
 
 const app: Express = express();
 
+// trust the first hop (reverse proxy) so req.ip / X-Forwarded-For reflect the real client
+app.set("trust proxy", 1);
+
 // cors for local setting
 if (process.env.NODE_ENV === "local" && process.env.ORIGIN) {
   app.use(

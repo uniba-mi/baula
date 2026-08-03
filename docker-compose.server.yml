@@ -26,5 +26,5 @@ services:
     volumes:
       - ./backend/api/dist/backend/api:/api
       - ./backend/api/dist/interfaces:/interfaces
-    ports:    
-      - "${HOST_IP}:${API_PORT}:${API_PORT}"
+    expose:
+      - "${API_PORT}"

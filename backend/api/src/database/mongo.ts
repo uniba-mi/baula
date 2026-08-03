@@ -19,11 +19,17 @@ import { Topic as ITopic } from "@interfaces/topic";
 import { UserServer as IUser } from "@interfaces/user";
 import { Evaluation as IEvaluation } from "@interfaces/evaluation";
 import { FeatureWish as IFeatureWish } from "../../../../interfaces/feature-wish";
-const uri = process.env.MONGO_DATABASE_URL
-  ? process.env.MONGO_DATABASE_URL.toString()
-  : "";
+import { logger } from "../shared/utils/logger";
 
-export const connection = mongoose.connect(uri);
+if (!process.env.MONGO_DATABASE_URL) {
+  throw new Error("MONGO_DATABASE_URL is missing");
+}
+const uri = process.env.MONGO_DATABASE_URL;
+
+export const connection = mongoose.connect(uri).catch((error) => {
+  logger.error("MongoDB connection failed", { error });
+  throw error;
+});
 
 // MongoDB Schemas -> Structure of the models
 // longterm evaluation schema
