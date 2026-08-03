@@ -13,4 +13,4 @@ prisma/generated
 users.ts
 prisma/*
 /api/dist/*
-export.xml
+/api/staticdata/*.xml
