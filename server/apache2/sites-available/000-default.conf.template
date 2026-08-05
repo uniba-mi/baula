@@ -80,13 +80,9 @@
     </IfModule>
 
     <IfModule mod_rewrite.c>
-        RewriteEngine On  
-        # Wenn eine vorhandene Datei oder ein Verzeichnis angefordert wird, gehe zu diesem
-        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
-        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
-        RewriteRule ^ - [L]
+        RewriteEngine On
 
-        # Wenn die angeforderte Ressource nicht existiert, verwende index.html
+        # Kein Locale-Präfix in der URL und keine API-/SSO-/Docs-Route -> auf Standard-Locale umleiten
         RewriteCond %{REQUEST_URI} !^/api
         RewriteCond %{REQUEST_URI} !^/Shibboleth.sso
         RewriteCond %{REQUEST_URI} !^/login/local
@@ -94,7 +90,17 @@
         RewriteCond %{REQUEST_URI} !^/docs/user
         RewriteCond %{REQUEST_URI} !^/docs/developer
         RewriteCond %{REQUEST_URI} !^/3rdpartylicenses
-        RewriteRule ^ /index.html [L]
+        RewriteCond %{REQUEST_URI} !^/(de|en)(/|$)
+        RewriteRule ^/?(.*)$ /de/$1 [R=302,L]
+
+        # Wenn eine vorhandene Datei oder ein Verzeichnis angefordert wird, gehe zu diesem
+        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+        RewriteRule ^ - [L]
+
+        # Wenn die angeforderte Ressource nicht existiert, verwende das index.html der jeweiligen Sprache
+        RewriteRule ^/de/ /de/index.html [L]
+        RewriteRule ^/en/ /en/index.html [L]
     </IfModule>
 
     # Proxy und Verbindungszeitlimits
