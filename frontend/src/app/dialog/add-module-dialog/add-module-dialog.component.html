@@ -12,9 +12,9 @@
           <span class="btn-icon d-inline" (click)="clearInput()" (keyup.enter)="clearInput()">
             <i class="bi bi-x-lg text-gray"></i>
           </span>
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectModule($event)">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayModule" (optionSelected)="selectModule($event)">
             @for (module of filteredModules | async; track module.mId) {
-              <mat-option [value]="module.name">
+              <mat-option [value]="module">
                 {{ module.acronym }}: {{ module.name }}
               </mat-option>
             }

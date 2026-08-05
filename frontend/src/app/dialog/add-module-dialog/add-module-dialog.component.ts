@@ -16,7 +16,6 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Module } from '@interfaces/module';
 import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
 import { PathModule } from '@interfaces/study-path';
-import { ModService } from 'src/app/shared/services/module.service';
 
 @Component({
   selector: 'app-add-module-dialog',
@@ -30,7 +29,6 @@ export class AddModuleDialogComponent implements OnInit {
   private snackbar = inject(SnackbarService);
   private formBuilder = inject(FormBuilder);
   private recsHelperService = inject(RecsHelperService);
-  private modService = inject(ModService);
 
   @Input() modules: Module[];
   @Input() semesterPlanId: string;
@@ -38,8 +36,7 @@ export class AddModuleDialogComponent implements OnInit {
   semesterPlanSemester: string | undefined;
   displayPriorModuleWarning: boolean = false;
   warningMessage: string = '';
-  moduleNames: string[] = [];
-  selectedModuleName = new FormControl('');
+  selectedModuleName = new FormControl<string | Module>('');
   filteredModules: Observable<Module[]>;
   addModuleForm: FormGroup;
 
@@ -56,7 +53,6 @@ export class AddModuleDialogComponent implements OnInit {
       moduleName: this.selectedModuleName,
     });
 
-    this.moduleNames = this.modules.map((mod) => mod.name);
     this.filteredModules = this.selectedModuleName.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value || '')),
@@ -70,8 +66,10 @@ export class AddModuleDialogComponent implements OnInit {
       });
   }
 
-  private _filter(value: string): Module[] {
-    const filterValue = value.toLowerCase();
+  private _filter(value: string | Module): Module[] {
+    const filterValue = (
+      typeof value === 'string' ? value : value.name
+    ).toLowerCase();
 
     return this.modules.filter(
       (mod) =>
@@ -80,17 +78,17 @@ export class AddModuleDialogComponent implements OnInit {
     );
   }
 
+  displayModule(module: string | Module): string {
+    return typeof module === 'string' ? module : `${module?.acronym} ${module?.name}`;
+  }
+
   async selectModule(event?: MatAutocompleteSelectedEvent) {
     this.addModuleForm.controls['moduleName'].addValidators([
       Validators.required,
     ]);
 
     if (event) {
-      const selectedValue = event.option.value;
-
-      this.selectedModule =
-        this.modules.find((mod) => mod.name === selectedValue) ||
-        this.modules.find((mod) => mod.acronym === selectedValue);
+      this.selectedModule = event.option.value;
     }
 
     // set prior module warning to false
@@ -128,20 +126,6 @@ export class AddModuleDialogComponent implements OnInit {
     }
   }
 
-  selectModuleByAcronym(acronym: string) {
-    this.selectedModule = this.modules.find((mod) => mod.acronym == acronym);
-
-    if (this.selectedModule) {
-      this.selectedModuleName.setValue(this.selectedModule.name);
-    }
-
-    this.selectModule();
-  }
-
-  viewModuleAcronym(acronym: string) {
-    this.modService.selectModuleFromAcronymString(acronym);
-  }
-
   clearInput() {
     this.selectedModuleName.setValue('');
     this.displayPriorModuleWarning = false;
@@ -154,15 +138,8 @@ export class AddModuleDialogComponent implements OnInit {
 
   // provides dialog data for call in component
   getSelectedModuleFromDialog() {
-    if (this.selectedModuleName) {
-      this.selectedModule = this.modules.find(
-        (mod) => mod.name == this.selectedModuleName.value,
-      );
-      return {
-        module: this.selectedModule,
-      };
-    } else {
-      return;
-    }
+    return {
+      module: this.selectedModule,
+    };
   }
 }
