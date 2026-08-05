@@ -11,15 +11,11 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Course } from '../../../../../../interfaces/course';
 import { PlanCourse } from '../../../../../../interfaces/semester-plan';
 import { ModService } from 'src/app/shared/services/module.service';
 import { getModuleAcronyms } from 'src/app/selectors/module-overview.selectors';
-import {
-  getPlanCourses,
-  getSelectedCourseIds,
-} from 'src/app/selectors/study-planning.selectors';
 import { CoursePlanningActions } from 'src/app/actions/study-planning.actions';
 import { PlanningValidationService } from 'src/app/shared/services/planning-validation.service';
 

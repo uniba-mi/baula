@@ -111,7 +111,7 @@
       </ng-container>
     </div>
   </div>
-  @for (deletedCourse of deletedCourses; track deletedCourse) {
+  @for (deletedCourse of deletedCourses; track deletedCourse.id) {
     <div class="container mx-auto alert alert-sm alert-warning" role="alert">
       Die Lehrveranstaltung "{{ deletedCourse.name ? deletedCourse.name : deletedCourse.id }}" wurde in UnivIS gelöscht
       und ist nicht mehr verfügbar.

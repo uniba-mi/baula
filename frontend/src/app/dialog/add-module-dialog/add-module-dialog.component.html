@@ -13,7 +13,7 @@
             <i class="bi bi-x-lg text-gray"></i>
           </span>
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectModule($event)">
-            @for (module of filteredModules | async; track module) {
+            @for (module of filteredModules | async; track module.mId) {
               <mat-option [value]="module.name">
                 {{ module.acronym }}: {{ module.name }}
               </mat-option>

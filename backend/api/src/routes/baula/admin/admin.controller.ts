@@ -688,7 +688,6 @@ export async function crawlFN2Modules(
         res.status(400)
       }
     } else {
-      console.log(mhbs)
       next(
         new BadRequestError("Es konnten keine Daten von FlexNow geladen werden.")
       )
