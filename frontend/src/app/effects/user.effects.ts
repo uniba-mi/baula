@@ -18,14 +18,13 @@ import { SnackbarService } from '../shared/services/snackbar.service';
 import {
   StudyPathActions,
   UserActions,
-  DashboardActions,
   FavoriteModulesActions,
   CompetenceAimsActions,
   ExcludedModulesActions,
   ExcludedModuleActions,
-  TimetableActions,
   JobActions,
   StudyProgrammeActions,
+  SettingsActions,
 } from '../actions/user.actions';
 import { Router } from '@angular/router';
 import { User } from '../../../../interfaces/user';
@@ -316,14 +315,14 @@ export class UserEffects {
 
   updateDashboardView$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(DashboardActions.updateDashboardView),
+      ofType(SettingsActions.updateDashboardView),
       switchMap((props) =>
         this.rest.updateDashboardSettings(props.chartName).pipe(
           map((settings) =>
-            DashboardActions.updateDashboardViewSuccess({ settings }),
+            SettingsActions.updateDashboardViewSuccess({ settings }),
           ),
           catchError((error) =>
-            of(DashboardActions.updateDashboardViewFailure(error)),
+            of(SettingsActions.updateDashboardViewFailure(error)),
           ),
         ),
       ),
@@ -332,7 +331,7 @@ export class UserEffects {
 
   updateTimetableView$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TimetableActions.updateTimetableSettings),
+      ofType(SettingsActions.updateTimetableSettings),
       switchMap((props) =>
         this.rest
           .updateTimetableSettings(
@@ -342,10 +341,30 @@ export class UserEffects {
           )
           .pipe(
             map((settings) =>
-              TimetableActions.updateTimetableSettingsSuccess({ settings }),
+              SettingsActions.updateTimetableSettingsSuccess({ settings }),
             ),
             catchError((error) =>
-              of(TimetableActions.updateTimetableSettingsFailure(error)),
+              of(SettingsActions.updateTimetableSettingsFailure(error)),
+            ),
+          ),
+      ),
+    ),
+  );
+
+  updateStudyPlanSettings$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettingsActions.updateStudyPlanSettings),
+      switchMap((props) =>
+        this.rest
+          .updateStudyPlanSettings(
+            props.settings
+          )
+          .pipe(
+            map((settings) =>
+              SettingsActions.updateStudyPlanSettingsSuccess({ settings }),
+            ),
+            catchError((error) =>
+              of(SettingsActions.updateStudyPlanSettingsFailure(error)),
             ),
           ),
       ),

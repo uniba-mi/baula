@@ -7,9 +7,11 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  WritableSignal,
   inject,
+  signal,
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { UntypedFormControl } from '@angular/forms';
@@ -22,8 +24,6 @@ import {
   PlanCourse,
   SemesterPlan,
 } from '../../../../../../interfaces/semester-plan';
-import { getLoadingState } from 'src/app/selectors/study-planning.selectors';
-import { LoadingActions } from 'src/app/actions/study-planning.actions';
 import { IndexedDbService } from 'src/app/shared/services/indexed-db.service';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
 
@@ -53,12 +53,12 @@ export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
   searchTerm: string = '';
   courseListEmpty: boolean = false;
   filters = new UntypedFormControl();
-  spinner$: Observable<boolean>;
+  spinner: WritableSignal<boolean>;
   acronyms: string[];
   types: string | undefined;
 
   ngOnInit(): void {
-    this.spinner$ = this.store.select(getLoadingState);
+    this.spinner = signal(false);
     this.store
       .select(getModuleAcronyms)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -96,7 +96,7 @@ export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
     searchsettings?: SearchSettings,
     reload?: boolean,
   ) {
-    this.store.dispatch(LoadingActions.startLoading());
+    this.spinner.set(true);
     this.indexedDB
       .searchCourses(semester, searchsettings, reload)
       .then((courses) => {
@@ -135,7 +135,7 @@ export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
             }
           }
 
-          this.store.dispatch(LoadingActions.stopLoading());
+          this.spinner.set(false);
           // update list to check if list is empty
           this.updateList();
         }

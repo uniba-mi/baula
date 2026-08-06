@@ -12,9 +12,10 @@ import {
   SemesterPlanActions,
   StudyPlanActions,
 } from 'src/app/actions/study-planning.actions';
-import { User } from '../../../../../../interfaces/user';
+import { StudyPlanSettings, User } from '../../../../../../interfaces/user';
 import {
   getSemesterList,
+  getStudyPlanSettings,
   getUser,
   getUserStudyPath,
   getUserStudyprogrammes,
@@ -61,7 +62,7 @@ import {
   getModuleByAcronym,
   getOldModuleByAcronym,
 } from 'src/app/selectors/module-overview.selectors';
-import { StudyPathActions, UserActions } from 'src/app/actions/user.actions';
+import { SettingsActions, StudyPathActions, UserActions } from 'src/app/actions/user.actions';
 import { StudyPlan } from '../../../../../../interfaces/study-plan';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { ScreenSizeService } from 'src/app/shared/services/screen-size.service';
@@ -120,7 +121,6 @@ export class StudyPlanDetailComponent implements OnInit {
   @ViewChild('semesterContainer', { static: false })
   semesterContainer!: ElementRef;
 
-  displayProgressBar: boolean = false;
   hintsOpened = false;
   hints: PlanningHints[] = [];
   hintsIconColor: string = 'standard';
@@ -132,6 +132,8 @@ export class StudyPlanDetailComponent implements OnInit {
   expandedSemesters: { [semesterName: string]: boolean } = {};
   closeMode: string;
   flexNowAvailable$: Observable<boolean>;
+  studyPlanSettings$: Observable<StudyPlanSettings | undefined>;
+  displayProgressBar$: Observable<boolean>;
 
   ngOnInit(): void {
     this.user$ = this.store.pipe(select(getUser));
@@ -144,6 +146,10 @@ export class StudyPlanDetailComponent implements OnInit {
     this.semesterPlans$ = this.store.select(
       getSemesterPlansOfSelectedStudyPlan,
     );
+    this.studyPlanSettings$ = this.store.select(getStudyPlanSettings)
+    this.displayProgressBar$ = this.studyPlanSettings$.pipe(
+      map(el => el?.displayProgressBar ?? false)
+    )
 
     /** transform semesterPlans$ into metaSemesters$ so initial details for display are given and additional info (different for path and plan)
      *  are loaded by children directly. Avoids redundancy in this component.*/
@@ -284,6 +290,11 @@ export class StudyPlanDetailComponent implements OnInit {
       });
   }
 
+  toggleGradeVisibility(settings: StudyPlanSettings) {
+    settings.displayGrades = !settings.displayGrades
+    this.store.dispatch(SettingsActions.updateStudyPlanSettings({ settings }))
+  }
+
   updateHintsIconColor(hints: PlanningHints[]) {
     if (hints.length === 0) {
       this.hintsIconColor = 'standard';
@@ -391,8 +402,9 @@ export class StudyPlanDetailComponent implements OnInit {
     this.canScrollRight = scrollLeft < scrollWidth - clientWidth - 1;
   }
 
-  toggleProgressBar() {
-    this.displayProgressBar = !this.displayProgressBar;
+  toggleProgressBar(settings: StudyPlanSettings) {
+    settings.displayProgressBar = !settings.displayProgressBar;
+    this.store.dispatch(SettingsActions.updateStudyPlanSettings({ settings }))
   }
 
   getMatchingSemesterPlan(

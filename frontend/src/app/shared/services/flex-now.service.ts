@@ -41,6 +41,7 @@ import {
 import { getModules } from 'src/app/selectors/module-overview.selectors';
 import { DebugDialogComponent } from '../components/debug-dialog/debug-dialog.component';
 import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -49,11 +50,11 @@ export class FlexnowService {
   private dialog = inject(MatDialog);
   private store = inject(Store);
   private rest = inject(RestService);
+  private snackbar = inject(SnackbarService);
 
   lastFlexnowApiConsent$: Observable<Consent | null>;
   lastFlexNowMetaDataConsent$: Observable<Consent | null>;
   lastFlexNowStudypathConsent$: Observable<Consent | null>;
-  lastFlexNowGradeConsent$: Observable<Consent | null>;
   currentUser$: Observable<User>;
   private unsubscribe$ = new Subject<void>();
   debuggingMode = true;
@@ -67,9 +68,6 @@ export class FlexnowService {
     );
     this.lastFlexNowStudypathConsent$ = this.store.select(
       getLastConsentByType('upload-exam-data'),
-    );
-    this.lastFlexNowGradeConsent$ = this.store.select(
-      getLastConsentByType('include-grades'),
     );
     this.currentUser$ = this.store.select(getUser);
   }
@@ -126,7 +124,6 @@ export class FlexnowService {
                   consents.flexNowImportConfirmed,
                   consents.metadataConfirmed,
                   consents.studypathConfirmed,
-                  consents.gradesConfirmed,
                   semesters,
                 );
               } else {
@@ -134,7 +131,6 @@ export class FlexnowService {
                 return this.getFlexNowData(
                   'update-metadata',
                   consents.studypathConfirmed,
-                  consents.gradesConfirmed,
                 );
               }
             }),
@@ -171,7 +167,6 @@ export class FlexnowService {
               this.getFlexNowData(
                 'update-metadata',
                 consent.studypathConfirmed,
-                consent.gradesConfirmed,
               ),
             ),
             filter((user) => !!user),
@@ -216,7 +211,6 @@ export class FlexnowService {
                   consents.flexNowImportConfirmed,
                   consents.metadataConfirmed,
                   consents.studypathConfirmed,
-                  consents.gradesConfirmed,
                   semesters,
                 ),
               ),
@@ -232,7 +226,6 @@ export class FlexnowService {
                   consents.flexNowImportConfirmed,
                   consents.metadataConfirmed,
                   consents.studypathConfirmed,
-                  consents.gradesConfirmed,
                   [semester],
                 ),
               ),
@@ -251,17 +244,15 @@ export class FlexnowService {
     flexNowImportConfirmed: boolean;
     metadataConfirmed: boolean;
     studypathConfirmed: boolean;
-    gradesConfirmed: boolean;
   }> {
     return this.lastFlexnowApiConsent$.pipe(
       take(1),
       withLatestFrom(
         this.lastFlexNowMetaDataConsent$,
         this.lastFlexNowStudypathConsent$,
-        this.lastFlexNowGradeConsent$,
       ),
       concatMap(
-        ([consent, metadataConsent, studypathConsent, gradeConsent]) => {
+        ([consent, metadataConsent, studypathConsent]) => {
           // check only metadata consent
           if (onlyMetaData) {
             if (consent?.hasConfirmed && metadataConsent?.hasConfirmed) {
@@ -269,7 +260,6 @@ export class FlexnowService {
                 flexNowImportConfirmed: true,
                 metadataConfirmed: true,
                 studypathConfirmed: false,
-                gradesConfirmed: false,
               });
             }
           }
@@ -277,14 +267,12 @@ export class FlexnowService {
           if (onlyStudyPath) {
             if (
               consent?.hasConfirmed &&
-              studypathConsent?.hasConfirmed &&
-              gradeConsent?.hasConfirmed
+              studypathConsent?.hasConfirmed
             ) {
               return of({
                 flexNowImportConfirmed: true,
                 metadataConfirmed: false,
-                studypathConfirmed: true,
-                gradesConfirmed: true,
+                studypathConfirmed: true
               });
             }
           }
@@ -292,14 +280,12 @@ export class FlexnowService {
           if (
             consent?.hasConfirmed &&
             metadataConsent?.hasConfirmed &&
-            studypathConsent?.hasConfirmed &&
-            gradeConsent?.hasConfirmed
+            studypathConsent?.hasConfirmed
           ) {
             return of({
               flexNowImportConfirmed: true,
               metadataConfirmed: true,
-              studypathConfirmed: true,
-              gradesConfirmed: true,
+              studypathConfirmed: true
             });
           }
           return this.openConsentDialog(onlyMetaData, onlyStudyPath);
@@ -328,7 +314,6 @@ export class FlexnowService {
     flexNowImportConfirmed: boolean;
     metadataConfirmed: boolean;
     studypathConfirmed: boolean;
-    gradesConfirmed: boolean;
   }> {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: <DialogData>{
@@ -362,7 +347,6 @@ export class FlexnowService {
     flexNowApiConsent: boolean,
     metadataConsent: boolean,
     studypathConsent: boolean,
-    gradeConsent: boolean,
     semesters: string[],
   ): Observable<boolean> {
     const confirmationDialogInterface: ConfirmationDialogData = {
@@ -401,19 +385,10 @@ export class FlexnowService {
               timestamp: new Date(),
             }),
           );
-          this.store.dispatch(
-            UserActions.addConsent({
-              ctype: 'include-grades',
-              hasConfirmed: gradeConsent,
-              hasResponded: true,
-              timestamp: new Date(),
-            }),
-          );
         }
         this.updateStudypathWithFlexNowData(
           mode,
           studypathConsent,
-          gradeConsent,
           semesters,
         );
       },
@@ -428,10 +403,9 @@ export class FlexnowService {
   updateStudypathWithFlexNowData(
     mode: 'update-user' | 'update-studypath' | 'update-metadata',
     studypathConsent: boolean,
-    gradeConsent: boolean,
     semesters: string[],
   ) {
-    this.getFlexNowData(mode, studypathConsent, gradeConsent, semesters)
+    this.getFlexNowData(mode, studypathConsent, semesters)
       .pipe(take(1))
       .pipe(
         withLatestFrom(
@@ -455,6 +429,8 @@ export class FlexnowService {
               const modules = importedUser.studyPath.completedModules.filter(
                 (mod) => mod.semester == semester,
               );
+
+              console.log(modules)
 
               // identify current completed modules of semester
               const currentPathModules =
@@ -543,11 +519,13 @@ export class FlexnowService {
       | 'update-studypath'
       | 'update-metadata',
     studypathConsent: boolean,
-    gradeConsent: boolean,
     semesters?: string[],
   ): Observable<User | undefined> {
+    if(mode !== 'create-user') {
+      this.snackbar.openLoaderSnackbar('Deine FlexNow-Daten werden geladen.')
+    }
     return this.rest
-      .getStudentDataViaFlexNow(studypathConsent, gradeConsent)
+      .getStudentDataViaFlexNow(studypathConsent)
       .pipe(
         withLatestFrom(this.currentUser$),
         map(([flexNowOutput, user]) => {

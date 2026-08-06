@@ -36,7 +36,6 @@ export class UserDialogComponent {
   flexNowImportConfirmed = false;
   metadataConfirmed = false;
   studyPathConfirmed = false;
-  gradesConfirmed = false;
   steps: string[] = ['welcome'];
   isFirstSemesterStudent: boolean = false;
   templatesAvailable: boolean;
@@ -54,12 +53,10 @@ export class UserDialogComponent {
     flexNowImportConfirmed: boolean;
     metadataConfirmed: boolean;
     studypathConfirmed: boolean;
-    gradesConfirmed: boolean;
   }) {
     this.flexNowImportConfirmed = confirmations.flexNowImportConfirmed;
     this.metadataConfirmed = confirmations.metadataConfirmed;
     this.studyPathConfirmed = confirmations.studypathConfirmed;
-    this.gradesConfirmed = confirmations.gradesConfirmed;
   }
 
   updateUserData(user: User) {
@@ -105,8 +102,7 @@ export class UserDialogComponent {
         this.currentStep = step;
         this.steps.push(step);
       } else {
-        const isStudent = this.user.roles.includes('student') && this.user.authType !== 'local';
-        if (isStudent) {
+        if (this.flexNowService.flexNowImportEnabled(this.user)) {
           this.currentStep = 'selection';
           this.steps.push('selection');
         } else {
@@ -158,7 +154,6 @@ export class UserDialogComponent {
         .getFlexNowData(
           'create-user',
           this.studyPathConfirmed,
-          this.gradesConfirmed,
         )
         .pipe(take(1))
         .subscribe((user) => {
@@ -227,16 +222,11 @@ export class UserDialogComponent {
         timestamp: new Date(),
       },
       {
-        ctype: 'include-grades',
-        hasConfirmed: this.gradesConfirmed,
-        timestamp: new Date(),
-      },
-      {
         ctype: '2512-privacy-change',
         hasConfirmed: true,
         hasResponded: true,
         timestamp: new Date(),
-      },
+      }
     ];
 
     return this.rest.createUser(this.user);
