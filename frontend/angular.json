@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "baula": {
+      "i18n": {
+        "sourceLocale": "de-DE",
+        "locales": {
+          "en-US": "src/locale/messages.en.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -21,6 +27,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "localize": ["en-US"],
             "outputPath": {
               "base": "../server/app"
             },
