@@ -1,9 +1,9 @@
-<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+<ng-container role="Dialogfenster" aria-label="Dialogfenster" i18n-aria-label>
   <form [formGroup]="moduleForm">
     <div class="content-wrapper">
       <div class="input-field-wrapper">
         <mat-form-field appearance="outline">
-          <mat-label>Name:</mat-label>
+          <mat-label i18n>Name:</mat-label>
           <input matInput #moduleName formControlName="name" maxlength="50" type="text" [value]="module.name"
             required />
             @if (
@@ -11,40 +11,40 @@
               moduleForm.controls.name.invalid
               ) {
               <mat-error>@if (moduleForm.controls.name.errors?.required) {
-                <span>Das ist ein Pflichtfeld.</span>
+                <span i18n>Das ist ein Pflichtfeld.</span>
                 }@if (moduleForm.controls.name.errors?.maxlength) {
-                <span
+                <span i18n
                 >Du darfst nur 50 Zeichen eingeben.</span>
               }
               @if (moduleForm.controls.name.errors?.pattern) {
-                <span>Das Feld darf nicht leer sein.</span>
+                <span i18n>Das Feld darf nicht leer sein.</span>
               }</mat-error>
             }
           </mat-form-field>
         </div>
         <div class="input-field-wrapper">
           <mat-form-field appearance="outline">
-            <mat-label>Notizen:</mat-label>
+            <mat-label i18n>Notizen:</mat-label>
             <textarea matInput formControlName="notes" #moduleNotes maxlength="1000" type="text" [value]="module.notes">
             </textarea>
           </mat-form-field>
         </div>
         <div class="input-field-wrapper">
           <mat-form-field appearance="outline">
-            <mat-label>ECTS:</mat-label>
+            <mat-label i18n>ECTS:</mat-label>
             <input matInput type="number" min="1" max="30" formControlName="ects" placeholder="ECTS" #moduleEcts
-              [value]="module.ects" required />
+              [value]="module.ects" required i18n-placeholder/>
               @if (
                 moduleForm.controls.ects.touched &&
                 moduleForm.controls.ects.invalid
                 ) {
                 <mat-error>@if (moduleForm.controls.ects.errors?.required) {
-                  <span>Das ist ein Pflichtfeld.</span>
+                  <span i18n>Das ist ein Pflichtfeld.</span>
                   }@if (
                   moduleForm.controls.ects.errors?.min ||
                   moduleForm.controls.ects.errors?.max
                   ) {
-                  <span>Die Zahl der ECTS muss zwischen 1 und 30 liegen.</span>
+                  <span i18n>Die Zahl der ECTS muss zwischen 1 und 30 liegen.</span>
                 }</mat-error>
               }
             </mat-form-field>
@@ -52,7 +52,7 @@
         </div>
         <mat-dialog-actions>
           <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
-            (keyup)="close('noData')">
+            (keyup)="close('noData')" i18n>
             Abbrechen
           </button>
       <button mat-raised-button [disabled]="!moduleForm.valid" class="btn btn-primary" type="submit" [mat-dialog-close]="{
@@ -60,7 +60,7 @@
           notes: moduleNotes.value,
           ects: moduleEcts.value,
           flexNowImported: moduleForm.controls.flexNowImported.value
-        }" (click)="close('data')" (keyup)="close('data')">
+        }" (click)="close('data')" (keyup)="close('data')" i18n>
             Speichern
           </button>
         </mat-dialog-actions>

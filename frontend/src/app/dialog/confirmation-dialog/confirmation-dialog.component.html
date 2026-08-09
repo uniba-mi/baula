@@ -16,35 +16,35 @@
           @switch (data.actionType) {
             @case ("delete") {
               <!-- delete action -->
-              <span>
+              <span i18n>
                 Bist du sicher, dass du
                 <b>{{ data.confirmationItem }}</b> löschen möchtest?
               </span>
             }
             @case ("add") {
               <!-- add action -->
-              <span>
+              <span i18n>
                 Bist du sicher, dass du
                 <b>{{ data.confirmationItem }}</b> hinzufügen möchtest?
               </span>
             }
             @case ("update") {
               <!-- update action -->
-              <span>
+              <span i18n>
                 Bist du sicher, dass du
                 <b>{{ data.confirmationItem }}</b> aktualisieren möchtest?
               </span>
             }
             @case ("overwrite") {
               <!-- overwrite action -->
-              <span>
+              <span i18n>
                 Bist du sicher, dass du
                 <b>{{ data.confirmationItem }}</b> überschreiben möchtest?
               </span>
             }
             @default {
               <!-- other possible actions / fallback -->
-              <span>
+              <span i18n>
                 Bist du sicher, dass du mit
                 <b>{{ data.confirmationItem }}</b> fortfahren möchtest?
               </span>

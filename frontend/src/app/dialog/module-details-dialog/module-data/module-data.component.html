@@ -4,34 +4,34 @@
     <div class="meta-box">
       @if (selectedModule.respPerson) {
         <div class="row module-information-prof-row">
-          <span class="fw-bold col-12 col-md-3"
+          <span class="fw-bold col-12 col-md-3" i18n
             ><i class="bi bi-person"></i> Modulverantwortl.</span
           >
           <span class="col-12 col-md-3"
             >{{ selectedModule.respPerson.firstname }}
             {{ selectedModule.respPerson.lastname }}
           </span>
-          <span class="fw-bold col-12 col-md-3"
+          <span class="fw-bold col-12 col-md-3" i18n
             ><i class="bi bi-house"></i> Lehrstuhl</span
           >
           <span class="col-12 col-md-3">{{ selectedModule.chair }}</span>
         </div>
       }
       <div class="row my-2">
-        <span class="fw-bold col-12 col-md-3"
+        <span class="fw-bold col-12 col-md-3" i18n
           ><i class="bi bi-arrow-clockwise"></i> Angebotshäufigkeit</span
         >
         <span class="col-12 col-md-3">{{ selectedModule.term }}</span>
-        <span class="fw-bold col-12 col-md-3"
+        <span class="fw-bold col-12 col-md-3" i18n
           ><i class="bi bi-alarm"></i> Moduldauer</span
         >
-        <span class="col-12 col-md-3"
+        <span class="col-12 col-md-3" i18n
           >{{ selectedModule.duration }} Semester</span
         >
       </div>
       <div class="row my-2">
         @if (selectedModule.recTerm) {
-          <span class="fw-bold col-12 col-md-3"
+          <span class="fw-bold col-12 col-md-3" i18n
             ><i class="bi bi-calendar"></i> Empfohlenes Semester</span
           >
         }
@@ -46,7 +46,7 @@
         }
         <span class="fw-bold col-12 col-md-3">
           @if (selectedModule.type !== "") {
-            <span><i class="bi bi-exclamation-circle"></i> Modulart</span>
+            <span i18n><i class="bi bi-exclamation-circle"></i> Modulart</span>
           }
         </span>
         @if (selectedModule.type !== "") {
@@ -63,7 +63,7 @@
       </div>
       <div class="row my-2">
         @if (getFullModuleGroup(selectedModule.mgId) | async; as mg) {
-          <span class="fw-bold col-12 col-md-3"
+          <span class="fw-bold col-12 col-md-3" i18n
             ><i class="bi bi-grid"></i> Modulgruppe</span
           >
           @if (mg) {
@@ -73,7 +73,7 @@
       </div>
     </div>
     <div class="row module-information-description-row">
-      <div class="col-12 col-md-3 fw-bold">Inhalte</div>
+      <div class="col-12 col-md-3 fw-bold" i18n>Inhalte</div>
       <div
         class="col-12 col-md-9"
         [ngClass]="selectedModule.content.length > 500 ? 'truncate' : ''"
@@ -143,7 +143,7 @@
       selectedModule.skills != selectedModule.addInfo && selectedModule.addInfo
     ) {
       <div class="row">
-        <span class="col-12 col-md-3 fw-bold">Zusatz&shy;informationen</span>
+        <span class="col-12 col-md-3 fw-bold" i18n>Zusatz&shy;informationen</span>
         <span
           class="col-12 col-md-9"
           [innerHtml]="selectedModule.addInfo"
@@ -152,7 +152,7 @@
     }
     @if (selectedModule.workload && selectedModule.workload != "") {
       <div class="row">
-        <span class="col-12 col-md-3 fw-bold">Arbeitsaufwand</span>
+        <span class="col-12 col-md-3 fw-bold" i18n>Arbeitsaufwand</span>
         <span
           class="col-12 col-md-9"
           [innerHtml]="selectedModule.workload"
@@ -163,7 +163,7 @@
       <div class="row">
         @if (selectedModule.prevModules) {
           <div class="row">
-            <span class="fw-bold col-12 col-md-3">Vorkenntnisse</span>
+            <span class="fw-bold col-12 col-md-3" i18n>Vorkenntnisse</span>
             <span class="col-12 col-md-9">
               @for (prevMod of selectedModule.prevModules; track prevMod) {
                 <span>
@@ -185,7 +185,7 @@
     }
     @if (selectedModule.priorKnowledge) {
       <div class="row">
-        <span class="fw-bold col-12 col-md-3">Empfohlene Vorkenntnisse</span>
+        <span class="fw-bold col-12 col-md-3" i18n>Empfohlene Vorkenntnisse</span>
         <span
           class="col-12 col-md-9 module-information-priorKnowledge"
           [innerHTML]="
@@ -204,7 +204,7 @@
           <div class="module-information-classes">
             <div class="module-information-classes">
               <div class="row module-information-classes-header">
-                <div class="fw-bold col-12 col-md-3">
+                <div class="fw-bold col-12 col-md-3" i18n>
                   Lehrveranstaltungen
                   <span
                     class="col-auto px-2"
@@ -226,6 +226,7 @@
                     [disabled]="expandedClasses"
                     (click)="findCourses(selectedModule.acronym)"
                     [mat-dialog-close]="'jump'"
+                    i18n
                   >
                     <i class="bi bi-search d-none d-sm-inline me-2"></i>
                     Finde passende Lehrveranstaltungen
@@ -234,6 +235,7 @@
                     class="bi bi-info-circle icon"
                     matTooltip="Module können einen oder mehrere Lehrveranstaltungen enthalten. Finde passende Lehrveranstaltungen, die du für dein Modul belegen kannst."
                     appTooltip
+                    i18n-matTooltip
                   ></i>
                 </div>
               </div>
@@ -257,6 +259,7 @@
                             findCourses(selectedModule.acronym, class.type)
                           "
                           [mat-dialog-close]="'jump'"
+                          i18n
                         >
                           <i class="bi bi-search d-xl-none d-inline"></i>
                           Finde passende Lehrveranstaltung
@@ -267,22 +270,22 @@
                       <div class="col-12">
                         <div class="row">
                           <div
-                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold"
+                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold" i18n
                           >
                             Lehrperson
                           </div>
                           <div
-                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold"
+                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold" i18n
                           >
                             Angebotshäufigkeit
                           </div>
                           <div
-                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold"
+                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold" i18n="Modul Sprache"
                           >
                             Sprache
                           </div>
                           <div
-                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold"
+                            class="col-12 col-md-3 module-information-classes-titleCol fw-bold" i18n
                           >
                             SWS
                           </div>
@@ -305,7 +308,7 @@
                       @if (class.desc) {
                         <div class="col-12 col-xxl-6 mt-2">
                           <div
-                            class="module-information-classes-titleCol fw-bold"
+                            class="module-information-classes-titleCol fw-bold" i18n
                           >
                             Inhalte
                           </div>
@@ -315,7 +318,7 @@
                       @if (class.literature) {
                         <div class="col-12 col-xxl-6 mt-2">
                           <div
-                            class="module-information-classes-titleCol fw-bold"
+                            class="module-information-classes-titleCol fw-bold" i18n
                           >
                             Literatur
                           </div>
@@ -337,7 +340,7 @@
         <div class="module-information-exam">
           <div class="module-information-classes">
             <div class="row module-information-classes-header">
-              <div class="fw-bold col-12 col-md-3">
+              <div class="fw-bold col-12 col-md-3" i18n>
                 Prüfungen
                 <span
                   class="col-auto px-2"
@@ -399,7 +402,7 @@
                     <div class="col-md-3"></div>
                     <div class="col-12 col-md-9">
                       <div class="row">
-                        <div class="col-12 col-md-4">
+                        <div class="col-12 col-md-4" i18n>
                           <span class="fw-bold">
                             <i class="bi bi-alarm"></i> Prüfungsdauer:
                           </span>
@@ -410,7 +413,7 @@
                           }
                           {{ exam.duration }} Minuten
                         </div>
-                        <div class="col-12 col-md-5">
+                        <div class="col-12 col-md-5" i18n>
                           <span class="fw-bold">
                             <i class="bi bi-pie-chart"></i> Anteil an Modulnote:
                           </span>
@@ -460,7 +463,7 @@
                               class="module-planning-notification mt-2 d-flex flex-wrap align-items-center"
                             >
                               <i class="bi bi-check-lg me-2 text-success"></i>
-                              <span class="text-break">
+                              <span class="text-break" i18n>
                                 Das Modul ist im aktiven Plan "{{
                                   activeStudyPlan?.name
                                 }}" eingeplant:
@@ -485,12 +488,13 @@
                         <div class="row d-flex align-items-center">
                           <div class="col-12 col-md-4">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Studienplan</mat-label>
+                              <mat-label i18n>Studienplan</mat-label>
                               <mat-select
                                 formControlName="selectedStudyPlanId"
                                 (selectionChange)="checkConstraints()"
                                 aria-label="Dropdown zur Studienplanwahl"
                                 required
+                                i18n-aria-label
                               >
                                 @for (
                                   studyPlan of studyPlans;
@@ -515,11 +519,12 @@
                                 appearance="outline"
                                 class="w-100"
                               >
-                                <mat-label>Semester</mat-label>
+                                <mat-label i18n>Semester</mat-label>
                                 <mat-select
                                   formControlName="selectedSemesterPlanId"
                                   (selectionChange)="checkConstraints()"
                                   aria-label="Dropdown zur Semesterwahl"
+                                  i18n-aria-label
                                   required
                                 >
                                   @for (
@@ -549,6 +554,8 @@
                               (click)="addModuleToPlan(selectedModule)"
                               (keyup.enter)="addModuleToPlan(selectedModule)"
                               aria-label="In den Studienplan einplanen"
+                              i18n-aria-label
+                              i18n
                             >
                               Einplanen
                             </button>

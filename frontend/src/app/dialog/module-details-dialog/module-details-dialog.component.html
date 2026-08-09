@@ -8,7 +8,7 @@
             {{ selectedModule.ects }} ECTS
           </button>
           @if (selectedModule.offerBegin !== '(leer)' && selectedModule.offerBegin) {
-            <button class="btn btn-outline chip success-chip px-2 mx-2" disabled
+            <button class="btn btn-outline chip success-chip px-2 mx-2" disabled i18n="Modul beginnt ab"
               >
               Ab {{ selectedModule.offerBegin }}
             </button>
@@ -22,7 +22,7 @@
 </div>
 <!-- alert if module is old -->
 @if(selectedModule.hasIssue) {
-  <div class="alert alert-warning" role="alert">
+  <div class="alert alert-warning" role="alert" i18n>
     Dieses Modul ist nicht mehr Teil deines aktuell ausgewählten Modulhandbuchs oder ist einer Modulgruppe zugeordnet, in welcher es ursprünglich nicht enthalten ist. Prüfe ggf. die Anrechenbarkeit.
   </div>
 }
@@ -34,7 +34,7 @@
   <app-manage-status [selectedModule]="selectedModule"></app-manage-status>
 </mat-tab> -->
 @if (focusModule && priorModules && extractedPriorModules && advancedModules && (priorModules.length > 0 || advancedModules.length > 0 || extractedPriorModules.length > 0)) {
-  <mat-tab label="Abhängigkeiten"
+  <mat-tab label="Abhängigkeiten" i18n-label
     >
     <ng-template matTabContent>
       <app-dependency-graph [focusModule]="focusModule" [priorModules]="priorModules"
@@ -44,7 +44,7 @@
   </mat-tab>
 }
 @if (moduleInStudyPath$ | async) {
-  <mat-tab label="Feedback">
+  <mat-tab label="Feedback" i18n-label>
     <app-module-feedback [selectedModule]="selectedModule" [feedback]="feedback$ | async"
     [dialog]="dialog"></app-module-feedback>
   </mat-tab>
