@@ -5,7 +5,7 @@
   "projects": {
     "baula": {
       "i18n": {
-        "sourceLocale": "de-DE",
+        "sourceLocale": "de",
         "locales": {
           "en-US": "src/locale/messages.en.xlf"
         }
