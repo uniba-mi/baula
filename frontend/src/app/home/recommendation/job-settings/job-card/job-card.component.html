@@ -4,17 +4,17 @@
       <div class="d-flex flex-row justify-content-between">
         <h3 class="mt-0">{{job.title}}</h3>
         <button [matMenuTriggerFor]="jobmenu" class="btn-icon" role="button" aria-haspopup="true"
-          aria-expanded="false" tabindex="0" aria-label="Kontextmenu für weitere Aktionen öffnen">
+          aria-expanded="false" tabindex="0" aria-label="Kontextmenu für weitere Aktionen öffnen" i18n-aria-label>
           <i class="icon bi bi-three-dots-vertical text-gray"></i>
         </button>
         <mat-menu #jobmenu="matMenu">
           <button mat-menu-item class="btn-icon" (click)="editJob(job)" (keyup.enter)="editJob(job)" [disabled]="job.inputMode === 'mock'" matTooltip ="Diesen Job kannst du nicht bearbeiten, da es sich um ein vordefiniertes Jobprofil handelt."
-            [matTooltipDisabled]="job.inputMode !== 'mock'" matTooltipPosition="right">
+            [matTooltipDisabled]="job.inputMode !== 'mock'" matTooltipPosition="right" i18n-matTooltip i18n>
             <i class="text-gray ms-0 icon bi bi-pencil"></i>
             Bearbeiten
           </button>
           <button mat-menu-item class="btn-icon text-danger" (click)="openDeleteConfirmationDialog(job)"
-            (keyup.enter)="openDeleteConfirmationDialog(job)">
+            (keyup.enter)="openDeleteConfirmationDialog(job)" i18n>
             <i class="ms-0 icon bi bi-trash3"></i>
             Löschen
           </button>
@@ -28,9 +28,9 @@
       </div>
       @if (recModules$ | async; as recModules) {
         <div class="mt-2">
-          <div class="fw-bold me-2">Beispiele für passende Module <i class="bi bi-info-circle"
+          <div class="fw-bold me-2" i18n>Beispiele für passende Module <i class="bi bi-info-circle"
             matTooltip="Dies sind Module, die dir in deinem Studienverlaufsplan auf Basis des hochgeladenen Jobs vorgeschlagen werden können."
-          matTooltipClass="custom-tooltip"></i></div>
+          matTooltipClass="custom-tooltip" i18n-matTooltip></i></div>
           @if (!job.loading || recModules.length > 0) {
             <div class="d-flex flex-row flex-wrap"
               >

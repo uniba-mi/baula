@@ -18,7 +18,7 @@
         </mat-chip-option>
         <mat-chip-option (click)="navigate('modulliste')" [selected]="activeRoute =='modulliste'"
           [selectable]="false" class="child-chip" role="button" tabindex="0"
-          aria-label="Liste mit Modulempfehlungen">
+          aria-label="Liste mit Modulempfehlungen" i18n-aria-label>
           Modulempfehlungen
         </mat-chip-option>
       </mat-chip-listbox>
@@ -26,29 +26,29 @@
         <!-- mat menu with settings pages -->
         <mat-menu #settingsMenu="matMenu">
           <button mat-menu-item (click)="navigate('topics')" [class.active]="activeRoute === 'topics'"
-            aria-label="Einstellungen zu Interessen">
+            aria-label="Einstellungen zu Interessen" i18n-aria-label>
             <i class="bi bi-tags-fill text-gray me-2"></i>
-            <span>Interessen</span>
+            <span i18n>Interessen</span>
           </button>
           <button mat-menu-item (click)="navigate('jobs')" [class.active]="activeRoute === 'jobs'"
-            aria-label="Einstellungen zu Jobs">
+            aria-label="Einstellungen zu Jobs" i18n-aria-label>
             <i class="bi bi-signpost-split-fill text-gray me-2"></i>
-            <span>Jobs</span>
+            <span i18n>Jobs</span>
           </button>
           <button mat-menu-item (click)="navigate('feedback')" [class.active]="activeRoute === 'feedback'"
-            aria-label="Einstellungen zu Feedback">
+            aria-label="Einstellungen zu Feedback" i18n-aria-label>
             <i class="bi bi-chat-dots-fill text-gray me-2"></i>
-            <span>Feedback</span>
+            <span i18n>Feedback</span>
           </button>
           <button mat-menu-item (click)=" navigate('merkliste')" [class.active]="activeRoute === 'merkliste'"
-            aria-label="Merkliste">
+            aria-label="Merkliste" i18n-aria-label>
             <i class="bi bi-bookmark-fill text-gray me-2"></i>
-            <span>Merkliste</span>
+            <span i18n>Merkliste</span>
           </button>
           <button mat-menu-item (click)="navigate('blacklist')" [class.active]="activeRoute === 'blacklist'"
-            aria-label="Liste mit nicht interessanten Modulen">
+            aria-label="Liste mit nicht interessanten Modulen" i18n-aria-label>
             <i class="bi bi-shield-fill-x text-gray me-2"></i>
-            <span>Blacklist</span>
+            <span i18n>Blacklist</span>
           </button>
         </mat-menu>
       </div>
@@ -59,10 +59,10 @@
           <h4 class="h5 mb-0">Für dich passende Module
             <i class="bi bi-info-circle"
               matTooltip="Hier werden dir Module auf Basis deiner Angaben zu Interessen und Jobs vorgeschlagen. Je öfter das Modul für die einzelnen Interessen und Jobs passend ist, desto weiter vorne wird es dir angezeigt."
-              matTooltipClass="custom-tooltip" appTooltip>
+              matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip>
             </i>
           </h4>
-          <div class="btn-link mb-0" (click)="navigate('modulliste')">
+          <div class="btn-link mb-0" (click)="navigate('modulliste')" i18n>
             <i class="bi bi-arrow-up-right-square me-2"></i>Alle
             verwalten
           </div>
@@ -73,7 +73,7 @@
         (hasRecommendations)="hasRecommendations = $event"></app-recommendations-list>
       </div>
       <div class="jobs-interests mb-4">
-        <h4 class="h5 mb-3">Deine Jobs und Interessen</h4>
+        <h4 class="h5 mb-3" i18n>Deine Jobs und Interessen</h4>
         <div class="row">
           <div class="col-12 col-lg-6 mb-3 mb-lg-0">
             <app-data-preview [type]="'jobs'"></app-data-preview>
@@ -85,7 +85,7 @@
       </div>
       <div class="further-cards">
         <!-- once for favourites, blacklist, feedback, with preview true -->
-        <h4 class="h5 mb-3">Sonstiges</h4>
+        <h4 class="h5 mb-3" i18n>Sonstiges</h4>
         <div class="row">
           <div class="col-12 col-lg-4 mb-3 mb-lg-0">
             <app-settings-list [preview]="true" [type]="'merkliste'"></app-settings-list>

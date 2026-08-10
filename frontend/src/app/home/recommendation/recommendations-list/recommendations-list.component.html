@@ -10,7 +10,7 @@
 
     @if (isLoading) {
       <div class="d-flex align-items-center gap-2">
-        <p class="mb-0">Modulvorschläge werden geladen...</p>
+        <p class="mb-0" i18n>Modulvorschläge werden geladen...</p>
         <mat-spinner diameter="24"></mat-spinner>
       </div>
     }
@@ -21,13 +21,13 @@
         <div class="preview-container">
           @if (canScrollLeft) {
             <button class="scroll-arrow scroll-arrow-left" (click)="scrollLeft()"
-              matTooltip="Nach links scrollen" aria-label="Nach links scrollen">
+              matTooltip="Nach links scrollen" aria-label="Nach links scrollen" i18n-matTooltip>
               <i class="bi bi-chevron-left"></i>
             </button>
           }
           @if (canScrollRight) {
             <button class="scroll-arrow scroll-arrow-right" (click)="scrollRight()"
-              matTooltip="Nach rechts scrollen" aria-label="Nach rechts scrollen">
+              matTooltip="Nach rechts scrollen" aria-label="Nach rechts scrollen" i18n-matTooltip>
               <i class="bi bi-chevron-right"></i>
             </button>
           }
@@ -66,7 +66,7 @@
 
     @if (!isLoading && (!recommendations || recommendations.length === 0)) {
       @if (!preview) {
-        <p>
+        <p i18n>
           Keine Modulvorschläge verfügbar. Bitte wähle Interessen oder Jobs aus, um Empfehlungen zu erhalten.
         </p>
       }
