@@ -28,6 +28,7 @@
     "buildDocs": "npm run buildDevDocs && npm run buildUserDocs",
     "buildTest": "npm run buildBackend && npm run buildFrontendTest && npm run buildDocs",
     "buildProd": "npm run buildBackend && npm run buildFrontendProd && npm run buildDocs",
-    "buildInitial": "node initial/initial.ts"
+    "buildInitial": "node initial/initial.ts",
+    "generateLanguageFiles": "cd frontend && ng extract-i18n --output-path src/locale && cp ./src/locale/messages.xlf ./src/locale/messages.en.xlf"
   }
 }
