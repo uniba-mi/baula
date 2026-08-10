@@ -13,10 +13,10 @@
         <i class="plus-icon bi bi-plus-square-dotted text-gray"></i>
         @if (!metaSemester.isPastSemester) {
           <span>
-            <p class="empty-state-header">
+            <p class="empty-state-header" i18n>
               Noch keine Module für dieses Semester eingeplant.
             </p>
-            <p class="empty-state-description">
+            <p class="empty-state-description" i18n>
               Füge über den
               <a class="link" routerLink="../../../modulkatalog"
                 >Modulkatalog</a
@@ -26,10 +26,10 @@
             </p>
           </span>
         } @else {
-          <p class="empty-state-header">
+          <p class="empty-state-header" i18n>
             Noch keine Module in diesem Semester absolviert.
           </p>
-          <p class="empty-state-description">
+          <p class="empty-state-description" i18n>
             Lade im Profil deinen
             <a class="link" routerLink="/app/profil/integrationen-verwalten"
               >FlexNow-Auszug</a
