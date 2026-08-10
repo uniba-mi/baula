@@ -13,12 +13,12 @@
                 <i class="bi bi-clock ms-2"></i>
                 {{ date.startdate | date:'shortDate' }}
                 @if (date.starttime) {
-                  <span>(ab {{ date.starttime }})</span>
+                  <span i18n="Semester beginnt ab...">(ab {{ date.starttime }})</span>
                 }
                 bis
                 {{ date.enddate | date:'shortDate' }}
                 @if (date.endtime) {
-                  <span>(bis {{ date.endtime }})</span>
+                  <span i18n="Semester geht bis...">(bis {{ date.endtime }})</span>
                 }
               </span>
             </div>
@@ -28,7 +28,7 @@
     }
     <!-- show message if no current periods exist -->
     @if (activePeriods.length === 0) {
-      <div class="text-muted">
+      <div class="text-muted" i18n>
         Keine aktuellen Zeiträume.
       </div>
     }
@@ -36,6 +36,8 @@
     @if (pastPeriods.length > 0) {
       <div class="my-3">
         <span class="toggle-text text-gray" (click)="togglePastPeriods()">
+          <!-- TODO: Add i18n, e.g. by wrapping a ng-container around the text, or using something like this: -->
+          <!-- <ng-container i18n="@@togglePastPeriodsText">{pastPeriodsExpanded, select, true {Vergangene Zeiträume verbergen} false {Vergangene Zeiträume anzeigen}}</ng-container> -->
           {{ pastPeriodsExpanded ? 'Vergangene Zeiträume verbergen' : 'Vergangene Zeiträume anzeigen' }}
             <i class="bi" [ngClass]="{
               'bi-chevron-up': pastPeriodsExpanded, 
@@ -57,12 +59,12 @@
                     <i class="bi bi-clock ms-2"></i>
                     {{ date.startdate | date:'shortDate' }}
                     @if (date.starttime) {
-                      <span>(ab {{ date.starttime }})</span>
+                      <span i18n="Zeitraum beginnt ab...">(ab {{ date.starttime }})</span>
                     }
                     bis
                     {{ date.enddate | date:'shortDate' }}
                     @if (date.endtime) {
-                      <span>(bis {{ date.endtime }})</span>
+                      <span i18n="Zeitraum geht bis...">(bis {{ date.endtime }})</span>
                     }
                   </span>
                 </div>

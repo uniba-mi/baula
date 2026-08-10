@@ -64,7 +64,7 @@
                 @if (withDescription){
                 <!-- Description -->
                 <div class="labeled-box s-text text-muted">
-                    <span class="labeled-box-label mat-caption">Beschreibung</span>
+                    <span class="labeled-box-label mat-caption" i18n>Beschreibung</span>
                     <div>
                         <p class="text-start p-2">{{ wish.description }}</p>
                     </div>
@@ -73,7 +73,7 @@
                 <!-- Admin Message -->
                 @if (wish.adminMessage) {
                 <div class="labeled-box s-text text-muted admin-box">
-                    <span class="labeled-box-label mat-caption">Notiz von Team-Baula</span>
+                    <span class="labeled-box-label mat-caption" i18n>Notiz von Team-Baula</span>
                     <div>
                         <p class="text-start p-2 m-0">{{ wish.adminMessage }}</p>
                     </div>
@@ -82,7 +82,7 @@
                 <!-- Delete Button -->
                 @if (withDeleteButton) {
                 <div class="col-12 text-end p-2">
-                    <button (click)="deleteFunction?.(wish)" class="btn btn-danger">
+                    <button (click)="deleteFunction?.(wish)" class="btn btn-danger" i18n>
                         <i class="bi bi-trash"></i> Löschen
                     </button>
                 </div>
