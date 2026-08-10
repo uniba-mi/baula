@@ -10,7 +10,7 @@
       <div #bulkActionsBar class="bulk-actions-bar px-2 py-3 d-flex justify-content-between align-items-center"
         [ngClass]="{'sticky': isSticky}">
         <div class="selection-actions">
-          <button class="selected-count-btn position-relative btn p-0 me-3" matTooltip="Ausgewählte Lehrveranstaltungen">
+          <button class="selected-count-btn position-relative btn p-0 me-3" matTooltip="Ausgewählte Lehrveranstaltungen" i18n-matTooltip>
             @if (selectedItems.length > 0) {
               <span
                 class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle">
@@ -20,10 +20,10 @@
             <i class="cart-icon bi bi-cart-check text-gray"></i>
           </button>
           <button class="btn btn-secondary me-2 btn-sm expand-on-click" (click)="toggleSelectAll()"
-            matTooltip="{{ allSelected ? 'Alle Lehrveranstaltungen abwählen' : 'Alle Lehrveranstaltungen auswählen' }}">
+            matTooltip="{{ allSelected ? 'Alle Lehrveranstaltungen abwählen' : 'Alle Lehrveranstaltungen auswählen' }}" i18n-matTooltip>
             <i class=" bi" [ngClass]="allSelected ? 'bi-x-circle' : 'bi-check-all'"></i>
             @if (isSidenavFullScreen || screenIsXXL) {
-              <span>
+              <span i18n>
                 {{ allSelected ? 'Alle abwählen' : 'Alle wählen' }}
               </span>
             }
@@ -31,23 +31,23 @@
         </div>
         <div class="planning-actions">
           <button class="btn btn-success me-2 btn-sm expand-on-click" (click)="planSelectedCourses()"
-            matTooltip="In den Stundenplan einplanen">
+            matTooltip="In den Stundenplan einplanen" i18n-matTooltip>
             <i class="bi bi-plus-circle"></i>
             @if (isSidenavFullScreen || screenIsXXL) {
-              <span> Einplanen</span>
+              <span i18n="Modul einplanen"> Einplanen</span>
             } </button>
             <button class="btn btn-danger btn-sm expand-on-click" (click)="unplanSelectedCourses()"
-              matTooltip="Aus dem Stundenplan entfernen">
+              matTooltip="Aus dem Stundenplan entfernen" i18n-matTooltip>
               <i class="bi bi-dash-circle"></i>
               @if (isSidenavFullScreen || screenIsXXL) {
-                <span> Ausplanen</span>
+                <span i18n="Modul ausplanen"> Ausplanen</span>
               } </button>
             </div>
           </div>
         }
         @if (searchResult.length !== 0) {
           <mat-paginator #paginator [length]="searchResult.length" [pageSize]="pageSize"
-            hidePageSize (page)="handlePageEvent($event)" aria-label="Wähle eine Ergebnisseite aus">
+            hidePageSize (page)="handlePageEvent($event)" aria-label="Wähle eine Ergebnisseite aus" i18n-aria-label>
           </mat-paginator>
         }
       }

@@ -6,8 +6,8 @@
           <mat-sidenav #coursesearch mode="side" [opened]="searchOpened">
             <!-- Content for left sidebar -->
             <div class="d-flex justify-content-between mt-4 mb-2">
-              <h3 class="d-none d-lg-block mx-auto my-2 text-start">Suche nach Lehrver&shy;anstaltungen</h3>
-              <h3 class="d-block d-lg-none mx-auto my-2 text-start">Suche nach LVs</h3>
+              <h3 class="d-none d-lg-block mx-auto my-2 text-start" i18n>Suche nach Lehrver&shy;anstaltungen</h3>
+              <h3 class="d-block d-lg-none mx-auto my-2 text-start" i18n>Suche nach LVs</h3>
               <i class="fs-4 bi bi-x-lg icon text-gray" (click)="toggleSearch()"></i>
             </div>
             <div>
@@ -29,13 +29,13 @@
                     class="d-flex flex-column justify-content-between align-items-center flex-md-row justify-content-md-between px-2 py-1">
                     <!-- List header -->
                   <div class="text-center text-sm-start"><span matTooltip="Semester
-                    ändern" role="button" tabindex="0" (click)="editSemester()"><i
+                    ändern" role="button" tabindex="0" i18n-matTooltip (click)="editSemester()"><i
                     class="bi bi-pencil-square mb-1"></i>
                   {{plan.semester | Semester}}</span></div>
                   @if (ectsSum$ | async; as ectsSum) {
                     <div class="text-gray align-items-center"
                       matTooltip="Bitte beachte: Hier können nur ECTS aufsummiert werden, die von Dozierenden in UnivIS angegeben werden.">
-                      <span class="ects-sum text-blue">Geplante ECTS: {{ ectsSum }}</span>
+                      <span class="ects-sum text-blue" i18n>Geplante ECTS: {{ ectsSum }}</span>
                       von 30 ECTS
                     </div>
                   }
@@ -72,9 +72,9 @@
   @if (activeSemester$ | async; as semester) {
     <div class="container mx-auto my-3 my-md-5">
     <div class="text-center text-sm-start"><span matTooltip="Semester
-      ändern" role="button" tabindex="0" (click)="editSemester()"><i class="bi bi-pencil-square mb-1"></i>
+      ändern" role="button" tabindex="0" i18n-matTooltip (click)="editSemester()"><i class="bi bi-pencil-square mb-1"></i>
       {{semester | Semester}}</span></div>
-      <div class="alert alert-sm alert-warning fs-6" role="alert">
+      <div class="alert alert-sm alert-warning fs-6" role="alert" i18n>
         Zum ausgewählten Semester konnte kein Stundenplan gefunden werden, bitte wechsle in ein anderes Semester!
       </div>
     </div>
