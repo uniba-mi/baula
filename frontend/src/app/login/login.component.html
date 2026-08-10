@@ -4,14 +4,14 @@
     <div class="col-xl-4 col-lg-6 col-md-8 col-12 my-4">
       <mat-card appearance="outlined" class="highlighted-card">
         <mat-card-header class="justify-content-center text-center">
-          <mat-card-title>Login mit Nutzerkonto der Uni Bamberg</mat-card-title>
+          <mat-card-title i18n>Login mit Nutzerkonto der Uni Bamberg</mat-card-title>
         </mat-card-header>
-        <img mat-card-image class="w-50 mx-auto my-4" src="../../assets/UBLogo.png" alt="Logo der Universität Bamberg">
+        <img mat-card-image class="w-50 mx-auto my-4" src="../../assets/UBLogo.png" alt="Logo der Universität Bamberg" i18n-alt>
         <mat-card-content class="text-center">
-          <p class="my-2">Wenn Du ein Nutzerkonto (BA-Nummer) an der Universität Bamberg hast, dann nutze bitte die
+          <p class="my-2" i18n>Wenn Du ein Nutzerkonto (BA-Nummer) an der Universität Bamberg hast, dann nutze bitte die
             Anmeldung über folgende Schaltfläche.
           </p>
-          <button class="btn btn-primary my-2" type="submit" (click)="shibLogin()">Login für Universität
+          <button class="btn btn-primary my-2" type="submit" (click)="shibLogin()" i18n>Login für Universität
           Bamberg</button>
         </mat-card-content>
       </mat-card>
@@ -20,22 +20,22 @@
     <div class="col-xl-4 col-lg-6 col-md-8 col-12 my-4">
       <mat-card appearance="outlined">
         <mat-card-header class="justify-content-center text-center">
-          <mat-card-title>Login mit Demo-Account</mat-card-title>
+          <mat-card-title i18n>Login mit Demo-Account</mat-card-title>
         </mat-card-header>
         <img mat-card-image class="w-50 mx-auto mt-4" src="../../assets/demo_icon.jpg"
-          alt="Bildschirm auf den drei Personen zeigen.">
-          <p class="attribution text-center mb-4">
+          alt="Bildschirm auf den drei Personen zeigen." i18n-alt>
+          <p class="attribution text-center mb-4" i18n>
             Designed by:
             <a class="link" href="https://de.freepik.com/">Freepik</a>
           </p>
           <mat-card-content class="text-center">
-            <p class="my-2">Unser Demo-Account bietet dir die Möglichkeit die Nutzeroberfläche und Teile der
+            <p class="my-2" i18n>Unser Demo-Account bietet dir die Möglichkeit die Nutzeroberfläche und Teile der
               Funktionalitäten von Baula zu testen.
               <i class="bi bi-info-circle"
                 matTooltip="Der Demo-Account hat nur lesenden Zugriff, er dient primär dazu die Nutzeroberfläche und die Interaktivität zu explorieren. Für einen vollumfänglichen Test-Account wende dich an unser Projektteam."
-              matTooltipPosition="right"></i>
+              matTooltipPosition="right" i18n-matTooltip></i>
             </p>
-            <button class="btn btn-primary my-2" type="submit" (click)="demoLogin()">Login mit Demo-Account</button>
+            <button class="btn btn-primary my-2" type="submit" (click)="demoLogin()" i18n>Login mit Demo-Account</button>
           </mat-card-content>
         </mat-card>
       </div>
@@ -45,20 +45,20 @@
       <div class="col-xl-4 col-lg-6 col-md-8 col-12 my-4">
         <mat-card appearance="outlined" class="text-center">
           <mat-card-header class="justify-content-center mb-2">
-            <mat-card-title>Login mit separatem Konto</mat-card-title>
+            <mat-card-title i18n>Login mit separatem Konto</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <p class="my-2 text-center">Hier kann man sich mit einem lokalen Konto anmelden.</p>
+            <p class="my-2 text-center" i18n>Hier kann man sich mit einem lokalen Konto anmelden.</p>
             <form (ngSubmit)="onSubmit()">
               <div>
                 <mat-form-field appearance="outline">
-                  <mat-label>Anmeldename:</mat-label>
+                  <mat-label i18n>Anmeldename:</mat-label>
                   <input matInput type="text" [(ngModel)]="username" name="username" required>
                 </mat-form-field>
               </div>
               <div class="my-1">
                 <mat-form-field appearance="outline">
-                  <mat-label>Kennwort:</mat-label>
+                  <mat-label i18n>Kennwort:</mat-label>
                   <input matInput type="password" [(ngModel)]="password" name="password" required>
                 </mat-form-field>
               </div>
@@ -67,7 +67,7 @@
                   {{ errorMessage }}
                 </div>
               }
-              <button class="btn btn-primary mx-auto" type="submit">Login</button>
+              <button class="btn btn-primary mx-auto" type="submit" i18n>Login</button>
             </form>
           </mat-card-content>
         </mat-card>
