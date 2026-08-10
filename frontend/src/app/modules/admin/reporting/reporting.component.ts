@@ -9,7 +9,6 @@ import { Semester } from '../../../../../../interfaces/semester';
 @Component({
   selector: 'admin-reporting',
   standalone: false,
-
   templateUrl: './reporting.component.html',
   styleUrl: './reporting.component.scss',
 })
@@ -34,13 +33,6 @@ export class ReportingComponent implements OnInit {
       name: 'Häufigkeit',
     },
   ];
-  barChartConfig = {
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
 
   ngOnInit(): void {
     this.reportNew$ = this.adminRestService.getReport().pipe(
@@ -85,23 +77,20 @@ export class ReportingComponent implements OnInit {
           spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
           cardData: {
             title: 'Häufigkeit Modulstatus',
-            data: {
-              labels: report.frequencyModuleStatus.map((item) =>
-                item.name.toString(),
-              ),
-              datasets: [
-                {
-                  backgroundColor: report.frequencyModuleStatus.map(
-                    (item) =>
-                      this.colorMapping[
-                        item.name.toLowerCase() as keyof typeof this.colorMapping
-                      ],
-                  ),
-                  data: report.frequencyModuleStatus.map((item) => item.count),
-                },
-              ],
-            },
-            config: this.barChartConfig,
+            xLabels: report.frequencyModuleStatus.map((item) =>
+              item.name.toString(),
+            ),
+            series: [
+              {
+                data: report.frequencyModuleStatus.map((item) => ({
+                  value: item.count,
+                  color:
+                    this.colorMapping[
+                      item.name.toLowerCase() as keyof typeof this.colorMapping
+                    ],
+                })),
+              },
+            ],
           },
         });
         // add frequency of studyplans
@@ -111,20 +100,17 @@ export class ReportingComponent implements OnInit {
           spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
           cardData: {
             title: 'Häufigkeit Studienpläne (Cluster)',
-            data: {
-              labels: report.frequencyStudyPlansClustered.map((item) =>
-                item.name.toString(),
-              ),
-              datasets: [
-                {
-                  backgroundColor: 'rgba(102, 144, 177, 0.8)',
-                  data: report.frequencyStudyPlansClustered.map(
-                    (item) => item.count,
-                  ),
-                },
-              ],
-            },
-            config: this.barChartConfig,
+            xLabels: report.frequencyStudyPlansClustered.map((item) =>
+              item.name.toString(),
+            ),
+            series: [
+              {
+                color: 'rgba(102, 144, 177, 0.8)',
+                data: report.frequencyStudyPlansClustered.map(
+                  (item) => item.count,
+                ),
+              },
+            ],
           },
         });
         // add last update user table
@@ -164,24 +150,22 @@ export class ReportingComponent implements OnInit {
           },
         });
         // add frequency of study duration
+        const sortedDuration = report.frequencyDuration.sort((a, b) => Number(a.name) - Number(b.name))
         cards.push({
           id: 'frequencyDurationChart',
           type: 'bar',
           spacingClasses: 'col-12 col-md-6 my-2',
           cardData: {
-            title: 'Häufigkeit Studienpläne (Cluster)',
-            data: {
-              labels: report.frequencyDuration.map((item) =>
-                item.name ? item.name.toString() : 'Null',
-              ),
-              datasets: [
-                {
-                  backgroundColor: 'rgba(102, 144, 177, 0.8)',
-                  data: report.frequencyDuration.map((item) => item.count),
-                },
-              ],
-            },
-            config: this.barChartConfig,
+            title: 'Häufigkeit Studiendauer',
+            xLabels: sortedDuration.map((item) =>
+              item.name ? item.name.toString() : 'Null',
+            ),
+            series: [
+              {
+                color: 'rgba(102, 144, 177, 0.8)',
+                data: sortedDuration.map((item) => item.count),
+              },
+            ],
           },
         });
         // add frequency of completed modules as cluster
@@ -191,20 +175,17 @@ export class ReportingComponent implements OnInit {
           spacingClasses: 'col-12 col-md-6 my-2',
           cardData: {
             title: 'Häufigkeit Abgeschlossene Module (Cluster)',
-            data: {
-              labels: report.frequencyCompletedModules.map((item) =>
-                item.name.toString(),
-              ),
-              datasets: [
-                {
-                  backgroundColor: 'rgba(102, 144, 177, 0.8)',
-                  data: report.frequencyCompletedModules.map(
-                    (item) => item.count,
-                  ),
-                },
-              ],
-            },
-            config: this.barChartConfig,
+            xLabels: report.frequencyCompletedModules.map((item) =>
+              item.name.toString(),
+            ),
+            series: [
+              {
+                color: 'rgba(102, 144, 177, 0.8)',
+                data: report.frequencyCompletedModules.map(
+                  (item) => item.count,
+                ),
+              },
+            ],
           },
         });
         // add frequency of start semester
@@ -242,6 +223,7 @@ export class ReportingComponent implements OnInit {
   private cleanUpReport(report: AdminReport): AdminReport {
     return {
       ...report,
+      frequencyModuleStatus: report.frequencyModuleStatus.filter(el => el.name),
       frequencyStartSemester: report.frequencyStartSemester.map((el) => {
         return {
           ...el,

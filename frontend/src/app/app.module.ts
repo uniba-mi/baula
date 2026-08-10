@@ -290,7 +290,6 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
     NotFoundComponent,
     RecommendationsListComponent,
     PersonalisationStatusComponent,
-    WordCloudComponent,
     DataPreviewComponent,
     SettingsListComponent,
     UploadStudentDataConfirmationComponent,
@@ -371,6 +370,7 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
     MatTabsModule,
     FullCalendarModule,
     MatTreeModule,
+    WordCloudComponent,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'de' },

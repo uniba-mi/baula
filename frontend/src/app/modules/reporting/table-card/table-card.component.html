@@ -4,8 +4,8 @@
         <mat-card-title>{{cardData.title}}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="mt-2">
-        <table mat-table [dataSource]="tableData">
-            @for(column of cardData.columns; track column) {
+        <table mat-table [dataSource]="tableData()">
+            @for(column of cardData.columns; track column.key) {
             <ng-container [matColumnDef]="column.key">
                 <th class="fw-bold" [class]="column.key === 'count' ? 'text-center' : ''" mat-header-cell *matHeaderCellDef>{{ column.name }}</th>
                 <td [class]="column.key === 'count' ? 'text-center' : ''" mat-cell *matCellDef="let element"> {{element[column.key]}} </td>
@@ -14,8 +14,8 @@
             <tr mat-header-row *matHeaderRowDef="cardData.columnKeys"></tr>
             <tr mat-row *matRowDef="let row; columns: cardData.columnKeys;"></tr>
         </table>
-        <mat-paginator hidePageSize [length]="cardData.data.length" [pageSize]="pageSize"
-            (page)="onPageChange($event, cardData.data)"></mat-paginator>
+        <mat-paginator hidePageSize [length]="cardData.data.length" [pageSize]="pageSize()"
+            [pageIndex]="currentPage()" (page)="onPageChange($event)"></mat-paginator>
     </mat-card-content>
 </mat-card>
 }

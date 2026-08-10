@@ -1,14 +1,32 @@
-<div class="container d-flex justify-content-between align-items-center mb-4">
-    <div class="flex-grow-1 me-4">
-        <mat-form-field class="mb-0" appearance="outline">
-            <mat-label>Wähle ein Semester</mat-label>
-            <mat-select [(value)]="selectedSemester" (selectionChange)="updateReport(selectedSemester)">
-                @for(semester of semesterList; track semester) {
-                    <mat-option [value]="semester">{{ semester | Semester }}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
+<div class="container d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <mat-button-toggle-group [value]="viewMode" (change)="onViewModeChange($event)">
+        <mat-button-toggle value="semester">Semesterauswertung</mat-button-toggle>
+        <mat-button-toggle value="drilldown">Drill-down</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div class="flex-grow-1">
+        @if(viewMode === 'semester') {
+            <mat-form-field class="mb-0" appearance="outline">
+                <mat-label>Wähle ein Semester</mat-label>
+                <mat-select [value]="selectedSemester" (selectionChange)="onSemesterChange($event)">
+                    <mat-option [value]="ALL_SEMESTERS">Kein Semester (alle anzeigen)</mat-option>
+                    @for(semester of semesterList; track semester) {
+                        <mat-option [value]="semester">{{ semester | Semester }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        } @else {
+            <mat-form-field class="mb-0" appearance="outline">
+                <mat-label>Wähle einen Nutzer-Code</mat-label>
+                <mat-select [value]="selectedPersonalCode" (selectionChange)="onPersonalCodeChange($event)">
+                    @for(option of personalCodeOptions; track option.code) {
+                        <mat-option [value]="option.code">{{ option.label }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        }
     </div>
+
     <div>
         <button class="btn btn-outline" [matMenuTriggerFor]="surveySettings">
             <i class="bi bi-gear-fill icon me-1"></i>
@@ -24,7 +42,9 @@
 </div>
 <hr>
 
-@if(report) {
+@if(viewMode === 'drilldown' && !selectedPersonalCode) {
+    <p class="text-muted text-center">Bitte einen Nutzer-Code auswählen, um die Detailauswertung zu sehen.</p>
+} @else if(report) {
     <reporting-base [report]="report"></reporting-base>
 } @else {
     <div class="d-flex justify-content-center align-items-center w-100 h-100">
