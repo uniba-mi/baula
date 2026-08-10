@@ -4,7 +4,7 @@
   <div class="col-12 mb-2" [class.col-md-6]="context == 'detail-dialog'">
     @if (course.terms && course.terms.length !== 0) {
       <div class="row">
-        <div class="col-12 mx-0 mb-2 fw-bold">
+        <div class="col-12 mx-0 mb-2 fw-bold" i18n>
           <i class="bi bi-clock"></i> Zeitangaben:
         </div>
         @for (term of course.terms; track term) {
@@ -21,7 +21,7 @@
                   term.enddate &&
                   term.startdate !== term.enddate
                   ) {
-                  <span>
+                  <span i18n="Bis DATUM">
                   bis {{ term.enddate | date : "EEEE, dd.MM.yyyy" }}</span>
                 }
               </div>
@@ -46,7 +46,7 @@
       </div>
     } @else {
       <div class="row">
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info" role="alert" i18n>
           Zur Lehrveranstaltung liegen keine Zeitangaben vor!
         </div>
       </div>
@@ -60,13 +60,13 @@
     <div class="d-flex flex-wrap">
       @if (course.ects) {
         <div class="me-4">
-          <span class="fw-bold me-2">ECTS:</span>
+          <span class="fw-bold me-2" i18n>ECTS:</span>
           <span>{{ course.ects }}</span>
         </div>
       }
       @if (course.sws) {
         <div>
-          <span class="fw-bold me-2">SWS:</span>
+          <span class="fw-bold me-2" i18n>SWS:</span>
           <span>{{ course.sws }}</span>
         </div>
       }
@@ -75,7 +75,7 @@
     <!-- Format -->
     @if (course.format) {
       <div class="d-flex flex-wrap my-3">
-        <div class="fw-bold me-2">
+        <div class="fw-bold me-2" i18n="Kurs Format">
           <i class="bi bi-person-video3 me-2"></i> Format:
         </div>
         <div>
@@ -86,7 +86,7 @@
     <!-- Language -->
     @if (course.lang) {
       <div class="d-flex flex-wrap my-3">
-        <div class="fw-bold me-2">
+        <div class="fw-bold me-2" i18n="Kurs Sprache">
           <i class="bi bi-translate me-2"></i> Sprache:
         </div>
         <div>
@@ -97,7 +97,7 @@
     <!-- Expected Attendance -->
     @if (course.expAttendance ) {
       <div class="d-flex flex-wrap my-3">
-        <div class="fw-bold me-2">
+        <div class="fw-bold me-2" i18n>
           <i class="bi bi-people me-1"></i> Erwartete Teilnehmerzahl:
         </div>
         <div>
@@ -107,7 +107,7 @@
     }
     @if (course.dozs) {
       <!-- Teachers -->
-      <div class="fw-bold mt-3 mb-1 my-md-0">
+      <div class="fw-bold mt-3 mb-1 my-md-0" i18n>
         <i class="bi bi-person me-1"></i> Dozierende:
       </div>
       @for (doz of course.dozs; track doz) {
@@ -118,7 +118,7 @@
           @if (doz.email) {
             <div class="d-inline">
               <button class="btn btn-outline" (click)="writeEMail(doz.email)"
-                (keyup.enter)="writeEMail(doz.email)" aria-label="E-Mail an Lehrende">
+                (keyup.enter)="writeEMail(doz.email)" aria-label="E-Mail an Lehrende" i18n-aria-label>
                 <i class="bi bi-envelope"></i>
               </button>
             </div>
@@ -131,7 +131,7 @@
       <div class="my-3">
         <div class="fw-bold my-1">
           <i class="bi bi-house me-2"></i>
-          <span>Lehrstuhl:</span>
+          <span i18n>Lehrstuhl:</span>
         </div>
         <div>{{ course.chair }}</div>
       </div>
@@ -150,7 +150,7 @@
         }
         @if (course.addInfo) {
           <div class="d-flex flex-wrap">
-            <mat-chip-set aria-label="Zusätzliche Angaben zu Inhalten">
+            <mat-chip-set aria-label="Zusätzliche Angaben zu Inhalten" i18n-aria-label>
               @for (item of course.addInfo.split(';'); track item) {
                 <mat-chip>{{ item }}</mat-chip>
               }
@@ -210,7 +210,7 @@
 
   @if (course.literature) {
     <div class="row my-2">
-      <div class="col-12 fw-bold" [class.col-xl-3]="context == 'detail-dialog'">Literatur</div>
+      <div class="col-12 fw-bold" [class.col-xl-3]="context == 'detail-dialog'" i18n>Literatur</div>
       <div class="col-12" [class.col-xl-9]="context == 'detail-dialog'" [innerHtml]="course.literature | markdown">
       </div>
     </div>
@@ -218,13 +218,13 @@
 
   @if (modules && modules.length !== 0 && context !== 'sidenav') {
     <div class="row my-3">
-      <div class="col-12 fw-bold" [class.col-xl-5]="context == 'detail-dialog'">Lehrveranstaltung für dich belegbar in
+      <div class="col-12 fw-bold" [class.col-xl-5]="context == 'detail-dialog'" i18n>Lehrveranstaltung für dich belegbar in
       den folgenden Modulen:</div>
       <div class="col-12 d-flex align-items-center" [class.col-xl-7]="context == 'detail-dialog'">
         <ul>
           @for (mod of modules; track mod) {
             <li>{{ mod.identifier.acronym }} @if (mod.ects) {
-              <span>({{ mod.ects }}
+              <span i18n>({{ mod.ects }}
               ECTS)</span>
             }</li>
           }

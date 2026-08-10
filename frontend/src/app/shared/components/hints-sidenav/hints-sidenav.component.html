@@ -1,13 +1,13 @@
 <div class="d-flex justify-content-between mt-4 mb-2">
   <i class="fs-3 bi bi-x-lg icon" (click)="onClose()"></i>
-  <h3 class="mx-auto my-2 text-start">Hinweise</h3>
+  <h3 class="mx-auto my-2 text-start" i18n>Hinweise</h3>
 </div>
 <div class="mx-2">
 
   @if (hints.length === 0) {
     <div class="alert alert-info alert-sm" role="alert">
       <div class="d-flex align-items-center">
-        <span>Keine Hinweise gefunden.</span>
+        <span i18n>Keine Hinweise gefunden.</span>
       </div>
     </div>
   }
@@ -24,7 +24,7 @@
         <span>{{ hint.end }}</span>
       </div>
       @if (hint.type === 'collision') {
-        <div role="button" class="my-1 link" (click)="onResolveClick(hint)">
+        <div role="button" class="my-1 link" (click)="onResolveClick(hint)" i18n>
           Überschneidung auflösen
         </div>
       }

@@ -6,6 +6,7 @@
         class="no-data-img"
         src="../../../../assets/no_data.png"
         alt="Keine Daten vorhanden"
+        i18n-alt
       />
     </div>
     <div class="no-data-message p-2 text-center text-gray">
@@ -17,14 +18,16 @@
         class="no-data-img"
         src="../../../../assets/no_data_diagramme.png"
         alt="Keine Daten vorhanden"
+        i18n-alt
       />
     </div>
-    <div class="no-data-message-diagram p-2 text-center text-gray">
+    <div class="no-data-message-diagram p-2 text-center text-gray" i18n>
       Noch keine Daten vorhanden.
       <i
         class="bi bi-info-circle"
         matTooltip="Dieses Diagramm visualisiert deinen Studienverlauf. Füge Module hinzu, indem du deinen FlexNow-Auszug hochlädst oder den Modulstatus für die jeweiligen Module im Modulkatalog anpasst."
         matTooltipClass="custom-tooltip"
+        i18n-matTooltip
         appTooltip
       ></i>
     </div>
@@ -34,6 +37,7 @@
       class="no-data-btn btn btn-outline redirect link"
       [routerLink]="noDataLinkText"
       aria-label="Gehe zu"
+      i18n-aria-label
     >
       {{ noDataBtnText }}
     </a>

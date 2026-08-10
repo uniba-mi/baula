@@ -1,6 +1,6 @@
 <div class="d-flex align-items-center justify-content-center justify-content-sm-between flex-wrap mx-2 mb-3">
   <div>
-    <button class="btn me-2" (click)="today()" (keyup.enter)="today()">Heute</button>
+    <button class="btn me-2" (click)="today()" (keyup.enter)="today()" i18n>Heute</button>
     <button class="btn btn-ghost me-2" (click)="prev()" (keyup.enter)="prev()">
       <i class="bi bi-chevron-left"></i>
     </button>
@@ -20,72 +20,74 @@
       <button id="timetable_add_button" appHoverTracker
         class="btn btn-primary ms-2 d-none d-sm-inline plausible-event-name=Timetable-Add+Button"
         (click)="openSearch.emit()" (keyup.enter)="openSearch.emit()" aria-label="Lehrveranstaltungssuche öffnen"
+        i18n-aria-label
         tabindex="0">
         <i class="bi bi-plus-lg"></i>
-        <span class="ms-1">Hinzufügen</span>
+        <span class="ms-1" i18n>Hinzufügen</span>
       </button>
       <button class="add-button d-sm-none" (click)="openSearch.emit()" aria-label="Lehrveranstaltungssuche öffnen"
+      i18n-aria-label
         >
         <i class="bi bi-plus-lg"></i>
       </button>
     }
 
     <!-- Area for changing view -->
-    <button [matMenuTriggerFor]="viewMenu" class="btn mx-2" aria-label="Ansicht wechseln">
+    <button [matMenuTriggerFor]="viewMenu" class="btn mx-2" aria-label="Ansicht wechseln" i18n-aria-label>
       <i class="bi bi-chevron-down"></i>
-      <span class="ms-1">Ansicht</span>
+      <span class="ms-1" i18n>Ansicht</span>
     </button>
     <mat-menu #viewMenu="matMenu">
       <button mat-menu-item (click)="changeView('timeGridDay')" (keyup.enter)="changeView('timeGridDay')"
-        aria-label="Auf Tagesansicht umstellen" tabindex="0">
+        aria-label="Auf Tagesansicht umstellen" tabindex="0" i18n-aria-label>
         <i class="bi bi-calendar-day"></i>
-        <span class="ms-2">Tag</span>
+        <span class="ms-2" i18n>Tag</span>
       </button>
       <button mat-menu-item (click)="changeView('timeGridWeek')" (keyup.enter)="changeView('timeGridWeek')"
-        aria-label="Auf Wochenansicht umstellen" tabindex="0">
+        aria-label="Auf Wochenansicht umstellen" tabindex="0" i18n-aria-label>
         <i class="bi bi-calendar-week"></i>
-        <span class="ms-2">Woche</span>
+        <span class="ms-2" i18n>Woche</span>
       </button>
       <button mat-menu-item (click)="changeView('dayGridMonth')" (keyup.enter)="changeView('dayGridMonth')"
-        aria-label="Auf Monatsansicht umstellen" tabindex="0">
+        aria-label="Auf Monatsansicht umstellen" tabindex="0" i18n-aria-label>
         <i class="bi bi-calendar-month"></i>
-        <span class="ms-2">Monat</span>
+        <span class="ms-2" i18n>Monat</span>
       </button>
       <button mat-menu-item (click)="changeView('listWeek')" (keyup.enter)="changeView('listWeek')"
-        aria-label="Auf Terminübersicht umstellen" tabindex="0">
+        aria-label="Auf Terminübersicht umstellen" tabindex="0" i18n-aria-label>
         <i class="bi bi-card-list"></i>
-        <span class="ms-2">Terminübersicht</span>
+        <span class="ms-2" i18n>Terminübersicht</span>
       </button>
     </mat-menu>
 
     <!-- Area for import and export -->
     @if (!isWidget) {
-      <button [matMenuTriggerFor]="ieMenu" class="btn" aria-label="Import und Export Menü öffnen">
+      <button [matMenuTriggerFor]="ieMenu" class="btn" aria-label="Import und Export Menü öffnen" i18n-aria-label>
         <i class="bi bi-chevron-down"></i>
-        <span class="ms-1">Import/Export</span>
+        <span class="ms-1" i18n>Import/Export</span>
       </button>
     }
     <mat-menu #ieMenu="matMenu">
       <button mat-menu-item (click)="import.emit()" (keyup.enter)="import.emit()"
-        aria-label="Stundenplan importieren" tabindex="0">
+        aria-label="Stundenplan importieren" tabindex="0" i18n-aria-label>
         <i class="bi bi-upload"></i>
-        <span class="ms-2">Plan importieren (JSON)</span>
+        <span class="ms-2" i18n>Plan importieren (JSON)</span>
       </button>
       <button mat-menu-item (click)="export.emit()" (keyup.enter)="export.emit()"
-        aria-label="Stundenplan exportieren" tabindex="0">
+        aria-label="Stundenplan exportieren" tabindex="0" i18n-aria-label>
         <i class="bi bi-download"></i>
-        <span class="ms-2">Plan exportieren (JSON)</span>
+        <span class="ms-2" i18n>Plan exportieren (JSON)</span>
       </button>
       <button mat-menu-item (click)="openPDF.emit()" (keyup.enter)="openPDF.emit()"
-        aria-label="Stundenplan als PDF anzeigen" tabindex="0">
+        aria-label="Stundenplan als PDF anzeigen" tabindex="0" i18n-aria-label>
         <i class="bi bi-filetype-pdf"></i>
-        <span class="ms-2">Plan als PDF anzeigen</span>
+        <span class="ms-2" i18n>Plan als PDF anzeigen</span>
       </button>
       <button mat-menu-item (click)="openUnivis.emit()" (keyup.enter)="openUnivis.emit()"
-        aria-label="Stundenplan in UnivIS anzeigen" tabindex="0">
+        aria-label="Stundenplan in UnivIS anzeigen" tabindex="0" i18n-aria-label>
         <img src="../../../../assets/univis.png" width="16px" height="16px"
-          alt="Das Favicon der UnivIS, dem universitären Informationssystem.">
-          <span class="ms-2">Plan in UnivIS anzeigen</span>
+          alt="Das Favicon der UnivIS, dem universitären Informationssystem." i18n-alt>
+          <span class="ms-2" i18n>Plan in UnivIS anzeigen</span>
         </button>
       </mat-menu>
 
@@ -95,7 +97,7 @@
       <mat-menu #calenderSettingsMenu="matMenu" class="calendar-settings-menu d-flex justify-content-center">
         <button mat-menu-item class="btn-icon my-2">
           <mat-slide-toggle [checked]="calendarOptions.weekends" (change)="toggleWeekends()"
-            aria-label="Zeige auch die Wochenendtage Samstag und Sonntag an">
+            aria-label="Zeige auch die Wochenendtage Samstag und Sonntag an" i18n-aria-label i18n>
             Wochenende anzeigen
           </mat-slide-toggle>
         </button>
@@ -103,7 +105,7 @@
       <ng-container>
         @if (!isWidget) {
           <button class="btn-icon" (click)="openHints.emit()"
-            matTooltip="Klicke hier um Planungshinweise anzuzeigen." matTooltipClass="custom-tooltip" appTooltip>
+            matTooltip="Klicke hier um Planungshinweise anzuzeigen." matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip>
             <i class="bi bi-exclamation-triangle-fill fs-5 me-2"
             [ngClass]="{'text-warning': hintsIconColor === 'warning', 'text-danger': hintsIconColor === 'danger', 'text-secondary': hintsIconColor === 'standard'}"></i>
           </button>
@@ -112,10 +114,10 @@
     </div>
   </div>
   @for (deletedCourse of deletedCourses; track deletedCourse) {
-    <div class="container mx-auto alert alert-sm alert-warning" role="alert">
+    <div class="container mx-auto alert alert-sm alert-warning" role="alert" i18n>
       Die Lehrveranstaltung "{{ deletedCourse.name ? deletedCourse.name : deletedCourse.id }}" wurde in UnivIS gelöscht
       und ist nicht mehr verfügbar.
-      <span class="ms-2 delete-link" aria-label="Lehrveranstaltung abwählen" tabindex="0"
+      <span class="ms-2 delete-link" aria-label="Lehrveranstaltung abwählen" tabindex="0" i18n-aria-label
         (click)="deselectDeletedCourse(deletedCourse)"
       (keyup.enter)="deselectDeletedCourse(deletedCourse)">Lehrveranstaltung abwählen</span>
     </div>
