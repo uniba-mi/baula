@@ -1,4 +1,4 @@
-<p>
+<p i18n>
   Möchtest du
 
   @if (
@@ -10,12 +10,12 @@
   }
   wirklich löschen?
 </p>
-<p class="fw-semibold">
+<p class="fw-semibold" i18n>
   Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.
 </p>
 
 <mat-dialog-actions>
-  <button mat-raised-button class="btn btn-outline" mat-dialog-close>Abbrechen</button>
+  <button mat-raised-button class="btn btn-outline" mat-dialog-close i18n>Abbrechen</button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button mat-raised-button class="btn btn-danger" [mat-dialog-close]="'delete'">Löschen</button>
+  <button mat-raised-button class="btn btn-danger" [mat-dialog-close]="'delete'" i18n>Löschen</button>
 </mat-dialog-actions>

@@ -1,9 +1,9 @@
 <form [formGroup]="academicDateForm">
   <mat-form-field>
-    <mat-label>Beginn und Ende des Zeitraums</mat-label>
+    <mat-label i18n>Beginn und Ende des Zeitraums</mat-label>
     <mat-date-range-input [rangePicker]="picker">
-      <input matStartDate placeholder="Beginn" formControlName="startdate">
-      <input matEndDate placeholder="Ende" formControlName="enddate">
+      <input matStartDate placeholder="Beginn" formControlName="startdate" i18n-placeholder>
+      <input matEndDate placeholder="Ende" formControlName="enddate" i18n-placeholder>
     </mat-date-range-input>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker></mat-date-range-picker>
@@ -11,23 +11,23 @@
 
   <div>
     <mat-form-field>
-      <mat-label>Startzeit</mat-label>
+      <mat-label i18n>Startzeit</mat-label>
       <input type="time" matInput formControlName="starttime">
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Endzeit</mat-label>
+      <mat-label i18n>Endzeit</mat-label>
       <input type="time" matInput formControlName="endtime">
     </mat-form-field>
   </div>
 
   <mat-form-field>
-    <mat-label>Beschreibung</mat-label>
+    <mat-label i18n>Beschreibung</mat-label>
     <input type="text" matInput formControlName="desc">
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Semester</mat-label>
+    <mat-label i18n>Semester</mat-label>
     <mat-select formControlName="semester" name="semester">
       @for (sem of semesterlist; track sem) {
         <mat-option  [value]="sem.name">{{ sem.fullName }}</mat-option>
@@ -37,7 +37,7 @@
 
   @if (dateTypes$ | async; as dateTypes) {
     <mat-form-field formGroupName="dateType">
-      <mat-label>DateType</mat-label>
+      <mat-label i18n>DateType</mat-label>
       <mat-select formControlName="typeId" name="typeId">
         @for (dateType of dateTypes; track dateType) {
           <mat-option [value]="dateType.typeId">{{ dateType.name }}</mat-option>
@@ -51,6 +51,6 @@
   <button mat-raised-button class="btn btn-outline" mat-dialog-close>Abbrechen</button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
   <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="this.academicDateForm.value"
-  [disabled]="!this.academicDateForm.valid">Speichern</button>
+  [disabled]="!this.academicDateForm.valid" i18n>Speichern</button>
 
 </mat-dialog-actions>

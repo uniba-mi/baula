@@ -1,19 +1,19 @@
 <div class="container">
     <div class="row">
-        <h2 class="col-12 text-center mb-4">Import von UnivIS-Daten</h2>
+        <h2 class="col-12 text-center mb-4" i18n>Import von UnivIS-Daten</h2>
     </div>
     <div class="row mb-4">
-        <p class="col-12">Hiermit werden die aktuellen Themen aus der JSON im Backend in der Datenbank erstellt bzw.
+        <p class="col-12" i18n>Hiermit werden die aktuellen Themen aus der JSON im Backend in der Datenbank erstellt bzw.
             aktualisiert sowie die dazugehörigen Embeddings.</p>
         <div class="col-12">
-            <button class="w-100 btn btn-primary" (click)="getTopics()">Themen und Embeddings generieren</button>
+            <button class="w-100 btn btn-primary" (click)="getTopics()" i18n>Themen und Embeddings generieren</button>
         </div>
     </div>
     <div class="row">
-        <p class="col-12">Hiermit werden die Modulembeddings aus der JSON im Backend in der Datenbank erstellt bzw.
+        <p class="col-12" i18n>Hiermit werden die Modulembeddings aus der JSON im Backend in der Datenbank erstellt bzw.
             aktualisiert.</p>
         <div class="col-12">
-            <button class="w-100 btn btn-primary" (click)="getModuleEmbeddings()">Modulembeddings generieren</button>
+            <button class="w-100 btn btn-primary" (click)="getModuleEmbeddings()" i18n>Modulembeddings generieren</button>
         </div>
     </div>
     <!-- TODO uncomment when Evaluation Tool is needed -->

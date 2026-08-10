@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <!-- Button to init connection of courses to modulecourses -->
   <div class="row">
-    <button class="w-100 btn btn-primary" (click)="connectCourses2Modulcourses()">
+    <button class="w-100 btn btn-primary" (click)="connectCourses2Modulcourses()" i18n>
       Verknüpfe UnivIS-Lehrveranstaltungen mit Modul-LVs mittels Heuristik
     </button>
   </div>
@@ -15,7 +15,7 @@
     @if (courses$ | async; as courses) {
       @if (noConnectedCourses$ | async; as noConnectedCourses) {
         <div id="not-connected-container" class="col">
-          <h3>Nicht verknüpfte Module</h3>
+          <h3 i18n>Nicht verknüpfte Module</h3>
           <admin-connection-card [containers]="noConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
         </div>
       } @else {
@@ -26,13 +26,13 @@
       @if (partiallyConnectedCourses$ | async; as partiallyConnectedCourses) {
         <div id="part-connected-container" class="col"
           >
-          <h3>Teilweise verknüpfte Module</h3>
+          <h3 i18n>Teilweise verknüpfte Module</h3>
           <admin-connection-card [containers]="partiallyConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
         </div>
       }
       @if (fullyConnectedCourses$ | async; as fullyConnectedCourses) {
         <div id="full-connected-container" class="col">
-          <h3>Vollständig verknüpfte Module</h3>
+          <h3 i18n>Vollständig verknüpfte Module</h3>
           <admin-connection-card [containers]="fullyConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
         </div>
       }

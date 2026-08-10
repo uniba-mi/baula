@@ -11,17 +11,17 @@
         <div class="row g-2">
             @if (approveButton) {
             <div class="col-auto">
-                <button class="btn btn-success ms-2" (click)="approveWish()">Genehmigen</button>
+                <button class="btn btn-success ms-2" (click)="approveWish()" i18n>Genehmigen</button>
             </div>
             }
             @if (unapproveButton) {
             <div class="col-auto">
-                <button class="btn btn-warning ms-2" (click)="unapproveWish()">Ablehnen</button>
+                <button class="btn btn-warning ms-2" (click)="unapproveWish()" i18n>Ablehnen</button>
             </div>
             }
             @if (deleteButton) {
             <div class="col-auto">
-                <button class="btn btn-danger ms-2" (click)="deleteWish()">Löschen</button>
+                <button class="btn btn-danger ms-2" (click)="deleteWish()" i18n>Löschen</button>
             </div>
             }
         </div>
@@ -30,11 +30,12 @@
         <!-- Admin message -->
         <mat-divider class="my-3"></mat-divider>
         <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Admin Message</mat-label>
+            <mat-label i18n>Admin Message</mat-label>
 
             <textarea matInput [(ngModel)]="adminMessage">
             </textarea>
         </mat-form-field>
+        <!-- TODO: Add i18n for following @if -->
         <button class="btn btn-success ms-2" (click)="updateAdminMessage()"
             [disabled]="adminMessage === initialAdminMessage">
             @if (wish.adminMessage) {
@@ -59,12 +60,12 @@
         </span>
         }
         <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Tag hinzufügen</mat-label>
+            <mat-label i18n>Tag hinzufügen</mat-label>
 
             <textarea matInput [(ngModel)]="tagToAdd">
             </textarea>
         </mat-form-field>
-        <button class="btn btn-success" (click)="addTag()">Tag hinzufügen</button>
+        <button class="btn btn-success" (click)="addTag()" i18n>Tag hinzufügen</button>
         @if (tagToAddErrorMessage) {
         <div class="alert alert-danger mt-2">
             {{ tagToAddErrorMessage }}

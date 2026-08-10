@@ -1,6 +1,6 @@
 <!-- Change option for semester -->
 <mat-form-field class="w-100">
-  <mat-label>Semester</mat-label>
+  <mat-label i18n>Semester</mat-label>
   <mat-select (selectionChange)="selectSemester()" [(value)]="selectedSemester">
     @for (semester of semesterList; track semester) {
       <mat-option class="my-2" [value]="semester.name">{{

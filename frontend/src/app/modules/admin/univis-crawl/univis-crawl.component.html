@@ -1,9 +1,9 @@
 <div class="container">
   <div class="row">
-    <h2 class="col-12 text-center">Import von UnivIS-Daten</h2>
+    <h2 class="col-12 text-center" i18n>Import von UnivIS-Daten</h2>
   </div>
   <div class="row mb-2 align-items-center">
-    <h3 class="text-center">Crawl manuell starten:</h3>
+    <h3 class="text-center" i18n>Crawl manuell starten:</h3>
     <!-- Select of Semester -->
     <div class="col-6">
       <admin-semester-selection-form (semesterChange)="selectSemester($event)"></admin-semester-selection-form>
@@ -11,7 +11,7 @@
 
     <!-- Button to start crawl -->
     <div class="col-6">
-      <button class="w-100 btn btn-primary" (click)="startCrawling()">
+      <button class="w-100 btn btn-primary" (click)="startCrawling()" i18n>
         Importiere UnivIS-Daten
       </button>
     </div>
@@ -22,7 +22,7 @@
       >
       <mat-card appearance="outlined" class="server-log">
         <mat-card-header>
-          <mat-card-title>Logdatei zum Cronjob</mat-card-title>
+          <mat-card-title i18n>Logdatei zum Cronjob</mat-card-title>
         </mat-card-header>
         <mat-card-content class="container-fluid">
           @for (log of cronjobLogs; track log) {
