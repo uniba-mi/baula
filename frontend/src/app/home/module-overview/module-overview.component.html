@@ -1,6 +1,6 @@
 @if (!maintenance) {
   <div id="module-overview" class="container mx-auto my-3 my-md-5">
-    <h1 class="text-center text-sm-start">Modulkatalog</h1>
+    <h1 class="text-center text-sm-start" i18n>Modulkatalog</h1>
     <!-- Hinweis Modulerklärung -->
     <app-hint [key]="moduleHint" [hintMessage]="moduleHintMessage"></app-hint>
     <app-search-panel [searchSettings]="searchSettings$ | async" [filterOptions]="filterList" [horizontalFilters]="true"
@@ -29,9 +29,9 @@
       <mat-sidenav-content>
         @if (selectedGroupFilter && mobileView) {
           <h4 class="filter-display">
-            Gruppiert nach
+            <span i18n>Gruppiert nach: </span>
             <span class="fst-italic me-3">{{selectedGroupFilter.name}}</span>
-            <span class="d-inline-block link" (click)="removeGroupFilter()"><i class="me-1 bi bi-x-lg"></i>Gruppierung
+            <span class="d-inline-block link" (click)="removeGroupFilter()" i18n><i class="me-1 bi bi-x-lg"></i>Gruppierung
           aufheben</span>
         </h4>
       }
@@ -65,7 +65,7 @@
     <div class="grouping-wrapper">
       <form>
         <mat-form-field class="mb-0" appearance="outline">
-          <mat-label>
+          <mat-label i18n>
             Gruppieren nach...
           </mat-label>
           <mat-select [(value)]="selectedGroup" (selectionChange)="onGroupingSelectionChange($event.value)">
@@ -84,7 +84,7 @@
         @if (selectedGroupFilter) {
           <button class="btn btn-sm btn-outline ms-0 w-100" (click)="removeGroupFilter()">
             <i class="bi bi-x-lg"></i>
-            <span class="ms-2">Auswahl aufheben</span>
+            <span class="ms-2" i18n>Auswahl aufheben</span>
           </button>
         }
       </div>
