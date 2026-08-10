@@ -32,7 +32,7 @@
     </svg>
   </div>
   <div id="competence-list">
-    <h6>Unterkompetenzen, welche nicht abgedeckt sind:</h6>
+    <h6 i18n>Unterkompetenzen, welche nicht abgedeckt sind:</h6>
     @for (comp of childCompetences; track comp; let i = $index) {
       <span>
         @if (this.fulfillment && this.fulfillment[i].fulfillment === 0) {
@@ -48,7 +48,7 @@
     <hr>
       <div id="longDescription">{{ longDescription }}</div>
     </div>
-    <div class="alert alert-primary" id="hint">
+    <div class="alert alert-primary" id="hint" i18n>
       Bitte klicken Sie auf eines der Kreissegmente oder fahren mit der Maus hinein um nähere Informationen zu erhalten.
     </div>
   </div>

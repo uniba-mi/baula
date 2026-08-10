@@ -1,4 +1,4 @@
-<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+<ng-container role="Dialogfenster" aria-label="Dialogfenster" i18n-aria-label>
     <div class="content-wrapper">
         <div class="scrollable-content">
             <app-upload-data-privacy [version]="'bakule'"></app-upload-data-privacy>
@@ -10,12 +10,12 @@
     </div>
     <mat-dialog-actions>
         <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close()"
-            (keyup)="close()">
+            (keyup)="close()" i18n>
             Abbrechen
         </button>
         <button mat-raised-button class="btn btn-primary plausible-event-name=Studyprogression-Save+Button"
             [mat-dialog-close]="getConsent()" id="study_prog_save_button" [disabled]="!flexNowImportConfirmed"
-            (click)="close()" (keyup)="close()">
+            (click)="close()" (keyup)="close()" i18n>
             Weiter
         </button>
     </mat-dialog-actions>

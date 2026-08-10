@@ -1,7 +1,7 @@
 @if (module) {
   <mat-card class="p-3 mb-2 rounded module-item" [ngClass]="{'w-100 d-flex flex-column': customStyle}"
     [ngStyle]="{'opacity': isDropped(module.acronym) ? '0.7' : '1'}" tabindex="0"
-    aria-label="Karte mit Modulinformationen" cdkDrag [cdkDragDisabled]="isSmallScreen || customStyle"
+    aria-label="Karte mit Modulinformationen" i18n-aria-label cdkDrag [cdkDragDisabled]="isSmallScreen || customStyle"
     [cdkDragData]="module" (cdkDragStarted)="onDragStarted()" (cdkDragEnded)="onDragEnded()"
     (click)="selectModule(module)" (keyup.enter)="selectModule(module)">
     <div class="d-flex align-items-center justify-content-between mb-2">
@@ -30,7 +30,7 @@
       <!-- Context Menu -->
       <div class="d-flex align-items-center offset-right">
         <button class="btn-icon" [matMenuTriggerFor]="moduleMenu" role="button" aria-haspopup="true"
-          aria-expanded="false" tabindex="0" aria-label="Kontextmenu für weitere Aktionen öffnen"
+          aria-expanded="false" tabindex="0" aria-label="Kontextmenu für weitere Aktionen öffnen" i18n-aria-label
           (click)="onContextMenuClick($event)" (keyup.enter)="onContextMenuClick($event)">
           <i class="icon bi bi-three-dots-vertical text-gray"></i>
         </button>
@@ -38,12 +38,12 @@
           @if ((isFavourite(module.acronym) | async)) {
             <button mat-menu-item (click)="onToggleFavourite($event, module.acronym)"
               (keyup.enter)="onToggleFavourite($event, module.acronym)">
-              <i class="bi bi-bookmark-fill text-gray"></i> <span> Nicht mehr merken</span>
+              <i class="bi bi-bookmark-fill text-gray"></i> <span i18n> Nicht mehr merken</span>
             </button>
           } @else {
             <button mat-menu-item (click)="onToggleFavourite($event, module.acronym)"
               (keyup.enter)="onToggleFavourite($event, module.acronym)">
-              <i class="bi bi-bookmark"></i> <span> Merken</span>
+              <i class="bi bi-bookmark"></i> <span i18n="Recommendation merken (im Gedächtniss behalten)"> Merken</span>
             </button>
           }
           <button mat-menu-item (click)="markAsExcluded($event, module.acronym)"
@@ -52,7 +52,7 @@
        'bi-hand-thumbs-down-fill': (isExcluded(module.acronym) | async), 
        'bi-hand-thumbs-down': !(isExcluded(module.acronym) | async)
      }" aria-hidden="true"></i>
-            <span> Nicht mehr vorschlagen</span>
+            <span i18n> Nicht mehr vorschlagen</span>
           </button>
         </mat-menu>
       </div>
@@ -69,7 +69,7 @@
       <!-- Third Row -->
       <div class="d-flex align-items-center justify-content-between mb-2">
         <div class="text-gray flex-fill s-text">
-          <span matTooltip="Angebotssemester" matTooltipClass="custom-tooltip">{{ module.term }}</span>
+          <span matTooltip="Angebotssemester" matTooltipClass="custom-tooltip" i18n-matTooltip>{{ module.term }}</span>
         </div>
         <!-- Add Button (only if not customStyle) -->
         @if (!customStyle) {
@@ -113,7 +113,7 @@
       <div class="d-flex align-items-start justify-content-between">
         <div> <!-- so that ects always stick to the right -->
           @if (module.type === 'Pflichtmodul') {
-            <span matTooltip="Das ist ein Pflichtmodul"
+            <span matTooltip="Das ist ein Pflichtmodul" i18n-matTooltip
               class="compulsory-icon">
               <i>P</i>
             </span>
@@ -121,7 +121,7 @@
         </div>
         <!-- ECTS Column -->
         <div class="text-gray flex-shrink-0">
-          <button class="btn btn-outline chip ects-chip px-2" disabled>
+          <button class="btn btn-outline chip ects-chip px-2" disabled i18n>
             {{ module.ects }} ECTS
           </button>
         </div>

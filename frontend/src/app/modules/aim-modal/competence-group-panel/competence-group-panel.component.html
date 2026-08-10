@@ -3,7 +3,7 @@
     <mat-panel-title class="text-truncate" [matTooltip]="cg.name">
       {{ cg.compId | formatCompetence }} - {{ cg.name }}
     </mat-panel-title>
-    <mat-panel-description>
+    <mat-panel-description i18n>
       <!-- Display Sum of lower competences -->
       {{ cgFormControl.value }} ECTS
     </mat-panel-description>
@@ -27,7 +27,7 @@
     @if (competences$ | async; as competences) {
       <div class="row" >
         <div class="col-9">
-          <p class="mt-3">Hierunter fallen folgende Kompetenzziele:</p>
+          <p class="mt-3" i18n>Hierunter fallen folgende Kompetenzziele:</p>
           <ul>
             @for (comp of competences; track comp) {
               @if (comp.parentId == cg.compId) {

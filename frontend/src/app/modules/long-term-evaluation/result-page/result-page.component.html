@@ -1,7 +1,7 @@
 <div class="container d-flex justify-content-between align-items-center mb-4">
     <div class="flex-grow-1 me-4">
         <mat-form-field class="mb-0" appearance="outline">
-            <mat-label>Wähle ein Semester</mat-label>
+            <mat-label i18n>Wähle ein Semester</mat-label>
             <mat-select [(value)]="selectedSemester" (selectionChange)="updateReport(selectedSemester)">
                 @for(semester of semesterList; track semester) {
                     <mat-option [value]="semester">{{ semester | Semester }}</mat-option>
@@ -10,12 +10,12 @@
         </mat-form-field>
     </div>
     <div>
-        <button class="btn btn-outline" [matMenuTriggerFor]="surveySettings">
+        <button class="btn btn-outline" [matMenuTriggerFor]="surveySettings" i18n>
             <i class="bi bi-gear-fill icon me-1"></i>
             Einstellungen
         </button>
         <mat-menu #surveySettings="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item i18n>
                 <i class="bi bi-filetype-csv icon me-1"></i>
                 Export als CSV
             </button>

@@ -1,7 +1,7 @@
 @if (selectedStandard && selectedStandard.stId !== '') {
   @if (competenceGroups$ | async; as competenceGroups) {
     <div class="mt-4">
-      <p class="recommendation-title">
+      <p class="recommendation-title" i18n>
         Auf welchen Kompetenzbereich möchten Sie sich fokussieren?
       </p>
       <div class="competence-button-wrapper">
@@ -10,7 +10,7 @@
     </div>
   }
 } @else {
-  <div class="alert alert-primary mt-3">
+  <div class="alert alert-primary mt-3" i18n>
     Bitte wählen Sie zunächst einen Standard aus um entsprechende Empfehlungen
     zu erhalten!
   </div>

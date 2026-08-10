@@ -56,16 +56,16 @@
         <!-- each group represents a possible bar color and its description -->
         <g>
           <rect x="0" y="-5" width="20" height="20" fill="var(--ub-blue)" />
-          <text x="25" y="12.5" class="legend">Aktueller Wert</text>
+          <text x="25" y="12.5" class="legend" i18n>Aktueller Wert</text>
         </g>
         <g transform="translate(150, 0)">
           <rect x="0" y="-5" width="20" height="20" fill="var(--ub-red)" />
-          <text x="25" y="12.5" class="legend">Ausgewählt</text>
+          <text x="25" y="12.5" class="legend" i18n>Ausgewählt</text>
         </g>
         @if ((unit$ | async) == 'ects') {
           <g transform="translate(300, 0)">
             <line x1="0" y1="5" x2="20" y2="5" stroke="#0FB500" stroke-width="3" />
-            <text x="25" y="12.5" class="legend">Dein Zielwert</text>
+            <text x="25" y="12.5" class="legend" i18n>Dein Zielwert</text>
           </g>
         }
       </g>

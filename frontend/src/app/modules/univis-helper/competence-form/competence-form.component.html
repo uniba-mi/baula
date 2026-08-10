@@ -1,4 +1,4 @@
-<div class="competence-sum border">
+<div class="competence-sum border" i18n>
   Ihre aktuellen Zuordnungen:
   @for (standard of standards$ | async; track standard; let i = $index) {
     <div [style.color]="sumColor[i]">
@@ -9,8 +9,8 @@
 </div>
 <div class="container">
   <div class="row">
-    <h3>Ordnen Sie Ihrer Veranstaltung die Kompetenzen zu:</h3>
-    <p class="description">
+    <h3 i18n>Ordnen Sie Ihrer Veranstaltung die Kompetenzen zu:</h3>
+    <p class="description" i18n>
       Hier können Sie Ihrer Veranstaltung für jeden hinterlegten
       Kompetenzstandard die entsprechenden Kompetenzen zuordnen. Bitte ordnen
       Sie jeden Kompetenzstandard zu. Achten Sie darauf
@@ -27,9 +27,9 @@
             <div class="competence-label">{{ standard.stId }}</div>
           </ng-template>
           <div class="row font-weight-bold border-bottom my-2 py-2">
-            <div class="col-2">Kompetenzkürzel</div>
-            <div class="col-6">Beschreibung</div>
-            <div class="col-4 text-center">Zeitanteil (in %)</div>
+            <div class="col-2" i18n>Kompetenzkürzel</div>
+            <div class="col-6" i18n>Beschreibung</div>
+            <div class="col-4 text-center" i18n>Zeitanteil (in %)</div>
           </div>
           @for (competence of competences$ | async; track competence; let i = $index) {
             @if (competence.stId === standard.stId) {
@@ -68,12 +68,12 @@
             <div class="fw-bolder">{{err.name}}!</div>
             <div>{{ err.desc }}</div>
             @if (err.name == 'Fehlende Eingaben') {
-              <button class="btn button my-2" (click)="removeAlert()">Ich möchte
+              <button class="btn button my-2" (click)="removeAlert()" i18n>Ich möchte
               keine weiteren Kompetenzangaben machen</button>
             }
             @if (err.name == 'Summe größer als 100%') {
               <button class="btn button my-2"
-              (click)="standardizeFulfillments()">Normiere meine Angaben auf 100%</button>
+              (click)="standardizeFulfillments()" i18n>Normiere meine Angaben auf 100%</button>
             }
           </div>
         }

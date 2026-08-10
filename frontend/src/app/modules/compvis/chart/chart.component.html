@@ -5,14 +5,14 @@
   </div>
   <div class="col-12 col-lg-5">
     @if (selectedCourses.length === 0) {
-      <div class="alert alert-primary">
+      <div class="alert alert-primary" i18n>
         Auf der linken Seite finden Sie die Veranstaltungsliste.
         Hier können Sie die Veranstaltungen, welche Sie belegen anklicken.
         Die darin vermittelten Kompetenzen werden dann in der Mitte des Bildes visualisiert.
       </div>
     }
     @if (selectedCourses.length !== 0 && (selectedBar$ | async) === undefined) {
-      <div class="alert alert-primary">
+      <div class="alert alert-primary" i18n>
         Sie sehen nun die Visualisierung der ersten Kompetenzebene.
         Um nähere Informationen zur zweiten Kompetenzebene zu erhalten, klicken Sie auf den Balken des gewünschten
         Kompetenzfeldes.
