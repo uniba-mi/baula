@@ -76,8 +76,8 @@
       <mat-radio-group class="d-flex flex-column" aria-labelledby="import-radio-group-label"
         [(ngModel)]="importFormat">
         @if (startSemester) {
-          <mat-radio-button value="startWithUserStartSemester" class="me-2" i18n>In meinem
-            Startsemester ({{ startSemester.fullName }})
+          <mat-radio-button value="startWithUserStartSemester" class="me-2"><ng-container i18n>In meinem
+            Startsemester ({{ startSemester.fullName }}) </ng-container>
             @if (importType === 'deinen Studienplan') {
               <button class="btn-icon"
                 matTooltip="Hier wird dein bestehender Studienverlauf mit den zukünftigen Semestern kombiniert. Diese Option eignet sich besonders gut, um deinen Verlauf und deinen weiteren Plan mit Mitstudierenden zu teilen. Es werden dabei keine personenbezogenen Daten wie z. B. deine Note exportiert."
@@ -94,8 +94,8 @@
             }
           </mat-radio-button>
         }
-        <mat-radio-button value="startWithCurrentSemester" class="me-2" i18n>Im aktuellen Semester ({{ current.fullName
-          }})
+        <mat-radio-button value="startWithCurrentSemester" class="me-2"><ng-container i18n>Im aktuellen Semester ({{ current.fullName
+          }}) </ng-container>
           @if (importType === 'deinen Studienplan') {
             <button class="btn-icon"
               matTooltip="Mit dieser Option werden nur die zukünftigen Semester in die Exportdatei eingefügt, ohne deinen Studienverlauf. Diese Option eignet sich z. B. dafür, wenn du den aktuellen Plan sichern möchtest"
@@ -111,8 +111,8 @@
             </button>
           }
         </mat-radio-button>
-        <mat-radio-button value="keepSemesterOfFile" class="me-2" i18n>Wie in
-          der Importdatei ({{ start.fullName }})
+        <mat-radio-button value="keepSemesterOfFile" class="me-2"><span i18n>Wie in
+          der Importdatei ({{ start.fullName }})</span>
           @if (importType === 'deinen Studienplan') {
             <button class="btn-icon"
               matTooltip="Mit dieser Option werden nur die zukünftigen Semester in die Exportdatei eingefügt, ohne deinen Studienverlauf. Diese Option eignet sich z. B. dafür, wenn du den aktuellen Plan sichern möchtest"

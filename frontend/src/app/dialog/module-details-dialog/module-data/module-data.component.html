@@ -105,7 +105,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12 col-md-3 fw-bold">Lernziele</div>
+      <div class="col-12 col-md-3 fw-bold" i18n>Lernziele</div>
       <div
         class="col-12 col-md-9"
         [ngClass]="selectedModule.skills.length > 500 ? 'truncate' : ''"
@@ -204,8 +204,8 @@
           <div class="module-information-classes">
             <div class="module-information-classes">
               <div class="row module-information-classes-header">
-                <div class="fw-bold col-12 col-md-3" i18n>
-                  Lehrveranstaltungen
+                <div class="fw-bold col-12 col-md-3">
+                  <ng-container i18n>Lehrveranstaltungen</ng-container>
                   <span
                     class="col-auto px-2"
                     role="button"
@@ -340,8 +340,10 @@
         <div class="module-information-exam">
           <div class="module-information-classes">
             <div class="row module-information-classes-header">
-              <div class="fw-bold col-12 col-md-3" i18n>
-                Prüfungen
+              <div class="fw-bold col-12 col-md-3">
+                <ng-container i18n> 
+                  Prüfungen
+                </ng-container>
                 <span
                   class="col-auto px-2"
                   role="button"
@@ -402,19 +404,23 @@
                     <div class="col-md-3"></div>
                     <div class="col-12 col-md-9">
                       <div class="row">
-                        <div class="col-12 col-md-4" i18n>
-                          <span class="fw-bold">
+                        <div class="col-12 col-md-4">
+                          <span class="fw-bold" i18n>
                             <i class="bi bi-alarm"></i> Prüfungsdauer:
                           </span>
                           @if (exam.duration) {
                             <span></span>
                           } @else {
-                            Keine Angabe
+                            <span i18n>
+                              Keine Angabe
+                            </span>
                           }
-                          {{ exam.duration }} Minuten
+                          <span i18n>
+                            {{ exam.duration }} Minuten
+                          </span>
                         </div>
-                        <div class="col-12 col-md-5" i18n>
-                          <span class="fw-bold">
+                        <div class="col-12 col-md-5">
+                          <span class="fw-bold" i18n>
                             <i class="bi bi-pie-chart"></i> Anteil an Modulnote:
                           </span>
                           @if (
@@ -426,7 +432,9 @@
                               {{ exam.share }}%
                             </span>
                           } @else {
-                            Keine Angabe
+                            <span i18n>
+                              Keine Angabe
+                            </span>
                           }
                         </div>
                       </div>
