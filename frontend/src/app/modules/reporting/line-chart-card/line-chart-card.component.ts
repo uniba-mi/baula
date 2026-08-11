@@ -1,20 +1,20 @@
 import { Component, computed, input } from '@angular/core';
-import { BarChartCardData } from '../reporting';
+import { LineChartCardData } from '../reporting';
 import { MatCardModule } from '@angular/material/card';
 import { EchartsHostComponent } from '../echarts-host/echarts-host.component';
 import type { EChartsOption } from 'echarts';
 
 @Component({
-  selector: 'reporting-bar-chart-card',
+  selector: 'reporting-line-chart-card',
   imports: [
     MatCardModule,
     EchartsHostComponent
   ],
-  templateUrl: './bar-chart-card.component.html',
-  styleUrl: './bar-chart-card.component.scss'
+  templateUrl: './line-chart-card.component.html',
+  styleUrl: './line-chart-card.component.scss'
 })
-export class BarChartCardComponent {
-  cardData = input.required<BarChartCardData>();
+export class LineChartCardComponent {
+  cardData = input.required<LineChartCardData>();
   // suppresses the card's own mat-card/title so it can be dropped into a host that supplies
   // its own header chrome (e.g. the dashboard's mat-card + app-dashboard-card-header)
   bare = input(false);
@@ -26,7 +26,7 @@ export class BarChartCardComponent {
       xAxis: {
         type: 'category',
         data: cardData.xLabels,
-        axisLabel: { rotate: 45, hideOverlap: true },
+        axisLabel: { rotate: 30, hideOverlap: true },
       },
       yAxis: {
         type: 'value',
@@ -43,8 +43,6 @@ export class BarChartCardComponent {
       legend: {
         show: showLegend,
         top: 0,
-        // keeps the legend to a single row (scrolling instead of wrapping) so its height stays
-        // predictable and the reserved grid.top above always fits it, regardless of series count
         type: 'scroll',
       },
       tooltip: {
@@ -52,14 +50,13 @@ export class BarChartCardComponent {
       },
       series: cardData.series.map((series) => ({
         name: series.name,
-        type: series.type ?? 'bar',
-        data: series.data.map((point) =>
-          typeof point === 'object'
-            ? { value: point.value, itemStyle: point.color ? { color: point.color } : undefined }
-            : point
-        ),
+        type: 'line',
+        data: series.data,
+        connectNulls: true,
+        smooth: series.smooth ?? false,
+        lineStyle: series.color ? { color: series.color } : undefined,
         itemStyle: series.color ? { color: series.color } : undefined,
-        stack: cardData.stacked ? 'total' : undefined,
+        areaStyle: series.area ? {} : undefined,
       })),
     };
   });

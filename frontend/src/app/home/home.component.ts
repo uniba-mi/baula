@@ -415,18 +415,18 @@ export class HomeComponent implements OnInit {
             }
             // else case not exist, when false is returned user not responded this time open dialog again
           } else {
-            // user completed survey, when latestSurveyConsent not exists or hasConfirmed is false, than add new consent
-            if (!latestSurveyConsent || !latestSurveyConsent.hasConfirmed) {
-              this.store.dispatch(
-                UserActions.addConsent({
-                  ctype: 'bakule-survey',
-                  hasConfirmed: true,
-                  hasResponded: true,
-                  timestamp: new Date(),
-                }),
-              );
-            }
-            // else do nothing, since nothing changed
+            // user completed survey: always record a fresh consent with the current timestamp,
+            // otherwise latestSurveyConsent.timestamp stays frozen at the first-ever confirmation
+            // once hasConfirmed is already true, causing the dialog to reopen (and create duplicate
+            // survey entries) on every later login instead of only once per semester
+            this.store.dispatch(
+              UserActions.addConsent({
+                ctype: 'bakule-survey',
+                hasConfirmed: true,
+                hasResponded: true,
+                timestamp: new Date(),
+              }),
+            );
           }
         });
     }

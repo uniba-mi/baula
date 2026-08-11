@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         @for(card of report().cards; track card.id) {
-            <div [class]="card.spacingClasses">
+            <div [class]="card.spacingClasses" class="d-flex flex-column report-card-cell">
                 @switch (card.type) {
                     @case ('meta') {
                         <reporting-meta-data-card [cardData]="card.cardData"></reporting-meta-data-card>
@@ -9,8 +9,20 @@
                     @case ('bar') {
                         <reporting-bar-chart-card [cardData]="card.cardData"></reporting-bar-chart-card>
                     }
+                    @case ('boxplot') {
+                        <reporting-boxplot-card [cardData]="card.cardData"></reporting-boxplot-card>
+                    }
+                    @case ('line') {
+                        <reporting-line-chart-card [cardData]="card.cardData"></reporting-line-chart-card>
+                    }
                     @case ('table') {
                         <reporting-table-card [cardData]="card.cardData"></reporting-table-card>
+                    }
+                    @case ('quote') {
+                        <reporting-quote-card [cardData]="card.cardData"></reporting-quote-card>
+                    }
+                    @case ('pie') {
+                        <reporting-pie-chart-card [cardData]="card.cardData"></reporting-pie-chart-card>
                     }
                 }
             </div>

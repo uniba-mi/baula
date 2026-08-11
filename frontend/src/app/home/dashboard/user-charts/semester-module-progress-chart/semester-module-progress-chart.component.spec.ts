@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SemesterModuleProgressChartComponent } from './semester-module-progress-chart.component';
+import { BarChartCardComponent } from 'src/app/modules/reporting/bar-chart-card/bar-chart-card.component';
 
 describe('SemesterModuleProgressChartComponent', () => {
   let component: SemesterModuleProgressChartComponent;
@@ -8,7 +9,8 @@ describe('SemesterModuleProgressChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SemesterModuleProgressChartComponent ]
+      declarations: [ SemesterModuleProgressChartComponent ],
+      imports: [ BarChartCardComponent ]
     })
     .compileComponents();
   });
