@@ -42,7 +42,7 @@ export class UnivisHelperComponent implements OnInit {
     navigator.clipboard.writeText(textfield.value);
     // show Alert
     this._snackBar.open(
-      'Der Text wurde in die Zwischenablage kopiert.',
+      $localize `Der Text wurde in die Zwischenablage kopiert.`,
       undefined,
       { panelClass: ['alert', 'alert-success'], duration: 5000 },
     );
