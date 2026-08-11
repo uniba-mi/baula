@@ -1,11 +1,19 @@
 import { Component, Input, SimpleChanges, inject } from '@angular/core';
 import { Competence, Fulfillment } from '@interfaces/competence';
 import { Bar } from '../../interfaces/chart';
-import * as d3 from 'd3';
+import type { ECElementEvent, EChartsOption } from 'echarts';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { deselectBar } from '../../state/chart.actions';
 import { ExpandedCourse } from '@interfaces/course';
+
+interface DonutSliceDatum {
+  name: string;
+  compId: string;
+  shortCode: string;
+  value: number;
+  itemStyle: { color: string };
+}
 
 @Component({
   selector: 'app-donut-chart',
@@ -23,23 +31,17 @@ export class DonutChartComponent {
 
   fulfillment: Fulfillment[];
   childCompetences: Competence[];
-  donutChartData: any[];
 
   // strings for the additional information
   shortDescription: string;
   description: string;
   longDescription: string;
+  showInfo = false;
 
-  // declare global variables of the donut chart
-  width = 200;
-  height = 200;
-  margin = 20;
-  radius = Math.min(this.width, this.height) / 2 - this.margin;
-  dataReady: any[];
-  textPosition: any[];
+  option: EChartsOption = {};
 
   // define color-Range
-  color = [
+  private readonly palette = [
     'rgba(0,69,125,0.6)',
     'rgba(255,211,0,0.6)',
     'rgba(151,191,13,0.6)',
@@ -49,23 +51,8 @@ export class DonutChartComponent {
     'rgba(26,23,27,0.6)',
   ];
 
-  // define arc and pie Generator
-  arc = d3
-    .arc()
-    .outerRadius(this.radius)
-    .innerRadius(this.radius - 0.6 * this.radius);
-
-  pie = d3.pie<Fulfillment>().value((d: Fulfillment) => {
-    if (d) {
-      return d.fulfillment;
-    } else {
-      return 0;
-    }
-  });
-
   ngOnInit() {
-    //initialize donutChartData
-    this.donutChartData = this.updateDonutChartData();
+    this.rebuildOption();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -104,8 +91,8 @@ export class DonutChartComponent {
       this.fulfillment = this.getData(this.courses, this.selectedBar);
     }
 
-    // update donutChartData when values are changing
-    this.donutChartData = this.updateDonutChartData();
+    // update chart option when values are changing
+    this.rebuildOption();
   }
 
   getData(courses: ExpandedCourse[], bar: Bar): Fulfillment[] {
@@ -122,77 +109,71 @@ export class DonutChartComponent {
     return result;
   }
 
-  getShortDescription(index: number): string {
-    // find the right short-description
-    if (this.selectedBar) {
-      return (
-        this.selectedBar.childCompetences[index].compId.split('_')[1] +
-        '.' +
-        this.selectedBar.childCompetences[index].compId.split('_')[2]
-      );
+  onSliceInteract(e: ECElementEvent): void {
+    if (e.componentType !== 'series' || !e.data) {
+      return;
     }
-    return '';
+    this.showInfoFor((e.data as DonutSliceDatum).compId);
   }
 
-  mouseInDonutPart(index: number) {
-    this.competences.map((data) => {
-      if (data.compId === this.childCompetences[index].compId) {
-        this.shortDescription = data.short;
-        this.description = data.name;
-        this.longDescription = data.desc;
-      }
-    });
-    let infoField = document.getElementById('infoField');
-    if (infoField) {
-      infoField.style.display = 'block';
+  showInfoFor(compId: string): void {
+    const comp = this.competences.find((c) => c.compId === compId);
+    if (!comp) {
+      return;
     }
-    let hint = document.getElementById('hint');
-    if (hint) {
-      hint.style.display = 'none';
-    }
+    this.shortDescription = comp.short;
+    this.description = comp.name;
+    this.longDescription = comp.desc;
+    this.showInfo = true;
   }
 
-  mouseOutDonutPart() {
-    let infoField = document.getElementById('infoField');
-    if (infoField) {
-      infoField.style.display = 'none';
-    }
-    let hint = document.getElementById('hint');
-    if (hint) {
-      hint.style.display = 'block';
-    }
+  hideInfo(): void {
+    this.showInfo = false;
   }
 
-  updateDonutChartData(): any[] {
-    // check if variables are not undefined
+  private rebuildOption(): void {
     if (
-      this.selectedBar &&
-      this.fulfillment !== undefined &&
-      this.competences !== undefined
+      !this.selectedBar ||
+      this.fulfillment === undefined ||
+      this.competences === undefined
     ) {
-      // set block variables
-      this.childCompetences = this.selectedBar.childCompetences;
-
-      const donutChartData: any[] = [];
-
-      this.childCompetences.forEach((comp) => {
-        donutChartData.push(
-          this.fulfillment.find((c) => c.compId == comp.compId),
-        );
-      });
-
-      d3.select('#donut-chart svg').attr(
-        'viewBox',
-        '0 0 ' + this.width + ' ' + this.height,
-      );
-
-      // translate into center of box
-      d3.select('#donut-chart svg g').attr(
-        'transform',
-        'translate(' + this.width / 2 + ', ' + this.height / 2 + ')',
-      );
-      return this.pie(donutChartData);
+      this.option = {};
+      return;
     }
-    return [];
+
+    this.childCompetences = this.selectedBar.childCompetences;
+
+    const data: DonutSliceDatum[] = this.childCompetences
+      .map((comp, idx) => ({
+        name: comp.compId,
+        compId: comp.compId,
+        shortCode: `${comp.compId.split('_')[1]}.${comp.compId.split('_')[2]}`,
+        value: this.fulfillment.find((f) => f.compId === comp.compId)?.fulfillment ?? 0,
+        itemStyle: { color: this.palette[idx % this.palette.length] },
+      }))
+      .filter((d) => d.value !== 0);
+
+    this.option = {
+      tooltip: { show: false },
+      series: [
+        {
+          type: 'pie',
+          radius: ['42%', '78%'],
+          label: {
+            show: true,
+            position: 'inside',
+            fontSize: 13,
+            fontWeight: 'bold',
+            color: '#000',
+            textBorderColor: '#fff',
+            textBorderWidth: 3,
+            formatter: (p: any) => (p.data as DonutSliceDatum).shortCode,
+          },
+          labelLine: { show: false },
+          itemStyle: { borderColor: 'black', borderWidth: 1, opacity: 0.7 },
+          data,
+        },
+      ],
+    };
   }
 }

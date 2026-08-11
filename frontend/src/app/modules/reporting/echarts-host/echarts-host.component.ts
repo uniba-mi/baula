@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, effect, input, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, effect, input, output, viewChild } from '@angular/core';
 import * as echarts from 'echarts';
-import type { EChartsOption } from 'echarts';
+import type { EChartsOption, ECElementEvent } from 'echarts';
 
 @Component({
   selector: 'reporting-echarts-host',
@@ -10,6 +10,10 @@ import type { EChartsOption } from 'echarts';
 })
 export class EchartsHostComponent implements AfterViewInit, OnDestroy {
   option = input.required<EChartsOption>();
+
+  chartClick = output<ECElementEvent>();
+  chartMouseOver = output<ECElementEvent>();
+  chartMouseOut = output<ECElementEvent>();
 
   private container = viewChild.required<ElementRef<HTMLDivElement>>('chartContainer');
   private chart?: echarts.ECharts;
@@ -35,6 +39,7 @@ export class EchartsHostComponent implements AfterViewInit, OnDestroy {
       }
       this.chart = echarts.init(element);
       this.chart.setOption(this.option());
+      this.bindEvents(this.chart);
     };
 
     tryInit();
@@ -46,5 +51,11 @@ export class EchartsHostComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.resizeObserver?.disconnect();
     this.chart?.dispose();
+  }
+
+  private bindEvents(chart: echarts.ECharts): void {
+    chart.on('click', (params) => this.chartClick.emit(params as ECElementEvent));
+    chart.on('mouseover', (params) => this.chartMouseOver.emit(params as ECElementEvent));
+    chart.on('mouseout', (params) => this.chartMouseOut.emit(params as ECElementEvent));
   }
 }

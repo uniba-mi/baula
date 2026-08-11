@@ -15,6 +15,9 @@ import type { EChartsOption } from 'echarts';
 })
 export class BarChartCardComponent {
   cardData = input.required<BarChartCardData>();
+  // suppresses the card's own mat-card/title so it can be dropped into a host that supplies
+  // its own header chrome (e.g. the dashboard's mat-card + app-dashboard-card-header)
+  bare = input(false);
 
   option = computed<EChartsOption>(() => {
     const cardData = this.cardData();
@@ -49,13 +52,14 @@ export class BarChartCardComponent {
       },
       series: cardData.series.map((series) => ({
         name: series.name,
-        type: 'bar',
+        type: series.type ?? 'bar',
         data: series.data.map((point) =>
           typeof point === 'object'
             ? { value: point.value, itemStyle: point.color ? { color: point.color } : undefined }
             : point
         ),
         itemStyle: series.color ? { color: series.color } : undefined,
+        stack: cardData.stacked ? 'total' : undefined,
       })),
     };
   });

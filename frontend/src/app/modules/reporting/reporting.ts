@@ -4,7 +4,7 @@ export interface Report {
 
 export interface ReportCard {
     id: string,
-    type: 'meta'|'bar'|'boxplot'|'line'|'table'|'quote',
+    type: 'meta'|'bar'|'boxplot'|'line'|'table'|'quote'|'pie',
     spacingClasses: string,
     cardData: any
 }
@@ -27,13 +27,15 @@ interface MetaCardItem {
 
 export interface BarChartCardData extends CardData {
     xLabels: string[],
-    series: BarChartSeries[]
+    series: BarChartSeries[],
+    stacked?: boolean, // when true, every series is stacked into a single bar per x-axis slot
 }
 
 interface BarChartSeries {
     name?: string,
     data: (number | BarChartDataPoint)[],
     color?: string, // default color for the whole series
+    type?: 'bar' | 'line', // per-series override for mixed bar+line charts; defaults to 'bar'
 }
 
 interface BarChartDataPoint {
@@ -56,6 +58,19 @@ export interface LineChartCardData extends CardData {
 interface LineChartSeries {
     name: string,
     data: number[],
+    color?: string, // overrides the default palette color for this series' line/points
+    area?: boolean, // fills the area under this series' line
+}
+
+export interface PieCardData extends CardData {
+    categories: string[], // shared slice labels, same order as `colors` and every ring's `data`
+    colors: string[], // fixed color per category, same length/order as `categories`, shared by every ring
+    rings: PieRing[], // one concentric ring per pie series, rendered innermost (rings[0]) to outermost
+}
+
+interface PieRing {
+    name: string, // ring label (e.g. module group name), used as the echarts series name / tooltip prefix
+    data: number[], // slice values, same order/length as `categories`
 }
 
 export interface QuoteCardData extends CardData {

@@ -1,10 +1,31 @@
+#donut-chart {
+    // scales with the viewport instead of a fixed height; floor stays >=
+    // reporting-echarts-host's own min-height (320px), otherwise the chart
+    // overflows this container onto #competence-list right below it.
+    height: clamp(320px, 45vh, 420px);
+}
+
+// same width AND min-height guard as bar-chart's .sticky-chart, so both
+// panels stick/release together and neither looks stretched on short screens
+@media (min-width: 992px) and (max-width: 1400px) and (min-height: 700px) {
+    // chart + not-covered list + description panel stick together as one
+    // unit, in sync with bar-chart's .sticky-chart (same breakpoint/trick)
+    #donutComponent {
+        position: sticky;
+        top: 0;
+    }
+
+    .donut-scroll-room {
+        height: 200vh;
+    }
+}
+
 #infoField {
     position: relative;
     width: 100%;
     min-height: 10em;
     background-color: var(--ub-blue-0);
     padding: 1em;
-    display: none;
     float: left;
 }
 

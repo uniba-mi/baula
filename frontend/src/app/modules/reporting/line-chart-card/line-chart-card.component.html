@@ -1,10 +1,14 @@
 @if(cardData(); as cardData) {
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>{{ cardData.title }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="mt-2">
-        <reporting-echarts-host [option]="option()"></reporting-echarts-host>
-    </mat-card-content>
-</mat-card>
+@if(bare()) {
+    <reporting-echarts-host [option]="option()"></reporting-echarts-host>
+} @else {
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{ cardData.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-2">
+            <reporting-echarts-host [option]="option()"></reporting-echarts-host>
+        </mat-card-content>
+    </mat-card>
+}
 }

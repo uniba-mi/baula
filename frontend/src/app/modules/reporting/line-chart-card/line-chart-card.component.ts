@@ -15,9 +15,13 @@ import type { EChartsOption } from 'echarts';
 })
 export class LineChartCardComponent {
   cardData = input.required<LineChartCardData>();
+  // suppresses the card's own mat-card/title so it can be dropped into a host that supplies
+  // its own header chrome (e.g. the dashboard's mat-card + app-dashboard-card-header)
+  bare = input(false);
 
   option = computed<EChartsOption>(() => {
     const cardData = this.cardData();
+    const showLegend = cardData.series.length > 1;
     return {
       xAxis: {
         type: 'category',
@@ -32,11 +36,14 @@ export class LineChartCardComponent {
         left: 8,
         right: 16,
         bottom: 8,
-        top: 24,
+        // reserve extra room up top when the legend is shown, otherwise it has no dedicated
+        // space and overlaps the plot/axis labels instead of sitting cleanly above them
+        top: showLegend ? 40 : 24,
       },
       legend: {
-        show: cardData.series.length > 1,
-        top: 0
+        show: showLegend,
+        top: 0,
+        type: 'scroll',
       },
       tooltip: {
         trigger: 'axis',
@@ -46,6 +53,9 @@ export class LineChartCardComponent {
         type: 'line',
         data: series.data,
         connectNulls: true,
+        lineStyle: series.color ? { color: series.color } : undefined,
+        itemStyle: series.color ? { color: series.color } : undefined,
+        areaStyle: series.area ? {} : undefined,
       })),
     };
   });

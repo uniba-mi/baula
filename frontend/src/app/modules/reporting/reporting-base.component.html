@@ -21,6 +21,9 @@
                     @case ('quote') {
                         <reporting-quote-card [cardData]="card.cardData"></reporting-quote-card>
                     }
+                    @case ('pie') {
+                        <reporting-pie-chart-card [cardData]="card.cardData"></reporting-pie-chart-card>
+                    }
                 }
             </div>
         }
