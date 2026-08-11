@@ -49,6 +49,7 @@ export class SemesterCardComponent {
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
   displayGrades$: Observable<boolean>;
 
+  // TODO: Is it safe to translate following texts?
   actionConfig: Record<ItemActionName, ActionConfig> = {
     feedback: { icon: 'bi-chat-dots', text: 'Feedback', showInMenu: true },
     edit: { icon: 'bi-pencil', text: 'Bearbeiten', showInMenu: true },
@@ -152,7 +153,7 @@ export class SemesterCardComponent {
     ) {
       this.snackbarService.openSnackBar({
         message:
-          'Dieses Modul ist nicht mehr in der aktuellen Version vorhanden und kann nicht verschoben oder angesehen werden. Wenn du es entfernen möchtest, kannst du es löschen oder stattdessen einen Platzhalter anlegen.',
+          $localize `Dieses Modul ist nicht mehr in der aktuellen Version vorhanden und kann nicht verschoben oder angesehen werden. Wenn du es entfernen möchtest, kannst du es löschen oder stattdessen einen Platzhalter anlegen.`,
         type: AlertType.DANGER,
       });
     }

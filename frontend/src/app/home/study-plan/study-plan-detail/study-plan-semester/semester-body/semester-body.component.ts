@@ -286,7 +286,7 @@ export class SemesterBodyComponent {
 
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Semester wählen',
+        dialogTitle: $localize `Semester wählen`,
         dialogContentId: 'select-semester-dialog',
         semesters$: availableTargetSemesters$,
       },
@@ -323,7 +323,7 @@ export class SemesterBodyComponent {
                     });
                   } else {
                     console.error(
-                      'Keine ID gefunden für Semester:',
+                      $localize `Keine ID gefunden für Semester:`,
                       targetSemester,
                     );
                   }
@@ -347,7 +347,7 @@ export class SemesterBodyComponent {
         this.snackbarService.openSnackBar({
           type: AlertType.WARNING,
           message:
-            'Für ein Modul, das du nur belegt, aber nicht abgeschlossen hast, kannst du keine Note hinzufügen.',
+            $localize `Für ein Modul, das du nur belegt, aber nicht abgeschlossen hast, kannst du keine Note hinzufügen.`,
         });
         break;
       case 'failed':

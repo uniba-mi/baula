@@ -108,7 +108,7 @@ export class StudyPlanDetailComponent implements OnInit {
   selectedSemesterPlans$: Observable<SemesterPlan[] | undefined>;
   studyPlanDetailHint: string = 'studyPlanDetail-hint';
   studyPlanDetailMessage: string =
-    'Hier hast du die Möglichkeit, dein ganzes Studium zu planen. Plane, welche Module du in welchem Semester belegen möchtest und überprüfe, ob du damit alle ECTS-Vorgaben deines Studiums erreichst. Platzhalter erlauben es Dir, individuelle Inhalte anzulegen. Wenn du die Seitenleiste ausklappst, siehst du Modulempfehlungen für deinen Studiengang.';
+    $localize `Hier hast du die Möglichkeit, dein ganzes Studium zu planen. Plane, welche Module du in welchem Semester belegen möchtest und überprüfe, ob du damit alle ECTS-Vorgaben deines Studiums erreichst. Platzhalter erlauben es Dir, individuelle Inhalte anzulegen. Wenn du die Seitenleiste ausklappst, siehst du Modulempfehlungen für deinen Studiengang.`;
 
   // conditions for sidenav to open
   isActivePlan$: Observable<boolean>;
@@ -498,12 +498,13 @@ export class StudyPlanDetailComponent implements OnInit {
     return activeSemesters.includes(lastSemester.semester);
   }
 
+  // TODO: Can you translate every element of the following?
   openAddSemesterDialog(): void {
     const confirmationDialogInterface: ConfirmationDialogData = {
       dialogTitle: 'Weiteres Semester anhängen?',
       actionType: 'add',
       warningMessage:
-        'Bitte füge nur ein Semester hinzu, wenn du auch wirklich ein weiteres Semester studierst, denn hierdurch wird die Studienzeit in deinem Profil verlängert.',
+        $localize `Bitte füge nur ein Semester hinzu, wenn du auch wirklich ein weiteres Semester studierst, denn hierdurch wird die Studienzeit in deinem Profil verlängert.`,
       confirmationItem: 'ein neues Semester',
       confirmButtonLabel: 'Hinzufügen',
       cancelButtonLabel: 'Abbrechen',
@@ -647,7 +648,7 @@ export class StudyPlanDetailComponent implements OnInit {
 
         const dialogRef = this.dialog.open(DialogComponent, {
           data: {
-            dialogTitle: 'Semester abschließen',
+            dialogTitle: $localize `Semester abschließen`,
             dialogContentId: 'finish-semester-stepper',
             missingModules: pathModules.length > 0 ? pathModules : [], // opens for all (user generated) modules, can also be empty
           },
@@ -711,9 +712,10 @@ export class StudyPlanDetailComponent implements OnInit {
   }
 
   // confirm dialog for finishing an empty semester
+  // TODO: Can you translate every element of the following?
   confirmFinishingEmptySemester(semester: string) {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Semester ohne Module abschließen?',
+      dialogTitle: $localize `Semester ohne Module abschließen?`,
       confirmationItem: 'dem Semesterabschluss ohne Module oder Platzhalter',
       confirmButtonLabel: 'Abschließen',
       cancelButtonLabel: 'Abbrechen',
