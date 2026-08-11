@@ -176,11 +176,6 @@ const routes: Routes = [
         (m) => m.UnivisHelperModule
       ),
   },
-  {
-    path: 'admin',
-    loadChildren: () =>
-      import('./modules/admin/admin.module').then((m) => m.AdminModule),
-  },
   { path: '404', component: NotFoundComponent},
   { path: '**', redirectTo: '404'}
 ];
