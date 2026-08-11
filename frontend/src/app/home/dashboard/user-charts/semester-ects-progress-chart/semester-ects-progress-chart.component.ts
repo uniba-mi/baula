@@ -56,6 +56,7 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
     this.calculateDataForLineChart();
   }
 
+  // TODO: Is it safe to translate following labels?
   calculateDataForLineChart() {
     this.lineChartData = {
       datasets: [

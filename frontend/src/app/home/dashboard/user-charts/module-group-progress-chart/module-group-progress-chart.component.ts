@@ -14,6 +14,7 @@ export class ModuleGroupProgressChartComponent implements OnInit, OnChanges {
   @Input() studyPath: StudyPath;
   @Input() mgs: ModuleGroup[] | undefined | null;
 
+  // TODO: Can you translate the following strings?
   public moduleGroupChartLabels: string[] = ['Bestanden', 'Nicht bestanden', 'Belegt', 'Nicht belegt'];
   public moduleGroupChartDatasets: ChartConfiguration<'pie'>['data']['datasets'];
 

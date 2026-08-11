@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   chartMetadata = chartMetadata;
   finishSemesterHint: string = 'finishSemester-hint';
   finishSemesterHintMessage: string =
-    'Es ist Zeit, dein Semester abzuschließen. Navigiere über "Studienverlaufsplan" zu deinem Plan und schließe das Semester ab, indem du auf "Jetzt Semester abschließen" klickst. Nur so können deine Module und Platzhalter aus dem vergangenen Semester zum Studienverlauf hinzugefügt und deine aktuellen Leistungen berücksichtigt werden.';
+    $localize `Es ist Zeit, dein Semester abzuschließen. Navigiere über "Studienverlaufsplan" zu deinem Plan und schließe das Semester ab, indem du auf "Jetzt Semester abschließen" klickst. Nur so können deine Module und Platzhalter aus dem vergangenen Semester zum Studienverlauf hinzugefügt und deine aktuellen Leistungen berücksichtigt werden.`;
   showFinishSemesterHint$: Observable<boolean>;
   isPersonalisationComplete = false;
   dashboardData$: Observable<DashboardData>;

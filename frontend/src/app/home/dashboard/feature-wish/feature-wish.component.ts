@@ -48,7 +48,7 @@ export class FeatureWishComponent {
         this.allFeaturesWished = response;
       },
       error: (error) => {
-        this.allWishesErrorMessage = error.error?.error?.message || 'Fehler beim Abrufen aller Feature-Wünsche. Bitte versuche es später erneut.';
+        this.allWishesErrorMessage = error.error?.error?.message || $localize `Fehler beim Abrufen aller Feature-Wünsche. Bitte versuche es später erneut.`;
       }
     });
 
@@ -58,7 +58,7 @@ export class FeatureWishComponent {
         this.usersUnapprovedWishes = response;
       },
       error: (error) => {
-        this.usersUnapprovedWishesErrorMessage = error.error?.error?.message || 'Fehler beim Abrufen deiner ungenehmigten Feature-Wünsche. Bitte versuche es später erneut.';
+        this.usersUnapprovedWishesErrorMessage = error.error?.error?.message || $localize `Fehler beim Abrufen deiner ungenehmigten Feature-Wünsche. Bitte versuche es später erneut.`;
         console.error('Error retrieving user\'s unapproved feature wishes:', error);
       }
     });
@@ -70,15 +70,13 @@ export class FeatureWishComponent {
         this.title = '';
         this.description = '';
         this.selectedIcon = undefined;
-        this.successMessage = 'Dein Feature-Wunsch wurde erfolgreich eingereicht! ' +
-          'Dieser wird nun geprüft und bei Genehmigung in der Liste der Wünsche erscheinen. \n' +
-          'Vielen Dank für dein Feedback!';
+        this.successMessage = $localize `Dein Feature-Wunsch wurde erfolgreich eingereicht! Dieser wird nun geprüft und bei Genehmigung in der Liste der Wünsche erscheinen. Vielen Dank für dein Feedback!`;
         this.errorMessage = '';
       },
       error: (error) => {
         console.error('Error sending feature wish:', error);
         console.error('Error sending feature wish:', error.error?.error?.message);
-        this.errorMessage = error.error?.error?.message || 'Ein Fehler ist aufgetreten. Bitte versuche es später erneut.';
+        this.errorMessage = error.error?.error?.message || $localize `Ein Fehler ist aufgetreten. Bitte versuche es später erneut.`;
         this.successMessage = '';
       }
     });
@@ -90,7 +88,7 @@ export class FeatureWishComponent {
         this.usersUnapprovedWishes = this.usersUnapprovedWishes.filter(w => w._id !== wish._id);
       },
       error: (error) => {
-        this.usersUnapprovedWishesErrorMessage = error.error?.error?.message || 'Fehler beim Löschen deines ungenehmigten Feature-Wunsches. Bitte versuche es später erneut.';
+        this.usersUnapprovedWishesErrorMessage = error.error?.error?.message || $localize `Fehler beim Löschen deines ungenehmigten Feature-Wunsches. Bitte versuche es später erneut.`;
       }
     });
   }

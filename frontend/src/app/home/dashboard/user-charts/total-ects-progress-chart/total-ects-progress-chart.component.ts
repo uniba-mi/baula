@@ -58,6 +58,7 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       let aimedEctsOverSemesters = this.getSummedValues(this.studyPlan.semesterPlans.map(el => el.aimedEcts));
       let summedEcteOverSemesters = this.getSummedValues(this.studyPlan.semesterPlans.map(el => el.summedEcts));
       
+      // TODO: Is it safe to translate following labels?
       this.studyProgressData.datasets = this.studyProgressData.datasets.concat([
         {
           data: aimedEctsOverSemesters,
@@ -92,6 +93,7 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       for(const [index,value] of this.semesters.entries()) {
         aimedEctsOverSemesters.push(step + step * index);
       }
+      // TODO: Is it safe to translate following label?
       this.studyProgressData.datasets.push(
         {
           data: aimedEctsOverSemesters,
@@ -115,6 +117,7 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       );
       return passedModulesEcts;
     }));
+    // TODO: Is it safe to translate following label?
     this.studyProgressData.datasets.push(
       {
         data: passedEctsOverSemester,

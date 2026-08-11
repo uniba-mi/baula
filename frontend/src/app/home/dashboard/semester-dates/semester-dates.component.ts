@@ -91,14 +91,14 @@ export class SemesterDatesComponent implements OnInit {
     const daysToStart = this.calculateDaysBetween(this.today, startDate);
     const daysToEnd = this.calculateDaysBetween(this.today, endDate);
 
-    const pluralize = (count: number) => (count === 1 ? 'Tag' : 'Tagen');
+    const pluralize = (count: number) => (count === 1 ? $localize `Tag` : $localize `:Plural von Tag (day):Tagen`);
 
     if (daysToStart > 0) {
-      return `beginnt in ${daysToStart} ${pluralize(daysToStart)}`;
+      return $localize `beginnt in ${daysToStart} ${pluralize(daysToStart)}`;
     } else if (daysToEnd > 0 && this.isWithinPeriod(date)) {
-      return `endet in ${daysToEnd} ${pluralize(daysToEnd)}`;
+      return $localize `endet in ${daysToEnd} ${pluralize(daysToEnd)}`;
     } else {
-      return `abgeschlossen`;
+      return $localize `abgeschlossen`;
     }
   }
 

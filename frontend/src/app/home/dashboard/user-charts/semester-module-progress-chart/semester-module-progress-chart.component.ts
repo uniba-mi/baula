@@ -49,6 +49,7 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
     this.calculateDataForChart();
   }
 
+  // TODO: Is it safe to translate following labels?
   calculateDataForChart() {
     this.barChartData = {
       labels: this.semesters.map((semester) => semester.shortName),

@@ -26,6 +26,7 @@ export class PersonalisationStatusComponent {
   private jobs$: Observable<ExtendedJob[] | undefined>;
   private favouriteModules$: Observable<Module[]>;
 
+  // TODO: Is it safe to add $localize to the description of the following elements?
   steps: {
     title: string;
     description: string;
