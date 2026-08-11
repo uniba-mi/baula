@@ -204,7 +204,7 @@ export async function updateModuleInStudyPath(
     name &&
     status &&
     userReq._id &&
-    ects &&
+    ects !== undefined &&
     semester &&
     mgId &&
     isUserGenerated !== undefined &&

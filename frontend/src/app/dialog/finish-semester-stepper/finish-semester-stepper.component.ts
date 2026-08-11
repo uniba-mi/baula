@@ -122,8 +122,8 @@ export class FinishSemesterStepperComponent {
           notes: [module.notes],
           status: [module.status, Validators.required],
           ects: [
-            module.ects,
-            [Validators.required, Validators.min(1), Validators.max(30)],
+            module.ects !== undefined ? module.ects : '',
+            [Validators.required, Validators.min(0), Validators.max(30)],
           ],
           grade: [module.grade.toString(), []],
           semester: module.semester,

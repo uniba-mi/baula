@@ -143,7 +143,7 @@
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline">
                     <mat-label>ECTS</mat-label>
-                    <input matInput formControlName="ects" #ects type="number" min="1" max="30" required>
+                    <input matInput formControlName="ects" #ects type="number" min="0" max="30" required>
                     @if (getFormGroup(getFormKey(module, i)).get('ects')?.touched && getFormGroup(getFormKey(module, i)).get('ects')?.invalid) {
                       <mat-error
                         >@if (
@@ -151,7 +151,7 @@
                         getFormGroup(getFormKey(module, i)).get('ects')?.errors?.max
                         ) {
                         <span
-                        >Die ECTS müssen mindestens 1 und maximal 30 sein.</span>
+                        >Die ECTS müssen mindestens 0 und maximal 30 sein. Gib 0 ECTS an, wenn das Modul eine freiwillige Zusatzleistung ist.</span>
                         }@if (getFormGroup(getFormKey(module, i)).get('ects')?.errors?.required) {
                         <span
                           >Das
@@ -162,7 +162,7 @@
                   }
                 </mat-form-field>
                 <i class="bi bi-info-circle"
-                  matTooltip="Gib hier die ECTS ein. Der Wert darf zwischen 1 und 30 liegen."
+                  matTooltip="Gib hier die ECTS ein. Die ECTS müssen mindestens 0 und maximal 30 sein. Gib 0 ECTS an, wenn das Modul eine freiwillige Zusatzleistung ist."
                 matTooltipClass="custom-tooltip" appTooltip></i>
               </div>
               <div class="input-field-wrapper">
