@@ -76,6 +76,7 @@ export class ResultPageComponent implements OnInit {
       const monthListing = this.countOccurences(
         filteredResults.map((el) => el.evaluationCode)
       );
+      // TODO: Can you translate the following? Up to line 130
       cards.push({
         id: 'participationMonthsChart',
         type: 'bar',
@@ -165,6 +166,7 @@ export class ResultPageComponent implements OnInit {
     const meanNps = Number(
       this.calculateMean(results.map((el) => el.nps)).toFixed(2)
     );
+    // TODO: Can you translate the following? Up to line 203
     return {
       title: 'Überblicksinformationen',
       items: [
