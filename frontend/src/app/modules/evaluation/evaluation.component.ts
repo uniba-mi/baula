@@ -135,7 +135,7 @@ export class EvaluationComponent implements OnInit {
         this.snackbar.openSnackBar({
           type: AlertType.DANGER,
           message:
-            'Bitte ordnen Sie alle Module einem Feld zu und klicken Sie auf "Speichern", bevor Sie einen anderen Abschnitt auswählen.',
+            $localize `Bitte ordnen Sie alle Module einem Feld zu und klicken Sie auf "Speichern", bevor Sie einen anderen Abschnitt auswählen.`,
         });
         return;
       }
@@ -144,7 +144,7 @@ export class EvaluationComponent implements OnInit {
       if (this.changesMade && this.moduleDataAvailable && !this.saveClicked) {
         this.snackbar.openSnackBar({
           type: AlertType.DANGER,
-          message: 'Bitte speichern Sie Ihre Eingaben.',
+          message: $localize `Bitte speichern Sie Ihre Eingaben.`,
         });
         return;
       }
@@ -304,7 +304,7 @@ export class EvaluationComponent implements OnInit {
         next: (response) => {
           this.snackbar.openSnackBar({
             type: AlertType.SUCCESS,
-            message: 'Zuordnung wurde gespeichert.',
+            message: $localize `Zuordnung wurde gespeichert.`,
           });
 
           // Update local data
@@ -334,7 +334,7 @@ export class EvaluationComponent implements OnInit {
         error: () => {
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
-            message: 'Zuordnung konnte nicht gespeichert werden.',
+            message: $localize `Zuordnung konnte nicht gespeichert werden.`,
           });
           this.isLoading = false;
         },
@@ -345,7 +345,7 @@ export class EvaluationComponent implements OnInit {
     navigator.clipboard.writeText(desc).then(() => {
       this.snackbar.openSnackBar({
         type: AlertType.SUCCESS,
-        message: 'Text in die Zwischenablage kopiert!',
+        message: $localize `Text in die Zwischenablage kopiert!`,
       });
     });
   }
@@ -367,7 +367,7 @@ export class EvaluationComponent implements OnInit {
       `);
       newWindow.document.close();
     } else {
-      alert('Popup-Blocker aktiv? Neues Fenster konnte nicht geöffnet werden.');
+      alert($localize `Popup-Blocker aktiv? Neues Fenster konnte nicht geöffnet werden.`);
     }
   }
 
