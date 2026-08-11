@@ -85,7 +85,7 @@ export class ManageAcademicDatesComponent implements OnInit, AfterViewInit {
   openEditDialog(element: AcademicDate) {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {
-        dialogTitle: 'Zeitraum bearbeiten',
+        dialogTitle: $localize `Zeitraum bearbeiten`,
         dialogContentId: 'academic-date-dialog',
         academicDate: element,
       },
@@ -118,7 +118,7 @@ export class ManageAcademicDatesComponent implements OnInit, AfterViewInit {
   openDeleteDialog(element: AcademicDate) {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {
-        dialogTitle: 'Zeitraum löschen',
+        dialogTitle: $localize `Zeitraum löschen`,
         dialogContentId: 'delete-dialog',
       },
     });

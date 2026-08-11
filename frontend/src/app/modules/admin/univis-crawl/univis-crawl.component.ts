@@ -40,7 +40,7 @@ export class UnivisCrawlComponent implements OnInit {
     if (this.selectedSemester !== '') {
       this.dialog.open(AdminDialogComponent, {
         data: {
-          dialogTitle: 'UnivIS Crawl gestartet...',
+          dialogTitle: $localize `UnivIS Crawl gestartet...`,
           dialogContentId: 'univis-crawl-dialog',
           univisCrawl$: this.rest.crawlUnivIS(this.selectedSemester),
         },
@@ -49,7 +49,7 @@ export class UnivisCrawlComponent implements OnInit {
     } else {
       this.snackbar.openSnackBar({
         type: AlertType.DANGER,
-        message: 'Es wurde kein Semester ausgewählt!',
+        message: $localize `Es wurde kein Semester ausgewählt!`,
       });
     }
   }

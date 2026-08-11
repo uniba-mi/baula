@@ -50,7 +50,7 @@ export class EditConnectionDialogComponent implements OnInit {
     navigator.clipboard.writeText(this.chair).then(() => {
       this.snackbar.openSnackBar({
         type: AlertType.SUCCESS,
-        message: 'Lehrstuhl in die Zwischenablage kopiert!',
+        message: $localize `Lehrstuhl in die Zwischenablage kopiert!`,
       });
     });
   }

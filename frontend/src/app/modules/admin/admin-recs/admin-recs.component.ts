@@ -15,11 +15,11 @@ export class AdminRecsComponent {
   getModuleEmbeddings() {
     this.adminService.updateModuleEmbeddings().subscribe({
       next: (response) => {
-        console.log('Modulembeddings wurden aktualisiert', response);
+        console.log($localize `Modulembeddings wurden aktualisiert`, response);
       },
       error: (error) => {
         console.error(
-          'Modulembeddings konnten nicht aktualisiert werden',
+          $localize `Modulembeddings konnten nicht aktualisiert werden`,
           error,
         );
       },
@@ -29,10 +29,10 @@ export class AdminRecsComponent {
   getTopics() {
     this.adminService.initializeTopics().subscribe({
       next: (response) => {
-        console.log('Topics wurden initialisiert', response);
+        console.log($localize `Topics wurden initialisiert`, response);
       },
       error: (error) => {
-        console.error('Topics konnten nicht initialisiert werden', error);
+        console.error($localize `Topics konnten nicht initialisiert werden`, error);
       },
     });
   }
@@ -40,11 +40,11 @@ export class AdminRecsComponent {
   initEvaluationData() {
     this.evalService.initEvaluationData().subscribe({
       next: (response) => {
-        console.log('Evaluationsdaten wurden initialisiert', response);
+        console.log($localize `Evaluationsdaten wurden initialisiert`, response);
       },
       error: (error) => {
         console.error(
-          'Evaluationsdaten konnten nicht initialisiert werden',
+          $localize `Evaluationsdaten konnten nicht initialisiert werden`,
           error,
         );
       },

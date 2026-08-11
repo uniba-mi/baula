@@ -52,7 +52,7 @@ export class ConnectionCardComponent {
   ) {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {
-        dialogTitle: 'Verknüfpung von Modul zu Lehrveranstaltung bearbeiten',
+        dialogTitle: $localize `Verknüfpung von Modul zu Lehrveranstaltung bearbeiten`,
         dialogContentId: 'edit-connection-dialog',
         mCourse,
         semester: this.semester,

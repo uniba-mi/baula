@@ -13,7 +13,7 @@ export class OtherActionsComponent {
   private api = inject(AdminRestService);
 
   triggerError() {
-    throw new Error("Testfehler für Sentry :)");
+    throw new Error($localize `Testfehler für Sentry :)`);
   }
 
   resetNotificationHint() {

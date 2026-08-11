@@ -23,6 +23,7 @@ export class ReportingComponent implements OnInit {
     failed: 'rgba(235, 105, 114, 0.8)',
   };
 
+  // TODO: Can you translate following?
   columnKeys = ['name', 'count'];
   columns = [
     {
@@ -49,6 +50,7 @@ export class ReportingComponent implements OnInit {
 
         let cards: ReportCard[] = [];
         // add meta card
+        // TODO: Can you translate the following? Up to line 235
         cards.push({
           id: 'userMetaData',
           type: 'meta',

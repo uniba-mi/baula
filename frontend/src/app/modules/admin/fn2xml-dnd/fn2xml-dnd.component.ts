@@ -53,7 +53,7 @@ export class Fn2xmlDndComponent implements OnInit {
     if (this.selectedSemester !== '') {
       this.dialog.open(AdminDialogComponent, {
         data: {
-          dialogTitle: 'FlexNow Modulhandbuch Crawl gestartet...',
+          dialogTitle: $localize `FlexNow Modulhandbuch Crawl gestartet...`,
           dialogContentId: 'univis-crawl-dialog',
           univisCrawl$: this.rest.crawlFlexNow(this.selectedSemester),
         },
@@ -62,7 +62,7 @@ export class Fn2xmlDndComponent implements OnInit {
     } else {
       this.snackbar.openSnackBar({
         type: AlertType.DANGER,
-        message: 'Es wurde kein Semester ausgewählt!',
+        message: $localize `Es wurde kein Semester ausgewählt!`,
       });
     }
   }
