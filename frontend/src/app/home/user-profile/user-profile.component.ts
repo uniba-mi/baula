@@ -70,13 +70,13 @@ export class UserProfileComponent implements OnInit {
 
   openDeleteDialog(user: User) {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Account löschen?',
+      dialogTitle: $localize `Account löschen?`,
       actionType: 'delete',
-      confirmationItem: 'deinen Account',
+      confirmationItem: $localize `deinen Account`,
       warningMessage:
-        'Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.',
-      confirmButtonLabel: 'Ja, ich möchte meinen Account löschen',
-      cancelButtonLabel: 'Abbrechen',
+        $localize `Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.`,
+      confirmButtonLabel: $localize `Ja, ich möchte meinen Account löschen`,
+      cancelButtonLabel: $localize `Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.userUpdateService.deleteUser(user);
@@ -90,9 +90,9 @@ export class UserProfileComponent implements OnInit {
   importUserData(user: User) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Daten importieren:',
+        dialogTitle: $localize `Daten importieren:`,
         dialogContentId: 'import-dialog',
-        importType: 'deine Nutzerdaten',
+        importType: $localize `deine Nutzerdaten`,
       },
       minWidth: '50vw',
     });

@@ -249,10 +249,10 @@ export class UserFormComponent implements OnInit, OnChanges {
     if (mhbs.length != 1) {
       // set programmetype and semesterdate for further selection of most appropriate mhb
       const programmeType = spName.startsWith('Bachelor')
-        ? 'Bachelor'
+        ? $localize `Bachelor`
         : spName.startsWith('Master')
-          ? 'Master'
-          : 'Lehramt';
+          ? $localize `Master`
+          : $localize `Lehramt`;
       const semesterDate = new Semester().semesterDate;
 
       // transform semester strings into Date

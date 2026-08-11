@@ -60,19 +60,19 @@ export class UserConsentsComponent {
       case 'bakule-survey':
         return {
           dialogTitle: isConfirmed
-            ? 'Einwilligung zum Evaluations- und Forschungsvorhaben widerrufen?'
-            : 'Einwilligung zum Evaluations- und Forschungsvorhaben geben?',
+            ? $localize `Einwilligung zum Evaluations- und Forschungsvorhaben widerrufen?`
+            : $localize `Einwilligung zum Evaluations- und Forschungsvorhaben geben?`,
           actionType: isConfirmed ? 'delete' : 'confirm',
           confirmationItem: isConfirmed
-            ? 'deine Einwilligung zum Evaluations- und Forschungsvorhaben'
-            : 'Einwilligung zum Evaluations- und Forschungsvorhaben',
-          confirmButtonLabel: isConfirmed ? 'Widerrufen' : 'Einwilligung geben',
-          cancelButtonLabel: 'Abbrechen',
+            ? $localize `deine Einwilligung zum Evaluations- und Forschungsvorhaben`
+            : $localize `Einwilligung zum Evaluations- und Forschungsvorhaben`,
+          confirmButtonLabel: isConfirmed ? $localize `Widerrufen` : $localize `Einwilligung geben`,
+          cancelButtonLabel: $localize `Abbrechen`,
           confirmButtonClass: isConfirmed
             ? 'btn btn-danger'
             : 'btn btn-primary',
           warningMessage: isConfirmed
-            ? 'Der Widerruf betrifft nur zukünftige Umfragen, die bisherige Teilnahme an der Umfrage wird direkt mit Abgabe anonymisiert und lässt sich somit nicht mehr deinem Nutzerprofil zuordnen.'
+            ? $localize `Der Widerruf betrifft nur zukünftige Umfragen, die bisherige Teilnahme an der Umfrage wird direkt mit Abgabe anonymisiert und lässt sich somit nicht mehr deinem Nutzerprofil zuordnen.`
             : '',
           callbackMethod: () => {
             this.updateConsent(type, !isConfirmed);
