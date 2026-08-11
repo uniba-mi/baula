@@ -77,6 +77,7 @@ export class ModuleOverviewComponent
   maintenance = false; // Variable to disable features and make maintenance message visible
   sideNavOpened = true;
   mobileView = false;
+  // TODO: Can following names be translated with $localize?
   groupingOptions: Option[] = [
     {
       value: 'struktur',
@@ -92,8 +93,9 @@ export class ModuleOverviewComponent
   ];
   moduleHint: string = 'module-hint';
   moduleHintMessage: string =
-    'Hier siehst du alle Module, die in deinem Modulhandbuch vorhanden sind. Module sind thematische Blöcke, die du in deinen Studienverlaufsplan einplanen kannst. Module können wiederum Lehrveranstaltungen enthalten, die du unter Stundenplanung in deinen Stundenplan deines aktuellen Semesters einplanen kannst.';
-  filterList: OptionGroup[] = [
+    $localize `Hier siehst du alle Module, die in deinem Modulhandbuch vorhanden sind. Module sind thematische Blöcke, die du in deinen Studienverlaufsplan einplanen kannst. Module können wiederum Lehrveranstaltungen enthalten, die du unter Stundenplanung in deinen Stundenplan deines aktuellen Semesters einplanen kannst.`;
+  // TODO: Can following be translated?
+    filterList: OptionGroup[] = [
     {
       name: 'Angebotssemester',
       options: [
