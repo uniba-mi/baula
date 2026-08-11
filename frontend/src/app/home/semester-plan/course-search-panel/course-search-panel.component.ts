@@ -72,6 +72,7 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
   private trackDebounceDelay: number = 5000;
   private lastTrackedQuery: string = '';
 
+  // TODO: Can following be translated?
   searchInOptions: Option[] = [
     {
       value: 'name',

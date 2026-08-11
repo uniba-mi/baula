@@ -79,7 +79,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
   ectsSum$: Observable<number | null | undefined>;
   semesterPlanHint: string = 'semesterPlan-hint';
   semesterPlanHintMessage: string =
-    'Hier planst du dein aktuelles Semester. Klicke auf Hinzufügen, um Lehrveranstaltungen zu suchen und diese bequem deinem Stundenplan hinzuzufügen. In der selben Menüleiste findest du beim Klick auf <i class="bi bi-exclamation-triangle-fill"></i> Planungshinweise wie z.B. fehlende oder sich überschneidende Lehrveranstaltungen.';
+    $localize `Hier planst du dein aktuelles Semester. Klicke auf Hinzufügen, um Lehrveranstaltungen zu suchen und diese bequem deinem Stundenplan hinzuzufügen. In der selben Menüleiste findest du beim Klick auf <i class="bi bi-exclamation-triangle-fill"></i> Planungshinweise wie z.B. fehlende oder sich überschneidende Lehrveranstaltungen.`;
   timetable: Timetable;
   initialView = 'timeGridWeek';
   academicDates$: Observable<AcademicDate[]>;
@@ -202,7 +202,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
       this.snackbar.openSnackBar({
         type: AlertType.DANGER,
         message:
-          'Du hast keine Lehrveranstaltungen ausgewählt, es kann daher kein PDF angezeigt werden.',
+          $localize `Du hast keine Lehrveranstaltungen ausgewählt, es kann daher kein PDF angezeigt werden.`,
       });
     }
   }
@@ -258,7 +258,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
           } else {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
-              message: `Der Stundenplan konnte nicht importiert werden. Wechsel zunächst in das ${this.transform.transformUnivIsSemester(
+              message: $localize `Der Stundenplan konnte nicht importiert werden. Wechsel zunächst in das ${this.transform.transformUnivIsSemester(
                 result.semester,
               )}!`,
             });
@@ -267,7 +267,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
             message:
-              'Der Stundenplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!',
+              $localize `Der Stundenplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!`,
           });
         }
       }

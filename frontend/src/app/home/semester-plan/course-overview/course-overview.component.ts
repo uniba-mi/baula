@@ -46,7 +46,7 @@ export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {
   selectedFilters: Option[];
   courseSearchHint: string = 'courseSearch-hint';
   courseSearchHintMessage: string =
-    'Hier findest du Lehrveranstaltungen, die du in deinen Stundenplan einplanen kannst. Lehrveranstaltungen gehören immer zu einem größeren thematischen Abschnitt, einem Modul. Damit du weißt, welche Lehrveranstaltung zu welchem Modul gehört, kannst du die Modulzugehörigkeit sehen. Du kannst auch direkt Lehrveranstaltungen zu einem Modul suchen, wenn du im <a class="link" href="/app/modulkatalog">Modulkatalog</a> ein Modul auswählst und dort auf den Button "Finde passende Lehrveranstaltungen" klickst.';
+    $localize `Hier findest du Lehrveranstaltungen, die du in deinen Stundenplan einplanen kannst. Lehrveranstaltungen gehören immer zu einem größeren thematischen Abschnitt, einem Modul. Damit du weißt, welche Lehrveranstaltung zu welchem Modul gehört, kannst du die Modulzugehörigkeit sehen. Du kannst auch direkt Lehrveranstaltungen zu einem Modul suchen, wenn du im <a class="link" href="/app/modulkatalog">Modulkatalog</a> ein Modul auswählst und dort auf den Button "Finde passende Lehrveranstaltungen" klickst.`;
   searchSettings: SearchSettings;
   courses: Course[] = [];
   searchResult: Course[] | undefined = undefined;
