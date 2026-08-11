@@ -61,6 +61,7 @@ export class RecsSidenavComponent implements OnInit, OnChanges {
   isSmallScreen: boolean = false;
   passedOrTakenAcronyms: string[] = [];
 
+  // TODO: Can you translate the following?
   tabs = [
     {
       label: 'Passend',
@@ -98,28 +99,29 @@ export class RecsSidenavComponent implements OnInit, OnChanges {
     serendipity: {
       key: 'serendipity-hint',
       message:
-        'Diese Liste zeigt Module, die Studierende deines Studiengangs oft wählen. Bitte beachte, dass die Universität Bamberg mit ihren Studiengängen ein breites Wissensangebot anbietet, das hier nicht abgebildet ist. Bitte informiere dich abseits dieser Liste über die vielfältigen Möglichkeiten deines Studiengangs.',
+        $localize `Diese Liste zeigt Module, die Studierende deines Studiengangs oft wählen. Bitte beachte, dass die Universität Bamberg mit ihren Studiengängen ein breites Wissensangebot anbietet, das hier nicht abgebildet ist. Bitte informiere dich abseits dieser Liste über die vielfältigen Möglichkeiten deines Studiengangs.`,
     },
     newModules: {
       key: 'newModules-hint',
       message:
-        'Diese Liste zeigt Module, die in einer neuen Version angeboten werden. Dies sind teilweise neu entstandene Module, können jedoch im individuellem Fall auch eine Lehrstuhländerung oder Restrukturierung des bisherigen Modules bedeuten.',
+        $localize `Diese Liste zeigt Module, die in einer neuen Version angeboten werden. Dies sind teilweise neu entstandene Module, können jedoch im individuellem Fall auch eine Lehrstuhländerung oder Restrukturierung des bisherigen Modules bedeuten.`,
     },
     serendipitousModules: {
       key: 'serendipitous-modules-hint',
       message:
-        'Diese Liste zeigt Module aus deinem Modulhandbuch, die du vielleicht noch nicht kennst.',
+        $localize `Diese Liste zeigt Module aus deinem Modulhandbuch, die du vielleicht noch nicht kennst.`,
     },
     personalModules: {
       key: 'personalModules-hint',
       message:
-        'Diese Liste zeigt Module, die zu den Angaben passen, die du unter "Personalisierung" gemacht hast (z. B. Jobs, Interessen).',
+        $localize `Diese Liste zeigt Module, die zu den Angaben passen, die du unter "Personalisierung" gemacht hast (z. B. Jobs, Interessen).`,
     },
   };
 
   searchSettings$: Observable<SearchSettings>;
   currentSearchTerm: string = '';
   currentlySelectedFilters: Option[] = [];
+  // TODO: Can you translate the following? Up to line 200
   filterList: OptionGroup[] = [
     {
       name: 'Angebotssemester',
@@ -411,11 +413,11 @@ export class RecsSidenavComponent implements OnInit, OnChanges {
 
   openDeleteFavouritesDialog(): void {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Merkliste löschen?',
+      dialogTitle: $localize `Merkliste löschen?`,
       actionType: 'delete',
-      confirmationItem: 'deine gemerkten Module',
-      confirmButtonLabel: 'Löschen',
-      cancelButtonLabel: 'Abbrechen',
+      confirmationItem: $localize `deine gemerkten Module`,
+      confirmButtonLabel: $localize `Löschen`,
+      cancelButtonLabel: $localize `Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.deleteFavourites();
