@@ -6,6 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ShortenCourseTypePipe implements PipeTransform {
   transform(type: string): string {
+    // TODO: Can you translate the following?
     switch (type) {
         case 'Seminar':
             return 'S';

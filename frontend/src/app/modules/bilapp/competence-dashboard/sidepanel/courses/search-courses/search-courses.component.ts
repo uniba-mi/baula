@@ -24,6 +24,7 @@ export class SearchCoursesComponent {
   searchTermControl = new FormControl();
   filters = new FormControl();
 
+  // TODO: Can you translate the following?
   filterList: string[] = ['Titel', 'Beschreibung', 'Typ', 'Modulnummer'];
 
   ngOnInit(): void {
