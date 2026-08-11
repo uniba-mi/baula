@@ -74,6 +74,7 @@ export class RecommendationsListComponent implements OnInit {
   topicsArray: Topic[] = [];
   jobsArray: Job[] = [];
 
+  // TODO: Can following be translated?
   filterList: OptionGroup[] = [
     {
       name: 'Angebotssemester',

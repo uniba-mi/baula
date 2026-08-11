@@ -40,6 +40,7 @@ export class JobCardComponent implements OnInit {
   }
 
   editJob(job: Job) {
+    // TODO: Can following dialogTitle be translated?
     const dialogRef = this.dialog.open(DialogComponent, {
       maxWidth: window.innerWidth < 1400 ? '90vw' : '50vw',
       data: {
@@ -61,6 +62,7 @@ export class JobCardComponent implements OnInit {
   }
 
   openDeleteConfirmationDialog(job: Job) {
+    // TODO: Can following labels be translated?
     const confirmationDialogInterface: ConfirmationDialogData = {
       dialogTitle: 'Jobanzeige löschen?',
       actionType: 'delete',

@@ -75,7 +75,7 @@ export class DataPreviewComponent {
   }
 
   get title(): string {
-    return this.type === 'jobs' ? 'Jobs' : 'Interessen';
+    return this.type === 'jobs' ? $localize `Jobs` : $localize `Interessen`;
   }
 
   get routeLink(): string {
@@ -88,7 +88,7 @@ export class DataPreviewComponent {
 
   get tooltipText(): string {
     const label = this.type === 'jobs' ? 'Jobs' : 'Themen';
-    return `Module, die dir auf Basis deiner angegebenen ${label} empfohlen werden.`;
+    return $localize `Module, die dir auf Basis deiner angegebenen ${label} empfohlen werden.`;
   }
 
   onModuleClick(acronym: string): void {
