@@ -66,7 +66,7 @@ export class UserDialogComponent {
   saveUser() {
     if (!this.validateUserData()) {
       this.currentStep = 'loading'; // set loading to show loading message till all request where made
-      this.loadingMessage = 'Dein Nutzer wird nun angelegt.';
+      this.loadingMessage = $localize `Dein Nutzer wird nun angelegt.`;
       this.initializeNewUser()
         .pipe(take(1))
         .subscribe((user) => {
@@ -111,7 +111,7 @@ export class UserDialogComponent {
         }
       }
     } else {
-      this.errorMessage = 'Stimme bitte den Nutzungsbedingungen zu.';
+      this.errorMessage = $localize `Stimme bitte den Nutzungsbedingungen zu.`;
     }
   }
 
@@ -125,7 +125,7 @@ export class UserDialogComponent {
   returnToStart() {
     this.currentStep = 'loading';
     this.loadingMessage =
-      'Schade, dass du Baula doch nicht nutzen möchtest. Wir melden dich ab.';
+      $localize `Schade, dass du Baula doch nicht nutzen möchtest. Wir melden dich ab.`;
     if (this.user.authType === 'saml') {
       this.auth
         .shibLogout()
@@ -149,7 +149,7 @@ export class UserDialogComponent {
     if (this.metadataConfirmed) {
       this.currentStep = 'loading';
       this.loadingMessage =
-        'Wir laden deine Daten von FlexNow, das kann kurz dauern...';
+        $localize `Wir laden deine Daten von FlexNow, das kann kurz dauern...`;
       this.flexNowService
         .getFlexNowData(
           'create-user',
@@ -162,7 +162,7 @@ export class UserDialogComponent {
             this.errorMessage = this.checkMetaDataForErrors(this.user);
           } else {
             this.errorMessage =
-              'Leider konnten wir für dich keine Daten aus FlexNow importieren!';
+              $localize `Leider konnten wir für dich keine Daten aus FlexNow importieren!`;
           }
           this.loadingMessage = undefined;
           this.nextStep('createUser');
@@ -178,7 +178,7 @@ export class UserDialogComponent {
       !data.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbId ||
       !data.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbVersion
     ) {
-      return 'Leider konnten wir kein Modulhandbuch extrahieren, wähle daher ein passendes Modulhandbuch aus.';
+      return $localize `Leider konnten wir kein Modulhandbuch extrahieren, wähle daher ein passendes Modulhandbuch aus.`;
     }
     return undefined;
   }

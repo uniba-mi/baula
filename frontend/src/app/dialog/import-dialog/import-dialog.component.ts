@@ -97,7 +97,7 @@ export class ImportDialogComponent {
           this.filename = undefined;
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
-            message: 'Die ausgewählte Datei ist keine valide .json-Datei.',
+            message: $localize `Die ausgewählte Datei ist keine valide .json-Datei.`,
           });
         }
       };
@@ -108,7 +108,7 @@ export class ImportDialogComponent {
       this.snackbar.openSnackBar({
         type: AlertType.DANGER,
         message:
-          'Die ausgewählte Datei hat nicht den richtigen Dateityp! Lade bitte eine .json-Datei hoch.',
+          $localize `Die ausgewählte Datei hat nicht den richtigen Dateityp! Lade bitte eine .json-Datei hoch.`,
       });
 
       this.analytics.trackEvent('InvalidFileType', { message: 'Not JSON' });
