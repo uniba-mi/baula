@@ -53,6 +53,7 @@ export class LineChartCardComponent {
         type: 'line',
         data: series.data,
         connectNulls: true,
+        smooth: series.smooth ?? false,
         lineStyle: series.color ? { color: series.color } : undefined,
         itemStyle: series.color ? { color: series.color } : undefined,
         areaStyle: series.area ? {} : undefined,

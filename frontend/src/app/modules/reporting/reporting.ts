@@ -60,6 +60,7 @@ interface LineChartSeries {
     data: number[],
     color?: string, // overrides the default palette color for this series' line/points
     area?: boolean, // fills the area under this series' line
+    smooth?: boolean, // curves the line instead of straight segments between points
 }
 
 export interface PieCardData extends CardData {

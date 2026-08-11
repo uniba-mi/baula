@@ -53,14 +53,14 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges, On
 
   calculateDataForLineChart() {
     const series: LineChartCardData['series'] = [
-      { name: 'Belegte ECTS (Ist)', data: this.getEctsProgressFromStudyPath(this.studyPathInSemester, 'taken'), color: 'rgb(51, 106, 151)', area: true },
-      { name: 'Bestandene ECTS (Ist)', data: this.getEctsProgressFromStudyPath(this.studyPathInSemester, 'passed'), color: '#97bf0d', area: true },
-      { name: 'Nicht bestandene ECTS (Ist)', data: this.getEctsProgressFromStudyPath(this.studyPathInSemester, 'failed'), color: '#e6444f', area: true },
+      { name: 'Belegte ECTS (Ist)', data: this.getEctsProgressFromStudyPath(this.studyPathInSemester, 'taken'), color: 'rgb(51, 106, 151)', area: true, smooth: true },
+      { name: 'Bestandene ECTS (Ist)', data: this.getEctsProgressFromStudyPath(this.studyPathInSemester, 'passed'), color: '#97bf0d', area: true, smooth: true },
+      { name: 'Nicht bestandene ECTS (Ist)', data: this.getEctsProgressFromStudyPath(this.studyPathInSemester, 'failed'), color: '#e6444f', area: true, smooth: true },
     ];
     if (this.studyPathInSemester) {
       series.push(
-        { name: 'Ziel ECTS (Plan)', data: this.getEctsProgressFromStudyPlan('aim'), color: 'rgba(77,83,96,1)', area: true },
-        { name: 'Eingeplante ECTS (Plan)', data: this.getEctsProgressFromStudyPlan('planned'), color: 'rgb(159, 159, 156)', area: true },
+        { name: 'Ziel ECTS (Plan)', data: this.getEctsProgressFromStudyPlan('aim'), color: 'rgba(77,83,96,1)', area: true, smooth: true },
+        { name: 'Eingeplante ECTS (Plan)', data: this.getEctsProgressFromStudyPlan('planned'), color: 'rgb(159, 159, 156)', area: true, smooth: true },
       );
     }
 
