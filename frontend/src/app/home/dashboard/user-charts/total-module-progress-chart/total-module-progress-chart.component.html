@@ -1,9 +1,7 @@
-@if (modulProgressData) {
+@if (cardData) {
   <mat-card-content>
     @if (noDataMessage) {
-      <canvas baseChart [data]="modulProgressData" [options]="moduleProgressOptions"
-        [type]="'bar'" [legend]="false">
-      </canvas>
+      <reporting-bar-chart-card [cardData]="cardData" [bare]="true"></reporting-bar-chart-card>
     } @else {
       <app-no-data [diagram]=true noDataBtnText="Studienverlauf aus FlexNow laden" noDataLinkText="/app/profil/integrationen-verwalten"></app-no-data>
     }

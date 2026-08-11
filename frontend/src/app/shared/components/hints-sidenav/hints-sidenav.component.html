@@ -12,7 +12,7 @@
     </div>
   }
 
-  @for (hint of hints; track hint) {
+  @for (hint of hints; track $index) {
     <div class="alert alert-sm" [class.alert-warning]="hint.type === 'warning'"
       [class.alert-danger]="hint.type === 'collision' || hint.type === 'risk'" role="alert">
       <div>

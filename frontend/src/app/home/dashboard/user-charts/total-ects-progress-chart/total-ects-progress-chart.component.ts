@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { ChartData, ChartConfiguration } from 'chart.js';
 import { SemesterStudyPath, StudyPath } from '@interfaces/study-path';
 import { Semester } from '@interfaces/semester';
 import { StudyPlan } from '@interfaces/study-plan';
+import { BarChartCardData } from 'src/app/modules/reporting/reporting';
 
 @Component({
     selector: 'app-total-ects-progress-chart',
@@ -16,25 +16,7 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
   @Input() semesters: Semester[];
   @Input() aimedEcts: number | undefined;
 
-  public studyProgressData: ChartData<'bar'|'line', number[]>;
-
-  public studyProgressOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    scales: {
-      x: {
-      },
-      y: {
-        ticks: {
-          stepSize: 30
-        }
-      }
-    },
-    plugins: {
-      legend: {
-        display: true,
-      }
-    }
-  };
+  public cardData: BarChartCardData;
 
   constructor() { }
 
@@ -47,41 +29,18 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
   }
 
   private calculateDataForCharts() {
-    this.studyProgressData = {
-      labels: this.semesters.map(semester => semester.shortName),
-      datasets: [],
-    };
+    const series: BarChartCardData['series'] = [];
 
     // add aimed and planned ects to dataset
     if(this.studyPlan) {
       // if study plan exists add aimed and summed ects as data for chart
       let aimedEctsOverSemesters = this.getSummedValues(this.studyPlan.semesterPlans.map(el => el.aimedEcts));
       let summedEcteOverSemesters = this.getSummedValues(this.studyPlan.semesterPlans.map(el => el.summedEcts));
-      
-      this.studyProgressData.datasets = this.studyProgressData.datasets.concat([
-        {
-          data: aimedEctsOverSemesters,
-          label: 'Ziel ECTS',
-          backgroundColor: 'rgba(102, 144, 177, 0.2)',
-          borderColor: 'rgb(51, 106, 151)',
-          pointBackgroundColor: 'rgb(102, 144, 177)',
-          pointBorderColor: '#00457d',
-          pointHoverBackgroundColor: '#00457d',
-          pointHoverBorderColor: 'rgb(51, 106, 151)',
-          type: 'line'
-        },
-        {
-          data: summedEcteOverSemesters,
-          label: 'Bisher eingeplante ECTS',
-          backgroundColor: 'rgb(159, 159, 156, 0.3)',
-          borderColor: 'rgb(159, 159, 156)',
-          pointBackgroundColor: 'rgb(207, 207, 206)',
-          pointBorderColor: 'rgb(159, 159, 156)',
-          pointHoverBackgroundColor: 'rgb(159, 159, 156)',
-          pointHoverBorderColor: 'rgb(207, 207, 206)',
-          type: 'line'
-        }
-      ]);
+
+      series.push(
+        { name: 'Ziel ECTS', type: 'line', data: aimedEctsOverSemesters, color: 'rgb(51, 106, 151)' },
+        { name: 'Bisher eingeplante ECTS', type: 'line', data: summedEcteOverSemesters, color: 'rgb(159, 159, 156)' },
+      );
     } else {
       // case if no active study plan exists, approximate aimed ects, planned ects are ignored
       // push values for aimedEcts, if no study plan is active assume student want to achieve same ects in each semester to get final aimedEcts
@@ -92,19 +51,7 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       for(const [index,value] of this.semesters.entries()) {
         aimedEctsOverSemesters.push(step + step * index);
       }
-      this.studyProgressData.datasets.push(
-        {
-          data: aimedEctsOverSemesters,
-          label: 'Ziel ECTS',
-          backgroundColor: 'rgba(102, 144, 177, 0.2)',
-          borderColor: 'rgb(51, 106, 151)',
-          pointBackgroundColor: 'rgb(102, 144, 177)',
-          pointBorderColor: '#00457d',
-          pointHoverBackgroundColor: '#00457d',
-          pointHoverBorderColor: 'rgb(51, 106, 151)',
-          type: 'line'
-        }
-      )
+      series.push({ name: 'Ziel ECTS', type: 'line', data: aimedEctsOverSemesters, color: 'rgb(51, 106, 151)' });
     }
 
     // TODO
@@ -115,16 +62,13 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       );
       return passedModulesEcts;
     }));
-    this.studyProgressData.datasets.push(
-      {
-        data: passedEctsOverSemester,
-        label: 'Bisher bestandene ECTS',
-        backgroundColor: 'rgba(172, 204, 61, 0.8)',
-        borderColor: '#97bf0d',
-        hoverBackgroundColor: '#97bf0d',
-        hoverBorderColor: '#97bf0d',
-      }
-    );
+    series.push({ name: 'Bisher bestandene ECTS', data: passedEctsOverSemester, color: '#97bf0d' });
+
+    this.cardData = {
+      title: 'ECTS Fortschritt (Gesamt)',
+      xLabels: this.semesters.map(semester => semester.shortName),
+      series,
+    } satisfies BarChartCardData;
   }
 
   /**---------------------------

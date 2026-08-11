@@ -1,8 +1,3 @@
 <mat-card-content>
-    <!-- <canvas baseChart [data]="studyProgressData" [options]="studyProgressOptions" [legend]="true"
-        [type]="'doughnut'">
-    </canvas> -->
-    <canvas baseChart [data]="studyProgressData" [options]="studyProgressOptions" [legend]="true"
-        [type]="'bar'">
-    </canvas>
+    <reporting-bar-chart-card [cardData]="cardData" [bare]="true"></reporting-bar-chart-card>
 </mat-card-content>

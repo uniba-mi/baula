@@ -5,8 +5,8 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { ChartConfiguration } from 'chart.js';
 import { StudyPath } from '@interfaces/study-path';
+import { BarChartCardData } from 'src/app/modules/reporting/reporting';
 
 @Component({
     selector: 'app-total-module-progress-chart',
@@ -17,15 +17,7 @@ import { StudyPath } from '@interfaces/study-path';
 export class TotalModuleProgressChartComponent implements OnInit, OnChanges {
   @Input() studyPath: StudyPath;
 
-  modulProgressData: ChartConfiguration<'bar'>['data'];
-  moduleProgressOptions: ChartConfiguration<'bar'>['options'] = {
-    responsive: true,
-    scales: {
-      y: {
-        display: false,
-      },
-    },
-  };
+  cardData: BarChartCardData | undefined;
   noDataMessage: boolean = false;
 
   constructor() {}
@@ -53,16 +45,14 @@ export class TotalModuleProgressChartComponent implements OnInit, OnChanges {
       }
     });
 
-    this.modulProgressData = {
-      labels: ['Bestanden', 'Nicht bestanden', 'Belegt'],
-      datasets: [
-        {
-          data: moduleData,
-          backgroundColor: ['#97BF0D', '#E6444F', '#00457D'],
-          hoverBackgroundColor: ['#C1D86E', '#F08F95', '#6690B1'],
-        },
-      ],
-    };
+    const colors = ['#97BF0D', '#E6444F', '#00457D'];
+    this.cardData = {
+      title: 'Modulbelegungen (Gesamt)',
+      xLabels: ['Bestanden', 'Nicht bestanden', 'Belegt'],
+      series: [{
+        data: moduleData.map((value, i) => ({ value, color: colors[i] })),
+      }],
+    } satisfies BarChartCardData;
   }
 
   private getModuleStatistics(studyPath: StudyPath): number[] {

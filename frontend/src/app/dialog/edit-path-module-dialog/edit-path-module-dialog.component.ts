@@ -41,8 +41,8 @@ export class EditPathModuleDialogComponent implements OnInit {
       name: [this.pathModule?.name || '', Validators.required],
       status: [this.pathModule?.status || 'open', Validators.required],
       ects: [
-        this.pathModule?.ects || '',
-        [Validators.required, Validators.min(1), Validators.max(30)],
+        this.pathModule?.ects !== undefined ? this.pathModule.ects : '',
+        [Validators.required, Validators.min(0), Validators.max(30)],
       ],
       grade: [
         this.pathModule?.grade ? this.pathModule.grade.toString() : '',

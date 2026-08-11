@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/
 
 @Component({
   selector: 'app-word-cloud',
-  standalone: false,
   templateUrl: './word-cloud.component.html',
   styleUrl: './word-cloud.component.scss'
 })

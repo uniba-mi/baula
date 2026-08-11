@@ -89,7 +89,7 @@
         </button>
       </mat-menu>
 
-      <button class="btn-icon" [matMenuTriggerFor]="calenderSettingsMenu">
+      <button class="btn-icon" [matMenuTriggerFor]="calenderSettingsMenu" aria-label="Wochenendtage anzeigen oder ausblenden">
         <i class="icon bi bi-sliders fw-bold me-2"></i>
       </button>
       <mat-menu #calenderSettingsMenu="matMenu" class="calendar-settings-menu d-flex justify-content-center">
@@ -103,7 +103,8 @@
       <ng-container>
         @if (!isWidget) {
           <button class="btn-icon" (click)="openHints.emit()"
-            matTooltip="Klicke hier um Planungshinweise anzuzeigen." matTooltipClass="custom-tooltip" appTooltip>
+            matTooltip="Klicke hier um Planungshinweise anzuzeigen." matTooltipClass="custom-tooltip" appTooltip
+            aria-label="Planungshinweise anzeigen">
             <i class="bi bi-exclamation-triangle-fill fs-5 me-2"
             [ngClass]="{'text-warning': hintsIconColor === 'warning', 'text-danger': hintsIconColor === 'danger', 'text-secondary': hintsIconColor === 'standard'}"></i>
           </button>
@@ -111,7 +112,7 @@
       </ng-container>
     </div>
   </div>
-  @for (deletedCourse of deletedCourses; track deletedCourse) {
+  @for (deletedCourse of deletedCourses; track deletedCourse.id) {
     <div class="container mx-auto alert alert-sm alert-warning" role="alert">
       Die Lehrveranstaltung "{{ deletedCourse.name ? deletedCourse.name : deletedCourse.id }}" wurde in UnivIS gelöscht
       und ist nicht mehr verfügbar.

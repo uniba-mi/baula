@@ -169,7 +169,7 @@
                       <mat-form-field appearance="outline" class="me-1 w-40">
                         <mat-label>Suchfeld</mat-label>
                         <mat-select formControlName="searchIn">
-                          @for (option of searchInOptions; track option) {
+                          @for (option of searchInOptions; track option.key) {
                             <mat-option [value]="option.key">{{
                             option.name }}</mat-option>
                           }

@@ -1,0 +1,6 @@
+// stretch each card's host element to fill the (row-height-matched) grid cell
+.report-card-cell > * {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+}

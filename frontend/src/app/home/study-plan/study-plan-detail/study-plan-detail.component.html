@@ -66,6 +66,7 @@
                 <h1>{{ selectedPlan.name }}</h1>
                 <button
                   class="btn-icon"
+                  aria-label="Studienplan editieren"
                   (click)="
                     openEditStudyPlanDialog(selectedPlan._id, selectedPlan)
                   "
@@ -185,6 +186,7 @@
                       (click)="toggleHints()"
                       matTooltip="Klicke hier, um Planungshinweise anzuzeigen."
                       matTooltipClass="custom-tooltip"
+                      aria-label="Planungshinweise anzuzeigen"
                     >
                       <i
                         class="bi bi-exclamation-triangle-fill fs-5"
@@ -251,7 +253,7 @@
                 >
                   @for (
                     metaSemester of metaSemesters;
-                    track metaSemester;
+                    track metaSemester.semester;
                     let i = $index
                   ) {
                     <div

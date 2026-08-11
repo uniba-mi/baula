@@ -1,8 +1,6 @@
 <mat-card-content>
   @if (noDataMessage) {
-    <canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions"
-      [type]="'bar'">
-    </canvas>
+    <reporting-bar-chart-card [cardData]="cardData" [bare]="true"></reporting-bar-chart-card>
   } @else {
     <app-no-data [diagram]=true noDataBtnText="Studienverlauf aus FlexNow laden" noDataLinkText="/app/profil/integrationen-verwalten"></app-no-data>
   }

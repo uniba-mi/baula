@@ -52,21 +52,21 @@
         <div class="m-2 m-sm-0 link" role="button" tabindex="0" aria-haspopup="false"
           aria-label="Nutzerdaten bearbeiten" (click)="navigate('daten')">
           <h4 id="user-data" class="mb-0" [class.selected]="activeRoute == 'daten'"><span><i
-          class="bi bi-person-circle text-gray"></i></span> Nutzerdaten bearbeiten
+          class="bi bi-person-circle text-gray"></i></span> <span class="label"> Nutzerdaten bearbeiten </span>
         </h4>
       </div>
       <hr />
       <div class="m-2 m-sm-0 link" role="button" tabindex="0" aria-haspopup="false"
         aria-label="Integrationen verwalten" (click)="navigate('integrationen-verwalten')">
         <h4 id="upload-fn-study-path" class="mb-0" [class.selected]="activeRoute == 'integrationen-verwalten'"><span><i
-        class="bi bi-database-up"></i></span> Datenintegrationen verwalten
+        class="bi bi-database-up"></i></span> <span class="label"> Datenintegrationen verwalten </span>
       </h4>
     </div>
     <hr />
     <div class="m-2 m-sm-0 link" role="button" tabindex="0" aria-haspopup="false"
       aria-label="Einwilligung und Datenschutz" (click)="navigate('datenschutz-einwilligung')">
       <h4 id="user-consents" class="mb-0" [class.selected]="activeRoute == 'datenschutz-einwilligung'">
-        <span><i class="bi bi-shield-check"></i></span> Einwilligungen & Datenschutz
+        <span><i class="bi bi-shield-check"></i></span> <span class="label"> Einwilligungen & Datenschutz </span>
       </h4>
     </div>
   </nav>

@@ -9,7 +9,8 @@ import {
   inject,
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import * as d3 from 'd3';
+import type { ECElementEvent, EChartsOption, CustomSeriesOption } from 'echarts';
+import type { BarSeriesOption } from 'echarts/charts';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
 import { Competence } from '@interfaces/competence';
@@ -26,6 +27,13 @@ import {
 import { CompAim, User } from '@interfaces/user';
 import { getUser, getUserAims } from 'src/app/selectors/user.selectors';
 import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
+
+function resolveCssVar(value: string): string {
+  const match = value.match(/^var\((--[\w-]+)\)$/);
+  return match
+    ? getComputedStyle(document.documentElement).getPropertyValue(match[1]).trim()
+    : value;
+}
 
 @Component({
   selector: 'app-bar-chart',
@@ -53,33 +61,31 @@ export class BarChartComponent implements OnInit, OnChanges {
 
   // variables for subscription
   selectedBar: Bar;
-  currentUnit: string;
+  currentUnit: string = 'ects';
   semester: string;
   view: string;
 
   @Output() clickBar = new EventEmitter<number>();
 
-  // declare global variables of the bar chart
-  margin = { top: 20, right: 40, bottom: 100, left: 40 };
-  svgHeight = 700;
-  svgWidth = 700;
-  contentWidth: number = this.svgWidth - this.margin.left - this.margin.right;
-  contentHeight: number = this.svgHeight - this.margin.top - this.margin.bottom;
-  legendPosition: string = `translate(${this.margin.left * 2}, ${
-    this.svgWidth - this.margin.bottom / 2
-  })`;
-  barWidth = 70;
-  xScale: any;
-  yScale: any;
-  xKoord: any;
-  yKoord: any;
+  option: EChartsOption = {};
+  hasSelection = false;
+
+  private hoverBars: Bar[] = [];
+  private hoverSelectBars: Bar[] = [];
 
   ngOnInit() {
     // store select for chart
     this.store.select(getSelectedBar).subscribe((selectedBar) => {
+      // drives the legend: no point showing an "Ausgewählt" swatch while
+      // nothing is actually selected
+      this.hasSelection = !!selectedBar;
       if (selectedBar) {
         this.selectedBar = selectedBar;
       }
+      // bar.fill is mutated in place on the shared store array by the
+      // selectBar/deselectBar reducers, so this observable's own value is the
+      // only thing that changes reference here - rebuild to pick up the color.
+      this.rebuildOption();
     });
     this.semester$.subscribe((sem) => (this.semester = sem));
     this.view$.subscribe((view) => (this.view = view));
@@ -89,6 +95,14 @@ export class BarChartComponent implements OnInit, OnChanges {
         this.compAims = user.compAims;
         this.assignAimsToBars();
       }
+    });
+    this.hoverBars$.subscribe((hoverBars) => {
+      this.hoverBars = hoverBars;
+      this.rebuildOption();
+    });
+    this.hoverSelectBars$.subscribe((hoverSelectBars) => {
+      this.hoverSelectBars = hoverSelectBars;
+      this.rebuildOption();
     });
   }
 
@@ -103,7 +117,7 @@ export class BarChartComponent implements OnInit, OnChanges {
           this.updateBars();
         }
         this.currentUnit = unit;
-        this.createAxis(this.competences);
+        this.rebuildOption();
       });
     }
 
@@ -111,6 +125,8 @@ export class BarChartComponent implements OnInit, OnChanges {
     if (changes.courses || changes.competences) {
       this.updateBars();
     }
+
+    this.rebuildOption();
   }
 
   private updateBars() {
@@ -138,104 +154,152 @@ export class BarChartComponent implements OnInit, OnChanges {
           bar.aim = aim.aim;
         }
       }
+      this.rebuildOption();
     }
   }
 
-  private createAxis(comp: Competence[]) {
-    // sets the highest value for yScale
+  // shortens the axis label if the full competence name is too long
+  private shortLabel(comp: Competence): string {
+    if (comp.name.length > 20) {
+      return comp.short.length < 13 ? comp.short : comp.short.slice(0, 10) + '...';
+    }
+    return comp.name;
+  }
+
+  private computeTopValue(bars: Bar[]): number {
     let topValue = 10;
-    // if bars exist, check if there is a value higher than topValue
-    if (this.bars) {
-      const max = this.bars
-        .map((el) => {
-          if (el.aim) {
-            return el.aim > el.fulfillment ? el.aim : el.fulfillment;
-          } else {
-            return el.fulfillment;
-          }
-        })
+    if (bars.length !== 0) {
+      const max = bars
+        .map((el) => (el.aim ? (el.aim > el.fulfillment ? el.aim : el.fulfillment) : el.fulfillment))
         .reduce((pv, cv) => (pv > cv ? pv : cv));
       topValue = max > topValue ? Math.round(max + 2) : topValue;
     }
-    if (comp !== undefined) {
-      // set Viewbox
-      d3.select('#bar-chart svg')
-        .attr('height', '100%')
-        .attr('width', '100%')
-        .attr('viewBox', '0 0 ' + this.svgWidth + ' ' + this.svgHeight);
-
-      // delete existing Axis
-      d3.select('#axis').remove();
-
-      // select g inside svg and save as variable
-      const g = d3
-        .select('#bar-chart svg g')
-        .append('g')
-        .attr('transform', `translate(${this.margin.left},0)`)
-        .attr('id', 'axis');
-
-      // set the x and y Scale
-      // if description lenght too long shorten it
-      this.xScale = d3
-        .scaleBand()
-        .rangeRound([0, this.contentWidth])
-        .domain(
-          this.competences.map((d) => {
-            if (d.name.length > 20) {
-              if (d.short.length < 13) {
-                return d.short;
-              } else {
-                return d.short.slice(0, 10) + '...';
-              }
-            } else {
-              return d.name;
-            }
-          }),
-        );
-
-      this.yScale = d3
-        .scaleLinear()
-        .domain([0, topValue])
-        .rangeRound([this.contentHeight, 0]);
-
-      // set coordinates of the bars
-      let multiplicator = this.bars ? this.bars.length : 0;
-      this.xKoord = (i: number) =>
-        this.contentWidth / (multiplicator * 2) +
-        (this.contentWidth / multiplicator) * i -
-        this.barWidth / 2 +
-        this.margin.left;
-      this.yKoord = (d: number) => {
-        return this.yScale(d);
-      };
-
-      // append two groups to g one for xAxis and one for yAxis
-      // Code for x axis
-      g.append('g')
-        .attr('class', 'axis axis--x')
-        .attr('transform', 'translate(0,' + this.contentHeight + ')')
-        .call(d3.axisBottom(this.xScale));
-
-      // Code for y axis
-      g.append('g')
-        .attr('class', 'axis axis--y')
-        .call(
-          d3
-            .axisLeft(this.yScale)
-            .tickFormat((d, i) => d + ' ' + this.currentUnit.toUpperCase()),
-        )
-        .append('text')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', 6)
-        .attr('dy', '0.71em')
-        .attr('text-anchor', 'end')
-        .text('Frequency');
-
-      g.selectAll('text').style('font-size', '1.7em');
-    }
+    return topValue;
   }
 
-  handleClick(index: number) {
-    this.store.dispatch(selectBar({ index }));
+  // renders the aim per bar as a short horizontal tick, drawn as a 'custom'
+  // series rect sized off the actual category band width (api.size) so it
+  // tracks the fulfillment bar's own rendered width - a fixed pixel size
+  // (e.g. via scatter/symbolSize) can't do that since barWidth is a percentage.
+  private buildAimSeries(bars: Bar[]): CustomSeriesOption {
+    const data = bars
+      .map((b, i): [number, number] | null => (b.aim ? [i, b.aim] : null))
+      .filter((point): point is [number, number] => point !== null);
+
+    return {
+      name: 'aim',
+      type: 'custom',
+      silent: true,
+      z: 4,
+      renderItem: (_params, api) => {
+        const categoryIndex = api.value(0) as number;
+        const aimValue = api.value(1) as number;
+        const point = api.coord([categoryIndex, aimValue]);
+        const bandWidth = (api.size!([1, 0]) as number[])[0];
+        // main bar is barWidth:'55%' of the band - render the tick slightly wider
+        const width = bandWidth * 0.62;
+        return {
+          type: 'rect',
+          shape: {
+            x: point[0] - width / 2,
+            y: point[1] - 1.5,
+            width,
+            height: 3,
+          },
+          style: { fill: '#0FB500' },
+        };
+      },
+      data,
+    };
+  }
+
+  private rebuildOption(): void {
+    if (!this.bars || !this.competences || this.bars.length === 0) {
+      this.option = {};
+      return;
+    }
+
+    const bars = this.bars;
+    const showAim = this.currentUnit === 'ects';
+    const topValue = this.computeTopValue(bars);
+
+    const series: (BarSeriesOption | CustomSeriesOption)[] = [
+      {
+        name: 'fulfillment',
+        type: 'bar',
+        stack: 'growth',
+        barWidth: '55%',
+        z: 2,
+        data: bars.map((b) => ({
+          value: b.fulfillment,
+          itemStyle: { color: resolveCssVar(b.fill) },
+        })),
+      },
+    ];
+
+    if (showAim) {
+      series.push(this.buildAimSeries(bars));
+    }
+
+    if (this.hoverBars.length === bars.length) {
+      series.push({
+        name: 'hoverPreview',
+        type: 'bar',
+        stack: 'growth',
+        barWidth: '55%',
+        silent: true,
+        z: 1,
+        itemStyle: { color: '#4A95CC', opacity: 0.7 },
+        data: this.hoverBars.map((hb) => hb.fulfillment),
+      });
+    }
+
+    if (this.hoverSelectBars.length === bars.length) {
+      series.push({
+        name: 'hoverContribution',
+        type: 'bar',
+        barGap: '-100%',
+        barWidth: '55%',
+        silent: true,
+        z: 3,
+        itemStyle: { color: '#4A95CC', opacity: 0.9 },
+        data: this.hoverSelectBars.map((hsb) => hsb.fulfillment),
+      });
+    }
+
+    this.option = {
+      grid: { left: 8, right: 8, bottom: 56, top: 8, containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: bars.map((b) => this.shortLabel(b.competence)),
+        axisLabel: { rotate: 45, hideOverlap: true },
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: topValue,
+        axisLabel: { formatter: (v: number) => `${v} ${this.currentUnit.toUpperCase()}` },
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: (params: any) => {
+          if (params.seriesName !== 'fulfillment') {
+            return '';
+          }
+          const bar = bars[params.dataIndex];
+          return (
+            `${bar.competence.compId.replace('_', ' ')} - ${bar.competence.name}: ` +
+            `${bar.fulfillment.toFixed(2)} ${this.currentUnit.toUpperCase()}`
+          );
+        },
+      },
+      series,
+    };
+  }
+
+  onChartClick(e: ECElementEvent): void {
+    if (e.componentType === 'series' && e.seriesName === 'fulfillment' && typeof e.dataIndex === 'number') {
+      this.store.dispatch(selectBar({ index: e.dataIndex }));
+    }
   }
 }

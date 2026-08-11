@@ -84,6 +84,7 @@ build_frontend:
     - install_dependencies
     - create_required_files
   script:
+    - rm -rf ./server/app/browser
     - npm run buildInitial PROD_BUILD_FRONTEND
   artifacts:
     paths:

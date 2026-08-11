@@ -32,11 +32,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {
-  BaseChartDirective,
-  provideCharts,
-  withDefaultRegisterables,
-} from 'ng2-charts';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -177,6 +172,9 @@ import { UpdateMhbDialogComponent } from './dialog/update-mhb-dialog/update-mhb-
 import { ChangeModuleGroupComponent } from './shared/components/change-module-group/change-module-group.component';
 import { DebugDialogComponent } from './shared/components/debug-dialog/debug-dialog.component';
 import { ManageStatusComponent } from './dialog/module-details-dialog/manage-status/manage-status.component';
+import { BarChartCardComponent } from './modules/reporting/bar-chart-card/bar-chart-card.component';
+import { LineChartCardComponent } from './modules/reporting/line-chart-card/line-chart-card.component';
+import { PieChartCardComponent } from './modules/reporting/pie-chart-card/pie-chart-card.component';
 import { FeatureWishComponent } from './home/dashboard/feature-wish/feature-wish.component';
 import { SingleFeatureWishComponent } from './home/dashboard/feature-wish/single-feature-wish/single-feature-wish.component';
 import { IconPickerComponent } from './dialog/icon-picker/icon-picker.component';
@@ -290,7 +288,6 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
     NotFoundComponent,
     RecommendationsListComponent,
     PersonalisationStatusComponent,
-    WordCloudComponent,
     DataPreviewComponent,
     SettingsListComponent,
     UploadStudentDataConfirmationComponent,
@@ -363,7 +360,6 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
     MatSidenavModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    BaseChartDirective,
     MatPaginatorModule,
     SharedModule,
     MatRadioModule,
@@ -371,12 +367,15 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
     MatTabsModule,
     FullCalendarModule,
     MatTreeModule,
+    WordCloudComponent,
+    BarChartCardComponent,
+    LineChartCardComponent,
+    PieChartCardComponent,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'de' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
-    provideCharts(withDefaultRegisterables()),
     {
       provide: ErrorHandler,
       useValue: createErrorHandler({
