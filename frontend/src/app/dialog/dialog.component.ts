@@ -51,6 +51,7 @@ export interface DialogData {
   studyPlanTemplate$?: Observable<StudyPlan>;
   newPlanId?: string;
   missingModules?: PathModule[];
+  semester?: string;
   pathModule?: PathModule;
   academicDate?: AcademicDate;
   mode?: string;

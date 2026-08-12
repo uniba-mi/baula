@@ -6,6 +6,25 @@
     weiter.</p>
   }
 
+  @if (!formInitialised && (flexNowSyncEnabled$ | async)) {
+    <div class="flex-now-sync-bar d-flex align-items-center flex-wrap mb-2">
+      <button mat-raised-button class="btn btn-outline" type="button" [disabled]="flexNowSyncLoading"
+        (click)="syncWithFlexNow()" (keyup.enter)="syncWithFlexNow()">
+        @if (flexNowSyncLoading) {
+          <i class="bi bi-arrow-repeat"></i> Wird abgeglichen...
+        } @else {
+          <i class="bi bi-cloud-download"></i> Mit FlexNow abgleichen
+        }
+      </button>
+      @if (flexNowSyncDone && !flexNowSyncLoading) {
+        <span class="ms-2 text-gray"><i class="bi bi-check-circle text-success"></i> Abgleich abgeschlossen</span>
+      }
+      @if (flexNowSyncError) {
+        <span class="ms-2 text-red"><i class="bi bi-exclamation-triangle"></i> {{ flexNowSyncError }}</span>
+      }
+    </div>
+  }
+
   @if (!formInitialised) {
     <!-- Table -->
     <div class="mt-3 p-0 rounded bg-white">
@@ -15,12 +34,17 @@
       </div>
       @if (missingModules.length > 0;) {
         <div>
-          @for (module of missingModules; track module) {
+          @for (module of missingModules; track getModuleKey(module)) {
             <div class="row p-2 py-sm-4 px-sm-2 border">
               <div class="col-12 col-sm-8 mb-1 mb-sm-0">
                 <!-- for user generated modules display both acronym and name (notes) -->
                 <ng-container>
                   {{ module.acronym }} - {{ module.name }}
+                  @if (module.flexNowImported) {
+                    <button class="btn btn-outline chip secondary-chip px-2 ms-2" disabled>
+                      Quelle: FlexNow
+                    </button>
+                  }
                 </ng-container>
               </div>
               <div class="col-12 col-sm-4 d-flex justify-content-start">
@@ -66,7 +90,7 @@
     @if (formData) {
       <mat-horizontal-stepper [linear]="true" [formGroup]="stepperForm" #stepper
         (animationDone)="selectionChange(stepper)">
-        @for (module of getSelectedModules(); track module; let i = $index) {
+        @for (module of getSelectedModules(); track getModuleKey(module); let i = $index) {
           <mat-step [formGroupName]="getFormKey(module, i)"
             [completed]="getFormGroup(getFormKey(module, i)).valid"
             [hasError]="getFormGroup(getFormKey(module, i)).invalid && (getFormGroup(getFormKey(module, i)).dirty || getFormGroup(getFormKey(module, i)).touched)">
@@ -76,6 +100,11 @@
             </span></ng-template>
             <form [formGroup]="getFormGroup(getFormKey(module, i))">
               <div class="content-wrapper">
+                @if (module.flexNowImported) {
+                  <button class="btn btn-outline chip secondary-chip px-2 mb-2" disabled>
+                    Quelle: FlexNow
+                  </button>
+                }
                 <!-- Basic Module Information -->
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline" class="mt-1">
@@ -225,6 +254,16 @@
                 </mat-form-field>
               }
             </div>
+            @if (structuredModuleGroups$ | async; as structuredModuleGroups) {
+              <div class="wrapper w-100 mt-0">
+                <app-module-group-wizard
+                  [mgId]="getFormGroup(getFormKey(module, i)).get('mgId')?.value"
+                  [structuredModuleGroups]="structuredModuleGroups"
+                  [possibleMgIdsBasedOnAcronym]="getPossibleMgIdsForAcronym(module.acronym) | async"
+                  (groupSelected)="getFormGroup(getFormKey(module, i)).get('mgId')?.setValue($event)"
+                ></app-module-group-wizard>
+              </div>
+            }
             <div class="button-group d-flex justify-content-between">
               @if (i !== 0) {
                 <button mat-raised-button class="previous-btn btn btn-outline me-2" matStepperPrevious

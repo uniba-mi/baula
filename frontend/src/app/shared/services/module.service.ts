@@ -18,6 +18,7 @@ import { UserGeneratedModule } from '@interfaces/user-generated-module';
 import { PathModule } from '@interfaces/study-path';
 import { ModuleHandbook } from '@interfaces/module-handbook';
 import { moduleChanges } from '../constants/module-mapping';
+import { RestService } from 'src/app/rest.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,7 @@ export class ModService {
   private dialog = inject(MatDialog);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private rest = inject(RestService);
 
   modulesInState$: any;
 
@@ -96,17 +98,12 @@ export class ModService {
     return mapping ? mapping.oldModuleAcronym : undefined;
   }
 
-  // Function to identify possible modulegroups of given acronym
+  // Function to identify possible modulegroups of given acronym - includes module
+  // groups from older module handbook versions the module was ever assigned to, not
+  // just the currently loaded one (the module group wizard filters this list against
+  // the current MHB's own group tree, so only still-existing groups get suggested)
   findModuleGroups(acronym: string): Observable<string[]> {
-    return this.store
-      .select(getModules)
-      .pipe(
-        map((modules) =>
-          modules
-            .filter((el) => el.acronym == acronym && !el.hasIssue && !el.isOld)
-            .map((el) => el.mgId),
-        ),
-      );
+    return this.rest.getModuleGroupIdsForAcronym(acronym);
   }
 
   // retrieve modules based on acronyms
