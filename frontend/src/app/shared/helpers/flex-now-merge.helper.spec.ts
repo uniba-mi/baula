@@ -176,7 +176,13 @@ describe('mergeFlexNowModulesIntoMissingModules', () => {
     expect(merged[0].flexNowImported).toBe(true);
   });
 
-  it('adds an unplanned non-MHB module as a new user-generated placeholder', () => {
+  it('adds an unplanned module as non-user-generated even when mhbAcronyms is empty', () => {
+    // regression test: mhbAcronyms can legitimately be empty (e.g. during the
+    // initial FlexNow import at account creation, before any MHB can be loaded)
+    // without meaning the module isn't a real one - isUserGenerated must not be
+    // derived from mhbAcronyms here, or the same module re-synced later (once the
+    // MHB is loaded and correctly recognized) would disagree with this earlier
+    // isUserGenerated:true entry and duplicate instead of matching
     const flexNowModules = [pathModule({ acronym: 'NEW2', semester: '2024s' })];
 
     const { merged, addedCount } = mergeFlexNowModulesIntoMissingModules(
@@ -186,7 +192,7 @@ describe('mergeFlexNowModulesIntoMissingModules', () => {
     );
 
     expect(addedCount).toBe(1);
-    expect(merged[0].isUserGenerated).toBe(true);
+    expect(merged[0].isUserGenerated).toBe(false);
     expect(merged[0].flexNowImported).toBe(true);
   });
 });

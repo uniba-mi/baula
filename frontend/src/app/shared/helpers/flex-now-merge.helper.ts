@@ -19,7 +19,9 @@ export interface FlexNowMergeResult {
  * by an unrelated FlexNow module that happens to share its made-up acronym.
  * Note this still can't merge a manual placeholder with a FlexNow module
  * representing the same real exam if their acronyms differ entirely - there's
- * no other shared key to match them on.
+ * no other shared key to match them on. A newly added (unmatched) FlexNow module
+ * is always isUserGenerated: false - see the comment at that assignment for why
+ * this can't be derived from mhbAcronyms.
  */
 export function mergeFlexNowModulesIntoMissingModules(
   missingModules: PathModule[],
@@ -45,10 +47,17 @@ export function mergeFlexNowModulesIntoMissingModules(
       };
       updatedCount++;
     } else {
-      const isInMhb = mhbAcronyms.has(fnModule.acronym);
+      // always false, never mhbAcronyms-derived: during the initial FlexNow import at
+      // account creation (upload-student-data-stepper, mode 'update-user') the module
+      // handbook can't be loaded yet - which MHB to load is itself only known from this
+      // same import's metadata. Deriving isUserGenerated from "is this acronym in the
+      // (empty) current MHB" would misflag every real module as a placeholder at that
+      // point, which then permanently disagrees with the same module re-synced later
+      // (once the MHB is loaded) and duplicates instead of matching. Every module
+      // FlexNow reports is a real, official one, so isUserGenerated is always false here.
       merged.push({
         ...fnModule,
-        isUserGenerated: !isInMhb,
+        isUserGenerated: false,
         flexNowImported: true,
       });
       addedCount++;

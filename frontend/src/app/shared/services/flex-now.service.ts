@@ -433,8 +433,6 @@ export class FlexnowService {
                 (mod) => mod.semester == semester,
               );
 
-              console.log(modules)
-
               // identify current completed modules of semester
               const currentPathModules =
                 currentStudypath.completedModules.filter(
