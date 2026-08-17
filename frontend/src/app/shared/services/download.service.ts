@@ -30,6 +30,39 @@ export class DownloadService {
     document.body.removeChild(link);
   }
 
+  // function to export tabular data as a CSV file, e.g. for the LTE survey data export
+  downloadCSVFile(rows: Record<string, unknown>[], filename: string) {
+    if (rows.length === 0) {
+      return;
+    }
+
+    const escapeCsvValue = (value: unknown): string => {
+      const str = value === null || value === undefined ? '' : String(value);
+      return `"${str.replace(/"/g, '""')}"`;
+    };
+
+    const columns = Object.keys(rows[0]);
+    const lines = [
+      columns.map(escapeCsvValue).join(';'),
+      ...rows.map((row) => columns.map((column) => escapeCsvValue(row[column])).join(';')),
+    ];
+    // BOM prefix so Excel recognizes the file as UTF-8 (needed for Umlaute)
+    const csvContent = '﻿' + lines.join('\r\n');
+
+    const fileBlob = new Blob([csvContent], {
+      type: 'text/csv;charset=utf-8;',
+    });
+
+    const blobUrl = URL.createObjectURL(fileBlob);
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(blobUrl);
+  }
+
   // function for pdf export of user data
   async downloadUserData(userData: User, studyPlans: StudyPlan[]) {
     // preload courses and studyprogrammes asyncronisly

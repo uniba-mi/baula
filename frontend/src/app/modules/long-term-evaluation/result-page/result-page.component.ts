@@ -22,6 +22,8 @@ import { LongTermEvaluation } from '../../../../../../interfaces/long-term-evalu
 import { SharedModule } from '../../shared/shared.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SemesterPipe } from '../../shared/pipes/semester.pipe';
+import { LazyInjectService } from '../../../shared/services/lazy-inject.service';
+import { DownloadService } from '../../../shared/services/download.service';
 
 type ViewMode = 'semester' | 'drilldown';
 
@@ -57,6 +59,7 @@ export class ResultPageComponent implements OnInit {
   selectedPersonalCode: string | undefined;
 
   private api = inject(LteRestService);
+  private lazyInject = inject(LazyInjectService);
   private semesterPipe = new SemesterPipe();
   private readonly barColor = 'rgba(102, 144, 177, 0.8)';
 
@@ -94,6 +97,38 @@ export class ResultPageComponent implements OnInit {
   onPersonalCodeChange(event: MatSelectChange): void {
     this.selectedPersonalCode = event.value;
     this.updateDrilldownReport(event.value);
+  }
+
+  // exports the full, unfiltered survey data set as CSV, regardless of the
+  // currently selected semester/drilldown view
+  exportCsv(): void {
+    const rows = this.surveyResults.map((el) => ({
+      Code: el.personalCode,
+      Zeitraum: el.evaluationCode,
+      Studiengang: el.spName,
+      Fachsemester: el.semester,
+      PU1: el.pu[0],
+      PU2: el.pu[1],
+      PU3: el.pu[2],
+      PU4: el.pu[3],
+      PEOU1: el.peou[0],
+      PEOU2: el.peou[1],
+      PEOU3: el.peou[2],
+      PEOU4: el.peou[3],
+      BI: el.bi,
+      Nutzung: el.use,
+      NPS: el.nps,
+      Feedback: el.feedback,
+    }));
+
+    const date = new Date();
+    const formattedDate = `${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`;
+
+    this.lazyInject
+      .get<DownloadService>(() =>
+        import('../../../shared/services/download.service').then((m) => m.DownloadService)
+      )
+      .then((download) => download.downloadCSVFile(rows, `lte_export_${formattedDate}.csv`));
   }
 
   updateReport(): void {

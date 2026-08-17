@@ -33,7 +33,7 @@
             Einstellungen
         </button>
         <mat-menu #surveySettings="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="exportCsv()">
                 <i class="bi bi-filetype-csv icon me-1"></i>
                 Export als CSV
             </button>
