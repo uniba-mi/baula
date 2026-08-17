@@ -68,7 +68,7 @@ export async function getModuleGroupIdsForAcronym(
   res: Response,
   next: NextFunction
 ) {
-  const acronym = validator.isAlphanumeric(req.params.acronym, 'de-DE', { ignore: '-.' }) ? req.params.acronym : undefined;
+  const acronym = validator.isAlphanumeric(req.params.acronym, 'de-DE', { ignore: '-. ' }) ? req.params.acronym : undefined;
 
   if (!acronym) {
     return next(new BadRequestError());

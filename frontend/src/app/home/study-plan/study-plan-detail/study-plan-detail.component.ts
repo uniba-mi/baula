@@ -704,7 +704,7 @@ export class StudyPlanDetailComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            if (result.emptySelect && !result.droppedModules) {
+            if (result.emptySelect) {
               this.updateIsPastSemestersForAllPlans(semesterPlan.semester);
             } else {
               // semester finish with data
@@ -767,6 +767,7 @@ export class StudyPlanDetailComponent implements OnInit {
       cancelButtonLabel: 'Abbrechen',
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
+        console.log('leeres Semester abgeschlossen')
         this.updateIsPastSemestersForAllPlans(semester);
         this.updateSemesterStudyPath(); // ensure study path is up to date
       },
