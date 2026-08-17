@@ -1,7 +1,8 @@
 import express, { Router } from "express";
-import { 
-    getMhbByIdAndVersion, 
+import {
+    getMhbByIdAndVersion,
     getModByAcronymAndVersion,
+    getModuleGroupIdsForAcronym,
     getModules,
     getUpToDateMhb,
 } from './module-handbooks.controller';
@@ -128,6 +129,40 @@ router.get('/:id', getUpToDateMhb)
  *             schema:
  *               $ref: '#/components/schemas/NotFoundError'
  */
+/**
+ * @swagger
+ * /module-handbooks/modules/{acronym}/module-groups:
+ *   get:
+ *     summary: Get all module group ids ever assigned to any version of a module by acronym
+ *     tags: [ModuleHandbook::Modules]
+ *     parameters:
+ *       - in: path
+ *         name: acronym
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Module acronym (abbreviation)
+ *         example: MOD-A
+ *     responses:
+ *       200:
+ *         description: Module group ids
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: string
+ *       400:
+ *         description: The request was invalid or malformed.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BadRequestError'
+ */
+// must be registered before /modules/:acronym/:version, otherwise "module-groups" would
+// match that route's :version param instead of this one
+router.get('/modules/:acronym/module-groups', getModuleGroupIdsForAcronym);
+
 router.get('/modules/:acronym/:version', getModByAcronymAndVersion);
 
 /**

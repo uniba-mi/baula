@@ -1354,7 +1354,9 @@ export async function crawlStudentDataViaFlexNow(
         xml: result,
       });
     } else {
-      res.status(404);
+      res.status(404).json({
+        message: "Es konnten keine Daten von FlexNow geladen werden.",
+      });
     }
   } catch (error) {
     next(error);

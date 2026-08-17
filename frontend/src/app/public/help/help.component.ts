@@ -11,7 +11,6 @@ export class HelpComponent {
   panelOpenState = false;
 
   navigateToDocs() {
-    console.log(config.userDocsUrl)
     window.open(config.userDocsUrl, '_blank')
   }
 }

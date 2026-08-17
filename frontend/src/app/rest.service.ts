@@ -490,6 +490,13 @@ export class RestService {
     );
   }
 
+  getModuleGroupIdsForAcronym(acronym: string): Observable<string[]> {
+    return this.http.get<string[]>(
+      `${this.urlBase}module-handbooks/modules/${acronym}/module-groups`,
+      httpOptions,
+    );
+  }
+
   getModules(): Observable<Module[]> {
     return this.http.get<Module[]>(
       `${this.urlBase}module-handbooks/modules`,

@@ -50,6 +50,7 @@ import {
   first,
   map,
   shareReplay,
+  skipWhile,
   switchMap,
   take,
   takeUntil,
@@ -140,7 +141,7 @@ export class StudyPlanDetailComponent implements OnInit {
     this.flexNowAvailable$ = this.store.pipe(select(getUser)).pipe(
       map(user => this.flexnowService.flexNowImportEnabled(user))
     )
-    this.user$.pipe(take(1)).subscribe((user) => {
+    this.user$.pipe(skipWhile(user => !user._id)).pipe(take(1)).subscribe((user) => {
       this.user = user;
     });
     this.semesterPlans$ = this.store.select(
@@ -594,13 +595,47 @@ export class StudyPlanDetailComponent implements OnInit {
       userGeneratedModules: semesterUserGeneratedModules,
     } = semesterPlan;
 
-    if (
-      semesterModuleStrings.length === 0 &&
-      semesterUserGeneratedModules.length === 0
-    ) {
-      this.confirmFinishingEmptySemester(semesterPlan.semester);
-      return;
-    }
+    // check for modules already completed for this semester (e.g. via an earlier
+    // FlexNow bulk import) that were never added to the semester's plan - these
+    // need to be shown/reviewed too, otherwise a later "Mit FlexNow abgleichen"
+    // can't find their real _id and would push a duplicate instead of updating them
+    this.store
+      .select(getUserStudyPath)
+      .pipe(take(1))
+      .subscribe((studyPath) => {
+        const alreadyCompletedForSemester = studyPath.completedModules.filter(
+          (mod) => mod.semester === semesterPlan.semester,
+        );
+
+        // skip the quick confirm and open the full stepper whenever there's anything to
+        // review - planned modules/placeholders, already-completed-but-unplanned modules,
+        // or FlexNow is available so the "Mit FlexNow abgleichen" step stays reachable -
+        // the stepper already handles the zero-modules case ("Es liegen keine Module vor" + "Ohne Abschließen")
+        if (
+          semesterModuleStrings.length === 0 &&
+          semesterUserGeneratedModules.length === 0 &&
+          alreadyCompletedForSemester.length === 0 &&
+          !this.flexnowService.flexNowImportEnabled(this.user)
+        ) {
+          this.confirmFinishingEmptySemester(semesterPlan.semester);
+          return;
+        }
+
+        this.buildAndOpenFinishSemesterStepper(
+          semesterPlan,
+          alreadyCompletedForSemester,
+        );
+      });
+  }
+
+  private buildAndOpenFinishSemesterStepper(
+    semesterPlan: SemesterPlan,
+    alreadyCompletedForSemester: PathModule[],
+  ): void {
+    const {
+      modules: semesterModuleStrings,
+      userGeneratedModules: semesterUserGeneratedModules,
+    } = semesterPlan;
 
     const pathModuleObservable =
       semesterModuleStrings.length > 0
@@ -645,11 +680,24 @@ export class StudyPlanDetailComponent implements OnInit {
           pathModules.push(userGeneratedPathMod);
         });
 
+        // include modules already completed for this semester that aren't part of
+        // the plan yet (see openFinishSemesterDialog for why)
+        const isSameModule = (a: PathModule, b: PathModule): boolean =>
+          (!!a._id && !!b._id && a._id === b._id) ||
+          (a.acronym === b.acronym && a.semester === b.semester);
+        alreadyCompletedForSemester.forEach((completedModule) => {
+          const alreadyCovered = pathModules.some((mod) => isSameModule(mod, completedModule));
+          if (!alreadyCovered) {
+            pathModules.push(completedModule);
+          }
+        });
+
         const dialogRef = this.dialog.open(DialogComponent, {
           data: {
             dialogTitle: 'Semester abschließen',
             dialogContentId: 'finish-semester-stepper',
             missingModules: pathModules.length > 0 ? pathModules : [], // opens for all (user generated) modules, can also be empty
+            semester: semesterPlan.semester,
           },
           disableClose: true,
         });
@@ -882,7 +930,6 @@ export class StudyPlanDetailComponent implements OnInit {
           .select(getCloseDialogMode)
           .subscribe((mode) => (this.closeMode = mode));
         if (this.closeMode === 'data') {
-          console.log(studyPlanId, studyPlan);
           this.studyPlanService.updateStudyPlan(studyPlanId, studyPlan);
         } else {
           return;
