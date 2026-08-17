@@ -50,6 +50,7 @@ import {
   first,
   map,
   shareReplay,
+  skipWhile,
   switchMap,
   take,
   takeUntil,
@@ -140,7 +141,7 @@ export class StudyPlanDetailComponent implements OnInit {
     this.flexNowAvailable$ = this.store.pipe(select(getUser)).pipe(
       map(user => this.flexnowService.flexNowImportEnabled(user))
     )
-    this.user$.pipe(take(1)).subscribe((user) => {
+    this.user$.pipe(skipWhile(user => !user._id)).pipe(take(1)).subscribe((user) => {
       this.user = user;
     });
     this.semesterPlans$ = this.store.select(

@@ -222,6 +222,9 @@ export class FinishSemesterStepperComponent {
 
         // do not edit acronyms and names for modules that are not user generated
         const isEditable = module.isUserGenerated;
+        // status, ects and grade come from FlexNow and would be overwritten on the
+        // next sync anyway, so don't let the user edit them here
+        const isFlexNowImported = !!module.flexNowImported;
 
         const moduleFormGroup = this.fb.group({
           acronym: [
@@ -233,12 +236,21 @@ export class FinishSemesterStepperComponent {
             Validators.required,
           ],
           notes: [module.notes],
-          status: [module.status, Validators.required],
+          status: [
+            { value: module.status, disabled: isFlexNowImported },
+            Validators.required,
+          ],
           ects: [
-            module.ects !== undefined ? module.ects : '',
+            {
+              value: module.ects !== undefined ? module.ects : '',
+              disabled: isFlexNowImported,
+            },
             [Validators.required, Validators.min(0), Validators.max(30)],
           ],
-          grade: [module.grade.toString(), []],
+          grade: [
+            { value: module.grade.toString(), disabled: isFlexNowImported },
+            [],
+          ],
           semester: module.semester,
           mgId: [module.mgId ? module.mgId : ''],
           isUserGenerated: [module.isUserGenerated], // retain property
@@ -251,7 +263,7 @@ export class FinishSemesterStepperComponent {
           moduleFormGroup.get('acronym') as FormControl,
           module.acronym,
         );
-        this.setupStatusChanges(moduleFormGroup);
+        this.setupStatusChanges(moduleFormGroup, isFlexNowImported);
         this.clearMgIdIfAmbiguous(moduleFormGroup, module.acronym);
       });
     } else {
@@ -331,7 +343,10 @@ export class FinishSemesterStepperComponent {
     });
   }
 
-  private setupStatusChanges(formGroup: FormGroup): void {
+  private setupStatusChanges(
+    formGroup: FormGroup,
+    isFlexNowImported: boolean,
+  ): void {
     const statusControl = formGroup.get('status') as FormControl;
     const gradeControl = formGroup.get('grade') as FormControl;
 
@@ -357,7 +372,9 @@ export class FinishSemesterStepperComponent {
           break;
         case 'passed':
           gradeControl.setValidators([Validators.min(1), Validators.max(4)]);
-          gradeControl.enable();
+          if (!isFlexNowImported) {
+            gradeControl.enable();
+          }
           break;
         case 'failed':
           gradeControl.setValue(5);
@@ -368,7 +385,9 @@ export class FinishSemesterStepperComponent {
         default:
           gradeControl.setValue(null);
           gradeControl.clearValidators();
-          gradeControl.enable();
+          if (!isFlexNowImported) {
+            gradeControl.enable();
+          }
           break;
       }
       gradeControl.updateValueAndValidity();

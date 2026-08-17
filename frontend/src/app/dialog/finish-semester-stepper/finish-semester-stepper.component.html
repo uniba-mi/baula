@@ -1,15 +1,25 @@
-<ng-container class="finish-dialog-container" role="Dialogfenster" aria-label="Dialogfenster">
-
+<ng-container
+  class="finish-dialog-container"
+  role="Dialogfenster"
+  aria-label="Dialogfenster"
+>
   @if (!formInitialised) {
-    <p>Bitte wähle alle Module oder Platzhalter an, die du in den Studienverlauf übernehmen
-      möchtest und klicke auf
-    weiter.</p>
+    <p>
+      Bitte wähle alle Module oder Platzhalter an, die du in den Studienverlauf
+      übernehmen möchtest und klicke auf weiter.
+    </p>
   }
 
   @if (!formInitialised && (flexNowSyncEnabled$ | async)) {
     <div class="flex-now-sync-bar d-flex align-items-center flex-wrap mb-2">
-      <button mat-raised-button class="btn btn-outline" type="button" [disabled]="flexNowSyncLoading"
-        (click)="syncWithFlexNow()" (keyup.enter)="syncWithFlexNow()">
+      <button
+        mat-raised-button
+        class="btn btn-outline"
+        type="button"
+        [disabled]="flexNowSyncLoading"
+        (click)="syncWithFlexNow()"
+        (keyup.enter)="syncWithFlexNow()"
+      >
         @if (flexNowSyncLoading) {
           <i class="bi bi-arrow-repeat"></i> Wird abgeglichen...
         } @else {
@@ -17,10 +27,16 @@
         }
       </button>
       @if (flexNowSyncDone && !flexNowSyncLoading) {
-        <span class="ms-2 text-gray"><i class="bi bi-check-circle text-success"></i> Abgleich abgeschlossen</span>
+        <span class="ms-2 text-gray"
+          ><i class="bi bi-check-circle text-success"></i> Abgleich
+          abgeschlossen</span
+        >
       }
       @if (flexNowSyncError) {
-        <span class="ms-2 text-red"><i class="bi bi-exclamation-triangle"></i> {{ flexNowSyncError }}</span>
+        <span class="ms-2 text-red"
+          ><i class="bi bi-exclamation-triangle"></i>
+          {{ flexNowSyncError }}</span
+        >
       }
     </div>
   }
@@ -28,11 +44,13 @@
   @if (!formInitialised) {
     <!-- Table -->
     <div class="mt-3 p-0 rounded bg-white">
-      <div class="row my-auto py-3 px-1 d-none d-sm-flex fw-bold text-gray border">
+      <div
+        class="row my-auto py-3 px-1 d-none d-sm-flex fw-bold text-gray border"
+      >
         <div class="col-8 text-gray">Kürzel/Name</div>
         <div class="col-4 text-gray">Übernehmen</div>
       </div>
-      @if (missingModules.length > 0;) {
+      @if (missingModules.length > 0) {
         <div>
           @for (module of missingModules; track getModuleKey(module)) {
             <div class="row p-2 py-sm-4 px-sm-2 border">
@@ -41,7 +59,10 @@
                 <ng-container>
                   {{ module.acronym }} - {{ module.name }}
                   @if (module.flexNowImported) {
-                    <button class="btn btn-outline chip secondary-chip px-2 ms-2" disabled>
+                    <button
+                      class="btn btn-outline chip secondary-chip px-2 ms-2"
+                      disabled
+                    >
                       Quelle: FlexNow
                     </button>
                   }
@@ -49,21 +70,33 @@
               </div>
               <div class="col-12 col-sm-4 d-flex justify-content-start">
                 @if (isModuleSelected(module)) {
-                  <button class="btn-icon" tabindex="0"
+                  <button
+                    class="btn-icon"
+                    tabindex="0"
                     (click)="setModuleCompletion(module, false)"
-                    (keyup.enter)="setModuleCompletion(module, false)">
-                    <i class="status-toggle active-toggle icon bi bi-toggle-on"></i>
+                    (keyup.enter)="setModuleCompletion(module, false)"
+                  >
+                    <i
+                      class="status-toggle active-toggle icon bi bi-toggle-on"
+                    ></i>
                   </button>
                 }
                 @if (!isModuleSelected(module)) {
-                  <button class="btn-icon" tabindex="0"
+                  <button
+                    class="btn-icon"
+                    tabindex="0"
                     (click)="setModuleCompletion(module, true)"
-                    (keyup.enter)="setModuleCompletion(module, true)">
-                    <i class="status-toggle icon bi bi-toggle-off text-gray"></i>
+                    (keyup.enter)="setModuleCompletion(module, true)"
+                  >
+                    <i
+                      class="status-toggle icon bi bi-toggle-off text-gray"
+                    ></i>
                   </button>
                 }
                 @if (isModuleSelected(module)) {
-                  <span class="status-active px-2 rounded info">Übernehmen</span>
+                  <span class="status-active px-2 rounded info"
+                    >Übernehmen</span
+                  >
                 }
                 @if (!isModuleSelected(module)) {
                   <span class="text-gray">Nicht übernehmen</span>
@@ -76,32 +109,58 @@
     </div>
   }
 
-
   @if (formInitialised && formData) {
-    <p>Bitte prüfe bzw. ergänze unten aufgeführte Module und Platzhalter. Wenn du
-      alles
-      vervollständigt hast und
-      auf "Speichern" klickst, wird das Semester abgeschlossen, als vergangen markiert und somit deine Belegungen zum
-      Studienverlauf hinzugefügt. Die Module sind dann <b>nicht mehr veränderbar</b>.
+    <p>
+      Bitte prüfe bzw. ergänze unten aufgeführte Module und Platzhalter. Wenn du
+      alles vervollständigt hast und auf "Speichern" klickst, wird das Semester
+      abgeschlossen, als vergangen markiert und somit deine Belegungen zum
+      Studienverlauf hinzugefügt. Die Module sind dann
+      <b>nicht mehr veränderbar</b>.
     </p>
   }
 
   @if (formInitialised) {
     @if (formData) {
-      <mat-horizontal-stepper [linear]="true" [formGroup]="stepperForm" #stepper
-        (animationDone)="selectionChange(stepper)">
-        @for (module of getSelectedModules(); track getModuleKey(module); let i = $index) {
-          <mat-step [formGroupName]="getFormKey(module, i)"
+      <mat-horizontal-stepper
+        [linear]="true"
+        [formGroup]="stepperForm"
+        #stepper
+        (animationDone)="selectionChange(stepper)"
+      >
+        @for (
+          module of getSelectedModules();
+          track getModuleKey(module);
+          let i = $index
+        ) {
+          <mat-step
+            [formGroupName]="getFormKey(module, i)"
             [completed]="getFormGroup(getFormKey(module, i)).valid"
-            [hasError]="getFormGroup(getFormKey(module, i)).invalid && (getFormGroup(getFormKey(module, i)).dirty || getFormGroup(getFormKey(module, i)).touched)">
-            <ng-template matStepLabel> <span
-              [style.color]="getFormGroup(getFormKey(module, i)).invalid && (getFormGroup(getFormKey(module, i)).dirty || getFormGroup(getFormKey(module, i)).touched) ? 'red' : ''">
-              {{ module.acronym }}
-            </span></ng-template>
+            [hasError]="
+              getFormGroup(getFormKey(module, i)).invalid &&
+              (getFormGroup(getFormKey(module, i)).dirty ||
+                getFormGroup(getFormKey(module, i)).touched)
+            "
+          >
+            <ng-template matStepLabel>
+              <span
+                [style.color]="
+                  getFormGroup(getFormKey(module, i)).invalid &&
+                  (getFormGroup(getFormKey(module, i)).dirty ||
+                    getFormGroup(getFormKey(module, i)).touched)
+                    ? 'red'
+                    : ''
+                "
+              >
+                {{ module.acronym }}
+              </span></ng-template
+            >
             <form [formGroup]="getFormGroup(getFormKey(module, i))">
               <div class="content-wrapper">
                 @if (module.flexNowImported) {
-                  <button class="btn btn-outline chip secondary-chip px-2 mb-2" disabled>
+                  <button
+                    class="btn btn-outline chip secondary-chip px-2 mb-2"
+                    disabled
+                  >
                     Quelle: FlexNow
                   </button>
                 }
@@ -109,41 +168,60 @@
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline" class="mt-1">
                     <mat-label>Kürzel</mat-label>
-                    <input matInput formControlName="acronym" #acronym required>
-                    @if (getFormGroup(getFormKey(module, i)).get('acronym')?.touched && getFormGroup(getFormKey(module, i)).get('acronym')?.invalid) {
-                      <mat-error
-                        >
-                        @if (getFormGroup(getFormKey(module, i)).get('acronym')?.errors?.required) {
-                          <span
-                            >Das
-                            ist
-                            ein
-                          Pflichtfeld.</span>
+                    <input
+                      matInput
+                      formControlName="acronym"
+                      #acronym
+                      required
+                    />
+                    @if (
+                      getFormGroup(getFormKey(module, i)).get("acronym")
+                        ?.touched &&
+                      getFormGroup(getFormKey(module, i)).get("acronym")
+                        ?.invalid
+                    ) {
+                      <mat-error>
+                        @if (
+                          getFormGroup(getFormKey(module, i)).get("acronym")
+                            ?.errors?.required
+                        ) {
+                          <span>Das ist ein Pflichtfeld.</span>
                         }
                       </mat-error>
                     }
                   </mat-form-field>
-                  <i class="bi bi-info-circle"
+                  <i
+                    class="bi bi-info-circle"
                     matTooltip="Hier kannst du ein Kürzel eingeben, um dein Modul wiederzuerkennen. Am besten verwendest du eine übliche Modulbezeichnung."
-                  matTooltipClass="custom-tooltip" appTooltip></i>
+                    matTooltipClass="custom-tooltip"
+                    appTooltip
+                  ></i>
                 </div>
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline">
                     <mat-label>Name</mat-label>
-                    <input matInput formControlName="name" #name required>
-                    @if (getFormGroup(getFormKey(module, i)).get('name')?.touched && getFormGroup(getFormKey(module, i)).get('name')?.invalid) {
-                      <mat-error
-                        >
-                        @if (getFormGroup(getFormKey(module, i)).get('name')?.errors?.required) {
-                          <span>Das
-                            ist ein
-                          Pflichtfeld.</span>
+                    <input matInput formControlName="name" #name required />
+                    @if (
+                      getFormGroup(getFormKey(module, i)).get("name")
+                        ?.touched &&
+                      getFormGroup(getFormKey(module, i)).get("name")?.invalid
+                    ) {
+                      <mat-error>
+                        @if (
+                          getFormGroup(getFormKey(module, i)).get("name")
+                            ?.errors?.required
+                        ) {
+                          <span>Das ist ein Pflichtfeld.</span>
                         }
                       </mat-error>
                     }
                   </mat-form-field>
-                  <i class="bi bi-info-circle" matTooltip="Lege einen Namen für das Modul fest."
-                  matTooltipClass="custom-tooltip" appTooltip></i>
+                  <i
+                    class="bi bi-info-circle"
+                    matTooltip="Lege einen Namen für das Modul fest."
+                    matTooltipClass="custom-tooltip"
+                    appTooltip
+                  ></i>
                 </div>
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline">
@@ -153,179 +231,266 @@
                       <mat-option value="failed">Nicht bestanden</mat-option>
                       <mat-option value="taken">Belegt</mat-option>
                     </mat-select>
-                    @if (getFormGroup(getFormKey(module, i)).get('status')?.touched && getFormGroup(getFormKey(module, i)).get('status')?.invalid) {
-                      <mat-error
-                        >
-                        @if (getFormGroup(getFormKey(module, i)).get('status')?.errors?.required) {
-                          <span
-                            >Das
-                            ist
-                            ein
-                          Pflichtfeld.</span>
+                    @if (
+                      getFormGroup(getFormKey(module, i)).get("status")
+                        ?.touched &&
+                      getFormGroup(getFormKey(module, i)).get("status")?.invalid
+                    ) {
+                      <mat-error>
+                        @if (
+                          getFormGroup(getFormKey(module, i)).get("status")
+                            ?.errors?.required
+                        ) {
+                          <span>Das ist ein Pflichtfeld.</span>
                         }
                       </mat-error>
                     }
                   </mat-form-field>
-                  <i class="bi bi-info-circle" matTooltip="Gib hier den letzten Status des Moduls an."
-                  matTooltipClass="custom-tooltip" appTooltip></i>
+                  <i
+                    class="bi bi-info-circle"
+                    matTooltip="Gib hier den letzten Status des Moduls an."
+                    matTooltipClass="custom-tooltip"
+                    appTooltip
+                  ></i>
                 </div>
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline">
                     <mat-label>ECTS</mat-label>
-                    <input matInput formControlName="ects" #ects type="number" min="0" max="30" required>
-                    @if (getFormGroup(getFormKey(module, i)).get('ects')?.touched && getFormGroup(getFormKey(module, i)).get('ects')?.invalid) {
-                      <mat-error
-                        >@if (
-                        getFormGroup(getFormKey(module, i)).get('ects')?.errors?.min ||
-                        getFormGroup(getFormKey(module, i)).get('ects')?.errors?.max
+                    <input
+                      matInput
+                      formControlName="ects"
+                      #ects
+                      type="number"
+                      min="0"
+                      max="30"
+                      required
+                    />
+                    @if (
+                      getFormGroup(getFormKey(module, i)).get("ects")
+                        ?.touched &&
+                      getFormGroup(getFormKey(module, i)).get("ects")?.invalid
+                    ) {
+                      <mat-error>
+                        @if (
+                          getFormGroup(getFormKey(module, i)).get("ects")
+                            ?.errors?.min ||
+                          getFormGroup(getFormKey(module, i)).get("ects")
+                            ?.errors?.max
                         ) {
-                        <span
-                        >Die ECTS müssen mindestens 0 und maximal 30 sein. Gib 0 ECTS an, wenn das Modul eine freiwillige Zusatzleistung ist.</span>
-                        }@if (getFormGroup(getFormKey(module, i)).get('ects')?.errors?.required) {
-                        <span
-                          >Das
-                          ist ein
-                        Pflichtfeld.</span>
-                      }
-                    </mat-error>
-                  }
-                </mat-form-field>
-                <i class="bi bi-info-circle"
-                  matTooltip="Gib hier die ECTS ein. Die ECTS müssen mindestens 0 und maximal 30 sein. Gib 0 ECTS an, wenn das Modul eine freiwillige Zusatzleistung ist."
-                matTooltipClass="custom-tooltip" appTooltip></i>
-              </div>
-              <div class="input-field-wrapper">
-                <mat-form-field appearance="outline">
-                  <mat-label>Note</mat-label>
-                  <input matInput formControlName="grade" #grade type="text">
-                  @if (getFormGroup(getFormKey(module, i)).get('grade')?.touched && getFormGroup(getFormKey(module, i)).get('grade')?.invalid) {
-                    <mat-error
-                      >
-                      @if (getFormGroup(getFormKey(module, i)).get('grade')?.errors?.min || getFormGroup(getFormKey(module, i)).get('grade')?.errors?.max) {
-                        <span
-                          >Die
-                          Note muss zwischen 1,0 und 4,0 liegen.
-                        </span>
-                      }
-                      @if (getFormGroup(getFormKey(module, i)).get('grade')?.errors?.pattern) {
-                        <span>
-                          Bitte gib eine gültige Zahl ein (z. B. 2, 2.5).
-                        </span>
-                      }
-                    </mat-error>
-                  }
-                  @if (showNoEditHint || showNoGradeHint) {
-                    <mat-hint class="text-gray">
-                      @if (showNoEditHint) {
-                        <span> <i
-                        class="bi bi-exclamation-triangle ms-2 text-red"></i>
-                        Da das Modul als "nicht
-                        bestanden"
-                      markiert ist, kannst du die Note nicht ändern.</span>
+                          <span
+                            >Die ECTS müssen mindestens 0 und maximal 30 sein.
+                            Gib 0 ECTS an, wenn das Modul eine freiwillige
+                            Zusatzleistung ist.</span
+                          >
+                        }
+                        @if (
+                          getFormGroup(getFormKey(module, i)).get("ects")
+                            ?.errors?.required
+                        ) {
+                          <span>Das ist ein Pflichtfeld.</span>
+                        }
+                      </mat-error>
                     }
-                    @if (showNoGradeHint) {
-                      <span>
-                        <i class="bi bi-exclamation-triangle ms-2 text-red"></i> Da das Modul als
-                        "belegt"
-                        markiert ist, gibt es noch keine Note.
-                      </span>
+                  </mat-form-field>
+                  <i
+                    class="bi bi-info-circle"
+                    matTooltip="Gib hier die ECTS ein. Die ECTS müssen mindestens 0 und maximal 30 sein. Gib 0 ECTS an, wenn das Modul eine freiwillige Zusatzleistung ist."
+                    matTooltipClass="custom-tooltip"
+                    appTooltip
+                  ></i>
+                </div>
+                <div class="input-field-wrapper">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Note</mat-label>
+                    <input
+                      matInput
+                      formControlName="grade"
+                      #grade
+                      type="text"
+                    />
+                    @if (
+                      getFormGroup(getFormKey(module, i)).get("grade")
+                        ?.touched &&
+                      getFormGroup(getFormKey(module, i)).get("grade")?.invalid
+                    ) {
+                      <mat-error>
+                        @if (
+                          getFormGroup(getFormKey(module, i)).get("grade")
+                            ?.errors?.min ||
+                          getFormGroup(getFormKey(module, i)).get("grade")
+                            ?.errors?.max
+                        ) {
+                          <span
+                            >Die Note muss zwischen 1,0 und 4,0 liegen.
+                          </span>
+                        }
+                        @if (
+                          getFormGroup(getFormKey(module, i)).get("grade")
+                            ?.errors?.pattern
+                        ) {
+                          <span>
+                            Bitte gib eine gültige Zahl ein (z. B. 2, 2.5).
+                          </span>
+                        }
+                      </mat-error>
                     }
-                  </mat-hint>
+                    @if (showNoEditHint || showNoGradeHint) {
+                      <mat-hint class="text-gray">
+                        @if (showNoEditHint) {
+                          <span>
+                            <i
+                              class="bi bi-exclamation-triangle ms-2 text-red"
+                            ></i>
+                            Da das Modul als "nicht bestanden" markiert ist,
+                            kannst du die Note nicht ändern.</span
+                          >
+                        }
+                        @if (showNoGradeHint) {
+                          <span>
+                            <i
+                              class="bi bi-exclamation-triangle ms-2 text-red"
+                            ></i>
+                            Da das Modul als "belegt" markiert ist, gibt es noch
+                            keine Note.
+                          </span>
+                        }
+                      </mat-hint>
+                    }
+                  </mat-form-field>
+                  <i
+                    class="bi bi-info-circle"
+                    matTooltip="Gib hier deine Note an. Sie kann zwischen 1,0 und 5,0 liegen."
+                    matTooltipClass="custom-tooltip"
+                    appTooltip
+                  ></i>
+                </div>
+                @if (
+                  structuredModuleGroups$ | async;
+                  as structuredModuleGroups
+                ) {
+                  <div class="input-field-wrapper">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Modulgruppe</mat-label>
+                      <mat-select formControlName="mgId" #mgId>
+                        @for (group of structuredModuleGroups; track group) {
+                          <mat-option
+                            [value]="group.mgId"
+                            [ngStyle]="{
+                              'padding-left':
+                                (group.level ?? 0) * 10 + 10 + 'px',
+                            }"
+                          >
+                            {{ group.path }}
+                          </mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="wrapper w-100 mt-0">
+                    <app-module-group-wizard
+                      [mgId]="
+                        getFormGroup(getFormKey(module, i)).get('mgId')?.value
+                      "
+                      [structuredModuleGroups]="structuredModuleGroups"
+                      [possibleMgIdsBasedOnAcronym]="
+                        getPossibleMgIdsForAcronym(module.acronym) | async
+                      "
+                      (groupSelected)="
+                        getFormGroup(getFormKey(module, i))
+                          .get('mgId')
+                          ?.setValue($event)
+                      "
+                    ></app-module-group-wizard>
+                  </div>
                 }
-              </mat-form-field>
-              <i class="bi bi-info-circle"
-                matTooltip="Gib hier deine Note an. Sie kann zwischen 1,0 und 5,0 liegen."
-              matTooltipClass="custom-tooltip" appTooltip></i>
-            </div>
-            <div class="input-field-wrapper">
-              @if (structuredModuleGroups$ | async; as structuredModuleGroups) {
-                <mat-form-field
-                  appearance="outline">
-                  <mat-label>Modulgruppe</mat-label>
-                  <mat-select formControlName="mgId" #mgId>
-                    @for (group of structuredModuleGroups; track group) {
-                      <mat-option [value]="group.mgId"
-                        [ngStyle]="{'padding-left': ((group.level ?? 0) * 10 + 10) + 'px'}"> {{
-                        group.path
-                        }}
-                      </mat-option>
-                    }
-                  </mat-select>
-                </mat-form-field>
-              }
-            </div>
-            @if (structuredModuleGroups$ | async; as structuredModuleGroups) {
-              <div class="wrapper w-100 mt-0">
-                <app-module-group-wizard
-                  [mgId]="getFormGroup(getFormKey(module, i)).get('mgId')?.value"
-                  [structuredModuleGroups]="structuredModuleGroups"
-                  [possibleMgIdsBasedOnAcronym]="getPossibleMgIdsForAcronym(module.acronym) | async"
-                  (groupSelected)="getFormGroup(getFormKey(module, i)).get('mgId')?.setValue($event)"
-                ></app-module-group-wizard>
-              </div>
-            }
-            <div class="button-group d-flex justify-content-between">
-              @if (i !== 0) {
-                <button mat-raised-button class="previous-btn btn btn-outline me-2" matStepperPrevious
+                <div class="button-group d-flex justify-content-between">
+                  @if (i !== 0) {
+                    <button
+                      mat-raised-button
+                      class="previous-btn btn btn-outline me-2"
+                      matStepperPrevious
+                    >
+                      <i class="bi bi-arrow-left"></i>
+                      <span class="d-none d-sm-inline">Vorheriges Modul</span>
+                    </button>
+                  }
+                  @if (i !== getSelectedModules().length - 1) {
+                    <button
+                      mat-raised-button
+                      class="next-btn btn btn-primary"
+                      matStepperNext
+                      [disabled]="!getFormGroup(getFormKey(module, i)).valid"
+                    >
+                      <span class="d-none d-sm-inline">Nächstes Modul</span>
+                      <i class="bi bi-arrow-right"></i>
+                    </button>
+                  }
+                </div>
+                @if (i === getSelectedModules().length - 1) {
+                  <button
+                    mat-raised-button
+                    class="save-btn btn btn-primary"
+                    [disabled]="!stepperForm.valid"
+                    [mat-dialog-close]="getData()"
+                    (click)="close('data')"
+                    (keyup.enter)="close('data')"
                   >
-                  <i class="bi bi-arrow-left"></i>
-                  <span class="d-none d-sm-inline">Vorheriges Modul</span>
-                </button>
-              }
-              @if (i !== getSelectedModules().length - 1) {
-                <button mat-raised-button class="next-btn btn btn-primary" matStepperNext
-                  [disabled]="!getFormGroup(getFormKey(module, i)).valid">
-                  <span class="d-none d-sm-inline">Nächstes Modul</span>
-                  <i class="bi bi-arrow-right"></i>
-                </button>
-              }
-            </div>
-            @if (i === getSelectedModules().length - 1) {
-              <button mat-raised-button class="save-btn btn btn-primary"
-                [disabled]="!stepperForm.valid"
-                [mat-dialog-close]="getData()" (click)="close('data')" (keyup.enter)="close('data')">
-                Speichern
-              </button>
-            }
-          </div>
-        </form>
-      </mat-step>
+                    Speichern
+                  </button>
+                }
+              </div>
+            </form>
+          </mat-step>
+        }
+        <!-- force stepper to use proper icons, default state is numbers.. -->
+        <ng-template matStepperIcon="edit">
+          <i class="bi bi-check-lg"></i>
+        </ng-template>
+        <ng-template matStepperIcon="done">
+          <i class="bi bi-check-lg"></i>
+        </ng-template>
+      </mat-horizontal-stepper>
+    } @else {
+      <mat-card appearance="outlined" class="my-3 p-4">
+        <p>
+          Es liegen keine Module oder Platzhalter zur Übernahme in den
+          Studienverlauf vor.
+        </p>
+      </mat-card>
     }
-    <!-- force stepper to use proper icons, default state is numbers.. -->
-    <ng-template matStepperIcon="edit">
-      <i class="bi bi-check-lg"></i>
-    </ng-template>
-    <ng-template matStepperIcon="done">
-      <i class="bi bi-check-lg"></i>
-    </ng-template>
-  </mat-horizontal-stepper>
-} @else {
-  <mat-card appearance="outlined" class="my-3 p-4">
-    <p>Es liegen keine Module oder Platzhalter zur Übernahme in den Studienverlauf vor.</p>
-  </mat-card>
-}
-}
-<mat-dialog-actions>
-  <!-- Weiter Button -->
-  @if (!formInitialised) {
-    <button mat-raised-button class="btn btn-primary mt-3" (click)="startStepper()"
-      (keyup.enter)="startStepper()">
-      Weiter
-    </button>
-  } @else {
-    <button mat-raised-button class="btn btn-outline mt-3" (click)="stopStepper()"
-      (keyup.enter)="stopStepper()">
-      Zurück
-    </button>
   }
-  <button mat-raised-button class="btn btn-outline" mat-dialog-close>
-    Abbrechen
-  </button>
-  @if (formInitialised && !formData) {
-    <button mat-raised-button class="btn btn-danger"
-      [mat-dialog-close]="getData()">
-      Ohne Abschließen
+  <mat-dialog-actions>
+    <!-- Weiter Button -->
+    @if (!formInitialised) {
+      <button
+        mat-raised-button
+        class="btn btn-primary mt-3"
+        (click)="startStepper()"
+        (keyup.enter)="startStepper()"
+      >
+        Weiter
+      </button>
+    } @else {
+      <button
+        mat-raised-button
+        class="btn btn-outline mt-3"
+        (click)="stopStepper()"
+        (keyup.enter)="stopStepper()"
+      >
+        Zurück
+      </button>
+    }
+    <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+      Abbrechen
     </button>
-  }
-</mat-dialog-actions>
-
+    @if (formInitialised && !formData) {
+      <button
+        mat-raised-button
+        class="btn btn-danger"
+        [mat-dialog-close]="getData()"
+      >
+        Ohne Abschließen
+      </button>
+    }
+  </mat-dialog-actions>
+</ng-container>

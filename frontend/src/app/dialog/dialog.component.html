@@ -106,7 +106,7 @@
             }
           }
           @case ("change-module-group-dialog") {
-            @if (data.mgId && data.structuredModuleGroups$) {
+            @if (data.structuredModuleGroups$) {
               <div>
                 <app-change-module-group-dialog
                   [mgId]="data.mgId"
