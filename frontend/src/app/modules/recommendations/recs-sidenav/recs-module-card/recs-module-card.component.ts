@@ -154,7 +154,7 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
     type: string;
   }): string {
     const typeLabel = firstChip.type === 'job' ? 'Job' : 'Interesse';
-    return $localize `Passt zu ${typeLabel}: ${firstChip.displayText}`;
+    return $localize `Passt zu ${typeLabel}\: ${firstChip.displayText}`;
   }
 
   getTotalChipCount(): number {

@@ -7,6 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ExpandCourseTypePipe implements PipeTransform {
 
   transform(type: string): string {
+    // TODO: Can you translate the return values?
     switch (type) {
         case 'S':
             return 'Seminar';

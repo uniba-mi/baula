@@ -1,3 +1,4 @@
+// TODO: Can you translate name and desc?
 export const chartMetadata: ChartMetadata[] = [
     { key: 'quick-links', name: 'Quick Links', desc: 'Hier findest du die Links zu den wichtigsten Uni-Diensten.', icon: 'bi-link-45deg' },
     { key: 'user-data', name: 'Meine Daten', desc: 'Hier siehst du die Daten zu deinem Studium', icon: 'bi-file-earmark-text' },

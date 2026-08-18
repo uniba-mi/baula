@@ -146,6 +146,7 @@ export class TransformationService {
 
   // transforms the status into a readable form
   transformStatus(status: string): string {
+    // TODO: Can you translate the following return values?
     switch (status) {
       case 'open':
         return 'Belegt';
@@ -379,6 +380,7 @@ export class TransformationService {
   }
 
   private minifyCoursetype(type: string): string {
+    // TODO: Can you translate the following return values?
     switch (type) {
       case 'Seminar':
         return 'S';

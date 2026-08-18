@@ -6,6 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CourseFormatPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): string {
+    // TODO: Can you translate the return values?
     switch (value) {
       case 'praesenz':
         return 'Präsenz'

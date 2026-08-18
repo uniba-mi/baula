@@ -68,6 +68,7 @@ export class DownloadService {
     };
 
     // set the content of the pdf file
+    // TODO: Can you translate elements here?
     const content = [
       { text: 'Deine Daten in Baula', style: 'header' },
       {

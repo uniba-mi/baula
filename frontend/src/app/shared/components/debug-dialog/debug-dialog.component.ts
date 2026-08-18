@@ -45,7 +45,7 @@ export class DebugDialogComponent {
     navigator.clipboard.writeText(data);
     this.snackbar.openSnackBar({
       type: AlertType.SUCCESS,
-      message: 'Die Daten wurden in die Zwischenablage kopiert.',
+      message: $localize `Die Daten wurden in die Zwischenablage kopiert.`,
     });
   }
 }

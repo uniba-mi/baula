@@ -10,6 +10,7 @@ export class ShowWeekdayPipe implements PipeTransform {
     let rhythm = parts[0];
     let weekday = parts[1];
 
+    // TODO: Can you translate rythm values?
     // decode rhythm
     switch (rhythm) {
       case 'w1':

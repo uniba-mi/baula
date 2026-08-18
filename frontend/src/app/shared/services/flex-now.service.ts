@@ -350,11 +350,11 @@ export class FlexnowService {
     semesters: string[],
   ): Observable<boolean> {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: `${semesters.length > 0 ? 'Ausgewählte ' : 'Alle '} Semester mit den FlexNow-Daten überschreiben?`,
+      dialogTitle: $localize `${semesters.length > 0 ? 'Ausgewählte ' : 'Alle '} Semester mit den FlexNow-Daten überschreiben?`,
       actionType: 'overwrite',
-      confirmationItem: `deine ${semesters.length > 0 ? 'ausgewählten' : ''} Semester`,
-      confirmButtonLabel: 'Überschreiben',
-      cancelButtonLabel: 'Abbrechen',
+      confirmationItem: $localize `deine ${semesters.length > 0 ? 'ausgewählten' : ''} Semester`,
+      confirmButtonLabel: $localize `Überschreiben`,
+      cancelButtonLabel: $localize `Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.dialog.closeAll();

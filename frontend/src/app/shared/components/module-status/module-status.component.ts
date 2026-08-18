@@ -44,6 +44,7 @@ export class ModuleStatusComponent implements OnInit {
   user: User;
   displayStatusOnHover: string = '';
   private destroy$ = new Subject<void>();
+  // TODO: Can you translate the name?
   statusOptions: Status[] = [
     {
       status: 'passed',

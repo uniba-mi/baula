@@ -167,7 +167,7 @@ export class UserUpdateService {
         } else {
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
-            message: 'Es ist ein Fehler beim Löschen aufgetreten.',
+            message: $localize `Es ist ein Fehler beim Löschen aufgetreten.`,
           });
         }
       });

@@ -77,7 +77,7 @@ export class ModService {
         this.snackbar.openSnackBar({
           type: AlertType.DANGER,
           message:
-            'Kein passendes Modul gefunden. Informiere dich auf der Universitätsseite über das Modul, da es nicht in unserem Modulbestand vorliegt.',
+            $localize `Kein passendes Modul gefunden. Informiere dich auf der Universitätsseite über das Modul, da es nicht in unserem Modulbestand vorliegt.`,
         });
       }
     });
