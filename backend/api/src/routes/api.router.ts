@@ -7,10 +7,33 @@ import { baula } from "./baula/baula.router";
 import { denyDemoWrites } from "../shared/middleware/demo-middleware";
 import { bilapp } from "./bilapp/bilapp.router";
 import { evaluation } from './evaluation/evaluation.router';
+import mongoose from "mongoose";
+import { redisClient } from "../config/session.config";
 
 const router: Router = express.Router();
 
-router.use(express.json());
+// Health check endpoint - no authentication required
+router.get('/health', (req: Request, res: Response) => {
+  const mongoStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+  const redisStatus = redisClient.status === 'ready' ? 'connected' : 'disconnected';
+  
+  const healthStatus = {
+    status: mongoStatus === 'connected' && redisStatus === 'connected' ? 'healthy' : 'degraded',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    services: {
+      mongodb: mongoStatus,
+      redis: redisStatus,
+    },
+    environment: process.env.NODE_ENV || 'development',
+  };
+  
+  const statusCode = healthStatus.status === 'healthy' ? 200 : 503;
+  res.status(statusCode).json(healthStatus);
+});
+
+// Remove duplicate express.json() - already set in app.ts
+// router.use(express.json());
 
 router.get("/", ensureAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     if (req.user) {

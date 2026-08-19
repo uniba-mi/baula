@@ -15,14 +15,15 @@ if (!process.env.SESSION_SECRET) {
 export const expressSession = session({
   store: new RedisStore({ client: redisClient }),
   secret: process.env.SESSION_SECRET,
-  name: process.env.SESSION_NAME ?? "testSession",
+  name: process.env.SESSION_NAME ?? "baulaSession",
   resave: false,
   saveUninitialized: false,
   proxy: true,
   cookie: {
-    secure: process.env.COOKIE_SECURE === "true" ? true : false, // Set to true if using HTTPS
+    secure: process.env.NODE_ENV === 'production', // Always true in production
     httpOnly: true,
-    maxAge: 8 * 60 * 60 * 1000,
-    sameSite: true,
+    maxAge: 8 * 60 * 60 * 1000, // 8 hours
+    sameSite: 'lax', // or 'strict' for higher security
+    domain: process.env.COOKIE_DOMAIN, // Optional: for subdomains
   },
 });

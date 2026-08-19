@@ -1,16 +1,79 @@
 import app from './app';
 import { redisClient } from './config/session.config';
 import mongoose from "mongoose";
+import { logger } from './shared/utils/logger';
 
-const port = process.env.API_PORT;
+const port = process.env.API_PORT || 3300;
 
-// creates and starts server on port 3305
-app.listen(port, () => {
-  console.log(`Server listens on port ${port}`);
+// creates and starts server
+const server = app.listen(port, () => {
+  logger.info(`Server listens on port ${port}`);
+  
   const connectionMongoDB =
-    mongoose.connection.readyState == 2
+    mongoose.connection.readyState === 1
       ? "MongoDB connected!"
       : "Connection to MongoDB failed!";
-  console.log(connectionMongoDB);
-  redisClient.connect().then(() => console.log('Redis connected!')).catch(console.error);
+  logger.info(connectionMongoDB);
+  
+  redisClient.connect()
+    .then(() => logger.info('Redis connected!'))
+    .catch((err) => logger.error('Redis connection failed:', err));
 });
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+  logger.error('Unhandled Rejection:', err);
+  server.close(() => process.exit(1));
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+  logger.error('Uncaught Exception:', err);
+  server.close(() => process.exit(1));
+});
+
+// Graceful shutdown on SIGTERM (Docker, Kubernetes, etc.)
+process.on('SIGTERM', async () => {
+  logger.info('SIGTERM received. Shutting down gracefully...');
+  
+  server.close(async () => {
+    try {
+      // Close MongoDB connection
+      await mongoose.connection.close();
+      logger.info('MongoDB connection closed.');
+      
+      // Close Redis connection
+      await redisClient.quit();
+      logger.info('Redis connection closed.');
+      
+      logger.info('Server closed.');
+      process.exit(0);
+    } catch (err) {
+      logger.error('Error during graceful shutdown:', err);
+      process.exit(1);
+    }
+  });
+});
+
+// Graceful shutdown on SIGINT (Ctrl+C)
+process.on('SIGINT', async () => {
+  logger.info('SIGINT received. Shutting down gracefully...');
+  
+  server.close(async () => {
+    try {
+      await mongoose.connection.close();
+      logger.info('MongoDB connection closed.');
+      
+      await redisClient.quit();
+      logger.info('Redis connection closed.');
+      
+      logger.info('Server closed.');
+      process.exit(0);
+    } catch (err) {
+      logger.error('Error during graceful shutdown:', err);
+      process.exit(1);
+    }
+  });
+});
+
+export default server;

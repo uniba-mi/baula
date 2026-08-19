@@ -23,7 +23,23 @@ const uri = process.env.MONGO_DATABASE_URL
   ? process.env.MONGO_DATABASE_URL.toString()
   : "";
 
-export const connection = mongoose.connect(uri);
+if (!uri) {
+  throw new Error("MONGO_DATABASE_URL environment variable is required");
+}
+
+// Enhanced MongoDB connection with pooling and retry options
+export const connection = mongoose.connect(uri, {
+  maxPoolSize: 10, // Default: 5
+  socketTimeoutMS: 30000, // 30 seconds
+  connectTimeoutMS: 30000, // 30 seconds
+  serverSelectionTimeoutMS: 5000, // 5 seconds
+  retryWrites: true,
+  retryReads: true,
+  appName: "Baula-Backend",
+}).catch((err) => {
+  console.error("MongoDB connection failed:", err);
+  throw err;
+});
 
 // MongoDB Schemas -> Structure of the models
 // longterm evaluation schema
