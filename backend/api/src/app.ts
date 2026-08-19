@@ -22,37 +22,20 @@ import { logger } from "./shared/utils/logger";
 
 const app: Express = express();
 
-// The API is only ever reached through the Apache reverse proxy (see
-// server/apache2/sites-available/000-default.conf.template) - trust
-// exactly that one hop's X-Forwarded-For so req.ip (and therefore the rate
-// limiters below) reflect the real client, not the proxy. Without this,
-// every request looks like it comes from the proxy's IP and all users
-// share a single rate-limit bucket.
-app.set('trust proxy', 1);
+// trust the first hop (reverse proxy) so req.ip / X-Forwarded-For reflect the real client
+app.set("trust proxy", 1);
 
-// Parse allowed origins from environment variable, falling back to the
-// single legacy ORIGIN var. `credentials: true` cannot be combined with a
-// wildcard origin (browsers reject it), so no origin ever resolves to '*'.
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(',').map((origin) => origin.trim())
-  : process.env.ORIGIN
-    ? [process.env.ORIGIN]
-    : [];
-
-if (allowedOrigins.length === 0) {
-  logger.warn(
-    'No ALLOWED_ORIGINS or ORIGIN configured - cross-origin requests with credentials will be rejected by browsers.'
+// cors for local setting
+if (process.env.NODE_ENV === "local" && process.env.ORIGIN) {
+  app.use(
+    cors({
+      origin: [
+        process.env.ORIGIN,
+      ],
+      credentials: true,
+    })
   );
 }
-
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'X-XSRF-TOKEN'],
-  })
-);
 
 // Rate limiting to prevent brute force and DDoS attacks. Window is
 // intentionally short (1 minute) with a generous cap: a SPA dashboard load

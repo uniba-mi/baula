@@ -19,9 +19,9 @@ import { Topic as ITopic } from "@interfaces/topic";
 import { UserServer as IUser } from "@interfaces/user";
 import { Evaluation as IEvaluation } from "@interfaces/evaluation";
 import { FeatureWish as IFeatureWish } from "../../../../interfaces/feature-wish";
-const uri = process.env.MONGO_DATABASE_URL
-  ? process.env.MONGO_DATABASE_URL.toString()
-  : "";
+import { logger } from "../shared/utils/logger";
+
+const uri = process.env.MONGO_DATABASE_URL;
 
 if (!uri) {
   throw new Error("MONGO_DATABASE_URL environment variable is required");

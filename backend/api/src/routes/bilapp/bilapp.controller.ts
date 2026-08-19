@@ -273,185 +273,221 @@ export async function getAllSavedCourses(
   next: NextFunction
 ) {
   const user = req.user as UserServer;
-  // find active study plan
-  const studyPlan = await findActiveStudyPlan(user._id);
-  if (studyPlan) {
-    let courses = [];
-    const semesterPlans = studyPlan.semesterPlans;
+  try {
+    // find active study plan
+    const studyPlan = await findActiveStudyPlan(user._id);
+    if (studyPlan) {
+      let courses = [];
+      const semesterPlans = studyPlan.semesterPlans;
 
-    // extract courses
-    for (let semesterPlan of semesterPlans) {
-      if (semesterPlan.courses.length !== 0) {
-        const keys = semesterPlan.courses.map((el) => el.id);
-        const dbCourses = await prisma.course.findMany({
-          include: {
-            dozs: {
-              select: {
-                person: true,
+      // extract courses
+      for (let semesterPlan of semesterPlans) {
+        if (semesterPlan.courses.length !== 0) {
+          const keys = semesterPlan.courses.map((el) => el.id);
+          const dbCourses = await prisma.course.findMany({
+            include: {
+              dozs: {
+                select: {
+                  person: true,
+                },
+              },
+              terms: {
+                include: {
+                  room: true,
+                },
+              },
+              competence: {
+                select: {
+                  cId: true,
+                  semester: true,
+                  compId: true,
+                  fulfillment: true,
+                },
+              },
+              mCourses: {
+                select: {
+                  modCourse: true,
+                },
               },
             },
-            terms: {
-              include: {
-                room: true,
+            where: {
+              AND: {
+                semester: semesterPlan.semester,
+                id: {
+                  in: keys,
+                },
               },
             },
-            competence: {
-              select: {
-                cId: true,
-                semester: true,
-                compId: true,
-                fulfillment: true,
-              },
-            },
-            mCourses: {
-              select: {
-                modCourse: true,
-              },
-            },
-          },
-          where: {
-            AND: {
-              semester: semesterPlan.semester,
-              id: {
-                in: keys,
-              },
-            },
-          },
-        });
-        // map MongoDB with Prisma Entries
-        for (let c of semesterPlan.courses) {
-          const course = dbCourses.find(
-            (el) => el.id == c.id && el.semester == semesterPlan.semester
-          );
-          if (course) {
-            let entry = {
-              status: c.status,
-              ...course,
-              sws: c.sws,
-              ects: c.ects,
-              contributeTo: c.contributeTo,
-              contributeAs: c.contributeAs,
-              dozs: course.dozs.map((el) => el.person),
-            };
-            courses.push(entry);
+          });
+          // map MongoDB with Prisma Entries
+          for (let c of semesterPlan.courses) {
+            const course = dbCourses.find(
+              (el) => el.id == c.id && el.semester == semesterPlan.semester
+            );
+            if (course) {
+              let entry = {
+                status: c.status,
+                ...course,
+                sws: c.sws,
+                ects: c.ects,
+                contributeTo: c.contributeTo,
+                contributeAs: c.contributeAs,
+                dozs: course.dozs.map((el) => el.person),
+              };
+              courses.push(entry);
+            }
           }
         }
       }
-    }
 
-    res.status(200).json(courses);
-  } else {
-    next(new NotFoundError("Keinen passenden Studienplan gefunden."));
+      res.status(200).json(courses);
+    } else {
+      next(new NotFoundError("Keinen passenden Studienplan gefunden."));
+    }
+  } catch (error) {
+    next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
   }
 }
 
-export async function getAllStandards(req: Request, res: Response) {
-    const result = await prisma.standard.findMany();
-    if(result) {
-        res.status(200).json(result);
-    } else {
-        res.status(400).send('Es wurden keine Standards gefunden!')
+export async function getAllStandards(req: Request, res: Response, next: NextFunction) {
+    try {
+        const result = await prisma.standard.findMany();
+        if(result) {
+            res.status(200).json(result);
+        } else {
+            res.status(400).send('Es wurden keine Standards gefunden!')
+        }
+    } catch (error) {
+        next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
     }
 }
 
-export async function getSingleStandard(req: Request, res: Response) {
+export async function getSingleStandard(req: Request, res: Response, next: NextFunction) {
     const id = req.params.id;
 
-    const result = await prisma.standard.findUnique({
-        where: {
-            stId: id
+    try {
+        const result = await prisma.standard.findUnique({
+            where: {
+                stId: id
+            }
+        });
+        if(result) {
+            res.status(200).json(result);
+        } else {
+            res.status(400).send('Es wurden keine Standards gefunden!')
         }
-    });
-    if(result) {
-        res.status(200).json(result);
-    } else {
-        res.status(400).send('Es wurden keine Standards gefunden!')
+    } catch (error) {
+        next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
     }
 }
 
-export async function getAllCompetences(req: Request, res: Response) {
-    const result = await prisma.competence.findMany();
-    if(result) {
-        res.status(200).json(result);
-    } else {
-        res.status(400).send('Es wurden keine Kompetenzen gefunden!')
-    }
-}
-
-export async function getCompetencesFromStandard(req: Request, res: Response) {
-    const stId = req.params.id;
-    const result = await prisma.competence.findMany({
-        where: {
-            stId
+export async function getAllCompetences(req: Request, res: Response, next: NextFunction) {
+    try {
+        const result = await prisma.competence.findMany();
+        if(result) {
+            res.status(200).json(result);
+        } else {
+            res.status(400).send('Es wurden keine Kompetenzen gefunden!')
         }
-    });
-    if(result) {
-        res.status(200).json(result);
-    } else {
-        res.status(400).send('Zum angegebenen Standard wurden keine Kompetenzen gefunden!')
+    } catch (error) {
+        next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
     }
 }
 
-export async function getUppestCompetenceGroups(req: Request, res: Response) {
+export async function getCompetencesFromStandard(req: Request, res: Response, next: NextFunction) {
     const stId = req.params.id;
-    const result = await prisma.competence.findMany({
-        where: {
-            AND: {
-                stId,
+    try {
+        const result = await prisma.competence.findMany({
+            where: {
+                stId
+            }
+        });
+        if(result) {
+            res.status(200).json(result);
+        } else {
+            res.status(400).send('Zum angegebenen Standard wurden keine Kompetenzen gefunden!')
+        }
+    } catch (error) {
+        next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
+    }
+}
+
+export async function getUppestCompetenceGroups(req: Request, res: Response, next: NextFunction) {
+    const stId = req.params.id;
+    try {
+        const result = await prisma.competence.findMany({
+            where: {
+                AND: {
+                    stId,
+                    parentId: null
+                }
+            }
+        });
+        if(result) {
+            res.status(200).json(result);
+        } else {
+            res.status(400).send('Zum angegebenen Standard wurden keine Kompetenzgruppen gefunden!')
+        }
+    } catch (error) {
+        next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
+    }
+}
+
+export async function getAllUppestCompetenceGroups(req: Request, res: Response, next: NextFunction) {
+    try {
+        const result = await prisma.competence.findMany({
+            where: {
                 parentId: null
             }
+        });
+        if(result) {
+            res.status(200).json(result);
+        } else {
+            res.status(400).send('Es wurden keine Kompetenzgruppen gefunden!')
         }
-    });
-    if(result) {
-        res.status(200).json(result);
-    } else {
-        res.status(400).send('Zum angegebenen Standard wurden keine Kompetenzgruppen gefunden!')
+    } catch (error) {
+        next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
     }
 }
 
-export async function getAllUppestCompetenceGroups(req: Request, res: Response) {
-    const result = await prisma.competence.findMany({
-        where: {
-            parentId: null
-        }
-    });
-    if(result) {
-        res.status(200).json(result);
-    } else {
-        res.status(400).send('Es wurden keine Kompetenzgruppen gefunden!')
-    }
-}
-
-export async function getAllLowerCompetences(req: Request, res: Response) {
-    const result = await prisma.competence.findMany({
-        where: {
-            NOT: {
-                parentId: null
-            }
-        }
-    });
-    if(result) {
-        res.status(200).json(result);
-    } else {
-        res.status(400).send('Es wurden keine Kompetenzen gefunden!')
-    }
-}
-
-export async function getLowerCompetences(req: Request, res: Response) {
-    const stId = req.params.id;
-    const result = await prisma.competence.findMany({
-        where: {
-            AND: {
-                stId,
+export async function getAllLowerCompetences(req: Request, res: Response, next: NextFunction) {
+    try {
+        const result = await prisma.competence.findMany({
+            where: {
                 NOT: {
                     parentId: null
                 }
             }
+        });
+        if(result) {
+            res.status(200).json(result);
+        } else {
+            res.status(400).send('Es wurden keine Kompetenzen gefunden!')
         }
-    });
-    if(result) {
-        res.status(200).json(result);
-    } else {
-        res.status(400).send('Es wurden keine Kompetenzen gefunden!')
+    } catch (error) {
+        next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
+    }
+}
+
+export async function getLowerCompetences(req: Request, res: Response, next: NextFunction) {
+    const stId = req.params.id;
+    try {
+        const result = await prisma.competence.findMany({
+            where: {
+                AND: {
+                    stId,
+                    NOT: {
+                        parentId: null
+                    }
+                }
+            }
+        });
+        if(result) {
+            res.status(200).json(result);
+        } else {
+            res.status(400).send('Es wurden keine Kompetenzen gefunden!')
+        }
+    } catch (error) {
+        next(new BadRequestError("Es ist ein unerwarteter Fehler aufgetreten."));
     }
 }

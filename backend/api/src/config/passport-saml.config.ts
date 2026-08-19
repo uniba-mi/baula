@@ -46,16 +46,32 @@ export const samlStrategy = new SamlStrategy(
     const id = baId
       ? encrypt(profile["urn:oid:1.3.6.1.4.1.5923.1.1.1.6"].split("@")[0])
       : "not set";
+    const roles = profile["urn:oid:1.3.6.1.4.1.5923.1.1.1.9"].map(
+      (role: string) => role.split("@")[0]
+    );
     if (!user) {
       const shibId = profile.nameID;
-      const roles = profile["urn:oid:1.3.6.1.4.1.5923.1.1.1.9"].map(
-        (role: string) => role.split("@")[0]
-      );
       user = {
         shibId: shibId,
         roles: roles,
         authType: "saml",
       };
+    } else {
+      // check if roles changed
+      const rolesChanged =
+        roles.length !== user.roles.length ||
+        !roles.every((r: string) => user.roles.includes(r));
+      if (rolesChanged) {
+        user = await User.findByIdAndUpdate(
+          user._id,
+          {
+            $set: {
+              roles: roles,
+            },
+          },
+          { new: true },
+        );
+      }
     }
     return done(null, { user, baId: id });
   },
