@@ -47,8 +47,26 @@ router.get("/", ensureAuthenticated, (req: Request, res: Response, next: NextFun
 router.use('/docs/baula', swaggerUi.serveFiles(swaggerBaulaConfig, swaggerOptions), swaggerUi.setup(swaggerBaulaConfig));
 router.use('/docs/bilapp', swaggerUi.serveFiles(swaggerBilAppConfig, swaggerOptions), swaggerUi.setup(swaggerBilAppConfig));
 
-router.use('/baula', ensureAuthenticated, denyDemoWrites, baula);
-router.use('/bilapp', bilapp)
-router.use('/evaluation', ensureAuthenticated, denyDemoWrites, evaluation);
+// API Versioning: v1 routes
+// Note: Current routes are mounted at /api/v1/... for versioning
+// Backwards compatibility: also mount at /api/... (deprecated)
+router.use('/v1/baula', ensureAuthenticated, denyDemoWrites, baula);
+router.use('/v1/bilapp', bilapp);
+router.use('/v1/evaluation', ensureAuthenticated, denyDemoWrites, evaluation);
+
+// Backwards compatibility: old routes without versioning
+// These will be deprecated in future versions
+router.use('/baula', ensureAuthenticated, denyDemoWrites, (req, res, next) => {
+  console.warn('[DEPRECATION] /api/baula is deprecated. Use /api/v1/baula instead.');
+  next();
+}, baula);
+router.use('/bilapp', (req, res, next) => {
+  console.warn('[DEPRECATION] /api/bilapp is deprecated. Use /api/v1/bilapp instead.');
+  next();
+}, bilapp);
+router.use('/evaluation', ensureAuthenticated, denyDemoWrites, (req, res, next) => {
+  console.warn('[DEPRECATION] /api/evaluation is deprecated. Use /api/v1/evaluation instead.');
+  next();
+}, evaluation);
 
 export { router as api };

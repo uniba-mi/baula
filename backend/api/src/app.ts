@@ -9,6 +9,7 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import compression from "compression";
 import rateLimit from "express-rate-limit";
+import cookieParser from "cookie-parser";
 import { api } from "./routes/api.router";
 
 import { authSaml } from "./routes/auth/auth-saml.routes";
@@ -60,6 +61,9 @@ app.use(limiter);
 
 // Enable compression for faster responses
 app.use(compression());
+
+// Parse cookies for CSRF protection
+app.use(cookieParser());
 
 /** ------------------------------
  *  -- Configurating middleware --
