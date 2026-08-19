@@ -16,8 +16,7 @@
     "strict": true,                                      /* Enable all strict type-checking options. */
 
     /* Completeness */
-    "skipLibCheck": true,
-    "types": ["jest", "node"]
+    "skipLibCheck": true
   },
   "include": ["./src/**/*", "../../interfaces/*.ts"],
   "exclude": ["./node_modules", "./dist"]

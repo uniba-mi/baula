@@ -31,13 +31,14 @@ export function generateCsrfTokenMiddleware(
   if (!req.cookies[CSRF_COOKIE_NAME]) {
     const token = generateCsrfToken();
     res.cookie(CSRF_COOKIE_NAME, token, {
-      httpOnly: true,
+      // Must be readable by client-side JS for the double-submit pattern to
+      // work: Angular's HttpClient reads this cookie by default and mirrors
+      // it into the X-XSRF-TOKEN header on outgoing requests automatically.
+      httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 8 * 60 * 60 * 1000, // 8 hours
     });
-    // Also set in response header for SPA frameworks
-    res.set('XSRF-TOKEN', token);
   }
   next();
 }
@@ -56,8 +57,15 @@ export function validateCsrfTokenMiddleware(
     return next();
   }
 
-  // Skip validation for API docs and health checks
-  if (req.path.startsWith('/api/docs') || req.path === '/api/health') {
+  // Skip validation for API docs, health checks, login (no session/cookie
+  // exists yet - protected by rate limiting instead) and the SAML ACS
+  // (verified via the signed SAML assertion, not a browser session cookie)
+  if (
+    req.path.startsWith('/api/docs') ||
+    req.path === '/api/health' ||
+    req.path.startsWith('/login') ||
+    req.path.startsWith('/Shibboleth.sso')
+  ) {
     return next();
   }
 
