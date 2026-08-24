@@ -42,7 +42,7 @@ import { checkAndReturnAdminUser } from "../../shared/middleware/admin-middlewar
 router.use('/admin', checkAndReturnAdminUser, admin);
 
 import { survey } from "./survey/survey.router";
-router.use('/survey', checkAndReturnAdminUser, survey);
+router.use('/survey', survey);
 
 import { featureWishes } from "./feature-wishes/feature-wishes.router";
 router.use('/feature-wishes', featureWishes);
