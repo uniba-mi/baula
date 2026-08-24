@@ -1,9 +1,9 @@
 import {
   Department,
   Prisma,
-  PrismaClient,
   StudyProgramme,
 } from "@prisma/client";
+import { prisma } from "../../database/prisma";
 import { logError } from "../error";
 import { Person } from "@interfaces/person";
 import { ModuleHandbook } from "@interfaces/module-handbook";
@@ -12,8 +12,6 @@ import {
   ImportLogMessage,
   MergedChangelog,
 } from "@interfaces/logs";
-
-const prisma = new PrismaClient();
 
 export async function upsertDeparmtents(
   departments: Department[],

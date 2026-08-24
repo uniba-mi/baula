@@ -25,7 +25,7 @@ import {
   User as UserClient,
   UserServer,
 } from "@interfaces/user";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../database/prisma";
 import mongoose from "mongoose";
 import { ExtendedJob, Job } from "@interfaces/job";
 import { transform } from "camaro";
@@ -45,8 +45,6 @@ import {
 import { Semester } from "../../../../../../interfaces/semester";
 import * as fs from "fs";
 import { Module } from "../../../../../../interfaces/module";
-
-const prisma = new PrismaClient();
 
 // Get Userdata via ShibId
 export async function getUser(req: Request, res: Response, next: NextFunction) {
@@ -692,7 +690,7 @@ export async function updateTimetableSettings(
 ) {
   const userReq = req.user as UserServer;
   const timetableId = validator.matches(
-    req.body.timetableId,
+    String(req.body.timetableId),
     /(dashboard)|(semesterplan)/g,
   )
     ? req.body.timetableId

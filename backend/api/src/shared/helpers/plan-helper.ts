@@ -4,9 +4,11 @@ import { PathModule } from "@interfaces/study-path";
 import { Semester } from "../../../../../interfaces/semester";
 import { validateObjectId } from "./custom-validator";
 
-export const findStudyPlan = async (studyPlanId: string) => {
+// userId is required: scoping the lookup to the owner is what prevents a
+// caller from reaching another user's plan by passing its id.
+export const findStudyPlan = async (studyPlanId: string, userId: string) => {
     if (validateObjectId(studyPlanId)) {
-        return await StudyPlan.findById(studyPlanId).exec();
+        return await StudyPlan.findOne({ _id: studyPlanId, userId }).exec();
     } else {
         return undefined;
     }

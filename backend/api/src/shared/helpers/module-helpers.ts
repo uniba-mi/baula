@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../database/prisma";
 import { moduleChanges } from "../constants/module-mapping";
 import { ModuleGroup } from "../../../../../interfaces/module-group";
 import { Module } from "../../../../../interfaces/module";
@@ -6,8 +6,6 @@ import { ModuleCourse } from "../../../../../interfaces/module-course";
 import { ModuleHandbook } from "../../../../../interfaces/module-handbook";
 import { UserServer } from "@interfaces/user";
 import { PathModule } from "@interfaces/study-path";
-
-const prisma = new PrismaClient();
 
 export async function extractModules(
   mhbId: string,

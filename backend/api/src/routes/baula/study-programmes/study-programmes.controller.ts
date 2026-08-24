@@ -1,15 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import {
-  PrismaClient,
   Sp2Mhb,
   StudyProgramme as PrismaStudyProgramme,
 } from "@prisma/client";
+import { prisma } from "../../../database/prisma";
 import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import { ModuleHandbook } from "../../../../../../interfaces/module-handbook";
 import { StudyProgramme } from "@interfaces/study-programme";
-
-const prisma = new PrismaClient();
 
 export async function getStudyProgrammes(
   req: Request,

@@ -94,12 +94,6 @@ app.use(csrfProtectionMiddleware);
 app.use(express.urlencoded({ limit: "100mb", extended: true }));
 app.use(express.json({ limit: "100mb" }));
 
-// Enhanced logging with morgan
-morgan.token('response-time-ms', (req, res) => {
-  const responseTime = res.getHeader('X-Response-Time');
-  return responseTime ? `${responseTime}ms` : '0ms';
-});
-
 app.use(
   morgan(':method :url :status :response-time - :remote-addr - :user-agent', {
     stream: { write: (message) => logger.info(message.trim()) },

@@ -1,9 +1,10 @@
 // src/middleware/errorHandler.ts
 import { Request, Response, NextFunction } from "express";
-import { logError } from "../error";
+import { logError, NotFoundError } from "../error";
+import { isSecureEnvironment } from "../../config/env.config";
 
 export function notFoundHandler(req: Request, res: Response, next: NextFunction) {
-  next(new Error("Not Found"));
+  next(new NotFoundError());
 }
 
 export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
@@ -16,7 +17,8 @@ export function errorHandler(err: any, req: Request, res: Response, next: NextFu
     error: {
       name: err.name,
       message,
-      ...(process.env.NODE_ENV !== "production" && { stack: err.stack }),
+      // Only leak stack traces where the API is not publicly reachable
+      ...(!isSecureEnvironment && { stack: err.stack }),
     },
   });
 }

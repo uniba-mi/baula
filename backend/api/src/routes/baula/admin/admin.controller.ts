@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../../../database/prisma";
 import {
   BadRequestError,
   logError,
@@ -50,8 +51,6 @@ import {
 } from "../../../shared/helpers/fn2mod-helper";
 import { MergedChangelog } from "@interfaces/logs";
 import { FeatureWish } from "../../../database/mongo";
-
-const prisma = new PrismaClient();
 
 // request to get the logs of the cronjob
 export async function getCronjobLogs(

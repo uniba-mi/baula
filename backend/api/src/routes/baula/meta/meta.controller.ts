@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../../database/prisma';
 import { BadRequestError, logError, NotFoundError } from '../../../shared/error';
 import { validateAndReturnSemester } from '../../../shared/helpers/custom-validator';
-
-const prisma = new PrismaClient();
 
 // get distinct departements of Courses
 export async function getDistinctDepartments(req: Request, res: Response, next: NextFunction) {

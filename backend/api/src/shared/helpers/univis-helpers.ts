@@ -1,12 +1,11 @@
 import { Course, Term, UnivISCourse } from "@interfaces/course";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../../database/prisma";
 import { Room } from "@interfaces/room";
 import { Person } from "@interfaces/person";
 import { CompetenceFulfillment } from "@interfaces/competence";
 import { CompetenceReader } from "./competence-reader";
 import validator from "validator";
-
-const prisma = new PrismaClient();
 
 export function transformUnivISCourse(
   univisCourse: UnivISCourse,

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../database/prisma";
 import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import {
@@ -7,8 +7,6 @@ import {
   transformCourses,
   transformDozs,
 } from "../../../shared/helpers/univis-helpers";
-
-const prisma = new PrismaClient();
 
 export async function getCourseDetails(
   req: Request,

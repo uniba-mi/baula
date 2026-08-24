@@ -29,7 +29,7 @@ if (!uri) {
 
 // Enhanced MongoDB connection with pooling and retry options
 export const connection = mongoose.connect(uri, {
-  maxPoolSize: 10, // Default: 5
+  maxPoolSize: 100, 
   socketTimeoutMS: 30000, // 30 seconds
   connectTimeoutMS: 30000, // 30 seconds
   serverSelectionTimeoutMS: 5000, // 5 seconds

@@ -1,12 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../database/prisma";
 import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import { addAllPriorModules, addExtractedModules, addModuleCourses, findAndBuildModuleHandbookByIdAndVersion } from "../../../shared/helpers/module-helpers";
 import { Module } from "../../../../../../interfaces/module";
 import { UserServer } from "@interfaces/user";
-
-const prisma = new PrismaClient();
 
 export async function getMhbByIdAndVersion(req: Request, res: Response, next: NextFunction) {
   const mhbId = validator.isAlphanumeric(req.params.id, undefined, { ignore: '_-' }) ? req.params.id : undefined;

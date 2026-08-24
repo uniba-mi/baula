@@ -1,12 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../database/prisma";
 import { BadRequestError, logError, NotFoundError } from "../../shared/error";
 import validator from "validator";
 import { checkSemester, transformCourses } from "../../shared/helpers/univis-helpers";
 import { findActiveStudyPlan } from "../../shared/helpers/plan-helper";
 import { UserServer } from "@interfaces/user";
-
-const prisma = new PrismaClient();
 
 export async function getUniqueModules(req: Request, res: Response, next: NextFunction) {
     const result = await prisma.module.findMany({
