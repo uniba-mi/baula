@@ -48,8 +48,8 @@ const limiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   skip: (req) => {
-    // Skip rate limiting for Swagger docs and health checks
-    return req.path.startsWith('/api/docs') || req.path === '/api/health';
+    // Skip rate limiting for Swagger docs
+    return req.path.startsWith('/api/docs');
   },
   handler: (req, res) => {
     logger.warn(`Rate limit exceeded for IP: ${req.ip}`);

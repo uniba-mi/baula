@@ -5,16 +5,15 @@ import { logger } from './shared/utils/logger';
 
 const port = process.env.API_PORT || 3300;
 
+// Log MongoDB connection state via events instead of checking readyState
+mongoose.connection.on('connected', () => logger.info('MongoDB connected!'));
+mongoose.connection.on('error', (err) => logger.error('MongoDB connection error:', err));
+mongoose.connection.on('disconnected', () => logger.warn('MongoDB disconnected.'));
+
 // creates and starts server
 const server = app.listen(port, () => {
   logger.info(`Server listens on port ${port}`);
-  
-  const connectionMongoDB =
-    mongoose.connection.readyState === 1
-      ? "MongoDB connected!"
-      : "Connection to MongoDB failed!";
-  logger.info(connectionMongoDB);
-  
+
   redisClient.connect()
     .then(() => logger.info('Redis connected!'))
     .catch((err) => logger.error('Redis connection failed:', err));

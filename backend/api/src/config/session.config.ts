@@ -20,7 +20,7 @@ export const expressSession = session({
   saveUninitialized: false,
   proxy: true,
   cookie: {
-    secure: process.env.NODE_ENV === 'production', // Always true in production
+    secure: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test', // Always true in production
     httpOnly: true,
     maxAge: 8 * 60 * 60 * 1000, // 8 hours
     sameSite: 'lax', // or 'strict' for higher security

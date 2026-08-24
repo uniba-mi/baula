@@ -57,12 +57,11 @@ export function validateCsrfTokenMiddleware(
     return next();
   }
 
-  // Skip validation for API docs, health checks, login (no session/cookie
+  // Skip validation for API docs, login (no session/cookie
   // exists yet - protected by rate limiting instead) and the SAML ACS
   // (verified via the signed SAML assertion, not a browser session cookie)
   if (
     req.path.startsWith('/api/docs') ||
-    req.path === '/api/health' ||
     req.path.startsWith('/login') ||
     req.path.startsWith('/Shibboleth.sso')
   ) {
