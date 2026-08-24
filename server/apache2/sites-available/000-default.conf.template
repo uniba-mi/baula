@@ -47,9 +47,6 @@
         Header always set X-Frame-Options DENY
         Header always set X-Content-Type-Options nosniff
         RequestHeader set X-Forwarded-Proto "https"
-
-        # Mirrors the CSP set by helmet in backend/api/src/app.ts
-        Header always set Content-Security-Policy "default-src 'self'; script-src 'self' ${PLAUSIBLE_URL}; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' ${PLAUSIBLE_URL}; frame-src 'none'; object-src 'none'"
     </IfModule>
 
     ProxyRequests Off
