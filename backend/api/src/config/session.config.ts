@@ -24,7 +24,7 @@ export const expressSession = session({
     secure: isSecureEnvironment,
     httpOnly: true,
     maxAge: 8 * 60 * 60 * 1000, // 8 hours
-    sameSite: 'lax', // or 'strict' for higher security
+    sameSite: 'strict', // or 'strict' for higher security
     domain: process.env.COOKIE_DOMAIN, // Optional: for subdomains
   },
 });

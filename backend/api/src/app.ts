@@ -37,11 +37,7 @@ if (process.env.NODE_ENV === "local" && process.env.ORIGIN) {
   );
 }
 
-// Rate limiting to prevent brute force and DDoS attacks. Window is
-// intentionally short (1 minute) with a generous cap: a SPA dashboard load
-// alone can fire off a couple dozen parallel requests, and a long window
-// (e.g. 15 minutes) means a single burst locks a client out for the rest
-// of that window instead of recovering quickly.
+// Rate limiting to prevent brute force and DDoS attacks
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 300, // Max 300 requests per IP per window
@@ -105,7 +101,7 @@ morgan.token('response-time-ms', (req, res) => {
 });
 
 app.use(
-  morgan(':method :url :status :response-time-ms - :remote-addr - :user-agent', {
+  morgan(':method :url :status :response-time - :remote-addr - :user-agent', {
     stream: { write: (message) => logger.info(message.trim()) },
   })
 );
