@@ -1,6 +1,7 @@
 import { RedisStore } from "connect-redis";
 import { createClient } from "redis";
 import session from "express-session";
+import { isSecureEnvironment } from "./env.config";
 
 // configurate redis
 export const redisClient = createClient({
@@ -20,7 +21,7 @@ export const expressSession = session({
   saveUninitialized: false,
   proxy: true,
   cookie: {
-    secure: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test', // Always true in production
+    secure: isSecureEnvironment,
     httpOnly: true,
     maxAge: 8 * 60 * 60 * 1000, // 8 hours
     sameSite: 'lax', // or 'strict' for higher security

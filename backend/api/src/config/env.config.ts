@@ -37,3 +37,9 @@ if (missingVars.length > 0) {
 // Log loaded environment
 console.log(`Environment loaded: ${process.env.NODE_ENV || 'development'}`);
 console.log(`API will be served on port: ${process.env.API_PORT || 3300}`);
+
+// `production` and the `test` staging deployment are both served over HTTPS
+// in practice (unlike local dev) - secure-cookie and CSRF enforcement must
+// treat them the same, so this is the single source of truth for that check.
+export const isSecureEnvironment =
+  process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';

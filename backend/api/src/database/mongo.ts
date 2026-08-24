@@ -37,7 +37,7 @@ export const connection = mongoose.connect(uri, {
   retryReads: true,
   appName: "Baula-Backend",
 }).catch((err) => {
-  console.error("MongoDB connection failed:", err);
+  logger.error("MongoDB connection failed:", err);
   throw err;
 });
 

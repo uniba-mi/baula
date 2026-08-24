@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
+import { isSecureEnvironment } from '../../config/env.config';
 
 /**
  * CSRF Token Management Middleware
@@ -35,7 +36,7 @@ export function generateCsrfTokenMiddleware(
       // work: Angular's HttpClient reads this cookie by default and mirrors
       // it into the X-XSRF-TOKEN header on outgoing requests automatically.
       httpOnly: false,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isSecureEnvironment,
       sameSite: 'lax',
       maxAge: 8 * 60 * 60 * 1000, // 8 hours
     });
@@ -74,7 +75,7 @@ export function validateCsrfTokenMiddleware(
 
   // Allow requests without CSRF validation in local development
   // (for easier testing with tools like Postman)
-  if (process.env.NODE_ENV !== 'production') {
+  if (!isSecureEnvironment) {
     return next();
   }
 

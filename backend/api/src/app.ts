@@ -119,7 +119,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", process.env.PLAUSIBLE_URL ?? "", "'unsafe-inline'"],
+        scriptSrc: ["'self'", process.env.PLAUSIBLE_URL ?? ""],
         styleSrc: ["'self'", "'unsafe-inline'"],
         imgSrc: ["'self'", "data:", "https:"],
         fontSrc: ["'self'"],
