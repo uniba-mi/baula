@@ -7,9 +7,9 @@ import { Module } from "../../../../../../interfaces/module";
 import { UserServer } from "@interfaces/user";
 
 export async function getMhbByIdAndVersion(req: Request, res: Response, next: NextFunction) {
-  const mhbId = validator.isAlphanumeric(req.params.id, undefined, { ignore: '_-' }) ? req.params.id : undefined;
-  const version = validator.isInt(req.params.version)
-    ? parseInt(req.params.version)
+  const mhbId = validator.isAlphanumeric(String(req.params.id), undefined, { ignore: '_-' }) ? String(req.params.id) : undefined;
+  const version = validator.isInt(String(req.params.version))
+    ? parseInt(String(req.params.version))
     : undefined;
   const user = req.user as UserServer
   if (mhbId && version && user) {
@@ -25,7 +25,7 @@ export async function getMhbByIdAndVersion(req: Request, res: Response, next: Ne
 }
 
 export async function getUpToDateMhb(req: Request, res: Response, next: NextFunction) {
-  const mhbId = validator.isAlphanumeric(req.params.id, undefined, { ignore: '_-' }) ? req.params.id : undefined;
+  const mhbId = validator.isAlphanumeric(String(req.params.id), undefined, { ignore: '_-' }) ? String(req.params.id) : undefined;
   const user = req.user as UserServer;
 
   if(mhbId && user && user.sps && user.sps.length > 0) {
@@ -66,7 +66,7 @@ export async function getModuleGroupIdsForAcronym(
   res: Response,
   next: NextFunction
 ) {
-  const acronym = validator.isAlphanumeric(req.params.acronym, 'de-DE', { ignore: '-. ' }) ? req.params.acronym : undefined;
+  const acronym = validator.isAlphanumeric(String(req.params.acronym), 'de-DE', { ignore: '-. ' }) ? String(req.params.acronym) : undefined;
 
   if (!acronym) {
     return next(new BadRequestError());
@@ -86,9 +86,9 @@ export async function getModByAcronymAndVersion(
   res: Response,
   next: NextFunction
 ) {
-  const acronym = validator.isAlphanumeric(req.params.acronym, 'de-DE', { ignore: '-.' }) ? req.params.acronym : undefined;
-  const version = validator.isInt(req.params.version)
-    ? parseInt(req.params.version)
+  const acronym = validator.isAlphanumeric(String(req.params.acronym), 'de-DE', { ignore: '-.' }) ? String(req.params.acronym) : undefined;
+  const version = validator.isInt(String(req.params.version))
+    ? parseInt(String(req.params.version))
     : undefined;
 
   let select = {

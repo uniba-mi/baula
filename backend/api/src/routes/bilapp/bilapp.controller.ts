@@ -31,7 +31,7 @@ export async function getUniqueModules(req: Request, res: Response, next: NextFu
 }
 
 export async function getBilAppCourses(req: Request, res: Response, next: NextFunction) {
-    const semester = validator.matches(req.params.semester, /(WS_\d{4}_\d{2})|(SoSe_\d{4})/g) ? req.params.semester : undefined;
+    const semester = validator.matches(String(req.params.semester), /(WS_\d{4}_\d{2})|(SoSe_\d{4})/g) ? String(req.params.semester) : undefined;
     if(semester) {
         try {
             const courses = await prisma.bilAppCourse.findMany({
@@ -54,7 +54,7 @@ export async function getBilAppCourses(req: Request, res: Response, next: NextFu
 }
 
 export async function getCompetenceAndModulesOfCourse(req: Request, res: Response, next: NextFunction) {
-    const id = validator.isInt(req.params.id, { min: 2, max: 500 }) ? Number(req.params.id) : undefined;
+    const id = validator.isInt(String(req.params.id), { min: 2, max: 500 }) ? Number(String(req.params.id)) : undefined;
     if(id) {
         try {
             const course = await prisma.bilAppCourse.findFirst({
@@ -92,14 +92,14 @@ export async function getSpecificCourses(
 ) {
 
   const searchTerm = validator.isAlphanumeric(
-    req.params.searchTerm,
+    String(req.params.searchTerm),
     undefined,
     { ignore: " .-_" }
   )
-    ? req.params.searchTerm
+    ? String(req.params.searchTerm)
     : undefined;
 
-  const semester = checkSemester(req.params.semester);
+  const semester = checkSemester(String(req.params.semester));
 
   if (searchTerm && semester) {
     try {
@@ -179,14 +179,14 @@ export async function getTopNCoursesForCompetence(
   next: NextFunction
 ) {
   const competence = validator.isAlphanumeric(
-    req.params.competence,
+    String(req.params.competence),
     undefined,
     { ignore: "_" }
   )
-    ? req.params.competence
+    ? String(req.params.competence)
     : undefined;
-  const semester = checkSemester(req.params.semester);
-  const topN = validator.isInt(req.params.topN) ? parseInt(req.params.topN) : undefined;
+  const semester = checkSemester(String(req.params.semester));
+  const topN = validator.isInt(String(req.params.topN)) ? parseInt(String(req.params.topN)) : undefined;
 
   if (competence && semester && topN) {
     try {
@@ -361,7 +361,7 @@ export async function getAllStandards(req: Request, res: Response, next: NextFun
 }
 
 export async function getSingleStandard(req: Request, res: Response, next: NextFunction) {
-    const id = req.params.id;
+    const id = String(req.params.id);
 
     try {
         const result = await prisma.standard.findUnique({
@@ -393,7 +393,7 @@ export async function getAllCompetences(req: Request, res: Response, next: NextF
 }
 
 export async function getCompetencesFromStandard(req: Request, res: Response, next: NextFunction) {
-    const stId = req.params.id;
+    const stId = String(req.params.id);
     try {
         const result = await prisma.competence.findMany({
             where: {
@@ -411,7 +411,7 @@ export async function getCompetencesFromStandard(req: Request, res: Response, ne
 }
 
 export async function getUppestCompetenceGroups(req: Request, res: Response, next: NextFunction) {
-    const stId = req.params.id;
+    const stId = String(req.params.id);
     try {
         const result = await prisma.competence.findMany({
             where: {
@@ -468,7 +468,7 @@ export async function getAllLowerCompetences(req: Request, res: Response, next: 
 }
 
 export async function getLowerCompetences(req: Request, res: Response, next: NextFunction) {
-    const stId = req.params.id;
+    const stId = String(req.params.id);
     try {
         const result = await prisma.competence.findMany({
             where: {

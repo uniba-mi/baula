@@ -233,8 +233,8 @@ export async function deleteAcademicDate(
   res: Response,
   next: NextFunction,
 ) {
-  const id = validator.isNumeric(req.params.id)
-    ? Number(req.params.id)
+  const id = validator.isNumeric(String(req.params.id))
+    ? Number(String(req.params.id))
     : undefined;
 
   if (id) {
@@ -334,7 +334,7 @@ export async function deleteDateType(
   next: NextFunction,
 ) {
   const id = validator.isNumeric(String(req.params.id))
-    ? Number(req.params.id)
+    ? Number(String(req.params.id))
     : undefined;
 
   if (id) {
@@ -359,15 +359,15 @@ export async function getConnectedCoursesForModule(
   res: Response,
   next: NextFunction,
 ) {
-  const moduleId = validator.isAlphanumeric(req.params.id, undefined, {
+  const moduleId = validator.isAlphanumeric(String(req.params.id), undefined, {
     ignore: "_-",
   })
-    ? req.params.id
+    ? String(req.params.id)
     : undefined;
-  const version = validator.isInt(req.params.version)
-    ? Number(req.params.version)
+  const version = validator.isInt(String(req.params.version))
+    ? Number(String(req.params.version))
     : undefined;
-  const semester = validateAndReturnSemester(req.params.semester);
+  const semester = validateAndReturnSemester(String(req.params.semester));
 
   if (moduleId && version && semester) {
     try {
@@ -594,17 +594,17 @@ export async function deleteCourseToModuleConnection(
   res: Response,
   next: NextFunction,
 ) {
-  const mcId = validator.isAlphanumeric(req.params.mcId, "de-DE", {
+  const mcId = validator.isAlphanumeric(String(req.params.mcId), "de-DE", {
     ignore: "-",
   })
-    ? req.params.mcId
+    ? String(req.params.mcId)
     : undefined;
-  const cId = validator.isAlphanumeric(req.params.cId, "de-DE", {
+  const cId = validator.isAlphanumeric(String(req.params.cId), "de-DE", {
     ignore: "_.",
   })
-    ? req.params.cId
+    ? String(req.params.cId)
     : undefined;
-  const semester = validateAndReturnSemester(req.params.semester);
+  const semester = validateAndReturnSemester(String(req.params.semester));
 
   if (mcId && cId && semester) {
     try {
@@ -658,7 +658,7 @@ export async function crawlFN2Modules(
   res: Response,
   next: NextFunction,
 ) {
-  const semester = checkSemester(req.params.semester);
+  const semester = checkSemester(String(req.params.semester));
   if (semester) {
     let startTime = Date.now();
     let mhbs: string[] = [];
@@ -750,7 +750,7 @@ export async function updateModuleEmbeddings(
         return ModEmbedding.findOneAndUpdate(
           { acronym }, // match by acronym
           { acronym, vector },
-          { upsert: true, new: true, setDefaultsOnInsert: true }, // create new if does not exist
+          { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }, // create new if does not exist
         );
       },
     );
@@ -829,7 +829,7 @@ export async function initTopicsFromJSON(
           keywords: topicData.keywords,
           parentId: parentId,
         },
-        { upsert: true, new: true, setDefaultsOnInsert: true },
+        { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true },
       );
 
       let needsNewEmbedding = true;
@@ -1380,7 +1380,7 @@ export async function adminApproveWish(
   res: Response,
   next: NextFunction,
 ) {
-  const wishId = req.params.id;
+  const wishId = String(req.params.id);
   if (!wishId) {
     next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
     return;
@@ -1406,7 +1406,7 @@ export async function adminUnapproveWish(
   res: Response,
   next: NextFunction,
 ) {
-  const wishId = req.params.id;
+  const wishId = String(req.params.id);
   if (!wishId) {
     next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
     return;
@@ -1432,7 +1432,7 @@ export async function adminDeleteWish(
   res: Response,
   next: NextFunction,
 ) {
-  const wishId = req.params.id;
+  const wishId = String(req.params.id);
   if (!wishId) {
     next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
     return;
@@ -1457,7 +1457,7 @@ export async function adminAddMessageToWish(
   res: Response,
   next: NextFunction,
 ) {
-  const wishId = req.params.id;
+  const wishId = String(req.params.id);
   if (!wishId) {
     next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
     return;
@@ -1489,7 +1489,7 @@ export async function adminAddTagToWish(
   res: Response,
   next: NextFunction,
 ) {
-  const wishId = req.params.id;
+  const wishId = String(req.params.id);
   if (!wishId) {
     next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
     return;
@@ -1526,7 +1526,7 @@ export async function adminRemoveTagFromWish(
   res: Response,
   next: NextFunction,
 ) {
-  const wishId = req.params.id;
+  const wishId = String(req.params.id);
   if (!wishId) {
     next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
     return;

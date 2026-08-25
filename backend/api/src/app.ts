@@ -25,6 +25,11 @@ const app: Express = express();
 // trust the first hop (reverse proxy) so req.ip / X-Forwarded-For reflect the real client
 app.set("trust proxy", 1);
 
+// Express 5 defaults the query parser to "simple" (Node querystring). The SAML
+// logout in auth.controller.ts hands req.query to node-saml for redirect
+// validation, so keep the Express 4 "extended" parser to preserve that behaviour.
+app.set("query parser", "extended");
+
 // cors for local setting
 if (process.env.NODE_ENV === "local" && process.env.ORIGIN) {
   app.use(
@@ -93,6 +98,16 @@ app.use(csrfProtectionMiddleware);
  *  -----------------------------*/
 app.use(express.urlencoded({ limit: "100mb", extended: true }));
 app.use(express.json({ limit: "100mb" }));
+
+// Express 5 leaves req.body as undefined when no body parser matched (e.g. a
+// DELETE without Content-Type). Express 4 defaulted it to {}, which the existing
+// req.body.x accesses across the controllers rely on - restore that here.
+app.use((req, _res, next) => {
+  if (req.body === undefined) {
+    req.body = {};
+  }
+  next();
+});
 
 app.use(
   morgan(':method :url :status :response-time - :remote-addr - :user-agent', {

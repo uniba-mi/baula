@@ -47,7 +47,7 @@ export const localStrategy = new LocalStrategy(
                 roles: roles,
               },
             },
-            { new: true },
+            { returnDocument: 'after' },
           );
         }
       }

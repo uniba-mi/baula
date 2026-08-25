@@ -594,7 +594,7 @@ export async function deleteExcludedModule(
   next: NextFunction,
 ) {
   const acronym =
-    typeof req.params.acronym == "string" ? req.params.acronym : undefined;
+    typeof String(req.params.acronym) == "string" ? String(req.params.acronym) : undefined;
   const user = req.user as UserServer;
   try {
     if (acronym && user && user.excludedModulesAcronyms) {

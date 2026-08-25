@@ -39,13 +39,13 @@ export async function getStudyProgramme(
   res: Response,
   next: NextFunction,
 ) {
-  const spId = validator.isAlphanumeric(req.params.id, undefined, {
+  const spId = validator.isAlphanumeric(String(req.params.id), undefined, {
     ignore: "-",
   })
-    ? req.params.id
+    ? String(req.params.id)
     : undefined;
   const poVersion = validator.isInt(String(req.params.version))
-    ? Number(req.params.version)
+    ? Number(String(req.params.version))
     : undefined;
 
   if (spId && poVersion) {

@@ -69,7 +69,7 @@ export const samlStrategy = new SamlStrategy(
               roles: roles,
             },
           },
-          { new: true },
+          { returnDocument: 'after' },
         );
       }
     }

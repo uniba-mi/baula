@@ -8,7 +8,13 @@ export function notFoundHandler(req: Request, res: Response, next: NextFunction)
 }
 
 export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
-  const status = err.statusCode || (err.name === "UnauthorizedError" ? 401 : 500);
+  // Express 5 rejects anything outside 100-999 in res.status(), which would throw
+  // inside the error handler itself - fall back to 500 for malformed codes.
+  const rawStatus = err.statusCode || (err.name === "UnauthorizedError" ? 401 : 500);
+  const status =
+    Number.isInteger(rawStatus) && rawStatus >= 100 && rawStatus <= 999
+      ? rawStatus
+      : 500;
   const message = err.message || "Internal Server Error";
 
   logError(err)

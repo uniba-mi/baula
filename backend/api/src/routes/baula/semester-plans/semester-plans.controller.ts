@@ -91,7 +91,7 @@ export async function addModule(
           $push: { "semesterPlans.$.modules": mod },
           $inc: { "semesterPlans.$.summedEcts": ects },
         },
-        { new: true, runValidators: true }
+        { returnDocument: 'after', runValidators: true }
       );
 
       if (updatedStudyPlan) {
@@ -201,7 +201,7 @@ export async function updateUserGeneratedModule(
         },
       },
       {
-        new: true,
+        returnDocument: 'after',
         arrayFilters: [
           { "semesterPlan._id": semesterPlanId },
           { "module._id": moduleId },

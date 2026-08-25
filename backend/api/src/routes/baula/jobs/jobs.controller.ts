@@ -196,7 +196,7 @@ async function saveJob(
             },
           },
         },
-        { new: true }
+        { returnDocument: 'after' }
       );
       return newJob;
     } catch (error) {

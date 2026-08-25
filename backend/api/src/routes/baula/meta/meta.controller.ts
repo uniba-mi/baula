@@ -67,7 +67,7 @@ export async function getAcademicDatesBySemester(
     res: Response,
     next: NextFunction
 ) {
-    const semesterParam = req.params.semester;
+    const semesterParam = String(req.params.semester);
     if (!semesterParam) {
         return next(new BadRequestError("Es wurde kein Semester angegeben."));
     }

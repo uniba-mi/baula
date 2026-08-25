@@ -1,7 +1,7 @@
 import mongoose, {
   HydratedDocument,
   model,
-  Query,
+  QueryWithHelpers,
   Schema,
   Model,
 } from "mongoose";
@@ -331,10 +331,13 @@ const ModEmbeddingSchema: Schema = new Schema<IModEmbedding>(
 
 // Query helpers for UserSchema
 type UserModelType = Model<IUser, UserQueryHelpers>;
-type UserModelQuery = Query<any, HydratedDocument<IUser>, UserQueryHelpers> &
-  UserQueryHelpers;
+type UserModelQuery = QueryWithHelpers<
+  any,
+  HydratedDocument<IUser>,
+  UserQueryHelpers
+>;
 interface UserQueryHelpers {
-  byShibId(this: UserModelQuery, shibId: String): UserModelQuery;
+  byShibId(shibId: string): UserModelQuery;
 }
 
 /* const ExamSchema: Schema = new Schema<IExam>(
@@ -567,7 +570,10 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
     timestamps: true,
   },
 );
-UserSchema.query.byShibId = function (shibId: String): UserModelQuery {
+UserSchema.query.byShibId = function (
+  this: UserModelQuery,
+  shibId: string,
+): UserModelQuery {
   return this.findOne({ shibId: shibId });
 };
 
