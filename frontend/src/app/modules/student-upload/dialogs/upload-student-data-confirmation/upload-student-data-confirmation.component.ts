@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, model, Output } from '@angular/core';
+import { Component, EventEmitter, Input, model, Output, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-upload-student-data-confirmation',
   standalone: false,
   templateUrl: './upload-student-data-confirmation.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './upload-student-data-confirmation.component.scss'
 })
 export class UploadStudentDataConfirmationComponent {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ModuleCourse } from '../../../../../../../../interfaces/module-course';
 import { Course } from '../../../../../../../../interfaces/course';
 import { CourseService } from 'src/app/shared/services/course.service';
@@ -7,6 +7,7 @@ import { CourseService } from 'src/app/shared/services/course.service';
   selector: 'admin-course-connection-card',
   templateUrl: './course-connection-card.component.html',
   styleUrl: './course-connection-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CourseConnectionCardComponent {

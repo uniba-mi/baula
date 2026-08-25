@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ImportLogMessage } from '@interfaces/logs';
 
@@ -6,6 +6,7 @@ import { ImportLogMessage } from '@interfaces/logs';
     selector: 'admin-univis-crawl-dialog',
     templateUrl: './univis-crawl-dialog.component.html',
     styleUrls: ['./univis-crawl-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class UnivisCrawlDialogComponent {

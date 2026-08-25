@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ExtendedModuleGroup } from '@interfaces/module-group';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -8,6 +8,7 @@ import { closeDialogMode } from 'src/app/actions/dialog.actions';
   selector: 'app-change-module-group-dialog',
   templateUrl: './change-module-group-dialog.component.html',
   styleUrl: './change-module-group-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ChangeModuleGroupDialogComponent {

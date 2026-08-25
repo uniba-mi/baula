@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ExtendedJob, Job, Jobtemplate } from '@interfaces/job';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -12,6 +12,7 @@ import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.servi
   selector: 'app-edit-job-dialog',
   templateUrl: './edit-job-dialog.component.html',
   styleUrl: './edit-job-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EditJobDialogComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, Input, model, inject } from '@angular/core';
+import { Component, Input, model, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MStudyProgramme, User } from '@interfaces/user';
 import { firstValueFrom, Observable, take } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth/auth.service';
@@ -21,6 +21,7 @@ import { FlexnowService } from 'src/app/shared/services/flex-now.service';
   selector: 'app-user-dialog',
   templateUrl: './user-dialog.component.html',
   styleUrls: ['./user-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UserDialogComponent {

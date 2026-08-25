@@ -1,4 +1,4 @@
-import { Component, computed, effect, input, signal } from '@angular/core';
+import { Component, computed, effect, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { TableCardData } from '../reporting';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -12,6 +12,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
     MatPaginatorModule
   ],
   templateUrl: './table-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './table-card.component.scss'
 })
 export class TableCardComponent {

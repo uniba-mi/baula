@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { Report } from './reporting';
 import { BarChartCardComponent } from './bar-chart-card/bar-chart-card.component';
 import { MetaDataCardComponent } from './meta-data-card/meta-data-card.component';
@@ -20,6 +20,7 @@ import { PieChartCardComponent } from './pie-chart-card/pie-chart-card.component
     PieChartCardComponent
   ],
   templateUrl: './reporting-base.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './reporting-base.component.scss'
 })
 export class ReportingBaseComponent {

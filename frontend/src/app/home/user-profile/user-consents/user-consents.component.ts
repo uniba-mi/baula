@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Consent, ConsentType, User } from '../../../../../../interfaces/user';
 import { getLastConsentByType } from 'src/app/selectors/user.selectors';
@@ -15,6 +15,7 @@ import { PrivacyStatementComponent } from 'src/app/modules/long-term-evaluation/
   selector: 'app-user-consents',
   standalone: false,
   templateUrl: './user-consents.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './user-consents.component.scss',
 })
 export class UserConsentsComponent {
@@ -108,6 +109,7 @@ export class UserConsentsComponent {
     <mat-dialog-actions>
       <button class="btn btn-primary" mat-dialog-close>Okay</button>
     </mat-dialog-actions> `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatDialogModule, PrivacyStatementComponent],
 })
 class PrivacyStatementDialog {}

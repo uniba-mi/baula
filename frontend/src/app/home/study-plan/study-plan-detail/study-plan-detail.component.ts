@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject, combineLatest, forkJoin, of } from 'rxjs';
@@ -77,6 +78,7 @@ import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
   selector: 'app-study-plan-detail',
   templateUrl: './study-plan-detail.component.html',
   styleUrls: ['./study-plan-detail.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class StudyPlanDetailComponent implements OnInit {

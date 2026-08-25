@@ -1,4 +1,4 @@
-import { Component, inject, model, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, model, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -44,6 +44,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     PrivacyStatementComponent,
     MatTooltipModule,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [LteRestService],
 })
 export class SurveyComponent implements OnInit, OnDestroy {

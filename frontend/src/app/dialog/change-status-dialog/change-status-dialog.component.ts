@@ -6,6 +6,7 @@ import {
   OnInit,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   FormBuilder,
@@ -30,6 +31,7 @@ import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.sel
   selector: 'app-change-status-dialog',
   templateUrl: './change-status-dialog.component.html',
   styleUrls: ['./change-status-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ChangeStatusDialogComponent implements OnInit, OnChanges {

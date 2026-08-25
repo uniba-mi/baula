@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RestService } from 'src/app/rest.service';
 import { Observable, take } from 'rxjs';
 import { AcademicDate } from '../../../../../../interfaces/academic-date';
@@ -9,6 +9,7 @@ import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
   selector: 'app-semester-dates',
   templateUrl: './semester-dates.component.html',
   styleUrl: './semester-dates.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SemesterDatesComponent implements OnInit {

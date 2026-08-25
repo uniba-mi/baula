@@ -8,6 +8,7 @@ import {
   Output,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
@@ -23,6 +24,7 @@ import { PlanningValidationService } from 'src/app/shared/services/planning-vali
   selector: 'app-course-item',
   templateUrl: './course-item.component.html',
   styleUrls: ['./course-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CourseItemComponent implements OnInit, OnChanges, OnDestroy {

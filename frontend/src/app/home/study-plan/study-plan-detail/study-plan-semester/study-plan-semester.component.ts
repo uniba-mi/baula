@@ -6,6 +6,7 @@ import {
   Output,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
@@ -36,6 +37,7 @@ import { DragDropService } from 'src/app/shared/services/drag-drop.service';
   selector: 'app-study-plan-semester',
   templateUrl: './study-plan-semester.component.html',
   styleUrls: ['./study-plan-semester.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class StudyPlanSemesterComponent implements OnChanges {

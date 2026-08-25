@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -16,6 +16,7 @@ import { ExtendedModuleGroup } from '@interfaces/module-group';
   selector: 'app-edit-path-module-dialog',
   templateUrl: './edit-path-module-dialog.component.html',
   styleUrls: ['./edit-path-module-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EditPathModuleDialogComponent implements OnInit {

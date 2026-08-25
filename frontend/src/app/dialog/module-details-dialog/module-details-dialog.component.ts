@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Module } from '@interfaces/module';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -29,6 +30,7 @@ import { AnalyticsService } from 'src/app/shared/services/analytics.service';
   selector: 'app-module-details-dialog',
   templateUrl: './module-details-dialog.component.html',
   styleUrls: ['./module-details-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleDetailsDialogComponent implements OnInit, OnDestroy {

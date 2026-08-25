@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { QuoteCardData } from '../reporting';
 import { MatCardModule } from '@angular/material/card';
 
@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
     MatCardModule
   ],
   templateUrl: './quote-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './quote-card.component.scss'
 })
 export class QuoteCardComponent {

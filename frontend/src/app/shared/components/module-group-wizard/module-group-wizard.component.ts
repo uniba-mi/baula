@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SimilarityService } from '../../services/similarity.service';
 import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
 
@@ -6,6 +6,7 @@ import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
   selector: 'app-module-group-wizard',
   templateUrl: './module-group-wizard.component.html',
   styleUrl: './module-group-wizard.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleGroupWizardComponent implements OnChanges {

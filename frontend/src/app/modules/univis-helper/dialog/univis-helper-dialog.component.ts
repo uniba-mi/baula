@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { PublicRestService } from '../public-rest.service';
   selector: 'app-dialog',
   templateUrl: './univis-helper-dialog.component.html',
   styleUrls: ['./univis-helper-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UnivISHelperDialogComponent implements OnInit {

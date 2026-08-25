@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
 import { take } from 'rxjs';
 
@@ -6,6 +6,7 @@ import { take } from 'rxjs';
   selector: 'other-actions',
   standalone: false,
   templateUrl: './other-actions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './other-actions.component.scss'
 })
 export class OtherActionsComponent {

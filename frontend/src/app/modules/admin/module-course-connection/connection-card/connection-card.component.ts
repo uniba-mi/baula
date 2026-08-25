@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Module } from '@interfaces/module';
 import { ModuleCourse2CourseConnection } from '@interfaces/connection';
 import { ModuleCourse } from '@interfaces/module-course';
@@ -12,6 +12,7 @@ import { CourseService } from 'src/app/shared/services/course.service';
   selector: 'admin-connection-card',
   templateUrl: './connection-card.component.html',
   styleUrl: './connection-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ConnectionCardComponent {

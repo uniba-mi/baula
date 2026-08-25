@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { getUser } from 'src/app/selectors/user.selectors';
@@ -9,6 +9,7 @@ import { State } from 'src/app/reducers';
   selector: 'app-study-path-update',
   templateUrl: './study-path-update.component.html',
   styleUrl: './study-path-update.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class StudyPathUpdateComponent implements OnInit {

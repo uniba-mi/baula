@@ -4,6 +4,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { StudyPath } from '@interfaces/study-path';
 import { BarChartCardData } from 'src/app/modules/reporting/reporting';
@@ -12,6 +13,7 @@ import { BarChartCardData } from 'src/app/modules/reporting/reporting';
     selector: 'app-total-module-progress-chart',
     templateUrl: './total-module-progress-chart.component.html',
     styleUrls: ['./total-module-progress-chart.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TotalModuleProgressChartComponent implements OnInit, OnChanges {

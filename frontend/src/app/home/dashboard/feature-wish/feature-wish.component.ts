@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RestService } from 'src/app/rest.service';
 import { FeatureWish } from '../../../../../../interfaces/feature-wish';
 
@@ -6,6 +6,7 @@ import { FeatureWish } from '../../../../../../interfaces/feature-wish';
   selector: 'app-feature-wish',
   standalone: false,
   templateUrl: './feature-wish.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './feature-wish.component.scss',
 })
 export class FeatureWishComponent {

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { LteRestService } from '../lte-rest.service';
 import { take } from 'rxjs';
 import {
@@ -44,6 +44,7 @@ const BAR_COLORS = ['#5B8FF9', '#5AD8A6', '#F6BD16', '#E8684A', '#6DC8EC', '#927
     SharedModule,
     MatProgressSpinnerModule,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [LteRestService],
 })
 export class ResultPageComponent implements OnInit {

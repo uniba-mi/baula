@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
@@ -17,6 +17,7 @@ import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
   selector: 'app-competence-dashboard',
   templateUrl: './competence-dashboard.component.html',
   styleUrls: ['./competence-dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CompetenceDashboardComponent implements OnInit {

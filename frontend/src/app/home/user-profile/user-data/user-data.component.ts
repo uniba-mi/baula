@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User } from '../../../../../../interfaces/user';
@@ -11,6 +11,7 @@ import { FlexnowService } from 'src/app/shared/services/flex-now.service';
   selector: 'app-user-data',
   templateUrl: './user-data.component.html',
   styleUrl: './user-data.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UserDataComponent implements OnInit {

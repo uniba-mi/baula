@@ -389,7 +389,7 @@
                   <div class="wrapper w-100 mt-0">
                     <app-module-group-wizard
                       [mgId]="
-                        getFormGroup(getFormKey(module, i)).get('mgId')?.value
+                        $safeNavigationMigration(getFormGroup(getFormKey(module, i)).get('mgId')?.value)
                       "
                       [structuredModuleGroups]="structuredModuleGroups"
                       [possibleMgIdsBasedOnAcronym]="

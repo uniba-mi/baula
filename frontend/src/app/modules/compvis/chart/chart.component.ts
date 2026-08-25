@@ -5,6 +5,7 @@ import {
   OnInit,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -19,6 +20,7 @@ import { getBars, getSelectedBar } from '../state/chart.selectors';
   selector: 'compvis-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ChartComponent implements OnInit, OnChanges {

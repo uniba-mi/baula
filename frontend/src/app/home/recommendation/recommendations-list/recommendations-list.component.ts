@@ -8,6 +8,7 @@ import {
   ViewChild,
   ElementRef,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FavoriteModulesActions } from 'src/app/actions/user.actions';
@@ -43,6 +44,7 @@ import { Topic } from '../../../../../../interfaces/topic';
   selector: 'app-recommendations-list',
   standalone: false,
   templateUrl: './recommendations-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './recommendations-list.component.scss',
 })
 export class RecommendationsListComponent implements OnInit {

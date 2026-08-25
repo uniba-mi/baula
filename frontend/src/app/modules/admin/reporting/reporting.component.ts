@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
 import { AdminReport } from '../reporting';
 import { map, Observable } from 'rxjs';
@@ -10,6 +10,7 @@ import { Semester } from '../../../../../../interfaces/semester';
   selector: 'admin-reporting',
   standalone: false,
   templateUrl: './reporting.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './reporting.component.scss',
 })
 export class ReportingComponent implements OnInit {

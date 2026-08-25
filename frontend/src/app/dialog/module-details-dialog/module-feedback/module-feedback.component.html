@@ -13,8 +13,8 @@
                 [formControlName]="question.id" class="d-none" />
                 <label [for]="question.id + '-' + option" class="star-label">
                             <i class="bi" [ngClass]="{
-                  'bi-star-fill text-blue': feedbackForm.get(question.id)?.value >= option,
-                  'bi-star': feedbackForm.get(question.id)?.value < option
+                  'bi-star-fill text-blue': $safeNavigationMigration(feedbackForm.get(question.id)?.value) >= option,
+                  'bi-star': $safeNavigationMigration(feedbackForm.get(question.id)?.value) < option
                 }"></i>
                 </label>
               }

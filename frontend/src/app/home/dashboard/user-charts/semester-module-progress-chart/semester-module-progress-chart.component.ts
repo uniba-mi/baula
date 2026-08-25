@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SemesterStudyPath } from '@interfaces/study-path';
 import { Semester } from '@interfaces/semester';
 import { StudyPlan } from '@interfaces/study-plan';
@@ -8,6 +8,7 @@ import { BarChartCardData } from 'src/app/modules/reporting/reporting';
     selector: 'app-semester-module-progress-chart',
     templateUrl: './semester-module-progress-chart.component.html',
     styleUrls: ['./semester-module-progress-chart.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {

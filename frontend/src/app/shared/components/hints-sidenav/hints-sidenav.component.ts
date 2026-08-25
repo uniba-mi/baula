@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { PlanningHints } from '../../../../../../interfaces/semester-plan';
 
 @Component({
   selector: 'app-hints-sidenav',
   standalone: false,
   templateUrl: './hints-sidenav.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hints-sidenav.component.scss'
 })
 

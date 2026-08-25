@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ExtendedJob } from '../../../../../../interfaces/job';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
@@ -13,6 +13,7 @@ import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.s
   selector: 'app-job-settings',
   standalone: false,
   templateUrl: './job-settings.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './job-settings.component.scss',
 })
 export class JobSettingsComponent implements OnInit {

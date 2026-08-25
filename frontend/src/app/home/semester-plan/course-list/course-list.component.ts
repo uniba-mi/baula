@@ -9,6 +9,7 @@ import {
   HostListener,
   ElementRef,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
@@ -26,6 +27,7 @@ import { getPlanCourses } from 'src/app/selectors/study-planning.selectors';
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CourseListComponent implements OnInit, OnChanges {

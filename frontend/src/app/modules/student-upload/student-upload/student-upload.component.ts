@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   getModules,
@@ -30,6 +30,7 @@ import { DialogComponent, DialogData } from 'src/app/dialog/dialog.component';
   selector: 'app-student-upload',
   templateUrl: './student-upload.component.html',
   styleUrls: ['./student-upload.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class StudentUploadComponent {

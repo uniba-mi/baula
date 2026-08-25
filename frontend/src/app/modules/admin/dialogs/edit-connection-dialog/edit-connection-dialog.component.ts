@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ModuleCourse } from '@interfaces/module-course';
 import { Course } from '@interfaces/course';
 import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
@@ -13,6 +13,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
   selector: 'admin-edit-connection-dialog',
   templateUrl: './edit-connection-dialog.component.html',
   styleUrl: './edit-connection-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EditConnectionDialogComponent implements OnInit {

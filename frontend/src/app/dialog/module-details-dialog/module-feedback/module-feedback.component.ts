@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, SimpleChanges, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DialogComponent } from '../../dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Module } from '../../../../../../interfaces/module';
@@ -11,6 +11,7 @@ import { UserActions } from 'src/app/actions/user.actions';
   selector: 'app-module-feedback',
   templateUrl: './module-feedback.component.html',
   styleUrl: './module-feedback.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleFeedbackComponent {

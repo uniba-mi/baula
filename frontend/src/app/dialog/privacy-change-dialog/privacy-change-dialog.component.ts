@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-privacy-change-dialog',
   standalone: false,
   templateUrl: './privacy-change-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './privacy-change-dialog.component.scss',
 })
 export class PrivacyChangeDialogComponent {

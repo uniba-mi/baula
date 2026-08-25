@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SemesterStudyPath, StudyPath } from '@interfaces/study-path';
@@ -11,6 +11,7 @@ import { LineChartCardData } from 'src/app/modules/reporting/reporting';
   selector: 'app-semester-ects-progress-chart',
   templateUrl: './semester-ects-progress-chart.component.html',
   styleUrls: ['./semester-ects-progress-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SemesterEctsProgressChartComponent implements OnInit, OnChanges, OnDestroy {

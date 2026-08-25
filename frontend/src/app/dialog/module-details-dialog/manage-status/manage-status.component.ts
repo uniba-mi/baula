@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { Module } from '../../../../../../interfaces/module';
@@ -19,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-manage-status',
   standalone: false,
   templateUrl: './manage-status.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './manage-status.component.scss',
 })
 export class ManageStatusComponent {

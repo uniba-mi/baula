@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AimModalComponent } from 'src/app/modules/aim-modal/aim-modal/aim-modal.component';
 import { State } from 'src/app/reducers';
@@ -9,6 +9,7 @@ import { CompetenceAimsActions } from 'src/app/actions/user.actions';
   selector: 'app-welcome-dialog',
   templateUrl: './welcome-dialog.component.html',
   styleUrls: ['./welcome-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class WelcomeDialogComponent {

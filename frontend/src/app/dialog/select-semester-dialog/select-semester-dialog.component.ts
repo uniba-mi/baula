@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, map, take } from 'rxjs';
 import { Semester } from '@interfaces/semester';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -10,6 +10,7 @@ import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
   selector: 'app-select-semester-dialog',
   templateUrl: './select-semester-dialog.component.html',
   styleUrl: './select-semester-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 

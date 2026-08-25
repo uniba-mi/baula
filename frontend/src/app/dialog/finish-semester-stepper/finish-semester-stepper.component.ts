@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -33,6 +33,7 @@ import { ModService } from 'src/app/shared/services/module.service';
   selector: 'app-finish-semester-stepper',
   templateUrl: './finish-semester-stepper.component.html',
   styleUrl: './finish-semester-stepper.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FinishSemesterStepperComponent {

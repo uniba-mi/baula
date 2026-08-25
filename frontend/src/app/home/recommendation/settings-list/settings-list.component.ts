@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { delay, map, Observable, of, switchMap, take } from 'rxjs';
 import {
   FavoriteModulesActions,
@@ -30,6 +30,7 @@ type ListItem = ModuleFeedback | Module;
   selector: 'app-settings-list',
   standalone: false,
   templateUrl: './settings-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './settings-list.component.scss',
 })
 export class SettingsListComponent {

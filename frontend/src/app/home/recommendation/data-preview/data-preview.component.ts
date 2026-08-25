@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, map, Observable } from 'rxjs';
 import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.service';
@@ -15,6 +15,7 @@ import { ModService } from 'src/app/shared/services/module.service';
   selector: 'app-data-preview',
   standalone: false,
   templateUrl: './data-preview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-preview.component.scss',
 })
 export class DataPreviewComponent {

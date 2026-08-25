@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UnivISHelperDialogComponent } from './dialog/univis-helper-dialog.component';
@@ -11,6 +11,7 @@ import { Fulfillment } from '@interfaces/competence';
   selector: 'app-univis-helper',
   templateUrl: './univis-helper.component.html',
   styleUrls: ['./univis-helper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UnivisHelperComponent implements OnInit {

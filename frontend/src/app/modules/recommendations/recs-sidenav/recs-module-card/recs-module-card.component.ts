@@ -8,6 +8,7 @@ import {
   OnInit,
   ChangeDetectorRef,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Module } from '@interfaces/module';
 import { EMPTY, map, Observable, switchMap, take, tap } from 'rxjs';
@@ -40,6 +41,7 @@ import { Topic } from '@interfaces/topic';
   selector: 'app-recs-module-card',
   templateUrl: './recs-module-card.component.html',
   styleUrls: ['./recs-module-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class RecsModuleCardComponent implements OnInit, OnChanges {

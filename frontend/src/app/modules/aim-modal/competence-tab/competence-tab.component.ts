@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Standard } from '../../bilapp/interfaces/standard';
 import { BilappRestService } from '../../bilapp/bilapp-rest.service';
@@ -18,6 +19,7 @@ import { CompAim } from '../../../../../../interfaces/user';
   selector: 'app-competence-tab',
   templateUrl: './competence-tab.component.html',
   styleUrls: ['./competence-tab.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CompetenceTabComponent implements OnInit {

@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { User } from '../../../../../../interfaces/user';
 import {
@@ -27,6 +28,7 @@ import { AuthService } from 'src/app/shared/auth/auth.service';
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UserFormComponent implements OnInit, OnChanges {

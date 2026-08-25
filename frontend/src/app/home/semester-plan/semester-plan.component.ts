@@ -6,6 +6,7 @@ import {
   ViewChild,
   HostListener,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { catchError, Observable, of, Subject, take, takeUntil } from 'rxjs';
@@ -51,6 +52,7 @@ import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
   selector: 'app-semester-plan',
   templateUrl: './semester-plan.component.html',
   styleUrls: ['./semester-plan.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SemesterPlanComponent implements OnInit, OnDestroy {

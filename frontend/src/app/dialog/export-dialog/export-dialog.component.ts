@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { StudyPlanTemplate } from '@interfaces/study-plan';
 import { SemesterStudyPath } from '@interfaces/study-path';
 import { SemesterPlanTemplate } from '@interfaces/semester-plan';
@@ -7,6 +7,7 @@ import { SemesterPlanTemplate } from '@interfaces/semester-plan';
     selector: 'app-export-dialog',
     templateUrl: './export-dialog.component.html',
     styleUrls: ['./export-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ExportDialogComponent {

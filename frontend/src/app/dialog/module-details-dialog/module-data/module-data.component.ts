@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../../../../../interfaces/user';
 import { Semester } from '../../../../../../interfaces/semester';
 import { StudyPlan } from '../../../../../../interfaces/study-plan';
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { of, Subject } from 'rxjs';
@@ -45,6 +45,7 @@ import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
   selector: 'app-module-data',
   templateUrl: './module-data.component.html',
   styleUrl: './module-data.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleDataComponent implements OnInit, OnDestroy {

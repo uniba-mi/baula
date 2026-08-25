@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Module } from '@interfaces/module';
 import { ModuleGroup } from '@interfaces/module-group';
 import { StudyPath } from '@interfaces/study-path';
@@ -8,6 +8,7 @@ import { PieCardData } from 'src/app/modules/reporting/reporting';
     selector: 'app-module-group-progress-chart',
     templateUrl: './module-group-progress-chart.component.html',
     styleUrls: ['./module-group-progress-chart.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ModuleGroupProgressChartComponent implements OnInit, OnChanges {

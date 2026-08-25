@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, effect, input, output, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, effect, input, output, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import * as echarts from 'echarts';
 import type { EChartsOption, ECElementEvent } from 'echarts';
 
@@ -6,6 +6,7 @@ import type { EChartsOption, ECElementEvent } from 'echarts';
   selector: 'reporting-echarts-host',
   imports: [],
   templateUrl: './echarts-host.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './echarts-host.component.scss'
 })
 export class EchartsHostComponent implements AfterViewInit, OnDestroy {

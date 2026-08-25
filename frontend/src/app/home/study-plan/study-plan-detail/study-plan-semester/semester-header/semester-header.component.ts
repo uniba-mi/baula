@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Module } from '../../../../../../../../interfaces/module';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
@@ -41,6 +41,7 @@ import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
   selector: 'app-semester-header',
   standalone: false,
   templateUrl: './semester-header.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './semester-header.component.scss',
 })
 export class SemesterHeaderComponent {

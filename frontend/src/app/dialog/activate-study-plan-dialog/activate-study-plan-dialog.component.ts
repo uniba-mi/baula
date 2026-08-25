@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { StudyPlan } from '@interfaces/study-plan';
 import { FormControl } from '@angular/forms';
 
@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
     selector: 'app-activate-study-plan-dialog',
     templateUrl: './activate-study-plan-dialog.component.html',
     styleUrl: './activate-study-plan-dialog.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ActivateStudyPlanDialogComponent implements OnInit {

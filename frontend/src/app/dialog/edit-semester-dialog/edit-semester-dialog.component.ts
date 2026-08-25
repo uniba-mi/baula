@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Semester } from '@interfaces/semester';
@@ -21,6 +22,7 @@ import { TimetableActions } from 'src/app/actions/study-planning.actions';
   selector: 'app-edit-semester-dialog',
   templateUrl: './edit-semester-dialog.component.html',
   styleUrls: ['./edit-semester-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EditSemesterDialogComponent implements OnInit {

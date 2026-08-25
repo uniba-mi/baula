@@ -10,6 +10,7 @@ import {
   WritableSignal,
   inject,
   signal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -31,6 +32,7 @@ import { SearchActions } from 'src/app/actions/search-settings.actions';
   selector: 'app-course-overview',
   templateUrl: './course-overview.component.html',
   styleUrls: ['./course-overview.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CourseOverviewComponent implements OnInit, OnChanges, OnDestroy {

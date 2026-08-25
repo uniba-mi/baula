@@ -9,6 +9,7 @@ import {
   OnInit,
   ViewChild,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { take } from 'rxjs';
 import { EvaluationRestService } from './evaluation-rest.service';
@@ -30,6 +31,7 @@ import { Router } from '@angular/router';
   selector: 'app-evaluation',
   templateUrl: './evaluation.component.html',
   styleUrls: ['./evaluation.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EvaluationComponent implements OnInit {

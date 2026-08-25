@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ModuleHandbook } from '@interfaces/module-handbook';
 import { ModService } from 'src/app/shared/services/module.service';
 import { RestService } from 'src/app/rest.service';
@@ -8,6 +8,7 @@ import { take } from 'rxjs';
   selector: 'app-update-mhb-dialog',
   standalone: false,
   templateUrl: './update-mhb-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './update-mhb-dialog.component.scss',
 })
 export class UpdateMhbDialogComponent implements OnInit {

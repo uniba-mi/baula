@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, SimpleChanges, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Competence, Fulfillment } from '@interfaces/competence';
 import { Bar } from '../../interfaces/chart';
 import type { ECElementEvent, EChartsOption } from 'echarts';
@@ -19,6 +19,7 @@ interface DonutSliceDatum {
   selector: 'app-donut-chart',
   templateUrl: './donut-chart.component.html',
   styleUrls: ['./donut-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class DonutChartComponent {

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AdminRestService } from '../admin-rest.service';
 import { AdminDialogComponent } from '../dialogs/admin-dialog.component';
@@ -15,6 +15,7 @@ import { RestService } from 'src/app/rest.service';
   selector: 'admin-module-course-connection',
   templateUrl: './module-course-connection.component.html',
   styleUrl: './module-course-connection.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleCourseConnectionComponent implements OnInit {

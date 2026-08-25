@@ -7,6 +7,7 @@ import {
   Output,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import type { ECElementEvent, EChartsOption, CustomSeriesOption } from 'echarts';
@@ -39,6 +40,7 @@ function resolveCssVar(value: string): string {
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class BarChartComponent implements OnInit, OnChanges {

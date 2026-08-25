@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Competence } from '../../../../../../interfaces/competence';
 import { Observable } from 'rxjs';
@@ -18,6 +19,7 @@ import { getUserAims } from 'src/app/selectors/user.selectors';
   selector: 'app-competence-group-panel',
   templateUrl: './competence-group-panel.component.html',
   styleUrls: ['./competence-group-panel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CompetenceGroupPanelComponent implements OnInit {

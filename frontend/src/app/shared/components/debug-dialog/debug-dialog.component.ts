@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { DialogComponent } from 'src/app/dialog/dialog.component';
@@ -14,6 +14,7 @@ import { AlertType } from '../../classes/alert';
   selector: 'app-debug-dialog',
   standalone: false,
   templateUrl: './debug-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './debug-dialog.component.scss',
 })
 export class DebugDialogComponent {

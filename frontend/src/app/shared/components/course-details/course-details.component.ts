@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Course } from '../../../../../../interfaces/course';
 import { ModuleCourse } from '../../../../../../interfaces/module-course';
 
@@ -6,6 +6,7 @@ import { ModuleCourse } from '../../../../../../interfaces/module-course';
     selector: 'app-course-details',
     templateUrl: './course-details.component.html',
     styleUrl: './course-details.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CourseDetailsComponent implements OnInit {

@@ -183,7 +183,7 @@
           }
         </div>
         <!-- similar module groups wizard -->
-        <app-module-group-wizard [mgId]="getFormGroup(module.acronym).get('mgId')?.value"
+        <app-module-group-wizard [mgId]="$safeNavigationMigration(getFormGroup(module.acronym).get('mgId')?.value)"
           [structuredModuleGroups]="structuredModuleGroups$ | async"
           (groupSelected)="selectSimilarGroup($event, module.acronym)">
         </app-module-group-wizard>

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   BehaviorSubject,
@@ -43,6 +43,7 @@ import { AnalyticsService } from 'src/app/shared/services/analytics.service';
   standalone: false,
 
   templateUrl: './topic-settings.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './topic-settings.component.scss',
 })
 export class TopicSettingsComponent {

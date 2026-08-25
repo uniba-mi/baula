@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Semester } from '@interfaces/semester';
 
 @Component({
   selector: 'admin-semester-selection-form',
   standalone: false,
   templateUrl: './semester-selection-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './semester-selection-form.component.scss'
 })
 export class SemesterSelectionFormComponent implements OnInit {

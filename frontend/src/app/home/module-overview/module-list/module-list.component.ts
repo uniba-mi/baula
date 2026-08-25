@@ -5,6 +5,7 @@ import {
   OnInit,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
 import { Module } from '../../../../../../interfaces/module';
@@ -19,6 +20,7 @@ import { Store } from '@ngrx/store';
   selector: 'app-module-list',
   templateUrl: './module-list.component.html',
   styleUrls: ['./module-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleListComponent implements OnInit, OnChanges {

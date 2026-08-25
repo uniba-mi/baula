@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, ChangeDetectionStrategy } from '@angular/core';
 import { BarChartCardData } from '../reporting';
 import { MatCardModule } from '@angular/material/card';
 import { EchartsHostComponent } from '../echarts-host/echarts-host.component';
@@ -11,6 +11,7 @@ import type { EChartsOption } from 'echarts';
     EchartsHostComponent
   ],
   templateUrl: './bar-chart-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './bar-chart-card.component.scss'
 })
 export class BarChartCardComponent {

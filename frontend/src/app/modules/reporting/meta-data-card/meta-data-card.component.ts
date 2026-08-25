@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { MetaCardData } from '../reporting';
 import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
 import { DownloadService } from '../../../shared/services/download.service';
@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule
   ],
   templateUrl: './meta-data-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './meta-data-card.component.scss',
 })
 export class MetaDataCardComponent {

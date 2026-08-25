@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, ChangeDetectionStrategy } from '@angular/core';
 import { BoxplotCardData } from '../reporting';
 import { MatCardModule } from '@angular/material/card';
 import { EchartsHostComponent } from '../echarts-host/echarts-host.component';
@@ -22,6 +22,7 @@ function darken(hex: string, amount = 0.35): string {
     EchartsHostComponent
   ],
   templateUrl: './boxplot-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './boxplot-card.component.scss'
 })
 export class BoxplotCardComponent {

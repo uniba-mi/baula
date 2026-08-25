@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AcademicDate, DateType } from '@interfaces/academic-date';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import { RestService } from 'src/app/rest.service';
   selector: 'admin-academic-dates-dialog',
   templateUrl: './academic-dates-dialog.component.html',
   styleUrl: './academic-dates-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AcademicDatesDialogComponent implements OnInit {

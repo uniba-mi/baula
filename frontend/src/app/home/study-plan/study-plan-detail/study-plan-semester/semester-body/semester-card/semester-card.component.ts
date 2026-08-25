@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ItemActionName, MetaSemester } from '@interfaces/semester-plan';
 import { StudyPath } from '@interfaces/study-path';
 import {
@@ -23,6 +23,7 @@ interface ActionConfig {
   selector: 'app-semester-card',
   templateUrl: './semester-card.component.html',
   styleUrl: './semester-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SemesterCardComponent {
