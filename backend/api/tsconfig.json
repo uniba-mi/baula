@@ -18,15 +18,6 @@
     /* Completeness */
     "skipLibCheck": true
   },
-  /* Dev-only (nodemon/ts-node, see startApi + startCronjob). Type checking on
-     every require blocks the event loop for ~15s at startup, which is longer
-     than the 5s serverSelectionTimeoutMS of the Mongo connection opened in
-     src/database/mongo.ts - the connection then times out before the loop is
-     free again. Transpiling only keeps startup at ~2s. `tsc` ignores this key,
-     so `npm run build` stays the full type-check gate. */
-  "ts-node": {
-    "transpileOnly": true
-  },
   "include": ["./src/**/*", "../../interfaces/*.ts"],
   "exclude": ["./node_modules", "./dist"]
 }

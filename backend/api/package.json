@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && npm run copyFiles",
     "copyFiles": "copyfiles package.json dist/backend/api && copyfiles -u 1 staticdata/* dist/backend/api/staticdata && copyfiles -u 1 staticdata/**/* dist/backend/api/staticdata && copyfiles -u 1 src/certs/* dist/backend/api/src && copyfiles -u 1 -a -e '**/*.ts' src/database/* dist/backend/api/src/ && copyfiles -a -u 2 src/database/.env dist/backend/api/src/database && copyfiles -a environment/* dist/backend/api/",
-    "startApi": "nodemon ./src/server.ts",
-    "startCronjob": "nodemon ./src/shared/utils/cron-job.ts",
+    "startApi": "tsx watch ./src/server.ts",
+    "startCronjob": "tsx watch ./src/shared/utils/cron-job.ts",
     "generateDB": "npx prisma generate --schema ./src/database/schema.prisma",
     "updateDB": "npx prisma db push --schema ./src/database/schema.prisma",
     "resetDB": "npx prisma migrate reset --skip-generate --schema ./src/database/schema.prisma",
@@ -60,10 +60,9 @@
     "@types/swagger-ui-express": "^4.1.8",
     "@types/validator": "^13.15.3",
     "copyfiles": "^2.4.1",
-    "nodemon": "^3.1.14",
     "prisma": "^6.18.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
   },
   "overrides": {
     "@node-saml/passport-saml": {

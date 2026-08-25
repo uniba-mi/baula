@@ -1,10 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "ignoreDeprecations": "6.0",
     "paths": {
-      "@interfaces/*": ["../interfaces/*"]
+      "@interfaces/*": ["../interfaces/*"],
+      "src/*": ["./src/*"]
     },
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
