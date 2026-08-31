@@ -13,12 +13,12 @@ import {
   Embedding as IEmbedding,
   ModuleEmbedding as IModEmbedding,
 } from "@interfaces/embedding";
-import { Exam as IExam } from "@interfaces/study-path";
+import { ExamAttempt as IExamAttempt } from "@interfaces/study-path";
 import { LongTermEvaluation as ILongTermEvaluation } from "@interfaces/long-term-evaluation";
 import { Topic as ITopic } from "@interfaces/topic";
 import { UserServer as IUser } from "@interfaces/user";
 import { Evaluation as IEvaluation } from "@interfaces/evaluation";
-import { FeatureWish as IFeatureWish } from "../../../../interfaces/feature-wish";
+import { FeatureWish as IFeatureWish } from "@interfaces/feature-wish";
 import { logger } from "../shared/utils/logger";
 
 const uri = process.env.MONGO_DATABASE_URL;
@@ -340,29 +340,33 @@ interface UserQueryHelpers {
   byShibId(shibId: string): UserModelQuery;
 }
 
-/* const ExamSchema: Schema = new Schema<IExam>(
+// ein Pruefungsversuch aus FlexNow (Prfstd). examId, name und remark sind bewusst
+// nicht required: camaro liefert fuer fehlende Knoten einen Leerstring, den Mongoose
+// als "nicht gesetzt" wertet - required wuerde beim Speichern einen ValidationError
+// werfen, obwohl der Versuch selbst valide ist.
+const ExamAttemptSchema: Schema = new Schema<IExamAttempt>(
   {
-    name: {
-      type: String,
-      required: true
+    examId: String,
+    name: String,
+    count: {
+      type: Number,
+      required: true,
     },
-    attempts: [{
-      semester: {
-        type: String,
-        required: true
-      },
-      status: {
-        type: String,
-        required: true,
-        // match: /(taken|failed|passed|open)/
-      },
-      grade: {
-        type: Number,
-        required: true
-      }
-    }]
-  }
-); */
+    grade: Number,
+    semester: {
+      type: String,
+      match: /(\d{4}((w)|(s)))/g,
+    },
+    status: {
+      type: String,
+      match: /(taken)|(failed)|(passed)|(open)/g,
+    },
+    remark: String,
+    flexNowImported: Boolean,
+  },
+  // Versuche sind Werte innerhalb eines Moduls, keine eigenstaendigen Dokumente
+  { _id: false },
+);
 
 // UserSchema
 const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
@@ -408,7 +412,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
           type: String,
           match: /(taken)|(failed)|(passed)|(open)/g,
         },
-        //exams: [ExamSchema],
+        examAttempts: [ExamAttemptSchema],
         semester: {
           type: String,
           match: /(\d{4}((w)|(s)))/g,

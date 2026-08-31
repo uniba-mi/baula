@@ -1,4 +1,5 @@
 import { PathModule } from '@interfaces/study-path';
+import { mergeFlexNowAttempts } from './exam-attempt.helper';
 
 export interface FlexNowMergeResult {
   merged: PathModule[];
@@ -43,6 +44,12 @@ export function mergeFlexNowModulesIntoMissingModules(
         status: fnModule.status,
         grade: fnModule.grade,
         ects: fnModule.ects ?? merged[matchIndex].ects,
+        // importierte Versuche ersetzen die zuvor importierten, selbst eingetragene
+        // bleiben erhalten - siehe mergeFlexNowAttempts
+        examAttempts: mergeFlexNowAttempts(
+          merged[matchIndex].examAttempts,
+          fnModule.examAttempts,
+        ),
         flexNowImported: true,
       };
       updatedCount++;

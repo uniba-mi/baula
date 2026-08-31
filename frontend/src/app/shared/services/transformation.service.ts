@@ -1,5 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { StudyPath, SemesterStudyPath } from '@interfaces/study-path';
+import {
+  StudyPath,
+  SemesterStudyPath,
+  ExamAttempt,
+} from '@interfaces/study-path';
 import { Semester } from '@interfaces/semester';
 import { MStudyProgramme } from '@interfaces/user';
 import { UserGeneratedModule } from '@interfaces/user-generated-module';
@@ -14,6 +18,7 @@ import { AcademicDate } from '@interfaces/academic-date';
 import { Course, Term } from '@interfaces/course';
 import { RRule, Weekday } from 'rrule';
 import { getSemesterPlansOfActiveStudyPlan } from 'src/app/selectors/study-planning.selectors';
+import { FnCompletedModule } from '@interfaces/fn-user';
 
 @Injectable({
   providedIn: 'root',
@@ -245,6 +250,48 @@ export class TransformationService {
       result = result.concat(courseEvents);
     }
     return result;
+  }
+
+  // ein Prfstd aus FlexNow ist bereits ein einzelner Versuch - er wird 1:1 uebernommen,
+  // lediglich das Semester wird von der Apnr ins univis-Format gebracht
+  transformExamAttempts(module: FnCompletedModule): ExamAttempt[] {
+    return (module.examAttempts ?? [])
+      .map((attempt) => ({
+        examId: attempt.examId || undefined,
+        name: attempt.name,
+        count: attempt.count,
+        // leeres <Note /> wird zu NaN bzw. null - beides bedeutet "noch nicht bewertet"
+        grade: Number.isFinite(attempt.grade) ? attempt.grade : null,
+        semester: new Semester(attempt.semester).name,
+        status: this.transformAttemptStatus(attempt.remark, attempt.grade),
+        remark: attempt.remark,
+        flexNowImported: true,
+      }))
+      .sort(
+        (a, b) => a.semester.localeCompare(b.semester) || a.count - b.count,
+      );
+  }
+
+  // Die Pruefungsbemerkung ist die verlaesslichere Quelle als die Note: nur sie
+  // unterscheidet anerkannte Leistungen und Freiversuche, die sich an der Note nicht
+  // ablesen lassen. Schreibweise und Gross-/Kleinschreibung variieren je nach Auszug.
+  private transformAttemptStatus(
+    remark: string,
+    grade: number | null,
+  ): string {
+    const bem = (remark ?? '').trim().toLowerCase();
+    // "nicht bestanden" zuerst pruefen, sonst greift der "bestanden"-Fall
+    if (bem.startsWith('nicht bestanden')) {
+      return 'failed';
+    }
+    if (bem.startsWith('bestanden') || bem.startsWith('anerkannte leistung')) {
+      return 'passed';
+    }
+    // "(Ohne)" oder unbekannte Bemerkung -> ueber die Note ableiten
+    if (!Number.isFinite(grade)) {
+      return 'taken';
+    }
+    return grade! > 4.0 ? 'failed' : 'passed';
   }
 
   private transformAcademicDatesToEvent(

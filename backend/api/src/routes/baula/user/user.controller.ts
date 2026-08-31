@@ -195,6 +195,10 @@ export async function updateModuleInStudyPath(
   const isUserGenerated = req.body.isUserGenerated;
   const flexNowImported = req.body.flexNowImported;
   const mgId = typeof req.body.mgId == "string" ? req.body.mgId : undefined;
+  // optional: fehlt das Feld, bleibt die gespeicherte Pruefungshistorie unangetastet
+  const examAttempts = Array.isArray(req.body.examAttempts)
+    ? req.body.examAttempts
+    : undefined;
 
   // check if all values are contained in body
   if (
@@ -237,6 +241,9 @@ export async function updateModuleInStudyPath(
           exist.mgId = mgId;
           exist.isUserGenerated = isUserGenerated;
           exist.flexNowImported = flexNowImported;
+          if (examAttempts) {
+            exist.examAttempts = examAttempts;
+          }
         } else {
           user.completedModules.push({
             _id: _id || new mongoose.Types.ObjectId(), // use _id if provided (in case of user generated modules), else generate a new one
@@ -249,6 +256,7 @@ export async function updateModuleInStudyPath(
             mgId,
             isUserGenerated,
             flexNowImported,
+            examAttempts: examAttempts ?? [],
           });
         }
         const result = await user.save();
@@ -262,6 +270,20 @@ export async function updateModuleInStudyPath(
     }
   } else {
     next(new NotFoundError("Parameter fehlen"));
+  }
+}
+
+/* Uebernimmt ein vom Client geschicktes Modul in ein gespeichertes, ohne die
+ * Pruefungshistorie zu verlieren: `examAttempts` ist optional, und ein Client, der das
+ * Feld nicht mitschickt (etwa der Statusdialog, der das Modul neu aufbaut), will die
+ * gespeicherten Versuche behalten - nicht sie loeschen. Object.assign allein wuerde das
+ * zwar auch leisten, verlaesst sich dafuer aber stillschweigend darauf, dass der
+ * Schluessel fehlt; hier steht die Absicht ausdruecklich da. */
+function assignModule(target: PathModule, source: PathModule) {
+  const { examAttempts, ...rest } = source;
+  Object.assign(target, rest);
+  if (Array.isArray(examAttempts)) {
+    target.examAttempts = examAttempts;
   }
 }
 
@@ -300,7 +322,7 @@ export async function updateStudyPath(
 
       if (indexToUpdate > -1) {
         // update existing module for the current semester
-        Object.assign(user.completedModules[indexToUpdate], module);
+        assignModule(user.completedModules[indexToUpdate], module);
       } else {
         // add new module
         if (
@@ -311,7 +333,10 @@ export async function updateStudyPath(
               moduleObjectId.toString() === existingMod._id.toString(),
           )
         ) {
-          user.completedModules.push(module);
+          user.completedModules.push({
+            ...module,
+            examAttempts: module.examAttempts ?? [],
+          });
         }
       }
     });
@@ -399,7 +424,7 @@ export async function finishSemester(
 
       if (indexToUpdate > -1) {
         // update existing module for the current semester
-        Object.assign(user.completedModules[indexToUpdate], module);
+        assignModule(user.completedModules[indexToUpdate], module);
       } else {
         // add new module
         if (
@@ -413,7 +438,10 @@ export async function finishSemester(
           if (!module._id || module._id === null) {
             module._id = new Types.ObjectId().toString();
           }
-          user.completedModules.push({ ...module });
+          user.completedModules.push({
+            ...module,
+            examAttempts: module.examAttempts ?? [],
+          });
         }
       }
     });
@@ -1303,11 +1331,21 @@ export async function crawlStudentDataViaFlexNow(
           let modulesWithoutAcronymCount = 1;
           for (let module of studypath.completedModules) {
             if (!module.acronym) {
-              if (module.examAttempts && module.examAttempts.length > 0) {
-                module.acronym = `${module.examAttempts[0].remark}-${modulesWithoutAcronymCount}`;
-              } else {
-                module.acronym = `Sonstige Leistung ${modulesWithoutAcronymCount}`;
-              }
+              // Anerkannte Leistungen bringen kein Modulkuerzel mit. Die
+              // Pruefungsbemerkung benennt sie ("Anerkannte Leistung"), die laufende
+              // Nummer haelt sie auseinander - ohne den Praefix stuenden im
+              // Studienverlauf nur "-1", "-2", "-3".
+              //
+              // ACHTUNG: das Acronym ist Teil des Matching-Schluessels (acronym +
+              // semester, siehe flex-now-merge.helper.ts / findMatchingModuleIndex).
+              // Leistungen, die schon unter "-1", "-2", ... gespeichert sind - der
+              // Praefix war leer, solange das Template "Prfbem" statt "Prfbem/Bez" las -
+              // gelten beim naechsten Abgleich als neu und kommen doppelt in den
+              // Studienverlauf. Sie muessen einmalig von Hand entfernt werden.
+              const remark = module.examAttempts?.[0]?.remark?.trim();
+              module.acronym = remark
+                ? `${remark}-${modulesWithoutAcronymCount}`
+                : `Sonstige Leistung ${modulesWithoutAcronymCount}`;
               modulesWithoutAcronymCount++;
             }
 

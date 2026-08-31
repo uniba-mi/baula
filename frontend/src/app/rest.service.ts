@@ -361,7 +361,7 @@ export class RestService {
       ects: module.ects,
       grade: module.grade,
       semester: module.semester,
-      // exams: module.exams,
+      examAttempts: module.examAttempts,
       mgId: module.mgId,
       isUserGenerated: module.isUserGenerated,
       flexNowImported: module.flexNowImported,

@@ -43,6 +43,7 @@ import {
 import { getModules } from 'src/app/selectors/module-overview.selectors';
 import { DebugDialogComponent } from '../components/debug-dialog/debug-dialog.component';
 import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
+import { TransformationService } from './transformation.service';
 import { SnackbarService } from './snackbar.service';
 import { mergeFlexNowModulesIntoMissingModules } from '../helpers/flex-now-merge.helper';
 
@@ -54,6 +55,7 @@ export class FlexnowService {
   private store = inject(Store);
   private rest = inject(RestService);
   private snackbar = inject(SnackbarService);
+  private transform = inject(TransformationService);
 
   lastFlexnowApiConsent$: Observable<Consent | null>;
   lastFlexNowMetaDataConsent$: Observable<Consent | null>;
@@ -668,6 +670,8 @@ export class FlexnowService {
         );
       }
 
+      const examAttempts = this.transform.transformExamAttempts(fnModule);
+
       return {
         acronym: fnModule.acronym,
         name: fnModule.name,
@@ -678,6 +682,7 @@ export class FlexnowService {
         isUserGenerated: false,
         flexNowImported: true,
         grade: fnModule.grade ?? 0,
+        examAttempts: examAttempts,
       };
     });
   }
