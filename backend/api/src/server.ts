@@ -1,14 +1,13 @@
 import app from './app';
 import { redisClient } from './config/session.config';
 import mongoose from "mongoose";
+import { connectMongo } from './database/mongo';
 import { logger } from './shared/utils/logger';
 
 const port = process.env.API_PORT || 3300;
 
-// Log MongoDB connection state via events instead of checking readyState
-mongoose.connection.on('connected', () => logger.info('MongoDB connected!'));
-mongoose.connection.on('error', (err) => logger.error('MongoDB connection error:', err));
-mongoose.connection.on('disconnected', () => logger.warn('MongoDB disconnected.'));
+// connect mongo directly without await
+void connectMongo();
 
 // creates and starts server
 const server = app.listen(port, () => {

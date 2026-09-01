@@ -6,7 +6,6 @@ import express, { Express } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import mongoose from "mongoose";
 import compression from "compression";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
@@ -114,8 +113,6 @@ app.use(
     stream: { write: (message) => logger.info(message.trim()) },
   })
 );
-
-mongoose.set("strictQuery", true);
 
 /** Helmet configuration - enhanced security headers */
 app.disable("x-powered-by");
