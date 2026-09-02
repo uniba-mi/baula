@@ -7,7 +7,8 @@
   padding: 2rem 3rem !important;
   width: 100% !important;
   overflow: auto;
-
+  scrollbar-width: auto;
+  scrollbar-color: var(--ub-gray-80) var(--ub-gray-20);
 }
 
 .mat-mdc-dialog-container {

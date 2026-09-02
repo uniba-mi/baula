@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Studienplan-Einstellungen werden jetzt persistiert (u. a. Notenanzeige-Option)
 
 ### Changed
-- Framework-Update: Angular auf Version 21 (inkl. Angular Material, NgRx 21), Umstellung auf das `inject()`-Pattern und die neue `@if`/`@for`-Control-Flow-Syntax
+- Framework-Update: Angular auf Version 22 (inkl. Angular Material, NgRx 22), Umstellung auf das `inject()`-Pattern und die neue `@if`/`@for`-Control-Flow-Syntax
 - Barrierefreiheit verbessert: Alt-Texte für Bilder ergänzt, Farbkontraste erhöht, Konsolen-Warnungen durch veraltete `@for`-Syntax behoben
 
 ### Fixed
