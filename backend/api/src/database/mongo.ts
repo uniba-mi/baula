@@ -27,19 +27,63 @@ if (!uri) {
   throw new Error("MONGO_DATABASE_URL environment variable is required");
 }
 
-// Enhanced MongoDB connection with pooling and retry options
-export const connection = mongoose.connect(uri, {
-  maxPoolSize: 100, 
-  socketTimeoutMS: 30000, // 30 seconds
-  connectTimeoutMS: 30000, // 30 seconds
-  serverSelectionTimeoutMS: 5000, // 5 seconds
+const mongoUri: string = uri;
+
+mongoose.set("strictQuery", true);
+
+mongoose.connection.on("connected", () => logger.info("MongoDB verbunden."));
+mongoose.connection.on("error", (err) =>
+  logger.error("MongoDB-Verbindungsfehler:", err),
+);
+mongoose.connection.on("disconnected", () =>
+  logger.warn("MongoDB-Verbindung getrennt."),
+);
+
+const MONGO_OPTIONS = {
+  maxPoolSize: 100,
+  socketTimeoutMS: 30000,
+  connectTimeoutMS: 30000,
+  serverSelectionTimeoutMS: 30000,
   retryWrites: true,
   retryReads: true,
   appName: "Baula-Backend",
-}).catch((err) => {
-  logger.error("MongoDB connection failed:", err);
-  throw err;
-});
+};
+
+const MAX_CONNECT_ATTEMPTS = 10;
+const INITIAL_RETRY_DELAY_MS = 1000;
+const MAX_RETRY_DELAY_MS = 30000;
+
+/**
+ * Starts connection to mongodb and retries 
+ * @returns true, as soon as connection is ready, false if no connection is enabled
+ */
+export async function connectMongo(): Promise<boolean> {
+  let delayMs = INITIAL_RETRY_DELAY_MS;
+
+  for (let attempt = 1; attempt <= MAX_CONNECT_ATTEMPTS; attempt++) {
+    try {
+      await mongoose.connect(mongoUri, MONGO_OPTIONS);
+      return true;
+    } catch (err) {
+      if (attempt === MAX_CONNECT_ATTEMPTS) {
+        logger.error(
+          `MongoDB-Verbindung nach ${MAX_CONNECT_ATTEMPTS} Versuchen aufgegeben:`,
+          err,
+        );
+        return false;
+      }
+
+      logger.warn(
+        `MongoDB-Verbindung fehlgeschlagen (Versuch ${attempt}/${MAX_CONNECT_ATTEMPTS}), nächster Versuch in ${delayMs / 1000}s:`,
+        err,
+      );
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      delayMs = Math.min(delayMs * 2, MAX_RETRY_DELAY_MS);
+    }
+  }
+
+  return false;
+}
 
 // MongoDB Schemas -> Structure of the models
 // longterm evaluation schema
