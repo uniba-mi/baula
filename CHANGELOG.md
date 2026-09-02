@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0]
 ### Added
 - FlexNow-Integration: automatisierter Noten-/Modul-Import aus FlexNow, inkl. Abgleich mit bereits abgeschlossenen Modulen, Lade-Anzeige während des Imports
 - Prüfungsversuche werden aus FlexNow importiert und gespeichert: je Modul die gesamte Historie mit Semester, Versuchsnummer, Note und Prüfungsbemerkung. Wiederholungsversuche gehen damit nicht mehr verloren – bisher überlebte nur das Ergebnis der jüngsten Ablegung. Angezeigt wird die Historie noch nicht
