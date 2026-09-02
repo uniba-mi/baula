@@ -11,30 +11,27 @@ export interface SemesterStudyPath extends StudySemester {
   courses: PathCourse[],
 }
 
-// abgeschlossenes bzw. belegtes Modul im Studienverlauf
+// completed or ongoing module of the study path
 export interface PathModule extends UserGeneratedModuleTemplate {
   _id?: string;
   semester: string;
   isUserGenerated: boolean;
   flexNowImported: boolean;
   grade: number;
-  // optional: wer keine Pruefungsdaten hat, laesst das Feld weg, statt ein leeres
-  // Array zu schicken - sonst ueberschreibt der Server die gespeicherte Historie
+  // optional - leaving it out keeps the stored attempts, sending [] clears them
   examAttempts?: ExamAttempt[];
 }
 
-// ein einzelner Pruefungsversuch (FlexNow: Studium/Prfstds/Prfstd)
+// a single exam attempt (FlexNow: Studium/Prfstds/Prfstd)
 export interface ExamAttempt {
-  examId?: string, // Teilprf/ModulPrf/@ModulPrf - nicht garantiert vorhanden
+  examId?: string, // Teilprf/ModulPrf/@ModulPrf, not always present
   name: string, // Teilprf/Bez
-  count: number, // Anzahl - Nummer des Versuchs
-  grade: number | null, // null, solange der Versuch unbewertet ist
-  semester: string, // univis-Format yyyy(s|w), nicht die FlexNow-Apnr
+  count: number, // number of the attempt
+  grade: number | null, // null while the attempt is not graded
+  semester: string, // univis format yyyy(s|w), not the FlexNow apnr
   status: string, // taken | failed | passed
-  remark: string, // Pruefungsbemerkung, Prfbem/Bez
-  // true = aus FlexNow importiert, false = selbst eingetragen. Bestandsdaten ohne das
-  // Feld gelten als manuell - deshalb immer gegen `!== true` pruefen, nie gegen `=== false`
-  flexNowImported: boolean
+  remark: string, // Prfbem/Bez
+  flexNowImported: boolean // missing or false means entered by the user
 }
 
 export interface PathCourse extends PlanCourse {

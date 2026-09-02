@@ -8,21 +8,11 @@ export interface FlexNowMergeResult {
 }
 
 /**
- * Merges freshly fetched FlexNow modules of a single semester into an existing
- * set of PathModules - used both by the finish-semester-stepper's "Mit FlexNow
- * abgleichen" step and by FlexnowService.extractCompletedModules (the standalone
- * sync). Matches by ID first, then acronym+semester. A recognized MHB acronym is
- * trusted as a shared key regardless of isUserGenerated/flexNowImported (so a
- * placeholder manually entered with the module's real, official acronym still
- * gets recognized as the same module instead of being duplicated). A free-text
- * (non-MHB) acronym is only trusted once both sides are already known to
- * originate from FlexNow, so an unrelated manual placeholder can't be clobbered
- * by an unrelated FlexNow module that happens to share its made-up acronym.
- * Note this still can't merge a manual placeholder with a FlexNow module
- * representing the same real exam if their acronyms differ entirely - there's
- * no other shared key to match them on. A newly added (unmatched) FlexNow module
- * is always isUserGenerated: false - see the comment at that assignment for why
- * this can't be derived from mhbAcronyms.
+ * Merges freshly fetched FlexNow modules of a single semester into an existing set of
+ * PathModules. Used by the finish-semester-stepper's "Mit FlexNow abgleichen" step and by
+ * FlexnowService.extractCompletedModules. Matches by ID first, then acronym + semester -
+ * two modules for the same exam with entirely different acronyms stay separate, there is
+ * no other shared key.
  */
 export function mergeFlexNowModulesIntoMissingModules(
   missingModules: PathModule[],
@@ -44,8 +34,8 @@ export function mergeFlexNowModulesIntoMissingModules(
         status: fnModule.status,
         grade: fnModule.grade,
         ects: fnModule.ects ?? merged[matchIndex].ects,
-        // importierte Versuche ersetzen die zuvor importierten, selbst eingetragene
-        // bleiben erhalten - siehe mergeFlexNowAttempts
+        // imported attempts replace the previously imported ones, manually entered
+        // ones are kept - see mergeFlexNowAttempts
         examAttempts: mergeFlexNowAttempts(
           merged[matchIndex].examAttempts,
           fnModule.examAttempts,
@@ -54,14 +44,10 @@ export function mergeFlexNowModulesIntoMissingModules(
       };
       updatedCount++;
     } else {
-      // always false, never mhbAcronyms-derived: during the initial FlexNow import at
-      // account creation (upload-student-data-stepper, mode 'update-user') the module
-      // handbook can't be loaded yet - which MHB to load is itself only known from this
-      // same import's metadata. Deriving isUserGenerated from "is this acronym in the
-      // (empty) current MHB" would misflag every real module as a placeholder at that
-      // point, which then permanently disagrees with the same module re-synced later
-      // (once the MHB is loaded) and duplicates instead of matching. Every module
-      // FlexNow reports is a real, official one, so isUserGenerated is always false here.
+      // FlexNow only reports official modules, so isUserGenerated is always false and
+      // never derived from mhbAcronyms: during the initial import at account creation
+      // the MHB is not loaded yet, which would flag every module as user-generated and
+      // duplicate it on the next sync.
       merged.push({
         ...fnModule,
         isUserGenerated: false,
@@ -87,17 +73,12 @@ function matchesModule(
     existing.acronym === incoming.acronym &&
     existing.semester === incoming.semester
   ) {
-    // a recognized MHB acronym is a reliable identifier on its own - e.g. a
-    // manually created placeholder that was typed in with the module's real,
-    // official acronym should still be recognized as the same module, even
-    // before either side is known to be FlexNow-sourced
+    // a known MHB acronym identifies the module on its own, e.g. a manual placeholder
+    // typed in with the official acronym
     if (mhbAcronyms.has(existing.acronym)) {
       return true;
     }
-    // free-text acronyms are not a reliable shared key - only trust the match
-    // if both sides are already known to originate from FlexNow, so an
-    // unrelated manual placeholder can't be clobbered by an unrelated FlexNow
-    // module that happens to coincidentally share its made-up acronym
+    // free-text acronyms can collide, so only match them if both sides come from FlexNow
     if (existing.isUserGenerated || incoming.isUserGenerated) {
       return !!existing.flexNowImported && !!incoming.flexNowImported;
     }

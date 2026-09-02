@@ -195,7 +195,7 @@ export async function updateModuleInStudyPath(
   const isUserGenerated = req.body.isUserGenerated;
   const flexNowImported = req.body.flexNowImported;
   const mgId = typeof req.body.mgId == "string" ? req.body.mgId : undefined;
-  // optional: fehlt das Feld, bleibt die gespeicherte Pruefungshistorie unangetastet
+  // optional - if the field is missing, the stored attempts stay untouched
   const examAttempts = Array.isArray(req.body.examAttempts)
     ? req.body.examAttempts
     : undefined;
@@ -273,12 +273,6 @@ export async function updateModuleInStudyPath(
   }
 }
 
-/* Uebernimmt ein vom Client geschicktes Modul in ein gespeichertes, ohne die
- * Pruefungshistorie zu verlieren: `examAttempts` ist optional, und ein Client, der das
- * Feld nicht mitschickt (etwa der Statusdialog, der das Modul neu aufbaut), will die
- * gespeicherten Versuche behalten - nicht sie loeschen. Object.assign allein wuerde das
- * zwar auch leisten, verlaesst sich dafuer aber stillschweigend darauf, dass der
- * Schluessel fehlt; hier steht die Absicht ausdruecklich da. */
 function assignModule(target: PathModule, source: PathModule) {
   const { examAttempts, ...rest } = source;
   Object.assign(target, rest);
@@ -1331,17 +1325,7 @@ export async function crawlStudentDataViaFlexNow(
           let modulesWithoutAcronymCount = 1;
           for (let module of studypath.completedModules) {
             if (!module.acronym) {
-              // Anerkannte Leistungen bringen kein Modulkuerzel mit. Die
-              // Pruefungsbemerkung benennt sie ("Anerkannte Leistung"), die laufende
-              // Nummer haelt sie auseinander - ohne den Praefix stuenden im
-              // Studienverlauf nur "-1", "-2", "-3".
-              //
-              // ACHTUNG: das Acronym ist Teil des Matching-Schluessels (acronym +
-              // semester, siehe flex-now-merge.helper.ts / findMatchingModuleIndex).
-              // Leistungen, die schon unter "-1", "-2", ... gespeichert sind - der
-              // Praefix war leer, solange das Template "Prfbem" statt "Prfbem/Bez" las -
-              // gelten beim naechsten Abgleich als neu und kommen doppelt in den
-              // Studienverlauf. Sie muessen einmalig von Hand entfernt werden.
+              // set acronym if not existing (e.g. "Annerkannte Leistung" from study abroad)
               const remark = module.examAttempts?.[0]?.remark?.trim();
               module.acronym = remark
                 ? `${remark}-${modulesWithoutAcronymCount}`

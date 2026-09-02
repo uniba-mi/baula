@@ -633,14 +633,9 @@ export class FlexnowService {
     }
   }
 
-  // matching mirrors the backend's findMatchingModuleIndex (plan-helper.ts) via the
-  // shared mergeFlexNowModulesIntoMissingModules helper: ID first, then acronym+semester
-  // with isUserGenerated/flexNowImported-aware matching - instead of the old acronym-only
-  // comparison, which could strip a same-acronym module from an unrelated semester and
-  // couldn't tell a matching module from a coincidentally-same-acronym one across semesters.
-  // Note: a manually maintained placeholder (flexNowImported: false) whose free-text acronym
-  // doesn't match FlexNow's own acronym for the same exam still can't be auto-merged - there's
-  // no reliable shared key between the two, so it's kept alongside the freshly imported module.
+  // matching mirrors the backend's findMatchingModuleIndex (plan-helper.ts) via the shared
+  // helper: ID first, then acronym + semester. A manual placeholder whose free-text acronym
+  // differs from FlexNow's is kept next to the imported module instead of merged into it.
   private extractCompletedModules(
     modulesToKeep: PathModule[],
     modules: FnCompletedModule[],
@@ -687,9 +682,9 @@ export class FlexnowService {
     });
   }
 
-  // read-only fetch for a single semester, used by the finish-semester-stepper's
-  // "Mit FlexNow abgleichen" step - no overwrite dialog, no store writes.
-  // Returns null on failure so the caller can show its own inline error state.
+  // read-only fetch for a single semester ("Mit FlexNow abgleichen" in the
+  // finish-semester-stepper): no overwrite dialog, no store writes. Returns null on
+  // failure so the caller can show its own error state.
   getFlexNowDataForSemester(semester: string): Observable<PathModule[] | null> {
     return this.rest.getStudentDataViaFlexNow(true).pipe(
       map((flexNowOutput) => {
@@ -705,8 +700,8 @@ export class FlexnowService {
     );
   }
 
-  // consent check for a read-only FlexNow abgleich, without the "Semester überschreiben?" dialog.
-  // Persists the consent (same actions as openOverwriteConfirmationDialog's callback) once granted.
+  // consent check for the read-only abgleich, without the "Semester überschreiben?" dialog.
+  // Persists the consent once granted, like openOverwriteConfirmationDialog does.
   ensureStudypathReadConsent(): Observable<boolean> {
     return this.getLatestConsents(false, true).pipe(
       map((consents) => consents.flexNowImportConfirmed && consents.studypathConfirmed),

@@ -252,15 +252,15 @@ export class TransformationService {
     return result;
   }
 
-  // ein Prfstd aus FlexNow ist bereits ein einzelner Versuch - er wird 1:1 uebernommen,
-  // lediglich das Semester wird von der Apnr ins univis-Format gebracht
+  // a Prfstd from FlexNow already is a single attempt, only the semester has to be
+  // converted from the apnr into the univis format
   transformExamAttempts(module: FnCompletedModule): ExamAttempt[] {
     return (module.examAttempts ?? [])
       .map((attempt) => ({
         examId: attempt.examId || undefined,
         name: attempt.name,
         count: attempt.count,
-        // leeres <Note /> wird zu NaN bzw. null - beides bedeutet "noch nicht bewertet"
+        // an empty <Note /> arrives as NaN or null, both mean "not graded yet"
         grade: Number.isFinite(attempt.grade) ? attempt.grade : null,
         semester: new Semester(attempt.semester).name,
         status: this.transformAttemptStatus(attempt.remark, attempt.grade),
@@ -272,22 +272,22 @@ export class TransformationService {
       );
   }
 
-  // Die Pruefungsbemerkung ist die verlaesslichere Quelle als die Note: nur sie
-  // unterscheidet anerkannte Leistungen und Freiversuche, die sich an der Note nicht
-  // ablesen lassen. Schreibweise und Gross-/Kleinschreibung variieren je nach Auszug.
+  // the exam remark is more reliable than the grade - only it marks recognized
+  // achievements and Freiversuche, which the grade alone does not show. Wording and
+  // casing vary between extracts.
   private transformAttemptStatus(
     remark: string,
     grade: number | null,
   ): string {
     const bem = (remark ?? '').trim().toLowerCase();
-    // "nicht bestanden" zuerst pruefen, sonst greift der "bestanden"-Fall
+    // check "nicht bestanden" first, otherwise the "bestanden" case matches it too
     if (bem.startsWith('nicht bestanden')) {
       return 'failed';
     }
     if (bem.startsWith('bestanden') || bem.startsWith('anerkannte leistung')) {
       return 'passed';
     }
-    // "(Ohne)" oder unbekannte Bemerkung -> ueber die Note ableiten
+    // "(Ohne)" or an unknown remark - derive the status from the grade
     if (!Number.isFinite(grade)) {
       return 'taken';
     }

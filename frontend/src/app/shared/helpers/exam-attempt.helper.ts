@@ -1,24 +1,14 @@
 import { ExamAttempt } from '@interfaces/study-path';
 
-/**
- * Prüfungsversuche sind die Fakten, `PathModule.status`/`grade` ist ihre Zusammenfassung.
- * Dieser Helper hält die Regeln, nach denen ein Versuch einer Prüfung zugeordnet wird -
- * bewusst frei von Angular-Abhängigkeiten, damit er ohne TestBed testbar bleibt, wie
- * `flex-now-merge.helper.ts`.
- *
- * In diesem Stand schreibt nur der FlexNow-Import Versuche. Die Funktionen für manuelle
- * Eingaben folgen mit der Prüfungshistorie-Oberfläche.
- */
+// Helpers for the exam attempts of a PathModule. Free of Angular dependencies so the
+// merge rules stay testable without TestBed, like flex-now-merge.helper.ts.
 
-/**
- * FlexNow benutzt "-1" als Sammel-Id für anerkannte Leistungen - rund 12 % der Versuche
- * in den Beispielauszügen tragen sie. Sie identifiziert keine konkrete Prüfung und darf
- * deshalb nie als Schlüssel dienen, sonst fallen unabhängige Anerkennungen zusammen.
- */
+// FlexNow uses "-1" as a collective id for recognized achievements, so it does not
+// identify a single exam - fall back to the exam name in that case
 const COLLECTIVE_EXAM_ID = '-1';
 
 function isFlexNow(attempt: ExamAttempt): boolean {
-  // Bestandsdaten ohne das Feld gelten als manuell - nie gegen `=== false` prüfen
+  // attempts stored before this field existed count as manual
   return attempt.flexNowImported === true;
 }
 
@@ -27,16 +17,10 @@ function examKey(examId: string | undefined, name: string): string {
 }
 
 /**
- * Übernimmt die Versuche eines FlexNow-Abgleichs in die gespeicherte Historie.
- *
- * Die importierten Versuche ersetzen die zuvor importierten - FlexNow ist für sie die
- * Quelle der Wahrheit. Selbst eingetragene Versuche bleiben dagegen erhalten: FlexNow
- * kennt sie nicht und würde sie bei jedem Abgleich löschen. Nur wenn ein importierter
- * Versuch dieselbe Prüfung im selben Semester abdeckt, weicht der manuelle - beide
- * beschreiben dann dasselbe Ereignis.
- *
- * Liefert der Import für dieses Modul gar keine Versuche, bleibt der gespeicherte Stand
- * unangetastet.
+ * Merges the attempts of a FlexNow sync into the stored ones. Imported attempts replace
+ * the previously imported ones, manually entered attempts are kept - unless an imported
+ * attempt covers the same exam in the same semester. If the import brings no attempts
+ * for this module, the stored ones are left untouched.
  */
 export function mergeFlexNowAttempts(
   stored: ExamAttempt[] | undefined,

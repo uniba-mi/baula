@@ -384,10 +384,6 @@ interface UserQueryHelpers {
   byShibId(shibId: string): UserModelQuery;
 }
 
-// ein Pruefungsversuch aus FlexNow (Prfstd). examId, name und remark sind bewusst
-// nicht required: camaro liefert fuer fehlende Knoten einen Leerstring, den Mongoose
-// als "nicht gesetzt" wertet - required wuerde beim Speichern einen ValidationError
-// werfen, obwohl der Versuch selbst valide ist.
 const ExamAttemptSchema: Schema = new Schema<IExamAttempt>(
   {
     examId: String,
@@ -408,7 +404,6 @@ const ExamAttemptSchema: Schema = new Schema<IExamAttempt>(
     remark: String,
     flexNowImported: Boolean,
   },
-  // Versuche sind Werte innerhalb eines Moduls, keine eigenstaendigen Dokumente
   { _id: false },
 );
 

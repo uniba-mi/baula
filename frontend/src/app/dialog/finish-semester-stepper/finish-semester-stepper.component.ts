@@ -447,9 +447,6 @@ export class FinishSemesterStepperComponent {
           const formKey = this.moduleFormKeys.get(selectionKey);
 
           if (formKey && rawValues[formKey]) {
-            // `module` ist das Quellmodul - dadurch ueberleben die Versuche, die
-            // "Mit FlexNow abgleichen" nur nach `missingModules` geschrieben hat.
-            // Das Formular kennt sie nicht und wuerde sie beim Speichern verwerfen.
             pathModules.push({
               ...rawValues[formKey],
               examAttempts: module.examAttempts,
