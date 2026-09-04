@@ -62,7 +62,7 @@ export class FlexnowService {
   lastFlexNowStudypathConsent$: Observable<Consent | null>;
   currentUser$: Observable<User>;
   private unsubscribe$ = new Subject<void>();
-  debuggingMode = true;
+  debuggingMode = false;
 
   constructor() {
     this.lastFlexnowApiConsent$ = this.store.select(
