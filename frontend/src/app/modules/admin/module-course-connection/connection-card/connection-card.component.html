@@ -1,4 +1,4 @@
-@for (container of containers; track container) {
+@for (container of containers; track container.key) {
   <mat-card class="mx-1 my-2">
     <!-- Header contains title and acronym of the module and possibility to open details of module -->
     <mat-card-header>
@@ -6,7 +6,7 @@
     </mat-card-header>
     <!-- Content section -->
     <mat-card-content>
-      @for (mCourse of container.module.mCourses; track mCourse) {
+      @for (mCourse of container.module.mCourses; track mCourse.mcId) {
         <div class="d-flex flex-row my-1">
           <!-- Status of the moduleCourse <-> Course connection, decides if check or x is displayed -->
           <div>
@@ -27,7 +27,7 @@
             </div>
             <!-- Connected courses -->
             <div class="ms-2 my-1">
-              @for (connection of container.connection; track connection) {
+              @for (connection of container.connection; track connection.mcId + connection.cId) {
                 @if (connection.mcId == mCourse.mcId) {
                   <div class="d-flex">
                     <div class="vr"></div>
@@ -41,7 +41,7 @@
           </div>
           <div>
             <!-- edit option -->
-            <i class="bi bi-pencil-square" (click)="openEditDialog(mCourse, container.module.chair, container.connection)"></i>
+            <i class="bi bi-pencil-square" (click)="openEditDialog(mCourse, container.module, container.connection)"></i>
           </div>
         </div>
       }

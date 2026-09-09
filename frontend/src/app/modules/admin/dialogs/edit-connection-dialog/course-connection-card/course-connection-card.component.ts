@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output, inject, ChangeDetectionStrategy } from '@angular/core';
-import { ModuleCourse } from '../../../../../../../../interfaces/module-course';
 import { Course } from '../../../../../../../../interfaces/course';
 import { CourseService } from 'src/app/shared/services/course.service';
 
@@ -14,16 +13,13 @@ export class CourseConnectionCardComponent {
   private cService = inject(CourseService);
 
   @Input() course: Course;
-  @Input() mCourse: ModuleCourse;
+  // whether the course is connected to the module course -> decided by the dialog, since courses
+  // taken from a connection do not carry their mCourses
+  @Input() connected: boolean;
+  // blocked while the dialog writes a connection
+  @Input() disabled = false;
   @Output() connect = new EventEmitter<Course>();
   @Output() disconnect = new EventEmitter<Course>();
-
-  checkCourse(course: Course): boolean {
-    let courseConnected = course.mCourses?.find(
-      (el) => el.modCourse.mcId === this.mCourse.mcId,
-    );
-    return courseConnected ? false : true;
-  }
 
   connectModule() {
     this.connect.emit(this.course);

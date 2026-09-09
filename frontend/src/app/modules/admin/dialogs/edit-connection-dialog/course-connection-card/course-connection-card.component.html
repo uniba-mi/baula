@@ -5,11 +5,11 @@
       } ({{ course.type }})
     </div>
     <div>
-      @if (checkCourse(course)) {
-        <button class="btn btn-success"
+      @if (!connected) {
+        <button class="btn btn-success" [disabled]="disabled"
         (click)="connectModule()">Verknüpfen</button>
       } @else {
-        <button class="btn btn-danger"
+        <button class="btn btn-danger" [disabled]="disabled"
           (click)="disconnectModule()">Verknüpfung
         löschen</button>
       }

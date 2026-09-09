@@ -11,85 +11,6 @@ const router: Router = express.Router();
 
 /**
  * @swagger
- * /module-handbooks/{id}/{version}:
- *   get:
- *     summary: Get a specific module handbook structure by id and version
- *     tags: [ModuleHandbook]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Module handbook id
- *         example: MHB1
- *       - in: path
- *         name: version
- *         required: true
- *         schema:
- *           type: integer
- *         description: Module handbook version
- *         example: 1
- *     responses:
- *       200:
- *         description: Module handbook
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ModuleHandbook'
- *       400:
- *         description: The request was invalid or malformed.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/BadRequestError'
- *       404:
- *         description: The requested module handbook could not be found with this id and version.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/NotFoundError'
- */
-router.get('/:id/:version', getMhbByIdAndVersion);
-
-/**
- * @swagger
- * /module-handbooks/{id}:
- *   get:
- *     summary: Get module handbook with newest version by id
- *     tags: [ModuleHandbook]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Module handbook id
- *         example: MHB1
- *     responses:
- *       200:
- *         description: Module handbook
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ModuleHandbook'
- *       400:
- *         description: The request was invalid or malformed.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/BadRequestError'
- *       404:
- *         description: No module handbook could be found with the given id.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/NotFoundError'
- */
-router.get('/:id', getUpToDateMhb)
-
-/**
- * @swagger
  * /module-handbooks/modules/{acronym}/{version}:
  *   get:
  *     summary: Get a specific module from all modules by acronym and version
@@ -194,5 +115,86 @@ router.get('/modules/:acronym/:version', getModByAcronymAndVersion);
  *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get('/modules', getModules);
+
+// the module handbook wildcards are registered last, otherwise '/:id' would swallow every
+// literal route below it - '/modules' would be read as the module handbook with id 'modules'
+/**
+ * @swagger
+ * /module-handbooks/{id}/{version}:
+ *   get:
+ *     summary: Get a specific module handbook structure by id and version
+ *     tags: [ModuleHandbook]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Module handbook id
+ *         example: MHB1
+ *       - in: path
+ *         name: version
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Module handbook version
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Module handbook
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ModuleHandbook'
+ *       400:
+ *         description: The request was invalid or malformed.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BadRequestError'
+ *       404:
+ *         description: The requested module handbook could not be found with this id and version.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
+ */
+router.get('/:id/:version', getMhbByIdAndVersion);
+
+/**
+ * @swagger
+ * /module-handbooks/{id}:
+ *   get:
+ *     summary: Get module handbook with newest version by id
+ *     tags: [ModuleHandbook]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Module handbook id
+ *         example: MHB1
+ *     responses:
+ *       200:
+ *         description: Module handbook
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ModuleHandbook'
+ *       400:
+ *         description: The request was invalid or malformed.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BadRequestError'
+ *       404:
+ *         description: No module handbook could be found with the given id.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
+ */
+router.get('/:id', getUpToDateMhb)
 
 export { router as moduleHandbooks };

@@ -9,3 +9,25 @@
 #full-connected-container {
     background-color: var(--ub-green-20);
 }
+
+// anchor for the loading overlay and a minimum height, so the spinner has room on first load
+.board-container {
+    position: relative;
+    min-height: 12rem;
+}
+
+// swallows every click on the board while data is being loaded
+.loading-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255 255 255 / 70%);
+    color: var(--ub-blue);
+
+    --mat-progress-spinner-active-indicator-color: var(--ub-blue);
+}

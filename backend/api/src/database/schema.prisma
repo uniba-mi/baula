@@ -246,6 +246,8 @@ model Course2ModuleCourse {
   course    Course       @relation(fields: [cId, semester], references: [id, semester], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([mcId, cId, semester])
+  // the primary key starts with mcId, so a filter on the semester alone cannot use it
+  @@index([semester])
 }
 
 model Course {
@@ -277,6 +279,8 @@ model Course {
   competence     CompetenceCourse[]
 
   @@id([id, semester])
+  // the primary key starts with id, so listing a whole semester cannot use it
+  @@index([semester])
 }
 
 // Start of competence Schema

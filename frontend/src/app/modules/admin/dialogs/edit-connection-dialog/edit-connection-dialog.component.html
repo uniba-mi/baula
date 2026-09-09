@@ -1,6 +1,10 @@
 <!-- Content -->
 <div class="container">
   <h3>{{ mCourse.name }} ({{ mCourse.type }})</h3>
+  <!-- module the module course belongs to -->
+  @if (moduleAcronym || moduleName) {
+    <p class="text-gray">{{ moduleAcronym }} - {{ moduleName }}</p>
+  }
   <div class="d-flex flex-row my-4">
     <!-- left side where search is located -->
     <div class="w-50">
@@ -30,9 +34,10 @@
           <div class="mt-4">
             @if (courseResults.length !== 0) {
               <!-- Display section of searchResults -->
-              @for (course of viewResult; track course) {
+              @for (course of viewResult; track course.id) {
                 <div>
-                  <admin-course-connection-card [course]="course" [mCourse]="mCourse"
+                  <admin-course-connection-card [course]="course"
+                    [connected]="connectedIds.has(course.id)" [disabled]="saving"
                     (connect)="connectModule($event)"
                   (disconnect)="disconnectModule($event)"></admin-course-connection-card>
                 </div>
@@ -55,17 +60,21 @@
       <!-- right side where connected courses are displayed -->
       <div class="w-50">
         <h4 class="text-center mb-4">Zugeordnete Lehrveranstaltungen</h4>
-        @for (connectedCourse of connectedCourses; track connectedCourse) {
+        @for (connectedCourse of connectedCourses; track connectedCourse.id) {
           <div>
-            <admin-course-connection-card [course]="connectedCourse" [mCourse]="mCourse"
+            <admin-course-connection-card [course]="connectedCourse"
+              [connected]="true" [disabled]="saving"
               (connect)="connectModule($event)"
             (disconnect)="disconnectModule($event)"></admin-course-connection-card>
+          </div>
+        } @empty {
+          <div class="alert alert-primary" role="alert">
+            Dieser Modul-LV ist im gewählten Semester noch keine Lehrveranstaltung zugeordnet.
           </div>
         }
       </div>
     </div>
     <mat-dialog-actions>
-      <button mat-raised-button class="btn btn-outline" mat-dialog-close>Abbrechen</button>
+      <button mat-raised-button class="btn btn-outline" (click)="closeDialog()">Schließen</button>
     </mat-dialog-actions>
   </div>
-

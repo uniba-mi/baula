@@ -4,6 +4,7 @@ import {
   addDateType,
   getAllAcademicDates,
   getConnectedCoursesForModule,
+  getAllConnectionsForSemester,
   getCronjobLogs,
   deleteAcademicDate,
   deleteDateType,
@@ -36,6 +37,8 @@ router.get("/report", getReporting);
 
 // get Courses that are connected to the requested module
 router.get("/connections/:id/:version/:semester", getConnectedCoursesForModule);
+// get all module-course <-> course connections of one semester in a single request
+router.get("/connections/:semester", getAllConnectionsForSemester);
 router.get("/connection", initConnectionModulecourse2Course);
 router.post("/connection", createCourseToModuleConnection);
 router.delete("/connection/:mcId/:cId/:semester", deleteCourseToModuleConnection);

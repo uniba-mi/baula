@@ -19,8 +19,11 @@ export interface AdminDialogData {
   mCourse?: ModuleCourse;
   semester?: string;
   chair?: string;
+  moduleName?: string;
+  moduleAcronym?: string;
   connection?: ModuleCourse2CourseConnection[];
   courses?: Course[];
+  hasChanges?: boolean;
 }
 
 @Component({

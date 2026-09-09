@@ -426,6 +426,38 @@ export async function getConnectedCoursesForModule(
   }
 }
 
+export async function getAllConnectionsForSemester(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const semester = validateAndReturnSemester(String(req.params.semester));
+
+  if (semester) {
+    try {
+      // all connections of the semester in one query -> avoids one request per module.
+      // Only the ids are returned: the caller already holds every course of the semester,
+      // so joining the course and module course rows would send the same data twice.
+      const connections = await prisma.course2ModuleCourse.findMany({
+        select: {
+          mcId: true,
+          cId: true,
+          semester: true,
+        },
+        where: {
+          semester: semester,
+        },
+      });
+      res.json(connections);
+    } catch (error) {
+      logError(error);
+      next(new BadRequestError("Fehler beim Abrufen der Verknüpfungen"));
+    }
+  } else {
+    next(new BadRequestError("Die eingegebenen Daten sind nicht valide."));
+  }
+}
+
 export async function initConnectionModulecourse2Course(
   req: Request,
   res: Response,

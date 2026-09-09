@@ -1,48 +1,78 @@
 <div class="container-fluid">
   <!-- Button to init connection of courses to modulecourses -->
   <div class="row">
-    <button class="w-100 btn btn-primary" (click)="connectCourses2Modulcourses()">
+    <button class="w-100 btn btn-primary" [disabled]="loading" (click)="connectCourses2Modulcourses()">
       Verknüpfe UnivIS-Lehrveranstaltungen mit Modul-LVs mittels Heuristik
     </button>
   </div>
-  <div class="row my-4">
+
+  <!-- Filter options for the kanban board -->
+  <div class="row my-4 align-items-center">
     <!-- Change option for semester -->
-    <admin-semester-selection-form (semesterChange)="selectSemester($event)"></admin-semester-selection-form>
+    <div class="col-12 col-lg-4">
+      <admin-semester-selection-form [disabled]="loading"
+        (semesterChange)="selectSemester($event)"></admin-semester-selection-form>
+    </div>
+    <!-- Filter for the offered term (Angebotssemester) of a module -->
+    <div class="col-12 col-lg-4">
+      <mat-form-field class="w-100">
+        <mat-label>Angebotssemester</mat-label>
+        <mat-select [value]="offerTerm" [disabled]="loading" (selectionChange)="selectOfferTerm($event.value)">
+          <mat-option class="my-2" value="all">Alle</mat-option>
+          <mat-option class="my-2" value="w">Nur Wintersemester</mat-option>
+          <mat-option class="my-2" value="s">Nur Sommersemester</mat-option>
+          <mat-option class="my-2" value="match">Passend zum gewählten Semester</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- Switch between the modules of the loaded module handbook and all modules of all versions -->
+    <div class="col-12 col-lg-4">
+      <mat-button-toggle-group [value]="scope" [disabled]="loading" (change)="selectScope($event.value)"
+        aria-label="Auswahl der angezeigten Module">
+        <mat-button-toggle value="mhb">Aktuelles Modulhandbuch</mat-button-toggle>
+        <mat-button-toggle value="all">Alle Module</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
   </div>
 
-  <!-- Kanban Board for Modules of the currently selected studyprogramme -->
-  <div class="row my-4">
-    @if (courses$ | async; as courses) {
-      @if (noConnectedCourses$ | async; as noConnectedCourses) {
-        <div id="not-connected-container" class="col">
-          <h3>Nicht verknüpfte Module</h3>
-          <admin-connection-card [containers]="noConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
-        </div>
-      } @else {
-        <div class="col">
-          <mat-spinner></mat-spinner>
-        </div>
-      }
-      @if (partiallyConnectedCourses$ | async; as partiallyConnectedCourses) {
-        <div id="part-connected-container" class="col"
-          >
-          <h3>Teilweise verknüpfte Module</h3>
-          <admin-connection-card [containers]="partiallyConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
-        </div>
-      }
-      @if (fullyConnectedCourses$ | async; as fullyConnectedCourses) {
-        <div id="full-connected-container" class="col">
-          <h3>Vollständig verknüpfte Module</h3>
-          <admin-connection-card [containers]="fullyConnectedCourses" [semester]="selectedSemester" [courses]="courses" (update)="initModuleConnections()"></admin-connection-card>
-        </div>
-      }
-    } @else {
-      <div class="col">
-        <mat-spinner></mat-spinner>
+  <!-- Kanban Board for the modules of the selected scope -->
+  <div class="row my-4 board-container">
+    <!-- covers the board while loading, so nothing is edited on an outdated state -->
+    @if (loading) {
+      <div class="loading-overlay" role="status" aria-live="polite" aria-busy="true">
+        <mat-spinner [diameter]="60"></mat-spinner>
+        <span>Daten werden geladen …</span>
       </div>
     }
-
+    @if (view$ | async; as view) {
+      @if (view.board.moduleCount === 0) {
+        <div class="col">
+          <div class="alert alert-primary" role="alert">
+            @if (scope === 'mhb') {
+              Es ist kein Modulhandbuch geladen. Wechsle auf „Alle Module“, um die Module
+              aller Modulhandbuch-Versionen zu bearbeiten.
+            } @else {
+              Es konnten keine Module geladen werden.
+            }
+          </div>
+        </div>
+      } @else {
+        <div id="not-connected-container" class="col">
+          <h3>Nicht verknüpfte Module</h3>
+          <admin-connection-card [containers]="view.board.none" [semester]="selectedSemester"
+            [courses]="view.courses" (update)="reload()"></admin-connection-card>
+        </div>
+        <div id="part-connected-container" class="col">
+          <h3>Teilweise verknüpfte Module</h3>
+          <admin-connection-card [containers]="view.board.partial" [semester]="selectedSemester"
+            [courses]="view.courses" (update)="reload()"></admin-connection-card>
+        </div>
+        <div id="full-connected-container" class="col">
+          <h3>Vollständig verknüpfte Module</h3>
+          <admin-connection-card [containers]="view.board.full" [semester]="selectedSemester"
+            [courses]="view.courses" (update)="reload()"></admin-connection-card>
+        </div>
+      }
+    }
   </div>
 </div>
-
-<!-- Spinner while loading the connection data -->

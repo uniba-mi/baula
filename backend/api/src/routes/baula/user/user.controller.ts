@@ -1245,7 +1245,7 @@ export async function crawlStudentDataViaFlexNow(
       if (user && user.roles.includes("admin")) {
         // read test xml file if user is admin
         result = fs.readFileSync(
-          __dirname + "../../../../staticdata/dummy_student_bachelor.xml",
+          __dirname + "../../../../../staticdata/dummy_student_bachelor.xml",
           "utf8",
         );
       } else {

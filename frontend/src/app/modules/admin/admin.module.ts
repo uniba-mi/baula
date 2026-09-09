@@ -29,6 +29,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { AuthInterceptor } from 'src/app/shared/auth/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConnectionCardComponent } from './module-course-connection/connection-card/connection-card.component';
@@ -95,6 +96,7 @@ import { AdminSingleFeatureWishComponent } from './admin-feature-wishes/admin-si
     MatCardModule,
     MatCheckboxModule,
     MatAutocompleteModule,
+    MatButtonToggleModule,
     SharedModule,
     ResultPageComponent,
     ReportingBaseComponent,

@@ -8,7 +8,10 @@ import {
   DateType,
 } from '@interfaces/academic-date';
 import { ImportLogMessage, Logmessage } from '@interfaces/logs';
-import { ModuleCourse2CourseConnection } from '@interfaces/connection';
+import {
+  ModuleCourse2CourseConnection,
+  ModuleCourse2CourseLink,
+} from '@interfaces/connection';
 import { AdminReport } from './reporting';
 
 const httpOptions = {
@@ -177,6 +180,16 @@ export class AdminRestService {
   ): Observable<ModuleCourse2CourseConnection[]> {
     return this.http.get<ModuleCourse2CourseConnection[]>(
       `${this.urlBase}/connections/${id}/${version}/${semester}`,
+      httpOptions,
+    );
+  }
+
+  // all module-course <-> course links of one semester in a single request (ids only)
+  getAllConnectionsForSemester(
+    semester: string,
+  ): Observable<ModuleCourse2CourseLink[]> {
+    return this.http.get<ModuleCourse2CourseLink[]>(
+      `${this.urlBase}/connections/${semester}`,
       httpOptions,
     );
   }
