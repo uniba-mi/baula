@@ -118,12 +118,16 @@ export class TransformationService {
     }
   }
 
-  // Transfer flex now upload semester format to short format (example: WS21/22 to w2021)
+  // Transfer flex now upload semester format to short format (example: WS21/22 to 2021w or SS21 to 2021s)
   transformFlexNowFormat(semesterString: string): string {
-    let seasonSuffix = semesterString.charAt(0).toLowerCase();
-    let yearSuffix = semesterString.slice(2, 4); // extract first two numbers, here 21
-    const fullYear = 2000 + parseInt(yearSuffix, 10); // create full year
-    return `${fullYear}${seasonSuffix}`;
+    let termSuffix = semesterString.charAt(0).toLowerCase();
+    let yearSuffix = parseInt(semesterString.substring(semesterString.length - 2), 10); // extract last two numbers, here 21 or 22 
+    // if term is winter subtract one to get correct year
+    if(termSuffix === 'w') {
+      yearSuffix--;
+    }
+    const fullYear = 2000 + yearSuffix; // create full year
+    return `${fullYear}${termSuffix}`;
   }
 
   /* takes studyprogrammes as input and returns a string, 
