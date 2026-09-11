@@ -146,14 +146,13 @@ export class TransformationService {
 
   // transforms the status into a readable form
   transformStatus(status: string): string {
-    // TODO: Can you translate the following return values?
     switch (status) {
       case 'open':
-        return 'Belegt';
+        return $localize`Belegt`;
       case 'passed':
-        return 'Bestanden';
+        return $localize`Bestanden`;
       case 'failed':
-        return 'Nicht bestanden';
+        return $localize`Nicht bestanden`;
       default:
         return '-';
     }

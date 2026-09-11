@@ -498,16 +498,15 @@ export class StudyPlanDetailComponent implements OnInit {
     return activeSemesters.includes(lastSemester.semester);
   }
 
-  // TODO: Can you translate every element of the following?
   openAddSemesterDialog(): void {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Weiteres Semester anhängen?',
+      dialogTitle: $localize`Weiteres Semester anhängen?`,
       actionType: 'add',
       warningMessage:
         $localize `Bitte füge nur ein Semester hinzu, wenn du auch wirklich ein weiteres Semester studierst, denn hierdurch wird die Studienzeit in deinem Profil verlängert.`,
-      confirmationItem: 'ein neues Semester',
-      confirmButtonLabel: 'Hinzufügen',
-      cancelButtonLabel: 'Abbrechen',
+      confirmationItem: $localize`ein neues Semester`,
+      confirmButtonLabel: $localize`Hinzufügen`,
+      cancelButtonLabel: $localize`Abbrechen`,
       confirmButtonClass: 'btn btn-primary',
       callbackMethod: () => {
         this.addSemester();
@@ -712,13 +711,12 @@ export class StudyPlanDetailComponent implements OnInit {
   }
 
   // confirm dialog for finishing an empty semester
-  // TODO: Can you translate every element of the following?
   confirmFinishingEmptySemester(semester: string) {
     const confirmationDialogInterface: ConfirmationDialogData = {
       dialogTitle: $localize `Semester ohne Module abschließen?`,
-      confirmationItem: 'dem Semesterabschluss ohne Module oder Platzhalter',
-      confirmButtonLabel: 'Abschließen',
-      cancelButtonLabel: 'Abbrechen',
+      confirmationItem: $localize`dem Semesterabschluss ohne Module oder Platzhalter`,
+      confirmButtonLabel: $localize`Abschließen`,
+      cancelButtonLabel: $localize`Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.updateIsPastSemestersForAllPlans(semester);

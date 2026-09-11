@@ -6,28 +6,28 @@
         <source>Logo von Baula, ein Absolventenhut mit einem Kompass</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">10,11</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3083162084677770945" datatype="html">
         <source>Hilfe &amp; Kontakt </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">38,40</context>
+          <context context-type="linenumber">38,39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6381327771210797873" datatype="html">
         <source>Über BAULA </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">43,45</context>
+          <context context-type="linenumber">43,44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5076471398754146091" datatype="html">
         <source>Publikationen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">48,50</context>
+          <context context-type="linenumber">48,49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2684253514308899037" datatype="html">
@@ -83,7 +83,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/edit-semester-dialog/edit-semester-dialog.component.html</context>
-          <context context-type="linenumber">17,18</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/export-dialog/export-dialog.component.html</context>
@@ -127,7 +127,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/univis-crawl-dialog/univis-crawl-dialog.component.html</context>
-          <context context-type="linenumber">26,27</context>
+          <context context-type="linenumber">26</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/dialogs/upload-student-data-dialog/upload-student-data-dialog.component.html</context>
@@ -407,7 +407,7 @@
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-exclamation-triangle ms-2 text-red&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Da das Modul als &quot;nicht bestanden&quot; markiert ist, kannst du die Note nicht ändern.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/change-status-dialog/change-status-dialog.component.html</context>
-          <context context-type="linenumber">36,38</context>
+          <context context-type="linenumber">36,37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/edit-path-module-dialog/edit-path-module-dialog.component.html</context>
@@ -608,7 +608,7 @@
         <source> Jobprofil auswählen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/edit-job-dialog/edit-job-dialog.component.html</context>
-          <context context-type="linenumber">42,43</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1864907396284303909" datatype="html">
@@ -631,6 +631,10 @@
           <context context-type="sourcefile">src/app/dialog/edit-job-dialog/edit-job-dialog.component.html</context>
           <context context-type="linenumber">114</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="3282235563480269560" datatype="html">
         <source>Beschreibung</source>
@@ -641,6 +645,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/dashboard/feature-wish/single-feature-wish/single-feature-wish.component.html</context>
           <context context-type="linenumber">67,68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.ts</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/academic-dates-dialog/academic-dates-dialog.component.html</context>
@@ -689,6 +697,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/dialogs/upload-student-data-stepper/upload-student-data-stepper.component.html</context>
           <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2648786414541353203" datatype="html">
@@ -758,6 +770,14 @@
           <context context-type="sourcefile">src/app/modules/student-upload/dialogs/upload-student-data-stepper/upload-student-data-stepper.component.html</context>
           <context context-type="linenumber">58</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">179</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">197</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="6006921599419732572" datatype="html">
         <source>Bestanden</source>
@@ -770,12 +790,28 @@
           <context context-type="linenumber">123</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/module-group-progress-chart/module-group-progress-chart.component.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/semester-module-progress-chart/semester-module-progress-chart.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/dialogs/upload-student-data-stepper/upload-student-data-stepper.component.html</context>
           <context context-type="linenumber">60,61</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/module-status/module-status.component.html</context>
           <context context-type="linenumber">9,10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/module-status/module-status.component.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/transformation.service.ts</context>
+          <context context-type="linenumber">153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1989583668137131476" datatype="html">
@@ -789,12 +825,28 @@
           <context context-type="linenumber">124</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/module-group-progress-chart/module-group-progress-chart.component.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/semester-module-progress-chart/semester-module-progress-chart.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/dialogs/upload-student-data-stepper/upload-student-data-stepper.component.html</context>
           <context context-type="linenumber">61</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/module-status/module-status.component.html</context>
           <context context-type="linenumber">17,18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/module-status/module-status.component.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/transformation.service.ts</context>
+          <context context-type="linenumber">155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6640096508236404933" datatype="html">
@@ -835,6 +887,10 @@
           <context context-type="sourcefile">src/app/modules/student-upload/dialogs/upload-student-data-stepper/upload-student-data-stepper.component.html</context>
           <context context-type="linenumber">130</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">179</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="8351182223254225272" datatype="html">
         <source>Die Note muss zwischen 1,0 und 4,0 liegen. </source>
@@ -863,7 +919,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/dialogs/upload-student-data-stepper/upload-student-data-stepper.component.html</context>
-          <context context-type="linenumber">158,160</context>
+          <context context-type="linenumber">158,159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7823708334852160218" datatype="html">
@@ -875,6 +931,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/finish-semester-stepper/finish-semester-stepper.component.html</context>
           <context context-type="linenumber">215</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/module-overview/module-overview.component.ts</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7516823280782135674" datatype="html">
@@ -895,7 +955,7 @@
         <source> Ändern </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/edit-semester-dialog/edit-semester-dialog.component.html</context>
-          <context context-type="linenumber">22,23</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8752630334924043078" datatype="html">
@@ -961,12 +1021,28 @@
           <context context-type="linenumber">125,126</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/module-group-progress-chart/module-group-progress-chart.component.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/semester-module-progress-chart/semester-module-progress-chart.component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/dialogs/upload-student-data-stepper/upload-student-data-stepper.component.html</context>
           <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/module-status/module-status.component.html</context>
           <context context-type="linenumber">25,26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/module-status/module-status.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/transformation.service.ts</context>
+          <context context-type="linenumber">151</context>
         </context-group>
         <note priority="1" from="description">Das Modul wurde Belegt</note>
       </trans-unit>
@@ -1021,7 +1097,7 @@
         <source> Zurück </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/finish-semester-stepper/finish-semester-stepper.component.html</context>
-          <context context-type="linenumber">279,282</context>
+          <context context-type="linenumber">279,281</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/user-dialog/user-dialog.component.html</context>
@@ -1249,12 +1325,28 @@
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/dependency-graph/dependency-graph.component.html</context>
           <context context-type="linenumber">22,23</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="8783847983270646764" datatype="html">
         <source>Wahlmodul</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/dependency-graph/dependency-graph.component.html</context>
           <context context-type="linenumber">26,27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2936200841167356552" datatype="html">
@@ -1329,8 +1421,24 @@
           <context context-type="linenumber">82</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/job-settings/job-card/job-card.component.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">101,102</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
+          <context context-type="linenumber">177</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
+          <context context-type="linenumber">109</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/admin-feature-wishes/admin-single-feature-wish/admin-single-feature-wish.component.html</context>
@@ -1342,7 +1450,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
-          <context context-type="linenumber">419</context>
+          <context context-type="linenumber">417</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7624133960269641605" datatype="html">
@@ -1354,6 +1462,26 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/resolve-collision-dialog/resolve-collision-dialog.component.html</context>
           <context context-type="linenumber">53,54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/job-settings/job-card/job-card.component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
+          <context context-type="linenumber">178</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-detail.component.ts</context>
+          <context context-type="linenumber">509</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-detail.component.ts</context>
+          <context context-type="linenumber">719</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
+          <context context-type="linenumber">110</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/user-profile/user-consents/user-consents.component.ts</context>
@@ -1381,7 +1509,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
-          <context context-type="linenumber">420</context>
+          <context context-type="linenumber">418</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/student-upload/student-upload.component.ts</context>
@@ -1428,7 +1556,7 @@
         <source><x id="INTERPOLATION" equiv-text="{{ selectedModule.duration }}"/> Semester</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/module-data/module-data.component.html</context>
-          <context context-type="linenumber">29,31</context>
+          <context context-type="linenumber">29,30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1281350104182209690" datatype="html">
@@ -1442,7 +1570,7 @@
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-exclamation-circle&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Modulart</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/module-data/module-data.component.html</context>
-          <context context-type="linenumber">49,51</context>
+          <context context-type="linenumber">49,50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8570283152099455578" datatype="html">
@@ -1513,7 +1641,7 @@
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-search d-none d-sm-inline me-2&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Finde passende Lehrveranstaltungen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/module-data/module-data.component.html</context>
-          <context context-type="linenumber">231,233</context>
+          <context context-type="linenumber">231,232</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2644861116640635140" datatype="html">
@@ -1669,6 +1797,18 @@
           <context context-type="sourcefile">src/app/modules/univis-helper/dialog/univis-helper-dialog.component.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">179</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">197</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">237</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="6529277908029932929" datatype="html">
         <source>Dropdown zur Semesterwahl</source>
@@ -1732,8 +1872,28 @@
           <context context-type="linenumber">41,42</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">135</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
-          <context context-type="linenumber">245</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
+          <context context-type="linenumber">244</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">194</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
@@ -1751,7 +1911,7 @@
         <source> Feedback absenden </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/module-feedback/module-feedback.component.html</context>
-          <context context-type="linenumber">25,26</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1735829729158786084" datatype="html">
@@ -1836,7 +1996,7 @@
         <source>Ich stimme der Datenschutzerklärung vom 01.12.2025 nicht zu. <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Mir ist bewusst, dass mein aktuelles Profil gelöscht wird.<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/privacy-change-dialog/privacy-change-dialog.component.html</context>
-          <context context-type="linenumber">23,28</context>
+          <context context-type="linenumber">23,27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1878029766669988474" datatype="html">
@@ -1878,7 +2038,7 @@
         <source>Behalten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/resolve-collision-dialog/resolve-collision-dialog.component.html</context>
-          <context context-type="linenumber">15,18</context>
+          <context context-type="linenumber">15,17</context>
         </context-group>
         <note priority="1" from="description">Überschneidende LVs behalten</note>
       </trans-unit>
@@ -2055,7 +2215,7 @@
         <source>Als nächstes müssen wir deinen Nutzeraccount erstellen. Hierzu benötigen wir ein paar Informationen zu dir.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Wir können diese Informationen über FlexNow importieren oder du kannst du sie manuell eingeben.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/user-dialog/user-dialog.component.html</context>
-          <context context-type="linenumber">38,40</context>
+          <context context-type="linenumber">38,39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6772143701069710443" datatype="html">
@@ -2601,6 +2761,84 @@
           <context context-type="linenumber">5,9</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1149618492289694902" datatype="html">
+        <source>Interessen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/personalisation-status/personalisation-status.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/data-preview/data-preview.component.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6920882515220555182" datatype="html">
+        <source>Gib 3 Interessen an</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/personalisation-status/personalisation-status.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3229595422546554334" datatype="html">
+        <source>Jobs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/personalisation-status/personalisation-status.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/data-preview/data-preview.component.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">180</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7466843887237067248" datatype="html">
+        <source>Lege einen Job an</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/personalisation-status/personalisation-status.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1803327194532543673" datatype="html">
+        <source>Merkliste</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/personalisation-status/personalisation-status.component.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
+          <context context-type="linenumber">123</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8066715395618745781" datatype="html">
+        <source>Markiere 3 Module als gemerkt</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/personalisation-status/personalisation-status.component.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8474862222604076582" datatype="html">
         <source>Das Favicon der Universität Bamberg bestehend aus drei unvollendeten Kreisen</source>
         <context-group purpose="location">
@@ -2805,6 +3043,56 @@
           <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2628847337336278540" datatype="html">
+        <source>Nicht belegt</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/module-group-progress-chart/module-group-progress-chart.component.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/module-status/module-status.component.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/module-status/module-status.component.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2566500778324579338" datatype="html">
+        <source>Belegte ECTS (Ist)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/semester-ects-progress-chart/semester-ects-progress-chart.component.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1721904865545685326" datatype="html">
+        <source>Bestandene ECTS (Ist)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/semester-ects-progress-chart/semester-ects-progress-chart.component.ts</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6780820351465957266" datatype="html">
+        <source>Nicht bestandene ECTS (Ist)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/semester-ects-progress-chart/semester-ects-progress-chart.component.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="587139318529809108" datatype="html">
+        <source>Ziel ECTS (Plan)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/semester-ects-progress-chart/semester-ects-progress-chart.component.ts</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2254601394936213422" datatype="html">
+        <source>Eingeplante ECTS (Plan)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/semester-ects-progress-chart/semester-ects-progress-chart.component.ts</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8806166676273682312" datatype="html">
         <source>Studienverlauf aus FlexNow laden</source>
         <context-group purpose="location">
@@ -2814,6 +3102,35 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/dashboard/user-charts/total-module-progress-chart/total-module-progress-chart.component.html</context>
           <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="744951064568363633" datatype="html">
+        <source>Ziel ECTS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/total-ects-progress-chart/total-ects-progress-chart.component.ts</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/total-ects-progress-chart/total-ects-progress-chart.component.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">240</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4563920326101525483" datatype="html">
+        <source>Bisher eingeplante ECTS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/total-ects-progress-chart/total-ects-progress-chart.component.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5020575976370644565" datatype="html">
+        <source>Bisher bestandene ECTS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/dashboard/user-charts/total-ects-progress-chart/total-ects-progress-chart.component.ts</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4967501765511619046" datatype="html">
@@ -2841,7 +3158,7 @@
         <source> <x id="INTERPOLATION" equiv-text="{{ group.ectsMin }}"/> ECTS </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/module-overview/group-navigation/group-navigation.component.html</context>
-          <context context-type="linenumber">80,82</context>
+          <context context-type="linenumber">80,81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.html</context>
@@ -2913,8 +3230,16 @@
           <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-module-card/recs-module-card.component.html</context>
           <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="116075911913377965" datatype="html">
@@ -2967,11 +3292,22 @@
           <context context-type="linenumber">87,88</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="7171745820196712881" datatype="html">
+        <source>Lehrstuhl</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/module-overview/module-overview.component.ts</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/evaluation/dialog/evaluation-dialog/evaluation-dialog.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="3670280882419664705" datatype="html">
         <source>Hier siehst du alle Module, die in deinem Modulhandbuch vorhanden sind. Module sind thematische Blöcke, die du in deinen Studienverlaufsplan einplanen kannst. Module können wiederum Lehrveranstaltungen enthalten, die du unter Stundenplanung in deinen Stundenplan deines aktuellen Semesters einplanen kannst.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/module-overview/module-overview.component.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5801660404155271254" datatype="html">
@@ -2986,28 +3322,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/data-preview/data-preview.component.html</context>
           <context context-type="linenumber">57,59</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3229595422546554334" datatype="html">
-        <source>Jobs</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/recommendation/data-preview/data-preview.component.ts</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
-          <context context-type="linenumber">36,37</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1149618492289694902" datatype="html">
-        <source>Interessen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/recommendation/data-preview/data-preview.component.ts</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
-          <context context-type="linenumber">31,32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3153204170122717861" datatype="html">
@@ -3070,12 +3384,33 @@
           <context context-type="linenumber">32,33</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3759172909594940206" datatype="html">
+        <source>Job bearbeiten</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/job-settings/job-card/job-card.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6018942390862436616" datatype="html">
+        <source>Jobanzeige löschen?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/job-settings/job-card/job-card.component.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4353309353045369989" datatype="html">
+        <source>die Jobanzeige &quot;<x id="PH" equiv-text="job.title"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/job-settings/job-card/job-card.component.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2975496718742394857" datatype="html">
         <source> Hier kannst du ein vordefiniertes Jobprofil auswählen und dir Module, welche zu dieser Jobanzeige passen, anzeigen lassen. Die hier eingefügten Jobanzeigen gehen zudem in die Empfehlungsgenerierung für dich ein, welche du im Studienverlaufsplan nutzen kannst. Wir arbeiten daran, dass du zukünftig auch eigene Jobanzeigen mittels URL hochladen kannst.
 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/job-settings/job-settings.component.html</context>
-          <context context-type="linenumber">8,12</context>
+          <context context-type="linenumber">8,11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8428238319360702086" datatype="html">
@@ -3113,17 +3448,6 @@
           <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1803327194532543673" datatype="html">
-        <source>Merkliste</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
-          <context context-type="linenumber">46,47</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="5322914131459167482" datatype="html">
         <source>Liste mit nicht interessanten Modulen</source>
         <context-group purpose="location">
@@ -3136,6 +3460,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
           <context context-type="linenumber">51,52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8338212876304808648" datatype="html">
@@ -3202,7 +3530,84 @@
         <source> Keine Modulvorschläge verfügbar. Bitte wähle Interessen oder Jobs aus, um Empfehlungen zu erhalten. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.html</context>
-          <context context-type="linenumber">70,71</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3318597276299345193" datatype="html">
+        <source>Sommer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4996922266254528864" datatype="html">
+        <source>Winter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1693392276596696607" datatype="html">
+        <source>Modulart</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2151982658670909173" datatype="html">
+        <source>Passt zu:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">117</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">176</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1665258484732614056" datatype="html">
+        <source>Interesse</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">187</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9149200843907748675" datatype="html">
+        <source>Sonstige</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">163</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7492458959932996005" datatype="html">
+        <source>Belegte und bestandene verstecken</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.ts</context>
+          <context context-type="linenumber">147</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">167</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6920196637619975735" datatype="html">
@@ -3211,6 +3616,10 @@
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.html</context>
           <context context-type="linenumber">95,96</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="2908089146605619232" datatype="html">
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i
@@ -3218,6 +3627,27 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.html</context>
           <context context-type="linenumber">115,119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7664300678338983000" datatype="html">
+        <source>Alle Module auf deiner Merkliste</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="343655872320743858" datatype="html">
+        <source>Alle Module auf deiner Blacklist</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
+          <context context-type="linenumber">129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5174566466871562507" datatype="html">
+        <source>Module, zu denen du positives Feedback gegeben hast.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3027070032651637380" datatype="html">
@@ -3241,39 +3671,53 @@
           <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="4518760788411724948" datatype="html">
+        <source>Feedback zum Modul löschen?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
+          <context context-type="linenumber">174</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="638346530211048167" datatype="html">
+        <source>dein Feedback zum Modul &quot;<x id="PH" equiv-text="feedbackItem.acronym"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
+          <context context-type="linenumber">176</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5235938977352303970" datatype="html">
         <source>Feedback zu <x id="PH" equiv-text="feedback.acronym"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
-          <context context-type="linenumber">245</context>
+          <context context-type="linenumber">244</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2805864281459948001" datatype="html">
         <source>Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf &quot;Merken&quot;, damit hier Module angezeigt werden.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
-          <context context-type="linenumber">288</context>
+          <context context-type="linenumber">287</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8296186444540300903" datatype="html">
         <source>Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf &quot;Nicht mehr vorschlagen&quot;, damit hier Module angezeigt werden.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
-          <context context-type="linenumber">290</context>
+          <context context-type="linenumber">289</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1273147452254881032" datatype="html">
         <source>Nachdem du ein Modul abgeschlossen hast, kannst du über die Moduldetails (Tab Feedback) Feedback geben. Wenn es Modulempfehlungen dazu gibt, werden diese hier angezeigt.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
-          <context context-type="linenumber">292</context>
+          <context context-type="linenumber">291</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5763299503610580592" datatype="html">
         <source>Keine Daten vorhanden.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
-          <context context-type="linenumber">294</context>
+          <context context-type="linenumber">293</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4946563864628225289" datatype="html">
@@ -3419,7 +3863,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/course-details/course-details.component.html</context>
-          <context context-type="linenumber">50,51</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7458277978606454941" datatype="html">
@@ -3497,10 +3941,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/semester-plan/course-overview/course-overview.component.html</context>
           <context context-type="linenumber">15,16</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/bilapp/competence-dashboard/sidepanel/courses/search-courses/search-courses.component.html</context>
-          <context context-type="linenumber">43,44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7450571806267546858" datatype="html">
@@ -3723,10 +4163,6 @@
           <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.html</context>
           <context context-type="linenumber">180</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/bilapp/competence-dashboard/sidepanel/courses/search-courses/search-courses.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="7771363815570683685" datatype="html">
         <source>Weiteres Feld hinzufügen</source>
@@ -3740,6 +4176,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.html</context>
           <context context-type="linenumber">184</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-detail.component.ts</context>
+          <context context-type="linenumber">508</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/full-calendar/full-calendar.component.html</context>
@@ -3771,14 +4211,35 @@
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-repeat&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Alle Filter zurücksetzen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.html</context>
-          <context context-type="linenumber">207,209</context>
+          <context context-type="linenumber">207,208</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1343010158700008250" datatype="html">
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-search&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Mit Filtern suchen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.html</context>
-          <context context-type="linenumber">210,212</context>
+          <context context-type="linenumber">210,211</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4790844316850307580" datatype="html">
+        <source>Kurzbezeichnung</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.ts</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4391585245288445044" datatype="html">
+        <source>Organisatorisches</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5687796285076000792" datatype="html">
+        <source>Modulnummer/kürzel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.ts</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1745375018875268957" datatype="html">
@@ -3800,7 +4261,7 @@
                     ändern</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/semester-plan/semester-plan.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">31,32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5420004361317855639" datatype="html">
@@ -3815,7 +4276,7 @@
       ändern</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/semester-plan/semester-plan.component.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">74,75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8178402408649885575" datatype="html">
@@ -3989,8 +4450,22 @@
           <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="8016023677800584434" datatype="html">
+        <source>Weiteres Semester anhängen?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-detail.component.ts</context>
+          <context context-type="linenumber">503</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5316628024399067482" datatype="html">
         <source>Bitte füge nur ein Semester hinzu, wenn du auch wirklich ein weiteres Semester studierst, denn hierdurch wird die Studienzeit in deinem Profil verlängert.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-detail.component.ts</context>
+          <context context-type="linenumber">506</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5062392591733483043" datatype="html">
+        <source>ein neues Semester</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-detail.component.ts</context>
           <context context-type="linenumber">507</context>
@@ -4000,11 +4475,25 @@
         <source>Semester abschließen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-detail.component.ts</context>
-          <context context-type="linenumber">651</context>
+          <context context-type="linenumber">650</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8087208861714852009" datatype="html">
         <source>Semester ohne Module abschließen?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-detail.component.ts</context>
+          <context context-type="linenumber">716</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="414357630281117759" datatype="html">
+        <source>dem Semesterabschluss ohne Module oder Platzhalter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-detail.component.ts</context>
+          <context context-type="linenumber">717</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6093029381673011350" datatype="html">
+        <source>Abschließen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-detail.component.ts</context>
           <context context-type="linenumber">718</context>
@@ -4125,11 +4614,43 @@
           <context context-type="linenumber">208,209</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3682857351603332467" datatype="html">
+        <source>Modulgruppe bearbeiten</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2753279027601460559" datatype="html">
+        <source>Note bearbeiten</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6834963354632343573" datatype="html">
+        <source>Auswählen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7897211246412919659" datatype="html">
+        <source>Verschieben</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5524407209514466984" datatype="html">
         <source>Dieses Modul ist nicht mehr in der aktuellen Version vorhanden und kann nicht verschoben oder angesehen werden. Wenn du es entfernen möchtest, kannst du es löschen oder stattdessen einen Platzhalter anlegen.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.ts</context>
-          <context context-type="linenumber">156</context>
+          <context context-type="linenumber">155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6320810455479869773" datatype="html">
@@ -4173,7 +4694,7 @@
   }}"/> zu erreichenden ECTS eingeplant. Klicke, um dein ECTS Ziel für dieses Semester anzupassen.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-header/semester-header.component.html</context>
-          <context context-type="linenumber">74,79</context>
+          <context context-type="linenumber">74,78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8323422358213440128" datatype="html">
@@ -4231,7 +4752,7 @@
         <source> Jetzt Semester abschließen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-header/semester-header.component.html</context>
-          <context context-type="linenumber">126,127</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1361543175845655821" datatype="html">
@@ -4315,7 +4836,7 @@
         <source><x id="INTERPOLATION" equiv-text="{{semesterNumber}}"/>. Semester</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/study-plan-semester.component.html</context>
-          <context context-type="linenumber">46,48</context>
+          <context context-type="linenumber">46,47</context>
         </context-group>
         <note priority="1" from="description">X-test Semester</note>
       </trans-unit>
@@ -4411,91 +4932,98 @@
         <source>Studienplan löschen?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1837004405383229643" datatype="html">
         <source>Anderen Studienplan aktivieren</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">145</context>
+          <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6498425058560906595" datatype="html">
         <source>Der Studienplan kann nicht deaktiviert werden, da es der einzige Plan ist.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">220</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1358530612441289660" datatype="html">
         <source>Studienplan erstellen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">262</context>
+          <context context-type="linenumber">261</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6337287738514832045" datatype="html">
         <source>Studienplan bearbeiten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">291</context>
+          <context context-type="linenumber">290</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3935725545468814338" datatype="html">
         <source>Daten exportieren:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">323</context>
+          <context context-type="linenumber">322</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5457938271766330440" datatype="html">
         <source>Was möchtest du importieren?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">354</context>
+          <context context-type="linenumber">353</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4997688094374180094" datatype="html">
         <source>Individuellen Studienplan</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">357</context>
+          <context context-type="linenumber">356</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5506693678981192880" datatype="html">
         <source>Offiziellen Musterstudienverlaufsplan für deinen Studiengang</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">361</context>
+          <context context-type="linenumber">360</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6128918397303588855" datatype="html">
         <source>Individuellen Studienplan importieren:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">383</context>
+          <context context-type="linenumber">382</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1160178675103760111" datatype="html">
         <source>Der Studienplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">434</context>
+          <context context-type="linenumber">433</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4309015014386721786" datatype="html">
         <source>Musterstudienverlaufsplan importieren:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">447</context>
+          <context context-type="linenumber">446</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3113647453583891954" datatype="html">
+        <source>deinen Musterplan</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
+          <context context-type="linenumber">448</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3166697822579139202" datatype="html">
         <source>Der Studienplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan.component.ts</context>
-          <context context-type="linenumber">490</context>
+          <context context-type="linenumber">489</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7597760185992692896" datatype="html">
@@ -4834,7 +5362,7 @@
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-trash me-1&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Account löschen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/user-profile/user-profile.component.html</context>
-          <context context-type="linenumber">11,13</context>
+          <context context-type="linenumber">11,12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1930863079234861089" datatype="html">
@@ -4899,7 +5427,7 @@
           class=&quot;bi bi-person-circle text-gray&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Nutzerdaten bearbeiten </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/user-profile/user-profile.component.html</context>
-          <context context-type="linenumber">55,57</context>
+          <context context-type="linenumber">54,57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3282716039856790951" datatype="html">
@@ -5035,7 +5563,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/welcome/welcome.component.html</context>
-          <context context-type="linenumber">29,32</context>
+          <context context-type="linenumber">29,31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1092224855973456641" datatype="html">
@@ -5480,11 +6008,11 @@
         <source>Speichern</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/academic-dates-dialog/academic-dates-dialog.component.html</context>
-          <context context-type="linenumber">54,56</context>
+          <context context-type="linenumber">54,55</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/date-type-dialog/date-type-dialog.component.html</context>
-          <context context-type="linenumber">19,21</context>
+          <context context-type="linenumber">19,20</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/aim-modal/aim-modal/aim-modal.component.html</context>
@@ -5518,7 +6046,7 @@
 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/delete-dialog/delete-dialog.component.html</context>
-          <context context-type="linenumber">14,17</context>
+          <context context-type="linenumber">14,16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6529923758020681945" datatype="html">
@@ -5562,10 +6090,6 @@
           <context context-type="sourcefile">src/app/modules/admin/dialogs/edit-connection-dialog/edit-connection-dialog.component.html</context>
           <context context-type="linenumber">28,29</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/bilapp/competence-dashboard/sidepanel/courses/search-courses/search-courses.component.html</context>
-          <context context-type="linenumber">30,31</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="2306758138235459904" datatype="html">
         <source> Es konnten keine Kurse gefunden werden. </source>
@@ -5599,7 +6123,7 @@
         <source>Don&apos;t worry... this process can take up to 10 minutes ☕</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/univis-crawl-dialog/univis-crawl-dialog.component.html</context>
-          <context context-type="linenumber">32,34</context>
+          <context context-type="linenumber">32,33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4273781497892720339" datatype="html">
@@ -5694,7 +6218,7 @@
         <source>Schicke Sentry einen Testfehler</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/other-actions/other-actions.component.html</context>
-          <context context-type="linenumber">2,4</context>
+          <context context-type="linenumber">2,3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9124585472747996194" datatype="html">
@@ -5709,6 +6233,134 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/other-actions/other-actions.component.html</context>
           <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3604625098563868650" datatype="html">
+        <source>Studiengang</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7578150610419870135" datatype="html">
+        <source>Häufigkeit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="775186130891581459" datatype="html">
+        <source>Allgemeines</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2572023737507768632" datatype="html">
+        <source>User insgesamt:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3162023584478513116" datatype="html">
+        <source>User (aktiv):</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4249941214725081369" datatype="html">
+        <source>Anzahl der User, die im letzten Monat aktiv waren</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6127531350277995763" datatype="html">
+        <source>Studienpläne (aktiv):</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4000472247143571744" datatype="html">
+        <source>Anzahl der Studienpläne, die im letzten Monat geändert wurden</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3927307878606970854" datatype="html">
+        <source>Häufigkeit Modulstatus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1967744808633351216" datatype="html">
+        <source>Häufigkeit Studienpläne (Cluster)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">172</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5509693073559202234" datatype="html">
+        <source>Aktualität User</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4829581105483335092" datatype="html">
+        <source>Häufigkeit Startsemester</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2021259800965081983" datatype="html">
+        <source>Häufigkeit Abgeschlossene Module</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">160</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6137068566636108089" datatype="html">
+        <source>Häufigkeit Abgeschlossene Module (Cluster)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">193</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4784070726281127868" datatype="html">
+        <source>Häufigkeit Studiengang</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">216</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="390718943946547787" datatype="html">
+        <source>Häufigkeit Lehrveranstaltungen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/admin/reporting/reporting.component.ts</context>
+          <context context-type="linenumber">228</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1974888358719679482" datatype="html">
@@ -5750,7 +6402,7 @@
         <source> Hier können Sie eigene Zielsetzungen angeben, wie stark Sie die einzelnen Bereiche der verschiedenen Standards/Zielvorgaben erfüllen möchten. Die Angabe erfolgt in ECTS und ist zunächst nur für die erste Kompetenzebene möglich.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Sie können somit einen Richtwert festlegen, welcher anschließend in der Visualisierung des Balkendiagramms angezeigt wird. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/aim-modal/aim-modal/aim-modal.component.html</context>
-          <context context-type="linenumber">5,10</context>
+          <context context-type="linenumber">5,9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2200772203685885175" datatype="html">
@@ -5825,13 +6477,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/bilapp/competence-dashboard/sidepanel/courses/recommendations/recommendations.component.html</context>
           <context context-type="linenumber">14,16</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1584074414724785657" datatype="html">
-        <source>Suche in...</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/bilapp/competence-dashboard/sidepanel/courses/search-courses/search-courses.component.html</context>
-          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3914328554959838386" datatype="html">
@@ -5974,13 +6619,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/debug-dialog/debug-dialog.component.html</context>
           <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7171745820196712881" datatype="html">
-        <source>Lehrstuhl</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/evaluation/dialog/evaluation-dialog/evaluation-dialog.component.html</context>
-          <context context-type="linenumber">21,22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6971739778655482663" datatype="html">
@@ -6190,6 +6828,111 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.html</context>
           <context context-type="linenumber">19,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8201979390867719449" datatype="html">
+        <source>Teilnehmer nach Monat</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7851636837828668942" datatype="html">
+        <source>Studiengänge der Teilnehmenden</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5866404944747657974" datatype="html">
+        <source>Feedback der Teilnehmenden</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8453775510941666452" datatype="html">
+        <source>FS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6035167640615844932" datatype="html">
+        <source>Überblicksinformationen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">171</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1462396651411805194" datatype="html">
+        <source>Anzahl Teilnehmer: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9072806391009470858" datatype="html">
+        <source>Anzahl der Teilnehmer für das ausgewählte Semester.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">177</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1984385166655428822" datatype="html">
+        <source>Perceived Usefulness: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="537673596278156026" datatype="html">
+        <source>Durchschnittswert des PU Score.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">183</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4050772055316379704" datatype="html">
+        <source>Perceived Ease of Use: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">187</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8705736931182892599" datatype="html">
+        <source>Durchschnittswert des PEOU Score.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">189</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1184806246558252461" datatype="html">
+        <source>Behavioral Intention: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">193</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4773611818747302615" datatype="html">
+        <source>Durchschnittswert des BI Score.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1729414576089501941" datatype="html">
+        <source>Net Promoter Score: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">199</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7323251660914812010" datatype="html">
+        <source>Durchschnittswert des NPS.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/long-term-evaluation/result-page/result-page.component.ts</context>
+          <context context-type="linenumber">201</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5484066470957357400" datatype="html">
@@ -6675,46 +7418,102 @@
           <context context-type="linenumber">107,108</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3105806246985420019" datatype="html">
+        <source>Passend</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3324969553211795236" datatype="html">
+        <source>Module, die laut deinen Einstellungen unter &quot;Personalisierung&quot; zu dir passen.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5659799815836451311" datatype="html">
+        <source>Neu</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3001698377374923463" datatype="html">
+        <source>Module, die neu im Angebot sind.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3433270479436838236" datatype="html">
+        <source>Entdecken</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2760657731346890015" datatype="html">
+        <source>Verschiedene Module, die du interessant finden könntest.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4809483038496515211" datatype="html">
+        <source>Gemerkt</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8984269743406531400" datatype="html">
+        <source>Module, die du dir gemerkt hast.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7774029937122836800" datatype="html">
         <source>Diese Liste zeigt Module, die Studierende deines Studiengangs oft wählen. Bitte beachte, dass die Universität Bamberg mit ihren Studiengängen ein breites Wissensangebot anbietet, das hier nicht abgebildet ist. Bitte informiere dich abseits dieser Liste über die vielfältigen Möglichkeiten deines Studiengangs.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4585027801292740198" datatype="html">
         <source>Diese Liste zeigt Module, die in einer neuen Version angeboten werden. Dies sind teilweise neu entstandene Module, können jedoch im individuellem Fall auch eine Lehrstuhländerung oder Restrukturierung des bisherigen Modules bedeuten.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="211654194462177799" datatype="html">
         <source>Diese Liste zeigt Module aus deinem Modulhandbuch, die du vielleicht noch nicht kennst.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3173910184622174984" datatype="html">
         <source>Diese Liste zeigt Module, die zu den Angaben passen, die du unter &quot;Personalisierung&quot; gemacht hast (z. B. Jobs, Interessen).</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1066438479652819124" datatype="html">
         <source>Merkliste löschen?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
-          <context context-type="linenumber">416</context>
+          <context context-type="linenumber">414</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8075917134272169194" datatype="html">
         <source>deine gemerkten Module</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/recommendations/recs-sidenav/recs-sidenav.component.ts</context>
-          <context context-type="linenumber">418</context>
+          <context context-type="linenumber">416</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1221739800402364913" datatype="html">
@@ -6722,6 +7521,20 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reporting/meta-data-card/meta-data-card.component.html</context>
           <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4624584768158500467" datatype="html">
+        <source>Wintersemester <x id="PH" equiv-text="year"/>/<x id="PH_1" equiv-text="year + 1"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shared/pipes/semester.pipe.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="250279206517920575" datatype="html">
+        <source>Sommersemester <x id="PH" equiv-text="year"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shared/pipes/semester.pipe.ts</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6343058326219562066" datatype="html">
@@ -6816,7 +7629,7 @@
         <source> Einwilligung zum Abruf deiner Studierendendaten über die FlexNow-Schnittstelle zuletzt akzeptiert am <x id="INTERPOLATION" equiv-text="{{ integrateFnDataConsent.timestamp | date: &quot;medium&quot; }}"/> </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/student-upload/student-upload.component.html</context>
-          <context context-type="linenumber">10,14</context>
+          <context context-type="linenumber">10,13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5442790955019741430" datatype="html">
@@ -6906,7 +7719,7 @@
         <source> Hier können Sie Ihrer Veranstaltung für jeden hinterlegten Kompetenzstandard die entsprechenden Kompetenzen zuordnen. Bitte ordnen Sie jeden Kompetenzstandard zu. Achten Sie darauf <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>für jeden Standard Daten anzugeben<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/>. Die eingegebenen Prozentwerte dürfen pro Standard in der <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Summe nicht über 100%<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> werden. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/univis-helper/competence-form/competence-form.component.html</context>
-          <context context-type="linenumber">14,22</context>
+          <context context-type="linenumber">14,21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6630476578681504471" datatype="html">
@@ -7125,6 +7938,10 @@
           <context context-type="sourcefile">src/app/nav/nav.component.html</context>
           <context context-type="linenumber">106,107</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="2727877908536004662" datatype="html">
         <source>Admin-Bereich</source>
@@ -7252,7 +8069,7 @@
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;acronym&quot;&gt;"/>L<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>ehrveranstaltungskoordination und </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/about/about.component.html</context>
-          <context context-type="linenumber">35,37</context>
+          <context context-type="linenumber">35,36</context>
         </context-group>
         <note priority="1" from="description">Baula Acronym</note>
       </trans-unit>
@@ -7688,6 +8505,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
           <context context-type="linenumber">91,93</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8182270205825566146" datatype="html">
@@ -8479,7 +9300,7 @@
       (keyup.enter)=&quot;deselectDeletedCourse(deletedCourse)&quot;&gt;"/>Lehrveranstaltung abwählen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/full-calendar/full-calendar.component.html</context>
-          <context context-type="linenumber">118,125</context>
+          <context context-type="linenumber">118,124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6360070448422058743" datatype="html">
@@ -8514,7 +9335,7 @@
         <source> Überschneidung auflösen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/hints-sidenav/hints-sidenav.component.html</context>
-          <context context-type="linenumber">28,29</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5611145838652884552" datatype="html">
@@ -8544,13 +9365,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/module-group-wizard/module-group-wizard.component.html</context>
           <context context-type="linenumber">27,28</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2628847337336278540" datatype="html">
-        <source>Nicht belegt</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/module-status/module-status.component.html</context>
-          <context context-type="linenumber">33,34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8213673052753274038" datatype="html">
@@ -8588,7 +9402,7 @@
         <source>Gehe zu</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/no-data/no-data.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">39,40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8829497237648100098" datatype="html">
@@ -8636,7 +9450,7 @@
       href=&quot;mailto:ul.datenschutz@uni-bamberg&quot;&gt;"/>ul.datenschutz@uni-bamberg<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">11,21</context>
+          <context context-type="linenumber">11,20</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
@@ -8655,7 +9469,7 @@
       href=&quot;mailto:ute.schmid@uni-bamberg.de&quot;&gt;"/>ute.schmid@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">23,30</context>
+          <context context-type="linenumber">23,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4914445710115225277" datatype="html">
@@ -8674,7 +9488,7 @@
       href=&quot;mailto:datenschutzbeauftragter@uni-bamberg.de&quot;&gt;"/>datenschutzbeauftragter@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">32,40</context>
+          <context context-type="linenumber">32,39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
@@ -8880,18 +9694,18 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">299,303</context>
+          <context context-type="linenumber">299,302</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5248860638783428706" datatype="html">
         <source>Bei Vorliegen eines gesetzlichen Grundes können Sie die Löschung Ihrer personenbezogenen Daten verlangen (Art. 17 DSGVO). Dies ist insbesondere der Fall, wenn diese für die Zwecke, zu denen sie erhoben oder auf sonstige Weise verarbeitet wurden, nicht mehr notwendig sind oder eine erteilte Einwilligung zur Datenverarbeitung widerrufen wird und keine anderweitige Rechtsgrundlage für die Verarbeitung vorliegt. Das Recht auf Löschung besteht jedoch unter anderem dann nicht, wenn die Datenverarbeitung zur Wahrnehmung einer Aufgabe, die im öffentlichen Interesse liegt, erforderlich ist oder in Ausübung öffentlicher Gewalt erfolgt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">126,138</context>
+          <context context-type="linenumber">126,137</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">304,315</context>
+          <context context-type="linenumber">304,314</context>
         </context-group>
       </trans-unit>
       <trans-unit id="212800797717653833" datatype="html">
@@ -8947,14 +9761,14 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">355,359</context>
+          <context context-type="linenumber">355,358</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6119426765092747546" datatype="html">
         <source>Ich bin zudem darauf hingewiesen worden, dass die Verarbeitung meiner oben genannten Daten gemäß Art. 4 Nr. 2 DSGVO auf freiwilliger Basis erfolgt, ferner, dass ich mein Einverständnis ohne für mich nachteilige Folgen verweigern bzw. jederzeit mit Wirkung für die Zukunft widerrufen kann, wobei der Widerruf die Rechtmäßigkeit der Verarbeitung nicht rückwirkend beseitigt.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">183,190</context>
+          <context context-type="linenumber">183,189</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
@@ -9071,6 +9885,413 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
           <context context-type="linenumber">372,377</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1140327701924892323" datatype="html">
+        <source>Quick Links</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6604306652741023425" datatype="html">
+        <source>Hier findest du die Links zu den wichtigsten Uni-Diensten.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2024759925016573743" datatype="html">
+        <source>Meine Daten</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3167695857537716884" datatype="html">
+        <source>Hier siehst du die Daten zu deinem Studium</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4914915381889329423" datatype="html">
+        <source>ECTS Fortschritt (Gesamt)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6941791344038448976" datatype="html">
+        <source>Dieses Diagramm zeigt dir deinen ECTS Fortschritt aufsummiert über die einzelnen Semester.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2320694561296293538" datatype="html">
+        <source>Modulbelegungen (Gesamt)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3476158565397279911" datatype="html">
+        <source>Dieses Diagramm zeigt dir an, wie viele Module bereits belegt, bestanden und nicht bestanden hast.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8809643142924317313" datatype="html">
+        <source>ECTS Fortschritt nach Semester</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2434022114201424881" datatype="html">
+        <source>Dieses Diagramm gibt dir einen detaillierten Einblick, wie sich dein ECTS Fortschritt nach Semester im Vergleich zu deinem Plan verhält.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2278666213869099524" datatype="html">
+        <source>Modul Fortschritt nach Semester</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1059628762557195863" datatype="html">
+        <source>Dieses Diagramm zeigt dir für die einzelnen Semester, wie viele Module du belegt, bestanden und nicht bestanden hast.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1060891557611796163" datatype="html">
+        <source>Belegungen in Modulgruppen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="248464955525847325" datatype="html">
+        <source>Dieses Diagramm zeigt dir wie viele Module in welchen Modulgruppen bereits absolviert hast.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3658639379167754604" datatype="html">
+        <source>Aktuelle Termine</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="59429552909539781" datatype="html">
+        <source>Hier werden dir wichtige Termine des aktuellen Semesters angezeigt.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8689349343847741250" datatype="html">
+        <source>Terminkalender</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7918072281012259" datatype="html">
+        <source>Hier findest du eine kleine Version deines Stundenplans, um schnell die heutigen Termine zu finden.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="760131128529114034" datatype="html">
+        <source>Notendurchschnitt</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8076618073399586462" datatype="html">
+        <source>Hier siehst du deinen angenährten derzeitigen Notendurschnitt</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1337521142842079451" datatype="html">
+        <source>Hier siehst du den aktuellen Stand der Personalisierung</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="455777516512236190" datatype="html">
+        <source>Feature Vorschlag</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2411245676044465277" datatype="html">
+        <source>Hier kannst du ein neues Feature für Baula vorschlagen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/constants/chart-metadata.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8969554293946092754" datatype="html">
+        <source>Präsenz</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-format.pipe.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2804065944563619242" datatype="html">
+        <source>Präsenz + Online-Anteile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-format.pipe.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2659850497427110476" datatype="html">
+        <source>Präsenz/Online parallel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-format.pipe.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8870711330013548872" datatype="html">
+        <source>Online</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-format.pipe.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3985160956103480418" datatype="html">
+        <source>Fällt aus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-format.pipe.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4600602737630578905" datatype="html">
+        <source>Kein Format vorhanden!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-format.pipe.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3313528406596871463" datatype="html">
+        <source>Deutsch</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-lang.pipe.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8957931169022166336" datatype="html">
+        <source>Englisch</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-lang.pipe.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8600574173596179480" datatype="html">
+        <source>Italienisch</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-lang.pipe.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8748928399455456848" datatype="html">
+        <source>Spanisch</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-lang.pipe.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2786227613708971023" datatype="html">
+        <source>Deutsch/Englisch on Demand</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-lang.pipe.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7437692005151411584" datatype="html">
+        <source>Sonstige Sprache</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/pipes/course-lang.pipe.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3817929182783936118" datatype="html">
+        <source>Deine Daten in Baula</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1935931592226752569" datatype="html">
+        <source>Hier findest du eine Auflistung aller Daten, die zu deinem Account in Baula gespeichert sind.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1826776298941794529" datatype="html">
+        <source>Rollen: <x id="PH" equiv-text="userData.roles.join(&apos;, &apos;)"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9070894083257962942" datatype="html">
+        <source>Studiengang: <x id="PH" equiv-text="studprogrammes"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2181973260444194481" datatype="html">
+        <source>Start Semester: <x id="PH" equiv-text="this.transform.transformUnivIsSemester(
+            userData.startSemester,
+          )"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">84,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5533923162997816039" datatype="html">
+        <source>Studiendauer (geplant): <x id="PH" equiv-text="userData.duration"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6438283527433749629" datatype="html">
+        <source>ECTS (gesamt): <x id="PH" equiv-text="userData.maxEcts"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4329362556194513304" datatype="html">
+        <source>Account erstellt am <x id="PH" equiv-text="this.transform.transformDate(
+            userData.createdAt,
+          )"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">89,91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2877379682531791484" datatype="html">
+        <source>Account zuletzt aktualisiert am <x id="PH" equiv-text="this.transform.transformDate(
+            userData.updatedAt,
+          )"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">92,94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3678994020804695408" datatype="html">
+        <source>Deine gemerkten Module: <x id="PH" equiv-text="favouriteModules"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3279108192157361509" datatype="html">
+        <source>Module, die nicht mehr vorgeschlagen werden: <x id="PH" equiv-text="excludedModules"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7931470359977250407" datatype="html">
+        <source>Bisherige Lehrveranstaltungen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1209707902307832984" datatype="html">
+        <source>Bisherige Module</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7230929661746145802" datatype="html">
+        <source>Studienpläne</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5081318291720726512" datatype="html">
+        <source>Einwilligungen (Datenschutz)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8040881171107393560" datatype="html">
+        <source>ID</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">197</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2921864248907047755" datatype="html">
+        <source><x id="PH" equiv-text="studyPlan.name"/> (<x id="PH_1" equiv-text="studyPlan.status ? $localize`aktiv` : $localize`passiv`"/>) - erstellt am <x id="PH_2" equiv-text="this.transform.transformDate(
+            studyPlan.createdAt,
+          )"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">223,227</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8766474537436839826" datatype="html">
+        <source>aktiv</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">224</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6394419313909318796" datatype="html">
+        <source>passiv</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">224,225</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8789782348051904613" datatype="html">
+        <source>Eingeplante Module</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">238</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5022210304146940014" datatype="html">
+        <source>Eingeplante Platzhalter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">239</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8292439142262258550" datatype="html">
+        <source>Stand ECTS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
+          <context context-type="linenumber">241</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3174931973453246130" datatype="html">

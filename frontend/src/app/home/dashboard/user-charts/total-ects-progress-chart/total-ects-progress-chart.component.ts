@@ -58,11 +58,10 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       let aimedEctsOverSemesters = this.getSummedValues(this.studyPlan.semesterPlans.map(el => el.aimedEcts));
       let summedEcteOverSemesters = this.getSummedValues(this.studyPlan.semesterPlans.map(el => el.summedEcts));
       
-      // TODO: Is it safe to translate following labels?
       this.studyProgressData.datasets = this.studyProgressData.datasets.concat([
         {
           data: aimedEctsOverSemesters,
-          label: 'Ziel ECTS',
+          label: $localize`Ziel ECTS`,
           backgroundColor: 'rgba(102, 144, 177, 0.2)',
           borderColor: 'rgb(51, 106, 151)',
           pointBackgroundColor: 'rgb(102, 144, 177)',
@@ -73,7 +72,7 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
         },
         {
           data: summedEcteOverSemesters,
-          label: 'Bisher eingeplante ECTS',
+          label: $localize`Bisher eingeplante ECTS`,
           backgroundColor: 'rgb(159, 159, 156, 0.3)',
           borderColor: 'rgb(159, 159, 156)',
           pointBackgroundColor: 'rgb(207, 207, 206)',
@@ -93,11 +92,11 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       for(const [index,value] of this.semesters.entries()) {
         aimedEctsOverSemesters.push(step + step * index);
       }
-      // TODO: Is it safe to translate following label?
+
       this.studyProgressData.datasets.push(
         {
           data: aimedEctsOverSemesters,
-          label: 'Ziel ECTS',
+          label: $localize`Ziel ECTS`,
           backgroundColor: 'rgba(102, 144, 177, 0.2)',
           borderColor: 'rgb(51, 106, 151)',
           pointBackgroundColor: 'rgb(102, 144, 177)',
@@ -117,11 +116,11 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       );
       return passedModulesEcts;
     }));
-    // TODO: Is it safe to translate following label?
+
     this.studyProgressData.datasets.push(
       {
         data: passedEctsOverSemester,
-        label: 'Bisher bestandene ECTS',
+        label: $localize`Bisher bestandene ECTS`,
         backgroundColor: 'rgba(172, 204, 61, 0.8)',
         borderColor: '#97bf0d',
         hoverBackgroundColor: '#97bf0d',

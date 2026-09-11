@@ -56,7 +56,6 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
     this.calculateDataForLineChart();
   }
 
-  // TODO: Is it safe to translate following labels?
   calculateDataForLineChart() {
     this.lineChartData = {
       datasets: [
@@ -65,7 +64,7 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
             this.studyPathInSemester,
             'taken',
           ),
-          label: 'Belegte ECTS (Ist)',
+          label: $localize`Belegte ECTS (Ist)`,
           backgroundColor: 'rgba(102, 144, 177, 0.2)',
           borderColor: 'rgb(51, 106, 151)',
           pointBackgroundColor: 'rgb(102, 144, 177)',
@@ -79,7 +78,7 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
             this.studyPathInSemester,
             'passed',
           ),
-          label: 'Bestandene ECTS (Ist)',
+          label: $localize`Bestandene ECTS (Ist)`,
           backgroundColor: 'rgba(172, 204, 61, 0.2)',
           borderColor: '#97bf0d',
           pointBackgroundColor: 'rgb(213, 229, 158)',
@@ -93,7 +92,7 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
             this.studyPathInSemester,
             'failed',
           ),
-          label: 'Nicht bestandene ECTS (Ist)',
+          label: $localize`Nicht bestandene ECTS (Ist)`,
           backgroundColor: 'rgba(235, 105, 114, 0.2)',
           borderColor: '#e6444f',
           pointBackgroundColor: 'rgb(240, 143, 149)',
@@ -109,7 +108,7 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
       this.lineChartData.datasets = this.lineChartData.datasets.concat([
         {
           data: this.getEctsProgressFromStudyPlan('aim'),
-          label: 'Ziel ECTS (Plan)',
+          label: $localize`Ziel ECTS (Plan)`,
           backgroundColor: 'rgba(77,83,96,0.2)',
           borderColor: 'rgba(77,83,96,1)',
           pointBackgroundColor: 'rgba(77,83,96,1)',
@@ -120,7 +119,7 @@ export class SemesterEctsProgressChartComponent implements OnInit, OnChanges {
         },
         {
           data: this.getEctsProgressFromStudyPlan('planned'),
-          label: 'Eingeplante ECTS (Plan)',
+          label: $localize`Eingeplante ECTS (Plan)`,
           backgroundColor: 'rgb(159, 159, 156, 0.3)',
           borderColor: 'rgb(159, 159, 156)',
           pointBackgroundColor: 'rgb(207, 207, 206)',

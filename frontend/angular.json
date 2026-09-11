@@ -111,6 +111,9 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "en": {
+              "localize": ["en-US"]
             }
           },
           "defaultConfiguration": "production"
@@ -123,6 +126,9 @@
             },
             "development": {
               "buildTarget": "baula:build:development"
+            },
+            "en": {
+              "buildTarget": "baula:build:development,en"
             }
           },
           "defaultConfiguration": "development"

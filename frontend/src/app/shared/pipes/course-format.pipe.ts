@@ -6,20 +6,19 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CourseFormatPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): string {
-    // TODO: Can you translate the return values?
     switch (value) {
       case 'praesenz':
-        return 'Präsenz'
+        return $localize`Präsenz`
       case 'both':
-        return 'Präsenz + Online-Anteile';
+        return $localize`Präsenz + Online-Anteile`;
       case 'hybrid':
-        return 'Präsenz/Online parallel';
+        return $localize`Präsenz/Online parallel`;
       case 'online':
-        return 'Online';
+        return $localize`Online`;
       case 'none':
-        return 'Fällt aus';
+        return $localize`Fällt aus`;
       default:
-        return 'Kein Format vorhanden!';
+        return $localize`Kein Format vorhanden!`;
     }
   }
 }

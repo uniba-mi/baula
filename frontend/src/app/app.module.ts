@@ -70,8 +70,6 @@ import { SemesterPlanComponent } from './home/semester-plan/semester-plan.compon
 import { StudyPlanComponent } from './home/study-plan/study-plan.component';
 import { CourseListComponent } from './home/semester-plan/course-list/course-list.component';
 import { CourseItemComponent } from './home/semester-plan/course-item/course-item.component';
-import { ExpandCourseTypePipe } from './shared/pipes/expand-course-type.pipe';
-import { ShowWeekdayPipe } from './shared/pipes/show-weekday.pipe';
 import { StudyPlanDetailComponent } from './home/study-plan/study-plan-detail/study-plan-detail.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
@@ -198,9 +196,7 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
     CourseListComponent,
     CourseItemComponent,
     StudentUploadComponent,
-    ExpandCourseTypePipe,
     DecimalFormatPipe,
-    ShowWeekdayPipe,
     StudyPlanDetailComponent,
     DialogComponent,
     DashboardComponent,

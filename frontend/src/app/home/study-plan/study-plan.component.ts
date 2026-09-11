@@ -101,14 +101,13 @@ export class StudyPlanComponent implements OnInit {
     event.stopPropagation();
   }
 
-  // TODO: Can you translate every element of the following?
   openDeleteDialog(id: string, name: string) {
     const confirmationDialogInterface: ConfirmationDialogData = {
       dialogTitle: $localize `Studienplan löschen?`,
       actionType: 'delete',
       confirmationItem: name,
-      confirmButtonLabel: 'Löschen',
-      cancelButtonLabel: 'Abbrechen',
+      confirmButtonLabel: $localize`Löschen`,
+      cancelButtonLabel: $localize`Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.deleteStudyPlan(id);
@@ -439,14 +438,14 @@ export class StudyPlanComponent implements OnInit {
     });
   }
 
-  // TODO: Can you translate every element of the following?
+  // TODO: Can you translate every element of the following? -> No, imported studyplan name is german based and no translation can be added
   // import degree specific study plan template provided by uni
   importStudyPlanTemplate(uId: string, start?: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         dialogTitle: $localize `Musterstudienverlaufsplan importieren:`,
         dialogContentId: 'import-dialog',
-        importType: 'deinen Musterplan',
+        importType: $localize`deinen Musterplan`,
         studyPlanTemplate$: this.studyPlanTemplate$,
         startSemester: new Semester(start),
       },

@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ShortenCourseTypePipe implements PipeTransform {
   transform(type: string): string {
-    // TODO: Can you translate the following?
+    // TODO: Can you translate the following? No, based on UnivIS course type that is only available in german
     switch (type) {
         case 'Seminar':
             return 'S';

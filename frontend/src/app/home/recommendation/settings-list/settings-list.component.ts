@@ -52,7 +52,8 @@ export class SettingsListComponent {
 
   ngOnInit() {
     if (!this.preview) {
-      // get type from route data
+      // get type from route data 
+      // TODO: add to localize when routing is translated!!!
       this.type = this.route.snapshot.data['type'] || 'merkliste';
     }
 
@@ -117,17 +118,16 @@ export class SettingsListComponent {
   }
 
   getTitle(): string {
-    // TODO: Can following be translated?
     const titles = {
       preview: {
-        merkliste: 'Merkliste',
-        blacklist: 'Blacklist',
-        feedback: 'Feedback',
+        merkliste: $localize`Merkliste`,
+        blacklist: $localize`Blacklist`,
+        feedback: $localize`Feedback`,
       },
       standard: {
-        merkliste: 'Alle Module auf deiner Merkliste',
-        blacklist: 'Alle Module auf deiner Blacklist',
-        feedback: 'Module, zu denen du positives Feedback gegeben hast.',
+        merkliste: $localize`Alle Module auf deiner Merkliste`,
+        blacklist: $localize`Alle Module auf deiner Blacklist`,
+        feedback: $localize`Module, zu denen du positives Feedback gegeben hast.`,
       },
     };
 
@@ -170,13 +170,12 @@ export class SettingsListComponent {
       case 'feedback':
         const feedbackItem = item as ModuleFeedback;
 
-        // TODO: Can following be translated?
         const confirmationDialogInterface: ConfirmationDialogData = {
-          dialogTitle: 'Feedback zum Modul löschen?',
+          dialogTitle: $localize`Feedback zum Modul löschen?`,
           actionType: 'delete',
-          confirmationItem: `dein Feedback zum Modul "${feedbackItem.acronym}"`,
-          confirmButtonLabel: 'Löschen',
-          cancelButtonLabel: 'Abbrechen',
+          confirmationItem: $localize`dein Feedback zum Modul "${feedbackItem.acronym}"`,
+          confirmButtonLabel: $localize`Löschen`,
+          cancelButtonLabel: $localize`Abbrechen`,
           confirmButtonClass: 'btn btn-danger',
           callbackMethod: () => {
             this.deleteFeedback(feedbackItem.acronym);

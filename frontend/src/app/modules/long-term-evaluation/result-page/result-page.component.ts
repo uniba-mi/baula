@@ -76,13 +76,13 @@ export class ResultPageComponent implements OnInit {
       const monthListing = this.countOccurences(
         filteredResults.map((el) => el.evaluationCode)
       );
-      // TODO: Can you translate the following? Up to line 130
+
       cards.push({
         id: 'participationMonthsChart',
         type: 'bar',
         spacingClasses: 'col-12 col-md-6 col-lg-4 mb-2',
         cardData: {
-          title: 'Teilnehmer nach Monat',
+          title: $localize`Teilnehmer nach Monat`,
           data: {
             labels: monthListing.map((el) => el.name),
             datasets: [
@@ -102,12 +102,12 @@ export class ResultPageComponent implements OnInit {
         type: 'table',
         spacingClasses: 'col-12 col-md-6 col-lg-4 mb-2',
         cardData: {
-          title: 'Studiengänge der Teilnehmenden',
+          title: $localize`Studiengänge der Teilnehmenden`,
           data: this.countOccurences(filteredResults.map((el) => el.spName)),
           columnKeys: ['name', 'count'],
           columns: [
-            { key: 'name', name: 'Studiengang' },
-            { key: 'count', name: 'Häufigkeit' },
+            { key: 'name', name: $localize`Studiengang` },
+            { key: 'count', name: $localize`Häufigkeit` },
           ],
         },
       });
@@ -118,13 +118,13 @@ export class ResultPageComponent implements OnInit {
         type: 'table',
         spacingClasses: 'col-12 mb-2',
         cardData: {
-          title: 'Feedback der Teilnehmenden',
+          title: $localize`Feedback der Teilnehmenden`,
           data: filteredResults.map(({ spName, semester, feedback}) => ({ spName, semester, feedback})).filter(el => el.feedback !== ''),
           columnKeys: ['spName', 'semester', 'feedback'],
           columns: [
-            { key: 'spName', name: 'Studiengang' },
-            { key: 'semester', name: 'FS' },
-            { key: 'feedback', name: 'Feedback'}
+            { key: 'spName', name: $localize`Studiengang` },
+            { key: 'semester', name: $localize`FS` },
+            { key: 'feedback', name: $localize`Feedback`}
           ],
         },
       });
@@ -166,39 +166,39 @@ export class ResultPageComponent implements OnInit {
     const meanNps = Number(
       this.calculateMean(results.map((el) => el.nps)).toFixed(2)
     );
-    // TODO: Can you translate the following? Up to line 203
+
     return {
-      title: 'Überblicksinformationen',
+      title: $localize`Überblicksinformationen`,
       items: [
         {
           iconClass: 'bi-people',
-          name: 'Anzahl Teilnehmer: ',
+          name: $localize`Anzahl Teilnehmer: `,
           data: results.length,
-          tooltip: 'Anzahl der Teilnehmer für das ausgewählte Semester.',
+          tooltip: $localize`Anzahl der Teilnehmer für das ausgewählte Semester.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Perceived Usefulness: ',
+          name: $localize`Perceived Usefulness: `,
           data: meanPu,
-          tooltip: 'Durchschnittswert des PU Score.',
+          tooltip: $localize`Durchschnittswert des PU Score.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Perceived Ease of Use: ',
+          name: $localize`Perceived Ease of Use: `,
           data: meanPeou,
-          tooltip: 'Durchschnittswert des PEOU Score.',
+          tooltip: $localize`Durchschnittswert des PEOU Score.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Behavioral Intention: ',
+          name: $localize`Behavioral Intention: `,
           data: meanBi,
-          tooltip: 'Durchschnittswert des BI Score.',
+          tooltip: $localize`Durchschnittswert des BI Score.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Net Promoter Score: ',
+          name: $localize`Net Promoter Score: `,
           data: meanNps,
-          tooltip: 'Durchschnittswert des NPS.',
+          tooltip: $localize`Durchschnittswert des NPS.`,
         },
       ],
       reportData: results,

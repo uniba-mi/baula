@@ -49,14 +49,13 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
     this.calculateDataForChart();
   }
 
-  // TODO: Is it safe to translate following labels?
   calculateDataForChart() {
     this.barChartData = {
       labels: this.semesters.map((semester) => semester.shortName),
       datasets: [
         {
           data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'passed'),
-          label: 'Bestanden',
+          label: $localize`Bestanden`,
           backgroundColor: 'rgba(172, 204, 61, 0.8)',
           borderColor: '#97bf0d',
           hoverBackgroundColor: '#97bf0d',
@@ -64,7 +63,7 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
         },
         {
           data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'taken'),
-          label: 'Belegt',
+          label: $localize`Belegt`,
           backgroundColor: 'rgba(102, 144, 177, 0.8)',
           borderColor: 'rgb(51, 106, 151)',
           hoverBackgroundColor: '#00457d',
@@ -72,7 +71,7 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
         },
         {
           data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'failed'),
-          label: 'Nicht bestanden',
+          label: $localize`Nicht bestanden`,
           backgroundColor: 'rgba(235, 105, 114, 0.8)',
           borderColor: '#e6444f',
           hoverBackgroundColor: 'rgb(235, 105, 114)',

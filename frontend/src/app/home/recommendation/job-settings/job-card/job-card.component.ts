@@ -40,11 +40,10 @@ export class JobCardComponent implements OnInit {
   }
 
   editJob(job: Job) {
-    // TODO: Can following dialogTitle be translated?
     const dialogRef = this.dialog.open(DialogComponent, {
       maxWidth: window.innerWidth < 1400 ? '90vw' : '50vw',
       data: {
-        dialogTitle: 'Job bearbeiten',
+        dialogTitle: $localize`Job bearbeiten`,
         dialogContentId: 'edit-job',
         job,
       },
@@ -62,13 +61,12 @@ export class JobCardComponent implements OnInit {
   }
 
   openDeleteConfirmationDialog(job: Job) {
-    // TODO: Can following labels be translated?
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Jobanzeige löschen?',
+      dialogTitle: $localize`Jobanzeige löschen?`,
       actionType: 'delete',
-      confirmationItem: `die Jobanzeige "${job.title}"`,
-      confirmButtonLabel: 'Löschen',
-      cancelButtonLabel: 'Abbrechen',
+      confirmationItem: $localize`die Jobanzeige "${job.title}"`,
+      confirmButtonLabel: $localize`Löschen`,
+      cancelButtonLabel: $localize`Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.deleteJob(job);

@@ -77,17 +77,16 @@ export class ModuleOverviewComponent
   maintenance = false; // Variable to disable features and make maintenance message visible
   sideNavOpened = true;
   mobileView = false;
-  // TODO: Can following names be translated with $localize?
   groupingOptions: Option[] = [
     {
       value: 'struktur',
-      name: 'Modulgruppe',
+      name: $localize`Modulgruppe`,
       key: '',
       selected: true,
     },
     {
       value: 'chair',
-      name: 'Lehrstuhl',
+      name: $localize`Lehrstuhl`,
       key: '',
     },
   ];

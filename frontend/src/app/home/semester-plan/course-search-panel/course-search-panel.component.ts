@@ -72,33 +72,32 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
   private trackDebounceDelay: number = 5000;
   private lastTrackedQuery: string = '';
 
-  // TODO: Can following be translated?
   searchInOptions: Option[] = [
     {
       value: 'name',
-      name: 'Titel',
+      name: $localize`Titel`,
       key: 'name',
       selected: true,
     },
     {
       value: 'desc',
-      name: 'Beschreibung',
+      name: $localize`Beschreibung`,
       key: 'desc',
     },
     {
       value: 'short',
-      name: 'Kurzbezeichnung',
+      name: $localize`Kurzbezeichnung`,
       key: 'short',
       selected: true,
     },
     {
       value: 'organizational',
-      name: 'Organisatorisches',
+      name: $localize`Organisatorisches`,
       key: 'organizational',
     },
     {
       value: 'mId',
-      name: 'Modulnummer/kürzel',
+      name: $localize`Modulnummer/kürzel`,
       key: 'mId',
       selected: true,
     },
