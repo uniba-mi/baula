@@ -500,11 +500,11 @@
           <context context-type="linenumber">12,15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3778094307851479671" datatype="html">
-        <source> Viel Spaß beim Entdecken! 🚀 </source>
+      <trans-unit id="8463388700626410685" datatype="html">
+        <source>Viel Spaß beim Entdecken!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/demo-user-dialog/demo-user-dialog.component.html</context>
-          <context context-type="linenumber">16,17</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2678158162232364941" datatype="html">
@@ -1368,15 +1368,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/dependency-graph/dependency-graph.component.html</context>
           <context context-type="linenumber">59,60</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="212317688228744180" datatype="html">
-        <source>&lt;div class=&quot;p-2&quot;&gt;
-          &lt;strong&gt;<x id="PH" equiv-text="module.name"/>&lt;/strong&gt;&lt;br&gt;
-          &lt;span&gt;<x id="PH_1" equiv-text="module.ects"/> ECTS&lt;/span&gt; | &lt;span&gt;<x id="PH_2" equiv-text="module.term"/>&lt;/span&gt;&lt;br&gt;</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/dialog/module-details-dialog/dependency-graph/dependency-graph.component.ts</context>
-          <context context-type="linenumber">111,113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2700278332995046364" datatype="html">
@@ -2251,10 +2242,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/user-dialog/user-dialog.component.html</context>
           <context context-type="linenumber">63</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">226</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8852844643379026142" datatype="html">
@@ -8343,429 +8330,276 @@
           <context context-type="linenumber">16,17</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5688543495725744103" datatype="html">
-        <source>Datenschutzerklärungen</source>
+      <trans-unit id="7623135239551445678" datatype="html">
+        <source>Datenschutzerklärung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">5,7</context>
+          <context context-type="linenumber">4,6</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6164645777432470323" datatype="html">
-        <source> Datenschutzerklärung ab 01.12.2025 </source>
+      <trans-unit id="4949721397441803538" datatype="html">
+        <source> Der Betrieb von Baula unterliegt dem Information Security Management System (ISMS) der Universität Bamberg, Details unter <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+            class=&quot;link&quot;
+            href=&quot;https://www.uni-bamberg.de/its/verfahrensweisen/isms&quot;
+            target=&quot;_blank&quot;
+            &gt;"/>Informationssicherheit an der Otto-Friedrich-Universität Bamberg<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/>. Der Systembetrieb und die Datenhaltung erfolgt ausschließlich lokal auf Systemen der Universität Bamberg. Der Betrieb erfolgt nach Maßgabe der <x id="START_LINK_1" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/minf&quot; target=&quot;_blank&quot;
+            &gt;"/>Organisationseinheit Lehrstuhl Medieninformatik<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/>. Es gilt grundsätzlich für den Betrieb von Baula die <x id="START_LINK_2" equiv-text="&lt;a
+            class=&quot;link&quot;
+            href=&quot;https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/allgemeine-datenschutzerklaerung/&quot;
+            target=&quot;_blank&quot;
+            &gt;"/>Allgemeine Datenschutzerklärung für IT-Systeme an der Otto-Friedrich-Universität Bamberg<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">8,28</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3161178735759844375" datatype="html">
-        <source>Der Betrieb von Baula unterliegt dem Information Security Management System (ISMS) der Universität Bamberg, Details unter <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot;
-                            href=&quot;https://www.uni-bamberg.de/its/verfahrensweisen/isms&quot;
-                            target=&quot;_blank&quot;&gt;"/>Informationssicherheit an der Otto-Friedrich-Universität Bamberg<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. Der Systembetrieb und die Datenhaltung erfolgt ausschließlich lokal auf Systemen der Universität Bamberg. Der Betrieb erfolgt nach Maßgabe der <x id="START_LINK_1" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/minf&quot;
-                            target=&quot;_blank&quot;&gt;"/>Organisationseinheit Lehrstuhl Medieninformatik<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. Es gilt grundsätzlich für den Betrieb von Baula die <x id="START_LINK_2" equiv-text="&lt;a class=&quot;link&quot;
-                            href=&quot;https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/allgemeine-datenschutzerklaerung/&quot;
-                            target=&quot;_blank&quot;&gt;"/>Allgemeine Datenschutzerklärung für IT-Systeme an der Otto-Friedrich-Universität Bamberg<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </source>
+      <trans-unit id="2702404329288768603" datatype="html">
+        <source> Die nachfolgende Ergänzung zur Datenschutzerklärung gilt speziell für <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+            class=&quot;link&quot;
+            href=&quot;https://baula.minf.uni-bamberg.de&quot;
+            target=&quot;_blank&quot;
+            &gt;"/>Baula<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/>, ein System entwickelt im Rahmen der Projekte <x id="START_LINK_1" equiv-text="&lt;a
+            class=&quot;link&quot;
+            href=&quot;https://www.uni-bamberg.de/dikule/&quot;
+            target=&quot;_blank&quot;
+            &gt;"/>DiKuLe<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/>, <x id="START_LINK_2" equiv-text="&lt;a
+            class=&quot;link&quot;
+            href=&quot;https://www.uni-bamberg.de/wiai/forschung/forschungseinrichtungen-verbundprojekte/voll-kiba/&quot;
+            target=&quot;_blank&quot;
+            &gt;"/>VoLL-KI<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/> und <x id="START_LINK_3" equiv-text="&lt;a
+            class=&quot;link&quot;
+            href=&quot;https://www.uni-bamberg.de/bakule/&quot;
+            target=&quot;_blank&quot;
+            &gt;"/>BaKuLe<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">15,33</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">168,186</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7134012164939902788" datatype="html">
-        <source>Die nachfolgende Ergänzung zur Datenschutzerklärung gilt speziell für <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot;
-                            href=&quot;https://baula.minf.uni-bamberg.de&quot; target=&quot;_blank&quot;&gt;"/>Baula<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, ein System entwickelt im Rahmen der Projekte <x id="START_LINK_1" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/dikule/&quot;
-                            target=&quot;_blank&quot;&gt;"/>DiKuLe<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, <x id="START_LINK_2" equiv-text="&lt;a class=&quot;link&quot;
-                            href=&quot;https://www.uni-bamberg.de/wiai/forschung/forschungseinrichtungen-verbundprojekte/voll-kiba/&quot;
-                            target=&quot;_blank&quot;&gt;"/>VoLL-KI<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> und <x id="START_LINK_3" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/bakule/&quot;
-                            target=&quot;_blank&quot;&gt;"/>BaKuLe<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">35,44</context>
+          <context context-type="linenumber">31,57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2851974820592309" datatype="html">
         <source>Nutzungsbedingungen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">44,46</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">197,199</context>
+          <context context-type="linenumber">59,61</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6990591406776975268" datatype="html">
-        <source>Die Nutzung von Baula steht ausschließlich Personen mit einem Nutzerkonto der Universität Bamberg (ba-Nummer und zugehöriges Kennwort) oder Personen mit einem bereitgestellten Demoaccount offen. Jegliche Verwendung von Baula zu anderen Zwecken als zur Unterstützung der Studienplanung, -organisation und -beratung ist untersagt.</source>
+      <trans-unit id="2186465875215617577" datatype="html">
+        <source> Die Nutzung von Baula steht ausschließlich Personen mit einem Nutzerkonto der Universität Bamberg (ba-Nummer und zugehöriges Kennwort) oder Personen mit einem bereitgestellten Demoaccount offen. Jegliche Verwendung von Baula zu anderen Zwecken als zur Unterstützung der Studienplanung, -organisation und -beratung ist untersagt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">46,49</context>
+          <context context-type="linenumber">62,66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8727127619281123762" datatype="html">
         <source>Kategorien personenbezogener Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">51,53</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">204,206</context>
+          <context context-type="linenumber">69,71</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4465225616942568886" datatype="html">
-        <source>Direkt personenbezogene Daten werden in Baula nicht gespeichert. Für die Nutzung der Anwendung werden beim Login primär eine eindeutige pseudonyme Nutzer-ID sowie die Rollen (z. B. „Studierende“ oder „Mitarbeitende“) übergeben. Um den Abruf des individuellen Studienverlaufs über die FlexNow-Schnittstelle zu ermöglichen, wird zusätzlich die universitäre Nutzerkennung (ba-Nummer) beim Login übergeben, verarbeitet, aber nicht dauerhaft gespeichert.</source>
+      <trans-unit id="1324907536532657995" datatype="html">
+        <source> Direkt personenbezogene Daten werden in Baula nicht gespeichert. Für die Nutzung der Anwendung werden beim Login primär eine eindeutige pseudonyme Nutzer-ID sowie die Rollen (z. B. „Studierende“ oder „Mitarbeitende“) übergeben. Um den Abruf des individuellen Studienverlaufs über die FlexNow-Schnittstelle zu ermöglichen, wird zusätzlich die universitäre Nutzerkennung (ba-Nummer) beim Login übergeben, verarbeitet, aber nicht dauerhaft gespeichert. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">53,57</context>
+          <context context-type="linenumber">72,78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3837719859497619826" datatype="html">
         <source>FlexNow Auszug (Abruf des individuellen Studienverlaufs)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">59,60</context>
+          <context context-type="linenumber">81,82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8183279985854431158" datatype="html">
         <source>Betroffene:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">217</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8753072394691160317" datatype="html">
-        <source>Die Verarbeitung eines individuellen Studienverlaufs erfolgt nur mit Einverständnis der Studierenden.</source>
+      <trans-unit id="5760056115073652219" datatype="html">
+        <source> Die Verarbeitung eines individuellen Studienverlaufs erfolgt nur mit Einverständnis der Studierenden. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">61,62</context>
+          <context context-type="linenumber">84,85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3141654450009635538" datatype="html">
         <source> Datenschutzhinweise für die optionale Verwendung der FlexNow-Schnittstelle </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">93,94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6880906807320307959" datatype="html">
         <source>Quellen der personenbezogenen Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">76,78</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">234,236</context>
+          <context context-type="linenumber">101,103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4743080257843374472" datatype="html">
         <source>FlexNow</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">78,79</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">236,237</context>
+          <context context-type="linenumber">103,104</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4818692472723811165" datatype="html">
-        <source>Bei Nutzung des optionalen Abrufs von individuellen Studienverlaufsdaten wird über die universitäre Kennung (ba-Nummer) der individuelle Studienverlauf über eine FlexNow-Schnittstelle abgerufen.</source>
+      <trans-unit id="1612609204394055592" datatype="html">
+        <source> Bei Nutzung des optionalen Abrufs von individuellen Studienverlaufsdaten wird über die universitäre Kennung (ba-Nummer) der individuelle Studienverlauf über eine FlexNow-Schnittstelle abgerufen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">79,80</context>
+          <context context-type="linenumber">105,107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="342392929413076552" datatype="html">
         <source>Dauer der Speicherung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">83,85</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">240,242</context>
+          <context context-type="linenumber">111,113</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9207874170291278409" datatype="html">
-        <source>Die universitäre Kennung (ba-Nummer) wird nicht dauerhaft in ihrer direkten, personenbezogenen Form innerhalb von Baula gespeichert. Stattdessen erfolgt die Verarbeitung ausschließlich zur Authentifizierung. Ein Zugriff auf die Kennung erfolgt ausschließlich im Rahmen des Abrufs des individuellen Studienverlaufs über die FlexNow-Schnittstelle. Eine sessionübergreifende Speicherung der Kennung findet nicht statt.</source>
+      <trans-unit id="6684005014610445185" datatype="html">
+        <source> Die universitäre Kennung (ba-Nummer) wird nicht dauerhaft in ihrer direkten, personenbezogenen Form innerhalb von Baula gespeichert. Stattdessen erfolgt die Verarbeitung ausschließlich zur Authentifizierung. Ein Zugriff auf die Kennung erfolgt ausschließlich im Rahmen des Abrufs des individuellen Studienverlaufs über die FlexNow-Schnittstelle. Eine sessionübergreifende Speicherung der Kennung findet nicht statt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">85,88</context>
+          <context context-type="linenumber">114,119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4687892896306577762" datatype="html">
         <source>Nutzerdaten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">91,93</context>
+          <context context-type="linenumber">123,125</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
           <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8182270205825566146" datatype="html">
-        <source>Die Nutzerdaten werden mit Projektende 2029 – bzw. im Falle einer Verlängerung – 2031 aus der Anwendung entfernt, es sei denn, es erfolgt bereits vorher ein entsprechender Widerspruch.</source>
+      <trans-unit id="6221910916755366017" datatype="html">
+        <source> Die Nutzerdaten werden mit Projektende 2029 – bzw. im Falle einer Verlängerung – 2031 aus der Anwendung entfernt, es sei denn, es erfolgt bereits vorher ein entsprechender Widerspruch. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">93,94</context>
+          <context context-type="linenumber">126,128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3017158766271994892" datatype="html">
         <source>Individueller Studienverlauf</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">96,98</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">248,250</context>
+          <context context-type="linenumber">131,133</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5432908950674922614" datatype="html">
-        <source>Die Löschung des individuellen Studienverlaufs ist zudem jederzeit in der Anwendung über eine entsprechende Funktionalität möglich.</source>
+      <trans-unit id="1564125879327126544" datatype="html">
+        <source> Die Löschung des individuellen Studienverlaufs ist zudem jederzeit in der Anwendung über eine entsprechende Funktionalität möglich. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">98,99</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">250,251</context>
+          <context context-type="linenumber">134,135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3357106210269103356" datatype="html">
         <source>Zwecke und Rechtsgrundlage der Verarbeitung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">101,103</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">253,255</context>
+          <context context-type="linenumber">138,140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6868369054951587409" datatype="html">
         <source>Zweck</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">103,105</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">255,257</context>
+          <context context-type="linenumber">140,142</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4210170042581200285" datatype="html">
-        <source>Im Rahmen des Forschungsprojekts BaKuLe werden Unterstützungsmaßnahmen zum zielorientierten und sinnstiftenden Studieren untersucht. Hierbei wird auf einer in den Projekten DiKuLe und VoLL-KI entwickelten Webanwendung (digitaler Studienassistent) aufgebaut, die die kurz- sowie langfristige Studienplanung unterstützt und in diesem Rahmen möglichst individuelle Unterstützung auf Basis des bisherigen Studienverlaufs bieten soll. Somit sollen beispielsweise studienbegleitend Vorschläge für den weiteren individuellen Bildungsweg (z. B. Kompetenzerwerb) entwickelt werden. Zu Forschungszwecken im Kontext dieses Studienassistenten (z. B. für Publikationen) können hochaggregierte Nutzungsdaten verwendet werden, die nicht mehr auf einzelne Personen zurückzuführen sind.</source>
+      <trans-unit id="4069296783558486902" datatype="html">
+        <source> Im Rahmen des Forschungsprojekts BaKuLe werden Unterstützungsmaßnahmen zum zielorientierten und sinnstiftenden Studieren untersucht. Hierbei wird auf einer in den Projekten DiKuLe und VoLL-KI entwickelten Webanwendung (digitaler Studienassistent) aufgebaut, die die kurz- sowie langfristige Studienplanung unterstützt und in diesem Rahmen möglichst individuelle Unterstützung auf Basis des bisherigen Studienverlaufs bieten soll. Somit sollen beispielsweise studienbegleitend Vorschläge für den weiteren individuellen Bildungsweg (z. B. Kompetenzerwerb) entwickelt werden. Zu Forschungszwecken im Kontext dieses Studienassistenten (z. B. für Publikationen) können hochaggregierte Nutzungsdaten verwendet werden, die nicht mehr auf einzelne Personen zurückzuführen sind. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">105,111</context>
+          <context context-type="linenumber">143,153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1059520774914208855" datatype="html">
         <source>Rechtsgrundlage</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">115,117</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">265,267</context>
+          <context context-type="linenumber">157,159</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6865786923782940639" datatype="html">
-        <source>Art. 6 Abs. 1 Unterabs. 1 Buchst. a, e DSGVO, Art. 7 DSGVO Art. 4 Abs. 1 BayDSG i. V. m. Art. 2 Abs. 1 Satz 2 BayHIG: Forschung als Aufgabe der Universitäten</source>
+      <trans-unit id="7087318102648915780" datatype="html">
+        <source> Art. 6 Abs. 1 Unterabs. 1 Buchst. a, e DSGVO, Art. 7 DSGVO Art. 4 Abs. 1 BayDSG i. V. m. Art. 2 Abs. 1 Satz 2 BayHIG: Forschung als Aufgabe der Universitäten </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">117,118</context>
+          <context context-type="linenumber">160,162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2954082625425284930" datatype="html">
         <source>Weiteres</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">120,122</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">278,280</context>
+          <context context-type="linenumber">165,167</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4297534578251146734" datatype="html">
-        <source>Cookies, Protokolldateien und die Webanalyse-Tools Plausible und Sentry werden zur Erstellung von Nutzungsstatistiken, zur Prüfung oder Wartung des Webdienstes und zur Gewährleistung der Netz- und Informationssicherheit gemäß Art. 6 Abs. 1 BayDSG, § 13 Abs. 7 TMG, Art. 11 Abs. 1 BayEGovG verwendet. Diese Nutzungsdaten werden nicht mit den o. g. Datenkategorien zusammengeführt.</source>
+      <trans-unit id="4509526072311767896" datatype="html">
+        <source> Cookies, Protokolldateien und die Webanalyse-Tools Plausible und Sentry werden zur Erstellung von Nutzungsstatistiken, zur Prüfung oder Wartung des Webdienstes und zur Gewährleistung der Netz- und Informationssicherheit gemäß Art. 6 Abs. 1 BayDSG, § 13 Abs. 7 TMG, Art. 11 Abs. 1 BayEGovG verwendet. Diese Nutzungsdaten werden nicht mit den o. g. Datenkategorien zusammengeführt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">122,125</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">280,285</context>
+          <context context-type="linenumber">168,173</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8123773765901555222" datatype="html">
         <source>Übermittlung an Dritte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">127,129</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">290,292</context>
+          <context context-type="linenumber">176,178</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3260021974611950735" datatype="html">
-        <source>Eine klassische Übermittlung personenbezogener Daten an Dritte erfolgt in Baula nicht. Eine Übermittlung der universitären Kennung an FlexNow ist nur notwendig, falls der individuelle Studienverlauf nach Einwilligung über die entsprechende Schnittstelle abgerufen werden soll. Nutzerinnen und Nutzern können zudem aggregierte Auswertungen und Studienempfehlungen auf Basis von anonymisierten und aggregierten Studienverlaufsdaten bereitgestellt werden. Diese Daten werden jedoch in einer Form präsentiert, die keine Rückschlüsse auf individuelle Personen zulässt. Die Nutzung dieser aggregierten Auswertungen dient ausschließlich dem Zweck der Studienplanung und -beratung.</source>
+      <trans-unit id="5919973781637406882" datatype="html">
+        <source> Eine klassische Übermittlung personenbezogener Daten an Dritte erfolgt in Baula nicht. Eine Übermittlung der universitären Kennung an FlexNow ist nur notwendig, falls der individuelle Studienverlauf nach Einwilligung über die entsprechende Schnittstelle abgerufen werden soll. Nutzerinnen und Nutzern können zudem aggregierte Auswertungen und Studienempfehlungen auf Basis von anonymisierten und aggregierten Studienverlaufsdaten bereitgestellt werden. Diese Daten werden jedoch in einer Form präsentiert, die keine Rückschlüsse auf individuelle Personen zulässt. Die Nutzung dieser aggregierten Auswertungen dient ausschließlich dem Zweck der Studienplanung und -beratung. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">129,135</context>
+          <context context-type="linenumber">179,187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7741104794969764717" datatype="html">
         <source>Selbstauskunft</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">138,140</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">303,305</context>
+          <context context-type="linenumber">191,193</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5734473611155175945" datatype="html">
-        <source>Nutzende haben im Hinblick auf ihre individuellen Studiendaten die Möglichkeit, selbst zu überprüfen, welche Daten in Baula verarbeitet werden, indem sie die Funktionalität des individuellen Datenexports nutzen. </source>
+      <trans-unit id="8643472326276676388" datatype="html">
+        <source> Nutzende haben im Hinblick auf ihre individuellen Studiendaten die Möglichkeit, selbst zu überprüfen, welche Daten in Baula verarbeitet werden, indem sie die Funktionalität des individuellen Datenexports nutzen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">140,142</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">305,307</context>
+          <context context-type="linenumber">194,196</context>
         </context-group>
       </trans-unit>
       <trans-unit id="688632242274553551" datatype="html">
         <source>Betroffenenrechte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">147,149</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">312,314</context>
+          <context context-type="linenumber">200,202</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1021523478286569205" datatype="html">
-        <source>Für den Dienst www.uni-bamberg.de besteht kein spezifischer Regelungsbedarf. Es gelten die Angaben der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot;
-                            href=&quot;https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/allgemeine-datenschutzerklaerung/&quot;
-                            target=&quot;_blank&quot;&gt;"/>Allgemeinen Datenschutzerklärung der Universität<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </source>
+      <trans-unit id="5895790251534124481" datatype="html">
+        <source> Für den Dienst www.uni-bamberg.de besteht kein spezifischer Regelungsbedarf. Es gelten die Angaben der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+            class=&quot;link&quot;
+            href=&quot;https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/allgemeine-datenschutzerklaerung/&quot;
+            target=&quot;_blank&quot;
+            &gt;"/>Allgemeinen Datenschutzerklärung der Universität<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">149,156</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">314,321</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5853253854226624285" datatype="html">
-        <source> Datenschutzerklärung bis 30.11.2025 </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">164</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3387020783538609724" datatype="html">
-        <source>Die nachfolgende Ergänzung zur Datenschutzerklärung gilt speziell für <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot;
-                            href=&quot;https://baula.minf.uni-bamberg.de&quot; target=&quot;_blank&quot;&gt;"/>Baula<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, ein System entwickelt im Rahmen der Projekte <x id="START_LINK_1" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/dikule/&quot;
-                            target=&quot;_blank&quot;&gt;"/>DiKuLe<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> und <x id="START_LINK_2" equiv-text="&lt;a class=&quot;link&quot;
-                            href=&quot;https://www.uni-bamberg.de/wiai/forschung/forschungseinrichtungen-verbundprojekte/voll-kiba/&quot;
-                            target=&quot;_blank&quot;&gt;"/>VoLL-KI<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> . </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">188,195</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1163971132110476089" datatype="html">
-        <source>Die Nutzung von Baula steht ausschließlich Personen mit einem Nutzerkonto der Universität Bamberg (ba-Nummer und zugehöriges Kennwort) offen. Jegliche Verwendung von Baula zu anderen Zwecken als zur Unterstützung der Studienplanung, -organisation und -beratung ist untersagt.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">199,202</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4272689413884063357" datatype="html">
-        <source>Direkt personenbezogene Daten wie Adressdaten sowie Nutzername werden in Baula nicht gespeichert und nur im Rahmen eines optionalen FlexNow Uploads verarbeitet. Der Login erfolgt mit der universitären Nutzerkennung. Dabei werden der Anwendung lediglich eine eindeutige pseudonyme Nutzer-ID sowie die Rollen &quot;Studierende&quot; oder &quot;Mitarbeitende&quot; übergeben.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">206,211</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="468109812196499350" datatype="html">
-        <source>FlexNow Auszug (Individueller Studienverlauf)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">216,217</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7327802177572273781" datatype="html">
-        <source>Die Verarbeitung eines individuellen Studienverlaufs erfolgt nur mit Einverständniserklärung der Studierenden.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">218,219</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1777738311055595584" datatype="html">
-        <source>Extraktion des individuellen Studienverlaufs durch Studierende, die die optionale Funktionalität der automatischen Eingabe des eigenen Studienfortschritts nutzen möchten.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">237,238</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="341526590090347325" datatype="html">
-        <source>Nutzendendaten</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">242,244</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4832236440993397096" datatype="html">
-        <source>Die Nutzendendaten werden mit Projektende (Ende 2025) aus der Anwendung entfernt, es sei denn, es erfolgt bereits vorher ein entsprechender Widerspruch innerhalb der Anwendung.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">244,246</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5200434142395971673" datatype="html">
-        <source>Im Rahmen der Forschungsprojekte DiKuLe und VoLL-KI werden die Möglichkeiten zur Unterstützung der individuellen Studienplanung mithilfe des digitalen Studienassistenten Baula erforscht. Um möglichst individuelle Studien- und Modulbelegungsempfehlungen zu erhalten, haben Studierende die Möglichkeit, ihren individuellen Studienverlauf in die Anwendung hochladen.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">257,262</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2698045224008256030" datatype="html">
-        <source>Art. 6 Abs. 1 Unterabs. 1 Buchst. e DSGVO, Art. 4 Abs. 1 BayDSG i. V. m. Art. 2 Abs. 1 Satz 2 BayHIG: Forschung als Aufgabe der Universitäten</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">267,269</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3457045015628279223" datatype="html">
-        <source>Art. 6 Abs. 2 Nr. 3 Buchst. c BayDSG: Die Verwendung von Prüfungsdaten zu Zwecken der Forschung ist zulässig, da die beabsichtigte Forschung anderweitig nicht durchgeführt werden kann und das Forschungsinteresse auf Verbesserungen der Studienberatung (universitäre Aufgabe gem. Art. 82 BayHIG) abzielt.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">271,274</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5085164392000420067" datatype="html">
-        <source>Eine klassische Übermittlung an Dritte erfolgt im Rahmen von Baula nicht. Nutzenden können aggregierte Auswertungen und Studienempfehlungen auf Basis von anonymisierten und aggregierten Studienverlaufsdaten bereitgestellt werden. Diese Daten werden jedoch in einer Form präsentiert, die keine Rückschlüsse auf individuelle Personen zulässt. Die Nutzung dieser aggregierten Auswertungen dient ausschließlich dem Zweck der Studienplanung und -beratung.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">292,299</context>
+          <context context-type="linenumber">203,211</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5899944089946489995" datatype="html">
@@ -9420,471 +9254,286 @@
         <source>Einwilligungs­erklärung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">4,5</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">203,204</context>
+          <context context-type="linenumber">2,3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7819911702681715777" datatype="html">
-        <source>gemäß Art. 6 Abs. 1 Unterabs. 1 Buchst. a, Art. 7 und 4 Nr. 11 EU-Datenschutz-Grundverordnung (DSGVO) in die Verarbeitung personenbezogener Daten in dem Projekt &quot;Von Lernenden Lernen: Ganzheitliche Daten- und Wissensunterstützte Hochschulbildung und deren Gestaltung (VoLL-KI) - BMBF&quot; der Universität Bamberg.</source>
+      <trans-unit id="7432269760193319034" datatype="html">
+        <source> gemäß Art. 6 Abs. 1 Unterabs. 1 Buchst. a, Art. 7 und 4 Nr. 11 EU-Datenschutz-Grundverordnung (DSGVO) in die Verarbeitung personenbezogener Daten in dem Projekt &quot;BaKuLe – Bamberger Kulturen der Lehre gemeinsam entwickeln (Stiftung Innovation in der Hochschullehre)&quot; der Universität Bamberg. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">5,8</context>
+          <context context-type="linenumber">4,7</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3061312033911983433" datatype="html">
         <source>1. Verantwortliche im Sinn von Art. 4 Nr. 7 DSGVO:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">9,10</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">207,208</context>
+          <context context-type="linenumber">10,11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2872721725519282864" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Otto-Friedrich-Universität Bamberg<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Präsident Prof. Dr. Kai Fischbach<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Kanzlerin Dr. Dagmar Steuer-Flieser<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Kapuzinerstraße 16<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> 96047 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Telefon: +49 951 863 0<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Telefax: +49 951 863 1005<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap;&quot;&gt;"/>E-Mail:<x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot;
-      href=&quot;mailto:ul.datenschutz@uni-bamberg&quot;&gt;"/>ul.datenschutz@uni-bamberg<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Otto-Friedrich-Universität Bamberg<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Präsident Prof. Dr. Kai Fischbach<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Kanzlerin Dr. Dagmar Steuer-Flieser<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Kapuzinerstraße 16<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> 96047 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Telefon: +49 951 863 0<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Telefax: +49 951 863 1005<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap&quot;
+      &gt;"/>E-Mail:<x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot; href=&quot;mailto:ul.datenschutz@uni-bamberg&quot;
+        &gt;"/>ul.datenschutz@uni-bamberg<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+      &gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span
+    &gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">11,20</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">209,218</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4737013939229404473" datatype="html">
-        <source>2. Leitung des Projekts (Teilprojekt Universität Bamberg):</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">21,22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8344030645723859254" datatype="html">
-        <source> Prof. Dr. Ute Schmid<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Lehrstuhl für Kognitive Systeme<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> An der Weberei 5, 96049 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Telefon: +49 951 2860<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap;&quot;&gt;"/>E-Mail: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
-      href=&quot;mailto:ute.schmid@uni-bamberg.de&quot;&gt;"/>ute.schmid@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">23,29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4914445710115225277" datatype="html">
-        <source>3. Kontaktdaten des behördlichen Datenschutzbeauftragten:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">30,31</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">228,229</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8038518219939349951" datatype="html">
-        <source> Datenschutzbeauftragter der Otto-Friedrich-Universität Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Kapuzinerstraße 25<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> 96047 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Telefon: +49 951 863 1030<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Telefax: + 49 951 863 4030<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap;&quot;&gt;"/>E-Mail: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
-      href=&quot;mailto:datenschutzbeauftragter@uni-bamberg.de&quot;&gt;"/>datenschutzbeauftragter@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">32,39</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">230,237</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5382715735122457555" datatype="html">
-        <source>4. Zweck des Projekts:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">40,41</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">238,239</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3946278533361756314" datatype="html">
-        <source>Im Rahmen des Forschungsprojekts zur datengetriebenen Studienplanung an der Fakultät Wirtschaftsinformatik und Angewandte Informatik der Universität Bamberg werden technische und organisatorische Möglichkeiten zur Verbesserung der Studienplanung untersucht. Hierbei wurde eine Webanwendung (digitaler Studienassistent) entwickelt, die die kurz- sowie langfristige Studienplanung unterstützt und in diesem Rahmen möglichst personalisierte Empfehlungen geben soll. Somit soll es beispielsweise für Studierende die Möglichkeit geben, ihren individuellen Studienverlauf in der Webanwendung zu hinterlegen, um möglichst individuelle Studien- und Modulbelegungsempfehlungen zu erhalten. Dies soll Studierenden z. B. über eine optionale Upload-Funktion eines FlexNow-Exports nach entsprechender Einverständniserklärung möglich sein. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">41,54</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8633777803400837356" datatype="html">
-        <source>5. Rechtsgrundlage für die Datenverarbeitung:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">58,59</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">246,247</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1900074515103494264" datatype="html">
-        <source>6. Details</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">62,63</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">250,251</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="510207869271830921" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Umgang mit den Daten / Art und Weise der Datenverarbeitung<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">67,68</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7105971983171376610" datatype="html">
-        <source>Die Daten werden dem digitalen Studienassistenten durch meinen Upload bereitgestellt. Die in dem Upload enthaltenen persönlichen Daten werden nicht gespeichert, siehe Inhalt der Datensätze - d.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">68,71</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4249232868009802086" datatype="html">
-        <source>Inhalt der Datensätze</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">75,76</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">260,261</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3927456965148348401" datatype="html">
-        <source>Daten zum Studium (z. B. Studiengang), Studienverlauf</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">78,79</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2992810473276044795" datatype="html">
-        <source>Prüfungsdetaildaten (z. B. Belegungssemester, Note)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">79,80</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2722040352935494619" datatype="html">
-        <source>Angemeldete Lehrveranstaltungen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">80,81</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3451242121298290000" datatype="html">
-        <source>Persönliche Daten (im FlexNow Auszug enthalten: Name, Adresse, Matrikelnummer, Geschlecht, Nationalität, Telefonnummer)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">81,83</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5386895203218404241" datatype="html">
-        <source>Ggf. Verarbeitung der Daten in anonymisierter, pseudonymisierter oder personenbezogener Form </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">88,89</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">271,272</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1485296144156104085" datatype="html">
-        <source>Daten der Kategorie (d) werden nicht gespeichert und die Verarbeitung von Daten der Kategorien (a), (b) und (c) erfolgt somit pseudonymisiert.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">91,94</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7685880417290621587" datatype="html">
-        <source>Ort der Verarbeitung der Daten u. ä.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">98,99</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">279,280</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2802642511868518325" datatype="html">
-        <source>Digitaler Studienassistent</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">99,100</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">280,281</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1007113207280910892" datatype="html">
-        <source>7. Personenkreis</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">104,105</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">285,286</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1365383340299043395" datatype="html">
-        <source>Nur Projektbeteiligte des o. g. BMBF-Forschungsprojekts VoLL-KI der Uni Bamberg (Teilprojekt „Studienplanung an der Fakultät WIAI der Universität Bamberg“) sowie das System entwickelnde Mitarbeitende des Lehrstuhls für Medieninformatik erhalten Kenntnis meiner oben genannten Daten. Diese werden nicht an Dritte weitergegeben. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">105,108</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1977324626398269269" datatype="html">
-        <source>8. Löschung</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">110,111</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">289,290</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4854462465124081990" datatype="html">
-        <source>Die Löschung meiner persönlichen oben genannten Studienverlaufsdaten ist jederzeit über eine entsprechende Funktionalität in der Anwendung möglich und wird mit Abschluss des Teilprojekts (30.11.2025) automatisch gelöscht, es sei denn, es erfolgt ein entsprechender Widerspruch.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">111,114</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1027261132635656319" datatype="html">
-        <source>9. Ihre Rechte hinsichtlich der Verarbeitung Ihrer personenbezogenen Daten:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">115,116</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">293,294</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8205875920080118032" datatype="html">
-        <source>Sie haben ein Recht auf Auskunft über die personenbezogenen Daten, die wir von Ihnen verarbeiten, sowie auf weitere mit der Verarbeitung zusammenhängende Informationen (Art. 15 DSGVO). Bitte beachten Sie, dass dieses Auskunftsrecht in bestimmten Fällen eingeschränkt oder ausgeschlossen sein kann.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">117,120</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">295,298</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4798588666324863389" datatype="html">
-        <source>Für den Fall, dass personenbezogene Daten über Sie nicht (mehr) zutreffend oder unvollständig sind, können Sie eine Berichtigung und – unter Berücksichtigung des Zwecks der Verarbeitung – Vervollständigung dieser Daten verlangen (Art. 16 DSGVO).</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">121,125</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">299,302</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5248860638783428706" datatype="html">
-        <source>Bei Vorliegen eines gesetzlichen Grundes können Sie die Löschung Ihrer personenbezogenen Daten verlangen (Art. 17 DSGVO). Dies ist insbesondere der Fall, wenn diese für die Zwecke, zu denen sie erhoben oder auf sonstige Weise verarbeitet wurden, nicht mehr notwendig sind oder eine erteilte Einwilligung zur Datenverarbeitung widerrufen wird und keine anderweitige Rechtsgrundlage für die Verarbeitung vorliegt. Das Recht auf Löschung besteht jedoch unter anderem dann nicht, wenn die Datenverarbeitung zur Wahrnehmung einer Aufgabe, die im öffentlichen Interesse liegt, erforderlich ist oder in Ausübung öffentlicher Gewalt erfolgt. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">126,137</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">304,314</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="212800797717653833" datatype="html">
-        <source>Sofern eine der gesetzlichen Voraussetzungen vorliegt, können Sie die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten verlangen (Art. 18 DSGVO). Dies hat zur Folge, dass die Daten zwar nicht gelöscht, aber gekennzeichnet werden, um ihre weitere Verarbeitung einzuschränken.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">141,146</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">319,324</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4896470153935682315" datatype="html">
-        <source>Wenn Sie in die Verarbeitung eingewilligt haben oder ein Vertrag zur Datenverarbeitung besteht und die Datenverarbeitung mithilfe automatisierter Verfahren durchgeführt wird, steht Ihnen gegebenenfalls ein Recht auf Datenübertragbarkeit zu (Art. 20 DSGVO). Dabei erhalten Sie die Daten, die Sie der Universität Bamberg zur Verfügung gestellt haben, in einem strukturierten, gängigen und elektronischen Format.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">147,154</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">325,332</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5363719285030731051" datatype="html">
-        <source>Aus Gründen, die sich aus Ihrer besonderen Situation ergeben, können Sie der Verarbeitung Sie betreffender personenbezogener Daten durch uns jederzeit widersprechen (Art. 21 DSGVO). Sofern die gesetzlichen Voraussetzungen vorliegen, verarbeiten wir in der Folge diese personenbezogenen Daten nicht mehr.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">155,159</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">333,337</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6154981629925396275" datatype="html">
-        <source>Sie haben das Recht, sich beim behördlichen Datenschutzbeauftragten der Universität Bamberg (Art. 38 Abs. 4 DSGVO) sowie bei der Aufsichtsbehörde (Art. 77 DSGVO) über die Verarbeitung Ihrer personenbezogenen Daten zu beschweren. Zuständige Aufsichtsbehörde ist der <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Bayerische Landesbeauftragte für den Datenschutz<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/><x id="START_TAG_MAT_CARD" ctype="x-mat_card" equiv-text="&lt;mat-card class=&quot;contact-card p-2&quot;&gt;"/> Prof. Dr. Thomas Petri<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Wagmüllerstraße 18, 80538 München<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Telefon: +49 89 212672 0<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap;&quot;&gt;"/>E-Mail: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
-            href=&quot;mailto:poststelle@datenschutz-bayern.de&quot;&gt;"/>poststelle@datenschutz-bayern.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_MAT_CARD" ctype="x-mat_card" equiv-text="&lt;/mat-card&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">160,176</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">338,354</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1275231071229202241" datatype="html">
-        <source>Ich bin darauf hingewiesen worden, dass im Rahmen der vorstehend genannten Zwecke meine oben genannten Daten unter Beachtung des Bayerischen Datenschutzgesetzes (BayDSG) und der EU-Datenschutz-Grundverordnung (DSGVO) verarbeitet werden.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">177,181</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">355,358</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6119426765092747546" datatype="html">
-        <source>Ich bin zudem darauf hingewiesen worden, dass die Verarbeitung meiner oben genannten Daten gemäß Art. 4 Nr. 2 DSGVO auf freiwilliger Basis erfolgt, ferner, dass ich mein Einverständnis ohne für mich nachteilige Folgen verweigern bzw. jederzeit mit Wirkung für die Zukunft widerrufen kann, wobei der Widerruf die Rechtmäßigkeit der Verarbeitung nicht rückwirkend beseitigt.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">183,189</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">361,367</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="817909477476435293" datatype="html">
-        <source>Meine Widerrufserklärung werde ich richten an:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">192,193</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">370,371</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1298731537528647273" datatype="html">
-        <source> Otto-Friedrich-Universität Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Lehrstuhl für Medieninformatik<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> An der Weberei 5, 96049 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap;&quot;&gt;"/>oder per E-Mail an: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
-        href=&quot;mailto:sekretariat.minf@uni-bamberg.de&quot;&gt;"/>sekretariat.minf@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">194,199</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3236025457223927506" datatype="html">
-        <source>gemäß Art. 6 Abs. 1 Unterabs. 1 Buchst. a, Art. 7 und 4 Nr. 11 EU-Datenschutz-Grundverordnung (DSGVO) in die Verarbeitung personenbezogener Daten in dem Projekt &quot;BaKuLe – Bamberger Kulturen der Lehre gemeinsam entwickeln (Stiftung Innovation in der Hochschullehre)&quot; der Universität Bamberg.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">204,206</context>
+          <context context-type="linenumber">12,25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3090336711565907159" datatype="html">
         <source>2. Leitung des Projekts:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">219,220</context>
+          <context context-type="linenumber">25,26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8328083789623323795" datatype="html">
-        <source> Prof. Dr. Stefan Hörmann<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Vizepräsident für Lehre und Studierende<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> An der Weberei 5, 96049 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Telefon: +49 863 1925<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap;&quot;&gt;"/>E-Mail: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
-        href=&quot;mailto:vp.lehre@uni-bamberg.de&quot;&gt;"/>vp.lehre@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <source> Prof. Dr. Stefan Hörmann<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Vizepräsident für Lehre und Studierende<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> An der Weberei 5, 96049 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Telefon: +49 863 1925<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap&quot;
+      &gt;"/>E-Mail: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:vp.lehre@uni-bamberg.de&quot;
+        &gt;"/>vp.lehre@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+      &gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span
+    &gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">221,227</context>
+          <context context-type="linenumber">27,38</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6893811128063740455" datatype="html">
-        <source>Im Rahmen des Forschungsprojekts zur individuellen Studienplanung an der Universität Bamberg werden Unterstützungsmaßnahmen zum zielorientierten und sinnstiftenden Studieren untersucht. Hierbei wird auf einer in den Projekten DiKuLe und VoLL-KI entwickelten Webanwendung (digitaler Studienassistent) aufgebaut, die die kurz- sowie langfristige Studienplanung unterstützt und in diesem Rahmen möglichst individuelle Unterstützung auf Basis des bisherigen Studienverlaufs bieten soll. Somit sollen beispielsweise studienbegleitend Vorschläge für den weiteren individuellen Bildungsweg (z. B. Kompetenzerwerb) entwickelt werden.</source>
+      <trans-unit id="4914445710115225277" datatype="html">
+        <source>3. Kontaktdaten des behördlichen Datenschutzbeauftragten:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">239,244</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8038518219939349951" datatype="html">
+        <source> Datenschutzbeauftragter der Otto-Friedrich-Universität Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Kapuzinerstraße 25<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> 96047 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Telefon: +49 951 863 1030<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Telefax: + 49 951 863 4030<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap&quot;
+      &gt;"/>E-Mail: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:datenschutzbeauftragter@uni-bamberg.de&quot;
+        &gt;"/>datenschutzbeauftragter@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+      &gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span
+    &gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">40,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5382715735122457555" datatype="html">
+        <source>4. Zweck des Projekts:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5795238759626165475" datatype="html">
+        <source> Im Rahmen des Forschungsprojekts zur individuellen Studienplanung an der Universität Bamberg werden Unterstützungsmaßnahmen zum zielorientierten und sinnstiftenden Studieren untersucht. Hierbei wird auf einer in den Projekten DiKuLe und VoLL-KI entwickelten Webanwendung (digitaler Studienassistent) aufgebaut, die die kurz- sowie langfristige Studienplanung unterstützt und in diesem Rahmen möglichst individuelle Unterstützung auf Basis des bisherigen Studienverlaufs bieten soll. Somit sollen beispielsweise studienbegleitend Vorschläge für den weiteren individuellen Bildungsweg (z. B. Kompetenzerwerb) entwickelt werden. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">54,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8633777803400837356" datatype="html">
+        <source>5. Rechtsgrundlage für die Datenverarbeitung:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1900074515103494264" datatype="html">
+        <source>6. Details</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">69,70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5877983257910508660" datatype="html">
         <source>Umgang mit den Daten / Art und Weise der Datenverarbeitung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">255,256</context>
+          <context context-type="linenumber">76,77</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6659500007605390481" datatype="html">
-        <source>Die Daten werden dem digitalen Studienassistenten nach ausdrücklicher Einwilligung über eine FlexNow-Schnittstelle bereitgestellt.</source>
+      <trans-unit id="4273005971987929461" datatype="html">
+        <source> Die Daten werden dem digitalen Studienassistenten nach ausdrücklicher Einwilligung über eine FlexNow-Schnittstelle bereitgestellt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">256,257</context>
+          <context context-type="linenumber">80,82</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6711427923889956126" datatype="html">
-        <source>Daten zum Studium, wie Studiengang, Studienstart, Status (z. B. „immatrikuliert“), Gesamt-ECTS, Notendurchschnitt</source>
+      <trans-unit id="4249232868009802086" datatype="html">
+        <source>Inhalt der Datensätze</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">263,264</context>
+          <context context-type="linenumber">86,87</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="457803776277571187" datatype="html">
-        <source>Prüfungsdetaildaten, wie belegte Module, Versuche, Status (z. B. „bestanden“), Belegungssemester, Note</source>
+      <trans-unit id="9204462536506897742" datatype="html">
+        <source> Daten zum Studium, wie Studiengang, Studienstart, Status (z. B. „immatrikuliert“), Gesamt-ECTS, Notendurchschnitt </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">265,266</context>
+          <context context-type="linenumber">90,91</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6564888229706061091" datatype="html">
-        <source>Angemeldete Lehrveranstaltungen (z. B. Wartelistenplatz)</source>
+      <trans-unit id="284046966155200119" datatype="html">
+        <source> Prüfungsdetaildaten, wie belegte Module, Versuche, Status (z. B. „bestanden“), Belegungssemester, Note </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">267,268</context>
+          <context context-type="linenumber">94,95</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4289732884275476325" datatype="html">
-        <source>Die universitäre Kennung wird lediglich zum Abruf der Datensätze über die Schnittstelle verarbeitet und serverseitig nicht gespeichert. Die anschließende Verarbeitung von Daten der Kategorien (a), (b) und (c) erfolgt pseudonymisiert.</source>
+      <trans-unit id="4982193479090535992" datatype="html">
+        <source> Angemeldete Lehrveranstaltungen (z. B. Wartelistenplatz) </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">274,276</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5443277090386410196" datatype="html">
-        <source>Nur Projektbeteiligte des o. g. Projekts mit Bezug zum digitalen Studienassistenten sowie das System entwickelnde Mitarbeitende des Lehrstuhls für Medieninformatik erhalten Kenntnis meiner oben genannten Daten. Diese werden nicht an Dritte weitergegeben.</source>
+      <trans-unit id="5386895203218404241" datatype="html">
+        <source>Ggf. Verarbeitung der Daten in anonymisierter, pseudonymisierter oder personenbezogener Form </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">286,288</context>
+          <context context-type="linenumber">106,107</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3243497470769191893" datatype="html">
-        <source>Die Löschung meiner persönlichen oben genannten Studienverlaufsdaten ist jederzeit über eine entsprechende Funktionalität in der Anwendung möglich und wird mit Abschluss des Projekts 2029 – bzw. im Falle einer Verlängerung – 2031 automatisch gelöscht, es sei denn, es erfolgt ein entsprechender Widerspruch.</source>
+      <trans-unit id="9062637598445379324" datatype="html">
+        <source> Die universitäre Kennung wird lediglich zum Abruf der Datensätze über die Schnittstelle verarbeitet und serverseitig nicht gespeichert. Die anschließende Verarbeitung von Daten der Kategorien (a), (b) und (c) erfolgt pseudonymisiert. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">290,292</context>
+          <context context-type="linenumber">111,114</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7685880417290621587" datatype="html">
+        <source>Ort der Verarbeitung der Daten u. ä.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">118,119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2802642511868518325" datatype="html">
+        <source>Digitaler Studienassistent</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">119,120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1007113207280910892" datatype="html">
+        <source>7. Personenkreis</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">124,125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5067787459898278726" datatype="html">
+        <source> Nur Projektbeteiligte des o. g. Projekts mit Bezug zum digitalen Studienassistenten sowie das System entwickelnde Mitarbeitende des Lehrstuhls für Medieninformatik erhalten Kenntnis meiner oben genannten Daten. Diese werden nicht an Dritte weitergegeben. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">126,129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1977324626398269269" datatype="html">
+        <source>8. Löschung</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">131,132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9057745635641736444" datatype="html">
+        <source> Die Löschung meiner persönlichen oben genannten Studienverlaufsdaten ist jederzeit über eine entsprechende Funktionalität in der Anwendung möglich und wird mit Abschluss des Projekts 2029 – bzw. im Falle einer Verlängerung – 2031 automatisch gelöscht, es sei denn, es erfolgt ein entsprechender Widerspruch. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">133,137</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2963657654571528739" datatype="html">
+        <source> 9. Ihre Rechte hinsichtlich der Verarbeitung Ihrer personenbezogenen Daten: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">140,141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4826396776730002370" datatype="html">
+        <source> Sie haben ein Recht auf Auskunft über die personenbezogenen Daten, die wir von Ihnen verarbeiten, sowie auf weitere mit der Verarbeitung zusammenhängende Informationen (Art. 15 DSGVO). Bitte beachten Sie, dass dieses Auskunftsrecht in bestimmten Fällen eingeschränkt oder ausgeschlossen sein kann. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">144,148</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2132644890785711793" datatype="html">
+        <source> Für den Fall, dass personenbezogene Daten über Sie nicht (mehr) zutreffend oder unvollständig sind, können Sie eine Berichtigung und – unter Berücksichtigung des Zwecks der Verarbeitung – Vervollständigung dieser Daten verlangen (Art. 16 DSGVO). </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">151,154</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8780203620214735068" datatype="html">
+        <source> Bei Vorliegen eines gesetzlichen Grundes können Sie die Löschung Ihrer personenbezogenen Daten verlangen (Art. 17 DSGVO). Dies ist insbesondere der Fall, wenn diese für die Zwecke, zu denen sie erhoben oder auf sonstige Weise verarbeitet wurden, nicht mehr notwendig sind oder eine erteilte Einwilligung zur Datenverarbeitung widerrufen wird und keine anderweitige Rechtsgrundlage für die Verarbeitung vorliegt. Das Recht auf Löschung besteht jedoch unter anderem dann nicht, wenn die Datenverarbeitung zur Wahrnehmung einer Aufgabe, die im öffentlichen Interesse liegt, erforderlich ist oder in Ausübung öffentlicher Gewalt erfolgt. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">157,165</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5017582557906014871" datatype="html">
+        <source> Sofern eine der gesetzlichen Voraussetzungen vorliegt, können Sie die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten verlangen (Art. 18 DSGVO). Dies hat zur Folge, dass die Daten zwar nicht gelöscht, aber gekennzeichnet werden, um ihre weitere Verarbeitung einzuschränken. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">169,172</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2977135105394253744" datatype="html">
+        <source> Wenn Sie in die Verarbeitung eingewilligt haben oder ein Vertrag zur Datenverarbeitung besteht und die Datenverarbeitung mithilfe automatisierter Verfahren durchgeführt wird, steht Ihnen gegebenenfalls ein Recht auf Datenübertragbarkeit zu (Art. 20 DSGVO). Dabei erhalten Sie die Daten, die Sie der Universität Bamberg zur Verfügung gestellt haben, in einem strukturierten, gängigen und elektronischen Format. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">175,180</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1452511848529669663" datatype="html">
+        <source> Aus Gründen, die sich aus Ihrer besonderen Situation ergeben, können Sie der Verarbeitung Sie betreffender personenbezogener Daten durch uns jederzeit widersprechen (Art. 21 DSGVO). Sofern die gesetzlichen Voraussetzungen vorliegen, verarbeiten wir in der Folge diese personenbezogenen Daten nicht mehr. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">183,187</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3654158335702912907" datatype="html">
+        <source> Sie haben das Recht, sich beim behördlichen Datenschutzbeauftragten der Universität Bamberg (Art. 38 Abs. 4 DSGVO) sowie bei der Aufsichtsbehörde (Art. 77 DSGVO) über die Verarbeitung Ihrer personenbezogenen Daten zu beschweren. Zuständige Aufsichtsbehörde ist der <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Bayerische Landesbeauftragte für den Datenschutz<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/><x id="START_TAG_MAT_CARD" ctype="x-mat_card" equiv-text="&lt;mat-card class=&quot;contact-card p-2&quot;&gt;"/> Prof. Dr. Thomas Petri<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Wagmüllerstraße 18, 80538 München<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Telefon: +49 89 212672 0<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap&quot;
+          &gt;"/>E-Mail: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:poststelle@datenschutz-bayern.de&quot;
+            &gt;"/>poststelle@datenschutz-bayern.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span
+        &gt;"/><x id="CLOSE_TAG_MAT_CARD" ctype="x-mat_card" equiv-text="&lt;/mat-card&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">190,208</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1275231071229202241" datatype="html">
+        <source>Ich bin darauf hingewiesen worden, dass im Rahmen der vorstehend genannten Zwecke meine oben genannten Daten unter Beachtung des Bayerischen Datenschutzgesetzes (BayDSG) und der EU-Datenschutz-Grundverordnung (DSGVO) verarbeitet werden.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">210,213</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6119426765092747546" datatype="html">
+        <source>Ich bin zudem darauf hingewiesen worden, dass die Verarbeitung meiner oben genannten Daten gemäß Art. 4 Nr. 2 DSGVO auf freiwilliger Basis erfolgt, ferner, dass ich mein Einverständnis ohne für mich nachteilige Folgen verweigern bzw. jederzeit mit Wirkung für die Zukunft widerrufen kann, wobei der Widerruf die Rechtmäßigkeit der Verarbeitung nicht rückwirkend beseitigt.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">218,223</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="817909477476435293" datatype="html">
+        <source>Meine Widerrufserklärung werde ich richten an:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
+          <context context-type="linenumber">226,227</context>
         </context-group>
       </trans-unit>
       <trans-unit id="696994374316514541" datatype="html">
-        <source> Otto-Friedrich-Universität Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Lehrstuhl für Medieninformatik<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> An der Weberei 5, 96049 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap;&quot;&gt;"/>oder per E-Mail an: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
-          href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;"/>baula.minf@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <source> Otto-Friedrich-Universität Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Lehrstuhl für Medieninformatik<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> An der Weberei 5, 96049 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap&quot;
+      &gt;"/>oder per E-Mail an: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:baula.minf@uni-bamberg.de&quot;
+        &gt;"/>baula.minf@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+      &gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span
+    &gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">372,377</context>
+          <context context-type="linenumber">228,238</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1140327701924892323" datatype="html">

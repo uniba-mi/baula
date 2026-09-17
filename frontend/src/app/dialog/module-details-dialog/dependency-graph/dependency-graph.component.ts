@@ -108,7 +108,7 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
       const module = node.data() as ModuleDetailsDependencyVisNodeSchema;
 
       // generate tooltip content
-      let content = $localize `<div class="p-2">
+      let content = `<div class="p-2">
           <strong>${module.name}</strong><br>
           <span>${module.ects} ECTS</span> | <span>${module.term}</span><br>`;
 
