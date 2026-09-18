@@ -1,6 +1,6 @@
 <mat-tab-group class="feature-wish-component">
     <!-- Make a wish + top wishes -->
-    <mat-tab label="Feature-Wunsch">
+    <mat-tab label="Feature-Wunsch" i18n-label>
         <br>
         <mat-card-content class="container-fluid d-block pt-0">
             <div class="mb-3">
@@ -8,19 +8,19 @@
             </div>
             <div class="mb-3">
                 <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>Feature-Titel</mat-label>
-                    <input matInput [(ngModel)]="title" placeholder="Gebe einen Titel ein" id="title" maxlength="200">
+                    <mat-label i18n>Feature-Titel</mat-label>
+                    <input matInput [(ngModel)]="title" placeholder="Gebe einen Titel ein" i18n-placeholder id="title" maxlength="200">
                 </mat-form-field>
             </div>
             <div class="mb-3">
                 <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>Feature-Beschreibung</mat-label>
-                    <textarea matInput [(ngModel)]="description" placeholder="Füge eine Beschreibung hinzu" rows="4"
+                    <mat-label i18n>Feature-Beschreibung</mat-label>
+                    <textarea matInput [(ngModel)]="description" placeholder="Füge eine Beschreibung hinzu" i18n-placeholder rows="4"
                         maxlength="1000"></textarea>
                 </mat-form-field>
             </div>
 
-            <button color="primary" class="w-100 btn btn-outline" (click)="submitFeatureWish()">Feature-Wunsch
+            <button color="primary" class="w-100 btn btn-outline" (click)="submitFeatureWish()" i18n>Feature-Wunsch
                 absenden</button>
 
             <!-- Error/ Succes message div -->
@@ -32,7 +32,7 @@
             </div>
 
             <mat-list>
-                <h2><i class="bi bi-trophy-fill" style="color:goldenrod;"></i> Top Feature-Wünsche</h2>
+                <h2 i18n><i class="bi bi-trophy-fill" style="color:goldenrod;"></i> Top Feature-Wünsche</h2>
                 @for (wish of topFeaturesWished; track wish) {
                 <app-single-feature-wish [wish]="wish"
                     [rank]="topFeaturesWished.indexOf(wish) + 1"></app-single-feature-wish>
@@ -41,7 +41,7 @@
         </mat-card-content>
     </mat-tab>
     <!-- All wishes -->
-    <mat-tab label="Alle Wünsche">
+    <mat-tab label="Alle Wünsche" i18n-label>
         <div class="alert alert-danger p-2 m-2" role="alert" *ngIf="allWishesErrorMessage">
             {{ allWishesErrorMessage }}
         </div>
@@ -56,7 +56,7 @@
         </div>
     </mat-tab>
     <!-- Unapproved Wishes -->
-    <mat-tab label="Deine ungenehmigten Wünsche">
+    <mat-tab label="Deine ungenehmigten Wünsche" i18n-label>
         <div class="alert alert-danger p-2 m-2" role="alert" *ngIf="usersUnapprovedWishesErrorMessage">
             {{ usersUnapprovedWishesErrorMessage }}
         </div>

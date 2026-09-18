@@ -50,23 +50,23 @@
     <div class="row">
       <nav class="col-12 col-md-3 d-flex flex-md-column flex-row mb-3 mb-md-0">
         <div class="m-2 m-sm-0 link" role="button" tabindex="0" aria-haspopup="false"
-          aria-label="Nutzerdaten bearbeiten" (click)="navigate('daten')">
+          aria-label="Nutzerdaten bearbeiten" i18n-aria-label (click)="navigate('daten')">
           <h4 id="user-data" class="mb-0" [class.selected]="activeRoute == 'daten'"><span><i
-          class="bi bi-person-circle text-gray"></i></span> <span class="label"> Nutzerdaten bearbeiten </span>
+          class="bi bi-person-circle text-gray"></i></span> <span class="label" i18n> Nutzerdaten bearbeiten </span>
         </h4>
       </div>
       <hr />
       <div class="m-2 m-sm-0 link" role="button" tabindex="0" aria-haspopup="false"
-        aria-label="Integrationen verwalten" (click)="navigate('integrationen-verwalten')">
+        aria-label="Integrationen verwalten" i18n-aria-label (click)="navigate('integrationen-verwalten')">
         <h4 id="upload-fn-study-path" class="mb-0" [class.selected]="activeRoute == 'integrationen-verwalten'"><span><i
-        class="bi bi-database-up"></i></span> <span class="label"> Datenintegrationen verwalten </span>
+        class="bi bi-database-up"></i></span> <span class="label" i18n> Datenintegrationen verwalten </span>
       </h4>
     </div>
     <hr />
     <div class="m-2 m-sm-0 link" role="button" tabindex="0" aria-haspopup="false"
-      aria-label="Einwilligung und Datenschutz" (click)="navigate('datenschutz-einwilligung')">
+      aria-label="Einwilligung und Datenschutz" i18n-aria-label (click)="navigate('datenschutz-einwilligung')">
       <h4 id="user-consents" class="mb-0" [class.selected]="activeRoute == 'datenschutz-einwilligung'">
-        <span><i class="bi bi-shield-check"></i></span> <span class="label"> Einwilligungen & Datenschutz </span>
+        <span><i class="bi bi-shield-check"></i></span> <span class="label" i18n> Einwilligungen & Datenschutz </span>
       </h4>
     </div>
   </nav>

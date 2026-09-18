@@ -40,8 +40,8 @@
               (keyup.enter)="toggleSidenav()"
               [matTooltip]="
                 sidenav.opened
-                  ? 'Modulempfehlungen einklappen'
-                  : 'Modulempfehlungen ausklappen'
+                  ? hideModuleRecommendations
+                  : showModuleRecommendations
               "
             >
               <span class="icon-wrapper">
@@ -142,9 +142,8 @@
                       } @else {
                         <i class="bi bi-eye-fill"></i>
                       }
-                      <span class="mx-2" i18n
-                        >Noten
-                        {{ studyPlanSettings.displayGrades ? "ausblenden" : "einblenden" }}</span
+                      <span class="mx-2"
+                        >{{ studyPlanSettings.displayGrades ? hideGrades : showGrades }}</span
                       >
                     </button>
 
@@ -161,10 +160,8 @@
                         <i class="bi bi-graph-up-arrow"></i>
                         {{
                           studyPlanSettings.displayProgressBar
-                            ? "ECTS Fortschritt verstecken"
-                            : "ECTS
-                      Fortschritt
-                      anzeigen"
+                            ? hideECTSProgress
+                            : showECTSProgress
                         }}
                       </button>
                     }
@@ -179,9 +176,10 @@
                       (click)="openAddSemesterDialog()"
                       (keyup.enter)="openAddSemesterDialog()"
                       matTooltip="Studiendauer verlängern"
+                      i18n-matTooltip
                       matTooltipClass="custom-tooltip"
                     >
-                      <i class="bi bi-plus-lg me-2"> Semester hinzufügen</i>
+                      <i class="bi bi-plus-lg me-2" i18n> Semester hinzufügen</i>
                     </button>
                   }
                   @if (isActivePlan$ | async) {
@@ -191,6 +189,7 @@
                       matTooltip="Klicke hier, um Planungshinweise anzuzeigen."
                       matTooltipClass="custom-tooltip"
                       aria-label="Planungshinweise anzuzeigen"
+                      i18n-aria-label
                     >
                       <i
                         class="bi bi-exclamation-triangle-fill fs-5"
@@ -207,12 +206,14 @@
                       class="sync-with-fn btn btn-primary btn-sm"
                       matTooltip="FlexNow-Auszug laden"
                       matTooltipClass="custom-tooltip"
+                      i18n-matTooltip
                       aria-label="FlexNow-Auszug laden"
                     >
                       <a
                         class="profile-link redirect"
                         (click)="importCompleteFlexNowData()"
                         (keyup.enter)="importCompleteFlexNowData()"
+                        i18n
                         ><i class="bi bi-arrow-repeat me-2"></i>Studienverlauf
                         aus FlexNow laden</a
                       >
@@ -233,6 +234,8 @@
                     [disabled]="!canScrollLeft"
                     matTooltip="Nach links scrollen"
                     aria-label="Nach links scrollen"
+                    i18n-matTooltip
+                    i18n-aria-label
                   >
                     <i class="bi bi-chevron-left"></i>
                   </button>
@@ -246,6 +249,8 @@
                     [disabled]="!canScrollRight"
                     matTooltip="Nach rechts scrollen"
                     aria-label="Nach rechts scrollen"
+                    i18n-matTooltip
+                    i18n-aria-label
                   >
                     <i class="bi bi-chevron-right"></i>
                   </button>
@@ -300,6 +305,8 @@
         href="/app/studium/ueberblick"
         class="btn btn-primary redirect link"
         aria-label="Studienverlaufsplan auswählen"
+        i18n-aria-label
+        i18n
         >Wähle hier einen vorhandenen Studienverlaufsplan aus</a
       >
     </div>

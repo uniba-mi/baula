@@ -16,6 +16,7 @@ import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import deLocale from '@fullcalendar/core/locales/de';
+// TODO: Import as english, where appropriate
 import listPlugin from '@fullcalendar/list';
 import { Course } from '../../../../../../interfaces/course';
 import {

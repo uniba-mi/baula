@@ -106,7 +106,7 @@
         @if (!isWidget) {
           <button class="btn-icon" (click)="openHints.emit()"
             matTooltip="Klicke hier um Planungshinweise anzuzeigen." matTooltipClass="custom-tooltip" appTooltip
-            aria-label="Planungshinweise anzeigen">
+            aria-label="Planungshinweise anzeigen" i18n-matTooltip i18n-aria-label>
             <i class="bi bi-exclamation-triangle-fill fs-5 me-2"
             [ngClass]="{'text-warning': hintsIconColor === 'warning', 'text-danger': hintsIconColor === 'danger', 'text-secondary': hintsIconColor === 'standard'}"></i>
           </button>
@@ -115,7 +115,7 @@
     </div>
   </div>
   @for (deletedCourse of deletedCourses; track deletedCourse.id) {
-    <div class="container mx-auto alert alert-sm alert-warning" role="alert">
+    <div class="container mx-auto alert alert-sm alert-warning" role="alert" i18n>
       Die Lehrveranstaltung "{{ deletedCourse.name ? deletedCourse.name : deletedCourse.id }}" wurde in UnivIS gelöscht
       und ist nicht mehr verfügbar.
       <span class="ms-2 delete-link" aria-label="Lehrveranstaltung abwählen" tabindex="0" i18n-aria-label
