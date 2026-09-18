@@ -27,11 +27,11 @@ export class ReportingComponent implements OnInit {
   columns = [
     {
       key: 'name',
-      name: 'Studiengang',
+      name: $localize`Studiengang`,
     },
     {
       key: 'count',
-      name: 'Häufigkeit',
+      name: $localize`Häufigkeit`,
     },
   ];
 
@@ -47,25 +47,25 @@ export class ReportingComponent implements OnInit {
           type: 'meta',
           spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
           cardData: {
-            title: 'Allgemeines',
+            title: $localize`Allgemeines`,
             items: [
               {
                 iconClass: 'bi-people-fill',
-                name: 'User insgesamt:',
+                name: $localize`User insgesamt:`,
                 data: report.allUsers,
               },
               {
                 iconClass: 'bi-person-fill-check',
-                name: 'User (aktiv):',
+                name: $localize`User (aktiv):`,
                 data: report.activeUsers,
-                tooltip: 'Anzahl der User, die im letzten Monat aktiv waren',
+                tooltip: $localize`Anzahl der User, die im letzten Monat aktiv waren`,
               },
               {
                 iconClass: 'bi-journal-text',
-                name: 'Studienpläne (aktiv):',
+                name: $localize`Studienpläne (aktiv):`,
                 data: report.frequencyStudyPlans,
                 tooltip:
-                  'Anzahl der Studienpläne, die im letzten Monat geändert wurden',
+                  $localize`Anzahl der Studienpläne, die im letzten Monat geändert wurden`,
               },
             ],
             reportData: report,
@@ -77,7 +77,7 @@ export class ReportingComponent implements OnInit {
           type: 'bar',
           spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
           cardData: {
-            title: 'Häufigkeit Modulstatus',
+            title: $localize`Häufigkeit Modulstatus`,
             xLabels: report.frequencyModuleStatus.map((item) =>
               item.name.toString(),
             ),
@@ -100,7 +100,7 @@ export class ReportingComponent implements OnInit {
           type: 'bar',
           spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
           cardData: {
-            title: 'Häufigkeit Studienpläne (Cluster)',
+            title: $localize`Häufigkeit Studienpläne (Cluster)`,
             xLabels: report.frequencyStudyPlansClustered.map((item) =>
               item.name.toString(),
             ),
@@ -120,7 +120,7 @@ export class ReportingComponent implements OnInit {
           type: 'table',
           spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
           cardData: {
-            title: 'Aktualität User',
+            title: $localize`Aktualität User`,
             data: report.lastActiveUsersHistory,
             columnKeys: this.columnKeys,
             columns: this.columns,
@@ -132,7 +132,7 @@ export class ReportingComponent implements OnInit {
           type: 'table',
           spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
           cardData: {
-            title: 'Häufigkeit Startsemester',
+            title: $localize`Häufigkeit Startsemester`,
             data: report.frequencyStartSemester,
             columnKeys: this.columnKeys,
             columns: this.columns,
@@ -144,7 +144,7 @@ export class ReportingComponent implements OnInit {
           type: 'table',
           spacingClasses: 'col-12 col-md-6 col-lg-4 my-2',
           cardData: {
-            title: 'Häufigkeit Abgeschlossene Module',
+            title: $localize`Häufigkeit Abgeschlossene Module`,
             data: report.frequencyModulesAsCompleted,
             columnKeys: this.columnKeys,
             columns: this.columns,
@@ -157,7 +157,7 @@ export class ReportingComponent implements OnInit {
           type: 'bar',
           spacingClasses: 'col-12 col-md-6 my-2',
           cardData: {
-            title: 'Häufigkeit Studiendauer',
+            title: $localize`Häufigkeit Studiendauer`,
             xLabels: sortedDuration.map((item) =>
               item.name ? item.name.toString() : 'Null',
             ),
@@ -175,7 +175,7 @@ export class ReportingComponent implements OnInit {
           type: 'bar',
           spacingClasses: 'col-12 col-md-6 my-2',
           cardData: {
-            title: 'Häufigkeit Abgeschlossene Module (Cluster)',
+            title: $localize`Häufigkeit Abgeschlossene Module (Cluster)`,
             xLabels: report.frequencyCompletedModules.map((item) =>
               item.name.toString(),
             ),
@@ -195,7 +195,7 @@ export class ReportingComponent implements OnInit {
           type: 'table',
           spacingClasses: 'col-12 col-md-6 my-2',
           cardData: {
-            title: 'Häufigkeit Studiengang',
+            title: $localize`Häufigkeit Studiengang`,
             data: report.frequencyStudyProgrammes,
             columnKeys: this.columnKeys,
             columns: this.columns,
@@ -207,7 +207,7 @@ export class ReportingComponent implements OnInit {
           type: 'table',
           spacingClasses: 'col-12 col-md-6 my-2',
           cardData: {
-            title: 'Häufigkeit Lehrveranstaltungen',
+            title: $localize`Häufigkeit Lehrveranstaltungen`,
             data: report.frequencyPlannedCourses,
             columnKeys: this.columnKeys,
             columns: this.columns,

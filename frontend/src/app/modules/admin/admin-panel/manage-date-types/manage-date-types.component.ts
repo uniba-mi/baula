@@ -37,7 +37,7 @@ export class ManageDateTypesComponent {
   openCreateDialog() {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {
-        dialogTitle: 'Neuen Zeitraumtyp anlegen',
+        dialogTitle: $localize `Neuen Zeitraumtyp anlegen`,
         dialogContentId: 'date-type-dialog',
       },
     });
@@ -59,7 +59,7 @@ export class ManageDateTypesComponent {
   openEditDialog(element: DateType) {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {
-        dialogTitle: 'Zeitraumtyp bearbeiten',
+        dialogTitle: $localize `Zeitraumtyp bearbeiten`,
         dialogContentId: 'date-type-dialog',
         dateType: element,
       },
@@ -87,7 +87,7 @@ export class ManageDateTypesComponent {
   openDeleteDialog(element: DateType) {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {
-        dialogTitle: 'Zeitraumtyp löschen',
+        dialogTitle: $localize `Zeitraumtyp löschen`,
         dialogContentId: 'delete-dialog',
       },
     });

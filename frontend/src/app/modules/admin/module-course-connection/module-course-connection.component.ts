@@ -319,7 +319,7 @@ export class ModuleCourseConnectionComponent implements OnInit {
   connectCourses2Modulcourses() {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {
-        dialogTitle: 'Module und Lehrveranstaltungen werden verknüpft...',
+        dialogTitle: $localize `Module und Lehrveranstaltungen werden verknüpft...`,
         dialogContentId: 'univis-crawl-dialog',
         univisCrawl$: this.rest.initConnectionCourses2Modules(),
       },

@@ -4,7 +4,7 @@
   aria-label="Dialogfenster"
 >
   @if (!formInitialised) {
-    <p>
+    <p i18n>
       Bitte wähle alle Module oder Platzhalter an, die du in den Studienverlauf
       übernehmen möchtest und klicke auf weiter.
     </p>
@@ -21,16 +21,16 @@
         (keyup.enter)="syncWithFlexNow()"
       >
         @if (flexNowSyncLoading) {
-          <i class="bi bi-arrow-repeat"></i> Wird abgeglichen...
+          <i class="bi bi-arrow-repeat"></i> <span i18n>Wird abgeglichen...</span>
         } @else {
-          <i class="bi bi-cloud-download"></i> Mit FlexNow abgleichen
+          <i class="bi bi-cloud-download"></i> <span i18n>Mit FlexNow abgleichen</span>
         }
       </button>
       @if (flexNowSyncDone && !flexNowSyncLoading) {
-        <span class="ms-2 text-gray"
-          ><i class="bi bi-check-circle text-success"></i> Abgleich
-          abgeschlossen</span
-        >
+        <span class="ms-2 text-gray">
+          <i class="bi bi-check-circle text-success"></i> 
+          <span i18n>Abgleich abgeschlossen</span>
+        </span>
       }
       @if (flexNowSyncError) {
         <span class="ms-2 text-red"
@@ -44,11 +44,9 @@
   @if (!formInitialised) {
     <!-- Table -->
     <div class="mt-3 p-0 rounded bg-white">
-      <div
-        class="row my-auto py-3 px-1 d-none d-sm-flex fw-bold text-gray border"
-      >
-        <div class="col-8 text-gray">Kürzel/Name</div>
-        <div class="col-4 text-gray">Übernehmen</div>
+      <div class="row my-auto py-3 px-1 d-none d-sm-flex fw-bold text-gray border">
+        <div class="col-8 text-gray" i18n>Kürzel/Name</div>
+        <div class="col-4 text-gray" i18n>Übernehmen</div>
       </div>
       @if (missingModules.length > 0) {
         <div>
@@ -110,12 +108,11 @@
   }
 
   @if (formInitialised && formData) {
-    <p>
-      Bitte prüfe bzw. ergänze unten aufgeführte Module und Platzhalter. Wenn du
-      alles vervollständigt hast und auf "Speichern" klickst, wird das Semester
-      abgeschlossen, als vergangen markiert und somit deine Belegungen zum
-      Studienverlauf hinzugefügt. Die Module sind dann
-      <b>nicht mehr veränderbar</b>.
+    <p i18n>Bitte prüfe bzw. ergänze unten aufgeführte Module und Platzhalter. Wenn du
+      alles
+      vervollständigt hast und
+      auf "Speichern" klickst, wird das Semester abgeschlossen, als vergangen markiert und somit deine Belegungen zum
+      Studienverlauf hinzugefügt. Die Module sind dann <b>nicht mehr veränderbar</b>.
     </p>
   }
 
@@ -167,25 +164,17 @@
                 <!-- Basic Module Information -->
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline" class="mt-1">
-                    <mat-label>Kürzel</mat-label>
-                    <input
-                      matInput
-                      formControlName="acronym"
-                      #acronym
-                      required
-                    />
-                    @if (
-                      getFormGroup(getFormKey(module, i)).get("acronym")
-                        ?.touched &&
-                      getFormGroup(getFormKey(module, i)).get("acronym")
-                        ?.invalid
-                    ) {
-                      <mat-error>
-                        @if (
-                          getFormGroup(getFormKey(module, i)).get("acronym")
-                            ?.errors?.required
-                        ) {
-                          <span>Das ist ein Pflichtfeld.</span>
+                    <mat-label i18n>Kürzel</mat-label>
+                    <input matInput formControlName="acronym" #acronym required>
+                    @if (getFormGroup(getFormKey(module, i)).get('acronym')?.touched && getFormGroup(getFormKey(module, i)).get('acronym')?.invalid) {
+                      <mat-error
+                        >
+                        @if (getFormGroup(getFormKey(module, i)).get('acronym')?.errors?.required) {
+                          <span i18n
+                            >Das
+                            ist
+                            ein
+                          Pflichtfeld.</span>
                         }
                       </mat-error>
                     }
@@ -193,55 +182,43 @@
                   <i
                     class="bi bi-info-circle"
                     matTooltip="Hier kannst du ein Kürzel eingeben, um dein Modul wiederzuerkennen. Am besten verwendest du eine übliche Modulbezeichnung."
-                    matTooltipClass="custom-tooltip"
-                    appTooltip
-                  ></i>
+                  matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip></i>
                 </div>
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline">
                     <mat-label>Name</mat-label>
-                    <input matInput formControlName="name" #name required />
-                    @if (
-                      getFormGroup(getFormKey(module, i)).get("name")
-                        ?.touched &&
-                      getFormGroup(getFormKey(module, i)).get("name")?.invalid
-                    ) {
-                      <mat-error>
-                        @if (
-                          getFormGroup(getFormKey(module, i)).get("name")
-                            ?.errors?.required
-                        ) {
-                          <span>Das ist ein Pflichtfeld.</span>
+                    <input matInput formControlName="name" #name required>
+                    @if (getFormGroup(getFormKey(module, i)).get('name')?.touched && getFormGroup(getFormKey(module, i)).get('name')?.invalid) {
+                      <mat-error
+                        >
+                        @if (getFormGroup(getFormKey(module, i)).get('name')?.errors?.required) {
+                          <span i18n>Das
+                            ist ein
+                          Pflichtfeld.</span>
                         }
                       </mat-error>
                     }
                   </mat-form-field>
-                  <i
-                    class="bi bi-info-circle"
-                    matTooltip="Lege einen Namen für das Modul fest."
-                    matTooltipClass="custom-tooltip"
-                    appTooltip
-                  ></i>
+                  <i class="bi bi-info-circle" matTooltip="Lege einen Namen für das Modul fest."
+                  matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip></i>
                 </div>
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline">
-                    <mat-label>Status</mat-label>
+                    <mat-label i18n>Status</mat-label>
                     <mat-select formControlName="status" #status required>
-                      <mat-option value="passed">Bestanden</mat-option>
-                      <mat-option value="failed">Nicht bestanden</mat-option>
-                      <mat-option value="taken">Belegt</mat-option>
+                      <mat-option value="passed" i18n>Bestanden</mat-option>
+                      <mat-option value="failed" i18n>Nicht bestanden</mat-option>
+                      <mat-option value="taken" i18n="Das Modul wurde Belegt">Belegt</mat-option>
                     </mat-select>
-                    @if (
-                      getFormGroup(getFormKey(module, i)).get("status")
-                        ?.touched &&
-                      getFormGroup(getFormKey(module, i)).get("status")?.invalid
-                    ) {
-                      <mat-error>
-                        @if (
-                          getFormGroup(getFormKey(module, i)).get("status")
-                            ?.errors?.required
-                        ) {
-                          <span>Das ist ein Pflichtfeld.</span>
+                    @if (getFormGroup(getFormKey(module, i)).get('status')?.touched && getFormGroup(getFormKey(module, i)).get('status')?.invalid) {
+                      <mat-error
+                        >
+                        @if (getFormGroup(getFormKey(module, i)).get('status')?.errors?.required) {
+                          <span i18n
+                            >Das
+                            ist
+                            ein
+                          Pflichtfeld.</span>
                         }
                       </mat-error>
                     }
@@ -255,7 +232,7 @@
                 </div>
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline">
-                    <mat-label>ECTS</mat-label>
+                    <mat-label i18n>ECTS</mat-label>
                     <input
                       matInput
                       formControlName="ects"
@@ -277,7 +254,7 @@
                           getFormGroup(getFormKey(module, i)).get("ects")
                             ?.errors?.max
                         ) {
-                          <span
+                          <span i18n
                             >Die ECTS müssen mindestens 0 und maximal 30 sein.
                             Gib 0 ECTS an, wenn das Modul eine freiwillige
                             Zusatzleistung ist.</span
@@ -287,7 +264,7 @@
                           getFormGroup(getFormKey(module, i)).get("ects")
                             ?.errors?.required
                         ) {
-                          <span>Das ist ein Pflichtfeld.</span>
+                          <span i18n>Das ist ein Pflichtfeld.</span>
                         }
                       </mat-error>
                     }
@@ -297,11 +274,12 @@
                     matTooltip="Gib hier die ECTS ein. Die ECTS müssen mindestens 0 und maximal 30 sein. Gib 0 ECTS an, wenn das Modul eine freiwillige Zusatzleistung ist."
                     matTooltipClass="custom-tooltip"
                     appTooltip
+                    i18n-matTooltip
                   ></i>
                 </div>
                 <div class="input-field-wrapper">
                   <mat-form-field appearance="outline">
-                    <mat-label>Note</mat-label>
+                    <mat-label i18n>Note</mat-label>
                     <input
                       matInput
                       formControlName="grade"
@@ -320,7 +298,7 @@
                           getFormGroup(getFormKey(module, i)).get("grade")
                             ?.errors?.max
                         ) {
-                          <span
+                          <span i18n
                             >Die Note muss zwischen 1,0 und 4,0 liegen.
                           </span>
                         }
@@ -328,7 +306,7 @@
                           getFormGroup(getFormKey(module, i)).get("grade")
                             ?.errors?.pattern
                         ) {
-                          <span>
+                          <span i18n>
                             Bitte gib eine gültige Zahl ein (z. B. 2, 2.5).
                           </span>
                         }
@@ -411,7 +389,7 @@
                       matStepperPrevious
                     >
                       <i class="bi bi-arrow-left"></i>
-                      <span class="d-none d-sm-inline">Vorheriges Modul</span>
+                      <span class="d-none d-sm-inline" i18n>Vorheriges Modul</span>
                     </button>
                   }
                   @if (i !== getSelectedModules().length - 1) {
@@ -421,7 +399,7 @@
                       matStepperNext
                       [disabled]="!getFormGroup(getFormKey(module, i)).valid"
                     >
-                      <span class="d-none d-sm-inline">Nächstes Modul</span>
+                      <span class="d-none d-sm-inline" i18n>Nächstes Modul</span>
                       <i class="bi bi-arrow-right"></i>
                     </button>
                   }
@@ -434,6 +412,7 @@
                     [mat-dialog-close]="getData()"
                     (click)="close('data')"
                     (keyup.enter)="close('data')"
+                    i18n
                   >
                     Speichern
                   </button>
@@ -452,7 +431,7 @@
       </mat-horizontal-stepper>
     } @else {
       <mat-card appearance="outlined" class="my-3 p-4">
-        <p>
+        <p i18n>
           Es liegen keine Module oder Platzhalter zur Übernahme in den
           Studienverlauf vor.
         </p>
@@ -467,6 +446,7 @@
         class="btn btn-primary mt-3"
         (click)="startStepper()"
         (keyup.enter)="startStepper()"
+        i18n
       >
         Weiter
       </button>
@@ -476,11 +456,12 @@
         class="btn btn-outline mt-3"
         (click)="stopStepper()"
         (keyup.enter)="stopStepper()"
+        i18n
       >
         Zurück
       </button>
     }
-    <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+    <button mat-raised-button class="btn btn-outline" mat-dialog-close i18n>
       Abbrechen
     </button>
     @if (formInitialised && !formData) {

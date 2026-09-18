@@ -82,20 +82,21 @@ export class ModuleOverviewComponent
   groupingOptions: Option[] = [
     {
       value: 'struktur',
-      name: 'Modulgruppe',
+      name: $localize`Modulgruppe`,
       key: '',
       selected: true,
     },
     {
       value: 'chair',
-      name: 'Lehrstuhl',
+      name: $localize`Lehrstuhl`,
       key: '',
     },
   ];
   moduleHint: string = 'module-hint';
   moduleHintMessage: string =
-    'Hier siehst du alle Module, die in deinem Modulhandbuch vorhanden sind. Module sind thematische Blöcke, die du in deinen Studienverlaufsplan einplanen kannst. Module können wiederum Lehrveranstaltungen enthalten, die du unter Stundenplanung in deinen Stundenplan deines aktuellen Semesters einplanen kannst.';
-  filterList: OptionGroup[] = [
+    $localize `Hier siehst du alle Module, die in deinem Modulhandbuch vorhanden sind. Module sind thematische Blöcke, die du in deinen Studienverlaufsplan einplanen kannst. Module können wiederum Lehrveranstaltungen enthalten, die du unter Stundenplanung in deinen Stundenplan deines aktuellen Semesters einplanen kannst.`;
+  // TODO: Can following be translated?
+    filterList: OptionGroup[] = [
     {
       name: 'Angebotssemester',
       options: [

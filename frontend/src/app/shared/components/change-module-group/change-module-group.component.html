@@ -1,7 +1,7 @@
 @if (structuredModuleGroups) {
   <mat-form-field appearance="outline">
     <mat-label>Modulgruppe</mat-label>
-    <mat-select #mgForm [formControl]="selectedModuleGroup" [value]="mgId" placeholder="Bitte wählen"
+    <mat-select #mgForm [formControl]="selectedModuleGroup" [value]="mgId" placeholder="Bitte wählen" i18n-placeholder
       (selectionChange)="select(mgForm.value)">
       @for (group of structuredModuleGroups; track group) {
         <mat-option [value]="group.mgId"

@@ -81,13 +81,13 @@ export class UserEffects {
                   tap(() => {
                     this.snackbar.openSnackBar({
                       type: AlertType.SUCCESS,
-                      message: 'Nutzereinstellungen erfolgreich aktualisiert.',
+                      message: $localize `Nutzereinstellungen erfolgreich aktualisiert.`,
                     });
                   }),
                   catchError((error) => {
                     this.snackbar.openSnackBar({
                       type: AlertType.DANGER,
-                      message: 'Nutzereinstellungen konnten nicht gespeichert werden!',
+                      message: $localize `Nutzereinstellungen konnten nicht gespeichert werden!`,
                     });
                     return of(UserActions.updateUserFailure({ error }));
                   }),
@@ -107,7 +107,7 @@ export class UserEffects {
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Modul wurde aktualisiert',
+              message: $localize `Modul wurde aktualisiert`,
             });
           }),
           catchError((error) =>
@@ -129,13 +129,13 @@ export class UserEffects {
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Modul(e) wurden aktualisiert',
+              message: $localize `Modul(e) wurden aktualisiert`,
             });
           }),
           catchError((error) => {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
-              message: 'Modul(e) konnten nicht aktualisiert werden.',
+              message: $localize `Modul(e) konnten nicht aktualisiert werden.`,
             });
             return of(StudyPathActions.updateStudyPathFailure({ error }));
           }),
@@ -171,13 +171,13 @@ export class UserEffects {
             );
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Das Modulhandbuch wurde erfolgreich aktualisiert.',
+              message: $localize `Das Modulhandbuch wurde erfolgreich aktualisiert.`,
             });
           }),
           catchError((error) => {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
-              message: 'Das Modulhandbuch konnte nicht aktualisiert werden!',
+              message: $localize `Das Modulhandbuch konnte nicht aktualisiert werden!`,
             });
             return of(UserActions.updateUserFailure({ error }));
           }),
@@ -206,13 +206,13 @@ export class UserEffects {
             tap(() => {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
-                message: 'Semester wurde abgeschlossen',
+                message: $localize `Semester wurde abgeschlossen`,
               });
             }),
             catchError((error) => {
               this.snackbar.openSnackBar({
                 type: AlertType.DANGER,
-                message: 'Semester konnte nicht abgeschlossen werden.',
+                message: $localize `Semester konnte nicht abgeschlossen werden.`,
               });
               return of(StudyPathActions.finishSemesterFailure({ error }));
             }),
@@ -288,7 +288,7 @@ export class UserEffects {
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Feedback wurde aktualisiert.',
+              message: $localize `Feedback wurde aktualisiert.`,
             });
 
             // use feedback
@@ -403,16 +403,16 @@ export class UserEffects {
             this.snackbar.openSnackBar(
               {
                 type: AlertType.SUCCESS,
-                message: 'Modul wird nicht mehr vorgeschlagen.',
+                message: $localize `Modul wird nicht mehr vorgeschlagen.`,
               },
-              'Unter Personalisierung rückgängig machen',
+              $localize `Unter Personalisierung rückgängig machen`,
               () => this.router.navigate(['/app/personalisierung/blacklist']),
             );
           }),
           catchError((error) => {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
-              message: 'Modul nicht mehr vorschlagen fehlgeschlagen.',
+              message: $localize `Modul nicht mehr vorschlagen fehlgeschlagen.`,
             });
             return of(
               ExcludedModuleActions.toggleExcludedModuleFailure({
@@ -450,14 +450,14 @@ export class UserEffects {
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Die Kompetenzziele wurden erfolgreich aktualisiert.',
+              message: $localize `Die Kompetenzziele wurden erfolgreich aktualisiert.`,
             });
           }),
           catchError((error) => {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
               message:
-                'Die Ziele konnten nicht gespeichert werden. Bitte versuchen Sie es erneut!',
+                $localize `Die Ziele konnten nicht gespeichert werden. Bitte versuchen Sie es erneut!`,
             });
             return of(
               CompetenceAimsActions.updateCompetenceAimsFailure({ error }),
@@ -479,7 +479,7 @@ export class UserEffects {
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Modul wurde gelöscht.',
+              message: $localize `Modul wurde gelöscht.`,
             });
           }),
           catchError((error) =>
@@ -501,7 +501,7 @@ export class UserEffects {
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Feedback wurde gelöscht.',
+              message: $localize `Feedback wurde gelöscht.`,
             });
 
             // delete corresponding recommendations
@@ -514,7 +514,7 @@ export class UserEffects {
           catchError((error) => {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
-              message: 'Feedback konnte nicht gelöscht werden.',
+              message: $localize `Feedback konnte nicht gelöscht werden.`,
             });
             return of(UserActions.deleteModuleFeedbackFailure({ error }));
           }),
@@ -532,13 +532,13 @@ export class UserEffects {
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Dein Studienverlauf wurde erfolgreich gelöscht.',
+              message: $localize `Dein Studienverlauf wurde erfolgreich gelöscht.`,
             });
           }),
           catchError((error) => {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
-              message: 'Dein Studienverlauf konnte nicht gelöscht werden.',
+              message: $localize `Dein Studienverlauf konnte nicht gelöscht werden.`,
             });
             return of(StudyPathActions.deleteStudyPathFailure({ error }));
           }),
@@ -612,7 +612,7 @@ export class UserEffects {
           tap(() =>
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: `Der Job "${props.job.title}" wurde erfolgreich hinzugefügt.`,
+              message: $localize `Der Job "${props.job.title}" wurde erfolgreich hinzugefügt.`,
             }),
           ),
           catchError((error) => {
@@ -632,7 +632,7 @@ export class UserEffects {
           tap(() =>
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Der Job wurde erfolgreich gelöscht.',
+              message: $localize `Der Job wurde erfolgreich gelöscht.`,
             }),
           ),
           catchError((error) => {

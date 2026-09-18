@@ -10,6 +10,7 @@ import { RestService } from 'src/app/rest.service';
 import { AuthService } from '../auth/auth.service';
 import { config } from 'src/environments/config.local';
 import { AlertType } from '../classes/alert';
+import { LocaleService } from './locale.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ export class UserUpdateService {
   private snackbar = inject(SnackbarService);
   private rest = inject(RestService);
   private auth = inject(AuthService);
+  private locale = inject(LocaleService);
 
   private availableHints: Hint[] = [
     { key: 'module-hint', hasConfirmed: false },
@@ -163,11 +165,11 @@ export class UserUpdateService {
       )
       .subscribe((success) => {
         if (success) {
-          document.location.href = config.homeUrl;
+          document.location.href = this.locale.localizeUrl(config.homeUrl);
         } else {
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
-            message: 'Es ist ein Fehler beim Löschen aufgetreten.',
+            message: $localize `Es ist ein Fehler beim Löschen aufgetreten.`,
           });
         }
       });

@@ -133,7 +133,7 @@ export class DependencyGraphComponent implements OnInit, AfterViewInit {
 
         content += `<span>${statusText} (${semester})</span>`;
         if (module.status.grade) {
-          content += ` | <span>Note: ${module.status.grade}</span>`;
+          content += $localize ` | <span>Note: ${module.status.grade}</span>`;
         }
       }
 

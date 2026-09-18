@@ -51,24 +51,24 @@ export class SemesterCardComponent {
   displayGrades$: Observable<boolean>;
 
   actionConfig: Record<ItemActionName, ActionConfig> = {
-    feedback: { icon: 'bi-chat-dots', text: 'Feedback', showInMenu: true },
-    edit: { icon: 'bi-pencil', text: 'Bearbeiten', showInMenu: true },
-    delete: { icon: 'bi-trash3', text: 'Löschen', showInMenu: true },
+    feedback: { icon: 'bi-chat-dots', text: $localize`Feedback`, showInMenu: true },
+    edit: { icon: 'bi-pencil', text: $localize`Bearbeiten`, showInMenu: true },
+    delete: { icon: 'bi-trash3', text: $localize`Löschen`, showInMenu: true },
     changeMG: {
       icon: 'bi-pencil',
-      text: 'Modulgruppe bearbeiten',
+      text: $localize`Modulgruppe bearbeiten`,
       showInMenu: false,
     },
     editGrade: {
       icon: 'bi-pencil',
-      text: 'Note bearbeiten',
+      text: $localize`Note bearbeiten`,
       showInMenu: false,
     },
-    select: { icon: 'bi-cursor', text: 'Auswählen', showInMenu: false },
-    drag: { icon: 'bi-arrows-move', text: 'Verschieben', showInMenu: false },
+    select: { icon: 'bi-cursor', text: $localize`Auswählen`, showInMenu: false },
+    drag: { icon: 'bi-arrows-move', text: $localize`Verschieben`, showInMenu: false },
     moveToSem: {
       icon: 'bi-arrows-move',
-      text: 'Verschieben',
+      text: $localize`Verschieben`,
       showInMenu: true,
     },
   };
@@ -153,7 +153,7 @@ export class SemesterCardComponent {
     ) {
       this.snackbarService.openSnackBar({
         message:
-          'Dieses Modul ist nicht mehr in der aktuellen Version vorhanden und kann nicht verschoben oder angesehen werden. Wenn du es entfernen möchtest, kannst du es löschen oder stattdessen einen Platzhalter anlegen.',
+          $localize `Dieses Modul ist nicht mehr in der aktuellen Version vorhanden und kann nicht verschoben oder angesehen werden. Wenn du es entfernen möchtest, kannst du es löschen oder stattdessen einen Platzhalter anlegen.`,
         type: AlertType.DANGER,
       });
     }

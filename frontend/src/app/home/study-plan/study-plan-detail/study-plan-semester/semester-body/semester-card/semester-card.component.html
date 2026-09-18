@@ -5,6 +5,7 @@
   }"
   tabindex="0"
   aria-label="Tabellenzeile mit Modulinformationen"
+  i18n-aria-label
   (click)="
     availableActions.includes('select') &&
       moduleType !== 'userGeneratedModule' &&
@@ -56,6 +57,7 @@
             <i
               class="bi bi-exclamation-triangle ms-2 text-red"
               matTooltip="Dieses Modul ist in deinem aktuellen Modulhandbuch nicht mehr vorhanden."
+              i18n-matTooltip
             >
             </i>
           }
@@ -83,6 +85,7 @@
           aria-expanded="false"
           tabindex="0"
           aria-label="Kontextmenu für weitere Aktionen öffnen"
+          i18n-aria-label
           (click)="$event.stopPropagation()"
           (keyup.enter)="$event.stopPropagation()"
           [matMenuTriggerFor]="contextMenu"
@@ -131,7 +134,7 @@
       @case ("userGeneratedModule") {
         <div class="text-start flex-fill text-gray">
           <div class="notes-field border">
-            <b>Notizen:</b> {{ moduleData.notes }}
+            <b i18n>Notizen:</b> {{ moduleData.notes }}
           </div>
         </div>
       }
@@ -153,11 +156,12 @@
           (click)="triggerAction('changeMG', null, $event)"
           (keyup.enter)="triggerAction('changeMG', null, $event)"
           matTooltip="Bitte wähle eine Modulgruppe, damit Modulgruppengrenzen bei der Einplanung berücksichtigt werden können."
+          i18n-matTooltip
         >
           @if (getModulePath(moduleData.mgId) | async; as modulePath) {
             <span>{{ modulePath }}</span>
           } @else {
-            <span class="text-gray no-mg-warning">
+            <span class="text-gray no-mg-warning" i18n>
               <i class="bi bi-exclamation-triangle ms-2 text-red"></i>
               Bitte wähle eine Modulgruppe
             </span>
@@ -172,8 +176,8 @@
 
       <!-- so ECTS stick to the right in any case -->
       @if (moduleType === "module" && moduleData.type === "Pflichtmodul") {
-        <div matTooltip="Das ist ein Pflichtmodul" class="compulsory-icon">
-          <i>P</i>
+        <div matTooltip="Das ist ein Pflichtmodul" class="compulsory-icon" i18n-matTooltip>
+          <i i18n="P steht für Pflichtmodul">P</i>
         </div>
       }
 
@@ -188,7 +192,7 @@
               (keyup.enter)="triggerAction('editGrade', null, $event)"
             >
               @if (moduleData.grade) {
-                <span class="grade">Note: {{ moduleData.grade }}</span>
+                <span class="grade" i18n>Note: {{ moduleData.grade }}</span>
               } @else {
                 <i class="bi bi-question-circle"></i>
               }
@@ -200,13 +204,13 @@
 
     <!-- Badge for flexNowImported -->
     @if (moduleData.flexNowImported) {
-      <button class="btn btn-outline chip secondary-chip px-2" disabled>
+      <button class="btn btn-outline chip secondary-chip px-2" disabled i18n>
         Quelle: FlexNow
       </button>
     }
 
     <!-- ECTS Column -->
-    <button class="btn btn-outline chip ects-chip px-2" disabled>
+    <button class="btn btn-outline chip ects-chip px-2" disabled i18n>
       {{ moduleData.ects }} ECTS
     </button>
   </div>

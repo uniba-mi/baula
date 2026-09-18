@@ -58,7 +58,7 @@ export class ConnectionCardComponent {
   ) {
     // the dialog gets this exact object and sets hasChanges on it when it writes something
     const data: AdminDialogData = {
-      dialogTitle: 'Verknüpfung von Modul zu Lehrveranstaltung bearbeiten',
+      dialogTitle: $localize `Verknüpfung von Modul zu Lehrveranstaltung bearbeiten`,
       dialogContentId: 'edit-connection-dialog',
       mCourse,
       semester: this.semester,

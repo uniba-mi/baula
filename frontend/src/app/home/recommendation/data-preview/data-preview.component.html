@@ -32,7 +32,7 @@
               </ul>
             }
             <div class="btn-link w-100 mb-0 text-center" [routerLink]="routeLink">
-              <i class="bi bi-arrow-up-right-square me-2"></i>Alle verwalten
+              <i class="bi bi-arrow-up-right-square me-2" i18n></i>Alle verwalten
             </div>
           </div>
         </div>
@@ -51,9 +51,9 @@
       <div class="empty-state d-flex align-items-center justify-content-center p-4">
         <div class="text-center">
           <i class="bi bi-info-circle fs-1 text-muted mb-3"></i>
-          <p class="text-muted mb-3">Füge hier interessante Themenfelder und Jobs hinzu, um etwas zu sehen und
+          <p class="text-muted mb-3" i18n>Füge hier interessante Themenfelder und Jobs hinzu, um etwas zu sehen und
           Modulempfehlungen zu erhalten.</p>
-          <a class="btn btn-primary" [routerLink]="routeLink">
+          <a class="btn btn-primary" [routerLink]="routeLink" i18n>
             {{ title }} hinzufügen
           </a>
         </div>

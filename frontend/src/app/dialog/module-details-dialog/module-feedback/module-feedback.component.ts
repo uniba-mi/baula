@@ -27,22 +27,22 @@ export class ModuleFeedbackComponent {
   questions = [
     {
       id: 'similarmods',
-      label: 'Möchtest du inhaltlich ähnliche Module belegen?',
+      label: $localize `Möchtest du inhaltlich ähnliche Module belegen?`,
     },
     {
       id: 'similarchair',
       label:
-        'Möchtest du weitere Module dieses oder eines fachlich verwandten Lehrstuhls belegen?',
+        $localize `Möchtest du weitere Module dieses oder eines fachlich verwandten Lehrstuhls belegen?`,
     },
     {
       id: 'priorknowledge',
       label:
-        'Sind die im Modul angegebenen Vorkenntnisse in vollem Umfang nötig?',
+        $localize `Sind die im Modul angegebenen Vorkenntnisse in vollem Umfang nötig?`,
     },
     {
       id: 'contentmatch',
       label:
-        'Entsprechen die gelernten Inhalte nach deiner Einschätzung der Modulbeschreibung?',
+        $localize `Entsprechen die gelernten Inhalte nach deiner Einschätzung der Modulbeschreibung?`,
     },
   ];
 

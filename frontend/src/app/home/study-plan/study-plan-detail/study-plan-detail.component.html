@@ -84,6 +84,7 @@
                 tabindex="0"
                 aria-label="Alle Studienpläne ansehen"
                 routerLink="/app/studium/ueberblick"
+                i18n-aria-label i18n
               >
                 <i class="bi bi-arrow-up-right-square"></i> Studienpläne
                 verwalten
@@ -134,13 +135,14 @@
                       (keyup.enter)="toggleGradeVisibility(studyPlanSettings)"
                       matTooltip="Noten ein- und ausblenden"
                       matTooltipClass="custom-tooltip"
+                      i18n-matTooltip
                     >
                       @if (studyPlanSettings.displayGrades) {
                         <i class="bi bi-eye-slash-fill"></i>
                       } @else {
                         <i class="bi bi-eye-fill"></i>
                       }
-                      <span class="mx-2"
+                      <span class="mx-2" i18n
                         >Noten
                         {{
                           studyPlanSettings.displayGrades
@@ -157,6 +159,8 @@
                         (keyup.enter)="toggleProgressBar(studyPlanSettings)"
                         matTooltip="Studienfortschritt anzeigen"
                         matTooltipClass="custom-tooltip"
+                        i18n-matTooltip
+                        i18n
                       >
                         <i class="bi bi-graph-up-arrow"></i>
                         {{

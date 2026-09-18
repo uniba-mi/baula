@@ -8,7 +8,7 @@
   Die hier eingefügten Jobanzeigen gehen in die Empfehlungsgenerierung für dich ein, welche du im
   Studienverlaufsplan nutzen kannst.
 </div> -->
-    <div class="mb-4">
+    <div class="mb-4" i18n>
       Hier kannst du aus bestehenden Jobprofilen ein passendes auswählen. Die
       hier eingefügten Jobanzeigen gehen in die Empfehlungsgenerierung für dich
       ein, welche du im Studienverlaufsplan nutzen kannst. Zukünftig soll es
@@ -19,6 +19,7 @@
         aria-label="Link zum Jobportal der Arbeitsagentur"
         tabindex="0"
         target="_blank"
+        i18n-aria-label
         >Arbeitsagentur</a
       >
       hochladen kannst. Daran arbeiten wir derzeit noch (TBD).
@@ -36,10 +37,11 @@
           [selected]="inputMode === 'mock'"
           selectable="false"
           disableRipple
+          i18n
         >
           Jobprofil auswählen
         </mat-chip-option>
-        <mat-chip-option [selected]="inputMode === 'url'" disabled>
+        <mat-chip-option [selected]="inputMode === 'url'" disabled i18n>
           Jobanzeige per URL <span class="badge beta-badge">TBD</span>
         </mat-chip-option>
       </mat-chip-listbox>
@@ -49,7 +51,7 @@
     @if (inputMode === "mock") {
       <div class="d-flex flex-row align-items-center my-2">
         <mat-form-field class="search-input-field my-3" appearance="outline">
-          <mat-label>Wähle aus den exemplarischen Jobanzeigen aus:</mat-label>
+          <mat-label i18n>Wähle aus den exemplarischen Jobanzeigen aus:</mat-label>
           <mat-select
             [(value)]="selectedJob"
             (selectionChange)="selectJob()"
@@ -109,7 +111,7 @@
       @if (inputMode === "url" || editMode) {
         <div>
           <mat-form-field appearance="outline">
-            <mat-label>Titel</mat-label>
+            <mat-label i18n>Titel</mat-label>
             <input
               matInput
               [(ngModel)]="editedJob.title"
@@ -121,7 +123,7 @@
       @if (editedJob.description) {
         <div>
           <mat-form-field appearance="outline">
-            <mat-label>Beschreibung</mat-label>
+            <mat-label i18n>Beschreibung</mat-label>
             <textarea
               matInput
               [(ngModel)]="editedJob.description"
@@ -133,7 +135,7 @@
       }
       <div>
         <mat-form-field appearance="outline">
-          <mat-label>Schlagworte</mat-label>
+          <mat-label i18n>Schlagworte</mat-label>
           @if (loadingKeywords) {
             <div class="d-flex align-items-center justify-content-center">
               <ng-container *ngTemplateOutlet="JobLoading"></ng-container>
@@ -156,6 +158,7 @@
                   keyword +
                   ' zu bearbeiten.'
                 "
+
               >
                 {{ keyword }}
                 <button matChipRemove [attr.aria-label]="'Entferne ' + keyword">
@@ -184,7 +187,7 @@
           }
         </mat-form-field>
         @if (editedJob.keywords.length === 0) {
-          <div class="text-danger small">
+          <div class="text-danger small" i18n>
             Gib mindestens ein Schlagwort an oder lasse dir über den Zauberstab
             Schlagworte extrahieren.
           </div>
@@ -214,6 +217,7 @@
       [disabled]="
         !editedJob || !editedJob.keywords || editedJob.keywords.length === 0
       "
+      i18n
     >
       Speichern
     </button>

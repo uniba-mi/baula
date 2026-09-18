@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
       .then(() => console.info('Lehrveranstaltungen wurden geladen!'))
       .catch((error) =>
         console.error(
-          'Beim Laden der Lehrveranstaltungen ist ein Fehler aufgetreten! ' +
+          $localize `Beim Laden der Lehrveranstaltungen ist ein Fehler aufgetreten! ` +
             error,
         ),
       );
@@ -275,7 +275,7 @@ export class HomeComponent implements OnInit {
   openImportDialog(uId: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Musterstudienplan importieren',
+        dialogTitle: $localize `Musterstudienplan importieren`,
         dialogContentId: 'import-dialog',
         importType: 'deinen Musterplan',
         isFirstSemesterStudent: this.isFirstSemesterStudent,
@@ -332,7 +332,7 @@ export class HomeComponent implements OnInit {
 
   createDefaultStudyPlan(modules?: PathModule[]) {
     this.studyPlanService.createStudyPlan(
-      'Mein Studienplan',
+      $localize `Mein Studienplan`,
       this.user.startSemester,
       this.user.duration,
       undefined,

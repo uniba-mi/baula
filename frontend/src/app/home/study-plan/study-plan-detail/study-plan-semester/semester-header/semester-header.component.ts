@@ -164,7 +164,7 @@ export class SemesterHeaderComponent {
 
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: pathModule ? 'Leistung bearbeiten' : 'Leistung hinzufügen',
+        dialogTitle: pathModule ? $localize `Leistung bearbeiten` : $localize `Leistung hinzufügen`,
         dialogContentId: 'edit-path-module-dialog',
         pathModule: pathModuleData,
       },
@@ -198,7 +198,7 @@ export class SemesterHeaderComponent {
     event.stopPropagation();
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Zu erreichende ECTS bearbeiten',
+        dialogTitle: $localize `Zu erreichende ECTS bearbeiten`,
         dialogContentId: 'update-aimed-ects-dialog',
         aimedEcts: aimedEcts,
       },
@@ -234,7 +234,7 @@ export class SemesterHeaderComponent {
   openAddModuleDialog(ppId: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Modul hinzufügen',
+        dialogTitle: $localize `Modul hinzufügen`,
         dialogContentId: 'add-module-dialog',
         modules: this.modules,
         semesterPlanId: ppId,
@@ -269,7 +269,7 @@ export class SemesterHeaderComponent {
 
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Platzhalter anlegen',
+        dialogTitle: $localize `Platzhalter anlegen`,
         dialogContentId: 'add-user-generated-module-dialog',
         module: newModule,
       },

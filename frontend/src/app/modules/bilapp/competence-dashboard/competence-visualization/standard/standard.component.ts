@@ -53,7 +53,7 @@ export class StandardComponent implements OnInit {
   openDialog(standard: Standard) {
     this.dialog.open(DialogComponent, {
       data: {
-        dialogTitel: `Informationen zum ${standard.stId} Standard`,
+        dialogTitel: $localize `Informationen zum ${standard.stId} Standard`,
         dialogContentId: 'standard-dialog',
         standard: standard,
       },

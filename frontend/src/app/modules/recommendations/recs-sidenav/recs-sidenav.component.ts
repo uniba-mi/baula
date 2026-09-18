@@ -65,26 +65,26 @@ export class RecsSidenavComponent implements OnInit, OnChanges {
 
   tabs = [
     {
-      label: 'Passend',
+      label: $localize`Passend`,
       icon: 'bi bi-person-circle text-gray',
       infoText:
-        'Module, die laut deinen Einstellungen unter "Personalisierung" zu dir passen.',
+        $localize`Module, die laut deinen Einstellungen unter "Personalisierung" zu dir passen.`,
     },
     {
-      label: 'Neu',
+      label: $localize`Neu`,
       icon: 'bi bi-stars text-gray',
-      infoText: 'Module, die neu im Angebot sind.',
+      infoText: $localize`Module, die neu im Angebot sind.`,
     },
     // { label: 'Beliebt', icon: 'bi bi-people-fill text-gray', infoText: 'Module, die Studierende deines Studiengangs häufig belegen.' },
     {
-      label: 'Entdecken',
+      label: $localize`Entdecken`,
       icon: 'bi bi-binoculars-fill text-gray',
-      infoText: 'Verschiedene Module, die du interessant finden könntest.',
+      infoText: $localize`Verschiedene Module, die du interessant finden könntest.`,
     },
     {
-      label: 'Gemerkt',
+      label: $localize`Gemerkt`,
       icon: 'bi bi-bookmark-fill text-gray',
-      infoText: 'Module, die du dir gemerkt hast.',
+      infoText: $localize`Module, die du dir gemerkt hast.`,
     },
   ];
   selectedTabIndex: number = 0;
@@ -100,22 +100,22 @@ export class RecsSidenavComponent implements OnInit, OnChanges {
     serendipity: {
       key: 'serendipity-hint',
       message:
-        'Diese Liste zeigt Module, die Studierende deines Studiengangs oft wählen. Bitte beachte, dass die Universität Bamberg mit ihren Studiengängen ein breites Wissensangebot anbietet, das hier nicht abgebildet ist. Bitte informiere dich abseits dieser Liste über die vielfältigen Möglichkeiten deines Studiengangs.',
+        $localize `Diese Liste zeigt Module, die Studierende deines Studiengangs oft wählen. Bitte beachte, dass die Universität Bamberg mit ihren Studiengängen ein breites Wissensangebot anbietet, das hier nicht abgebildet ist. Bitte informiere dich abseits dieser Liste über die vielfältigen Möglichkeiten deines Studiengangs.`,
     },
     newModules: {
       key: 'newModules-hint',
       message:
-        'Diese Liste zeigt Module, die in einer neuen Version angeboten werden. Dies sind teilweise neu entstandene Module, können jedoch im individuellem Fall auch eine Lehrstuhländerung oder Restrukturierung des bisherigen Modules bedeuten.',
+        $localize `Diese Liste zeigt Module, die in einer neuen Version angeboten werden. Dies sind teilweise neu entstandene Module, können jedoch im individuellem Fall auch eine Lehrstuhländerung oder Restrukturierung des bisherigen Modules bedeuten.`,
     },
     serendipitousModules: {
       key: 'serendipitous-modules-hint',
       message:
-        'Diese Liste zeigt Module aus deinem Modulhandbuch, die du vielleicht noch nicht kennst.',
+        $localize `Diese Liste zeigt Module aus deinem Modulhandbuch, die du vielleicht noch nicht kennst.`,
     },
     personalModules: {
       key: 'personalModules-hint',
       message:
-        'Diese Liste zeigt Module, die zu den Angaben passen, die du unter "Personalisierung" gemacht hast (z. B. Jobs, Interessen).',
+        $localize `Diese Liste zeigt Module, die zu den Angaben passen, die du unter "Personalisierung" gemacht hast (z. B. Jobs, Interessen).`,
     },
   };
 
@@ -124,18 +124,18 @@ export class RecsSidenavComponent implements OnInit, OnChanges {
   currentlySelectedFilters: Option[] = [];
   filterList: OptionGroup[] = [
     {
-      name: 'Angebotssemester',
+      name: $localize`Angebotssemester`,
       options: [
         {
           value: 'SS',
-          name: 'Sommer',
+          name: $localize`Sommer`,
           key: 'term',
           selected: false,
           metadata: false,
         },
         {
           value: 'WS',
-          name: 'Winter',
+          name: $localize`Winter`,
           key: 'term',
           selected: false,
           metadata: false,
@@ -143,18 +143,18 @@ export class RecsSidenavComponent implements OnInit, OnChanges {
       ],
     },
     {
-      name: 'Modulart',
+      name: $localize`Modulart`,
       options: [
         {
           value: 'Pflichtmodul',
-          name: 'Pflichtmodul',
+          name: $localize`Pflichtmodul`,
           key: 'type',
           selected: false,
           metadata: false,
         },
         {
           value: 'Wahlmodul',
-          name: 'Wahlmodul',
+          name: $localize`Wahlmodul`,
           key: 'type',
           selected: false,
           metadata: false,
@@ -162,11 +162,11 @@ export class RecsSidenavComponent implements OnInit, OnChanges {
       ],
     },
     {
-      name: 'Sonstige',
+      name: $localize`Sonstige`,
       options: [
         {
           value: 'hideTakenPassed',
-          name: 'Belegte und bestandene verstecken',
+          name: $localize`Belegte und bestandene verstecken`,
           key: 'hideTakenPassed',
           selected: false,
           metadata: false,
@@ -175,25 +175,25 @@ export class RecsSidenavComponent implements OnInit, OnChanges {
     },
   ];
   personalTabFilters: OptionGroup = {
-    name: 'Passt zu:',
+    name: $localize`Passt zu:`,
     options: [
       {
         value: 'Jobs',
-        name: 'Jobs',
+        name: $localize`Jobs`,
         key: 'source',
         selected: false,
         metadata: true,
       },
       {
         value: 'Interesse',
-        name: 'Interesse',
+        name: $localize`Interesse`,
         key: 'source',
         selected: false,
         metadata: true,
       },
       {
         value: 'Feedback',
-        name: 'Feedback',
+        name: $localize`Feedback`,
         key: 'source',
         selected: false,
         metadata: true,
@@ -413,11 +413,11 @@ export class RecsSidenavComponent implements OnInit, OnChanges {
 
   openDeleteFavouritesDialog(): void {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Merkliste löschen?',
+      dialogTitle: $localize `Merkliste löschen?`,
       actionType: 'delete',
-      confirmationItem: 'deine gemerkten Module',
-      confirmButtonLabel: 'Löschen',
-      cancelButtonLabel: 'Abbrechen',
+      confirmationItem: $localize `deine gemerkten Module`,
+      confirmButtonLabel: $localize `Löschen`,
+      cancelButtonLabel: $localize `Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.deleteFavourites();

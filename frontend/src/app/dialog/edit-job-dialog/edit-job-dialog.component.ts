@@ -107,7 +107,7 @@ export class EditJobDialogComponent implements OnInit {
             this.editedJob.keywords = value.keywords;
           } else {
             this.errorMessage =
-              'Die Keywords konnten leider nicht generiert werden.';
+              $localize `Die Keywords konnten leider nicht generiert werden.`;
           }
           this.loadingKeywords = false;
         });

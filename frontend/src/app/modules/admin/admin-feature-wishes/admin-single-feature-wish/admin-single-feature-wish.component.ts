@@ -65,9 +65,8 @@ export class AdminSingleFeatureWishComponent {
       },
       error: (error) => {
         console.error('Error updating admin message for feature wish:', error);
-        // TODO: Passt das error.error?.error? ??
         console.log(error.error?.message);
-        this.adminMessageErrorMessage = error.error?.message || 'An error occurred while updating the admin message.';
+        this.adminMessageErrorMessage = error.error?.message || $localize `Es kam zu einem Fehler bei dem Updaten der Admin Message.`;
       }
     });
   }
@@ -76,12 +75,12 @@ export class AdminSingleFeatureWishComponent {
     this.rest.adminRemoveTag(this.wish._id, tagName).subscribe({
       next: (response) => {
         this.wish.tags = this.wish.tags?.filter(tag => tag !== tagName);
-        this.tagToAddSuccessMessage = `Der Tag "${tagName}" wurde erfolgreich entfernt.`;
+        this.tagToAddSuccessMessage = $localize `Der Tag "${tagName}" wurde erfolgreich entfernt.`;
         this.tagToAddErrorMessage = "";
       },
       error: (error) => {
         console.error('Error removing tag from feature wish:', error);
-        this.tagToAddErrorMessage = error.error?.message || "Der Tag konnte nicht entfernt werden.";
+        this.tagToAddErrorMessage = error.error?.message || $localize `:Tag im Sinne von Markierung:Der Tag konnte nicht entfernt werden.`;
         this.tagToAddSuccessMessage = "";
       }
     });
@@ -92,12 +91,12 @@ export class AdminSingleFeatureWishComponent {
       next: (response) => {
         this.wish.tags = [...(this.wish.tags || []), this.tagToAdd];
         this.tagToAdd = "";
-        this.tagToAddSuccessMessage = "Tag erfolgreich hinzugefügt.";
+        this.tagToAddSuccessMessage = $localize `:Tag im Sinne von Markierung:Tag erfolgreich hinzugefügt.`;
         this.tagToAddErrorMessage = "";
       },
       error: (error) => {
         console.error('Error adding tag to feature wish:', error);
-        this.tagToAddErrorMessage = error.error?.message || "Der Tag konnte nicht hinzugefügt werden.";
+        this.tagToAddErrorMessage = error.error?.message || $localize `:Tag im Sinne von Markierung:Der Tag konnte nicht hinzugefügt werden.`;
         this.tagToAddSuccessMessage = "";
       }
     });

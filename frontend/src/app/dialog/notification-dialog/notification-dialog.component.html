@@ -4,13 +4,13 @@
         <div>
             <p mat-dialog-title class="pl-0 text-gray">🔧 Wartungsarbeiten an Baula</p>
         </div>
-        <p>Am <b>Mittwoch, den 26.11.2025</b> wird Baula wegen geplanter Wartungsarbeiten vorübergehend nicht verfügbar
+        <p i18n>Am <b>Mittwoch, den 26.11.2025</b> wird Baula wegen geplanter Wartungsarbeiten vorübergehend nicht verfügbar
             sein. Vielen Dank für dein Verständnis.
         </p>
     </div>
     <div class="col-12 col-md-6 col-lg-7 col-xl-8 mt-2 mt-md-0">
-        <mat-checkbox [(ngModel)]="disableDialog">Nicht mehr anzeigen</mat-checkbox>
-        <button class="btn btn-outline ms-2" [mat-dialog-close]="disableDialog">
+        <mat-checkbox [(ngModel)]="disableDialog" i18n>Nicht mehr anzeigen</mat-checkbox>
+        <button class="btn btn-outline ms-2" [mat-dialog-close]="disableDialog" i18n>
             Schließen
         </button>
     </div>

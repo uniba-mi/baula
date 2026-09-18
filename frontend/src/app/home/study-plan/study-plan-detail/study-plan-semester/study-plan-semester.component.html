@@ -2,24 +2,24 @@
 <div class="status-bar mb-2 d-flex">
   @if (isOldestPastSemester()) {
     <div class="chip" matTooltip="Abgeschlossene Semester"
-      matTooltipClass="custom-tooltip">
+      matTooltipClass="custom-tooltip" i18n-matTooltip>
       <i class="finished-icon bi bi-check-circle-fill"></i>@if (isExpanded) {
-      <span> Abgeschlossen</span>
+      <span i18n> Abgeschlossen</span>
     }
   </div>
 }
 @if (isCurrentSemester()) {
-  <div class="chip" matTooltip="Laufendes Semester" matTooltipClass="custom-tooltip">
+  <div class="chip" matTooltip="Laufendes Semester" matTooltipClass="custom-tooltip" i18n-matTooltip>
     <i class="current-icon bi bi-play-circle-fill"></i>@if (isExpanded) {
-    <span> Laufend</span>
+    <span i18n> Laufend</span>
   }
 </div>
 }
 @if (isEligibleForFinish) {
   <div class="chip" matTooltip="Semester, die du abschließen kannst."
-    matTooltipClass="custom-tooltip">
+    matTooltipClass="custom-tooltip" i18n-matTooltip>
     <i class="to-be-finished-icon bi bi-record-circle-fill"></i>@if (isExpanded) {
-    <span>
+    <span i18n>
     Bereit zum Abschluss</span>
   }
 </div>
@@ -43,6 +43,6 @@
 
   <!-- Non Expanded Semester -->
   <div [hidden]="isExpanded" class="vertical-title d-flex align-items-center">
-    <span class="text-gray">{{semesterNumber}}. Semester</span>
+    <span class="text-gray" i18n="X-test Semester">{{semesterNumber}}. Semester</span>
   </div>
 </div>

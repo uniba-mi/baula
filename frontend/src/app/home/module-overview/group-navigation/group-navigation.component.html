@@ -76,19 +76,19 @@
     @if (group.ectsMin !== undefined && group.ectsMax) {
       <div class="me-2">
         @if (group.ectsMin == group.ectsMax) {
-          <div class="chip xs-chip ects-chip">
+          <div class="chip xs-chip ects-chip" i18n>
             {{ group.ectsMin }} ECTS
           </div>
         }
         @if (group.ectsMin != group.ectsMax) {
-          <div class="chip xs-chip ects-chip">
+          <div class="chip xs-chip ects-chip" i18n>
             {{ group.ectsMin }} - {{ group.ectsMax }} ECTS
           </div>
         }
       </div>
     }
     @if (group.achievedEcts) {
-      <div class="chip xs-chip success-chip">
+      <div class="chip xs-chip success-chip" i18n>
         Erreicht: {{ group.achievedEcts }} ECTS
       </div>
     }

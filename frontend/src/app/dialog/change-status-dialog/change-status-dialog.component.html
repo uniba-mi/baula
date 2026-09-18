@@ -4,7 +4,7 @@
       <div class="w-100">
         <mat-form-field class="study-course-field" appearance="outline">
           <mat-label>Status des Moduls</mat-label>
-          <mat-select #moduleStatus [formControl]="selectedModuleStatus" aria-label="Dropdown zur Statuswahl" required>
+          <mat-select #moduleStatus [formControl]="selectedModuleStatus" aria-label="Dropdown zur Statuswahl" required i18n-aria-label>
             @for (statusOption of statusOptions; track statusOption) {
               <mat-option [value]="statusOption.status"><i
               class="{{ statusOption.iconClass }}"></i>
@@ -15,17 +15,17 @@
       </mat-form-field>
       @if (selectedModuleStatus.value === 'passed' || selectedModuleStatus.value === 'failed') {
         <mat-form-field class="mb-4" appearance="outline">
-          <mat-label>Note:</mat-label>
+          <mat-label i18n>Note:</mat-label>
           <input matInput formControlName="grade" type="text" pattern="^[1-5]((\.|,)[0-9])?$" />
           @if (changeStatusForm.get('grade')?.errors) {
             <mat-error>
               @if (changeStatusForm.get('grade')?.errors?.min || changeStatusForm.get('grade')?.errors?.max) {
-                <span>
+                <span i18n>
                   Die Zahl muss zwischen {{minGrade}}.0 und {{maxGrade}}.0 liegen.
                 </span>
               }
               @if (changeStatusForm.get('grade')?.errors?.pattern) {
-                <span>
+                <span i18n>
                   Bitte gib eine gültige Zahl ein (z. B. 2, 2.5).
                 </span>
               }
@@ -33,7 +33,7 @@
           }
           @if (showNoEditHint) {
             <mat-hint class="text-gray">
-              <span> <i class="bi bi-exclamation-triangle ms-2 text-red"></i> Da das Modul als "nicht bestanden" markiert
+              <span i18n> <i class="bi bi-exclamation-triangle ms-2 text-red"></i> Da das Modul als "nicht bestanden" markiert
             ist, kannst du die Note nicht ändern.</span>
           </mat-hint>
         }
@@ -43,11 +43,11 @@
     }
     <mat-dialog-actions>
       <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
-        (keyup)="close('noData')">
+        (keyup)="close('noData')" i18n>
         Abbrechen
       </button>
       <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="getModuleStatus()"
-        [disabled]="!changeStatusForm.valid" (click)="close('data')" (keyup)="close('data')">
+        [disabled]="!changeStatusForm.valid" (click)="close('data')" (keyup)="close('data')" i18n>
         Speichern
       </button>
     </mat-dialog-actions>

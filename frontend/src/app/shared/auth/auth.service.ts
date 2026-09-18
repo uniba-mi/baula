@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { config } from 'src/environments/config.local';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
+import { LocaleService } from 'src/app/shared/services/locale.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,17 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
 export class AuthService {
   private http = inject(HttpClient);
   private dialog = inject(MatDialog);
+  private locale = inject(LocaleService);
+
+  /** Passes the locale through the IdP as RelayState, which mirrors it back unchanged */
+  private withRelayState(url: string): string {
+    if (!this.locale.hasLocalePrefix) {
+      return url;
+    }
+    const target = new URL(url);
+    target.searchParams.set('RelayState', this.locale.current);
+    return target.toString();
+  }
 
   localLogin(username: string, password: string): Observable<boolean> {
     return this.http
@@ -35,7 +47,7 @@ export class AuthService {
   }
 
   shibLogin(): any {
-    window.location.href = config.shibLoginUrl;
+    window.location.href = this.withRelayState(config.shibLoginUrl);
   }
 
   localLogout(): Observable<boolean> {
@@ -57,7 +69,10 @@ export class AuthService {
 
   shibLogout(): Observable<{ success: boolean; requestUrl?: string }> {
     return this.http
-      .get<{ success: boolean; requestUrl?: string }>(config.shibLogoutUrl)
+      .get<{
+        success: boolean;
+        requestUrl?: string;
+      }>(this.withRelayState(config.shibLogoutUrl))
       .pipe(
         map((response) => {
           return response;

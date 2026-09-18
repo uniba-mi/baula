@@ -78,18 +78,18 @@ export class RecommendationsListComponent implements OnInit {
 
   filterList: OptionGroup[] = [
     {
-      name: 'Angebotssemester',
+      name: $localize`Angebotssemester`,
       options: [
         {
           value: 'SS',
-          name: 'Sommer',
+          name: $localize`Sommer`,
           key: 'term',
           selected: false,
           metadata: false,
         },
         {
           value: 'WS',
-          name: 'Winter',
+          name: $localize`Winter`,
           key: 'term',
           selected: false,
           metadata: false,
@@ -97,18 +97,18 @@ export class RecommendationsListComponent implements OnInit {
       ],
     },
     {
-      name: 'Modulart',
+      name: $localize`Modulart`,
       options: [
         {
           value: 'Pflichtmodul',
-          name: 'Pflichtmodul',
+          name: $localize`Pflichtmodul`,
           key: 'type',
           selected: false,
           metadata: false,
         },
         {
           value: 'Wahlmodul',
-          name: 'Wahlmodul',
+          name: $localize`Wahlmodul`,
           key: 'type',
           selected: false,
           metadata: false,
@@ -116,25 +116,25 @@ export class RecommendationsListComponent implements OnInit {
       ],
     },
     {
-      name: 'Passt zu:',
+      name: $localize`Passt zu:`,
       options: [
         {
           value: 'Jobs',
-          name: 'Jobs',
+          name: $localize`Jobs`,
           key: 'source',
           selected: false,
           metadata: true,
         },
         {
           value: 'Interesse',
-          name: 'Interesse',
+          name: $localize`Interesse`,
           key: 'source',
           selected: false,
           metadata: true,
         },
         {
           value: 'Feedback',
-          name: 'Feedback',
+          name: $localize`Feedback`,
           key: 'source',
           selected: false,
           metadata: true,
@@ -142,11 +142,11 @@ export class RecommendationsListComponent implements OnInit {
       ],
     },
     {
-      name: 'Sonstige',
+      name: $localize`Sonstige`,
       options: [
         {
           value: 'hideTakenPassed',
-          name: 'Belegte und bestandene verstecken',
+          name: $localize`Belegte und bestandene verstecken`,
           key: 'hideTakenPassed',
           selected: false,
           metadata: false,

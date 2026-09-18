@@ -102,37 +102,37 @@ export class DownloadService {
 
     // set the content of the pdf file
     const content = [
-      { text: 'Deine Daten in Baula', style: 'header' },
+      { text: $localize`Deine Daten in Baula`, style: 'header' },
       {
-        text: 'Hier findest du eine Auflistung aller Daten, die zu deinem Account in Baula gespeichert sind.',
+        text: $localize`Hier findest du eine Auflistung aller Daten, die zu deinem Account in Baula gespeichert sind.`,
         margin: [0, 0, 0, 10],
       },
       /* listing of general user data */
-      { text: 'Nutzerdaten', style: 'subheader' },
+      { text: $localize`Nutzerdaten`, style: 'subheader' },
       {
         style: 'listing',
         ul: [
-          `Rollen: ${userData.roles.join(', ')}`,
-          `Studiengang: ${studprogrammes}`,
-          `Start Semester: ${this.transform.transformUnivIsSemester(
+          $localize`Rollen: ${userData.roles.join(', ')}`,
+          $localize`Studiengang: ${studprogrammes}`,
+          $localize`Start Semester: ${this.transform.transformUnivIsSemester(
             userData.startSemester,
           )}`,
-          `Studiendauer (geplant): ${userData.duration}`,
-          `ECTS (gesamt): ${userData.maxEcts}`,
-          `Account erstellt am ${this.transform.transformDate(
+          $localize`Studiendauer (geplant): ${userData.duration}`,
+          $localize`ECTS (gesamt): ${userData.maxEcts}`,
+          $localize`Account erstellt am ${this.transform.transformDate(
             userData.createdAt,
           )}`,
-          `Account zuletzt aktualisiert am ${this.transform.transformDate(
+          $localize`Account zuletzt aktualisiert am ${this.transform.transformDate(
             userData.updatedAt,
           )}`,
-          `Deine gemerkten Module: ${favouriteModules}`,
-          `Module, die nicht mehr vorgeschlagen werden: ${excludedModules}`,
+          $localize`Deine gemerkten Module: ${favouriteModules}`,
+          $localize`Module, die nicht mehr vorgeschlagen werden: ${excludedModules}`,
         ],
         margin: [0, 0, 0, 10],
       },
       /* table of courses from study path */
       {
-        text: 'Bisherige Lehrveranstaltungen',
+        text: $localize`Bisherige Lehrveranstaltungen`,
         style: 'subheader',
       },
       {
@@ -146,7 +146,7 @@ export class DownloadService {
       },
       /* table of modules from study path */
       {
-        text: 'Bisherige Module',
+        text: $localize`Bisherige Module`,
         style: 'subheader',
       },
       {
@@ -162,14 +162,14 @@ export class DownloadService {
       },
       /* section for study plans, each study plan has a small heading and a table */
       {
-        text: 'Studienpläne',
+        text: $localize`Studienpläne`,
         style: 'subheader',
       },
       ...this.generateStudyPlansOutput(studyPlans),
 
       /* Consents */
       {
-        text: 'Einwilligungen (Datenschutz)',
+        text: $localize`Einwilligungen (Datenschutz)`,
         style: 'subheader',
       },
       consentsTable,
@@ -209,7 +209,7 @@ export class DownloadService {
   ########################################################*/
   // generates the module tables for pdf export
   private generateTableOfModules(input: PathModule[]): any[] {
-    let result = [['Kürzel', 'Status', 'Note', 'Semester']];
+    let result = [[$localize`Kürzel`, $localize`Status`, $localize`Note`, $localize`Semester`]];
     for (let entry of input) {
       let status = entry.status
         ? this.transform.transformStatus(entry.status)
@@ -227,7 +227,7 @@ export class DownloadService {
 
   // generates the course tables for pdf export
   private async generateTableOfCourses(input: PathCourse[]): Promise<any[]> {
-    let result = [['ID', 'Status', 'Semester']];
+    let result = [[$localize`ID`, $localize`Status`, $localize`Semester`]];
     for (let entry of input) {
       try {
         result.push([
@@ -253,8 +253,8 @@ export class DownloadService {
     for (let studyPlan of studyPlans) {
       output.push(
         {
-          text: `${studyPlan.name} (${
-            studyPlan.status ? 'aktiv' : 'passiv'
+          text: $localize`${studyPlan.name} (${
+            studyPlan.status ? $localize`aktiv` : $localize`passiv`
           }) - erstellt am ${this.transform.transformDate(
             studyPlan.createdAt,
           )}`,
@@ -267,11 +267,11 @@ export class DownloadService {
             width: ['*', 'auto', '*', '*', '*'],
             body: [
               [
-                'Semester',
-                'Eingeplante Module',
-                'Eingeplante Platzhalter',
-                'Ziel ECTS',
-                'Stand ECTS',
+                $localize`Semester`,
+                $localize`Eingeplante Module`,
+                $localize`Eingeplante Platzhalter`,
+                $localize`Ziel ECTS`,
+                $localize`Stand ECTS`,
               ],
               ...this.generateStudyPlanTable(studyPlan.semesterPlans),
             ],

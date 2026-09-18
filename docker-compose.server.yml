@@ -9,6 +9,7 @@ services:
       - HOSTNAME=${HOSTNAME}
       - API_PORT=${API_PORT}
       - PLAUSIBLE_URL=${PLAUSIBLE_URL}
+      - DEFAULT_LOCALE=${DEFAULT_LOCALE:-de}
     ports:    
       - "${HOST_IP}:${SERVER_PORT}:80"
       - "${HOST_IP}:${SERVER_PORT_SSL}:443"

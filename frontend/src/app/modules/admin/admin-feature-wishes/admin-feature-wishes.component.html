@@ -1,9 +1,9 @@
 <div class="container">
     <section>
-        <mat-checkbox (change)="simpleView = $event.checked">Simple Ansicht verwenden</mat-checkbox>
-        <mat-checkbox [checked]="true" (change)="showApprovedWishes = $event.checked">Genehmigte Wünsche
+        <mat-checkbox (change)="simpleView = $event.checked" i18n>Simple Ansicht verwenden</mat-checkbox>
+        <mat-checkbox [checked]="true" (change)="showApprovedWishes = $event.checked" i18n>Genehmigte Wünsche
             anzeigen</mat-checkbox>
-        <mat-checkbox [checked]="true" (change)="showUnapprovedWishes = $event.checked">Ungenehmigte Wünsche
+        <mat-checkbox [checked]="true" (change)="showUnapprovedWishes = $event.checked" i18n>Ungenehmigte Wünsche
             anzeigen</mat-checkbox>
     </section>
 
@@ -12,13 +12,13 @@
         <!-- Approved -->
         <div class="col">
             @if (showApprovedWishes && showUnapprovedWishes) {
-                <h2>Genehmigte und noch nicht genehmigte Wünsche</h2>
+                <h2 i18n>Genehmigte und noch nicht genehmigte Wünsche</h2>
             } @else if(showApprovedWishes) {
-                <h2>Genehmigte Wünsche</h2>
+                <h2 i18n>Genehmigte Wünsche</h2>
             } @else if (showUnapprovedWishes) {
-                <h2>Noch nicht genehmigte Wünsche</h2>
+                <h2 i18n>Noch nicht genehmigte Wünsche</h2>
             } @else {
-                <h2>Derzeit werden keine Wünsche angezeigt.</h2>
+                <h2 i18n>Derzeit werden keine Wünsche angezeigt.</h2>
             }
 
             <div class="row">

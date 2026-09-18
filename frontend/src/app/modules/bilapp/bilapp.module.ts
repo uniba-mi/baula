@@ -18,7 +18,6 @@ import { CourseListComponent } from './competence-dashboard/sidepanel/courses/co
 import { RecommendationsComponent } from './competence-dashboard/sidepanel/courses/recommendations/recommendations.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CoursesComponent } from './competence-dashboard/sidepanel/courses/courses.component';
-import { SearchCoursesComponent } from './competence-dashboard/sidepanel/courses/search-courses/search-courses.component';
 import { CourseItemComponent } from './competence-dashboard/sidepanel/courses/course-list/course-item/course-item.component';
 import { ShortenCourseTypePipe } from './pipes/shorten-course-type.pipe';
 import * as fromStudyPlanning from '../../reducers/study-planning.reducers';
@@ -48,7 +47,6 @@ import {MatRadioModule} from '@angular/material/radio';
     AllCoursesComponent,
     CourseListComponent,
     RecommendationsComponent,
-    SearchCoursesComponent,
     CourseItemComponent,
     ShortenCourseTypePipe,
     WelcomeDialogComponent,

@@ -53,7 +53,8 @@ export class SettingsListComponent {
 
   ngOnInit() {
     if (!this.preview) {
-      // get type from route data
+      // get type from route data 
+      // TODO: add to localize when routing is translated!!!
       this.type = this.route.snapshot.data['type'] || 'merkliste';
     }
 
@@ -120,14 +121,14 @@ export class SettingsListComponent {
   getTitle(): string {
     const titles = {
       preview: {
-        merkliste: 'Merkliste',
-        blacklist: 'Blacklist',
-        feedback: 'Feedback',
+        merkliste: $localize`Merkliste`,
+        blacklist: $localize`Blacklist`,
+        feedback: $localize`Feedback`,
       },
       standard: {
-        merkliste: 'Alle Module auf deiner Merkliste',
-        blacklist: 'Alle Module auf deiner Blacklist',
-        feedback: 'Module, zu denen du positives Feedback gegeben hast.',
+        merkliste: $localize`Alle Module auf deiner Merkliste`,
+        blacklist: $localize`Alle Module auf deiner Blacklist`,
+        feedback: $localize`Module, zu denen du positives Feedback gegeben hast.`,
       },
     };
 
@@ -139,11 +140,11 @@ export class SettingsListComponent {
   get tooltipText(): string {
     switch (this.type) {
       case 'merkliste':
-        return 'Module, die du für später speichern möchtest.';
+        return $localize `Module, die du für später speichern möchtest.`;
       case 'blacklist':
-        return 'Module, die du aus deinen Empfehlungen ausschließen möchtest.';
+        return $localize `Module, die du aus deinen Empfehlungen ausschließen möchtest.`;
       case 'feedback':
-        return 'Dein abgegebenes Feedback zu Modulen.';
+        return $localize `Dein abgegebenes Feedback zu Modulen.`;
       default:
         return '';
     }
@@ -171,11 +172,11 @@ export class SettingsListComponent {
         const feedbackItem = item as ModuleFeedback;
 
         const confirmationDialogInterface: ConfirmationDialogData = {
-          dialogTitle: 'Feedback zum Modul löschen?',
+          dialogTitle: $localize`Feedback zum Modul löschen?`,
           actionType: 'delete',
-          confirmationItem: `dein Feedback zum Modul "${feedbackItem.acronym}"`,
-          confirmButtonLabel: 'Löschen',
-          cancelButtonLabel: 'Abbrechen',
+          confirmationItem: $localize`dein Feedback zum Modul "${feedbackItem.acronym}"`,
+          confirmButtonLabel: $localize`Löschen`,
+          cancelButtonLabel: $localize`Abbrechen`,
           confirmButtonClass: 'btn btn-danger',
           callbackMethod: () => {
             this.deleteFeedback(feedbackItem.acronym);
@@ -241,7 +242,7 @@ export class SettingsListComponent {
       return item.name;
     } else if (this.isFeedback(item)) {
       const feedback = item as any;
-      return `Feedback zu ${feedback.acronym}` || 'Feedback';
+      return $localize `Feedback zu ${feedback.acronym}` || $localize `Feedback`;
     }
     return '';
   }
@@ -284,13 +285,13 @@ export class SettingsListComponent {
   get noDataMessage(): string {
     switch (this.type) {
       case 'merkliste':
-        return 'Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf "Merken", damit hier Module angezeigt werden.';
+        return $localize `Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf "Merken", damit hier Module angezeigt werden.`;
       case 'blacklist':
-        return 'Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf "Nicht mehr vorschlagen", damit hier Module angezeigt werden.';
+        return $localize `Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf "Nicht mehr vorschlagen", damit hier Module angezeigt werden.`;
       case 'feedback':
-        return 'Nachdem du ein Modul abgeschlossen hast, kannst du über die Moduldetails (Tab Feedback) Feedback geben. Wenn es Modulempfehlungen dazu gibt, werden diese hier angezeigt.';
+        return $localize `Nachdem du ein Modul abgeschlossen hast, kannst du über die Moduldetails (Tab Feedback) Feedback geben. Wenn es Modulempfehlungen dazu gibt, werden diese hier angezeigt.`;
       default:
-        return 'Keine Daten vorhanden.';
+        return $localize `Keine Daten vorhanden.`;
     }
   }
 }

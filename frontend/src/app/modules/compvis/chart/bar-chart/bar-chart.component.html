@@ -8,18 +8,18 @@
     <div class="legend">
       <span class="legend-item">
         <span class="legend-swatch" style="background: var(--ub-blue)"></span>
-        <span class="legend-text">Aktueller Wert</span>
+        <span class="legend-text" i18n>Aktueller Wert</span>
       </span>
       @if (hasSelection) {
         <span class="legend-item">
           <span class="legend-swatch" style="background: var(--ub-red)"></span>
-          <span class="legend-text">Ausgewählt</span>
+          <span class="legend-text" i18n>Ausgewählt</span>
         </span>
       }
       @if ((unit$ | async) == 'ects') {
         <span class="legend-item">
           <span class="legend-line"></span>
-          <span class="legend-text">Dein Zielwert</span>
+          <span class="legend-text" i18n>Dein Zielwert</span>
         </span>
       }
     </div>

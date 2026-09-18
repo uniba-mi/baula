@@ -126,7 +126,7 @@ export class PlanningValidationService {
           return {
             alreadyContained: true,
             message:
-              'Du hast dieses Modul für das ausgewählte Semester schon einmal eingeplant.',
+              $localize `Du hast dieses Modul für das ausgewählte Semester schon einmal eingeplant.`,
           };
         }
         return {
@@ -151,12 +151,12 @@ export class PlanningValidationService {
     if (!module.term.includes('WS') && semesterPlanId.includes('w')) {
       returnResult.success = false;
       returnResult.message =
-        'Bitte beachte, dass dieses Modul im Wintersemester nicht angeboten wird.';
+        `Bitte beachte, dass dieses Modul im Wintersemester nicht angeboten wird.`;
     }
     if (!module.term.includes('SS') && semesterPlanId.includes('s')) {
       returnResult.success = false;
       returnResult.message =
-        'Bitte beachte, dass dieses Modul im Sommersemester nicht angeboten wird.';
+        $localize `Bitte beachte, dass dieses Modul im Sommersemester nicht angeboten wird.`;
     }
     return returnResult;
   }
@@ -170,7 +170,7 @@ export class PlanningValidationService {
     // define return object
     let returnResult = {
       success: false,
-      message: 'Das Modul kann nicht eingeplant werden',
+      message: $localize `Das Modul kann nicht eingeplant werden`,
     };
 
     // get latest status of module from study path
@@ -183,7 +183,7 @@ export class PlanningValidationService {
     // Module cannot be planned if it has already been passed
     if (this.status === 'passed') {
       returnResult.success = false;
-      returnResult.message = 'Du hast dieses Modul schon bestanden';
+      returnResult.message = $localize `Du hast dieses Modul schon bestanden`;
     }
 
     this.status = undefined;
@@ -303,8 +303,8 @@ export class PlanningValidationService {
       return {
         type: 'warning',
         context: 'module-planning',
-        begin: 'Das Modul',
-        end: `wird im Modulhandbuch für das ${module.recTerm}. Semester empfohlen. Du hast es für das ${plannedSemesterNumber}. Semester eingeplant.`,
+        begin: $localize `Das Modul`,
+        end: $localize `wird im Modulhandbuch für das ${module.recTerm}. Semester empfohlen. Du hast es für das ${plannedSemesterNumber}. Semester eingeplant.`,
         acronym: module.acronym,
       };
     }
@@ -328,8 +328,8 @@ export class PlanningValidationService {
       return {
         type: 'risk',
         context: 'module-planning',
-        begin: 'Das Modul',
-        end: `ist im ${semester.fullName} nicht verfügbar. Es wird nur im Sommersemester angeboten.`,
+        begin: $localize `Das Modul`,
+        end: $localize `ist im ${semester.fullName} nicht verfügbar. Es wird nur im Sommersemester angeboten.`,
         acronym: module.acronym,
       };
     }
@@ -338,8 +338,8 @@ export class PlanningValidationService {
       return {
         type: 'risk',
         context: 'module-planning',
-        begin: 'Das Modul',
-        end: `ist im ${semester.fullName} nicht verfügbar. Es wird nur im Wintersemester angeboten.`,
+        begin: $localize `Das Modul`,
+        end: $localize `ist im ${semester.fullName} nicht verfügbar. Es wird nur im Wintersemester angeboten.`,
         acronym: module.acronym,
       };
     }
@@ -362,7 +362,7 @@ export class PlanningValidationService {
     // define return object
     let returnResult = {
       success: false,
-      message: 'Das Modul kann nicht eingeplant werden',
+      message: $localize `Das Modul kann nicht eingeplant werden`,
     };
 
     let isStructureValid = this.checkModuleStructure(mg, ects);
@@ -489,9 +489,7 @@ export class PlanningValidationService {
     let returnResult = {
       success: false,
       message:
-        'Die ECTS Grenze für die Modulgruppe ' +
-        mgName +
-        ' wurde überschritten',
+        $localize `Die ECTS Grenze für die Modulgruppe ${mgName} wurde überschritten`
     };
 
     for (let mod of modules) {
@@ -529,12 +527,7 @@ export class PlanningValidationService {
       }
 
       returnResult.message =
-        'Das Modul kann nicht eingeplant werden, da du die für die Modulgruppe "' +
-        mgName +
-        '" vorgesehenen ECTS schon erreicht hast. Bitte prüfe, ob du die Module mit dem richtigen Status markiert hast. \n\nBestandene Module: ' +
-        passedNames +
-        ' \n\nBelegte Module: ' +
-        takenNames;
+        $localize `Das Modul kann nicht eingeplant werden, da du die für die Modulgruppe "${mgName}" vorgesehenen ECTS schon erreicht hast. Bitte prüfe, ob du die Module mit dem richtigen Status markiert hast. \n\nBestandene Module: ${passedNames} \n\nBelegte Module: ${takenNames}`;
 
       return returnResult;
     } else {
@@ -684,8 +677,8 @@ export class PlanningValidationService {
         hints.push({
           type: 'warning',
           context: 'course-planning',
-          begin: 'Zum Modul',
-          end: 'wurden noch keine Lehrveranstaltungen eingeplant!',
+          begin: $localize `Zum Modul`,
+          end: $localize `wurden noch keine Lehrveranstaltungen eingeplant!`,
           acronym: module.acronym,
         });
       }
@@ -715,8 +708,8 @@ export class PlanningValidationService {
           hints.push({
             type: 'warning',
             context: 'course-planning',
-            begin: 'Zum Modul',
-            end: `fehlt noch folgende Lehrveranstaltung: ${moduleCourse.name} (${moduleCourse.type})`,
+            begin: $localize `Zum Modul`,
+            end: $localize `fehlt noch folgende Lehrveranstaltung: ${moduleCourse.name} (${moduleCourse.type})`,
             acronym: module.acronym,
           });
         }
@@ -782,12 +775,12 @@ export class PlanningValidationService {
         hints.push({
           type: 'collision',
           context: 'course-planning',
-          begin: 'Die beiden Lehrveranstaltungen ',
+          begin: $localize `Die beiden Lehrveranstaltungen `,
           end:
-            `"${courseString1}" & ${courseString2} überschneiden sich an ` +
+            $localize `"${courseString1}" & ${courseString2} überschneiden sich an ` +
             (collision.count == 1
-              ? 'einem Termin!'
-              : `${collision.count} Terminen!`),
+              ? $localize `einem Termin!`
+              : $localize `${collision.count} Terminen!`),
           courses: [course1, course2],
         });
       }

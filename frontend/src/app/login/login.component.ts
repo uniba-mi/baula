@@ -33,7 +33,7 @@ export class LoginComponent {
         this.router.navigate(['/app/']);
       } else {
         this.errorMessage =
-          'Der Login ist fehlgeschlagen. Nutzername oder Passwort haben nicht gestimmt!';
+          $localize `Der Login ist fehlgeschlagen. Nutzername oder Passwort haben nicht gestimmt!`;
       }
     });
   }

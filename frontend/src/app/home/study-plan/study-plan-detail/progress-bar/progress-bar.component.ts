@@ -56,7 +56,7 @@ export class ProgressBarComponent {
       this.achievedTooltip$ = this.achievedCredits$.pipe(
         map(
           (achievedCredits) =>
-            `Du hast aktuell ${achievedCredits} ECTS von insgesamt ${this.totalCredits} ECTS eingeplant.`
+            $localize `Du hast aktuell ${achievedCredits} ECTS von insgesamt ${this.totalCredits} ECTS eingeplant.`
         )
       );
 
@@ -69,7 +69,7 @@ export class ProgressBarComponent {
       this.plannedTooltip$ = this.plannedCredits$.pipe(
         map(
           (plannedCredits) =>
-            `Du hast aktuell ${plannedCredits} ECTS von insgesamt ${this.totalCredits} ECTS durch bestandene Module erreicht.`
+            $localize `Du hast aktuell ${plannedCredits} ECTS von insgesamt ${this.totalCredits} ECTS durch bestandene Module erreicht.`
         )
       );
     }

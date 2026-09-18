@@ -157,11 +157,11 @@ export class TransformationService {
   transformStatus(status: string): string {
     switch (status) {
       case 'open':
-        return 'Belegt';
+        return $localize`Belegt`;
       case 'passed':
-        return 'Bestanden';
+        return $localize`Bestanden`;
       case 'failed':
-        return 'Nicht bestanden';
+        return $localize`Nicht bestanden`;
       default:
         return '-';
     }
@@ -430,6 +430,7 @@ export class TransformationService {
   }
 
   private minifyCoursetype(type: string): string {
+    // TODO: Can you translate the following return values?
     switch (type) {
       case 'Seminar':
         return 'S';

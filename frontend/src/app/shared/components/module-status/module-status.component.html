@@ -1,12 +1,12 @@
 <span (click)="openChangeStatusDialog($event, modType)" matTooltip={{displayStatusOnHover}}
-  matTooltipClass="custom-tooltip">
+  matTooltipClass="custom-tooltip" i18n-matTooltip>
   @switch (this.status) {
     <!-- for the case if status options property status is passed -->
     @case ('passed') {
       <button class="btn-icon">
         <i class="bi bi-check-lg text-success"></i>
         @if (showStatusText) {
-          <span class="ms-2">Bestanden</span>
+          <span class="ms-2" i18n>Bestanden</span>
         }
       </button>
     }
@@ -14,7 +14,7 @@
       <button class="btn-icon">
         <i class="bi bi-x-lg text-danger"></i>
         @if (showStatusText) {
-          <span class="ms-2">Nicht bestanden</span>
+          <span class="ms-2" i18n>Nicht bestanden</span>
         }
       </button>
     }
@@ -22,7 +22,7 @@
       <button class="btn-icon">
         <i class="bi bi-dash-lg"></i>
         @if (showStatusText) {
-          <span class="ms-2">Belegt</span>
+          <span class="ms-2" i18n>Belegt</span>
         }
       </button>
     }
@@ -30,7 +30,7 @@
       <button class="btn-icon">
         <i class="bi bi-question-circle"></i>
         @if (showStatusText) {
-          <span class="ms-2">Nicht belegt</span>
+          <span class="ms-2" i18n>Nicht belegt</span>
         }
       </button>
     }

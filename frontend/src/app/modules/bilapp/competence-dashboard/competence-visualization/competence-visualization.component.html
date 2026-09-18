@@ -1,7 +1,7 @@
 <!-- Navigation -->
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-lg-8">
-    <h4 class="nav-header text-center">Zielperspektiven / Kompetenzstandards</h4>
+    <h4 class="nav-header text-center" i18n>Zielperspektiven / Kompetenzstandards</h4>
     <nav>
       <ul class="nav">
         <!-- Standards to select -->
@@ -14,7 +14,7 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-lg-12">
     @if (!(this.selectedStandard$ | async)) {
-      <div class="alert alert-primary">
+      <div class="alert alert-primary" i18n>
         Bitte wählen Sie einen Standard aus!
       </div>
     } @else {

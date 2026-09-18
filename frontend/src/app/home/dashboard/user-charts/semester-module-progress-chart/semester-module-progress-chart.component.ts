@@ -32,13 +32,13 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
 
   calculateDataForChart() {
     this.cardData = {
-      title: 'Modul Fortschritt nach Semester',
+      title: $localize`Modul Fortschritt nach Semester`,
       stacked: true,
       xLabels: this.semesters.map((semester) => semester.shortName),
       series: [
-        { name: 'Bestanden', data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'passed'), color: '#97bf0d' },
-        { name: 'Belegt', data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'taken'), color: '#00457d' },
-        { name: 'Nicht bestanden', data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'failed'), color: '#e6444f' },
+        { name: $localize`Bestanden`, data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'passed'), color: '#97bf0d' },
+        { name: $localize`Belegt`, data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'taken'), color: '#00457d' },
+        { name: $localize`Nicht bestanden`, data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'failed'), color: '#e6444f' },
       ],
     } satisfies BarChartCardData;
   }

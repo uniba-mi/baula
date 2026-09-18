@@ -33,8 +33,8 @@ export class ModuleGroupProgressChartComponent implements OnInit, OnChanges {
 
   private setDatasets(mgs: ModuleGroup[]) {
     this.cardData = {
-      title: 'Belegungen in Modulgruppen',
-      categories: ['Bestanden', 'Nicht bestanden', 'Belegt', 'Nicht belegt'],
+      title: $localize`Belegungen in Modulgruppen`,
+      categories: [$localize`Bestanden`, $localize`Nicht bestanden`, $localize`Belegt`, $localize`Nicht belegt`],
       colors: ['rgba(172, 204, 61, 0.8)', 'rgba(235, 105, 114, 0.8)', 'rgba(102, 144, 177, 0.8)', 'rgb(159, 159, 156, 0.8)'],
       rings: mgs.map((mg) => ({
         name: mg.name.toString(),

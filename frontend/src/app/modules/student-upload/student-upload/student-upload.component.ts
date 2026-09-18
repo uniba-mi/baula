@@ -89,11 +89,11 @@ export class StudentUploadComponent {
       dialogTitle: 'Einwilligung widerrufen?',
       actionType: 'delete',
       warningMessage:
-        'Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.',
+        $localize `Die Daten werden unwiederbringlich gelöscht, eine Wiederherstellung ist nicht möglich.`,
       confirmationItem:
-        'deine Einwilligung inklusive deines importierten Studienverlauf mit Belegungen und Noten',
-      confirmButtonLabel: 'Bestätigen',
-      cancelButtonLabel: 'Abbrechen',
+        $localize `deine Einwilligung inklusive deines importierten Studienverlauf mit Belegungen und Noten`,
+      confirmButtonLabel: $localize `Bestätigen`,
+      cancelButtonLabel: $localize `Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.deleteStudyPath();

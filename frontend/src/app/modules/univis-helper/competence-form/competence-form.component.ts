@@ -110,8 +110,8 @@ export class CompetenceFormComponent implements OnInit, OnChanges {
         !this.removeMissingEntryError
       ) {
         this.errors.push({
-          name: 'Fehlende Eingaben',
-          desc: `Zu mindestens einem Standard fehlen Angaben. Bitte ergänzen Sie diese noch.`,
+          name: $localize `Fehlende Eingaben`,
+          desc: $localize `Zu mindestens einem Standard fehlen Angaben. Bitte ergänzen Sie diese noch.`,
         });
         invalid = true;
       } else if (
@@ -119,8 +119,8 @@ export class CompetenceFormComponent implements OnInit, OnChanges {
         !this.errors.find((el) => el.name == 'Summe größer als 100%')
       ) {
         this.errors.push({
-          name: 'Summe größer als 100%',
-          desc: `In mindestens einem Standard haben Sie mehr als 100% vergeben. Das ist nicht möglich, bitte passen Sie ihre Änderungen an.`,
+          name: $localize `Summe größer als 100%`,
+          desc: $localize `In mindestens einem Standard haben Sie mehr als 100% vergeben. Das ist nicht möglich, bitte passen Sie ihre Änderungen an.`,
         });
         invalid = true;
       }

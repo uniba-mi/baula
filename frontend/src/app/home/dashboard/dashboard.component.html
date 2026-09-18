@@ -14,9 +14,10 @@
             class="btn btn-outline btn-sm mb-0"
             [matMenuTriggerFor]="addWidgetMenu"
             aria-label="Widgets managen"
+            i18n-aria-label
           >
             <i class="icon bi bi-sliders fw-bold me-2"></i
-            ><span class="manage-widget-text d-md-inline d-none"
+            ><span class="manage-widget-text d-md-inline d-none" i18n
               >Widgets managen</span
             >
           </button>
@@ -240,6 +241,8 @@
   aria-label="Button mit einem Icon, der auf einen VC Kurs leitet, in dem wichtige Informationen zu Baula kommuniziert werden und man Feedback geben kann."
   matTooltip="Klicke hier, um zum VC-Kurs mit allen wichtigen Informationen von Baula zu gelangen!"
   matTooltipHideDelay="200"
+  i18n-aria-label
+  i18n-matTooltip
   (click)="navigateToVC()"
   (keyup.enter)="navigateToVC()"
   (mouseenter)="feedbackTooltip.show()"

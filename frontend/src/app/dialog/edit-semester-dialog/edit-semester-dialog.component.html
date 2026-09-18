@@ -2,9 +2,9 @@
   <ng-container role="Dialoginhalt">
     <div class="content-wrapper">
       <mat-form-field appearance="outline">
-        <mat-label>Wähle das Semester aus:</mat-label>
+        <mat-label i18n>Wähle das Semester aus:</mat-label>
         <mat-select #semester [formControl]="selectedSemester" aria-label="Dropdown zur Semesterauswahl"
-          (selectionChange)="updateSemester()" required>
+          (selectionChange)="updateSemester()" required i18n-aria-label>
           @for (semester of semesters; track semester) {
             <mat-option [value]="semester.name">
               {{ semester.name | Semester }}
@@ -13,12 +13,12 @@
         </mat-select>
       </mat-form-field>
       <mat-dialog-actions>
-        <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="cancel()">
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="cancel()" i18n>
           Abbrechen
         </button>
         <button mat-raised-button class="btn btn-primary" (click)="saveSemester()"
           [mat-dialog-close]="{ semester: selectedSemester.value }"
-          [disabled]="!hasDefinedTeachingPeriod || !selectedSemester.value">
+          [disabled]="!hasDefinedTeachingPeriod || !selectedSemester.value" i18n>
           Ändern
         </button>
       </mat-dialog-actions>

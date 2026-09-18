@@ -1,11 +1,11 @@
-<ng-container role="Dialogfenster" aria-label="Dialogfenster">
+<ng-container role="Dialogfenster" aria-label="Dialogfenster" i18n-aria-label>
   <form [formGroup]="semesterForm">
     <div class="content-wrapper">
       <!-- single select mode -->
       @if (!isMultiMode()) {
         <mat-form-field appearance="outline">
-          <mat-label>Semester</mat-label>
-          <mat-select #semester [formControl]="selectedSemester" aria-label="Dropdown zur Semesterwahl"
+          <mat-label i18n>Semester</mat-label>
+          <mat-select #semester [formControl]="selectedSemester" aria-label="Dropdown zur Semesterwahl" i18n-aria-label
             required>
             @for (semester of semesters$ | async; track semester) {
               <mat-option [value]="semester.name"
@@ -15,7 +15,7 @@
             }
           </mat-select>
           @if (selectedSemester.invalid && selectedSemester.touched) {
-            <mat-error>
+            <mat-error i18n>
               Das ist ein Pflichtfeld.
             </mat-error>
           }
@@ -27,7 +27,7 @@
           <!-- select all option -->
           <div class="select-all-item mb-2 p-2">
             <mat-checkbox [checked]="isAllSelected()" [indeterminate]="isIndeterminate()"
-              (change)="toggleSelectAll()" (click)="$event.stopPropagation()">
+              (change)="toggleSelectAll()" (click)="$event.stopPropagation()" i18n>
               Alle auswählen
             </mat-checkbox>
           </div>
@@ -47,11 +47,11 @@
 
     <mat-dialog-actions>
       <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
-        (keyup)="close('noData')">
+        (keyup)="close('noData')" i18n>
         Abbrechen
       </button>
       <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="getSemester()"
-        [disabled]="!isValidSelection()" (click)="close('data')" (keyup)="close('data')">
+        [disabled]="!isValidSelection()" (click)="close('data')" (keyup)="close('data')" i18n>
         Übernehmen
       </button>
     </mat-dialog-actions>

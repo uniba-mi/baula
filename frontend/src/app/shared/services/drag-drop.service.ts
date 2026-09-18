@@ -49,7 +49,7 @@ export class DragDropService {
       this.snackbar.openSnackBar({
         type: AlertType.DANGER,
         message:
-          'Module können nicht in vergangene Semester verschoben werden.',
+          $localize `Module können nicht in vergangene Semester verschoben werden.`,
       });
       return;
     }

@@ -66,8 +66,6 @@ import { SemesterPlanComponent } from './home/semester-plan/semester-plan.compon
 import { StudyPlanComponent } from './home/study-plan/study-plan.component';
 import { CourseListComponent } from './home/semester-plan/course-list/course-list.component';
 import { CourseItemComponent } from './home/semester-plan/course-item/course-item.component';
-import { ExpandCourseTypePipe } from './shared/pipes/expand-course-type.pipe';
-import { ShowWeekdayPipe } from './shared/pipes/show-weekday.pipe';
 import { StudyPlanDetailComponent } from './home/study-plan/study-plan-detail/study-plan-detail.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
@@ -133,6 +131,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { MaintenanceMessageComponent } from './shared/components/maintenance-message/maintenance-message.component';
 import { ProfileMenuComponent } from './nav/profile-menu/profile-menu.component';
+import { LocaleSwitcherComponent } from './shared/components/locale-switcher/locale-switcher.component';
 import { GroupNavigationComponent } from './home/module-overview/group-navigation/group-navigation.component';
 import { UserDataComponent } from './home/user-profile/user-data/user-data.component';
 import { StudyPathUpdateComponent } from './home/user-profile/study-path-update/study-path-update.component';
@@ -197,9 +196,7 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
     CourseListComponent,
     CourseItemComponent,
     StudentUploadComponent,
-    ExpandCourseTypePipe,
     DecimalFormatPipe,
-    ShowWeekdayPipe,
     StudyPlanDetailComponent,
     DialogComponent,
     DashboardComponent,
@@ -263,6 +260,7 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
     CourseFormatPipe,
     LoginComponent,
     ProfileMenuComponent,
+    LocaleSwitcherComponent,
     MaintenanceMessageComponent,
     GroupNavigationComponent,
     UserDataComponent,

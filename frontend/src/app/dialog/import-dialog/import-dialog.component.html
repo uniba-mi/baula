@@ -10,20 +10,20 @@
       <div>
         @if (studyPlanTemplate$ | async) {
           <div class="d-flex flex-column align-items-start">
-            <p>Ein Musterstudienverlaufsplan gilt nur als Orientierung und kann nicht deine individuellen Interessen abdecken.
+            <p i18n>Ein Musterstudienverlaufsplan gilt nur als Orientierung und kann nicht deine individuellen Interessen abdecken.
               Bitte informiere dich abseits dieses Musters über die
             vielfältigen Möglichkeiten deines Studiengangs.</p>
             <div class="d-flex align-items-start">
               <div class="uploaded-file d-flex align-items-start info-box-petrol me-3">
                 <i class="bi bi-file-earmark-text-fill me-2" style="font-size: 2rem;"></i>
                 <div>
-                  <p class="mb-0 fw-bold">Dein Musterstudienverlaufsplan ist bereit.</p>
+                  <p class="mb-0 fw-bold" i18n>Dein Musterstudienverlaufsplan ist bereit.</p>
                   <p class="text-muted mb-0">{{ templateFileName || 'Musterplan.pdf' }}</p>
                 </div>
               </div>
               @if (showRecencyWarning && previousSemester) {
                 <div class="d-flex align-items-center">
-                  <div class="text-danger p-4">
+                  <div class="text-danger p-4" i18n>
                     <i class="bi bi-info-circle me-2"></i>
                     Dieser Plan ist aus dem Semester <b>{{ previousSemester | Semester }}</b>. Der aktuellste
                     Plan wird kurz vor Semesterbeginn bereitgestellt.
@@ -33,7 +33,7 @@
             </div>
           </div>
         } @else {
-          <app-no-data noDataMessage="Kein Muster für deinen Studiengang vorhanden." [diagram]="false"></app-no-data>
+          <app-no-data noDataMessage="Kein Muster für deinen Studiengang vorhanden." [diagram]="false" i18n-noDataMessage></app-no-data>
         }
       </div>
     }
@@ -43,9 +43,9 @@
     <div class="drop-zone d-flex flex-column align-items-center" appDnd
       (fileDropped)="uploadedFile($event)">
       <input type="file" id="file" multiple (change)="uploadedFile($event)" />
-      <p> Lade hier {{ importType }} über Drag'n'Drop hoch</p>
-      <p> Oder:</p>
-      <label for="file">Nach Datei suchen</label>
+      <p i18n> Lade hier {{ importType }} über Drag'n'Drop hoch</p>
+      <p i18n> Oder:</p>
+      <label for="file" i18n>Nach Datei suchen</label>
       @if (filename) {
         <div>{{ filename }}</div>
       }
@@ -56,7 +56,7 @@
 
   <!-- Warnings for semester planning -->
   @if (importType === 'deinen Stundenplan') {
-    <div class="alert alert-danger my-2" role="alert">
+    <div class="alert alert-danger my-2" role="alert" i18n>
       Solltest du bereits einen Stundenplan für das Semester gespeichert haben, wird dieser überschrieben! Achte
       zudem darauf, dass der importierte Stundenplan aus dem gleichen Semester stammt, das derzeit ausgewählt
       ist!
@@ -68,62 +68,62 @@
     <div
       >
       <hr />
-      <div class="mt-4">
+      <div class="mt-4" i18n>
         Der Studienplan, den du importieren möchtest beginnt im <span class="fw-bold">{{ start.fullName }}</span>
         und endet im <span class="fw-bold">{{ end.fullName }}</span>.
       </div>
-      <label id="import-radio-group-label">In welchem Semester soll für dich der importierte Plan beginnen?</label>
+      <label id="import-radio-group-label" i18n>In welchem Semester soll für dich der importierte Plan beginnen?</label>
       <mat-radio-group class="d-flex flex-column" aria-labelledby="import-radio-group-label"
         [(ngModel)]="importFormat">
         @if (startSemester) {
-          <mat-radio-button value="startWithUserStartSemester" class="me-2">In meinem
-            Startsemester ({{ startSemester.fullName }})
+          <mat-radio-button value="startWithUserStartSemester" class="me-2"><ng-container i18n>In meinem
+            Startsemester ({{ startSemester.fullName }}) </ng-container>
             @if (importType === 'deinen Studienplan') {
               <button class="btn-icon"
                 matTooltip="Hier wird dein bestehender Studienverlauf mit den zukünftigen Semestern kombiniert. Diese Option eignet sich besonders gut, um deinen Verlauf und deinen weiteren Plan mit Mitstudierenden zu teilen. Es werden dabei keine personenbezogenen Daten wie z. B. deine Note exportiert."
-                matTooltipClass="custom-tooltip" appTooltip>
+                matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip>
                 <i class="bi bi-info-circle"></i>
               </button>
             }
             @if (importType === 'deinen Musterplan') {
               <button class="btn-icon"
                 matTooltip="Hier kannst du den importieren Plan in deinem ersten Semester beginnen lassen. Bitte beachte, dass der Semestertyp (Sommer/Winter) des Musterstudienverlaufsplan am besten mit deinem Startsemestertyp übereinstimmen sollte, damit die Module belegbar sind. Den Semestertyp siehst du am letzten Buchstaben des oben angezeigten Dateinamens."
-                matTooltipClass="custom-tooltip" appTooltip>
+                matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip>
                 <i class="bi bi-info-circle"></i>
               </button>
             }
           </mat-radio-button>
         }
-        <mat-radio-button value="startWithCurrentSemester" class="me-2">Im aktuellen Semester ({{ current.fullName
-          }})
+        <mat-radio-button value="startWithCurrentSemester" class="me-2"><ng-container i18n>Im aktuellen Semester ({{ current.fullName
+          }}) </ng-container>
           @if (importType === 'deinen Studienplan') {
             <button class="btn-icon"
               matTooltip="Mit dieser Option werden nur die zukünftigen Semester in die Exportdatei eingefügt, ohne deinen Studienverlauf. Diese Option eignet sich z. B. dafür, wenn du den aktuellen Plan sichern möchtest"
-              matTooltipClass="custom-tooltip" appTooltip>
+              matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip>
               <i class="bi bi-info-circle"></i>
             </button>
           }
           @if (importType === 'deinen Musterplan') {
             <button class="btn-icon"
               matTooltip="Hier kannst du den importieren Plan im aktuellen Semester beginnen lassen. Dies bedeutet, dass das erste Semester des importerten Plans in das aktuelle Semester eingefügt wird usw."
-              matTooltipClass="custom-tooltip" appTooltip>
+              matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip>
               <i class="bi bi-info-circle"></i>
             </button>
           }
         </mat-radio-button>
-        <mat-radio-button value="keepSemesterOfFile" class="me-2">Wie in
-          der Importdatei ({{ start.fullName }})
+        <mat-radio-button value="keepSemesterOfFile" class="me-2"><span i18n>Wie in
+          der Importdatei ({{ start.fullName }})</span>
           @if (importType === 'deinen Studienplan') {
             <button class="btn-icon"
               matTooltip="Mit dieser Option werden nur die zukünftigen Semester in die Exportdatei eingefügt, ohne deinen Studienverlauf. Diese Option eignet sich z. B. dafür, wenn du den aktuellen Plan sichern möchtest"
-              matTooltipClass="custom-tooltip" appTooltip>
+              matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip>
               <i class="bi bi-info-circle"></i>
             </button>
           }
           @if (importType === 'deinen Musterplan') {
             <button class="btn-icon"
               matTooltip="Hier kannst du den importieren Plan im Startsemester des importierten Plans beginnen lassen. Dies bedeutet, dass dein Studieverlauf ab dem Startsemester des Plans gefüllt wird."
-              matTooltipClass="custom-tooltip" appTooltip>
+              matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip>
               <i class="bi bi-info-circle"></i>
             </button>
           }
@@ -137,26 +137,26 @@
 
 <mat-dialog-actions>
   @if (importType !== 'deinen Musterplan') {
-    <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+    <button mat-raised-button class="btn btn-outline" mat-dialog-close i18n>
       Abbrechen
     </button>
     <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="generateOutput(upload)"
-      [disabled]="!file">
+      [disabled]="!file" i18n>
       Importieren
     </button>
   }
   @if (importType === 'deinen Musterplan') {
     @if (start && end && !isFirstSemesterStudent) {
-      <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+      <button mat-raised-button class="btn btn-outline" mat-dialog-close i18n>
         Abbrechen
       </button>
     } @else {
-      <button  mat-raised-button class="btn btn-primary" mat-dialog-close>
+      <button  mat-raised-button class="btn btn-primary" mat-dialog-close i18n>
         Überspringen
       </button>
     }
     <button mat-raised-button class="btn btn-primary"
-      [mat-dialog-close]="generateOutput(upload)">
+      [mat-dialog-close]="generateOutput(upload)" i18n>
       Importieren
     </button>
   }

@@ -11,7 +11,7 @@
         <app-course-list class="course-list" [courses]="courses" [searchSettings]="searchSettings" [isSticky]="isSticky"
         (notify)="updateList()"></app-course-list>
         @if (courseListEmpty === true) {
-          <div class="mx-auto mt-2 alert alert-primary" role="alert">
+          <div class="mx-auto mt-2 alert alert-primary" role="alert" i18n>
             Zum eingegebenen Suchbegriff konnten keine passenden Lehrveranstaltungen
             gefunden werden!
           </div>

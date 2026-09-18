@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
     selector: 'app-upload-data-privacy',
@@ -8,5 +8,4 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
     standalone: false
 })
 export class UploadDataPrivacyComponent {
-    @Input() version: string;
 }

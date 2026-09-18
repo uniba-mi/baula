@@ -25,7 +25,7 @@
       @for (mCourse of course.mCourses; track mCourse) {
         <div (mouseenter)="hoverSelectCourse(course, mCourse.modCourse.mcId)" (mouseleave)="hoverDeselectCourse()">
           <mat-checkbox class="ms-4" [checked]="this.checkSelectedCourses(course, mCourse.modCourse.mcId)"
-            (change)="selectCourse(course, mCourse.modCourse.mcId)" ariaLabel="Lehrveranstaltung auswählen" [disabled]="this.checkIfDisabled(course, mCourse.modCourse.mcId)">
+            (change)="selectCourse(course, mCourse.modCourse.mcId)" ariaLabel="Lehrveranstaltung auswählen" i18n-ariaLabel [disabled]="this.checkIfDisabled(course, mCourse.modCourse.mcId)">
             {{ mCourse.modCourse.identifier.acronym }} | {{ mCourse.modCourse.name }}
           </mat-checkbox>
         </div>
@@ -36,7 +36,7 @@
   @if (course && course.mCourses && course.mCourses.length == 1) {
     <div class="d-inline-flex" (mouseenter)="hoverSelectCourse(course, course.mCourses[0].modCourse.mcId)" (mouseleave)="hoverDeselectCourse()">
       <mat-checkbox [checked]="this.checkSelectedCourses(course, course.mCourses[0].modCourse.mcId)"
-        (change)="selectCourse(course, course.mCourses[0].modCourse.mcId)" ariaLabel="Lehrveranstaltung auswählen">
+        (change)="selectCourse(course, course.mCourses[0].modCourse.mcId)" ariaLabel="Lehrveranstaltung auswählen" i18n-ariaLabel>
         {{ course.name }} ({{ course.type | ShortenCourseType }})
       </mat-checkbox>
       <i class="d-flex bi bi-info-circle icon ms-3 me-0 align-items-center" (click)="openDialog($event, course)"></i>

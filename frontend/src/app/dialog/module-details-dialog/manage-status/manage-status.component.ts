@@ -77,11 +77,11 @@ export class ManageStatusComponent {
     semester: string,
   ) {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: `Modul wirklich aus dem Studienplan "${studyPlanName}" löschen?`,
+      dialogTitle: $localize `Modul wirklich aus dem Studienplan "${studyPlanName}" löschen?`,
       actionType: 'delete',
       confirmationItem: this.selectedModule.name,
-      confirmButtonLabel: 'Löschen',
-      cancelButtonLabel: 'Abbrechen',
+      confirmButtonLabel: $localize `Löschen`,
+      cancelButtonLabel: $localize `Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.store.dispatch(

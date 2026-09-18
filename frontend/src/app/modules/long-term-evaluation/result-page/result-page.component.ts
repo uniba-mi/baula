@@ -180,7 +180,7 @@ export class ResultPageComponent implements OnInit {
         type: 'bar',
         spacingClasses: isAggregate ? 'col-12 col-md-6 col-lg-8 mb-2' : 'col-12 col-md-6 col-lg-4 mb-2',
         cardData: this.generateBarChartData(
-          'Teilnehmer nach Monat',
+          $localize`Teilnehmer nach Monat`,
           this.countOccurencesChronological(filteredResults.map((el) => el.evaluationCode))
         ),
       };
@@ -194,15 +194,15 @@ export class ResultPageComponent implements OnInit {
       }
 
       // bar chart for usage frequency
-      const useOrder = ['täglich', 'mehrmals pro Woche', 'einmal pro Woche', 'seltener'];
+      const useOrder = [$localize`täglich`, $localize`mehrmals pro Woche`, $localize`einmal pro Woche`, $localize`seltener`];
       cards.push({
         id: 'useChart',
         type: 'bar',
         spacingClasses: `col-12 col-md-6 ${!isAggregate ? 'col-lg-4': ''} mb-2`,
         cardData: isAggregate
-          ? this.generateGroupedBarChartData('Nutzungshäufigkeit', (el) => el.use, useOrder)
+          ? this.generateGroupedBarChartData($localize`Nutzungshäufigkeit`, (el) => el.use, useOrder)
           : this.generateBarChartData(
-              'Nutzungshäufigkeit',
+              $localize`Nutzungshäufigkeit`,
               this.countOccurencesOrdered(filteredResults.map((el) => el.use), useOrder)
             ),
       });
@@ -213,9 +213,9 @@ export class ResultPageComponent implements OnInit {
         type: 'bar',
         spacingClasses: `col-12 col-md-6 ${!isAggregate ? 'col-lg-4': ''} mb-2`,
         cardData: isAggregate
-          ? this.generateGroupedBarChartData('Fachsemester der Teilnehmenden', (el) => String(el.semester))
+          ? this.generateGroupedBarChartData($localize`Fachsemester der Teilnehmenden`, (el) => String(el.semester))
           : this.generateBarChartData(
-              'Fachsemester der Teilnehmenden',
+              $localize`Fachsemester der Teilnehmenden`,
               this.countOccurencesNumeric(filteredResults.map((el) => el.semester))
             ),
       });
@@ -226,12 +226,12 @@ export class ResultPageComponent implements OnInit {
         type: 'table',
         spacingClasses: `col-12 col-lg-4 mb-2`,
         cardData: {
-          title: 'Studiengänge der Teilnehmenden',
+          title: $localize`Studiengänge der Teilnehmenden`,
           data: this.countOccurences(filteredResults.map((el) => el.spName)),
           columnKeys: ['name', 'count'],
           columns: [
-            { key: 'name', name: 'Studiengang' },
-            { key: 'count', name: 'Häufigkeit' },
+            { key: 'name', name: $localize`Studiengang` },
+            { key: 'count', name: $localize`Häufigkeit` },
           ],
         },
       });
@@ -243,7 +243,7 @@ export class ResultPageComponent implements OnInit {
         type: 'table',
         spacingClasses: `col-12 col-lg-8 mb-2`,
         cardData: {
-          title: 'Feedback der Teilnehmenden',
+          title: $localize`Feedback der Teilnehmenden`,
           data: filteredResults
             .map(({ spName, semester, feedback, evaluationCode }) => ({
               spName,
@@ -254,10 +254,10 @@ export class ResultPageComponent implements OnInit {
             .filter((el) => el.feedback !== ''),
           columnKeys: ['spName', 'semester', 'zeitraum', 'feedback'],
           columns: [
-            { key: 'spName', name: 'Studiengang' },
-            { key: 'semester', name: 'FS' },
-            { key: 'zeitraum', name: 'Semester' },
-            { key: 'feedback', name: 'Feedback' },
+            { key: 'spName', name: $localize`Studiengang` },
+            { key: 'semester', name: $localize`FS` },
+            { key: 'zeitraum', name: $localize`Semester` },
+            { key: 'feedback', name: $localize`Feedback` },
           ],
         },
       });
@@ -288,18 +288,18 @@ export class ResultPageComponent implements OnInit {
           type: 'meta',
           spacingClasses: 'col-12 col-md-6 col-lg-4 mb-2',
           cardData: {
-            title: 'Metainformationen',
+            title: $localize`Metainformationen`,
             items: [
               { iconClass: 'bi-mortarboard', name: 'Studiengang: ', data: latest.spName },
               { iconClass: 'bi-person-badge', name: 'Code: ', data: personalCode },
               {
                 iconClass: 'bi-calendar-range',
-                name: 'Verfügbare Semester: ',
+                name: $localize`Verfügbare Semester: `,
                 data: semesterDisplayLabels.join(', '),
               },
               {
                 iconClass: 'bi-collection',
-                name: 'Verfügbare Fachsemester: ',
+                name: $localize`Verfügbare Fachsemester: `,
                 data: userResults.map((el) => el.semester).join(', '),
               },
             ],
@@ -312,7 +312,7 @@ export class ResultPageComponent implements OnInit {
           type: 'line',
           spacingClasses: 'col-12 col-lg-8 mb-2',
           cardData: {
-            title: 'Verlauf PU / PEOU / BI / NPS',
+            title: $localize`Verlauf PU / PEOU / BI / NPS`,
             xLabels: semesterDisplayLabels,
             series: [
               { name: 'PU', data: userResults.map((el) => this.calculateMean(el.pu)) },
@@ -328,7 +328,7 @@ export class ResultPageComponent implements OnInit {
           type: 'table',
           spacingClasses: 'col-12 mb-2',
           cardData: {
-            title: 'Rohdaten je Semester',
+            title: $localize`Rohdaten je Semester`,
             data: userResults.map((el, i) => ({
               semester: semesterDisplayLabels[i],
               pu: Number(this.calculateMean(el.pu).toFixed(2)),
@@ -339,11 +339,11 @@ export class ResultPageComponent implements OnInit {
             })),
             columnKeys: ['semester', 'pu', 'peou', 'bi', 'use', 'nps'],
             columns: [
-              { key: 'semester', name: 'Semester' },
+              { key: 'semester', name: $localize`Semester` },
               { key: 'pu', name: 'PU' },
               { key: 'peou', name: 'PEOU' },
               { key: 'bi', name: 'BI' },
-              { key: 'use', name: 'Nutzung' },
+              { key: 'use', name: $localize`Nutzung` },
               { key: 'nps', name: 'NPS' },
             ],
           },
@@ -354,7 +354,7 @@ export class ResultPageComponent implements OnInit {
           type: 'quote',
           spacingClasses: 'col-12 mb-2',
           cardData: {
-            title: 'Feedback im Verlauf',
+            title: $localize`Feedback im Verlauf`,
             quotes: userResults
               .map((el, i) => ({ text: el.feedback, meta: semesterDisplayLabels[i] }))
               .filter((quote) => quote.text !== ''),
@@ -377,7 +377,7 @@ export class ResultPageComponent implements OnInit {
     return [...spNameByCode.entries()]
       .map(([code, spName]) => {
         const count = countByCode.get(code) ?? 0;
-        const recordLabel = count === 1 ? '1 Datensatz' : `${count} Datensätze`;
+        const recordLabel = count === 1 ? $localize`1 Datensatz` : $localize`${count} Datensätze`;
         return { code, label: `${code} (${spName}) · ${recordLabel}` };
       })
       .sort((a, b) => a.code.localeCompare(b.code));
@@ -419,38 +419,39 @@ export class ResultPageComponent implements OnInit {
     const meanNps = Number(
       this.calculateMean(results.map((el) => el.nps)).toFixed(2)
     );
+
     return {
-      title: 'Überblicksinformationen',
+      title: $localize`Überblicksinformationen`,
       items: [
         {
           iconClass: 'bi-people',
-          name: 'Anzahl Teilnehmer: ',
+          name: $localize`Anzahl Teilnehmer: `,
           data: results.length,
-          tooltip: `Anzahl der Teilnehmer ${scopeLabel}.`,
+          tooltip: $localize`Anzahl der Teilnehmer ${scopeLabel}.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Perceived Usefulness: ',
+          name: $localize`Perceived Usefulness: `,
           data: meanPu,
-          tooltip: 'Durchschnittswert des PU Score.',
+          tooltip: $localize`Durchschnittswert des PU Score.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Perceived Ease of Use: ',
+          name: $localize`Perceived Ease of Use: `,
           data: meanPeou,
-          tooltip: 'Durchschnittswert des PEOU Score.',
+          tooltip: $localize`Durchschnittswert des PEOU Score.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Behavioral Intention: ',
+          name: $localize`Behavioral Intention: `,
           data: meanBi,
-          tooltip: 'Durchschnittswert des BI Score.',
+          tooltip: $localize`Durchschnittswert des BI Score.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Net Promoter Score: ',
+          name: $localize`Net Promoter Score: `,
           data: meanNps,
-          tooltip: 'Durchschnittswert des NPS.',
+          tooltip: $localize`Durchschnittswert des NPS.`,
         },
       ],
       reportData: results,
@@ -479,7 +480,7 @@ export class ResultPageComponent implements OnInit {
     const groupStats = groups.map((group) => this.computeBoxplotConstructs(group.results));
 
     return {
-      title: 'Verteilung PU / PEOU / BI / NPS',
+      title: $localize`Verteilung PU / PEOU / BI / NPS`,
       categories: ['PU', 'PEOU', 'BI', 'NPS'],
       groups: groups.map((group) => group.label),
       data: groupStats.map((stats) => stats.map((s) => s?.stats ?? null)),

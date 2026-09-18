@@ -49,7 +49,7 @@ export class StudyPlanningEffects {
           catchError((error) => {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
-              message: 'Die Studienpläne konnten nicht geladen werden!',
+              message: $localize `Die Studienpläne konnten nicht geladen werden!`,
             });
             return of(StudyPlanActions.loadStudyPlansFailure({ error }));
           }),
@@ -109,13 +109,13 @@ export class StudyPlanningEffects {
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Der Studienplan wurde erfolgreich angelegt.',
+              message: $localize `Der Studienplan wurde erfolgreich angelegt.`,
             });
           }),
           catchError((error) => {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
-              message: 'Der Studienplan konnte nicht angelegt werden!',
+              message: $localize `Der Studienplan konnte nicht angelegt werden!`,
             });
             return of(StudyPlanActions.createStudyPlanFailure({ error }));
           }),
@@ -187,13 +187,13 @@ export class StudyPlanningEffects {
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Der Studienplan wurde erfolgreich aktualisiert.',
+              message: $localize `Der Studienplan wurde erfolgreich aktualisiert.`,
             });
           }),
           catchError((error) => {
             this.snackbar.openSnackBar({
               type: AlertType.DANGER,
-              message: 'Der Studienplan konnte nicht aktualisiert werden!',
+              message: $localize `Der Studienplan konnte nicht aktualisiert werden!`,
             });
             return of(StudyPlanActions.updateStudyPlanFailure({ error }));
           }),
@@ -216,12 +216,12 @@ export class StudyPlanningEffects {
           tap(() => {
             this.snackbar.openSnackBar({
               type: AlertType.SUCCESS,
-              message: 'Dein Studienplan wurde erfolgreich gelöscht.',
+              message: $localize `Dein Studienplan wurde erfolgreich gelöscht.`,
             });
           }),
           catchError((error) => {
             this.snackbar.openSnackBar({
-              message: 'Studienplan konnte nicht gelöscht werden.',
+              message: $localize `Studienplan konnte nicht gelöscht werden.`,
               type: AlertType.DANGER,
             });
             return of(StudyPlanActions.deleteStudyPlanFailure({ error }));
@@ -255,14 +255,14 @@ export class StudyPlanningEffects {
             tap(() => {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
-                message: 'Das Modul wurde zum Semester hinzugefügt.',
+                message: $localize `Das Modul wurde zum Semester hinzugefügt.`,
               });
             }),
             catchError((error) => {
               this.snackbar.openSnackBar({
                 type: AlertType.DANGER,
                 message:
-                  'Das Modul konnte nicht zum Semester hinzugefügt werden!',
+                  $localize `Das Modul konnte nicht zum Semester hinzugefügt werden!`,
               });
               return of(
                 ModulePlanningActions.addModuleToSemesterFailure({
@@ -360,13 +360,13 @@ export class StudyPlanningEffects {
             tap(() => {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
-                message: 'Das Modul wurde verschoben.',
+                message: $localize `Das Modul wurde verschoben.`,
               });
             }),
             catchError((error) => {
               this.snackbar.openSnackBar({
                 type: AlertType.DANGER,
-                message: 'Das Modul konnte nicht verschoben werden!',
+                message: $localize `Das Modul konnte nicht verschoben werden!`,
               });
               return of(
                 ModulePlanningActions.addModuleToSemesterFailure({
@@ -430,13 +430,13 @@ export class StudyPlanningEffects {
             tap(() => {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
-                message: 'Das Modul wurde verschoben.',
+                message: $localize `Das Modul wurde verschoben.`,
               });
             }),
             catchError((error) => {
               this.snackbar.openSnackBar({
                 type: AlertType.DANGER,
-                message: 'Das Modul konnte nicht verschoben werden!',
+                message: $localize `Das Modul konnte nicht verschoben werden!`,
               });
               return of(
                 UserGeneratedModuleActions.transferUserGeneratedModuleFailure({
@@ -497,13 +497,13 @@ export class StudyPlanningEffects {
             tap(() => {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
-                message: 'Das Modul wurde aus dem Semester entfernt.',
+                message: $localize `Das Modul wurde aus dem Semester entfernt.`,
               });
             }),
             catchError((error) => {
               this.snackbar.openSnackBar({
                 type: AlertType.DANGER,
-                message: 'Modul konnte nicht entfernt werden!',
+                message: $localize `Modul konnte nicht entfernt werden!`,
               });
               return of(
                 ModulePlanningActions.deleteModuleFromSemesterPlanFailure({
@@ -538,13 +538,13 @@ export class StudyPlanningEffects {
             tap(() => {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
-                message: 'Ziel-ECTS wurden aktualisiert.',
+                message: $localize `Ziel-ECTS wurden aktualisiert.`,
               });
             }),
             catchError((error) => {
               this.snackbar.openSnackBar({
                 type: AlertType.DANGER,
-                message: 'ECTS konnten nicht aktualisiert werden!',
+                message: $localize `ECTS konnten nicht aktualisiert werden!`,
               });
               return of(SemesterPlanActions.updateAimedEctsFailure({ error }));
             }),
@@ -576,7 +576,7 @@ export class StudyPlanningEffects {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
                 message:
-                  'Dein Platzhalter wurde erfolgreich zum Semester hinzugefügt.',
+                  $localize `Dein Platzhalter wurde erfolgreich zum Semester hinzugefügt.`,
               });
             }),
             catchError((error) => {
@@ -658,7 +658,7 @@ export class StudyPlanningEffects {
             catchError((error) => {
               this.snackbar.openSnackBar({
                 type: AlertType.DANGER,
-                message: 'Platzhalter konnte nicht aktualisiert werden!',
+                message: $localize `Platzhalter konnte nicht aktualisiert werden!`,
               });
               return of(
                 UserGeneratedModuleActions.updateUserGeneratedModuleFailure({
@@ -714,7 +714,7 @@ export class StudyPlanningEffects {
             catchError((error) => {
               this.snackbar.openSnackBar({
                 type: AlertType.DANGER,
-                message: 'Der Platzhalter konnte nicht entfernt werden!',
+                message: $localize `Der Platzhalter konnte nicht entfernt werden!`,
               });
               return of(
                 UserGeneratedModuleActions.deleteUserGeneratedModuleFailure({
@@ -778,7 +778,7 @@ export class StudyPlanningEffects {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
                 message:
-                  'Die Lehrveranstaltung wurde zum Stundenplan hinzugefügt.',
+                  $localize `Die Lehrveranstaltung wurde zum Stundenplan hinzugefügt.`,
               });
             }),
             map((courses) =>
@@ -805,7 +805,7 @@ export class StudyPlanningEffects {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
                 message:
-                  'Die Lehrveranstaltung wurde aus deinem Stundenplan entfernt.',
+                  $localize `Die Lehrveranstaltung wurde aus deinem Stundenplan entfernt.`,
               });
             }),
             map((courses) =>
@@ -836,7 +836,7 @@ export class StudyPlanningEffects {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
                 message:
-                  'Die Lehrveranstaltungen wurden zum Stundenplan hinzugefügt.',
+                  $localize `Die Lehrveranstaltungen wurden zum Stundenplan hinzugefügt.`,
               });
             }),
             map((courses) =>
@@ -863,7 +863,7 @@ export class StudyPlanningEffects {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
                 message:
-                  'Die Lehrveranstaltungen wurden aus deinem Stundenplan entfernt.',
+                  $localize `Die Lehrveranstaltungen wurden aus deinem Stundenplan entfernt.`,
               });
             }),
             map((courses) =>
@@ -893,7 +893,7 @@ export class StudyPlanningEffects {
             tap(() => {
               this.snackbar.openSnackBar({
                 type: AlertType.SUCCESS,
-                message: 'Der Stundenplan wurde erfolgreich eingefügt!',
+                message: $localize `Der Stundenplan wurde erfolgreich eingefügt!`,
               });
             }),
             map((semesterPlan) =>

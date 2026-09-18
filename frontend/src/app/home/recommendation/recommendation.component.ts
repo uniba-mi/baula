@@ -21,7 +21,7 @@ export class RecommendationComponent implements OnInit {
   hasRecommendations = false;
   personalisationHint: string = 'personalisation-hint';
   personalisationMessage: string =
-    'Hier kannst du deine Präferenzen zur Personalisierung von Baula verwalten. Auf Basis deiner angegebenen Interessen oder Jobs werden dir dann für dich passende Module in der Empfehlungsseitenleiste im Bereich "Studienverlaufsplan" (Tab "Passend") angezeigt, sodass du sie direkt beim Planen verwenden kannst.';
+    $localize `Hier kannst du deine Präferenzen zur Personalisierung von Baula verwalten. Auf Basis deiner angegebenen Interessen oder Jobs werden dir dann für dich passende Module in der Empfehlungsseitenleiste im Bereich "Studienverlaufsplan" (Tab "Passend") angezeigt, sodass du sie direkt beim Planen verwenden kannst.`;
 
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);

@@ -55,7 +55,7 @@ export class StudyPlanComponent implements OnInit {
   futureSemesters: Semester[];
   studyPlanHint: string = 'studyPlan-hint';
   studyPlanMessage: string =
-    'Hier hast du die Möglichkeit, mehrere Studienverlaufspläne anzulegen oder zu importieren. Beachte, dass du immer nur einen Studienplan über den Toggle aktivieren kannst. Diesen aktuellen Plan findest du immer direkt über die Navigation unter dem Menüpunkt "Studienverlaufsplan". Alle anderen Studienpläne sind hier archiviert.';
+    $localize `Hier hast du die Möglichkeit, mehrere Studienverlaufspläne anzulegen oder zu importieren. Beachte, dass du immer nur einen Studienplan über den Toggle aktivieren kannst. Diesen aktuellen Plan findest du immer direkt über die Navigation unter dem Menüpunkt "Studienverlaufsplan". Alle anderen Studienpläne sind hier archiviert.`;
   studyPlanTemplate$: Observable<StudyPlan | undefined>;
   templatesAvailable: boolean = false;
 
@@ -104,11 +104,11 @@ export class StudyPlanComponent implements OnInit {
 
   openDeleteDialog(id: string, name: string) {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Studienplan löschen?',
+      dialogTitle: $localize `Studienplan löschen?`,
       actionType: 'delete',
       confirmationItem: name,
-      confirmButtonLabel: 'Löschen',
-      cancelButtonLabel: 'Abbrechen',
+      confirmButtonLabel: $localize`Löschen`,
+      cancelButtonLabel: $localize`Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.deleteStudyPlan(id);
@@ -142,7 +142,7 @@ export class StudyPlanComponent implements OnInit {
 
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          dialogTitle: 'Anderen Studienplan aktivieren',
+          dialogTitle: $localize `Anderen Studienplan aktivieren`,
           dialogContentId: 'activate-study-plan',
           activeStudyPlan: activePlan,
           newPlanId: newId,
@@ -218,7 +218,7 @@ export class StudyPlanComponent implements OnInit {
       this.snackbar.openSnackBar({
         type: AlertType.DANGER,
         message:
-          'Der Studienplan kann nicht deaktiviert werden, da es der einzige Plan ist.',
+          $localize `Der Studienplan kann nicht deaktiviert werden, da es der einzige Plan ist.`,
       });
     }
   }
@@ -259,7 +259,7 @@ export class StudyPlanComponent implements OnInit {
 
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          dialogTitle: 'Studienplan erstellen',
+          dialogTitle: $localize `Studienplan erstellen`,
           dialogContentId: 'add-study-plan-dialog',
           studyPlan: newStudyPlan,
         },
@@ -288,7 +288,7 @@ export class StudyPlanComponent implements OnInit {
 
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          dialogTitle: 'Studienplan bearbeiten',
+          dialogTitle: $localize `Studienplan bearbeiten`,
           dialogContentId: 'add-study-plan-dialog',
           studyPlan: studyPlan,
         },
@@ -320,7 +320,7 @@ export class StudyPlanComponent implements OnInit {
       .subscribe((studyPathInSemester) => {
         const dialogRef = this.dialog.open(DialogComponent, {
           data: {
-            dialogTitle: 'Daten exportieren:',
+            dialogTitle: $localize `Daten exportieren:`,
             dialogContentId: 'export-dialog',
             studyPlan,
             studyPath: studyPathInSemester,
@@ -351,14 +351,14 @@ export class StudyPlanComponent implements OnInit {
   chooseImportType(uId: string, start?: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Was möchtest du importieren?',
+        dialogTitle: $localize `Was möchtest du importieren?`,
         dialogContentId: 'select-option-dialog',
         options: [
-          { value: 'individualStudyPlan', label: 'Individuellen Studienplan' },
+          { value: 'individualStudyPlan', label: $localize `Individuellen Studienplan` },
           {
             value: 'studyPlanTemplate',
             label:
-              'Offiziellen Musterstudienverlaufsplan für deinen Studiengang',
+              $localize `Offiziellen Musterstudienverlaufsplan für deinen Studiengang`,
           },
         ],
       },
@@ -380,7 +380,7 @@ export class StudyPlanComponent implements OnInit {
   importIndividualStudyPlan(uId: string, start?: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Individuellen Studienplan importieren:',
+        dialogTitle: $localize `Individuellen Studienplan importieren:`,
         dialogContentId: 'import-dialog',
         importType: 'deinen Studienplan',
         startSemester: new Semester(start),
@@ -431,7 +431,7 @@ export class StudyPlanComponent implements OnInit {
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
             message:
-              'Der Studienplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!',
+              $localize `Der Studienplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!`,
           });
         }
       }
@@ -439,13 +439,14 @@ export class StudyPlanComponent implements OnInit {
     });
   }
 
+  // TODO: Can you translate every element of the following? -> No, imported studyplan name is german based and no translation can be added
   // import degree specific study plan template provided by uni
   importStudyPlanTemplate(uId: string, start?: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Musterstudienverlaufsplan importieren:',
+        dialogTitle: $localize `Musterstudienverlaufsplan importieren:`,
         dialogContentId: 'import-dialog',
-        importType: 'deinen Musterplan',
+        importType: $localize`deinen Musterplan`,
         studyPlanTemplate$: this.studyPlanTemplate$,
         startSemester: new Semester(start),
       },
@@ -486,7 +487,7 @@ export class StudyPlanComponent implements OnInit {
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
             message:
-              'Der Studienplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!!',
+              $localize `Der Studienplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!!`,
           });
         }
       }

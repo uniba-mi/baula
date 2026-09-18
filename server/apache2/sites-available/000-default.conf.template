@@ -38,8 +38,13 @@
     SSLCertificateFile /etc/acme/rsa-certs/certfullchain_${HOSTNAME}.pem
     SSLCertificateKeyFile /etc/acme/rsa-certs/key_${HOSTNAME}.pem
 
-    Alias /3rdpartylicence.txt /var/www/browser/3rdpartylicence.txt
+    Alias /3rdpartylicenses.txt /var/www/3rdpartylicenses.txt
     Alias /docs /var/www/docs
+
+    <Directory /var/www/browser>
+        Options -Indexes +FollowSymLinks
+        Require all granted
+    </Directory>
 
     # Sicherheitsheader hinzufügen
     <IfModule mod_headers.c>
@@ -80,21 +85,41 @@
     </IfModule>
 
     <IfModule mod_rewrite.c>
-        RewriteEngine On  
+        RewriteEngine On
+
+        # No locale prefix in the URL: take the language from the cookie.
+        # mod_rewrite runs before ProxyPass - every proxied route must stay excluded here.
+        # /Shibboleth.sso in particular: the ACS call is a POST.
+        RewriteCond %{REQUEST_URI} !^/(api|Shibboleth\.sso|login/local|logout|public|docs|3rdpartylicenses)
+        RewriteCond %{REQUEST_URI} !^/(de|en)(/|$)
+        RewriteCond %{HTTP_COOKIE} (?:^|;\s*)baula_locale=(de|en)(?:;|$)
+        RewriteRule ^/?(.*)$ /%1/$1 [R=302,L]
+
+        # Without cookie: redirect to the default locale
+        RewriteCond %{REQUEST_URI} !^/(api|Shibboleth\.sso|login/local|logout|public|docs|3rdpartylicenses)
+        RewriteCond %{REQUEST_URI} !^/(de|en)(/|$)
+        RewriteRule ^/?(.*)$ /${DEFAULT_LOCALE}/$1 [R=302,L]
+
         # Wenn eine vorhandene Datei oder ein Verzeichnis angefordert wird, gehe zu diesem
         RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
         RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
         RewriteRule ^ - [L]
 
-        # Wenn die angeforderte Ressource nicht existiert, verwende index.html
-        RewriteCond %{REQUEST_URI} !^/api
-        RewriteCond %{REQUEST_URI} !^/Shibboleth.sso
-        RewriteCond %{REQUEST_URI} !^/login/local
-        RewriteCond %{REQUEST_URI} !^/logout
-        RewriteCond %{REQUEST_URI} !^/docs/user
-        RewriteCond %{REQUEST_URI} !^/docs/developer
-        RewriteCond %{REQUEST_URI} !^/3rdpartylicenses
-        RewriteRule ^ /index.html [L]
+        # Wenn die angeforderte Ressource nicht existiert, verwende das index.html der jeweiligen Sprache
+        RewriteRule ^/de/ /de/index.html [L]
+        RewriteRule ^/en/ /en/index.html [L]
+    </IfModule>
+
+    # Caching: never cache index.html
+    <IfModule mod_headers.c>
+        <FilesMatch "^index\.html$">
+            Header always set Cache-Control "no-store"
+        </FilesMatch>
+
+        # Only files with a build hash; assets/ is unhashed and stays excluded.
+        <FilesMatch "-[A-Za-z0-9_-]{8,}\.(js|css|woff2?|ttf)$">
+            Header always set Cache-Control "public, max-age=31536000, immutable"
+        </FilesMatch>
     </IfModule>
 
     # Proxy und Verbindungszeitlimits

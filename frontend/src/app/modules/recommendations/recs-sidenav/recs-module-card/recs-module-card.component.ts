@@ -156,7 +156,7 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
     type: string;
   }): string {
     const typeLabel = firstChip.type === 'job' ? 'Job' : 'Interesse';
-    return `Passt zu ${typeLabel}: ${firstChip.displayText}`;
+    return $localize `Passt zu ${typeLabel}\: ${firstChip.displayText}`;
   }
 
   getTotalChipCount(): number {
@@ -174,7 +174,7 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
     );
 
     const allItems = [...jobItems, ...topicItems];
-    return `Passt zu:\n ${allItems.join(', ')}`;
+    return $localize `Passt zu:\n ${allItems.join(', ')}`;
   }
 
   showModuleNameTooltip(element: HTMLElement): boolean {
@@ -261,7 +261,7 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
     event.stopPropagation();
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Semester wählen',
+        dialogTitle: $localize `Semester wählen`,
         dialogContentId: 'select-semester-dialog',
         semesters$: this.semesters$,
       },
@@ -348,9 +348,9 @@ export class RecsModuleCardComponent implements OnInit, OnChanges {
   getFeedbackTooltip(): string {
     const feedbackSources = this.getFeedbackSources();
     if (feedbackSources.length === 1) {
-      return `Könnte dir aufgrund deines Feedbacks zu ${feedbackSources[0].identifier} gefallen`;
+      return $localize `Könnte dir aufgrund deines Feedbacks zu ${feedbackSources[0].identifier} gefallen`;
     }
     const identifiers = feedbackSources.map((s) => s.identifier).join(' und ');
-    return `Könnte dir aufgrund deines Feedbacks zu ${identifiers} gefallen`;
+    return $localize `Könnte dir aufgrund deines Feedbacks zu ${identifiers} gefallen`;
   }
 }

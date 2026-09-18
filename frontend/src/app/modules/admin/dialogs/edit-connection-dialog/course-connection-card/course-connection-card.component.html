@@ -1,4 +1,4 @@
-<mat-card class="w-100 mb-4 px-2 py-1" tabindex="0" aria-label="Zeile mit Lehrveranstaltungsinformationen">
+<mat-card class="w-100 mb-4 px-2 py-1" tabindex="0" aria-label="Zeile mit Lehrveranstaltungsinformationen" i18n-aria-label>
   <div class="d-flex justify-content-between align-items-center">
     <div class="icon" (click)="openCourse()">{{ course.name }} @if (course.short) {
       <span>- {{ course.short }}</span>
@@ -7,10 +7,10 @@
     <div>
       @if (!connected) {
         <button class="btn btn-success" [disabled]="disabled"
-        (click)="connectModule()">Verknüpfen</button>
+        (click)="connectModule()" i18n>Verknüpfen</button>
       } @else {
         <button class="btn btn-danger" [disabled]="disabled"
-          (click)="disconnectModule()">Verknüpfung
+          (click)="disconnectModule()" i18n>Verknüpfung
         löschen</button>
       }
     </div>

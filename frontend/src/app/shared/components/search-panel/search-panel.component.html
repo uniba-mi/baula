@@ -10,9 +10,9 @@
         <!-- Search input field start -->
         <div role="search" class="search-input-wrapper">
           <mat-form-field appearance="outline" class="search-input-field w-100 mx-3 my-3">
-            <mat-label class="my-3"><i class="icon bi bi-search"></i>Suchen...</mat-label>
+            <mat-label class="my-3" i18n><i class="icon bi bi-search"></i>Suchen...</mat-label>
             <input #searchInput matInput type="text" maxlength="100" class="input-with-clear-icon"
-              [(ngModel)]="searchTerm" name="searchTerm" placeholder="Gib hier einen Suchbegriff ein" />
+              [(ngModel)]="searchTerm" name="searchTerm" placeholder="Gib hier einen Suchbegriff ein" i18n-placeholder/>
               <span class="btn-icon d-inline" (click)="clearInput()" (keyup.enter)="clearInput()">
                 <i class="bi bi-x-lg text-gray"></i>
               </span>
@@ -23,13 +23,14 @@
           <button mat-button role="button" tabindex="0"
             class="search-filter-button btn btn-icon btn-primary position-relative d-flex align-items-center"
             tabindex="0" aria-label="Suche ausklappen" matTooltip="Filtern" matTooltipClass="custom-tooltip"
+            i18n-matTooltip i18n-aria-label
             (click)="togglePanel()" (keyup.enter)="togglePanel()">
             <i class="filter-icon bi bi-funnel"></i>
             @if (!customStyle) {
-              <span class="d-none d-sm-inline">Filter</span>
+              <span class="d-none d-sm-inline" i18n>Filter</span>
             }
             @else {
-              <span class="d-none d-xl-inline">Filter</span>
+              <span class="d-none d-xl-inline" i18n>Filter</span>
             }
             @if (((selectedFiltersCount$ | async) ?? 0) > 0) {
               <span

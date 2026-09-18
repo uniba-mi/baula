@@ -7,7 +7,7 @@
             <source media="(max-width: 1560px)" srcset="../assets/icon.png" />
             <img
               src="../assets/baula-light.png"
-              alt="Logo von Baula, ein Absolventenhut mit einem Kompass"
+              alt="Logo von Baula, ein Absolventenhut mit einem Kompass" i18n-alt
               id="baula-logo"
             />
           </picture>
@@ -18,7 +18,12 @@
           <app-nav [user]="user"></app-nav>
         </div>
         <div class="col-auto d-flex align-items-center">
+          <app-locale-switcher></app-locale-switcher>
           <app-profile-menu [user]="user"> </app-profile-menu>
+        </div>
+      } @else {
+        <div class="col-auto d-flex align-items-center">
+          <app-locale-switcher></app-locale-switcher>
         </div>
       }
     </div>
@@ -34,17 +39,17 @@
 <footer class="bg-blue d-flex justify-content-center justify-content-sm-end">
   <ul class="d-flex flex-column flex-sm-row">
     <li class="my-1 mx-4 text-center">
-      <a class="link text-white" tabindex="0" routerLink="/hilfe"
+      <a class="link text-white" tabindex="0" routerLink="/hilfe" i18n
         >Hilfe & Kontakt
       </a>
     </li>
     <li class="my-1 mx-4 text-center">
-      <a class="link text-white" tabindex="0" routerLink="/ueber-uns"
+      <a class="link text-white" tabindex="0" routerLink="/ueber-uns" i18n
         >Über BAULA
       </a>
     </li>
     <li class="my-1 mx-4 text-center">
-      <a class="link text-white" tabindex="0" routerLink="/publikationen"
+      <a class="link text-white" tabindex="0" routerLink="/publikationen" i18n
         >Publikationen
       </a>
     </li>

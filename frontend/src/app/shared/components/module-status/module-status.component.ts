@@ -48,16 +48,16 @@ export class ModuleStatusComponent implements OnInit {
   statusOptions: Status[] = [
     {
       status: 'passed',
-      name: 'Bestanden',
+      name: $localize`Bestanden`,
       iconClass: 'bi bi-check-lg text-success',
     },
-    { status: 'taken', name: 'Belegt', iconClass: 'bi bi-dash-lg' },
+    { status: 'taken', name: $localize`Belegt`, iconClass: 'bi bi-dash-lg' },
     {
       status: 'failed',
-      name: 'Nicht bestanden',
+      name: $localize`Nicht bestanden`,
       iconClass: 'bi bi-x-lg text-danger',
     },
-    { status: 'open', name: 'Nicht belegt', iconClass: 'bi bi-question-lg' },
+    { status: 'open', name: $localize`Nicht belegt`, iconClass: 'bi bi-question-lg' },
   ];
   moduleChanges = moduleChanges;
   newModules = moduleChanges.map((el) => el.newModuleAcronym);

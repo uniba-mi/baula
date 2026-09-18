@@ -35,20 +35,20 @@ export class PersonalisationStatusComponent {
     completed$?: Observable<boolean>;
   }[] = [
     {
-      title: 'Interessen',
-      description: 'Gib 3 Interessen an',
+      title: $localize`Interessen`,
+      description: $localize`Gib 3 Interessen an`,
       icon: 'bi bi-tag-fill',
       link: '/app/personalisierung/topics',
     },
     {
-      title: 'Jobs',
-      description: 'Lege einen Job an',
+      title: $localize`Jobs`,
+      description: $localize`Lege einen Job an`,
       icon: 'bi bi-signpost-split-fill',
       link: '/app/personalisierung/jobs',
     },
     {
-      title: 'Merkliste',
-      description: 'Markiere 3 Module als gemerkt',
+      title: $localize`Merkliste`,
+      description: $localize`Markiere 3 Module als gemerkt`,
       icon: 'bi bi-bookmark-fill',
       link: '/app/personalisierung/merkliste',
     },

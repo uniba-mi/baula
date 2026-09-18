@@ -39,8 +39,8 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       let summedEcteOverSemesters = this.getSummedValues(this.studyPlan.semesterPlans.map(el => el.summedEcts));
 
       series.push(
-        { name: 'Ziel ECTS', type: 'line', data: aimedEctsOverSemesters, color: 'rgb(51, 106, 151)' },
-        { name: 'Bisher eingeplante ECTS', type: 'line', data: summedEcteOverSemesters, color: 'rgb(159, 159, 156)' },
+        { name: $localize`Ziel ECTS`, type: 'line', data: aimedEctsOverSemesters, color: 'rgb(51, 106, 151)' },
+        { name: $localize`Bisher eingeplante ECTS`, type: 'line', data: summedEcteOverSemesters, color: 'rgb(159, 159, 156)' },
       );
     } else {
       // case if no active study plan exists, approximate aimed ects, planned ects are ignored
@@ -52,7 +52,7 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       for(const [index,value] of this.semesters.entries()) {
         aimedEctsOverSemesters.push(step + step * index);
       }
-      series.push({ name: 'Ziel ECTS', type: 'line', data: aimedEctsOverSemesters, color: 'rgb(51, 106, 151)' });
+      series.push({ name: $localize`Ziel ECTS`, type: 'line', data: aimedEctsOverSemesters, color: 'rgb(51, 106, 151)' });
     }
 
     // TODO
@@ -63,10 +63,10 @@ export class TotalEctsProgressChartComponent implements OnInit, OnChanges {
       );
       return passedModulesEcts;
     }));
-    series.push({ name: 'Bisher bestandene ECTS', data: passedEctsOverSemester, color: '#97bf0d' });
+    series.push({ name: $localize`Bisher bestandene ECTS`, data: passedEctsOverSemester, color: '#97bf0d' });
 
     this.cardData = {
-      title: 'ECTS Fortschritt (Gesamt)',
+      title: $localize`ECTS Fortschritt (Gesamt)`,
       xLabels: this.semesters.map(semester => semester.shortName),
       series,
     } satisfies BarChartCardData;

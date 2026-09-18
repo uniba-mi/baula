@@ -92,12 +92,14 @@
                   @if (type === 'feedback') {
                     <button
                       class="btn btn-outline-secondary btn-sm me-1" (click)="editFeedback(item)"
-                      title="Bearbeiten">
+                      title="Bearbeiten"
+                      i18n-title>
                       <i class="bi bi-pencil"></i>
                     </button>
                   }
                   <button class="btn btn-outline-danger btn-sm" (click)="deleteItem(item)"
-                    title="Löschen">
+                    title="Löschen"
+                    i18n-title>
                     <i class="bi bi-trash"></i>
                   </button>
                 </div>
@@ -109,7 +111,7 @@
     </ul>
   }
   @if (items.length > 0 && preview) {
-    <div class="btn-link w-100 text-center" [routerLink]="routeLink"><i
+    <div class="btn-link w-100 text-center" [routerLink]="routeLink" i18n><i
     class="bi bi-arrow-up-right-square me-2"></i>
     Alle verwalten
   </div>

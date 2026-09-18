@@ -2,7 +2,7 @@
   <div class="content-wrapper">
     @if (studyPlans && studyPlans.length > 1 && !newPlanId) {
       <div>
-        <p>Du möchtest deinen aktuelle aktiven Studienplan deaktivieren. Wähle hier einen Studienplan aus, den du
+        <p i18n>Du möchtest deinen aktuelle aktiven Studienplan deaktivieren. Wähle hier einen Studienplan aus, den du
         stattdessen aktivieren möchtest.</p>
         <mat-form-field appearance="outline">
           <mat-label>Wähle einen Studienplan aus:</mat-label>
@@ -17,7 +17,7 @@
       </div>
     }
     <div>
-      <p>Durch den Wechsel deines aktiven Studienplan ändert sich nicht dein bisheriger Studienverlauf. Die Aktivierungsänderung betrifft
+      <p i18n>Durch den Wechsel deines aktiven Studienplan ändert sich nicht dein bisheriger Studienverlauf. Die Aktivierungsänderung betrifft
         somit nur das aktuelle sowie die zukünftigen Semester (Standardeinstellung). Du kannst die bisher eingeplanten Module des aktuellen Semesters auch in den
         neuen aktiven Studienplan übernehmen, vorhandene Pläne in diesem Plan werden dann überschrieben. Das bietet sich für den Fall an, dass
         du das aktuelle Semester fertig geplant hast und die eingeplanten Module der zukünftigen Semester übernehmen möchtest.
@@ -26,14 +26,14 @@
           die vorherigen Semester werden ausgeblendet.
         </span>
       </p>
-      <mat-checkbox [(ngModel)]="keepCurrentSemester">Ich möchte die eingeplanten Module des aktuellen Semesters aus meinem alten aktiven Studienplan in den neuen aktiven
+      <mat-checkbox [(ngModel)]="keepCurrentSemester" i18n>Ich möchte die eingeplanten Module des aktuellen Semesters aus meinem alten aktiven Studienplan in den neuen aktiven
       Studienplan übernehmen.</mat-checkbox>
     </div>
     <mat-dialog-actions>
-      <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+      <button mat-raised-button class="btn btn-outline" mat-dialog-close i18n>
         Abbrechen
       </button>
-      <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="{ newId: newPlanIdForm.value, keepCurrentSemester}" [disabled]="!newPlanIdForm.value && studyPlans">
+      <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="{ newId: newPlanIdForm.value, keepCurrentSemester}" [disabled]="!newPlanIdForm.value && studyPlans" i18n>
         Status ändern
       </button>
     </mat-dialog-actions>
