@@ -18,7 +18,12 @@
           <app-nav [user]="user"></app-nav>
         </div>
         <div class="col-auto d-flex align-items-center">
+          <app-locale-switcher></app-locale-switcher>
           <app-profile-menu [user]="user"> </app-profile-menu>
+        </div>
+      } @else {
+        <div class="col-auto d-flex align-items-center">
+          <app-locale-switcher></app-locale-switcher>
         </div>
       }
     </div>

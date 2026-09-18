@@ -53,10 +53,19 @@ const rootDir = getRootDir();
 
 const deployDir = "/home/gitlab-runner/baula-test";
 
+// Directories to empty before copying: fs.cp only merges and never deletes
+const pathsToClean = [
+    "server/app/browser",
+]
+
 export default async function deploy() {
     // Copy every file from rootDir + files[x] to deployDIr + files[x]
     // Make sure subfolders are correct
     // Make sure we do not need more retype/ docs dirs/files
+
+    for (let elPath of pathsToClean) {
+        await fs.rm(path.join(deployDir, elPath), { recursive: true, force: true });
+    }
 
     for (let elPath of paths) {
         await copyFileOrDir(path.join(rootDir, elPath), path.join(deployDir, elPath));

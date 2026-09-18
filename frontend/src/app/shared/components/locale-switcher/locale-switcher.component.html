@@ -1,0 +1,34 @@
+@if (available) {
+  <div
+    class="locale-switcher d-flex align-items-center"
+    role="group"
+    aria-label="Sprache wählen"
+    i18n-aria-label
+  >
+    <button
+      type="button"
+      class="locale-switcher__option"
+      [class.active]="current === 'de'"
+      [attr.aria-current]="current === 'de' ? 'true' : null"
+      lang="de"
+      title="Auf Deutsch anzeigen"
+      i18n-title
+      (click)="switchTo('de')"
+    >
+      DE
+    </button>
+    <span class="locale-switcher__separator" aria-hidden="true">|</span>
+    <button
+      type="button"
+      class="locale-switcher__option"
+      [class.active]="current === 'en'"
+      [attr.aria-current]="current === 'en' ? 'true' : null"
+      lang="en"
+      title="Auf Englisch anzeigen"
+      i18n-title
+      (click)="switchTo('en')"
+    >
+      EN
+    </button>
+  </div>
+}

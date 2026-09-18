@@ -47,6 +47,8 @@ Folgende Versionen sind die getesteten Voraussetzungen:
 
     API_PORT=1234 # port where backend is served
     DOCS_PORT=4201
+
+    DEFAULT_LOCALE=de # optional, sprache fuer urls ohne /de- bzw. /en-praefix (default: de)
     ```
 - unter `./backend/api/environment/` muss ebenfalls eine `.env.backend` angelegt werden. Diese enthält die Umgebungsvariablen für die API. Folgende Informationen müssen enthalten sein:
     ```bash

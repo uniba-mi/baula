@@ -135,6 +135,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { MaintenanceMessageComponent } from './shared/components/maintenance-message/maintenance-message.component';
 import { ProfileMenuComponent } from './nav/profile-menu/profile-menu.component';
+import { LocaleSwitcherComponent } from './shared/components/locale-switcher/locale-switcher.component';
 import { GroupNavigationComponent } from './home/module-overview/group-navigation/group-navigation.component';
 import { UserDataComponent } from './home/user-profile/user-data/user-data.component';
 import { StudyPathUpdateComponent } from './home/user-profile/study-path-update/study-path-update.component';
@@ -260,6 +261,7 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
     CourseFormatPipe,
     LoginComponent,
     ProfileMenuComponent,
+    LocaleSwitcherComponent,
     MaintenanceMessageComponent,
     GroupNavigationComponent,
     UserDataComponent,

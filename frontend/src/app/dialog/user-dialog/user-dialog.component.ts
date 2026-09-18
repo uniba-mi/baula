@@ -16,6 +16,7 @@ import { UserUpdateService } from 'src/app/shared/services/user-update.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { StudyProgramme } from '@interfaces/study-programme';
 import { FlexnowService } from 'src/app/shared/services/flex-now.service';
+import { LocaleService } from 'src/app/shared/services/locale.service';
 
 @Component({
   selector: 'app-user-dialog',
@@ -29,6 +30,7 @@ export class UserDialogComponent {
   private userUpdateService = inject(UserUpdateService);
   dialogRef = inject<MatDialogRef<UserDialogComponent>>(MatDialogRef);
   private flexNowService = inject(FlexnowService);
+  private locale = inject(LocaleService);
 
   @Input() user: User;
   currentStep = 'welcome';
@@ -132,7 +134,7 @@ export class UserDialogComponent {
         .pipe(take(1))
         .subscribe(() => {
           this.loadingMessage = undefined;
-          document.location.href = config.homeUrl;
+          document.location.href = this.locale.localizeUrl(config.homeUrl);
         });
     } else {
       this.auth
@@ -140,7 +142,7 @@ export class UserDialogComponent {
         .pipe(take(1))
         .subscribe(() => {
           this.loadingMessage = undefined;
-          document.location.href = config.homeUrl;
+          document.location.href = this.locale.localizeUrl(config.homeUrl);
         });
     }
   }

@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/shared/auth/auth.service';
 import { take } from 'rxjs';
 import { config } from 'src/environments/config.local';
 import { Router } from '@angular/router';
+import { LocaleService } from 'src/app/shared/services/locale.service';
 
 @Component({
   selector: 'app-profile-menu',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class ProfileMenuComponent {
   private auth = inject(AuthService);
+  private locale = inject(LocaleService);
   router = inject(Router);
 
   @Input() user: User;
@@ -36,7 +38,7 @@ export class ProfileMenuComponent {
         .pipe(take(1))
         .subscribe((success) => {
           if (success) {
-            document.location.href = config.homeUrl;
+            document.location.href = this.locale.localizeUrl(config.homeUrl);
           }
         });
     }
@@ -44,7 +46,7 @@ export class ProfileMenuComponent {
 
   login() {
     // forward to login url if login button is clicked
-    document.location.href = config.dashboardUrl;
+    document.location.href = this.locale.localizeUrl(config.dashboardUrl);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
