@@ -12,10 +12,8 @@ import {
   of,
   skip,
   Subject,
-  switchMap,
   take,
   takeUntil,
-  tap,
 } from 'rxjs';
 import {
   getFavouriteModuleAcronyms,
@@ -38,7 +36,6 @@ import { Recommendation } from '../../../../../../interfaces/recommendation';
 import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
 import { SearchSettings } from '../../../../../../interfaces/search';
 import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.selectors';
-import { SearchActions } from 'src/app/actions/search-settings.actions';
 import { AnalyticsService } from 'src/app/shared/services/analytics.service';
 
 @Component({

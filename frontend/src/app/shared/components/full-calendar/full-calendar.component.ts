@@ -51,7 +51,6 @@ import { TransformationService } from '../../services/transformation.service';
 import { PlanningValidationService } from '../../services/planning-validation.service';
 import { getPlanningHints } from 'src/app/selectors/study-planning.selectors';
 import { AlertType } from '../../classes/alert';
-import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { AnalyticsService } from '../../services/analytics.service';
 import { SettingsActions } from 'src/app/actions/user.actions';
 

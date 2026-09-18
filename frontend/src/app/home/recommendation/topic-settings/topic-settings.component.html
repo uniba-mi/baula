@@ -21,7 +21,7 @@
           <mat-autocomplete #autoTopic="matAutocomplete" class="chip-style-autocomplete">
             @if (filteredChildTopics$ | async; as filteredTopics) {
               @if (filteredTopics.length > 0) {
-                @for (topic of filteredTopics; track topic) {
+                @for (topic of filteredTopics; track topic.tId) {
                   <mat-option [value]="''"
                     (onSelectionChange)="selectTopicFromSearch(topic)" class="option-with-chip">
                     <div class="topic-option-container">
@@ -59,7 +59,7 @@
             <h4 class="text-gray">Themenbereiche</h4>
             <div class="col-12 col-md-4">
               <div class="d-flex flex-column gap-2">
-                @for (topic of topicTree.topics; track topic) {
+                @for (topic of topicTree.topics; track topic.tId) {
                   <button class="parent-button btn btn-sm d-flex flex-row gap-2 border"
                     (click)="selectParentTopic(topic)"
                     [class.text-blue]="topic.showChildren">
@@ -79,14 +79,14 @@
               </div>
             }
             <div class="col-12 col-md-8">
-              @for (parent of topicTree.topics; track parent) {
+              @for (parent of topicTree.topics; track parent.tId) {
                 @if (parent.showChildren) {
                   <div class="parent-group">
                     <div class="parent-title">
                       <span class="text-gray">{{ parent.name }}</span>
                     </div>
                     <mat-chip-listbox multiple>
-                      @for (child of parent.children; track child) {
+                      @for (child of parent.children; track child.tId) {
                         <app-topic-chip
                         (topicToggled)="topicToggle$.next($event)" [topic]="child"></app-topic-chip>
                       }
@@ -102,7 +102,7 @@
                 <div class="selected-container">
                   <span class="selected-label">Ausgewählt</span>
                   <mat-chip-listbox multiple class="selected-chipsbox p-2">
-                    @for (child of selectedChildren; track child) {
+                    @for (child of selectedChildren; track child.tId) {
                       <app-topic-chip
                       (topicToggled)="topicToggle$.next($event)" [topic]="child"></app-topic-chip>
                     }

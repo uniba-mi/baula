@@ -1,13 +1,13 @@
 <ng-container role="Dialoginhalt">
   <div class="content-wrapper">
-    @if (studyPlans && studyPlans.length !== 1 && !newPlanId) {
+    @if (studyPlans && studyPlans.length > 1 && !newPlanId) {
       <div>
         <p i18n>Du möchtest deinen aktuelle aktiven Studienplan deaktivieren. Wähle hier einen Studienplan aus, den du
         stattdessen aktivieren möchtest.</p>
         <mat-form-field appearance="outline">
           <mat-label>Wähle einen Studienplan aus:</mat-label>
           <mat-select [formControl]="newPlanIdForm" aria-label="Dropdown zur Auswahl eines neuen aktiven Studienplans" required>
-            @for (studyPlan of studyPlans; track studyPlan) {
+            @for (studyPlan of studyPlans; track studyPlan._id) {
               <mat-option [value]="studyPlan._id">
                 {{ studyPlan.name }}
               </mat-option>

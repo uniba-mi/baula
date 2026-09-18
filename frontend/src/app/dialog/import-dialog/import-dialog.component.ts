@@ -102,7 +102,11 @@ export class ImportDialogComponent {
         }
       };
       fileReader.onerror = (error) => {
-        console.log(error);
+        this.snackbar.openSnackBar({
+          type: AlertType.DANGER,
+          message:
+            'Es ist ein unerwarteter Fehler aufgetreten, probier es später nochmal. Falls der Fehler bestehen bleibt, melde dich beim Baula-Team.',
+        });
       };
     } else {
       this.snackbar.openSnackBar({

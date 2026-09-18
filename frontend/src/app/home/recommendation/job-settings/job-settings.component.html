@@ -21,7 +21,7 @@
     </mat-card>
   </div>
   @if (jobs$ | async; as jobs) {
-    @for (job of jobs; track job) {
+    @for (job of jobs; track job._id) {
       <div class="col-12 col-md-6 p-2">
         <app-job-card [job]="job" [studyPathModules]="studyPathModules$ | async"></app-job-card>
       </div>

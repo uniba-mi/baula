@@ -150,8 +150,8 @@
         }
         @if (course.addInfo) {
           <div class="d-flex flex-wrap">
-            <mat-chip-set aria-label="Zusätzliche Angaben zu Inhalten" i18n-aria-label>
-              @for (item of course.addInfo.split(';'); track item) {
+            <mat-chip-set aria-label="Zusätzliche Angaben zu Inhalten">
+              @for (item of course.addInfo.split(';'); track $index) {
                 <mat-chip>{{ item }}</mat-chip>
               }
             </mat-chip-set>

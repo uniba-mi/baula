@@ -34,8 +34,8 @@ export class DebugDialogComponent {
     );
   }
 
-  trackByCombinedKey(key1: string, key2: string): string {
-    return `${key1}-${key2}`;
+  trackByCombinedKey(keys: string[]): string {
+    return keys.join('-');
   }
 
   copyToClipboard(data: any) {
