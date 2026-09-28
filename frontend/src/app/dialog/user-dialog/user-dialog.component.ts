@@ -1,16 +1,10 @@
 import { Component, Input, model, inject, ChangeDetectionStrategy } from '@angular/core';
-import { MStudyProgramme, User } from '@interfaces/user';
-import { firstValueFrom, Observable, take } from 'rxjs';
+import { User } from '@interfaces/user';
+import { Observable, take } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { config } from 'src/environments/config.local';
 import { RestService } from 'src/app/rest.service';
-import { PathCourse, PathModule } from '@interfaces/study-path';
 import { Semester } from '@interfaces/semester';
-import {
-  FnCompletedModule,
-  FnCompletedCourse,
-  FnStudyProgramme,
-} from '@interfaces/fn-user';
 import { StudyPlan } from '@interfaces/study-plan';
 import { UserUpdateService } from 'src/app/shared/services/user-update.service';
 import { MatDialogRef } from '@angular/material/dialog';

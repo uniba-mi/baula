@@ -1435,7 +1435,7 @@ export async function crawlStudentDataViaFlexNow(
         duration:
           fnStudyprogramme.duration > fnStudyprogramme.semesters.length
             ? fnStudyprogramme.duration
-            : fnStudyprogramme.semesters.length,
+            : fnStudyprogramme.semesters.length + 1,
         maxEcts: fnStudyprogramme.maxEcts,
         startSemester: startSemester
           ? new Semester(startSemester.semester).name
