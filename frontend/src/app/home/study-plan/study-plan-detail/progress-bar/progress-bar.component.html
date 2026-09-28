@@ -19,19 +19,19 @@
     <div class="legend-item" role="figure" aria-label="Erreichte ECTS"
       matTooltip="Damit ECTS als erreicht gelten, müssen die Module als bestanden markiert sein." i18n-matTooltip i18n-aria-label>
       <span class="legend-color-box bg-bar bg-achieved-credits"></span>
-      <span class="legend-text" i18n>Erreichte ECTS <span class="text-gray">({{ achievedCredits$ | async
+      <span class="legend-text"><ng-container i18n>Erreichte ECTS</ng-container><span class="text-gray"> ({{ achievedCredits$ | async
       }})</span></span>
     </div>
     <div class="legend-item" role="figure" aria-label="Geplante ECTS"
       matTooltip="Alle ECTS, die du schon eingeplant hast." i18n-matTooltip i18n-aria-label>
       <span class="legend-color-box bg-bar bg-planned-credits"></span>
-      <span class="legend-text" i18n>Geplante ECTS <span class="text-gray">({{ plannedCredits$ | async
+      <span class="legend-text"><ng-container i18n>Geplante ECTS</ng-container><span class="text-gray"> ({{ plannedCredits$ | async
       }})</span></span>
     </div>
     <div class="legend-item" role="figure" aria-label="Gesamte ECTS"
       matTooltip="ECTS, die du in deinem Studiengang erreichen musst. Diese kannst du in deinem Profil anpassen." i18n-matTooltip i18n-aria-label>
       <span class="legend-color-box bg-bar bg-total-credits"></span>
-      <span class="legend-text" i18n>Gesamt ECTS <span class="text-gray">({{ totalCredits }})</span></span>
+      <span class="legend-text"><ng-container i18n>Gesamt ECTS</ng-container><span class="text-gray"> ({{ totalCredits }})</span></span>
     </div>
   </div>
 </div>
