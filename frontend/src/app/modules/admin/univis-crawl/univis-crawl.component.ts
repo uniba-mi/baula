@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { getSemesterList } from 'src/app/selectors/user.selectors';
 import { Semester } from '../../../../../../interfaces/semester';
@@ -15,6 +15,7 @@ import { Logmessage } from '../../../../../../interfaces/logs';
   selector: 'admin-univis-crawl',
   templateUrl: './univis-crawl.component.html',
   styleUrls: ['./univis-crawl.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UnivisCrawlComponent implements OnInit {

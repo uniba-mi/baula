@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { ListType } from '../../interfaces/list-types';
 import { Topic } from '@interfaces/topic';
 import { Job } from '@interfaces/job';
@@ -9,6 +9,7 @@ import { Module } from '@interfaces/module';
   selector: 'app-recs-module-list',
   standalone: false,
   templateUrl: './recs-module-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './recs-module-list.component.scss'
 })
 export class RecsModuleListComponent {

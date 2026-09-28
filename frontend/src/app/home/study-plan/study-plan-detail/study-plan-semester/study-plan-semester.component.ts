@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  inject,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   filter,
@@ -28,9 +37,10 @@ import { DragDropService } from 'src/app/shared/services/drag-drop.service';
   selector: 'app-study-plan-semester',
   templateUrl: './study-plan-semester.component.html',
   styleUrls: ['./study-plan-semester.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class StudyPlanSemesterComponent {
+export class StudyPlanSemesterComponent implements OnChanges {
   private store = inject(Store);
   private transform = inject(TransformationService);
   private dragDropService = inject(DragDropService);
@@ -113,6 +123,13 @@ export class StudyPlanSemesterComponent {
           ]),
         ),
       );
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['eligibleSemesterId'] && this.semesterPlan) {
+      this.isEligibleForFinish =
+        this.semesterPlan._id === this.eligibleSemesterId;
+    }
   }
 
   handleFinishSemester(semesterPlan: SemesterPlan): void {

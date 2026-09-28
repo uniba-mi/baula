@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
@@ -8,6 +8,7 @@ import { StudyPlanTemplate } from '@interfaces/study-plan';
   selector: 'app-study-plan-dialog',
   templateUrl: './study-plan-dialog.component.html',
   styleUrls: ['./study-plan-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class StudyPlanDialogComponent implements OnInit {

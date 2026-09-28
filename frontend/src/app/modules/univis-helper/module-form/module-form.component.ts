@@ -7,6 +7,7 @@ import {
   Output,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, firstValueFrom } from 'rxjs';
@@ -18,6 +19,7 @@ import { PublicRestService } from '../public-rest.service';
   selector: 'uh-module-form',
   templateUrl: './module-form.component.html',
   styleUrls: ['./module-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleFormComponent implements OnInit, OnChanges {

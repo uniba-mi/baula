@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DateType } from '@interfaces/academic-date';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   selector: 'admin-date-type-dialog',
   templateUrl: './date-type-dialog.component.html',
   styleUrl: './date-type-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class DateTypeDialogComponent {

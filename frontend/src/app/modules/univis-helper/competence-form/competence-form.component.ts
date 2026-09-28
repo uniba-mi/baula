@@ -7,6 +7,7 @@ import {
   Output,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Observable, firstValueFrom } from 'rxjs';
 import {
@@ -26,6 +27,7 @@ interface FormError {
   selector: 'uh-competence-form',
   templateUrl: './competence-form.component.html',
   styleUrls: ['./competence-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CompetenceFormComponent implements OnInit, OnChanges {

@@ -7,6 +7,7 @@ import {
   Output,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   OptionGroup,
@@ -39,6 +40,7 @@ import { RecsTabService } from '../recs-tab.service';
   selector: 'app-recs-sidenav',
   templateUrl: './recs-sidenav.component.html',
   styleUrls: ['./recs-sidenav.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class RecsSidenavComponent implements OnInit, OnChanges {

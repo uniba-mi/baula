@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -18,6 +18,7 @@ import { getSemesterList } from 'src/app/selectors/user.selectors';
   selector: 'app-upload-student-data-stepper',
   templateUrl: './upload-student-data-stepper.component.html',
   styleUrl: './upload-student-data-stepper.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UploadStudentDataStepperComponent {

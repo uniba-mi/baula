@@ -1,0 +1,19 @@
+@if(cardData(); as cardData) {
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{ cardData.title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="mt-2 quote-list">
+        @for(quote of cardData.quotes; track $index) {
+            <blockquote class="quote">
+                <p>{{ quote.text }}</p>
+                @if(quote.meta) {
+                    <footer class="text-muted">{{ quote.meta }}</footer>
+                }
+            </blockquote>
+        } @empty {
+            <p class="text-muted mb-0">Kein Feedback vorhanden.</p>
+        }
+    </mat-card-content>
+</mat-card>
+}

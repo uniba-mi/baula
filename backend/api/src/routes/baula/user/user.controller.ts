@@ -25,7 +25,7 @@ import {
   User as UserClient,
   UserServer,
 } from "@interfaces/user";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../database/prisma";
 import mongoose from "mongoose";
 import { ExtendedJob, Job } from "@interfaces/job";
 import { transform } from "camaro";
@@ -45,8 +45,6 @@ import {
 import { Semester } from "../../../../../../interfaces/semester";
 import * as fs from "fs";
 import { Module } from "../../../../../../interfaces/module";
-
-const prisma = new PrismaClient();
 
 // Get Userdata via ShibId
 export async function getUser(req: Request, res: Response, next: NextFunction) {
@@ -197,6 +195,10 @@ export async function updateModuleInStudyPath(
   const isUserGenerated = req.body.isUserGenerated;
   const flexNowImported = req.body.flexNowImported;
   const mgId = typeof req.body.mgId == "string" ? req.body.mgId : undefined;
+  // optional - if the field is missing, the stored attempts stay untouched
+  const examAttempts = Array.isArray(req.body.examAttempts)
+    ? req.body.examAttempts
+    : undefined;
 
   // check if all values are contained in body
   if (
@@ -204,7 +206,7 @@ export async function updateModuleInStudyPath(
     name &&
     status &&
     userReq._id &&
-    ects &&
+    ects !== undefined &&
     semester &&
     mgId &&
     isUserGenerated !== undefined &&
@@ -239,6 +241,9 @@ export async function updateModuleInStudyPath(
           exist.mgId = mgId;
           exist.isUserGenerated = isUserGenerated;
           exist.flexNowImported = flexNowImported;
+          if (examAttempts) {
+            exist.examAttempts = examAttempts;
+          }
         } else {
           user.completedModules.push({
             _id: _id || new mongoose.Types.ObjectId(), // use _id if provided (in case of user generated modules), else generate a new one
@@ -251,6 +256,7 @@ export async function updateModuleInStudyPath(
             mgId,
             isUserGenerated,
             flexNowImported,
+            examAttempts: examAttempts ?? [],
           });
         }
         const result = await user.save();
@@ -264,6 +270,14 @@ export async function updateModuleInStudyPath(
     }
   } else {
     next(new NotFoundError("Parameter fehlen"));
+  }
+}
+
+function assignModule(target: PathModule, source: PathModule) {
+  const { examAttempts, ...rest } = source;
+  Object.assign(target, rest);
+  if (Array.isArray(examAttempts)) {
+    target.examAttempts = examAttempts;
   }
 }
 
@@ -302,7 +316,7 @@ export async function updateStudyPath(
 
       if (indexToUpdate > -1) {
         // update existing module for the current semester
-        Object.assign(user.completedModules[indexToUpdate], module);
+        assignModule(user.completedModules[indexToUpdate], module);
       } else {
         // add new module
         if (
@@ -313,7 +327,10 @@ export async function updateStudyPath(
               moduleObjectId.toString() === existingMod._id.toString(),
           )
         ) {
-          user.completedModules.push(module);
+          user.completedModules.push({
+            ...module,
+            examAttempts: module.examAttempts ?? [],
+          });
         }
       }
     });
@@ -401,7 +418,7 @@ export async function finishSemester(
 
       if (indexToUpdate > -1) {
         // update existing module for the current semester
-        Object.assign(user.completedModules[indexToUpdate], module);
+        assignModule(user.completedModules[indexToUpdate], module);
       } else {
         // add new module
         if (
@@ -415,7 +432,10 @@ export async function finishSemester(
           if (!module._id || module._id === null) {
             module._id = new Types.ObjectId().toString();
           }
-          user.completedModules.push({ ...module });
+          user.completedModules.push({
+            ...module,
+            examAttempts: module.examAttempts ?? [],
+          });
         }
       }
     });
@@ -484,10 +504,18 @@ export async function deleteModuleFromStudyPath(
       const user = await User.findById(userReq._id);
       if (user) {
         const index = user.completedModules.findIndex((el) => el._id == id);
-        user.completedModules.splice(index, 1);
-        const result = await user.save();
-        const userClient = await transformUserStudyPath(result);
-        res.status(200).json(userClient.studyPath);
+        if (index >= 0) {
+          user.completedModules.splice(index, 1);
+          const result = await user.save();
+          const userClient = await transformUserStudyPath(result);
+          res.status(200).json(userClient.studyPath);
+        } else {
+          next(
+            new NotFoundError(
+              "Das angefragte Modul existiert nicht mehr im Studienverlauf.",
+            ),
+          );
+        }
       } else {
         next(new NotFoundError("Es wurde kein vergangenes Semester gefunden."));
       }
@@ -588,7 +616,7 @@ export async function deleteExcludedModule(
   next: NextFunction,
 ) {
   const acronym =
-    typeof req.params.acronym == "string" ? req.params.acronym : undefined;
+    typeof String(req.params.acronym) == "string" ? String(req.params.acronym) : undefined;
   const user = req.user as UserServer;
   try {
     if (acronym && user && user.excludedModulesAcronyms) {
@@ -684,7 +712,7 @@ export async function updateTimetableSettings(
 ) {
   const userReq = req.user as UserServer;
   const timetableId = validator.matches(
-    req.body.timetableId,
+    String(req.body.timetableId),
     /(dashboard)|(semesterplan)/g,
   )
     ? req.body.timetableId
@@ -739,20 +767,24 @@ export async function updateFavouriteModule(
     typeof req.body.acronym == "string" ? req.body.acronym : undefined;
 
   if (userReq._id && acronym) {
-    const user = await User.findById(userReq._id);
-    if (user) {
-      const index = user.favouriteModulesAcronyms.indexOf(acronym);
-      if (index === -1) {
-        // add module if it is not a favourite yet
-        user.favouriteModulesAcronyms.push(acronym);
+    try {
+      const user = await User.findById(userReq._id);
+      if (user) {
+        const index = user.favouriteModulesAcronyms.indexOf(acronym);
+        if (index === -1) {
+          // add module if it is not a favourite yet
+          user.favouriteModulesAcronyms.push(acronym);
+        } else {
+          // delete module if it is already there
+          user.favouriteModulesAcronyms.splice(index, 1);
+        }
+        const result = await user.save();
+        res.status(200).send(result.favouriteModulesAcronyms);
       } else {
-        // delete module if it is already there
-        user.favouriteModulesAcronyms.splice(index, 1);
+        next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
       }
-      const result = await user.save();
-      res.status(200).send(result.favouriteModulesAcronyms);
-    } else {
-      next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
+    } catch (error) {
+      next(new BadRequestError());
     }
   } else {
     next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
@@ -769,20 +801,24 @@ export async function updateExcludedModule(
     typeof req.body.acronym == "string" ? req.body.acronym : undefined;
 
   if (user._id && acronym) {
-    const userDb = await User.findById(user._id);
-    if (userDb) {
-      const index = user.excludedModulesAcronyms.indexOf(acronym);
-      if (index === -1) {
-        // add module if it is not a favourite yet
-        userDb.excludedModulesAcronyms.push(acronym);
+    try {
+      const userDb = await User.findById(user._id);
+      if (userDb) {
+        const index = user.excludedModulesAcronyms.indexOf(acronym);
+        if (index === -1) {
+          // add module if it is not a favourite yet
+          userDb.excludedModulesAcronyms.push(acronym);
+        } else {
+          // delete module if it is already there
+          userDb.excludedModulesAcronyms.splice(index, 1);
+        }
+        const result = await userDb.save();
+        res.status(200).send(result.excludedModulesAcronyms);
       } else {
-        // delete module if it is already there
-        userDb.excludedModulesAcronyms.splice(index, 1);
+        next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
       }
-      const result = await userDb.save();
-      res.status(200).send(result.excludedModulesAcronyms);
-    } else {
-      next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
+    } catch (error) {
+      next(new BadRequestError());
     }
   } else {
     next(new NotFoundError("Zu den Daten wurde kein Eintrag gefunden."));
@@ -827,9 +863,12 @@ export async function updateHint(
 ) {
   const userReq = req.user as UserServer;
   const key = typeof req.body.key == "string" ? req.body.key : undefined;
-  const hasConfirmed = Boolean(req.body.hasConfirmed);
+  const hasConfirmed =
+    req.body.hasConfirmed !== undefined
+      ? Boolean(req.body.hasConfirmed)
+      : undefined;
 
-  if (userReq._id && key && hasConfirmed) {
+  if (userReq._id && key && hasConfirmed !== undefined) {
     const user = await User.findById(userReq._id);
     if (user && user.hints) {
       const hintIndex = user.hints.findIndex((hint) => hint.key === key);
@@ -1286,11 +1325,11 @@ export async function crawlStudentDataViaFlexNow(
           let modulesWithoutAcronymCount = 1;
           for (let module of studypath.completedModules) {
             if (!module.acronym) {
-              if (module.examAttempts && module.examAttempts.length > 0) {
-                module.acronym = `${module.examAttempts[0].remark}-${modulesWithoutAcronymCount}`;
-              } else {
-                module.acronym = `Sonstige Leistung ${modulesWithoutAcronymCount}`;
-              }
+              // set acronym if not existing (e.g. "Annerkannte Leistung" from study abroad)
+              const remark = module.examAttempts?.[0]?.remark?.trim();
+              module.acronym = remark
+                ? `${remark}-${modulesWithoutAcronymCount}`
+                : `Sonstige Leistung ${modulesWithoutAcronymCount}`;
               modulesWithoutAcronymCount++;
             }
 
@@ -1354,7 +1393,9 @@ export async function crawlStudentDataViaFlexNow(
         xml: result,
       });
     } else {
-      res.status(404);
+      res.status(404).json({
+        message: "Es konnten keine Daten von FlexNow geladen werden.",
+      });
     }
   } catch (error) {
     next(error);
@@ -1394,7 +1435,7 @@ export async function crawlStudentDataViaFlexNow(
         duration:
           fnStudyprogramme.duration > fnStudyprogramme.semesters.length
             ? fnStudyprogramme.duration
-            : fnStudyprogramme.semesters.length,
+            : fnStudyprogramme.semesters.length + 1,
         maxEcts: fnStudyprogramme.maxEcts,
         startSemester: startSemester
           ? new Semester(startSemester.semester).name

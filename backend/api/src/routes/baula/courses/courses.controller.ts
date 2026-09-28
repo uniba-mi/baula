@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../database/prisma";
 import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import {
@@ -7,8 +7,6 @@ import {
   transformCourses,
   transformDozs,
 } from "../../../shared/helpers/univis-helpers";
-
-const prisma = new PrismaClient();
 
 export async function getCourseDetails(
   req: Request,
@@ -19,10 +17,10 @@ export async function getCourseDetails(
   const id = validator.isAlphanumeric(String(req.params.id), undefined, {
     ignore: "_.",
   })
-    ? req.params.id
+    ? String(req.params.id)
     : undefined;
 
-  const semester = checkSemester(req.params.semester);
+  const semester = checkSemester(String(req.params.semester));
 
   if (id && semester) {
     const course = await prisma.course.findUnique({
@@ -78,7 +76,7 @@ export async function getCoursesBySemester(
   res: Response,
   next: NextFunction
 ) {
-  const semester = checkSemester(req.params.semester);
+  const semester = checkSemester(String(req.params.semester));
   if (semester) {
     const courses = await prisma.course.findMany({
       orderBy: {

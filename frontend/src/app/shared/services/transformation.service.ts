@@ -1,5 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { StudyPath, SemesterStudyPath } from '@interfaces/study-path';
+import {
+  StudyPath,
+  SemesterStudyPath,
+  ExamAttempt,
+} from '@interfaces/study-path';
 import { Semester } from '@interfaces/semester';
 import { MStudyProgramme } from '@interfaces/user';
 import { UserGeneratedModule } from '@interfaces/user-generated-module';
@@ -14,6 +18,7 @@ import { AcademicDate } from '@interfaces/academic-date';
 import { Course, Term } from '@interfaces/course';
 import { RRule, Weekday } from 'rrule';
 import { getSemesterPlansOfActiveStudyPlan } from 'src/app/selectors/study-planning.selectors';
+import { FnCompletedModule } from '@interfaces/fn-user';
 
 @Injectable({
   providedIn: 'root',
@@ -113,12 +118,16 @@ export class TransformationService {
     }
   }
 
-  // Transfer flex now upload semester format to short format (example: WS21/22 to w2021)
+  // Transfer flex now upload semester format to short format (example: WS21/22 to 2021w or SS21 to 2021s)
   transformFlexNowFormat(semesterString: string): string {
-    let seasonSuffix = semesterString.charAt(0).toLowerCase();
-    let yearSuffix = semesterString.slice(2, 4); // extract first two numbers, here 21
-    const fullYear = 2000 + parseInt(yearSuffix, 10); // create full year
-    return `${fullYear}${seasonSuffix}`;
+    let termSuffix = semesterString.charAt(0).toLowerCase();
+    let yearSuffix = parseInt(semesterString.substring(semesterString.length - 2), 10); // extract last two numbers, here 21 or 22 
+    // if term is winter subtract one to get correct year
+    if(termSuffix === 'w') {
+      yearSuffix--;
+    }
+    const fullYear = 2000 + yearSuffix; // create full year
+    return `${fullYear}${termSuffix}`;
   }
 
   /* takes studyprogrammes as input and returns a string, 
@@ -245,6 +254,48 @@ export class TransformationService {
       result = result.concat(courseEvents);
     }
     return result;
+  }
+
+  // a Prfstd from FlexNow already is a single attempt, only the semester has to be
+  // converted from the apnr into the univis format
+  transformExamAttempts(module: FnCompletedModule): ExamAttempt[] {
+    return (module.examAttempts ?? [])
+      .map((attempt) => ({
+        examId: attempt.examId || undefined,
+        name: attempt.name,
+        count: attempt.count,
+        // an empty <Note /> arrives as NaN or null, both mean "not graded yet"
+        grade: Number.isFinite(attempt.grade) ? attempt.grade : null,
+        semester: new Semester(attempt.semester).name,
+        status: this.transformAttemptStatus(attempt.remark, attempt.grade),
+        remark: attempt.remark,
+        flexNowImported: true,
+      }))
+      .sort(
+        (a, b) => a.semester.localeCompare(b.semester) || a.count - b.count,
+      );
+  }
+
+  // the exam remark is more reliable than the grade - only it marks recognized
+  // achievements and Freiversuche, which the grade alone does not show. Wording and
+  // casing vary between extracts.
+  private transformAttemptStatus(
+    remark: string,
+    grade: number | null,
+  ): string {
+    const bem = (remark ?? '').trim().toLowerCase();
+    // check "nicht bestanden" first, otherwise the "bestanden" case matches it too
+    if (bem.startsWith('nicht bestanden')) {
+      return 'failed';
+    }
+    if (bem.startsWith('bestanden') || bem.startsWith('anerkannte leistung')) {
+      return 'passed';
+    }
+    // "(Ohne)" or an unknown remark - derive the status from the grade
+    if (!Number.isFinite(grade)) {
+      return 'taken';
+    }
+    return grade! > 4.0 ? 'failed' : 'passed';
   }
 
   private transformAcademicDatesToEvent(

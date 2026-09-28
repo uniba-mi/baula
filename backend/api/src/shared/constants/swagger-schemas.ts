@@ -957,6 +957,61 @@ export const swaggerBaulaSchema = {
                 type: 'boolean',
                 description: 'Imported from FlexNow',
                 example: true
+            },
+            examAttempts: {
+                type: 'array',
+                description:
+                    'Exam attempts imported from FlexNow. Omit the property to leave the stored history untouched - sending an empty array replaces it.',
+                items: {
+                    $ref: '#/components/schemas/ExamAttempt'
+                }
+            }
+        }
+    },
+
+    ExamAttempt: {
+        type: 'object',
+        description: 'Single exam attempt of a completed module (FlexNow: Prfstd)',
+        properties: {
+            examId: {
+                type: 'string',
+                description: 'Exam ID (FlexNow ModulPrf), not always provided',
+                example: '17421'
+            },
+            name: {
+                type: 'string',
+                example: 'schriftliche Pruefung (Klausur)'
+            },
+            count: {
+                type: 'integer',
+                description: 'Number of the attempt',
+                example: 1
+            },
+            grade: {
+                type: 'number',
+                nullable: true,
+                description: 'Grade (1.0-5.0), null while the attempt is not graded yet',
+                example: 1.7
+            },
+            semester: {
+                type: 'string',
+                pattern: '\d{4}((w)|(s))',
+                example: '2024w'
+            },
+            status: {
+                type: 'string',
+                enum: ['taken', 'failed', 'passed', 'open'],
+                example: 'passed'
+            },
+            remark: {
+                type: 'string',
+                description: 'Exam remark (FlexNow Prfbem)',
+                example: 'Bestanden'
+            },
+            flexNowImported: {
+                type: 'boolean',
+                description: 'true if imported from FlexNow, false if entered by the user',
+                example: true
             }
         }
     },

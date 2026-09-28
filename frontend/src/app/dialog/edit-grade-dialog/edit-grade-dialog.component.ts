@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
@@ -7,6 +7,7 @@ import { closeDialogMode } from 'src/app/actions/dialog.actions';
   selector: 'app-edit-grade-dialog',
   templateUrl: './edit-grade-dialog.component.html',
   styleUrl: './edit-grade-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EditGradeDialogComponent {

@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import {
+  catchError,
   concatMap,
   filter,
   map,
@@ -10,6 +11,7 @@ import {
   Subject,
   take,
   takeUntil,
+  tap,
   withLatestFrom,
 } from 'rxjs';
 import { StudyPathActions, UserActions } from 'src/app/actions/user.actions';
@@ -41,7 +43,9 @@ import {
 import { getModules } from 'src/app/selectors/module-overview.selectors';
 import { DebugDialogComponent } from '../components/debug-dialog/debug-dialog.component';
 import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
+import { TransformationService } from './transformation.service';
 import { SnackbarService } from './snackbar.service';
+import { mergeFlexNowModulesIntoMissingModules } from '../helpers/flex-now-merge.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -51,13 +55,14 @@ export class FlexnowService {
   private store = inject(Store);
   private rest = inject(RestService);
   private snackbar = inject(SnackbarService);
+  private transform = inject(TransformationService);
 
   lastFlexnowApiConsent$: Observable<Consent | null>;
   lastFlexNowMetaDataConsent$: Observable<Consent | null>;
   lastFlexNowStudypathConsent$: Observable<Consent | null>;
   currentUser$: Observable<User>;
   private unsubscribe$ = new Subject<void>();
-  debuggingMode = true;
+  debuggingMode = false;
 
   constructor() {
     this.lastFlexnowApiConsent$ = this.store.select(
@@ -430,8 +435,6 @@ export class FlexnowService {
                 (mod) => mod.semester == semester,
               );
 
-              console.log(modules)
-
               // identify current completed modules of semester
               const currentPathModules =
                 currentStudypath.completedModules.filter(
@@ -527,9 +530,9 @@ export class FlexnowService {
     return this.rest
       .getStudentDataViaFlexNow(studypathConsent)
       .pipe(
-        withLatestFrom(this.currentUser$),
-        map(([flexNowOutput, user]) => {
-          
+        withLatestFrom(this.currentUser$, this.store.select(getModules)),
+        map(([flexNowOutput, user, mhbModules]) => {
+
           if (this.debuggingMode && mode == 'update-studypath') {
             this.dialog.open(DebugDialogComponent, {
               data: flexNowOutput,
@@ -542,11 +545,13 @@ export class FlexnowService {
             };
 
             if (flexNowOutput.studypath && mode !== 'update-metadata') {
+              const mhbAcronyms = new Set(mhbModules.map((mod) => mod.acronym));
               updatedUser = {
                 ...updatedUser,
                 studyPath: this.extractStudypath(
                   flexNowOutput.studypath,
                   user.studyPath,
+                  mhbAcronyms,
                   semesters,
                 ),
               };
@@ -582,6 +587,7 @@ export class FlexnowService {
   private extractStudypath(
     fnStudypath: FnStudyPath,
     userStudypath: StudyPath,
+    mhbAcronyms: Set<string>,
     semesters?: string[],
   ): StudyPath {
     // define starting variables
@@ -605,7 +611,7 @@ export class FlexnowService {
       );
 
       let studypath = {
-        completedModules: this.extractCompletedModules(completedModules, filteredImportedModules),
+        completedModules: this.extractCompletedModules(completedModules, filteredImportedModules, mhbAcronyms),
         completedCourses: [
           ...completedCourses,
           ...this.extractCompletedCourses(filteredImportedCourses),
@@ -619,7 +625,7 @@ export class FlexnowService {
         (mod) => !mod.flexNowImported,
       );
       return {
-        completedModules: this.extractCompletedModules(completedModules, fnStudypath.completedModules),
+        completedModules: this.extractCompletedModules(completedModules, fnStudypath.completedModules, mhbAcronyms),
         completedCourses: this.extractCompletedCourses(
           fnStudypath.completedCourses,
         ),
@@ -627,8 +633,25 @@ export class FlexnowService {
     }
   }
 
-  private extractCompletedModules(modulesToKeep: PathModule[], modules: FnCompletedModule[]): PathModule[] {
-    const flexNowImportedModules = modules.map((fnModule) => {
+  // matching mirrors the backend's findMatchingModuleIndex (plan-helper.ts) via the shared
+  // helper: ID first, then acronym + semester. A manual placeholder whose free-text acronym
+  // differs from FlexNow's is kept next to the imported module instead of merged into it.
+  private extractCompletedModules(
+    modulesToKeep: PathModule[],
+    modules: FnCompletedModule[],
+    mhbAcronyms: Set<string>,
+  ): PathModule[] {
+    const flexNowImportedModules = this.mapFnModulesToPathModules(modules);
+    const { merged } = mergeFlexNowModulesIntoMissingModules(
+      modulesToKeep,
+      flexNowImportedModules,
+      mhbAcronyms,
+    );
+    return merged;
+  }
+
+  private mapFnModulesToPathModules(modules: FnCompletedModule[]): PathModule[] {
+    return modules.map((fnModule) => {
       let mgId = undefined;
       let moduleGroups = fnModule.moduleGroups;
       // TODO: if more than one Modulegroup set modulegroup to undefined, user need to set it
@@ -642,6 +665,8 @@ export class FlexnowService {
         );
       }
 
+      const examAttempts = this.transform.transformExamAttempts(fnModule);
+
       return {
         acronym: fnModule.acronym,
         name: fnModule.name,
@@ -652,15 +677,56 @@ export class FlexnowService {
         isUserGenerated: false,
         flexNowImported: true,
         grade: fnModule.grade ?? 0,
+        examAttempts: examAttempts,
       };
     });
-    const flexNowImportedAcronyms = modules.map(mod => mod.acronym)
-    modulesToKeep = modulesToKeep.filter(mod => !flexNowImportedAcronyms.includes(mod.acronym))
+  }
 
-    return [
-      ...modulesToKeep,
-      ...flexNowImportedModules
-    ]
+  // read-only fetch for a single semester ("Mit FlexNow abgleichen" in the
+  // finish-semester-stepper): no overwrite dialog, no store writes. Returns null on
+  // failure so the caller can show its own error state.
+  getFlexNowDataForSemester(semester: string): Observable<PathModule[] | null> {
+    return this.rest.getStudentDataViaFlexNow(true).pipe(
+      map((flexNowOutput) => {
+        if (!flexNowOutput?.studypath) {
+          return [];
+        }
+        const modulesOfSemester = flexNowOutput.studypath.completedModules.filter(
+          (mod) => new Semester(mod.semester).name === semester,
+        );
+        return this.mapFnModulesToPathModules(modulesOfSemester);
+      }),
+      catchError(() => of(null)),
+    );
+  }
+
+  // consent check for the read-only abgleich, without the "Semester überschreiben?" dialog.
+  // Persists the consent once granted, like openOverwriteConfirmationDialog does.
+  ensureStudypathReadConsent(): Observable<boolean> {
+    return this.getLatestConsents(false, true).pipe(
+      map((consents) => consents.flexNowImportConfirmed && consents.studypathConfirmed),
+      tap((granted) => {
+        if (granted) {
+          this.store.dispatch(
+            UserActions.addConsent({
+              ctype: 'flexnow-api',
+              hasConfirmed: true,
+              hasResponded: true,
+              timestamp: new Date(),
+            }),
+          );
+          this.store.dispatch(
+            UserActions.addConsent({
+              ctype: 'upload-exam-data',
+              hasConfirmed: true,
+              hasResponded: true,
+              timestamp: new Date(),
+            }),
+          );
+        }
+      }),
+      catchError(() => of(false)),
+    );
   }
 
   private extractCompletedCourses(courses: FnCompletedCourse[]): PathCourse[] {

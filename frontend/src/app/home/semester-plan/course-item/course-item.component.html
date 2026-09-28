@@ -5,7 +5,7 @@
   <div class="selection-indicator position-absolute top-0 start-0 p-2"
     [ngClass]="{'selected': isSelected}">
     @if (!isSelected) {
-      <i class="bi bi-circle text-gray not-selected" (click)="toggleSelection(course)">
+      <i class="bi bi-circle rounded-circle text-gray not-selected" (click)="toggleSelection(course)">
       </i>
     }
     @if (isSelected) {

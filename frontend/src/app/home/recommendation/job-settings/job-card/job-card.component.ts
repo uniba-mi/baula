@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ExtendedJob, Job } from '@interfaces/job';
 import { MatDialog } from '@angular/material/dialog';
 import { ModService } from 'src/app/shared/services/module.service';
@@ -17,6 +17,7 @@ import { Module } from '@interfaces/module';
   selector: 'app-job-card',
   standalone: false,
   templateUrl: './job-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './job-card.component.scss',
 })
 export class JobCardComponent implements OnInit {

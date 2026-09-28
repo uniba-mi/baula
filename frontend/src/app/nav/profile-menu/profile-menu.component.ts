@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, SimpleChanges, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MStudyProgramme, User } from '@interfaces/user';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { take } from 'rxjs';
@@ -10,6 +10,7 @@ import { LocaleService } from 'src/app/shared/services/locale.service';
   selector: 'app-profile-menu',
   templateUrl: './profile-menu.component.html',
   styleUrl: './profile-menu.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ProfileMenuComponent {

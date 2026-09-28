@@ -8,6 +8,7 @@ import {
   Renderer2,
   AfterViewInit,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   concat,
@@ -44,6 +45,7 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-module-overview',
   templateUrl: './module-overview.component.html',
   styleUrls: ['./module-overview.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleOverviewComponent

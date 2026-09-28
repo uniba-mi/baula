@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
@@ -23,6 +23,7 @@ import { getPlanCourses } from 'src/app/selectors/study-planning.selectors';
   selector: 'app-competence-visualization',
   templateUrl: './competence-visualization.component.html',
   styleUrls: ['./competence-visualization.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CompetenceVisualizationComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Module } from '../../../../../../interfaces/module';
 import { Store } from '@ngrx/store';
 import { PathModule, StudyPath } from '../../../../../../interfaces/study-path';
@@ -20,6 +20,7 @@ import { moduleChanges } from '../../constants/module-mapping';
   selector: 'app-module-status',
   templateUrl: './module-status.component.html',
   styleUrls: ['./module-status.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleStatusComponent implements OnInit {

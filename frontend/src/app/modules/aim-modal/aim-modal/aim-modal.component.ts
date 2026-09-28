@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CompAim, User } from '../../../../../../interfaces/user';
 import { Standard } from '../../bilapp/interfaces/standard';
@@ -12,6 +12,7 @@ import { CompetenceAimsActions } from 'src/app/actions/user.actions';
   selector: 'app-aim-modal',
   templateUrl: './aim-modal.component.html',
   styleUrls: ['./aim-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AimModalComponent {

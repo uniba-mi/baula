@@ -127,7 +127,7 @@
                 <div
                   class="menu-box d-flex justify-content-end align-items-center gap-2 mb-2"
                 >
-                  @if(studyPlanSettings$ | async; as studyPlanSettings) {
+                  @if (studyPlanSettings$ | async; as studyPlanSettings) {
                     <!-- Toggle to display/hide grade -->
                     <button
                       class="btn btn-outline btn-sm"
@@ -208,11 +208,11 @@
                       matTooltipClass="custom-tooltip"
                       i18n-matTooltip
                       aria-label="FlexNow-Auszug laden"
+                      (click)="importCompleteFlexNowData()"
+                      (keyup.enter)="importCompleteFlexNowData()"
                     >
                       <a
                         class="profile-link redirect"
-                        (click)="importCompleteFlexNowData()"
-                        (keyup.enter)="importCompleteFlexNowData()"
                         i18n
                         ><i class="bi bi-arrow-repeat me-2"></i>Studienverlauf
                         aus FlexNow laden</a

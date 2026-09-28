@@ -1,28 +1,34 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Module } from '@interfaces/module';
 import { ModuleCourse2CourseConnection } from '@interfaces/connection';
 import { ModuleCourse } from '@interfaces/module-course';
 import { MatDialog } from '@angular/material/dialog';
-import { AdminDialogComponent } from '../../dialogs/admin-dialog.component';
+import {
+  AdminDialogComponent,
+  AdminDialogData,
+} from '../../dialogs/admin-dialog.component';
 import { Course } from '@interfaces/course';
+import { ModuleConnectionContainer } from '../module-course-connection.component';
 import { ModService } from 'src/app/shared/services/module.service';
 import { CourseService } from 'src/app/shared/services/course.service';
+import { RestService } from 'src/app/rest.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'admin-connection-card',
   templateUrl: './connection-card.component.html',
   styleUrl: './connection-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ConnectionCardComponent {
   private dialog = inject(MatDialog);
   private modService = inject(ModService);
   private cService = inject(CourseService);
+  private rest = inject(RestService);
 
-  @Input() containers: {
-    module: Module;
-    connection: ModuleCourse2CourseConnection[];
-  }[]; // contains module with their connection -> connection is the moduleCourse with the connected courses
+  // contains module with their connection -> connection is the moduleCourse with the connected courses
+  @Input() containers: ModuleConnectionContainer[];
   @Input() semester: string;
   @Input() courses: Course[];
   @Output() update = new EventEmitter<void>();
@@ -47,31 +53,48 @@ export class ConnectionCardComponent {
   // opens the edit dialog
   openEditDialog(
     mCourse: ModuleCourse,
-    chair: string,
+    module: Module,
     connection: ModuleCourse2CourseConnection[],
   ) {
+    // the dialog gets this exact object and sets hasChanges on it when it writes something
+    const data: AdminDialogData = {
+      dialogTitle: $localize `Verknüpfung von Modul zu Lehrveranstaltung bearbeiten`,
+      dialogContentId: 'edit-connection-dialog',
+      mCourse,
+      semester: this.semester,
+      chair: module.chair,
+      moduleName: module.name,
+      moduleAcronym: module.acronym,
+      connection: connection.filter((el) => el.mcId == mCourse.mcId), //pass only connections of the selected modulCourse
+      courses: this.courses,
+    };
     const dialogRef = this.dialog.open(AdminDialogComponent, {
-      data: {
-        dialogTitle: $localize `Verknüfpung von Modul zu Lehrveranstaltung bearbeiten`,
-        dialogContentId: 'edit-connection-dialog',
-        mCourse,
-        semester: this.semester,
-        chair,
-        connection: connection.filter((el) => el.mcId == mCourse.mcId), //pass only connections of the selected modulCourse
-        courses: this.courses,
-      },
+      data,
       minWidth: '80vw',
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      // fire update event to enable reload in the parent component
-      this.update.emit();
+      // only reload the board if the dialog actually changed a connection
+      if (data.hasChanges) {
+        this.update.emit();
+      }
     });
   }
 
   // function to open details of the clicked module
   openModule(module: Module) {
-    this.modService.openDetailsDialog(module);
+    // modules of the 'all modules' scope come straight from the database and miss the derived
+    // fields the details dialog needs -> load the complete module before opening it
+    if (module.extractedPrevModules) {
+      this.modService.openDetailsDialog(module);
+      return;
+    }
+    this.rest
+      .getModuleByAcronymAndVersion(module.acronym, module.version)
+      .pipe(take(1))
+      .subscribe((completeModule) =>
+        this.modService.openDetailsDialog(completeModule),
+      );
   }
 
   // function to open details of the clicked course

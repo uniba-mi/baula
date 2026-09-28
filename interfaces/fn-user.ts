@@ -56,7 +56,7 @@ export interface FnCompletedModule {
     semesterBegin: string, // semester as apnr
     semesterEnd: string, // semester as apnr
     semester: string, // semester as apnr
-    examAttempts: ExamAttemp[]
+    examAttempts: FnExamAttemp[]
 }
 
 export interface FnCompletedCourse {
@@ -64,7 +64,7 @@ export interface FnCompletedCourse {
     semester: string // semester as apnr
 }
 
-interface ExamAttemp {
+interface FnExamAttemp {
     examId: string,
     count: number,
     grade: number | null,

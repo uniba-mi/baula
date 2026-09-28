@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FeatureWish } from '../../../../../../../interfaces/feature-wish';
 import { RestService } from 'src/app/rest.service';
 
@@ -6,6 +6,7 @@ import { RestService } from 'src/app/rest.service';
   selector: 'app-admin-single-feature-wish',
   standalone: false,
   templateUrl: './admin-single-feature-wish.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './admin-single-feature-wish.component.scss',
 })
 export class AdminSingleFeatureWishComponent {

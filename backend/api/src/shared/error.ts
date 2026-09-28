@@ -26,7 +26,7 @@ export class UnauthorizedError extends Error {
 
 export function logError(value: unknown) {
   if (value instanceof Error) {
-    logger.error(value.message)
+    logger.error(value.message, { name: value.name, stack: value.stack })
   } else {
     let stringified = "[Unable to stringify the thrown value]";
     try {

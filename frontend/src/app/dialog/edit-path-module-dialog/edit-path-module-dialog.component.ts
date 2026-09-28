@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -16,6 +16,7 @@ import { ExtendedModuleGroup } from '@interfaces/module-group';
   selector: 'app-edit-path-module-dialog',
   templateUrl: './edit-path-module-dialog.component.html',
   styleUrls: ['./edit-path-module-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EditPathModuleDialogComponent implements OnInit {
@@ -41,8 +42,8 @@ export class EditPathModuleDialogComponent implements OnInit {
       name: [this.pathModule?.name || '', Validators.required],
       status: [this.pathModule?.status || 'open', Validators.required],
       ects: [
-        this.pathModule?.ects || '',
-        [Validators.required, Validators.min(1), Validators.max(30)],
+        this.pathModule?.ects !== undefined ? this.pathModule.ects : '',
+        [Validators.required, Validators.min(0), Validators.max(30)],
       ],
       grade: [
         this.pathModule?.grade ? this.pathModule.grade.toString() : '',

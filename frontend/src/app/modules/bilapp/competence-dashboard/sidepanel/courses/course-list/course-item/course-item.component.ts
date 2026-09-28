@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { loadSelectedCourses } from 'src/app/modules/bilapp/state/actions/course.actions';
 import {
@@ -17,6 +17,7 @@ import { CourseService } from 'src/app/shared/services/course.service';
   selector: 'app-course-item',
   templateUrl: './course-item.component.html',
   styleUrls: ['./course-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CourseItemComponent implements OnInit {

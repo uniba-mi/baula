@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { User } from '../../../../../../interfaces/user';
 import {
@@ -14,7 +15,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Observable, catchError, firstValueFrom, map, of, take } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  firstValueFrom,
+  map,
+  of,
+  shareReplay,
+  take,
+} from 'rxjs';
 import { Semester } from '../../../../../../interfaces/semester';
 import { StudyProgramme } from '../../../../../../interfaces/study-programme';
 import { ModuleHandbook } from '../../../../../../interfaces/module-handbook';
@@ -22,11 +31,13 @@ import { RestService } from 'src/app/rest.service';
 import { Store } from '@ngrx/store';
 import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
 import { AuthService } from 'src/app/shared/auth/auth.service';
+import { TransformationService } from 'src/app/shared/services/transformation.service';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UserFormComponent implements OnInit, OnChanges {
@@ -34,6 +45,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   private formBuilder = inject(FormBuilder);
   private store = inject(Store);
   private auth = inject(AuthService);
+  private transform = inject(TransformationService);
 
   @Input() user: User;
   @Input() isEdit: boolean = false; // if is edit (= update profile) semester should not be editable
@@ -51,12 +63,14 @@ export class UserFormComponent implements OnInit, OnChanges {
   fulltime: boolean;
   startSemesters: Semester[];
 
-  /****Important: *** 
-  Currently we use the names and desc as keys, since they are readable to user as unique as the spId and poVersion.
-  This might be a future bug, if this assumption becomes wrong.
+  /****Wichtig: ***
+  Die Auswahl läuft für Nutzende lesbar über name und desc.
+  desc ist aber nur INNERHALB eines Studiengangs eindeutig, nicht global: mehrere
+  Studiengänge teilen sich denselben desc-Wert (z. B. BAI23 und BAI30). Track-Keys
+  im Template müssen deshalb spId/poVersion verwenden, niemals desc.
   *********/
   spNames: string[];
-  spVersions$: Observable<any[]>;
+  spVersions$: Observable<StudyProgramme[]>;
   possiblePOs$: Observable<StudyProgramme[]>;
   bachelors: string[];
   masters: string[];
@@ -118,6 +132,8 @@ export class UserFormComponent implements OnInit, OnChanges {
         this.auth.forceReload(error);
         return of([]); // Return an empty array or handle the error as needed
       }),
+      // eine Antwort für alle Subscriber: stabile Objektidentität und weniger Requests
+      shareReplay({ bufferSize: 1, refCount: false }),
     );
 
     if (
@@ -179,9 +195,9 @@ export class UserFormComponent implements OnInit, OnChanges {
       map((sps) => sps.filter((el) => el.name == name)),
     );
 
-    this.spVersions$ = this.possiblePOs$.pipe(
-      map((sps) => sps.map((el) => el.desc)),
-    );
+    // die POs selbst durchreichen: desc allein ist kein eindeutiger Key
+
+    this.spVersions$ = this.possiblePOs$;
 
     this.presetStudyprogramme(name);
   }
@@ -255,14 +271,8 @@ export class UserFormComponent implements OnInit, OnChanges {
           : $localize `Lehramt`;
       const semesterDate = new Semester().semesterDate;
 
-      // transform semester strings into Date
       const dates = mhbs.map((el) => {
-        let semesterString = '';
-        if (el.semester.startsWith('Winter')) {
-          semesterString = `${el.semester.slice(-9, -5)}w`;
-        } else {
-          semesterString = `${el.semester.slice(-4)}s`;
-        }
+        let semesterString = this.transform.transformFlexNowFormat(el.semester);
         return new Semester(semesterString).semesterDate;
       });
 
@@ -350,9 +360,9 @@ export class UserFormComponent implements OnInit, OnChanges {
           studyprogrammes.filter((el) => el.name == studyprogramme.name),
         );
 
-        this.spVersions$ = this.possiblePOs$.pipe(
-          map((sps) => sps.map((el) => el.desc)),
-        );
+        // die POs selbst durchreichen: desc allein ist kein eindeutiger Key
+
+        this.spVersions$ = this.possiblePOs$;
 
         // set studyprogramme value
         this.selectedSpName.setValue(studyprogramme.name);
@@ -398,6 +408,15 @@ export class UserFormComponent implements OnInit, OnChanges {
     }
     return idx;
   }
+
+  /**
+   * Vergleicht Modulhandbücher inhaltlich statt über die Objektreferenz.
+   * Notwendig, weil getStudyprogrammes() bei jedem Aufruf neue Objektinstanzen
+   * liefert und mat-select sonst per === vergleicht - die Vorauswahl ginge sonst
+   * beim nächsten Laden wieder verloren.
+   */
+  compareModuleHandbooks = (a: ModuleHandbook, b: ModuleHandbook): boolean =>
+    !!a && !!b && a.mhbId === b.mhbId && a.version === b.version;
 
   selectModuleHandbook(mhb: ModuleHandbook) {
     this.userForm.controls['mhb'].addValidators([Validators.required]);

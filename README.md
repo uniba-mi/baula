@@ -44,6 +44,7 @@ Folgende Versionen sind die getesteten Voraussetzungen:
     HOSTNAME=localhost # replace localhost by hostname (e.g. domain)
     HOST_URL=https://localhost # replace localhost by domain
     HOST_IP=123.456.789.101
+    PLAUSIBLE_URL=https://your-plausible-domain.com
 
     API_PORT=1234 # port where backend is served
     DOCS_PORT=4201
@@ -70,7 +71,7 @@ Folgende Versionen sind die getesteten Voraussetzungen:
     SESSION_ENC_KEY=OYgZjzXvk1dVmLSGE41ziK5jNhyoXxTFC2SEa3+hWTo= #key size must be 32 bytes in base64
     LOGIN_PAGE_URL=http://localhost:4200/login
     DASHBOARD_URL=https://test.de/app/
-    COOKIE_SECURE=false
+    COOKIE_DOMAIN=yourDomainName
     SESSION_NAME=yourSessionName
     TEST_USER=user
     ADMIN_USER=admin

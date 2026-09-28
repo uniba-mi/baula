@@ -140,9 +140,9 @@
               <mat-select #poVersion placeholder="Deine Prüfungsordnungsversion" formControlName="spVersion" i18n-placeholder
                 (selectionChange)="selectStudyprogramme(poVersion.value)" aria-label="Dropdown zur Prüfungsordnungsauswahl"
                 required i18n-aria-label>
-                @for (version of spVersions; track version) {
-                  <mat-option [value]="version">
-                    {{ version }}
+                @for (po of spVersions; track po.spId + '_' + po.poVersion) {
+                  <mat-option [value]="po.desc">
+                    {{ po.desc }}
                   </mat-option>
                 }
               </mat-select>
@@ -166,9 +166,10 @@
               <mat-form-field class="mhb-field" appearance="outline">
                 <mat-label i18n>Modulhandbuch:</mat-label>
                 <mat-select #moduleHandbook placeholder="Dein Modulhandbuch" formControlName="mhb" i18n-placeholder
+                  [compareWith]="compareModuleHandbooks"
                   (selectionChange)="selectModuleHandbook(moduleHandbook.value)" aria-label="Dropdown zur Modulhandbuchwahl"
                   required i18n-aria-label>
-                  @for (mhb of selectedStudyprogramme.mhbs; track mhb) {
+                  @for (mhb of selectedStudyprogramme.mhbs; track mhb.mhbId + '_' + mhb.version) {
                     <mat-option [value]="mhb">
                       {{ mhb.name }} ({{ mhb.semester }})
                     </mat-option>

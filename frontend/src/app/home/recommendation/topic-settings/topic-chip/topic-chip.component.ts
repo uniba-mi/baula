@@ -5,6 +5,7 @@ import {
   EventEmitter,
   OnInit,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getUserTopics } from 'src/app/selectors/user.selectors';
@@ -15,6 +16,7 @@ import { Topic } from '@interfaces/topic';
   selector: 'app-topic-chip',
   templateUrl: './topic-chip.component.html',
   styleUrls: ['./topic-chip.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TopicChipComponent implements OnInit {

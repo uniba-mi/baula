@@ -7,6 +7,7 @@ import {
   Output,
   ViewChild,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   FormArray,
@@ -37,6 +38,7 @@ import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.se
   selector: 'app-course-search-panel',
   templateUrl: './course-search-panel.component.html',
   styleUrls: ['./course-search-panel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CourseSearchPanelComponent implements OnInit, OnDestroy {

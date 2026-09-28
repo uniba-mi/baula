@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Module } from '../../../../../../../../interfaces/module';
 import { ModService } from 'src/app/shared/services/module.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -64,6 +64,7 @@ import { DragDropService } from 'src/app/shared/services/drag-drop.service';
   standalone: false,
 
   templateUrl: './semester-body.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './semester-body.component.scss',
 })
 export class SemesterBodyComponent {

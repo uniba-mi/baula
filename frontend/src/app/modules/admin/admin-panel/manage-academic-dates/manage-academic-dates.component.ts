@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { AdminRestService } from '../../admin-rest.service';
 import { Observable, Subscription } from 'rxjs';
@@ -19,6 +20,7 @@ import { formatDate } from '@angular/common';
   selector: 'admin-manage-academic-dates',
   templateUrl: './manage-academic-dates.component.html',
   styleUrl: './manage-academic-dates.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ManageAcademicDatesComponent implements OnInit, AfterViewInit {

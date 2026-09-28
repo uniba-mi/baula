@@ -5,12 +5,15 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
 import {
   getAllModules,
   getDistinctModules,
-  getModules,
 } from 'src/app/selectors/module-overview.selectors';
 import { Module } from '@interfaces/module';
 import { AlertType } from '../classes/alert';
 import { SnackbarService } from './snackbar.service';
-import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  map,
+} from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ModuleInteractionActions } from 'src/app/actions/module-overview.actions';
@@ -18,6 +21,7 @@ import { UserGeneratedModule } from '@interfaces/user-generated-module';
 import { PathModule } from '@interfaces/study-path';
 import { ModuleHandbook } from '@interfaces/module-handbook';
 import { moduleChanges } from '../constants/module-mapping';
+import { RestService } from 'src/app/rest.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +32,7 @@ export class ModService {
   private dialog = inject(MatDialog);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private rest = inject(RestService);
 
   modulesInState$: any;
 
@@ -96,17 +101,12 @@ export class ModService {
     return mapping ? mapping.oldModuleAcronym : undefined;
   }
 
-  // Function to identify possible modulegroups of given acronym
+  // Function to identify possible modulegroups of given acronym - includes module
+  // groups from older module handbook versions the module was ever assigned to, not
+  // just the currently loaded one (the module group wizard filters this list against
+  // the current MHB's own group tree, so only still-existing groups get suggested)
   findModuleGroups(acronym: string): Observable<string[]> {
-    return this.store
-      .select(getModules)
-      .pipe(
-        map((modules) =>
-          modules
-            .filter((el) => el.acronym == acronym && !el.hasIssue && !el.isOld)
-            .map((el) => el.mgId),
-        ),
-      );
+    return this.rest.getModuleGroupIdsForAcronym(acronym);
   }
 
   // retrieve modules based on acronyms

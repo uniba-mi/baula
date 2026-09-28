@@ -50,7 +50,6 @@
             @if (
               data.mCourse &&
               data.semester &&
-              data.chair &&
               data.connection &&
               data.courses
             ) {
@@ -58,7 +57,9 @@
                 <admin-edit-connection-dialog
                   [mCourse]="data.mCourse"
                   [semester]="data.semester"
-                  [chair]="data.chair"
+                  [chair]="data.chair ?? ''"
+                  [moduleName]="data.moduleName ?? ''"
+                  [moduleAcronym]="data.moduleAcronym ?? ''"
                   [connection]="data.connection"
                   [courses]="data.courses"
                 ></admin-edit-connection-dialog>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SimilarityService } from '../../services/similarity.service';
 import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
 
@@ -6,9 +6,10 @@ import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
   selector: 'app-module-group-wizard',
   templateUrl: './module-group-wizard.component.html',
   styleUrl: './module-group-wizard.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class ModuleGroupWizardComponent {
+export class ModuleGroupWizardComponent implements OnChanges {
   private similarityService = inject(SimilarityService);
 
   @Input() mgId: string | undefined;
@@ -18,7 +19,11 @@ export class ModuleGroupWizardComponent {
   similarGroups: ExtendedModuleGroup[] = [];
   showRecommendations: boolean = false;
 
-  ngOnInit() {
+  // recompute on every input change, not just once on init - possibleMgIdsBasedOnAcronym
+  // can arrive asynchronously after the initial render (e.g. an HTTP-backed source), so
+  // ngOnInit alone would miss it and the acronym-based suggestions would never appear
+  ngOnChanges(): void {
+    this.similarGroups = [];
     this.showSimilarGroups();
     this.showGroupsBasedOnAcronym();
   }

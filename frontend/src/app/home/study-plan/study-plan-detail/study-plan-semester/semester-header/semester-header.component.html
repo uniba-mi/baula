@@ -6,46 +6,84 @@ Passe die Einstellungen an oder lege über "Studienpläne verwalten" einen neuen
 </div> -->
 
 <div class="d-flex flex-column gap-2">
-
-  <div class="name-settings-row d-flex"
-    [ngClass]="{'flex-column align-items-center': !isExpanded, 'flex-row justify-content-between align-items-start': isExpanded}">
-
+  <div
+    class="name-settings-row d-flex"
+    [ngClass]="{
+      'flex-column align-items-center': !isExpanded,
+      'flex-row justify-content-between align-items-start': isExpanded,
+    }"
+  >
     <!-- Toggling -->
     <div class="toggle-container">
-      <button class="btn btn-outline" [ngClass]="{'chevron-left': !isExpanded, 'chevron-right': isExpanded}"
-        [matTooltip]="isExpanded ? collapseText : extendText" (click)="onToggleExpand()"
-        (keyup.enter)="onToggleExpand()">
-        <i class="bi" [ngClass]="isExpanded ? 'bi-chevron-left' : 'bi-chevron-right'"></i>
+      <button
+        class="btn btn-outline"
+        [ngClass]="{ 'chevron-left': !isExpanded, 'chevron-right': isExpanded }"
+        [matTooltip]="isExpanded ? collapseText : extendText"
+        (click)="onToggleExpand()"
+        (keyup.enter)="onToggleExpand()"
+      >
+        <i
+          class="bi"
+          [ngClass]="isExpanded ? 'bi-chevron-left' : 'bi-chevron-right'"
+        ></i>
       </button>
     </div>
 
     @if (isExpanded) {
       <!-- Semester Name -->
       <div class="row semester text-center">
-        <h4 class="mb-0 fw-bold" i18n="X-tes Semester">
-          {{semesterNumber}}. Semester
-        </h4>
-        <p class="semester-short mb-1">{{ metaSemester.semester | SemesterShort }}</p>
+        <h4 class="mb-0 fw-bold" i18n="X-tes Semester">{{ semesterNumber }}. Semester</h4>
+        <p class="semester-short mb-1">
+          {{ metaSemester.semester | SemesterShort }}
+        </p>
       </div>
       <!-- Semester Settings -->
       <div class="action-buttons d-flex">
         <div class="add-item-btn">
-          <button class="btn btn-outline bg-white"
-            [matMenuTriggerFor]="!metaSemester.isPastSemester ? addItemMenu : null"
-            (click)="metaSemester.isPastSemester ? openAddPathModuleDialog(metaSemester.semester, pathModule) : null"
-            (keyup.enter)="metaSemester.isPastSemester ? openAddPathModuleDialog(metaSemester.semester, pathModule) : null">
-            <i class="btn-icon plus-icon bi bi-plus-lg"
-            [matTooltip]="metaSemester.isPastSemester ? addPastWork : addCurrentWorkOrPlaceholder"></i>
+          <button
+            class="btn btn-outline bg-white"
+            [matMenuTriggerFor]="
+              !metaSemester.isPastSemester ? addItemMenu : null
+            "
+            (click)="
+              metaSemester.isPastSemester
+                ? openAddPathModuleDialog(metaSemester.semester, pathModule)
+                : null
+            "
+            (keyup.enter)="
+              metaSemester.isPastSemester
+                ? openAddPathModuleDialog(metaSemester.semester, pathModule)
+                : null
+            "
+          >
+            <i
+              class="btn-icon plus-icon bi bi-plus-lg"
+              [matTooltip]="
+                metaSemester.isPastSemester
+                  ? addPastWork
+                  : addCurrentWorkOrPlaceholder
+              "
+            ></i>
           </button>
           <mat-menu #addItemMenu="matMenu">
-            <button mat-menu-item tabindex="0" aria-label="Neuen Platzhalter anlegen"
-              (click)="openAddModuleDialog(semesterPlan._id)" (keyup.enter)="openAddModuleDialog(semesterPlan._id)" 
-              i18n-aria-label i18n>
+            <button
+              mat-menu-item
+              tabindex="0"
+              aria-label="Neuen Platzhalter anlegen"
+              (click)="openAddModuleDialog(semesterPlan._id)"
+              (keyup.enter)="openAddModuleDialog(semesterPlan._id)"
+              i18n-aria-label i18n
+            >
               Modul hinzufügen
             </button>
-            <button mat-menu-item tabindex="0" (click)="openUserGeneratedModuleDialog(semesterPlan._id)"
-              (keyup.enter)="openUserGeneratedModuleDialog(semesterPlan._id)" aria-label="Neuen Platzhalter anlegen" 
-              i18n-aria-label i18n>
+            <button
+              mat-menu-item
+              tabindex="0"
+              (click)="openUserGeneratedModuleDialog(semesterPlan._id)"
+              (keyup.enter)="openUserGeneratedModuleDialog(semesterPlan._id)"
+              aria-label="Neuen Platzhalter anlegen"
+              i18n-aria-label i18n
+            >
               Platzhalter hinzufügen
             </button>
           </mat-menu>
@@ -59,55 +97,83 @@ Passe die Einstellungen an oder lege über "Studienpläne verwalten" einen neuen
       <!-- ECTS Settings -->
       <div class="ects ps-0 d-flex align-items-center justify-content-start">
         @if (!metaSemester.isPastSemester) {
-        <button class="btn btn-outline chip ects-chip d-flex gap-1" (click)="
-    openAimedEctsDialog(
-      $event,
-      semesterPlan._id,
-      semesterPlan.aimedEcts
-    )
-  " (keyup.enter)="
-    openAimedEctsDialog(
-      $event,
-      semesterPlan._id,
-      semesterPlan.aimedEcts
-    )
-  " matTooltip="Du hast in diesem Semester {{
-    semesterPlan.summedEcts
-  }} von {{
-    semesterPlan.aimedEcts
-  }} zu erreichenden ECTS eingeplant. Klicke, um dein ECTS Ziel für dieses Semester anzupassen." i18n-matTooltip>
-          <span class="ects-span" [ngClass]="
-      semesterPlan.summedEcts > semesterPlan.aimedEcts ? 'green-bg' : ' '
-    " i18n>{{ semesterPlan.summedEcts }} </span>/
+          <button
+            class="btn btn-outline chip ects-chip d-flex gap-1"
+            (click)="
+              openAimedEctsDialog(
+                $event,
+                semesterPlan._id,
+                semesterPlan.aimedEcts
+              )
+            "
+            (keyup.enter)="
+              openAimedEctsDialog(
+                $event,
+                semesterPlan._id,
+                semesterPlan.aimedEcts
+              )
+            "
+            matTooltip="Du hast in diesem Semester {{
+              semesterPlan.summedEcts
+            }} von {{
+              semesterPlan.aimedEcts
+            }} zu erreichenden ECTS eingeplant. Klicke, um dein ECTS Ziel für dieses Semester anzupassen." i18n-matTooltip
+          >
+            <span
+              class="ects-span"
+              [ngClass]="
+                semesterPlan.summedEcts > semesterPlan.aimedEcts
+                  ? 'green-bg'
+                  : ' '
+              "
+              i18n>{{ semesterPlan.summedEcts }} </span
+            >/
             <span>
-              {{ semesterPlan.aimedEcts ? semesterPlan.aimedEcts : '--' }}
+              {{ semesterPlan.aimedEcts ? semesterPlan.aimedEcts : "--" }}
             </span>
             ECTS
           </button>
-        <button class="btn-icon px-2" [ngClass]="
-    semesterPlan.summedEcts > semesterPlan.aimedEcts ? ' ' : 'invisible'
-  " matTooltip="Du hast mehr ECTS eingeplant, als du für dieses Semester erreichen möchtest."
-  i18n-matTooltip
-            matTooltipClass="custom-tooltip" appTooltipClick>
+          <button
+            class="btn-icon px-2"
+            [ngClass]="
+              semesterPlan.summedEcts > semesterPlan.aimedEcts
+                ? ' '
+                : 'invisible'
+            "
+            matTooltip="Du hast mehr ECTS eingeplant, als du für dieses Semester erreichen möchtest."
+            i18n-matTooltip
+            matTooltipClass="custom-tooltip"
+            appTooltipClick
+          >
             <i class="bi bi-info-circle info-icon"></i>
           </button>
         }
         <!-- Make ECTS non-editable for past semesters -->
         @if (semesterStudyPath$ | async; as semesterStudyPath) {
           @if (metaSemester.isPastSemester) {
-          <div class="btn btn-outline chip ects-chip" matTooltip="Du hast in diesem Semester {{
-              semesterStudyPath[0].summedEcts
-            }} ECTS erreicht (bestandene Module)." i18n-matTooltip i18n>
+            <div
+              class="btn btn-outline chip ects-chip"
+              matTooltip="Du hast in diesem Semester {{
+                semesterStudyPath[0].summedEcts
+              }} ECTS erreicht (bestandene Module)."
+              i18n-matTooltip i18n
+            >
               <span>{{ semesterStudyPath[0].summedEcts }}</span> ECTS
             </div>
           }
         }
-        @if (!isFutureSemester(metaSemester.semester) && (flexNowImportAvailabe$ | async)) {
-          <button class="flex-now-sync btn btn-icon btn-outline position-absolute"
+        @if (
+          metaSemester.isPastSemester &&
+          (flexNowImportAvailabe$ | async)
+        ) {
+          <button
+            class="flex-now-sync btn btn-icon btn-outline position-absolute"
             matTooltip="Mit FlexNow synchronisieren"
-            aria-label="Semester mit FlexNow synchronisieren" 
+            aria-label="Semester mit FlexNow synchronisieren"
             i18n-matTooltip i18n-aria-label
-            (click)="syncWithFlexNow()" (keyup.enter)="syncWithFlexNow()">
+            (click)="syncWithFlexNow()"
+            (keyup.enter)="syncWithFlexNow()"
+          >
             <i class="bi bi-arrow-repeat text-gray"></i>
           </button>
         }
@@ -115,17 +181,24 @@ Passe die Einstellungen an oder lege über "Studienpläne verwalten" einen neuen
     </div>
   }
   <!-- Finish semester button -->
-  @if (semesterPlan && showFinishSemesterHint === true) {
-    @if (isExpanded && !metaSemester.isPastSemester && semesterPlan) {
-      <div class="text-center">
-        <button class="finish-button btn btn-sm btn-danger ms-lg-3 mb-1 mb-lg-0" [disabled]="!isEligibleForFinish"
-          [matTooltipDisabled]="!isEligibleForFinish" (click)="onFinishSemester($event)"
-          (keyup.enter)="onFinishSemester($event)"
-          matTooltip="Hier kannst du dein Semester abschließen und ggf. fehlende Daten zu deinen Modulen hinzufügen." 
-          i18n-matTooltip i18n>
-          Jetzt Semester abschließen
-        </button>
-      </div>
-    }
+  @if (
+    semesterPlan &&
+    showFinishSemesterHint === true &&
+    isExpanded &&
+    !metaSemester.isPastSemester
+  ) {
+    <div class="text-center">
+      <button
+        class="finish-button btn btn-sm btn-danger ms-lg-3 mb-1 mb-lg-0"
+        [disabled]="!isEligibleForFinish"
+        [matTooltipDisabled]="!isEligibleForFinish"
+        (click)="onFinishSemester($event)"
+        (keyup.enter)="onFinishSemester($event)"
+        matTooltip="Hier kannst du dein Semester abschließen und ggf. fehlende Daten zu deinen Modulen hinzufügen."
+        i18n-matTooltip i18n
+      >
+        Jetzt Semester abschließen
+      </button>
+    </div>
   }
 </div>

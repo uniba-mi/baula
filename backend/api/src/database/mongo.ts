@@ -1,7 +1,7 @@
 import mongoose, {
   HydratedDocument,
   model,
-  Query,
+  QueryWithHelpers,
   Schema,
   Model,
 } from "mongoose";
@@ -13,17 +13,77 @@ import {
   Embedding as IEmbedding,
   ModuleEmbedding as IModEmbedding,
 } from "@interfaces/embedding";
-import { Exam as IExam } from "@interfaces/study-path";
+import { ExamAttempt as IExamAttempt } from "@interfaces/study-path";
 import { LongTermEvaluation as ILongTermEvaluation } from "@interfaces/long-term-evaluation";
 import { Topic as ITopic } from "@interfaces/topic";
 import { UserServer as IUser } from "@interfaces/user";
 import { Evaluation as IEvaluation } from "@interfaces/evaluation";
-import { FeatureWish as IFeatureWish } from "../../../../interfaces/feature-wish";
-const uri = process.env.MONGO_DATABASE_URL
-  ? process.env.MONGO_DATABASE_URL.toString()
-  : "";
+import { FeatureWish as IFeatureWish } from "@interfaces/feature-wish";
+import { logger } from "../shared/utils/logger";
 
-export const connection = mongoose.connect(uri);
+const uri = process.env.MONGO_DATABASE_URL;
+
+if (!uri) {
+  throw new Error("MONGO_DATABASE_URL environment variable is required");
+}
+
+const mongoUri: string = uri;
+
+mongoose.set("strictQuery", true);
+
+mongoose.connection.on("connected", () => logger.info("MongoDB verbunden."));
+mongoose.connection.on("error", (err) =>
+  logger.error("MongoDB-Verbindungsfehler:", err),
+);
+mongoose.connection.on("disconnected", () =>
+  logger.warn("MongoDB-Verbindung getrennt."),
+);
+
+const MONGO_OPTIONS = {
+  maxPoolSize: 100,
+  socketTimeoutMS: 30000,
+  connectTimeoutMS: 30000,
+  serverSelectionTimeoutMS: 30000,
+  retryWrites: true,
+  retryReads: true,
+  appName: "Baula-Backend",
+};
+
+const MAX_CONNECT_ATTEMPTS = 10;
+const INITIAL_RETRY_DELAY_MS = 1000;
+const MAX_RETRY_DELAY_MS = 30000;
+
+/**
+ * Starts connection to mongodb and retries 
+ * @returns true, as soon as connection is ready, false if no connection is enabled
+ */
+export async function connectMongo(): Promise<boolean> {
+  let delayMs = INITIAL_RETRY_DELAY_MS;
+
+  for (let attempt = 1; attempt <= MAX_CONNECT_ATTEMPTS; attempt++) {
+    try {
+      await mongoose.connect(mongoUri, MONGO_OPTIONS);
+      return true;
+    } catch (err) {
+      if (attempt === MAX_CONNECT_ATTEMPTS) {
+        logger.error(
+          `MongoDB-Verbindung nach ${MAX_CONNECT_ATTEMPTS} Versuchen aufgegeben:`,
+          err,
+        );
+        return false;
+      }
+
+      logger.warn(
+        `MongoDB-Verbindung fehlgeschlagen (Versuch ${attempt}/${MAX_CONNECT_ATTEMPTS}), nächster Versuch in ${delayMs / 1000}s:`,
+        err,
+      );
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      delayMs = Math.min(delayMs * 2, MAX_RETRY_DELAY_MS);
+    }
+  }
+
+  return false;
+}
 
 // MongoDB Schemas -> Structure of the models
 // longterm evaluation schema
@@ -315,35 +375,37 @@ const ModEmbeddingSchema: Schema = new Schema<IModEmbedding>(
 
 // Query helpers for UserSchema
 type UserModelType = Model<IUser, UserQueryHelpers>;
-type UserModelQuery = Query<any, HydratedDocument<IUser>, UserQueryHelpers> &
-  UserQueryHelpers;
+type UserModelQuery = QueryWithHelpers<
+  any,
+  HydratedDocument<IUser>,
+  UserQueryHelpers
+>;
 interface UserQueryHelpers {
-  byShibId(this: UserModelQuery, shibId: String): UserModelQuery;
+  byShibId(shibId: string): UserModelQuery;
 }
 
-/* const ExamSchema: Schema = new Schema<IExam>(
+const ExamAttemptSchema: Schema = new Schema<IExamAttempt>(
   {
-    name: {
-      type: String,
-      required: true
+    examId: String,
+    name: String,
+    count: {
+      type: Number,
+      required: true,
     },
-    attempts: [{
-      semester: {
-        type: String,
-        required: true
-      },
-      status: {
-        type: String,
-        required: true,
-        // match: /(taken|failed|passed|open)/
-      },
-      grade: {
-        type: Number,
-        required: true
-      }
-    }]
-  }
-); */
+    grade: Number,
+    semester: {
+      type: String,
+      match: /(\d{4}((w)|(s)))/g,
+    },
+    status: {
+      type: String,
+      match: /(taken)|(failed)|(passed)|(open)/g,
+    },
+    remark: String,
+    flexNowImported: Boolean,
+  },
+  { _id: false },
+);
 
 // UserSchema
 const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
@@ -389,7 +451,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
           type: String,
           match: /(taken)|(failed)|(passed)|(open)/g,
         },
-        //exams: [ExamSchema],
+        examAttempts: [ExamAttemptSchema],
         semester: {
           type: String,
           match: /(\d{4}((w)|(s)))/g,
@@ -551,7 +613,10 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
     timestamps: true,
   },
 );
-UserSchema.query.byShibId = function (shibId: String): UserModelQuery {
+UserSchema.query.byShibId = function (
+  this: UserModelQuery,
+  shibId: string,
+): UserModelQuery {
   return this.findOne({ shibId: shibId });
 };
 

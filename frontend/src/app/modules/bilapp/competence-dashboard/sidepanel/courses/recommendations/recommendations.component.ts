@@ -5,6 +5,7 @@ import {
   OnInit,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, firstValueFrom } from 'rxjs';
@@ -22,6 +23,7 @@ import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
   selector: 'app-recommendations',
   templateUrl: './recommendations.component.html',
   styleUrls: ['./recommendations.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class RecommendationsComponent implements OnInit, OnChanges {

@@ -6,7 +6,9 @@ import express, { Express } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import mongoose from "mongoose";
+import compression from "compression";
+import rateLimit from "express-rate-limit";
+import cookieParser from "cookie-parser";
 import { api } from "./routes/api.router";
 
 import { authSaml } from "./routes/auth/auth-saml.routes";
@@ -14,8 +16,18 @@ import { localLogin, localLogout } from "./routes/auth/auth-local.routes";
 import passport from "./config/passport.config";
 import { expressSession } from "./config/session.config";
 import { errorHandler, notFoundHandler } from "./shared/middleware/error-handler-middleware";
+import { csrfProtectionMiddleware } from "./shared/middleware/csrf-middleware";
+import { logger } from "./shared/utils/logger";
 
 const app: Express = express();
+
+// trust the first hop (reverse proxy) so req.ip / X-Forwarded-For reflect the real client
+app.set("trust proxy", 1);
+
+// Express 5 defaults the query parser to "simple" (Node querystring). The SAML
+// logout in auth.controller.ts hands req.query to node-saml for redirect
+// validation, so keep the Express 4 "extended" parser to preserve that behaviour.
+app.set("query parser", "extended");
 
 // cors for local setting
 if (process.env.NODE_ENV === "local" && process.env.ORIGIN) {
@@ -29,15 +41,80 @@ if (process.env.NODE_ENV === "local" && process.env.ORIGIN) {
   );
 }
 
+// Rate limiting to prevent brute force and DDoS attacks
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 300, // Max 300 requests per IP per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting for Swagger docs
+    return req.path.startsWith('/api/docs');
+  },
+  handler: (req, res) => {
+    logger.warn(`Rate limit exceeded for IP: ${req.ip}`);
+    res.status(429).json({
+      error: {
+        message: 'Zu viele Requests. Bitte warte kurz und versuche es erneut.',
+        status: 429,
+      },
+    });
+  },
+});
+
+app.use(limiter);
+
+// Stricter rate limit specifically for the local login endpoint (brute force protection)
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Max 5 login attempts per IP per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    logger.warn(`Login rate limit exceeded for IP: ${req.ip}`);
+    res.status(429).json({
+      error: {
+        message: 'Zu viele Login-Versuche. Bitte warte 15 Minuten.',
+        status: 429,
+      },
+    });
+  },
+});
+
+// Enable compression for faster responses
+app.use(compression());
+
+// Parse cookies for CSRF protection
+app.use(cookieParser());
+
+// Mounted globally (not scoped to /api) so its own path-based exemptions
+// see the real, unstripped request path - Express strips the mount prefix
+// from req.path for middleware mounted via app.use('/api', ...).
+app.use(csrfProtectionMiddleware);
+
 /** ------------------------------
  *  -- Configurating middleware --
  *  -----------------------------*/
-app.use(express.urlencoded({ limit: "100mb", extended: true })); //false: only support simple bodys, true would support rich data
-app.use(express.json({ limit: "100mb" })); //json data will be extracted
-app.use(morgan("combined"));
-mongoose.set("strictQuery", true); // strict query enables, that only schema-defined data is saved to mongodb
+app.use(express.urlencoded({ limit: "100mb", extended: true }));
+app.use(express.json({ limit: "100mb" }));
 
-/** Helmet configuration */
+// Express 5 leaves req.body as undefined when no body parser matched (e.g. a
+// DELETE without Content-Type). Express 4 defaulted it to {}, which the existing
+// req.body.x accesses across the controllers rely on - restore that here.
+app.use((req, _res, next) => {
+  if (req.body === undefined) {
+    req.body = {};
+  }
+  next();
+});
+
+app.use(
+  morgan(':method :url :status :response-time - :remote-addr - :user-agent', {
+    stream: { write: (message) => logger.info(message.trim()) },
+  })
+);
+
+/** Helmet configuration - enhanced security headers */
 app.disable("x-powered-by");
 app.use(
   helmet({
@@ -45,9 +122,22 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", process.env.PLAUSIBLE_URL ?? ""],
-        styleSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:", "https:"],
+        fontSrc: ["'self'"],
+        connectSrc: ["'self'", process.env.PLAUSIBLE_URL ?? ""],
+        frameSrc: ["'none'"],
+        objectSrc: ["'none'"],
       },
     },
+    crossOriginEmbedderPolicy: false,
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true,
+    },
+    frameguard: { action: 'deny' },
+    noSniff: true,
     xssFilter: true,
   })
 );
@@ -60,7 +150,7 @@ app.use(passport.session());
 /** ------------------------------
  *  ---------- Routes ------------
  *  -----------------------------*/
-app.use('/login', localLogin);
+app.use('/login', loginLimiter, localLogin);
 app.use('/logout', localLogout);
 app.use("/Shibboleth.sso", authSaml);
 app.use("/api", api);

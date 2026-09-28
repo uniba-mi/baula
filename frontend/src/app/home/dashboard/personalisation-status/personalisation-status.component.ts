@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { combineLatest, map, Observable, switchMap, take } from 'rxjs';
 import { ExtendedJob } from '../../../../../../interfaces/job';
 import { Module } from '../../../../../../interfaces/module';
@@ -14,6 +14,7 @@ import { ModService } from 'src/app/shared/services/module.service';
   selector: 'app-personalisation-status',
   standalone: false,
   templateUrl: './personalisation-status.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './personalisation-status.component.scss',
 })
 export class PersonalisationStatusComponent {

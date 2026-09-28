@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
 
@@ -6,6 +6,7 @@ import { closeDialogMode } from 'src/app/actions/dialog.actions';
   selector: 'app-upload-student-data-dialog',
   templateUrl: './upload-student-data-dialog.component.html',
   styleUrl: './upload-student-data-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UploadStudentDataDialogComponent {

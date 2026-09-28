@@ -1,13 +1,14 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { ChartConfiguration, ChartData } from 'chart.js';
+import { Component, Input, OnChanges, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SemesterStudyPath } from '@interfaces/study-path';
 import { Semester } from '@interfaces/semester';
 import { StudyPlan } from '@interfaces/study-plan';
+import { BarChartCardData } from 'src/app/modules/reporting/reporting';
 
 @Component({
     selector: 'app-semester-module-progress-chart',
     templateUrl: './semester-module-progress-chart.component.html',
     styleUrls: ['./semester-module-progress-chart.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
@@ -15,27 +16,7 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
   @Input() semesters: Semester[];
   @Input() studyPlan: StudyPlan | undefined | null;
 
-  public barChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    scales: {
-      x: {
-        stacked: true,
-      },
-      y: {
-        stacked: true,
-        ticks: {
-          stepSize: 1,
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: true,
-      },
-    },
-  };
-
-  public barChartData: ChartData<'bar'>;
+  public cardData: BarChartCardData;
   noDataMessage: boolean = false;
 
   constructor() {}
@@ -50,35 +31,16 @@ export class SemesterModuleProgressChartComponent implements OnInit, OnChanges {
   }
 
   calculateDataForChart() {
-    this.barChartData = {
-      labels: this.semesters.map((semester) => semester.shortName),
-      datasets: [
-        {
-          data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'passed'),
-          label: $localize`Bestanden`,
-          backgroundColor: 'rgba(172, 204, 61, 0.8)',
-          borderColor: '#97bf0d',
-          hoverBackgroundColor: '#97bf0d',
-          hoverBorderColor: '#97bf0d',
-        },
-        {
-          data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'taken'),
-          label: $localize`Belegt`,
-          backgroundColor: 'rgba(102, 144, 177, 0.8)',
-          borderColor: 'rgb(51, 106, 151)',
-          hoverBackgroundColor: '#00457d',
-          hoverBorderColor: 'rgb(51, 106, 151)',
-        },
-        {
-          data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'failed'),
-          label: $localize`Nicht bestanden`,
-          backgroundColor: 'rgba(235, 105, 114, 0.8)',
-          borderColor: '#e6444f',
-          hoverBackgroundColor: 'rgb(235, 105, 114)',
-          hoverBorderColor: '#e6444f',
-        },
+    this.cardData = {
+      title: $localize`Modul Fortschritt nach Semester`,
+      stacked: true,
+      xLabels: this.semesters.map((semester) => semester.shortName),
+      series: [
+        { name: $localize`Bestanden`, data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'passed'), color: '#97bf0d' },
+        { name: $localize`Belegt`, data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'taken'), color: '#00457d' },
+        { name: $localize`Nicht bestanden`, data: this.getNumberOfModulesFromStudyPath(this.studyPath, 'failed'), color: '#e6444f' },
       ],
-    };
+    } satisfies BarChartCardData;
   }
   // TODO
   // returns for the given status the number of modules for each semester

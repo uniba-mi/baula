@@ -28,7 +28,7 @@ import { UserServer } from "@interfaces/user";
 //             await Evaluation.findOneAndUpdate(
 //                 { spId },
 //                 { spId, jobEvaluations },
-//                 { upsert: true, new: true, setDefaultsOnInsert: true }
+//                 { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
 //             );
 //         }
 

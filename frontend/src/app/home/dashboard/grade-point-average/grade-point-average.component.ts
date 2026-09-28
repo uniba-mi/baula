@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { PathModule, StudyPath } from '../../../../../../interfaces/study-path';
 import { Semester } from '../../../../../../interfaces/semester';
 
@@ -6,6 +6,7 @@ import { Semester } from '../../../../../../interfaces/semester';
     selector: 'app-grade-point-average',
     templateUrl: './grade-point-average.component.html',
     styleUrl: './grade-point-average.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GradePointAverageComponent implements OnInit {

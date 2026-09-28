@@ -36,11 +36,11 @@ export async function checkStudyPlanTemplateAvailability(
   req: Request,
   res: Response
 ) {
-  const programId = validator.isAlphanumeric(req.params.programId, undefined)
-    ? req.params.programId
+  const programId = validator.isAlphanumeric(String(req.params.programId), undefined)
+    ? String(req.params.programId)
     : undefined;
-  const semesterType = ["w", "s"].includes(req.params.semesterType)
-    ? (req.params.semesterType as "w" | "s")
+  const semesterType = ["w", "s"].includes(String(req.params.semesterType))
+    ? (String(req.params.semesterType) as "w" | "s")
     : undefined;
 
   try {
@@ -78,11 +78,11 @@ export async function getLatestTemplateForStudyProgram(
   req: Request,
   res: Response
 ) {
-  const programId = validator.isAlphanumeric(req.params.programId, undefined)
-    ? req.params.programId
+  const programId = validator.isAlphanumeric(String(req.params.programId), undefined)
+    ? String(req.params.programId)
     : undefined;
-  const semesterType = ["w", "s"].includes(req.params.semesterType)
-    ? (req.params.semesterType as "w" | "s")
+  const semesterType = ["w", "s"].includes(String(req.params.semesterType))
+    ? (String(req.params.semesterType) as "w" | "s")
     : undefined;
 
   try {
@@ -295,10 +295,14 @@ export async function transferModule(
     ? req.body.acronym
     : undefined;
   const ects = !Number.isNaN(Number(req.body.ects)) ? Number(req.body.ects) : 0;
+  const user = req.user as UserServer;
 
   if (studyPlanId && oldSemesterPlanId && newSemesterPlanId && acronym) {
     try {
-      const studyPlan = await StudyPlan.findById(studyPlanId);
+      const studyPlan = await StudyPlan.findOne({
+        _id: studyPlanId,
+        userId: user._id,
+      });
       if (studyPlan) {
         const oldSemesterPlan = studyPlan.semesterPlans.find(
           (el) => el._id.toString() === oldSemesterPlanId
@@ -349,10 +353,14 @@ export async function transferUserGeneratedModule(
     ? req.body.newSemesterPlanId
     : undefined;
   const module = validateAndReturnUserGeneratedModule(req.body.module);
+  const user = req.user as UserServer;
 
   if (studyPlanId && oldSemesterPlanId && newSemesterPlanId && module) {
     try {
-      const studyPlan = await StudyPlan.findById(studyPlanId);
+      const studyPlan = await StudyPlan.findOne({
+        _id: studyPlanId,
+        userId: user._id,
+      });
       if (studyPlan) {
         const oldSemesterPlan = studyPlan.semesterPlans.find(
           (el) => el._id.toString() === oldSemesterPlanId
@@ -395,8 +403,8 @@ export async function deleteStudyPlan(
   res: Response,
   next: NextFunction
 ) {
-  const studyPlanId = validateObjectId(req.params.id)
-    ? req.params.id
+  const studyPlanId = validateObjectId(String(req.params.id))
+    ? String(req.params.id)
     : undefined;
   const user = req.user as UserServer;
 

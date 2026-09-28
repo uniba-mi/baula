@@ -1,54 +1,47 @@
-<div id="donutComponent" (mouseleave)="mouseOutDonutPart()">
-  @if (selectedBar) {
-    <h5>
-      {{ selectedBar.competence.name }}
-    </h5>
-  }
-  <div #donutChart id="donut-chart">
-    <svg>
-      <g>
-        @for (d of donutChartData; track d; let i = $index) {
-          <g
-            (click)="mouseInDonutPart(i)"
-            (mouseover)="mouseInDonutPart(i)">
-            @if (d.value !== 0) {
-              <path #donutPart
-                [attr.d]="this.arc(d)"
-                [attr.fill]="this.color[i]"
-                stroke="black" style="stroke-width: 1px; opacity: 0.7;">
-              </path>
-            }
-            @if (d.value !== 0) {
-              <text
-                [attr.x] = "this.arc.centroid(d)[0]-5"
-                [attr.y] = "this.arc.centroid(d)[1]"
-                [attr.font-size] = "10">
-                {{ getShortDescription(i) }}
-              </text>
-            }
-          </g>
-        }
-      </g>
-    </svg>
-  </div>
-  <div id="competence-list">
-    <h6 i18n>Unterkompetenzen, welche nicht abgedeckt sind:</h6>
-    @for (comp of childCompetences; track comp; let i = $index) {
-      <span>
-        @if (this.fulfillment && this.fulfillment[i].fulfillment === 0) {
-          <span class="no-fulfillment"
-            (click)="mouseInDonutPart(i)"
-          (mouseover)="mouseInDonutPart(i)"> {{ comp.compId | formatCompetence }} </span>
-        }
-      </span>
+<!-- .donut-scroll-room gives #donutComponent room to scroll within, mirroring
+     bar-chart's .min-vh-200 - both use the same breakpoint so the two panels
+     stick/release together. -->
+<div class="donut-scroll-room">
+  <div id="donutComponent" (mouseleave)="hideInfo()">
+    @if (selectedBar) {
+      <h5>
+        {{ selectedBar.competence.name }}
+      </h5>
+    }
+    <div id="donut-chart">
+      <reporting-echarts-host
+        [option]="option"
+        (chartClick)="onSliceInteract($event)"
+        (chartMouseOver)="onSliceInteract($event)"
+      ></reporting-echarts-host>
+    </div>
+    <div id="competence-list">
+      <h6 i18n>Unterkompetenzen, welche nicht abgedeckt sind:</h6>
+      @for (comp of childCompetences; track comp; let i = $index) {
+        <span>
+          @if (this.fulfillment && this.fulfillment[i].fulfillment === 0) {
+            <span
+              class="no-fulfillment"
+              (click)="showInfoFor(comp.compId)"
+              (mouseover)="showInfoFor(comp.compId)"
+            >
+              {{ comp.compId | formatCompetence }}
+            </span>
+          }
+        </span>
+      }
+    </div>
+    @if (showInfo) {
+      <div id="infoField">
+        <div id="shortDescription">{{ description }}</div>
+        <hr />
+        <div id="longDescription">{{ longDescription }}</div>
+      </div>
+    } @else {
+      <div class="alert alert-primary" id="hint" i18n>
+        Bitte klicken Sie auf eines der Kreissegmente oder fahren mit der Maus
+        hinein um nähere Informationen zu erhalten.
+      </div>
     }
   </div>
-  <div id="infoField">
-    <div id="shortDescription">{{ description }}</div>
-    <hr>
-      <div id="longDescription">{{ longDescription }}</div>
-    </div>
-    <div class="alert alert-primary" id="hint" i18n>
-      Bitte klicken Sie auf eines der Kreissegmente oder fahren mit der Maus hinein um nähere Informationen zu erhalten.
-    </div>
-  </div>
+</div>

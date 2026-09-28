@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { filter, Observable } from 'rxjs';
 import { User } from '@interfaces/user';
 import { NavigationEnd, Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { getUser } from 'src/app/selectors/user.selectors';
   selector: 'app-recommendation',
   templateUrl: './recommendation.component.html',
   styleUrl: './recommendation.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class RecommendationComponent implements OnInit {

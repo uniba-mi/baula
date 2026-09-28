@@ -361,7 +361,7 @@ export class RestService {
       ects: module.ects,
       grade: module.grade,
       semester: module.semester,
-      // exams: module.exams,
+      examAttempts: module.examAttempts,
       mgId: module.mgId,
       isUserGenerated: module.isUserGenerated,
       flexNowImported: module.flexNowImported,
@@ -486,6 +486,13 @@ export class RestService {
   ): Observable<Module> {
     return this.http.get<Module>(
       `${this.urlBase}module-handbooks/modules/${acronym}/${version}`,
+      httpOptions,
+    );
+  }
+
+  getModuleGroupIdsForAcronym(acronym: string): Observable<string[]> {
+    return this.http.get<string[]>(
+      `${this.urlBase}module-handbooks/modules/${acronym}/module-groups`,
       httpOptions,
     );
   }

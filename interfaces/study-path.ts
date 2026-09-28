@@ -11,27 +11,27 @@ export interface SemesterStudyPath extends StudySemester {
   courses: PathCourse[],
 }
 
-// holds past exams
+// completed or ongoing module of the study path
 export interface PathModule extends UserGeneratedModuleTemplate {
   _id?: string;
   semester: string;
   isUserGenerated: boolean;
   flexNowImported: boolean;
   grade: number;
-  //exams: Exam[];
+  // optional - leaving it out keeps the stored attempts, sending [] clears them
+  examAttempts?: ExamAttempt[];
 }
 
-// each exam can have several attempts
-export interface Exam {
-  name: string;
-  attempts: ExamAttempt[];
-}
-
-// holds attempt for each exam
+// a single exam attempt (FlexNow: Studium/Prfstds/Prfstd)
 export interface ExamAttempt {
-  semester: string;
-  status: string;
-  grade: number;
+  examId?: string, // Teilprf/ModulPrf/@ModulPrf, not always present
+  name: string, // Teilprf/Bez
+  count: number, // number of the attempt
+  grade: number | null, // null while the attempt is not graded
+  semester: string, // univis format yyyy(s|w), not the FlexNow apnr
+  status: string, // taken | failed | passed
+  remark: string, // Prfbem/Bez
+  flexNowImported: boolean // missing or false means entered by the user
 }
 
 export interface PathCourse extends PlanCourse {

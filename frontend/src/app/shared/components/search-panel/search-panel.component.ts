@@ -7,6 +7,7 @@ import {
   Output,
   ViewChild,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   Option,
@@ -21,6 +22,7 @@ import { AnalyticsService } from '../../services/analytics.service';
   selector: 'app-search-panel',
   templateUrl: './search-panel.component.html',
   styleUrls: ['./search-panel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SearchPanelComponent implements OnInit {

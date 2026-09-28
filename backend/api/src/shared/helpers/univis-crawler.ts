@@ -1,4 +1,5 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../../database/prisma";
 import { transform } from "camaro";
 import { IncomingMessage } from "http";
 import https from "https";
@@ -20,8 +21,6 @@ import {
 } from "./univis-helpers";
 import { Person } from "@interfaces/person";
 import { ImportLogMessage } from "@interfaces/logs";
-
-const prisma = new PrismaClient();
 
 export async function crawlUnivis(url: string): Promise<string> {
   let result = new Promise<string>((resolve, reject) => {

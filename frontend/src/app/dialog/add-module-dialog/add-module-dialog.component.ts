@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -21,6 +21,7 @@ import { PathModule } from '@interfaces/study-path';
   selector: 'app-add-module-dialog',
   templateUrl: './add-module-dialog.component.html',
   styleUrls: ['./add-module-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AddModuleDialogComponent implements OnInit {

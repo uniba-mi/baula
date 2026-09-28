@@ -11,6 +11,7 @@ import {
   SimpleChanges,
   ViewChild,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -59,6 +60,7 @@ import { SettingsActions } from 'src/app/actions/user.actions';
   selector: 'app-full-calendar',
   templateUrl: './full-calendar.component.html',
   styleUrl: './full-calendar.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FullCalendarComponent

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
@@ -30,6 +30,7 @@ import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
   selector: 'app-study-plan',
   templateUrl: './study-plan.component.html',
   styleUrls: ['./study-plan.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class StudyPlanComponent implements OnInit {

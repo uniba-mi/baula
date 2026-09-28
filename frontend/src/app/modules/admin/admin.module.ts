@@ -29,6 +29,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { AuthInterceptor } from 'src/app/shared/auth/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConnectionCardComponent } from './module-course-connection/connection-card/connection-card.component';
@@ -37,7 +38,6 @@ import { CourseConnectionCardComponent } from './dialogs/edit-connection-dialog/
 import { ErrorLogsComponent } from './error-logs/error-logs.component';
 import { AdminRecsComponent } from './admin-recs/admin-recs.component';
 import { ReportingComponent } from './reporting/reporting.component';
-import { BaseChartDirective } from 'ng2-charts';
 import { SharedModule } from '../shared/shared.module';
 import { SemesterSelectionFormComponent } from './shared/semester-selection-form/semester-selection-form.component';
 import { ResultPageComponent } from '../long-term-evaluation/result-page/result-page.component';
@@ -96,8 +96,8 @@ import { AdminSingleFeatureWishComponent } from './admin-feature-wishes/admin-si
     MatCardModule,
     MatCheckboxModule,
     MatAutocompleteModule,
-    BaseChartDirective,
-    SharedModule, 
+    MatButtonToggleModule,
+    SharedModule,
     ResultPageComponent,
     ReportingBaseComponent,
     BarChartCardComponent,

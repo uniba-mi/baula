@@ -144,7 +144,7 @@ export async function getAllWishes(req: Request, res: Response, next: NextFuncti
 export async function hasLikedWish(req: Request, res: Response, next: NextFunction) {
     const user = req.user as UserServer;
 
-    const wishId = req.params.id;
+    const wishId = String(req.params.id);
     if (!wishId) {
         next(new BadRequestError("Es muss eine ID für den Feature-Wunsch angegeben werden."));
         return;
@@ -163,7 +163,7 @@ export async function hasLikedWish(req: Request, res: Response, next: NextFuncti
 export async function likeWish(req: Request, res: Response, next: NextFunction) {
     const user = req.user as UserServer;
 
-    const wishId = req.params.id;
+    const wishId = String(req.params.id);
     if (!wishId) {
         next(new BadRequestError("Es muss eine ID für den Feature-Wunsch angegeben werden."));
         return;
@@ -188,7 +188,7 @@ export async function likeWish(req: Request, res: Response, next: NextFunction) 
 export async function unlikeWish(req: Request, res: Response, next: NextFunction) {
     const user = req.user as UserServer;
 
-    const wishId = req.params.id;
+    const wishId = String(req.params.id);
     if (!wishId) {
         next(new BadRequestError("Es muss eine ID für den Feature-Wunsch angegeben werden."));
         return;
@@ -217,7 +217,7 @@ export async function unlikeWish(req: Request, res: Response, next: NextFunction
 export async function isUsersWish(req: Request, res: Response, next: NextFunction) {
     const user = req.user as UserServer;
 
-    const wishId = req.params.id;
+    const wishId = String(req.params.id);
     if (!wishId) {
         next(new BadRequestError("Es muss eine ID für den Feature-Wunsch angegeben werden."));
         return;
@@ -254,7 +254,7 @@ export async function getUsersUnapprovedWishes(req: Request, res: Response, next
 export async function deleteUsersUnapprovedWish(req: Request, res: Response, next: NextFunction) {
     const user = req.user as UserServer;
 
-    const wishId = req.params.id;
+    const wishId = String(req.params.id);
     if (!wishId) {
         next(new BadRequestError("Es muss eine ID für den Feature-Wunsch angegeben werden."));
         return;

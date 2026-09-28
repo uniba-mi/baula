@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FeatureWish } from '../../../../../../interfaces/feature-wish';
 import { RestService } from 'src/app/rest.service';
 
@@ -6,6 +6,7 @@ import { RestService } from 'src/app/rest.service';
   selector: 'app-admin-feature-wishes',
   standalone: false,
   templateUrl: './admin-feature-wishes.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './admin-feature-wishes.component.scss',
 })
 export class AdminFeatureWishesComponent implements OnInit {

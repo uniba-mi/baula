@@ -10,6 +10,7 @@ import {
   SimpleChanges,
   ViewChild,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ModuleGroup } from '../../../../../../interfaces/module-group';
 import { MatTree, MatTreeNestedDataSource } from '@angular/material/tree';
@@ -28,6 +29,7 @@ import { ModService } from 'src/app/shared/services/module.service';
   selector: 'app-group-navigation',
   templateUrl: './group-navigation.component.html',
   styleUrl: './group-navigation.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class GroupNavigationComponent

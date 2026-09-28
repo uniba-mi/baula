@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -16,6 +17,7 @@ import { Observable, take } from 'rxjs';
   selector: 'app-change-module-group',
   standalone: false,
   templateUrl: './change-module-group.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './change-module-group.component.scss',
 })
 export class ChangeModuleGroupComponent implements OnInit {

@@ -36,12 +36,19 @@ export const localStrategy = new LocalStrategy(
         };
       } else {
         // check if roles changed
-        if (roles.toString().length != dbUser.roles.toString().length) {
-          dbUser = await User.findByIdAndUpdate(dbUser._id, {
-            $set: {
-              roles: roles,
+        const rolesChanged =
+          roles.length !== dbUser.roles.length ||
+          !roles.every((r) => dbUser.roles.includes(r));
+        if (rolesChanged) {
+          dbUser = await User.findByIdAndUpdate(
+            dbUser._id,
+            {
+              $set: {
+                roles: roles,
+              },
             },
-          });
+            { returnDocument: 'after' },
+          );
         }
       }
       return done(null, { user: dbUser, baId: encrypt("test") });

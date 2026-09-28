@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
@@ -9,6 +9,7 @@ import { AdminDialogComponent } from '../dialogs/admin-dialog.component';
   selector: 'fn2dnd',
   templateUrl: './fn2xml-dnd.component.html',
   styleUrls: ['./fn2xml-dnd.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class Fn2xmlDndComponent implements OnInit {

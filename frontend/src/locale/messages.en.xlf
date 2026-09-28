@@ -465,7 +465,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="5100718981688620144">
         <source> Bist du sicher, dass du <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x> löschen möchtest? </source>
-        <target state="translated"> Are you sure you want to delete <x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>? </target>
+        <target state="translated"> Are you sure you want to delete <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/confirmation-dialog/confirmation-dialog.component.html</context>
           <context context-type="linenumber">20,22</context>
@@ -473,7 +473,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="8534763747768259491">
         <source> Bist du sicher, dass du <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x> hinzufügen möchtest? </source>
-        <target state="translated"> Are you sure you want to add <x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>? </target>
+        <target state="translated"> Are you sure you want to add <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/confirmation-dialog/confirmation-dialog.component.html</context>
           <context context-type="linenumber">27,29</context>
@@ -481,7 +481,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="8807601204633060612">
         <source> Bist du sicher, dass du <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x> aktualisieren möchtest? </source>
-        <target state="translated"> Are you sure you want to update <x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>? </target>
+        <target state="translated"> Are you sure you want to update <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/confirmation-dialog/confirmation-dialog.component.html</context>
           <context context-type="linenumber">34,36</context>
@@ -489,7 +489,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="7873070512961993991">
         <source> Bist du sicher, dass du <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x> überschreiben möchtest? </source>
-        <target state="translated"> Are you sure you want to overwrite <x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>? </target>
+        <target state="translated"> Are you sure you want to overwrite <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/confirmation-dialog/confirmation-dialog.component.html</context>
           <context context-type="linenumber">41,43</context>
@@ -497,7 +497,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="4293964998267422692">
         <source> Bist du sicher, dass du mit <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x> fortfahren möchtest? </source>
-        <target state="translated"> Are you sure you want to continue with <x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>? </target>
+        <target state="translated"> Are you sure you want to continue with <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ data.confirmationItem }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/confirmation-dialog/confirmation-dialog.component.html</context>
           <context context-type="linenumber">48,50</context>
@@ -545,7 +545,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="490642103536522644">
         <source> Für einen <x ctype="x-strong" equiv-text="&lt;strong&gt;" id="START_TAG_STRONG"></x>vollen Zugriff<x ctype="x-strong" equiv-text="&lt;/strong&gt;" id="CLOSE_TAG_STRONG"></x> und alle Features kannst du dich jederzeit an uns wenden: <x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;" id="START_LINK"></x>baula.minf@uni-bamberg.de<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x></source>
-        <target state="translated"> For <x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;" id="START_LINK"></x>full access<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x> and all features, you can contact us at any time: <x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;" id="START_LINK"></x>baula.minf@uni-bamberg.de<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x></target>
+        <target state="translated"> For <x ctype="x-strong" equiv-text="&lt;strong&gt;" id="START_TAG_STRONG"></x>full access<x ctype="x-strong" equiv-text="&lt;/strong&gt;" id="CLOSE_TAG_STRONG"></x> and all features, you can contact us at any time: <x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;" id="START_LINK"></x>baula.minf@uni-bamberg.de<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/demo-user-dialog/demo-user-dialog.component.html</context>
           <context context-type="linenumber">12,15</context>
@@ -1249,7 +1249,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="7291672005525908156">
         <source><x ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-info-circle me-2&quot;&gt;" id="START_ITALIC_TEXT"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x> Dieser Plan ist aus dem Semester <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ previousSemester | Semester }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>. Der aktuellste Plan wird kurz vor Semesterbeginn bereitgestellt. </source>
-        <target state="translated"><x equiv-text="{{ previousSemester | Semester }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x> This plan from the semester <x equiv-text="{{ previousSemester | Semester }}" id="INTERPOLATION"></x><x equiv-text="{{ previousSemester | Semester }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>. The current plan will be provided briefly before the semester starts. </target>
+        <target state="translated"><x ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-info-circle me-2&quot;&gt;" id="START_ITALIC_TEXT"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x> This plan from the semester <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x equiv-text="{{ previousSemester | Semester }}" id="INTERPOLATION"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x>. The current plan will be provided briefly before the semester starts. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/import-dialog/import-dialog.component.html</context>
           <context context-type="linenumber">27,29</context>
@@ -1305,7 +1305,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="633235168227131967">
         <source> Der Studienplan, den du importieren möchtest beginnt im <x ctype="x-span" equiv-text="&lt;span class=&quot;fw-bold&quot;&gt;" id="START_TAG_SPAN"></x><x equiv-text="{{ start.fullName }}" id="INTERPOLATION"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x> und endet im <x ctype="x-span" equiv-text="&lt;span class=&quot;fw-bold&quot;&gt;" id="START_TAG_SPAN"></x><x equiv-text="{{ end.fullName }}" id="INTERPOLATION_1"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x>. </source>
-        <target state="translated"> The study plan you want to import starts starts in <x equiv-text="{{ start.fullName }}" id="INTERPOLATION"></x><x equiv-text="{{ start.fullName }}" id="INTERPOLATION"></x><x equiv-text="{{ end.fullName }}" id="INTERPOLATION_1"></x> and ends in <x ctype="x-span" equiv-text="&lt;span class=&quot;fw-bold&quot;&gt;" id="START_TAG_SPAN"></x><x equiv-text="{{ end.fullName }}" id="INTERPOLATION_1"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x>. </target>
+        <target state="translated"> The study plan you want to import starts starts in <x ctype="x-span" equiv-text="&lt;span class=&quot;fw-bold&quot;&gt;" id="START_TAG_SPAN"></x><x equiv-text="{{ start.fullName }}" id="INTERPOLATION"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x> and ends in <x ctype="x-span" equiv-text="&lt;span class=&quot;fw-bold&quot;&gt;" id="START_TAG_SPAN"></x><x equiv-text="{{ end.fullName }}" id="INTERPOLATION_1"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/import-dialog/import-dialog.component.html</context>
           <context context-type="linenumber">72,75</context>
@@ -1659,7 +1659,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="5497931987276989823">
         <source><x ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-person&quot;&gt;" id="START_ITALIC_TEXT"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x> Modulverantwortl.</source>
-        <target state="translated">Module coordinator</target>
+        <target state="translated"><x ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-person&quot;&gt;" id="START_ITALIC_TEXT"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x> Module coordinator</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/module-data/module-data.component.html</context>
           <context context-type="linenumber">8,10</context>
@@ -1909,7 +1909,13 @@
                                   track semester;
                                   let last = $last
                                 ) {" id="START_BLOCK_FOR"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x><x ctype="x-strong" equiv-text="&lt;strong&gt;" id="START_TAG_STRONG"></x><x equiv-text="{{ semester | Semester }}" id="INTERPOLATION_1"></x><x ctype="x-strong" equiv-text="&lt;/strong&gt;" id="CLOSE_TAG_STRONG"></x><x equiv-text="@if (!last) {" id="START_BLOCK_IF"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x>, <x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x equiv-text="}" id="CLOSE_BLOCK_IF"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x equiv-text="}" id="CLOSE_BLOCK_FOR"></x></source>
-        <target state="translated"> The module is schedules in the current active plan "<x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x>": <x ctype="x-strong" equiv-text="&lt;strong&gt;" id="START_TAG_STRONG"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x><x ctype="x-strong" equiv-text="&lt;strong&gt;" id="START_TAG_STRONG"></x><x ctype="x-strong" equiv-text="&lt;/strong&gt;" id="CLOSE_TAG_STRONG"></x><x ctype="x-strong" equiv-text="&lt;/strong&gt;" id="CLOSE_TAG_STRONG"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x>, <x equiv-text="}" id="CLOSE_BLOCK_IF"></x><x equiv-text="}" id="CLOSE_BLOCK_IF"></x><x equiv-text="}" id="CLOSE_BLOCK_FOR"></x><x equiv-text="}" id="CLOSE_BLOCK_FOR"></x></target>
+        <target state="translated"> The module is schedules in the current active plan "<x equiv-text="{{
+                                  activeStudyPlan?.name
+                                }}" id="INTERPOLATION"></x>": <x equiv-text="@for (
+                                  semester of plannedSemesters;
+                                  track semester;
+                                  let last = $last
+                                ) {" id="START_BLOCK_FOR"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x><x ctype="x-strong" equiv-text="&lt;strong&gt;" id="START_TAG_STRONG"></x><x equiv-text="{{ semester | Semester }}" id="INTERPOLATION_1"></x><x ctype="x-strong" equiv-text="&lt;/strong&gt;" id="CLOSE_TAG_STRONG"></x><x equiv-text="@if (!last) {" id="START_BLOCK_IF"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x>, <x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x equiv-text="}" id="CLOSE_BLOCK_IF"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x equiv-text="}" id="CLOSE_BLOCK_FOR"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/module-data/module-data.component.html</context>
           <context context-type="linenumber">475,490</context>
@@ -2146,7 +2152,8 @@
       <trans-unit datatype="html" id="8579963993974598644">
         <source>Ab 01.12.2025 läuft Baula im Rahmen des <x ctype="x-a" equiv-text="&lt;a href=&quot;https://www.uni-bamberg.de/bakule/&quot;
             target=&quot;_blank&quot;&gt;" id="START_LINK"></x>BaKuLe-Projekts<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x> an der Universität Bamberg weiter und es gilt die neue Datenschutzerklärung vom 01.12.2025. Bitte lies die Änderungen und stimme zu, um Baula weiterhin mit deinem aktuellen Profil zu nutzen. <x ctype="x-strong" equiv-text="&lt;strong&gt;" id="START_TAG_STRONG"></x>Ohne deine Einwilligung werden deine aktuellen Daten gelöscht und du musst dir ein neues Konto anlegen.<x ctype="x-strong" equiv-text="&lt;/strong&gt;" id="CLOSE_TAG_STRONG"></x></source>
-        <target state="translated">As of December 1, 2025, Baula will continue to operate as part of the <x ctype="x-strong" equiv-text="&lt;strong&gt;" id="START_TAG_STRONG"></x>BaKuLe project<x ctype="x-strong" equiv-text="&lt;/strong&gt;" id="CLOSE_TAG_STRONG"></x> at the University of Bamberg, and the new privacy policy dated December 1, 2025, will apply. Please review the changes and provide your consent to continue using Baula with your current profile. <x ctype="x-strong" equiv-text="&lt;strong&gt;" id="START_TAG_STRONG"></x>Without your consent, your current data will be deleted and you will have to create a new account.<x ctype="x-strong" equiv-text="&lt;/strong&gt;" id="CLOSE_TAG_STRONG"></x></target>
+        <target state="translated">As of December 1, 2025, Baula will continue to operate as part of the <x ctype="x-a" equiv-text="&lt;a href=&quot;https://www.uni-bamberg.de/bakule/&quot;
+            target=&quot;_blank&quot;&gt;" id="START_LINK"></x>BaKuLe project<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x> at the University of Bamberg, and the new privacy policy dated December 1, 2025, will apply. Please review the changes and provide your consent to continue using Baula with your current profile. <x ctype="x-strong" equiv-text="&lt;strong&gt;" id="START_TAG_STRONG"></x>Without your consent, your current data will be deleted and you will have to create a new account.<x ctype="x-strong" equiv-text="&lt;/strong&gt;" id="CLOSE_TAG_STRONG"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/privacy-change-dialog/privacy-change-dialog.component.html</context>
           <context context-type="linenumber">6,13</context>
@@ -3773,7 +3780,7 @@
           <context context-type="sourcefile">src/app/home/recommendation/job-settings/job-card/job-card.component.ts</context>
           <context context-type="linenumber">67</context>
         </context-group>
-      <target state="translated">the job advertisement</target></trans-unit>
+      <target state="translated">the job advertisement "<x equiv-text="job.title" id="PH"></x>"</target></trans-unit>
       <trans-unit datatype="html" id="2975496718742394857">
         <source> Hier kannst du ein vordefiniertes Jobprofil auswählen und dir Module, welche zu dieser Jobanzeige passen, anzeigen lassen. Die hier eingefügten Jobanzeigen gehen zudem in die Empfehlungsgenerierung für dich ein, welche du im Studienverlaufsplan nutzen kannst. Wir arbeiten daran, dass du zukünftig auch eigene Jobanzeigen mittels URL hochladen kannst.
 </source>
@@ -4158,7 +4165,7 @@
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
           <context context-type="linenumber">176</context>
         </context-group>
-      <target state="translated">your feedback to the module</target></trans-unit>
+      <target state="translated">your feedback to the module "<x equiv-text="feedbackItem.acronym" id="PH"></x>"</target></trans-unit>
       <trans-unit datatype="html" id="5235938977352303970">
         <source>Feedback zu <x equiv-text="feedback.acronym" id="PH"></x></source>
         <target state="translated">Feedback for <x equiv-text="feedback.acronym" id="PH"></x></target>
@@ -4886,8 +4893,7 @@
       <trans-unit datatype="html" id="5323405389665961006">
         <source>Erreichte ECTS <x ctype="x-span" equiv-text="&lt;span class=&quot;text-gray&quot;&gt;" id="START_TAG_SPAN"></x>(<x equiv-text="{{ achievedCredits$ | async
       }}" id="INTERPOLATION"></x>)<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></source>
-        <target state="translated">Achieved ECTS <x equiv-text="{{ achievedCredits$ | async
-      }}" id="INTERPOLATION"></x>(<x equiv-text="{{ achievedCredits$ | async
+        <target state="translated">Achieved ECTS <x ctype="x-span" equiv-text="&lt;span class=&quot;text-gray&quot;&gt;" id="START_TAG_SPAN"></x>(<x equiv-text="{{ achievedCredits$ | async
       }}" id="INTERPOLATION"></x>)<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/progress-bar/progress-bar.component.html</context>
@@ -4913,8 +4919,7 @@
       <trans-unit datatype="html" id="6954627371382710435">
         <source>Geplante ECTS <x ctype="x-span" equiv-text="&lt;span class=&quot;text-gray&quot;&gt;" id="START_TAG_SPAN"></x>(<x equiv-text="{{ plannedCredits$ | async
       }}" id="INTERPOLATION"></x>)<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></source>
-        <target state="translated">Planned ECTS <x equiv-text="{{ plannedCredits$ | async
-      }}" id="INTERPOLATION"></x>(<x equiv-text="{{ plannedCredits$ | async
+        <target state="translated">Planned ECTS <x ctype="x-span" equiv-text="&lt;span class=&quot;text-gray&quot;&gt;" id="START_TAG_SPAN"></x>(<x equiv-text="{{ plannedCredits$ | async
       }}" id="INTERPOLATION"></x>)<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/progress-bar/progress-bar.component.html</context>
@@ -4939,7 +4944,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="3502517283453235827">
         <source>Gesamt ECTS <x ctype="x-span" equiv-text="&lt;span class=&quot;text-gray&quot;&gt;" id="START_TAG_SPAN"></x>(<x equiv-text="{{ totalCredits }}" id="INTERPOLATION"></x>)<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></source>
-        <target state="translated">All ECTS <x equiv-text="{{ totalCredits }}" id="INTERPOLATION"></x>(<x equiv-text="{{ totalCredits }}" id="INTERPOLATION"></x>)<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></target>
+        <target state="translated">All ECTS <x ctype="x-span" equiv-text="&lt;span class=&quot;text-gray&quot;&gt;" id="START_TAG_SPAN"></x>(<x equiv-text="{{ totalCredits }}" id="INTERPOLATION"></x>)<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/progress-bar/progress-bar.component.html</context>
           <context context-type="linenumber">34,35</context>
@@ -6157,7 +6162,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="34097409804415994">
         <source><x ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-upload me-1&quot;&gt;" id="START_ITALIC_TEXT"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x>Nutzerdaten wiederherstellen<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></source>
-        <target state="translated"><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x> Restore user data <x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></target>
+        <target state="translated"><x ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-upload me-1&quot;&gt;" id="START_ITALIC_TEXT"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x> Restore user data <x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/user-profile/user-profile.component.html</context>
           <context context-type="linenumber">19,21</context>
@@ -6886,7 +6891,9 @@
     dialogContentId.endsWith('academic-date-dialog')
     ) {" id="START_BLOCK_IF"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x> den ausgewählten Zeitraum <x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x equiv-text="}" id="CLOSE_BLOCK_IF"></x> wirklich löschen?
 </source>
-        <target state="translated"> Do you <x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x> really want to delete the period <x equiv-text="}" id="CLOSE_BLOCK_IF"></x><x equiv-text="}" id="CLOSE_BLOCK_IF"></x>?
+        <target state="translated"> Do you <x equiv-text="@if (
+    dialogContentId.endsWith('academic-date-dialog')
+    ) {" id="START_BLOCK_IF"></x><x ctype="x-span" equiv-text="&lt;span&gt;" id="START_TAG_SPAN"></x> really want to delete the period <x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x equiv-text="}" id="CLOSE_BLOCK_IF"></x>?
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/delete-dialog/delete-dialog.component.html</context>
@@ -7572,8 +7579,8 @@
         <source>Ranking für <x ctype="x-span" equiv-text="&lt;span
                           class=&quot;job-details fw-bold&quot;&gt;" id="START_TAG_SPAN"></x><x equiv-text="{{
                         selectedSection.title }}" id="INTERPOLATION"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></source>
-        <target state="translated">Ranking for <x equiv-text="{{
-                        selectedSection.title }}" id="INTERPOLATION"></x><x equiv-text="{{
+        <target state="translated">Ranking for <x ctype="x-span" equiv-text="&lt;span
+                          class=&quot;job-details fw-bold&quot;&gt;" id="START_TAG_SPAN"></x><x equiv-text="{{
                         selectedSection.title }}" id="INTERPOLATION"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/evaluation/evaluation.component.html</context>
@@ -8527,14 +8534,14 @@
           <context context-type="sourcefile">src/app/modules/shared/pipes/semester.pipe.ts</context>
           <context context-type="linenumber">14</context>
         </context-group>
-      <target state="translated">Winter semester</target></trans-unit>
+      <target state="translated">Winter semester <x equiv-text="year" id="PH"></x>/<x equiv-text="year + 1" id="PH_1"></x></target></trans-unit>
       <trans-unit datatype="html" id="250279206517920575">
         <source>Sommersemester <x equiv-text="year" id="PH"></x></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shared/pipes/semester.pipe.ts</context>
           <context context-type="linenumber">16</context>
         </context-group>
-      <target state="translated">Summer semester</target></trans-unit>
+      <target state="translated">Summer semester <x equiv-text="year" id="PH"></x></target></trans-unit>
       <trans-unit datatype="html" id="6343058326219562066">
         <source>Ich habe die Datenschutzerklärung zum Zugriff auf FlexNow gelesen und stimme dem Abrufen der Daten zu.</source>
         <target state="translated">I have read the privacy policy regarding access to FlexNow and consent to the retrieval of the data.</target>
@@ -8729,7 +8736,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="5328908281093831251">
         <source> Ihre aktuellen Zuordnungen: <x equiv-text="@for (standard of standards$ | async; track standard; let i = $index) {" id="START_BLOCK_FOR"></x><x ctype="x-div" equiv-text="&lt;div [style.color]=&quot;sumColor[i]&quot;&gt;" id="START_TAG_DIV"></x><x ctype="x-span" equiv-text="&lt;span class=&quot;font-weight-bold w-25&quot;&gt;" id="START_TAG_SPAN"></x><x equiv-text="{{ standard.stId }}" id="INTERPOLATION"></x>: <x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-span_1" equiv-text="&lt;span class=&quot;ml-2&quot;&gt;" id="START_TAG_SPAN_1"></x><x equiv-text="{{ competenceSums[i] }}" id="INTERPOLATION_1"></x> %<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-div" equiv-text="&lt;/div&gt;" id="CLOSE_TAG_DIV"></x><x equiv-text="}" id="CLOSE_BLOCK_FOR"></x></source>
-        <target state="translated"> Your current assignmens: <x ctype="x-span" equiv-text="&lt;span class=&quot;font-weight-bold w-25&quot;&gt;" id="START_TAG_SPAN"></x><x ctype="x-span" equiv-text="&lt;span class=&quot;font-weight-bold w-25&quot;&gt;" id="START_TAG_SPAN"></x><x ctype="x-span" equiv-text="&lt;span class=&quot;font-weight-bold w-25&quot;&gt;" id="START_TAG_SPAN"></x><x ctype="x-div" equiv-text="&lt;/div&gt;" id="CLOSE_TAG_DIV"></x>: <x ctype="x-div" equiv-text="&lt;/div&gt;" id="CLOSE_TAG_DIV"></x><x equiv-text="{{ competenceSums[i] }}" id="INTERPOLATION_1"></x><x equiv-text="{{ competenceSums[i] }}" id="INTERPOLATION_1"></x> %<x equiv-text="}" id="CLOSE_BLOCK_FOR"></x><x ctype="x-div" equiv-text="&lt;/div&gt;" id="CLOSE_TAG_DIV"></x><x equiv-text="}" id="CLOSE_BLOCK_FOR"></x></target>
+        <target state="translated"> Your current assignmens: <x equiv-text="@for (standard of standards$ | async; track standard; let i = $index) {" id="START_BLOCK_FOR"></x><x ctype="x-div" equiv-text="&lt;div [style.color]=&quot;sumColor[i]&quot;&gt;" id="START_TAG_DIV"></x><x ctype="x-span" equiv-text="&lt;span class=&quot;font-weight-bold w-25&quot;&gt;" id="START_TAG_SPAN"></x><x equiv-text="{{ standard.stId }}" id="INTERPOLATION"></x>: <x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-span_1" equiv-text="&lt;span class=&quot;ml-2&quot;&gt;" id="START_TAG_SPAN_1"></x><x equiv-text="{{ competenceSums[i] }}" id="INTERPOLATION_1"></x> %<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-div" equiv-text="&lt;/div&gt;" id="CLOSE_TAG_DIV"></x><x equiv-text="}" id="CLOSE_BLOCK_FOR"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/univis-helper/competence-form/competence-form.component.html</context>
           <context context-type="linenumber">2,10</context>
@@ -9072,11 +9079,10 @@
           target=&quot;_blank&quot;&gt;" id="START_LINK_1"></x>"BaKuLe: Bamberger Kulturen der Lehre gemeinsam gestalten"<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x> (ab 01.01.2026) gefördert durch die "Stiftung Innovation in der Hochschullehre" (StIL) sowie <x equiv-text="&lt;a class=&quot;link&quot;
           href=&quot;https://www.uni-bamberg.de/wiai/forschung/forschungseinrichtungen-verbundprojekte/voll-kiba/&quot;
           target=&quot;_blank&quot;&gt;" id="START_LINK_2"></x>"VoLL-KI: Von Lernenden lernen"<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x> (bis 30.11.2025) gefördert durch das Bundesministerium für Forschung und Bildung (BMBF). </source>
-        <target state="translated"> Staff members from the projects <x equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/bakule/&quot;
-          target=&quot;_blank&quot;&gt;" id="START_LINK_1"></x>"DiKuLe: Digitale Kulturen in der Lehren entwickeln"<x equiv-text="&lt;a class=&quot;link&quot;
+        <target state="translated"> Staff members from the projects <x ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/dikule&quot; target=&quot;_blank&quot;&gt;" id="START_LINK"></x>"DiKuLe: Digitale Kulturen in der Lehren entwickeln"<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x> (until 31.12.2025) and <x equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/bakule/&quot;
+          target=&quot;_blank&quot;&gt;" id="START_LINK_1"></x>"BaKuLe: Bamberger Kulturen der Lehre gemeinsam gestalten"<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x> (since 01.01.2026), funded by the "Stiftung Innovation in der Hochschullehre" (StIL), as well as <x equiv-text="&lt;a class=&quot;link&quot;
           href=&quot;https://www.uni-bamberg.de/wiai/forschung/forschungseinrichtungen-verbundprojekte/voll-kiba/&quot;
-          target=&quot;_blank&quot;&gt;" id="START_LINK_2"></x> (until 31.12.2025) and <x equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/bakule/&quot;
-          target=&quot;_blank&quot;&gt;" id="START_LINK_1"></x>"BaKuLe: Bamberger Kulturen der Lehre gemeinsam gestalten"<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x> (since 01.01.2026) funded by the "Stiftung Innovation in der Hochschullehre" (StIL) and the "Bundesministerium für Forschung und Bildung" (BMBF) - are conducting research and development on the digital study assistant. </target>
+          target=&quot;_blank&quot;&gt;" id="START_LINK_2"></x>"VoLL-KI: Von Lernenden lernen"<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x> (until 30.11.2025), funded by the "Bundesministerium für Forschung und Bildung" (BMBF), are conducting research and development on the digital study assistant. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/about/about.component.html</context>
           <context context-type="linenumber">15,25</context>
@@ -9177,7 +9183,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="2727753181778947687">
         <source><x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x>Dokumentation für Nutzende<x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x><x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x> Falls du konkrete Fragen zu einzelnen Funktionen oder einen allgemeinen Überblick zu allen verfügbaren Funktionen haben möchtest, findest du nähere Infos in unserer Dokumentation.<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x></source>
-        <target state="translated"><x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x>User Documentation<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x><x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x> If you have specific questions about individual features or would like a general overview of all available functions, you can find more information in our documentation.<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x></target>
+        <target state="translated"><x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x>User Documentation<x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x><x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x> If you have specific questions about individual features or would like a general overview of all available functions, you can find more information in our documentation.<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
           <context context-type="linenumber">12,15</context>
@@ -9238,11 +9244,8 @@
       <trans-unit datatype="html" id="4058824645713302108">
         <source><x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x>Projekt Baula<x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x><x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x> Lehrstuhl für Medieninformatik<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x> An der Weberei 5<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x> 96049 Bamberg<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x><x ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap;&quot;&gt;" id="START_TAG_SPAN"></x>E-Mail:<x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot;
                         href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;" id="START_LINK"></x>baula.minf@uni-bamberg.de<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></source>
-        <target state="translated"><x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot;
-                        href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;" id="START_LINK"></x>Project Baula<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot;
-                        href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;" id="START_LINK"></x> Chair of Media Informatics<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x> An der Weberei 5<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x> 96049 Bamberg<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x><x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot;
-                        href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;" id="START_LINK"></x>E-Mail:<x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot;
-                        href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;" id="START_LINK"></x>baula.minf@uni-bamberg.de<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></target>
+        <target state="translated"><x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x>Project Baula<x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x><x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x> Chair of Media Informatics<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x> An der Weberei 5<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x> 96049 Bamberg<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"></x><x ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap;&quot;&gt;" id="START_TAG_SPAN"></x>E-Mail:<x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot;
+                        href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;" id="START_LINK"></x>baula.minf@uni-bamberg.de<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x><x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
           <context context-type="linenumber">30,36</context>
@@ -9251,9 +9254,8 @@
       <trans-unit datatype="html" id="7387276683285953706">
         <source> Wir freuen uns immer über Feedback. Du kannst dich jederzeit in unseren <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://vc.uni-bamberg.de/course/view.php?id=71480&quot;
                     target=&quot;_blank&quot;&gt;" id="START_LINK"></x>VC-Kurs<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x> einschreiben und uns dort anonym Feedback und Anregungen zukommen lassen. </source>
-        <target state="translated"> We are always happy about feedback. You can enroll in our <x ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://vc.uni-bamberg.de/course/view.php?id=71480&quot;
-                    target=&quot;_blank&quot;&gt;" id="START_LINK"></x><x ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://vc.uni-bamberg.de/course/view.php?id=71480&quot;
-                    target=&quot;_blank&quot;&gt;" id="START_LINK"></x>VC course<x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x> at any time and send us anonymous feedback and suggestions there. </target>
+        <target state="translated"> We are always happy about feedback. You can enroll in our <x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x><x ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://vc.uni-bamberg.de/course/view.php?id=71480&quot;
+                    target=&quot;_blank&quot;&gt;" id="START_LINK"></x>VC course<x ctype="x-a" equiv-text="&lt;/a&gt;" id="CLOSE_LINK"></x><x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x> at any time and send us anonymous feedback and suggestions there. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
           <context context-type="linenumber">39,42</context>
@@ -9473,12 +9475,12 @@
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
           <context context-type="linenumber">8,30</context>
         </context-group>
-      <target state="translated"> The operation of Baula is subject to the University of Bamberg’s Information Security Management System (ISMS); details are available at <x equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/minf&quot; target=&quot;_blank&quot;
-            &gt;" id="START_LINK_1"></x>Information Security at the University of Bamberg<x equiv-text="&lt;a
+      <target state="translated"> The operation of Baula is subject to the University of Bamberg’s Information Security Management System (ISMS); details are available at <x ctype="x-a" equiv-text="&lt;a
             class=&quot;link&quot;
-            href=&quot;https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/allgemeine-datenschutzerklaerung/&quot;
+            href=&quot;https://www.uni-bamberg.de/its/verfahrensweisen/isms&quot;
             target=&quot;_blank&quot;
-            &gt;" id="START_LINK_2"></x>. System operation and data storage take place exclusively locally on University of Bamberg systems. Operations are conducted in accordance with the <x equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/minf&quot; target=&quot;_blank&quot;
+            &gt;" id="START_LINK"></x>Information Security at the University of Bamberg<x ctype="x-a" equiv-text="&lt;/a
+          &gt;" id="CLOSE_LINK"></x>. System operation and data storage take place exclusively locally on University of Bamberg systems. Operations are conducted in accordance with the <x equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/minf&quot; target=&quot;_blank&quot;
             &gt;" id="START_LINK_1"></x>Media Informatics Chair organizational unit<x ctype="x-a" equiv-text="&lt;/a
           &gt;" id="CLOSE_LINK"></x>. In principle, the <x equiv-text="&lt;a
             class=&quot;link&quot;
@@ -9512,23 +9514,17 @@
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
           <context context-type="linenumber">31,59</context>
         </context-group>
-      <target state="translated"> The following supplement to the privacy policy applies specifically to <x equiv-text="&lt;a
+      <target state="translated"> The following supplement to the privacy policy applies specifically to <x ctype="x-a" equiv-text="&lt;a
+            class=&quot;link&quot;
+            href=&quot;https://baula.minf.uni-bamberg.de&quot;
+            target=&quot;_blank&quot;
+            &gt;" id="START_LINK"></x>Baula<x ctype="x-a" equiv-text="&lt;/a
+          &gt;" id="CLOSE_LINK"></x>, a system developed within the framework of the projects <x equiv-text="&lt;a
             class=&quot;link&quot;
             href=&quot;https://www.uni-bamberg.de/dikule/&quot;
             target=&quot;_blank&quot;
-            &gt;" id="START_LINK_1"></x>Baula<x equiv-text="&lt;a
-            class=&quot;link&quot;
-            href=&quot;https://www.uni-bamberg.de/wiai/forschung/forschungseinrichtungen-verbundprojekte/voll-kiba/&quot;
-            target=&quot;_blank&quot;
-            &gt;" id="START_LINK_2"></x>, a system developed within the framework of the projects <x equiv-text="&lt;a
-            class=&quot;link&quot;
-            href=&quot;https://www.uni-bamberg.de/dikule/&quot;
-            target=&quot;_blank&quot;
-            &gt;" id="START_LINK_1"></x>DiKuLe<x equiv-text="&lt;a
-            class=&quot;link&quot;
-            href=&quot;https://www.uni-bamberg.de/bakule/&quot;
-            target=&quot;_blank&quot;
-            &gt;" id="START_LINK_3"></x>, <x equiv-text="&lt;a
+            &gt;" id="START_LINK_1"></x>DiKuLe<x ctype="x-a" equiv-text="&lt;/a
+          &gt;" id="CLOSE_LINK"></x>, <x equiv-text="&lt;a
             class=&quot;link&quot;
             href=&quot;https://www.uni-bamberg.de/wiai/forschung/forschungseinrichtungen-verbundprojekte/voll-kiba/&quot;
             target=&quot;_blank&quot;
@@ -10092,7 +10088,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="2087374457884393910">
         <source><x equiv-text="{{ attempt.name }}" id="INTERPOLATION"></x> (<x equiv-text="{{ attempt.count }}" id="INTERPOLATION_1"></x>. Versuch) - <x equiv-text="{{ attempt.semester | Semester }}" id="INTERPOLATION_2"></x> - <x equiv-text="{{ attempt.remark }}" id="INTERPOLATION_3"></x> - <x equiv-text="{{ attempt.grade ?? 'Keine Note gefunden!' }}" id="INTERPOLATION_4"></x></source>
-        <target state="translated"><x equiv-text="{{ attempt.name }}" id="INTERPOLATION"></x> (<x equiv-text="{{ attempt.count }}" id="INTERPOLATION_1"></x>. attempt)</target>
+        <target state="translated"><x equiv-text="{{ attempt.name }}" id="INTERPOLATION"></x> (<x equiv-text="{{ attempt.count }}" id="INTERPOLATION_1"></x>. attempt) - <x equiv-text="{{ attempt.semester | Semester }}" id="INTERPOLATION_2"></x> - <x equiv-text="{{ attempt.remark }}" id="INTERPOLATION_3"></x> - <x equiv-text="{{ attempt.grade ?? 'Keine Note gefunden!' }}" id="INTERPOLATION_4"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/debug-dialog/debug-dialog.component.html</context>
           <context context-type="linenumber">57,59</context>
@@ -10156,7 +10152,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="3688824088482530542">
         <source><x ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-check-lg text-success&quot;&gt;" id="START_ITALIC_TEXT"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x> Datei: <x equiv-text="{{ uploadedFileName }}" id="INTERPOLATION"></x></source>
-        <target state="translated"><x equiv-text="{{ uploadedFileName }}" id="INTERPOLATION"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x> File: <x equiv-text="{{ uploadedFileName }}" id="INTERPOLATION"></x>N</target>
+        <target state="translated"><x ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-check-lg text-success&quot;&gt;" id="START_ITALIC_TEXT"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x> File: <x equiv-text="{{ uploadedFileName }}" id="INTERPOLATION"></x>N</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/drop-zone/drop-zone.component.html</context>
           <context context-type="linenumber">6,9</context>
@@ -10369,9 +10365,7 @@
         <source> Die Lehrveranstaltung "<x equiv-text="{{ deletedCourse.name ? deletedCourse.name : deletedCourse.id }}" id="INTERPOLATION"></x>" wurde in UnivIS gelöscht und ist nicht mehr verfügbar. <x ctype="x-span" equiv-text="&lt;span class=&quot;ms-2 delete-link&quot; aria-label=&quot;Lehrveranstaltung abwählen&quot; tabindex=&quot;0&quot; i18n-aria-label
         (click)=&quot;deselectDeletedCourse(deletedCourse)&quot;
       (keyup.enter)=&quot;deselectDeletedCourse(deletedCourse)&quot;&gt;" id="START_TAG_SPAN"></x>Lehrveranstaltung abwählen<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></source>
-        <target state="translated"> The lecture "<x ctype="x-span" equiv-text="&lt;span class=&quot;ms-2 delete-link&quot; aria-label=&quot;Lehrveranstaltung abwählen&quot; tabindex=&quot;0&quot; i18n-aria-label
-        (click)=&quot;deselectDeletedCourse(deletedCourse)&quot;
-      (keyup.enter)=&quot;deselectDeletedCourse(deletedCourse)&quot;&gt;" id="START_TAG_SPAN"></x>" has been deleted in UnivIS and is no longer available. <x ctype="x-span" equiv-text="&lt;span class=&quot;ms-2 delete-link&quot; aria-label=&quot;Lehrveranstaltung abwählen&quot; tabindex=&quot;0&quot; i18n-aria-label
+        <target state="translated"> The lecture "<x equiv-text="{{ deletedCourse.name ? deletedCourse.name : deletedCourse.id }}" id="INTERPOLATION"></x>" has been deleted in UnivIS and is no longer available. <x ctype="x-span" equiv-text="&lt;span class=&quot;ms-2 delete-link&quot; aria-label=&quot;Lehrveranstaltung abwählen&quot; tabindex=&quot;0&quot; i18n-aria-label
         (click)=&quot;deselectDeletedCourse(deletedCourse)&quot;
       (keyup.enter)=&quot;deselectDeletedCourse(deletedCourse)&quot;&gt;" id="START_TAG_SPAN"></x>Deselect lecture<x ctype="x-span" equiv-text="&lt;/span&gt;" id="CLOSE_TAG_SPAN"></x></target>
         <context-group purpose="location">
@@ -10452,7 +10446,7 @@
       </trans-unit>
       <trans-unit datatype="html" id="8328844581349120301">
         <source><x ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-magic&quot;&gt;" id="START_ITALIC_TEXT"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x> Vorschläge für Modulgruppen <x equiv-text="&lt;i class=&quot;bi&quot; [ngClass]=&quot;showRecommendations ? 'bi-chevron-up' : 'bi-chevron-down'&quot;&gt;" id="START_ITALIC_TEXT_1"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x></source>
-        <target state="translated"><x equiv-text="&lt;i class=&quot;bi&quot; [ngClass]=&quot;showRecommendations ? 'bi-chevron-up' : 'bi-chevron-down'&quot;&gt;" id="START_ITALIC_TEXT_1"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x> Recommendations for module groups <x equiv-text="&lt;i class=&quot;bi&quot; [ngClass]=&quot;showRecommendations ? 'bi-chevron-up' : 'bi-chevron-down'&quot;&gt;" id="START_ITALIC_TEXT_1"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x></target>
+        <target state="translated"><x ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-magic&quot;&gt;" id="START_ITALIC_TEXT"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x> Recommendations for module groups <x equiv-text="&lt;i class=&quot;bi&quot; [ngClass]=&quot;showRecommendations ? 'bi-chevron-up' : 'bi-chevron-down'&quot;&gt;" id="START_ITALIC_TEXT_1"></x><x ctype="x-i" equiv-text="&lt;/i&gt;" id="CLOSE_ITALIC_TEXT"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/module-group-wizard/module-group-wizard.component.html</context>
           <context context-type="linenumber">7,10</context>
@@ -10562,14 +10556,10 @@
         &gt;" id="START_LINK"></x>ul.datenschutz@uni-bamberg<x ctype="x-a" equiv-text="&lt;/a
       &gt;" id="CLOSE_LINK"></x><x ctype="x-span" equiv-text="&lt;/span
     &gt;" id="CLOSE_TAG_SPAN"></x></source>
-        <target state="translated"><x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot; href=&quot;mailto:ul.datenschutz@uni-bamberg&quot;
-        &gt;" id="START_LINK"></x>Otto-Friedrich University Bamberg<x ctype="x-span" equiv-text="&lt;/span
-    &gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot; href=&quot;mailto:ul.datenschutz@uni-bamberg&quot;
-        &gt;" id="START_LINK"></x> President Prof. Dr. Kai Fischbach<x ctype="x-span" equiv-text="&lt;/span
-    &gt;" id="CLOSE_TAG_SPAN"></x> Chancellor Dr. Dagmar Steuer-Flieser<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Kapuzinerstraße 16<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> 96047 Bamberg<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Phone: +49 951 863 0<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Fax: +49 951 863 1005<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x><x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot; href=&quot;mailto:ul.datenschutz@uni-bamberg&quot;
-        &gt;" id="START_LINK"></x>E-Mail:<x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot; href=&quot;mailto:ul.datenschutz@uni-bamberg&quot;
-        &gt;" id="START_LINK"></x>ul.datenschutz@uni-bamberg<x ctype="x-span" equiv-text="&lt;/span
-    &gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-span" equiv-text="&lt;/span
+        <target state="translated"><x ctype="x-b" equiv-text="&lt;b&gt;" id="START_BOLD_TEXT"></x>Otto-Friedrich University Bamberg<x ctype="x-b" equiv-text="&lt;/b&gt;" id="CLOSE_BOLD_TEXT"></x><x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> President Prof. Dr. Kai Fischbach<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Chancellor Dr. Dagmar Steuer-Flieser<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Kapuzinerstraße 16<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> 96047 Bamberg<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Phone: +49 951 863 0<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Fax: +49 951 863 1005<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x><x ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap&quot;
+      &gt;" id="START_TAG_SPAN"></x>E-Mail:<x ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot; href=&quot;mailto:ul.datenschutz@uni-bamberg&quot;
+        &gt;" id="START_LINK"></x>ul.datenschutz@uni-bamberg<x ctype="x-a" equiv-text="&lt;/a
+      &gt;" id="CLOSE_LINK"></x><x ctype="x-span" equiv-text="&lt;/span
     &gt;" id="CLOSE_TAG_SPAN"></x>
 </target>
         <context-group purpose="location">
@@ -10594,12 +10584,10 @@
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
           <context context-type="linenumber">27,38</context>
         </context-group>
-      <target state="translated"> Prof. Dr. Stefan Hörmann<x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:vp.lehre@uni-bamberg.de&quot;
-        &gt;" id="START_LINK"></x> Vice President for Teaching and Learning<x ctype="x-span" equiv-text="&lt;/span
-    &gt;" id="CLOSE_TAG_SPAN"></x> An der Weberei 5, 96049 Bamberg<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Phone: +49 863 1925<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x><x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:vp.lehre@uni-bamberg.de&quot;
-        &gt;" id="START_LINK"></x>E-Mail: <x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:vp.lehre@uni-bamberg.de&quot;
-        &gt;" id="START_LINK"></x>vp.lehre@uni-bamberg.de<x ctype="x-span" equiv-text="&lt;/span
-    &gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-span" equiv-text="&lt;/span
+      <target state="translated"> Prof. Dr. Stefan Hörmann<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Vice President for Teaching and Learning<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> An der Weberei 5, 96049 Bamberg<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Phone: +49 863 1925<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x><x ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap&quot;
+      &gt;" id="START_TAG_SPAN"></x>E-Mail: <x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:vp.lehre@uni-bamberg.de&quot;
+        &gt;" id="START_LINK"></x>vp.lehre@uni-bamberg.de<x ctype="x-a" equiv-text="&lt;/a
+      &gt;" id="CLOSE_LINK"></x><x ctype="x-span" equiv-text="&lt;/span
     &gt;" id="CLOSE_TAG_SPAN"></x></target></trans-unit>
       <trans-unit datatype="html" id="4914445710115225277">
         <source>3. Kontaktdaten des behördlichen Datenschutzbeauftragten:</source>
@@ -10615,12 +10603,10 @@
         &gt;" id="START_LINK"></x>datenschutzbeauftragter@uni-bamberg.de<x ctype="x-a" equiv-text="&lt;/a
       &gt;" id="CLOSE_LINK"></x><x ctype="x-span" equiv-text="&lt;/span
     &gt;" id="CLOSE_TAG_SPAN"></x></source>
-        <target state="translated"> Data Protection Officer of the Otto-Friedrich University Bamberg<x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:datenschutzbeauftragter@uni-bamberg.de&quot;
-        &gt;" id="START_LINK"></x> Kapuzinerstraße 25<x ctype="x-span" equiv-text="&lt;/span
-    &gt;" id="CLOSE_TAG_SPAN"></x> 96047 Bamberg<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Phone: +49 951 863 1030<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Fax: + 49 951 863 4030<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x><x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:datenschutzbeauftragter@uni-bamberg.de&quot;
-        &gt;" id="START_LINK"></x>E-Mail: <x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:datenschutzbeauftragter@uni-bamberg.de&quot;
-        &gt;" id="START_LINK"></x>datenschutzbeauftragter@uni-bamberg.de<x ctype="x-span" equiv-text="&lt;/span
-    &gt;" id="CLOSE_TAG_SPAN"></x><x ctype="x-span" equiv-text="&lt;/span
+        <target state="translated"> Data Protection Officer of the Otto-Friedrich University Bamberg<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Kapuzinerstraße 25<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> 96047 Bamberg<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Phone: +49 951 863 1030<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x> Fax: + 49 951 863 4030<x ctype="lb" equiv-text="&lt;br /&gt;" id="LINE_BREAK"></x><x ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap&quot;
+      &gt;" id="START_TAG_SPAN"></x>E-Mail: <x ctype="x-a" equiv-text="&lt;a href=&quot;mailto:datenschutzbeauftragter@uni-bamberg.de&quot;
+        &gt;" id="START_LINK"></x>datenschutzbeauftragter@uni-bamberg.de<x ctype="x-a" equiv-text="&lt;/a
+      &gt;" id="CLOSE_LINK"></x><x ctype="x-span" equiv-text="&lt;/span
     &gt;" id="CLOSE_TAG_SPAN"></x></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   AcademicDate,
   DateType,
@@ -19,14 +19,18 @@ export interface AdminDialogData {
   mCourse?: ModuleCourse;
   semester?: string;
   chair?: string;
+  moduleName?: string;
+  moduleAcronym?: string;
   connection?: ModuleCourse2CourseConnection[];
   courses?: Course[];
+  hasChanges?: boolean;
 }
 
 @Component({
   selector: 'admin-dialog',
   templateUrl: './admin-dialog.component.html',
   styleUrl: './admin-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminDialogComponent {

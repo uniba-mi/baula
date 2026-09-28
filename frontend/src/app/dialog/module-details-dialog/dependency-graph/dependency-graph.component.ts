@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import cytoscape, { NodeSingular } from 'cytoscape';
 import dagre from 'cytoscape-dagre';
@@ -22,6 +23,7 @@ import { Semester } from '../../../../../../interfaces/semester';
   selector: 'app-dependency-graph',
   standalone: false,
   templateUrl: './dependency-graph.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dependency-graph.component.scss',
 })
 export class DependencyGraphComponent implements OnInit, AfterViewInit {

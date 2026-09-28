@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-icon-picker',
   standalone: false,
   templateUrl: './icon-picker.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './icon-picker.component.scss',
 })
 export class IconPickerComponent {

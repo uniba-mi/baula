@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
@@ -14,6 +14,7 @@ import { AnalyticsService } from 'src/app/shared/services/analytics.service';
   selector: 'app-module-card',
   templateUrl: './module-card.component.html',
   styleUrls: ['./module-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleCardComponent implements OnInit {

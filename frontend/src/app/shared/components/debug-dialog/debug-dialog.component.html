@@ -50,7 +50,7 @@
                     <div i18n>Note: {{ module.grade }}</div>
                     <div i18n>ECTS: {{ module.ects }}</div>
                     <div>
-                        <div>Versuche:</div>
+                        <div i18n>Versuche:</div>
                         @for(attempt of module.examAttempts; track trackByCombinedKey([attempt.examId, attempt.semester, $index.toString()]))
                         {
                         <ul>

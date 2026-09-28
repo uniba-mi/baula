@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
 import { EvaluationRestService } from '../../evaluation/evaluation-rest.service';
 
@@ -6,6 +6,7 @@ import { EvaluationRestService } from '../../evaluation/evaluation-rest.service'
   selector: 'admin-recs',
   standalone: false,
   templateUrl: './admin-recs.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './admin-recs.component.scss',
 })
 export class AdminRecsComponent {

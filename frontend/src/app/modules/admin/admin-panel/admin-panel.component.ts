@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
@@ -9,6 +9,7 @@ import { getUser } from 'src/app/selectors/user.selectors';
   selector: 'admin-panel',
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminPanelComponent implements OnInit {
