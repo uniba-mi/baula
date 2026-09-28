@@ -105,7 +105,8 @@
       <ng-container>
         @if (!isWidget) {
           <button class="btn-icon" (click)="openHints.emit()"
-            matTooltip="Klicke hier um Planungshinweise anzuzeigen." matTooltipClass="custom-tooltip" appTooltip i18n-matTooltip aria-label="Planungshinweise anzeigen" i18n-aria-label>
+            matTooltip="Klicke hier um Planungshinweise anzuzeigen." matTooltipClass="custom-tooltip" appTooltip
+            aria-label="Planungshinweise anzeigen" i18n-matTooltip i18n-aria-label>
             <i class="bi bi-exclamation-triangle-fill fs-5 me-2"
             [ngClass]="{'text-warning': hintsIconColor === 'warning', 'text-danger': hintsIconColor === 'danger', 'text-secondary': hintsIconColor === 'standard'}"></i>
           </button>

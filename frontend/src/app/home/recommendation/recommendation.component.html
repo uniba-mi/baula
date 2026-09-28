@@ -2,10 +2,10 @@
   <div class="container mx-auto my-3 my-md-5">
     <div class="d-flex justify-content-between align-items-center header-container">
       <div class="d-flex align-items-start justify-content-start">
-        <h1>Personalisierung</h1>
-        <span class="badge beta-badge ms-2">Beta</span>
+        <h1 i18n>Personalisierung</h1>
+        <span class="badge beta-badge ms-2" i18n>Beta</span>
       </div>
-      <button class="btn btn-blue-outline" [matMenuTriggerFor]="settingsMenu" aria-label="Anpassen">
+      <button class="btn btn-blue-outline" [matMenuTriggerFor]="settingsMenu" aria-label="Anpassen" i18n-aria-label i18n>
         <i class="bi bi-stars me-2"></i>Profil personalisieren
       </button>
     </div>
@@ -13,12 +13,12 @@
     <div class="navigation-container" class="d-flex align-items-center justify-content-between mb-4">
       <mat-chip-listbox class="selected-chipsbox p-2">
         <mat-chip-option (click)="navigate('')" [selected]="activeRoute ==''" [selectable]="false"
-          class="child-chip" role="button" tabindex="0" aria-label="Überblick über Personalisierung">
+          class="child-chip" role="button" tabindex="0" aria-label="Überblick über Personalisierung" i18n-aria-label i18n>
           Überblick
         </mat-chip-option>
         <mat-chip-option (click)="navigate('modulliste')" [selected]="activeRoute =='modulliste'"
           [selectable]="false" class="child-chip" role="button" tabindex="0"
-          aria-label="Liste mit Modulempfehlungen" i18n-aria-label>
+          aria-label="Liste mit Modulempfehlungen" i18n-aria-label i18n>
           Modulempfehlungen
         </mat-chip-option>
       </mat-chip-listbox>

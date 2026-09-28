@@ -117,6 +117,14 @@ export class StudyPlanDetailComponent implements OnInit {
   isActivePlan$: Observable<boolean>;
   plannedModules$: Observable<string[] | undefined>;
 
+  showECTSProgress: String = $localize `ECTS Fortschritt anzeigen`;
+  hideECTSProgress: String = $localize `ECTS Fortschritt verstecken`;
+  showGrades: String = $localize `Noten einblenden`;
+  hideGrades: String = $localize `Noten ausblenden`;
+  showModuleRecommendations: string = $localize `Modulempfehlungen ausklappen`;
+  hideModuleRecommendations: string = $localize `Modulempfehlungen einklappen`;
+
+
   // scrolling
   canScrollLeft = false;
   canScrollRight = false;
