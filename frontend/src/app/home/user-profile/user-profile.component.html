@@ -15,9 +15,9 @@
             <span class="d-md-inline d-none" i18n>Import/Export</span>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="importUserData(user)" i18n>
+            <button mat-menu-item (click)="importUserData(user)">
               <i class="bi bi-upload me-1"></i>
-              <span>Nutzerdaten wiederherstellen</span>
+              <span i18n>Nutzerdaten wiederherstellen</span>
             </button>
             <button mat-menu-item (click)="downloadUserdata(user, studyPlans, 'pdf')" [disabled]="disableDownload">
               <i class="bi bi-filetype-json me-1"></i>
