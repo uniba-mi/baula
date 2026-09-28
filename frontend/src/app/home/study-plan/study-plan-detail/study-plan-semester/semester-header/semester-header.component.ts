@@ -72,6 +72,12 @@ export class SemesterHeaderComponent {
   lastFlexNowStudypathConsent$: Observable<Consent | null>;
   flexNowImportAvailabe$: Observable<boolean>;
 
+  extendText: string = $localize `Ausklappen`;
+  collapseText: string = $localize `Einklappen`;
+
+  addPastWork: string = `Vergangene Leistung hinzufügen`;
+  addCurrentWorkOrPlaceholder: string = `Hier kannst du Module oder Platzhalter zum Semester hinzufügen.`;
+
   constructor() {
     this.lastFlexnowApiConsent$ = this.store.select(
       getLastConsentByType('flexnow-api'),

@@ -13,7 +13,7 @@ Passe die Einstellungen an oder lege über "Studienpläne verwalten" einen neuen
     <!-- Toggling -->
     <div class="toggle-container">
       <button class="btn btn-outline" [ngClass]="{'chevron-left': !isExpanded, 'chevron-right': isExpanded}"
-        [matTooltip]="isExpanded ? 'Einklappen' : 'Ausklappen'" (click)="onToggleExpand()"
+        [matTooltip]="isExpanded ? collapseText : extendText" (click)="onToggleExpand()"
         (keyup.enter)="onToggleExpand()">
         <i class="bi" [ngClass]="isExpanded ? 'bi-chevron-left' : 'bi-chevron-right'"></i>
       </button>
@@ -35,7 +35,7 @@ Passe die Einstellungen an oder lege über "Studienpläne verwalten" einen neuen
             (click)="metaSemester.isPastSemester ? openAddPathModuleDialog(metaSemester.semester, pathModule) : null"
             (keyup.enter)="metaSemester.isPastSemester ? openAddPathModuleDialog(metaSemester.semester, pathModule) : null">
             <i class="btn-icon plus-icon bi bi-plus-lg"
-            [matTooltip]="metaSemester.isPastSemester ? 'Vergangene Leistung hinzufügen' : 'Hier kannst du Module oder Platzhalter zum Semester hinzufügen.'"></i>
+            [matTooltip]="metaSemester.isPastSemester ? addPastWork : addCurrentWorkOrPlaceholder"></i>
           </button>
           <mat-menu #addItemMenu="matMenu">
             <button mat-menu-item tabindex="0" aria-label="Neuen Platzhalter anlegen"

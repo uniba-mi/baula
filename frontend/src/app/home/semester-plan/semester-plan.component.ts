@@ -283,7 +283,7 @@ export class SemesterPlanComponent implements OnInit, OnDestroy {
     if (hint.courses) {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          dialogTitle: 'Überschneidung auflösen',
+          dialogTitle: $localize `Überschneidung auflösen`,
           dialogContentId: 'resolve-collision',
           courses: hint.courses,
         },

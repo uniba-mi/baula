@@ -93,48 +93,47 @@ export class ModuleOverviewComponent
   moduleHint: string = 'module-hint';
   moduleHintMessage: string =
     $localize `Hier siehst du alle Module, die in deinem Modulhandbuch vorhanden sind. Module sind thematische Blöcke, die du in deinen Studienverlaufsplan einplanen kannst. Module können wiederum Lehrveranstaltungen enthalten, die du unter Stundenplanung in deinen Stundenplan deines aktuellen Semesters einplanen kannst.`;
-  // TODO: Can following be translated?
     filterList: OptionGroup[] = [
     {
-      name: 'Angebotssemester',
+      name: $localize `Angebotssemester`,
       options: [
         {
           value: 'SS',
-          name: 'Sommer',
+          name: $localize `Sommer`,
           key: 'term',
           selected: false,
         },
         {
           value: 'WS',
-          name: 'Winter',
+          name: $localize `Winter`,
           key: 'term',
           selected: false,
         },
       ],
     },
     {
-      name: 'Modulart',
+      name: $localize `Modulart`,
       options: [
         {
           value: 'Pflichtmodul',
-          name: 'Pflichtmodul',
+          name: $localize `Pflichtmodul`,
           key: 'type',
           selected: false,
         },
         {
           value: 'Wahlmodul',
-          name: 'Wahlmodul',
+          name: $localize `Wahlmodul`,
           key: 'type',
           selected: false,
         },
       ],
     },
     {
-      name: 'Sonstige',
+      name: $localize `Sonstige`,
       options: [
         {
           value: 'hideTakenPassed',
-          name: 'Belegte und bestandene verstecken',
+          name: $localize `Belegte und bestandene verstecken`,
           key: 'hideTakenPassed',
           selected: false,
           metadata: false,
