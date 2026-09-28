@@ -17,6 +17,7 @@ import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import deLocale from '@fullcalendar/core/locales/de';
+import enLocale from '@fullcalendar/core/locales/en-gb';
 // TODO: Import as english, where appropriate
 import listPlugin from '@fullcalendar/list';
 import { Course } from '../../../../../../interfaces/course';
@@ -55,6 +56,7 @@ import { getPlanningHints } from 'src/app/selectors/study-planning.selectors';
 import { AlertType } from '../../classes/alert';
 import { AnalyticsService } from '../../services/analytics.service';
 import { SettingsActions } from 'src/app/actions/user.actions';
+import { LocaleService } from 'src/app/shared/services/locale.service';
 
 @Component({
   selector: 'app-full-calendar',
@@ -75,6 +77,7 @@ export class FullCalendarComponent
   private transform = inject(TransformationService);
   private snackbar = inject(SnackbarService);
   private analytics = inject(AnalyticsService);
+  private locale = inject(LocaleService);
 
   @ViewChild('calendar') fullCalendar: FullCalendar;
   @Input() initalView: string;
@@ -114,7 +117,7 @@ export class FullCalendarComponent
       dayHeaderFormat: {
         weekday: 'short',
       },
-      locale: deLocale,
+      locale: this.locale.current == "en" ? enLocale : deLocale,
       businessHours: {
         daysOfWeek: [1, 2, 3, 4, 5], // Monday - Thursday
         startTime: '08:00', // a start time (10am in this example)
