@@ -56,8 +56,11 @@ export function getArguments() {
             case "PROD_BUILD_DOCS":
                 FLAGS.PROD_BUILD_DOCS = true;
                 break;
-            case "PROD_BUILD_FRONTEND":
-                FLAGS.PROD_BUILD_FRONTEND = true;
+            case "PROD_BUILD_FRONTEND_TEST":
+                FLAGS.PROD_BUILD_FRONTEND_TEST = true;
+                break;
+            case "PROD_BUILD_FRONTEND_PROD":
+                FLAGS.PROD_BUILD_FRONTEND_PROD = true;
                 break;
             case "PROD_START_DOCKER":
                 FLAGS.PROD_START_DOCKER = true;

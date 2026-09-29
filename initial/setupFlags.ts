@@ -14,7 +14,8 @@ export interface SetupFlags {
     PROD_CREATE_ENV: boolean;
     PROD_BUILD_BACKEND: boolean;
     PROD_BUILD_DOCS: boolean;
-    PROD_BUILD_FRONTEND: boolean;
+    PROD_BUILD_FRONTEND_TEST: boolean;
+    PROD_BUILD_FRONTEND_PROD: boolean;
     PROD_START_DOCKER: boolean;
     PROD_COPY_FILES: boolean;
     PROD_DEPLOY: boolean;
@@ -45,7 +46,8 @@ export const FLAGS: SetupFlags = {
     PROD_CREATE_ENV: false,
     PROD_BUILD_BACKEND: false,
     PROD_BUILD_DOCS: false,
-    PROD_BUILD_FRONTEND: false,
+    PROD_BUILD_FRONTEND_TEST: false,
+    PROD_BUILD_FRONTEND_PROD: false,
     PROD_START_DOCKER: false,
     PROD_COPY_FILES: false,
     PROD_DEPLOY: false,

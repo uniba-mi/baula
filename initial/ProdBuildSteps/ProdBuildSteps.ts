@@ -2,6 +2,7 @@ import { getRootDir } from "../helpers.ts";
 import buildBackend from "./buildBackend.ts";
 import buildDocs from "./buildDocs.ts";
 import buildFrontendProd from "./buildFrontendProd.ts";
+import buildFrontendTest from "./buildFrontendTest.ts";
 import copyFiles from "./copyFiles.ts";
 import { createFrontendProdEnvTs, createFrontendConfigLocalTs } from "./createProdEnv.ts";
 import deploy from "./deploy.ts";
@@ -17,8 +18,10 @@ export default class ProdBuildSteps {
                 return this.buildBackend;
             case "PROD_BUILD_DOCS":
                 return this.buildDocs;
-            case "PROD_BUILD_FRONTEND":
-                return this.buildFrontend;
+            case "PROD_BUILD_FRONTEND_TEST":
+                return this.buildFrontendTest;
+            case "PROD_BUILD_FRONTEND_PROD":
+                return this.buildFrontendProd;
             case "PROD_START_DOCKER":
                 return this.startServerDocker;
             case "PROD_COPY_FILES":
@@ -60,8 +63,18 @@ export default class ProdBuildSteps {
         }
     }
 
-    async buildFrontend() {
+    async buildFrontendTest() {
+        const rootDir = getRootDir();
+        try {
+            await buildFrontendTest(rootDir);
+            console.log("Frontend has been built.")
+        } catch (error) {
+            console.error("There was an error building the frontend. Aborting.")
+            throw error;
+        }
+    }
 
+    async buildFrontendProd() {
         const rootDir = getRootDir();
         try {
             await buildFrontendProd(rootDir);
