@@ -127,7 +127,7 @@ deploy:
     - build_frontend
   script:
     #- rm -rf /home/gitlab-runner/deployment
-    - npm run buildInitial PROD_DEPLOY
+    - DEPLOY_DIR=$DEPLOY_DIR npm run buildInitial PROD_DEPLOY
     - cd $DEPLOY_DIR && docker-compose -f docker-compose.yml -f docker-compose.server.yml down
     - cd $DEPLOY_DIR && npm run startServerDocker
 

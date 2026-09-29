@@ -51,7 +51,7 @@ const paths = [
 ]
 const rootDir = getRootDir();
 
-const deployDir = "/home/gitlab-runner/baula-test";
+const deployDir = process.env.DEPLOY_DIR;
 
 // Directories to empty before copying: fs.cp only merges and never deletes
 const pathsToClean = [
