@@ -25,7 +25,6 @@ stages:
   - build_backend
   - build_docs
   - build_frontend
-  # - create_docker
   - deploy
 
 variables:
@@ -55,14 +54,11 @@ create_required_files:
   stage: create_required_files
   dependencies: []
   script:
-    #- npm run buildInitial CREATE_CONFIG_AND_ENV CREATE_CERTS CREATE_TEMPLATES CREATE_LOCAL_USERS PROD_CREATE_ENV
     - COPY_PATH=$ENV_FILES_PATH npm run buildInitial PROD_COPY_FILES
   artifacts:
     paths:
       - backend/api/src/certs
       - backend/api/src
-      # TODO staticdata instead? 
-      - backend/api/src/staticdate
       - backend/api/environment
       - frontend/src/environments
       - .env
@@ -103,19 +99,6 @@ build_frontend:
     paths:
       - server/app/browser
     expire_in: 1 day
-
-# create_docker:
-#   stage: create_docker
-#   dependencies:
-#     - install_dependencies
-#     - create_required_files
-#     - build_backend
-#     - build_docs
-#     - build_frontend
-#   script:
-#     - npm run buildInitial PROD_START_DOCKER
-#     - sleep 20
-#     - npm run buildInitial CHECK_ALL
 
 deploy:
   stage: deploy
