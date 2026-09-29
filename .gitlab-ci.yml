@@ -10,7 +10,8 @@ workflow:
     - if: $CI_COMMIT_BRANCH == "main"
       variables:
         ENV_FILES_PATH: /home/gitlab-runner/envFilesProd
-        DEPLOY_DIR: /home/gitlab-runner/baula-test
+        DEPLOY_DIR: /home/gitlab-runner/baula-prod
+        RUNNER_TAG: live-prod-server
         COMPOSE_PROJECT_NAME: baula-test
         FRONTEND_BUILD_MODE: PROD_BUILD_FRONTEND_PROD
 
