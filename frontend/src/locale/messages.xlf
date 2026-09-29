@@ -6,28 +6,28 @@
         <source>Logo von Baula, ein Absolventenhut mit einem Kompass</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">10,11</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3083162084677770945" datatype="html">
         <source>Hilfe &amp; Kontakt </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">43,45</context>
+          <context context-type="linenumber">43,44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6381327771210797873" datatype="html">
         <source>Über BAULA </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">48,50</context>
+          <context context-type="linenumber">48,49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5076471398754146091" datatype="html">
         <source>Publikationen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">53,55</context>
+          <context context-type="linenumber">53,54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4082114936887396529" datatype="html">
@@ -101,7 +101,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/edit-semester-dialog/edit-semester-dialog.component.html</context>
-          <context context-type="linenumber">17,18</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/export-dialog/export-dialog.component.html</context>
@@ -145,7 +145,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/univis-crawl-dialog/univis-crawl-dialog.component.html</context>
-          <context context-type="linenumber">26,27</context>
+          <context context-type="linenumber">26</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/dialogs/upload-student-data-dialog/upload-student-data-dialog.component.html</context>
@@ -425,7 +425,7 @@
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-exclamation-triangle ms-2 text-red&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Da das Modul als &quot;nicht bestanden&quot; markiert ist, kannst du die Note nicht ändern.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/change-status-dialog/change-status-dialog.component.html</context>
-          <context context-type="linenumber">36,38</context>
+          <context context-type="linenumber">36,37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/edit-path-module-dialog/edit-path-module-dialog.component.html</context>
@@ -518,7 +518,7 @@
         <source>Viel Spaß beim Entdecken!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/demo-user-dialog/demo-user-dialog.component.html</context>
-          <context context-type="linenumber">16,17</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2678158162232364941" datatype="html">
@@ -622,7 +622,7 @@
         <source> Jobprofil auswählen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/edit-job-dialog/edit-job-dialog.component.html</context>
-          <context context-type="linenumber">42,43</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1864907396284303909" datatype="html">
@@ -921,7 +921,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/dialogs/upload-student-data-stepper/upload-student-data-stepper.component.html</context>
-          <context context-type="linenumber">158,160</context>
+          <context context-type="linenumber">158,159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7823708334852160218" datatype="html">
@@ -953,7 +953,7 @@
         <source> Ändern </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/edit-semester-dialog/edit-semester-dialog.component.html</context>
-          <context context-type="linenumber">22,23</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8752630334924043078" datatype="html">
@@ -1448,7 +1448,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">101,102</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/settings-list/settings-list.component.ts</context>
@@ -1578,7 +1578,7 @@
         <source><x id="INTERPOLATION" equiv-text="{{ selectedModule.duration }}"/> Semester</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/module-data/module-data.component.html</context>
-          <context context-type="linenumber">29,31</context>
+          <context context-type="linenumber">29,30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1281350104182209690" datatype="html">
@@ -1592,7 +1592,7 @@
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-exclamation-circle&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Modulart</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/module-data/module-data.component.html</context>
-          <context context-type="linenumber">49,51</context>
+          <context context-type="linenumber">49,50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8570283152099455578" datatype="html">
@@ -1663,7 +1663,7 @@
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-search d-none d-sm-inline me-2&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Finde passende Lehrveranstaltungen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/module-data/module-data.component.html</context>
-          <context context-type="linenumber">231,233</context>
+          <context context-type="linenumber">231,232</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2644861116640635140" datatype="html">
@@ -1927,7 +1927,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">37,38</context>
+          <context context-type="linenumber">64,65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2899773663377378608" datatype="html">
@@ -1941,7 +1941,7 @@
         <source> Feedback absenden </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/module-details-dialog/module-feedback/module-feedback.component.html</context>
-          <context context-type="linenumber">25,26</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1735829729158786084" datatype="html">
@@ -2026,7 +2026,7 @@
         <source>Ich stimme der Datenschutzerklärung vom 01.12.2025 nicht zu. <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Mir ist bewusst, dass mein aktuelles Profil gelöscht wird.<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/privacy-change-dialog/privacy-change-dialog.component.html</context>
-          <context context-type="linenumber">23,28</context>
+          <context context-type="linenumber">23,27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1878029766669988474" datatype="html">
@@ -2068,7 +2068,7 @@
         <source>Behalten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/resolve-collision-dialog/resolve-collision-dialog.component.html</context>
-          <context context-type="linenumber">15,18</context>
+          <context context-type="linenumber">15,17</context>
         </context-group>
         <note priority="1" from="description">Überschneidende LVs behalten</note>
       </trans-unit>
@@ -2245,7 +2245,7 @@
         <source>Als nächstes müssen wir deinen Nutzeraccount erstellen. Hierzu benötigen wir ein paar Informationen zu dir.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Wir können diese Informationen über FlexNow importieren oder du kannst du sie manuell eingeben.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dialog/user-dialog/user-dialog.component.html</context>
-          <context context-type="linenumber">38,40</context>
+          <context context-type="linenumber">38,39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6772143701069710443" datatype="html">
@@ -3307,7 +3307,7 @@
         <source> <x id="INTERPOLATION" equiv-text="{{ group.ectsMin }}"/> ECTS </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/module-overview/group-navigation/group-navigation.component.html</context>
-          <context context-type="linenumber">80,82</context>
+          <context context-type="linenumber">80,81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/semester-body/semester-card/semester-card.component.html</context>
@@ -3638,7 +3638,7 @@
 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/job-settings/job-settings.component.html</context>
-          <context context-type="linenumber">8,12</context>
+          <context context-type="linenumber">8,11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8428238319360702086" datatype="html">
@@ -3703,7 +3703,7 @@
         <source> Überblick </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
-          <context context-type="linenumber">17,18</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4256355018373787487" datatype="html">
@@ -3717,7 +3717,7 @@
         <source> Modulempfehlungen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/recommendation.component.html</context>
-          <context context-type="linenumber">22,23</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6697610289910852257" datatype="html">
@@ -3839,7 +3839,7 @@
         <source> Keine Modulvorschläge verfügbar. Bitte wähle Interessen oder Jobs aus, um Empfehlungen zu erhalten. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/recommendation/recommendations-list/recommendations-list.component.html</context>
-          <context context-type="linenumber">70,71</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2151982658670909173" datatype="html">
@@ -4117,7 +4117,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/course-details/course-details.component.html</context>
-          <context context-type="linenumber">50,51</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7458277978606454941" datatype="html">
@@ -4458,14 +4458,14 @@
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-repeat&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Alle Filter zurücksetzen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.html</context>
-          <context context-type="linenumber">206,208</context>
+          <context context-type="linenumber">206,207</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1343010158700008250" datatype="html">
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-search&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Mit Filtern suchen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/semester-plan/course-search-panel/course-search-panel.component.html</context>
-          <context context-type="linenumber">209,211</context>
+          <context context-type="linenumber">209,210</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4790844316850307580" datatype="html">
@@ -4508,7 +4508,7 @@
                     ändern</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/semester-plan/semester-plan.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">31,32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5420004361317855639" datatype="html">
@@ -4523,7 +4523,7 @@
       ändern</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/semester-plan/semester-plan.component.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">74,75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8178402408649885575" datatype="html">
@@ -4989,7 +4989,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/study-plan/study-plan-detail/study-plan-semester/study-plan-semester.component.html</context>
-          <context context-type="linenumber">46,48</context>
+          <context context-type="linenumber">46,47</context>
         </context-group>
         <note priority="1" from="description">X-tes Semester</note>
       </trans-unit>
@@ -5700,7 +5700,7 @@
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-trash me-1&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Account löschen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/user-profile/user-profile.component.html</context>
-          <context context-type="linenumber">11,13</context>
+          <context context-type="linenumber">11,12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1930863079234861089" datatype="html">
@@ -5899,7 +5899,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/welcome/welcome.component.html</context>
-          <context context-type="linenumber">29,32</context>
+          <context context-type="linenumber">29,31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1092224855973456641" datatype="html">
@@ -6344,11 +6344,11 @@
         <source>Speichern</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/academic-dates-dialog/academic-dates-dialog.component.html</context>
-          <context context-type="linenumber">54,56</context>
+          <context context-type="linenumber">54,55</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/date-type-dialog/date-type-dialog.component.html</context>
-          <context context-type="linenumber">19,21</context>
+          <context context-type="linenumber">19,20</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/aim-modal/aim-modal/aim-modal.component.html</context>
@@ -6382,7 +6382,7 @@
 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/delete-dialog/delete-dialog.component.html</context>
-          <context context-type="linenumber">14,17</context>
+          <context context-type="linenumber">14,16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6529923758020681945" datatype="html">
@@ -6459,7 +6459,7 @@
         <source>Don&apos;t worry... this process can take up to 10 minutes ☕</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/dialogs/univis-crawl-dialog/univis-crawl-dialog.component.html</context>
-          <context context-type="linenumber">32,34</context>
+          <context context-type="linenumber">32,33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4273781497892720339" datatype="html">
@@ -6568,7 +6568,7 @@
         <source>Schicke Sentry einen Testfehler</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/admin/other-actions/other-actions.component.html</context>
-          <context context-type="linenumber">2,4</context>
+          <context context-type="linenumber">2,3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9124585472747996194" datatype="html">
@@ -6755,7 +6755,7 @@
         <source> Hier können Sie eigene Zielsetzungen angeben, wie stark Sie die einzelnen Bereiche der verschiedenen Standards/Zielvorgaben erfüllen möchten. Die Angabe erfolgt in ECTS und ist zunächst nur für die erste Kompetenzebene möglich.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Sie können somit einen Richtwert festlegen, welcher anschließend in der Visualisierung des Balkendiagramms angezeigt wird. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/aim-modal/aim-modal/aim-modal.component.html</context>
-          <context context-type="linenumber">5,10</context>
+          <context context-type="linenumber">5,9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2200772203685885175" datatype="html">
@@ -8126,7 +8126,7 @@
         <source> Einwilligung zum Abruf deiner Studierendendaten über die FlexNow-Schnittstelle zuletzt akzeptiert am <x id="INTERPOLATION" equiv-text="{{ integrateFnDataConsent.timestamp | date: &quot;medium&quot; }}"/> </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/student-upload/student-upload/student-upload.component.html</context>
-          <context context-type="linenumber">10,14</context>
+          <context context-type="linenumber">10,13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5442790955019741430" datatype="html">
@@ -8216,7 +8216,7 @@
         <source> Hier können Sie Ihrer Veranstaltung für jeden hinterlegten Kompetenzstandard die entsprechenden Kompetenzen zuordnen. Bitte ordnen Sie jeden Kompetenzstandard zu. Achten Sie darauf <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>für jeden Standard Daten anzugeben<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/>. Die eingegebenen Prozentwerte dürfen pro Standard in der <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Summe nicht über 100%<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> werden. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/univis-helper/competence-form/competence-form.component.html</context>
-          <context context-type="linenumber">14,22</context>
+          <context context-type="linenumber">14,21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6630476578681504471" datatype="html">
@@ -8555,7 +8555,7 @@
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;acronym&quot;&gt;"/>L<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>ehrveranstaltungskoordination und </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/about/about.component.html</context>
-          <context context-type="linenumber">35,37</context>
+          <context context-type="linenumber">35,36</context>
         </context-group>
         <note priority="1" from="description">Baula Acronym</note>
       </trans-unit>
@@ -8589,216 +8589,268 @@
         </context-group>
       </trans-unit>
       <trans-unit id="3855255549258505663" datatype="html">
-        <source> Auf dieser Seite findest du allgemeine Hilfestellung sowie häufig gestellte Fragen zu Baula und dem Thema Studienplanung. Weitere Informationen über das Projekt Baula erhältst du auf der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; routerLink=&quot;/ueber-uns&quot; target=&quot;_blank&quot;&gt;"/>Über Baula Seite<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </source>
+        <source> Auf dieser Seite findest du allgemeine Hilfestellung sowie häufig gestellte Fragen zu Baula und dem Thema Studienplanung. Weitere Informationen über das Projekt Baula erhältst du auf der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; routerLink=&quot;/ueber-uns&quot; target=&quot;_blank&quot;
+          &gt;"/>Über Baula Seite<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">6,9</context>
+          <context context-type="linenumber">6,13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2727753181778947687" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Dokumentation für Nutzende<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Falls du konkrete Fragen zu einzelnen Funktionen oder einen allgemeinen Überblick zu allen verfügbaren Funktionen haben möchtest, findest du nähere Infos in unserer Dokumentation.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/></source>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Dokumentation für Nutzende<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Falls du konkrete Fragen zu einzelnen Funktionen oder einen allgemeinen Überblick zu allen verfügbaren Funktionen haben möchtest, findest du nähere Infos in unserer Dokumentation.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">12,15</context>
+          <context context-type="linenumber">15,20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8965532643728780113" datatype="html">
-        <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-link-45deg me-2&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Hier gehts zur Dokumentation!</source>
+      <trans-unit id="8925352130928921800" datatype="html">
+        <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-link-45deg me-2&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Hier gehts zur Dokumentation! </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">16,17</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4510987043723623414" datatype="html">
+        <source>Springe direkt zu:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/public/help/help.component.html</context>
+          <context context-type="linenumber">25,26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1392814043103947779" datatype="html">
         <source>Kontakt &amp; Feedback</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">21,22</context>
+          <context context-type="linenumber">29,30</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">28,29</context>
+          <context context-type="linenumber">50,51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="412723567864300521" datatype="html">
         <source>Überblick über Baula</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">22,23</context>
+          <context context-type="linenumber">34,35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7036348846271932059" datatype="html">
         <source>Häufig gestellte Fragen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">23,24</context>
+          <context context-type="linenumber">39,40</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">90,91</context>
+          <context context-type="linenumber">145,146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4387568535663993970" datatype="html">
         <source>Weitere Hilfestellung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">24,25</context>
+          <context context-type="linenumber">44,45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">147,148</context>
+          <context context-type="linenumber">228,229</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4058824645713302108" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Projekt Baula<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Lehrstuhl für Medieninformatik<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> An der Weberei 5<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> 96049 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap;&quot;&gt;"/>E-Mail:<x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;contact-mail&quot;
-                        href=&quot;mailto:baula.minf@uni-bamberg.de&quot;&gt;"/>baula.minf@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Projekt Baula<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Lehrstuhl für Medieninformatik<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> An der Weberei 5<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> 96049 Bamberg<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span style=&quot;white-space: nowrap&quot;
+          &gt;"/>E-Mail:<x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+            class=&quot;contact-mail&quot;
+            href=&quot;mailto:baula.minf@uni-bamberg.de&quot;
+            &gt;"/>baula.minf@uni-bamberg.de<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span
+        &gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">30,36</context>
+          <context context-type="linenumber">52,63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7387276683285953706" datatype="html">
-        <source> Wir freuen uns immer über Feedback. Du kannst dich jederzeit in unseren <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://vc.uni-bamberg.de/course/view.php?id=71480&quot;
-                    target=&quot;_blank&quot;&gt;"/>VC-Kurs<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> einschreiben und uns dort anonym Feedback und Anregungen zukommen lassen. </source>
+        <source> Wir freuen uns immer über Feedback. Du kannst dich jederzeit in unseren <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b
+          &gt;"/><x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+            class=&quot;link&quot;
+            href=&quot;https://vc.uni-bamberg.de/course/view.php?id=71480&quot;
+            target=&quot;_blank&quot;
+            &gt;"/>VC-Kurs<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+          &gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b
+        &gt;"/> einschreiben und uns dort anonym Feedback und Anregungen zukommen lassen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">39,42</context>
+          <context context-type="linenumber">66,77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4849089686414601588" datatype="html">
         <source>Kurzüberblick zu Baula</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">42,44</context>
+          <context context-type="linenumber">78,80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4679773818947469476" datatype="html">
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-person-vcard&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Dashboard</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">44,45</context>
+          <context context-type="linenumber">80,81</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5715768477058437831" datatype="html">
-        <source>Im Dashboard findest du verschiedene Kacheln, die dir helfen sollen, einen Überblick über wichtige Eckdaten zu deinem Studium sowie deinen aktuellen Fortschrittstand zu erhalten und die wichtigsten Termine im Blick zu haben. Über &quot;Widgets managen&quot; kannst du die Kacheln individuell ein- oder ausblenden. Quick Links führen dich schnell zu wichtigen Ressourcen für dein Studium, wie z. B. dem Virtuellen Campus (VC) oder dem Prüfungsverwaltungssystem FlexNow.</source>
+      <trans-unit id="2057760260408523943" datatype="html">
+        <source> Im Dashboard findest du verschiedene Kacheln, die dir helfen sollen, einen Überblick über wichtige Eckdaten zu deinem Studium sowie deinen aktuellen Fortschrittstand zu erhalten und die wichtigsten Termine im Blick zu haben. Über &quot;Widgets managen&quot; kannst du die Kacheln individuell ein- oder ausblenden. Quick Links führen dich schnell zu wichtigen Ressourcen für dein Studium, wie z. B. dem Virtuellen Campus (VC) oder dem Prüfungsverwaltungssystem FlexNow. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">45,52</context>
+          <context context-type="linenumber">82,88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2318336316953563708" datatype="html">
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-book&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Modulkatalog</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">55,56</context>
+          <context context-type="linenumber">91,92</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5951296292793167657" datatype="html">
-        <source>Der Modulkatalog enthält das gesamte Modulangebot für deinen Studiengang. Über die Gruppierungsoptionen auf der rechten Seite der Ansicht kannst du einzelne Modulgruppen einsehen. Die ECTS Angabe bei den Modulgruppen zeigt dir, wie viele Module du für jede Modulgruppe tatsächlich belegen musst. Mithilfe der Such- und Filteroptionen kannst du deine Suche nach Modulen weiter verfeinern. Details zu dem jeweiligen Modul erhältst du, in dem du auf eine Modulkarte klickst.</source>
+      <trans-unit id="3534813463950117809" datatype="html">
+        <source> Der Modulkatalog enthält das gesamte Modulangebot für deinen Studiengang. Über die Gruppierungsoptionen auf der rechten Seite der Ansicht kannst du einzelne Modulgruppen einsehen. Die ECTS Angabe bei den Modulgruppen zeigt dir, wie viele Module du für jede Modulgruppe tatsächlich belegen musst. Mithilfe der Such- und Filteroptionen kannst du deine Suche nach Modulen weiter verfeinern. Details zu dem jeweiligen Modul erhältst du, in dem du auf eine Modulkarte klickst. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">56,61</context>
+          <context context-type="linenumber">93,99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9052683834887404525" datatype="html">
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-calendar2-week&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Stundenplan</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">63,64</context>
+          <context context-type="linenumber">102,103</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3164326337252962737" datatype="html">
-        <source>Im Stundenplan kannst du Lehrveranstaltungen für das anstehende Semester planen, in dem du auf &quot;Hinzufügen&quot; klickst. Mithilfe der Lehrveranstaltungssuche kannst du im gesamten Lehrveranstaltungsbestand der Universität nach Lehrveranstaltungen suchen. Bitte prüfe deshalb, ob die Lehrveranstaltung auch für dich belegbar ist (Gibt es in der Lehrveranstaltungskachel z. B. eine Zuordnung zu einem Modul aus deinem Modulhandbuch?). Wende dich im Zweifel an deine <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/studienberatung/fachstudienberatung/&quot;
-                    target=&quot;_blank&quot;&gt;"/>Fachstudienberatung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</source>
+      <trans-unit id="6277939121186402082" datatype="html">
+        <source> Im Stundenplan kannst du Lehrveranstaltungen für das anstehende Semester planen, in dem du auf &quot;Hinzufügen&quot; klickst. Mithilfe der Lehrveranstaltungssuche kannst du im gesamten Lehrveranstaltungsbestand der Universität nach Lehrveranstaltungen suchen. Bitte prüfe deshalb, ob die Lehrveranstaltung auch für dich belegbar ist (Gibt es in der Lehrveranstaltungskachel z. B. eine Zuordnung zu einem Modul aus deinem Modulhandbuch?). Wende dich im Zweifel an deine <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+          class=&quot;link&quot;
+          href=&quot;https://www.uni-bamberg.de/studienberatung/fachstudienberatung/&quot;
+          target=&quot;_blank&quot;
+          &gt;"/>Fachstudienberatung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">64,72</context>
+          <context context-type="linenumber">104,118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4424743485441194112" datatype="html">
+        <source> Baula unterstützt dich außerdem mit weiteren Planungshinweisen, wie z. B. bei Kursüberschneidungen. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/public/help/help.component.html</context>
+          <context context-type="linenumber">119,120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5528901083306279842" datatype="html">
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-list-ol&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Studienverlaufsplan</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">75,76</context>
+          <context context-type="linenumber">123,124</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5460644324458471206" datatype="html">
-        <source>Im Studienverlaufsplan findest du eine Übersicht über alle ausstehenden und vergangenen Semester deines Studiums. Hier kannst du Module oder individuelle Platzhalter einplanen, um dir einen langfristigen Überblick über dein geplantes Studium zu verschaffen. Je nach Verfügbarkeit in deinem Studiengang findest du in der Seitenleiste verschiedene Modulvorschläge.</source>
+      <trans-unit id="8984146092825651448" datatype="html">
+        <source> Im Studienverlaufsplan findest du eine Übersicht über alle ausstehenden und vergangenen Semester deines Studiums. Hier kannst du Module oder individuelle Platzhalter einplanen, um dir einen langfristigen Überblick über dein geplantes Studium zu verschaffen. Je nach Verfügbarkeit in deinem Studiengang findest du in der Seitenleiste verschiedene Modulvorschläge. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">76,80</context>
+          <context context-type="linenumber">125,129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4846153293145053687" datatype="html">
+        <source> Du hast auch die Möglichkeit, mehrere Studienpläne anzulegen oder Pläne zu exportieren und mit anderen zu teilen. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/public/help/help.component.html</context>
+          <context context-type="linenumber">133,134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5676870013504135664" datatype="html">
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;bi bi-person-circle&quot;&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> Profil bearbeiten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">83,84</context>
+          <context context-type="linenumber">137,138</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8369642086977702281" datatype="html">
-        <source>Hier kannst du verschiedene Einstellungen im Hinblick auf dein Nutzerprofil vornehmen wie z. B. deine persönlichen Daten bearbeiten, deinen Studienverlauf über die FlexNow-Schnittstelle abrufen oder individuelle Einstellungen für Modulvorschläge festlegen.</source>
+      <trans-unit id="7213166227446133785" datatype="html">
+        <source> Hier kannst du verschiedene Einstellungen im Hinblick auf dein Nutzerprofil vornehmen wie z. B. deine persönlichen Daten bearbeiten, deinen Studienverlauf über die FlexNow-Schnittstelle abrufen oder individuelle Einstellungen für Modulvorschläge festlegen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">84,88</context>
+          <context context-type="linenumber">139,142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6597363944235894294" datatype="html">
         <source> Was ist ein Modul? </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">153</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2498306454057894689" datatype="html">
-        <source>Ein Modul ist eine in sich abgeschlossene, thematische Lehreinheit, die sich über eines oder mehrere Semester erstrecken kann. Das Angebot von Modulen findest du in deinem <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot;
-                            routerLink=&quot;/app/modulkatalog&quot; target=&quot;_blank&quot;&gt;"/>Modulkatalog<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. Module können im Regelfall vorausschauend für mehr als ein Semester geplant werden. In Baula gibt es deshalb einen Studienverlaufsplan. Ein Modul kann eine oder mehrere Lehrveranstaltungen enthalten. </source>
+      <trans-unit id="4466124065624210776" datatype="html">
+        <source> Ein Modul ist eine in sich abgeschlossene, thematische Lehreinheit, die sich über eines oder mehrere Semester erstrecken kann. Das Angebot von Modulen findest du in deinem <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; routerLink=&quot;/app/modulkatalog&quot; target=&quot;_blank&quot;
+              &gt;"/>Modulkatalog<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+            &gt;"/>. Module können im Regelfall vorausschauend für mehr als ein Semester geplant werden. In Baula gibt es deshalb einen Studienverlaufsplan. Ein Modul kann eine oder mehrere Lehrveranstaltungen enthalten. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">98,104</context>
+          <context context-type="linenumber">157,165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1855847140176100895" datatype="html">
         <source> Was ist eine Lehrveranstaltung? </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4906077562867967904" datatype="html">
-        <source>Eine Lehrveranstaltung ist eine konkrete Lerneinheit, die einem Modul zugeordnet ist. Verschiedene Typen von Lehrveranstaltungen sind zum Beispiel Vorlesung, Übung oder Seminar. Details zu Lehrveranstaltungen sind oft nur kurz vor Semesterbeginn verfügbar und können dann in den <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; routerLink=&quot;/app/semester&quot; target=&quot;_blank&quot;&gt;"/>Stundenplan<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> zur Wochenplanung übernommen werden. </source>
+      <trans-unit id="1750580838459760275" datatype="html">
+        <source> Eine Lehrveranstaltung ist eine konkrete Lerneinheit, die einem Modul zugeordnet ist. Verschiedene Typen von Lehrveranstaltungen sind zum Beispiel Vorlesung, Übung oder Seminar. Details zu Lehrveranstaltungen sind oft nur kurz vor Semesterbeginn verfügbar und können dann in den <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; routerLink=&quot;/app/semester&quot; target=&quot;_blank&quot;
+              &gt;"/>Stundenplan<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+            &gt;"/> zur Wochenplanung übernommen werden. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">112,117</context>
+          <context context-type="linenumber">178,187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4855313231347631921" datatype="html">
         <source> Was ist der Unterschied zwischen Stundenplan und Studienverlaufsplan? </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">195,196</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4853722153975461842" datatype="html">
+        <source> Mithilfe des Stundenplans kannst du deine Termine, d. h. zu besuchende Lehrveranstaltungen im Blick behalten. Im Stundenplan kannst du Lehrveranstaltungen aus dem aktuellen Angebot für das aktuelle Semester einplanen. Die Informationen hierfür werden mit dem Beginn des Semesters bekannt gegeben. Länger vorausplanen kannst du dagegen mithilfe des Studienverlaufsplans. Hier kannst du ganze Module aus dem Modulhandbuch einplanen, welche im Regelfall schon am Anfang deines Studiums bekannt sind. Somit kannst du über das aktuelle Semester hinaus einen persönlichen Verlaufsplan mit Abfolgen von Modulen erstellen. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/public/help/help.component.html</context>
+          <context context-type="linenumber">200,208</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9038543729199348087" datatype="html">
         <source> Wofür steht Baula? </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">218</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4669526584393233675" datatype="html">
-        <source>Baula ist ein Akronym und steht für Bamberger Assistentin zur Unterstützung der Lehrveranstaltungskoordination und -auswahl.</source>
+      <trans-unit id="2933037968588981807" datatype="html">
+        <source> Baula ist ein Akronym und steht für Bamberger Assistentin zur Unterstützung der Lehrveranstaltungskoordination und -auswahl. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">142,143</context>
+          <context context-type="linenumber">222,223</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6757947677489696080" datatype="html">
-        <source> Wenn du tiefergehende Fragen zu deiner persönlichen Studienplanung hast, kann dir die <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/studienberatung/fachstudienberatung/&quot;
-                target=&quot;_blank&quot;&gt;"/>Fachstudienberatung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> weiterhelfen. </source>
+        <source> Wenn du tiefergehende Fragen zu deiner persönlichen Studienplanung hast, kann dir die <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+          class=&quot;link&quot;
+          href=&quot;https://www.uni-bamberg.de/studienberatung/fachstudienberatung/&quot;
+          target=&quot;_blank&quot;
+          &gt;"/>Fachstudienberatung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/> weiterhelfen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/help/help.component.html</context>
-          <context context-type="linenumber">149,152</context>
+          <context context-type="linenumber">230,239</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7533197693304993287" datatype="html">
@@ -8836,15 +8888,29 @@
           <context context-type="linenumber">4,6</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4949721397441803538" datatype="html">
+      <trans-unit id="675283010454572416" datatype="html">
         <source> Der Betrieb von Baula unterliegt dem Information Security Management System (ISMS) der Universität Bamberg, Details unter <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
             class=&quot;link&quot;
             href=&quot;https://www.uni-bamberg.de/its/verfahrensweisen/isms&quot;
             target=&quot;_blank&quot;
             &gt;"/>Informationssicherheit an der Otto-Friedrich-Universität Bamberg<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
-          &gt;"/>. Der Systembetrieb und die Datenhaltung erfolgt ausschließlich lokal auf Systemen der Universität Bamberg. Der Betrieb erfolgt nach Maßgabe der <x id="START_LINK_1" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/minf&quot; target=&quot;_blank&quot;
+          &gt;"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
+          <context context-type="linenumber">8,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6793146487237837942" datatype="html">
+        <source> Der Systembetrieb und die Datenhaltung erfolgt ausschließlich lokal auf Systemen der Universität Bamberg. Der Betrieb erfolgt nach Maßgabe der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;link&quot; href=&quot;https://www.uni-bamberg.de/minf&quot; target=&quot;_blank&quot;
             &gt;"/>Organisationseinheit Lehrstuhl Medieninformatik<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
-          &gt;"/>. Es gilt grundsätzlich für den Betrieb von Baula die <x id="START_LINK_2" equiv-text="&lt;a
+          &gt;"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
+          <context context-type="linenumber">18,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5546505301433682629" datatype="html">
+        <source> Es gilt grundsätzlich für den Betrieb von Baula die <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
             class=&quot;link&quot;
             href=&quot;https://www.uni-bamberg.de/its/verfahrensweisen/datenschutz/datenschutzerklaerungen/allgemeine-datenschutzerklaerung/&quot;
             target=&quot;_blank&quot;
@@ -8852,7 +8918,7 @@
           &gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">8,30</context>
+          <context context-type="linenumber">26,34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2702404329288768603" datatype="html">
@@ -8879,105 +8945,105 @@
           &gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">31,59</context>
+          <context context-type="linenumber">37,63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2851974820592309" datatype="html">
         <source>Nutzungsbedingungen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">59,61</context>
+          <context context-type="linenumber">65,67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2186465875215617577" datatype="html">
         <source> Die Nutzung von Baula steht ausschließlich Personen mit einem Nutzerkonto der Universität Bamberg (ba-Nummer und zugehöriges Kennwort) oder Personen mit einem bereitgestellten Demoaccount offen. Jegliche Verwendung von Baula zu anderen Zwecken als zur Unterstützung der Studienplanung, -organisation und -beratung ist untersagt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">62,66</context>
+          <context context-type="linenumber">68,72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8727127619281123762" datatype="html">
         <source>Kategorien personenbezogener Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">69,71</context>
+          <context context-type="linenumber">75,77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1324907536532657995" datatype="html">
         <source> Direkt personenbezogene Daten werden in Baula nicht gespeichert. Für die Nutzung der Anwendung werden beim Login primär eine eindeutige pseudonyme Nutzer-ID sowie die Rollen (z. B. „Studierende“ oder „Mitarbeitende“) übergeben. Um den Abruf des individuellen Studienverlaufs über die FlexNow-Schnittstelle zu ermöglichen, wird zusätzlich die universitäre Nutzerkennung (ba-Nummer) beim Login übergeben, verarbeitet, aber nicht dauerhaft gespeichert. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">72,78</context>
+          <context context-type="linenumber">78,84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3837719859497619826" datatype="html">
         <source>FlexNow Auszug (Abruf des individuellen Studienverlaufs)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">81,82</context>
+          <context context-type="linenumber">87,88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8183279985854431158" datatype="html">
         <source>Betroffene:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5760056115073652219" datatype="html">
         <source> Die Verarbeitung eines individuellen Studienverlaufs erfolgt nur mit Einverständnis der Studierenden. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">84,85</context>
+          <context context-type="linenumber">90,91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3141654450009635538" datatype="html">
         <source> Datenschutzhinweise für die optionale Verwendung der FlexNow-Schnittstelle </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">93,94</context>
+          <context context-type="linenumber">99,100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6880906807320307959" datatype="html">
         <source>Quellen der personenbezogenen Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">101,103</context>
+          <context context-type="linenumber">107,109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4743080257843374472" datatype="html">
         <source>FlexNow</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">103,104</context>
+          <context context-type="linenumber">109,110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1612609204394055592" datatype="html">
         <source> Bei Nutzung des optionalen Abrufs von individuellen Studienverlaufsdaten wird über die universitäre Kennung (ba-Nummer) der individuelle Studienverlauf über eine FlexNow-Schnittstelle abgerufen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">105,107</context>
+          <context context-type="linenumber">111,113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="342392929413076552" datatype="html">
         <source>Dauer der Speicherung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">111,113</context>
+          <context context-type="linenumber">117,119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6684005014610445185" datatype="html">
         <source> Die universitäre Kennung (ba-Nummer) wird nicht dauerhaft in ihrer direkten, personenbezogenen Form innerhalb von Baula gespeichert. Stattdessen erfolgt die Verarbeitung ausschließlich zur Authentifizierung. Ein Zugriff auf die Kennung erfolgt ausschließlich im Rahmen des Abrufs des individuellen Studienverlaufs über die FlexNow-Schnittstelle. Eine sessionübergreifende Speicherung der Kennung findet nicht statt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">114,119</context>
+          <context context-type="linenumber">120,125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4687892896306577762" datatype="html">
         <source>Nutzerdaten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">123,125</context>
+          <context context-type="linenumber">129,131</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/services/download.service.ts</context>
@@ -8988,105 +9054,105 @@
         <source> Die Nutzerdaten werden mit Projektende 2029 – bzw. im Falle einer Verlängerung – 2031 aus der Anwendung entfernt, es sei denn, es erfolgt bereits vorher ein entsprechender Widerspruch. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">126,128</context>
+          <context context-type="linenumber">132,134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3017158766271994892" datatype="html">
         <source>Individueller Studienverlauf</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">131,133</context>
+          <context context-type="linenumber">137,139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1564125879327126544" datatype="html">
         <source> Die Löschung des individuellen Studienverlaufs ist zudem jederzeit in der Anwendung über eine entsprechende Funktionalität möglich. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">134,135</context>
+          <context context-type="linenumber">140,141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3357106210269103356" datatype="html">
         <source>Zwecke und Rechtsgrundlage der Verarbeitung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">138,140</context>
+          <context context-type="linenumber">144,146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6868369054951587409" datatype="html">
         <source>Zweck</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">140,142</context>
+          <context context-type="linenumber">146,148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4069296783558486902" datatype="html">
         <source> Im Rahmen des Forschungsprojekts BaKuLe werden Unterstützungsmaßnahmen zum zielorientierten und sinnstiftenden Studieren untersucht. Hierbei wird auf einer in den Projekten DiKuLe und VoLL-KI entwickelten Webanwendung (digitaler Studienassistent) aufgebaut, die die kurz- sowie langfristige Studienplanung unterstützt und in diesem Rahmen möglichst individuelle Unterstützung auf Basis des bisherigen Studienverlaufs bieten soll. Somit sollen beispielsweise studienbegleitend Vorschläge für den weiteren individuellen Bildungsweg (z. B. Kompetenzerwerb) entwickelt werden. Zu Forschungszwecken im Kontext dieses Studienassistenten (z. B. für Publikationen) können hochaggregierte Nutzungsdaten verwendet werden, die nicht mehr auf einzelne Personen zurückzuführen sind. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">143,153</context>
+          <context context-type="linenumber">149,159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1059520774914208855" datatype="html">
         <source>Rechtsgrundlage</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">157,159</context>
+          <context context-type="linenumber">163,165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7087318102648915780" datatype="html">
         <source> Art. 6 Abs. 1 Unterabs. 1 Buchst. a, e DSGVO, Art. 7 DSGVO Art. 4 Abs. 1 BayDSG i. V. m. Art. 2 Abs. 1 Satz 2 BayHIG: Forschung als Aufgabe der Universitäten </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">160,162</context>
+          <context context-type="linenumber">166,168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2954082625425284930" datatype="html">
         <source>Weiteres</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">165,167</context>
+          <context context-type="linenumber">171,173</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4509526072311767896" datatype="html">
         <source> Cookies, Protokolldateien und die Webanalyse-Tools Plausible und Sentry werden zur Erstellung von Nutzungsstatistiken, zur Prüfung oder Wartung des Webdienstes und zur Gewährleistung der Netz- und Informationssicherheit gemäß Art. 6 Abs. 1 BayDSG, § 13 Abs. 7 TMG, Art. 11 Abs. 1 BayEGovG verwendet. Diese Nutzungsdaten werden nicht mit den o. g. Datenkategorien zusammengeführt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">168,173</context>
+          <context context-type="linenumber">174,179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8123773765901555222" datatype="html">
         <source>Übermittlung an Dritte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">176,178</context>
+          <context context-type="linenumber">182,184</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5919973781637406882" datatype="html">
         <source> Eine klassische Übermittlung personenbezogener Daten an Dritte erfolgt in Baula nicht. Eine Übermittlung der universitären Kennung an FlexNow ist nur notwendig, falls der individuelle Studienverlauf nach Einwilligung über die entsprechende Schnittstelle abgerufen werden soll. Nutzerinnen und Nutzern können zudem aggregierte Auswertungen und Studienempfehlungen auf Basis von anonymisierten und aggregierten Studienverlaufsdaten bereitgestellt werden. Diese Daten werden jedoch in einer Form präsentiert, die keine Rückschlüsse auf individuelle Personen zulässt. Die Nutzung dieser aggregierten Auswertungen dient ausschließlich dem Zweck der Studienplanung und -beratung. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">179,187</context>
+          <context context-type="linenumber">185,193</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7741104794969764717" datatype="html">
         <source>Selbstauskunft</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">191,193</context>
+          <context context-type="linenumber">197,199</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8643472326276676388" datatype="html">
         <source> Nutzende haben im Hinblick auf ihre individuellen Studiendaten die Möglichkeit, selbst zu überprüfen, welche Daten in Baula verarbeitet werden, indem sie die Funktionalität des individuellen Datenexports nutzen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">194,196</context>
+          <context context-type="linenumber">200,202</context>
         </context-group>
       </trans-unit>
       <trans-unit id="688632242274553551" datatype="html">
         <source>Betroffenenrechte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">200,202</context>
+          <context context-type="linenumber">206,208</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5895790251534124481" datatype="html">
@@ -9098,7 +9164,7 @@
           &gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/public/privacy/privacy.component.html</context>
-          <context context-type="linenumber">203,212</context>
+          <context context-type="linenumber">209,217</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5899944089946489995" datatype="html">
@@ -9640,7 +9706,7 @@
       (keyup.enter)=&quot;deselectDeletedCourse(deletedCourse)&quot;&gt;"/>Lehrveranstaltung abwählen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/full-calendar/full-calendar.component.html</context>
-          <context context-type="linenumber">119,126</context>
+          <context context-type="linenumber">119,125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6360070448422058743" datatype="html">
@@ -9675,7 +9741,7 @@
         <source> Überschneidung auflösen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/hints-sidenav/hints-sidenav.component.html</context>
-          <context context-type="linenumber">28,29</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9195383714852509227" datatype="html">
@@ -9768,7 +9834,7 @@
         <source>Gehe zu</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/no-data/no-data.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">39,40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8829497237648100098" datatype="html">
@@ -9793,7 +9859,7 @@
         <source> gemäß Art. 6 Abs. 1 Unterabs. 1 Buchst. a, Art. 7 und 4 Nr. 11 EU-Datenschutz-Grundverordnung (DSGVO) in die Verarbeitung personenbezogener Daten in dem Projekt &quot;BaKuLe – Bamberger Kulturen der Lehre gemeinsam entwickeln (Stiftung Innovation in der Hochschullehre)&quot; der Universität Bamberg. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
-          <context context-type="linenumber">4,8</context>
+          <context context-type="linenumber">4,7</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3061312033911983433" datatype="html">
@@ -9927,8 +9993,8 @@
           <context context-type="linenumber">106,107</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9062637598445379324" datatype="html">
-        <source> Die universitäre Kennung wird lediglich zum Abruf der Datensätze über die Schnittstelle verarbeitet und serverseitig nicht gespeichert. Die anschließende Verarbeitung von Daten der Kategorien (a), (b) und (c) erfolgt pseudonymisiert. </source>
+      <trans-unit id="4334982472024080297" datatype="html">
+        <source> Die universitäre Kennung wird lediglich zum Abruf der Datensätze über die Schnittstelle verarbeitet und serverseitig und nicht dauerhaft gespeichert. Die anschließende Verarbeitung von Daten der Kategorien (a), (b) und (c) erfolgt pseudonymisiert. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/upload-data-privacy/upload-data-privacy.component.html</context>
           <context context-type="linenumber">111,114</context>
