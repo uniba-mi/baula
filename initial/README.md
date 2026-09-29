@@ -50,7 +50,10 @@ Führt folgenden Befehl aus:
 ### PROD_BUILD_DOCS
 Führt folgenden Befehl aus:
 - npm run buildUserDocs
-### PROD_BUILD_FRONTEND
+### PROD_BUILD_FRONTEND_TEST
+Führt folgenden Befehl aus:
+- npm run buildFrontendTest
+### PROD_BUILD_FRONTEND_PROD
 Führt folgenden Befehl aus:
 - npm run buildFrontendProd
 ### PROD_START_DOCKER
