@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
@@ -7,12 +7,9 @@ import { getStudyPlans } from 'src/app/selectors/study-planning.selectors';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { getSemesterList, getUser } from 'src/app/selectors/user.selectors';
-import { User } from '../../../../../interfaces/user';
-import { Semester } from '../../../../../interfaces/semester';
-import {
-  StudyPlan,
-  StudyPlanTemplate,
-} from '../../../../../interfaces/study-plan';
+import { User } from '@interfaces/user';
+import { Semester } from '@interfaces/semester';
+import { StudyPlan, StudyPlanTemplate } from '@interfaces/study-plan';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import {
   ConfirmationDialogData,
@@ -21,8 +18,8 @@ import {
 import { getCloseDialogMode } from 'src/app/selectors/dialog.selectors';
 import { AlertType } from 'src/app/shared/classes/alert';
 import type { DownloadService } from 'src/app/shared/services/download.service';
-import { SemesterPlanTemplate } from '../../../../../interfaces/semester-plan';
-import { StudyPath } from '../../../../../interfaces/study-path';
+import { SemesterPlanTemplate } from '@interfaces/semester-plan';
+import { StudyPath } from '@interfaces/study-path';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { RestService } from 'src/app/rest.service';
@@ -30,12 +27,22 @@ import { LazyInjectService } from 'src/app/shared/services/lazy-inject.service';
 import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
 
 @Component({
-    selector: 'app-study-plan',
-    templateUrl: './study-plan.component.html',
-    styleUrls: ['./study-plan.component.scss'],
-    standalone: false
+  selector: 'app-study-plan',
+  templateUrl: './study-plan.component.html',
+  styleUrls: ['./study-plan.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class StudyPlanComponent implements OnInit {
+  private router = inject(Router);
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+  private snackbar = inject(SnackbarService);
+  private studyPlanService = inject(StudyPlanService);
+  private transform = inject(TransformationService);
+  private api = inject(RestService);
+  private lazyInject = inject(LazyInjectService);
+
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   studyPlans$: Observable<StudyPlan[]>;
@@ -47,20 +54,10 @@ export class StudyPlanComponent implements OnInit {
   semesterList: Semester[];
   futureSemesters: Semester[];
   studyPlanHint: string = 'studyPlan-hint';
-  studyPlanMessage: string = 'Hier hast du die Möglichkeit, mehrere Studienverlaufspläne anzulegen oder zu importieren. Beachte, dass du immer nur einen Studienplan über den Toggle aktivieren kannst. Diesen aktuellen Plan findest du immer direkt über die Navigation unter dem Menüpunkt "Studienverlaufsplan". Alle anderen Studienpläne sind hier archiviert.';
+  studyPlanMessage: string =
+    $localize `Hier hast du die Möglichkeit, mehrere Studienverlaufspläne anzulegen oder zu importieren. Beachte, dass du immer nur einen Studienplan über den Toggle aktivieren kannst. Diesen aktuellen Plan findest du immer direkt über die Navigation unter dem Menüpunkt "Studienverlaufsplan". Alle anderen Studienpläne sind hier archiviert.`;
   studyPlanTemplate$: Observable<StudyPlan | undefined>;
   templatesAvailable: boolean = false;
-
-  constructor(
-    private router: Router,
-    private store: Store,
-    private dialog: MatDialog,
-    private snackbar: SnackbarService,
-    private studyPlanService: StudyPlanService,
-    private transform: TransformationService,
-    private api: RestService,
-    private lazyInject: LazyInjectService
-  ) { }
 
   ngOnInit(): void {
     this.studyPlans$ = this.store.select(getStudyPlans);
@@ -68,23 +65,33 @@ export class StudyPlanComponent implements OnInit {
     this.user$ = this.store.select(getUser);
 
     // get current semester
-    const currentSemesterType = Semester.getCurrentSemesterName().slice(-1) as 'w' | 's';
+    const currentSemesterType = Semester.getCurrentSemesterName().slice(-1) as
+      | 'w'
+      | 's';
 
     this.user$.subscribe((user) => {
       this.user = user;
       // load most recent study plan template for user's sp
       if (this.user && this.user.sps && this.user.sps.length > 0) {
-        const spId = this.user.sps[0].spId;
+        const spId = this.user.sps.filter(
+          (sp) => sp.status == 'Immatrikuliert',
+        )[0].spId;
 
         // check if a template is available for spId
-        this.api.checkTemplateAvailability(spId, currentSemesterType).subscribe((availabilityResponse) => {
-          this.templatesAvailable = availabilityResponse.available;
+        this.api
+          .checkTemplateAvailability(spId, currentSemesterType)
+          .subscribe((availabilityResponse) => {
+            this.templatesAvailable = availabilityResponse.available;
 
-          // fetch study plan template
-          if (this.templatesAvailable) {
-            this.studyPlanTemplate$ = this.api.getLatestTemplateForStudyProgram(spId, currentSemesterType);
-          }
-        });
+            // fetch study plan template
+            if (this.templatesAvailable) {
+              this.studyPlanTemplate$ =
+                this.api.getLatestTemplateForStudyProgram(
+                  spId,
+                  currentSemesterType,
+                );
+            }
+          });
       }
     });
 
@@ -97,11 +104,11 @@ export class StudyPlanComponent implements OnInit {
 
   openDeleteDialog(id: string, name: string) {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Studienplan löschen?',
+      dialogTitle: $localize `Studienplan löschen?`,
       actionType: 'delete',
       confirmationItem: name,
-      confirmButtonLabel: 'Löschen',
-      cancelButtonLabel: 'Abbrechen',
+      confirmButtonLabel: $localize`Löschen`,
+      cancelButtonLabel: $localize`Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.deleteStudyPlan(id);
@@ -128,14 +135,14 @@ export class StudyPlanComponent implements OnInit {
       // only set study plans if active plan is toggle to enable selection of new plan in dialog
       if (activePlan._id === id) {
         studyPlans = this.studyPlans.filter(
-          (plan) => plan._id !== activePlan._id
+          (plan) => plan._id !== activePlan._id,
         );
         newId = '';
       }
 
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          dialogTitle: 'Anderen Studienplan aktivieren',
+          dialogTitle: $localize `Anderen Studienplan aktivieren`,
           dialogContentId: 'activate-study-plan',
           activeStudyPlan: activePlan,
           newPlanId: newId,
@@ -145,10 +152,10 @@ export class StudyPlanComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        const semester = new Semester().name
+        const semester = new Semester().name;
         if (result.newId) {
           let newPlan = this.studyPlans.find(
-            (plan) => plan._id === result.newId
+            (plan) => plan._id === result.newId,
           );
           if (newPlan) {
             let oldPlan = activePlan;
@@ -156,7 +163,7 @@ export class StudyPlanComponent implements OnInit {
               newPlan = this.transform.transferPlanToAnotherStudyPlan(
                 oldPlan,
                 newPlan,
-                semester
+                semester,
               );
             }
 
@@ -164,15 +171,24 @@ export class StudyPlanComponent implements OnInit {
             newPlan.status = true;
 
             // always transfer current semester plan courses into new semester plan courses
-            const oldSemesterPlanCourses = oldPlan.semesterPlans.find(el => el.semester === semester)?.courses;
-            const newSemesterPlanIndex = newPlan.semesterPlans.findIndex(el => el.semester === semester);
+            const oldSemesterPlanCourses = oldPlan.semesterPlans.find(
+              (el) => el.semester === semester,
+            )?.courses;
+            const newSemesterPlanIndex = newPlan.semesterPlans.findIndex(
+              (el) => el.semester === semester,
+            );
             if (oldSemesterPlanCourses && newSemesterPlanIndex !== -1) {
-              newPlan.semesterPlans[newSemesterPlanIndex].courses = oldSemesterPlanCourses;
+              newPlan.semesterPlans[newSemesterPlanIndex].courses =
+                oldSemesterPlanCourses;
             }
 
-            const currentSemesterPlan = oldPlan.semesterPlans.find(el => el.isPastSemester === false);
-            const currentSemester = currentSemesterPlan ? currentSemesterPlan.semester : new Semester().name; // contains first not past semester to adapt new active plan
-            for(let plan of newPlan.semesterPlans) {
+            const currentSemesterPlan = oldPlan.semesterPlans.find(
+              (el) => el.isPastSemester === false,
+            );
+            const currentSemester = currentSemesterPlan
+              ? currentSemesterPlan.semester
+              : new Semester().name; // contains first not past semester to adapt new active plan
+            for (let plan of newPlan.semesterPlans) {
               if (plan.semester === currentSemester) {
                 plan.isPastSemester = false;
                 break;
@@ -182,8 +198,18 @@ export class StudyPlanComponent implements OnInit {
             }
 
             // update new and old plan
-            this.store.dispatch(StudyPlanActions.updateStudyPlan({ studyPlanId: oldPlan._id, studyPlan: oldPlan }))
-            this.store.dispatch(StudyPlanActions.updateStudyPlan({ studyPlanId: newPlan._id, studyPlan: newPlan }))
+            this.store.dispatch(
+              StudyPlanActions.updateStudyPlan({
+                studyPlanId: oldPlan._id,
+                studyPlan: oldPlan,
+              }),
+            );
+            this.store.dispatch(
+              StudyPlanActions.updateStudyPlan({
+                studyPlanId: newPlan._id,
+                studyPlan: newPlan,
+              }),
+            );
           }
         }
       });
@@ -192,7 +218,7 @@ export class StudyPlanComponent implements OnInit {
       this.snackbar.openSnackBar({
         type: AlertType.DANGER,
         message:
-          'Der Studienplan kann nicht deaktiviert werden, da es der einzige Plan ist.',
+          $localize `Der Studienplan kann nicht deaktiviert werden, da es der einzige Plan ist.`,
       });
     }
   }
@@ -208,14 +234,14 @@ export class StudyPlanComponent implements OnInit {
       inputName,
       user.startSemester,
       user.duration,
-      studyPlan.semesterPlans
+      studyPlan.semesterPlans,
     );
   }
 
   openAddStudyPlanDialog(
     user: User,
     studyPlanId?: string,
-    studyPlan?: StudyPlanTemplate
+    studyPlan?: StudyPlanTemplate,
   ) {
     if (!studyPlan) {
       // set status of study plan
@@ -233,7 +259,7 @@ export class StudyPlanComponent implements OnInit {
 
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          dialogTitle: 'Studienplan erstellen',
+          dialogTitle: $localize `Studienplan erstellen`,
           dialogContentId: 'add-study-plan-dialog',
           studyPlan: newStudyPlan,
         },
@@ -249,7 +275,7 @@ export class StudyPlanComponent implements OnInit {
             user.startSemester,
             user.duration,
             undefined,
-            status
+            status,
           );
         } else {
           return;
@@ -262,7 +288,7 @@ export class StudyPlanComponent implements OnInit {
 
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
-          dialogTitle: 'Studienplan bearbeiten',
+          dialogTitle: $localize `Studienplan bearbeiten`,
           dialogContentId: 'add-study-plan-dialog',
           studyPlan: studyPlan,
         },
@@ -288,12 +314,13 @@ export class StudyPlanComponent implements OnInit {
     const semester = studyPlan.semesterPlans
       .filter((plan) => plan.isPastSemester === true)
       .map((el) => new Semester(el.semester));
-    this.transform.transformStudyPath(studyPath, semester)
+    this.transform
+      .transformStudyPath(studyPath, semester)
       .pipe(take(1))
       .subscribe((studyPathInSemester) => {
         const dialogRef = this.dialog.open(DialogComponent, {
           data: {
-            dialogTitle: 'Daten exportieren:',
+            dialogTitle: $localize `Daten exportieren:`,
             dialogContentId: 'export-dialog',
             studyPlan,
             studyPath: studyPathInSemester,
@@ -303,12 +330,18 @@ export class StudyPlanComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            this.lazyInject.get<DownloadService>(() => 
-              import('../../shared/services/download.service').then((m) => m.DownloadService)
-            ).then(download => download.downloadJSONFile(
-              result,
-              `${studyPlan.name.toLowerCase().replace(' ', '_')}.json`
-            ));
+            this.lazyInject
+              .get<DownloadService>(() =>
+                import('../../shared/services/download.service').then(
+                  (m) => m.DownloadService,
+                ),
+              )
+              .then((download) =>
+                download.downloadJSONFile(
+                  result,
+                  `${studyPlan.name.toLowerCase().replace(' ', '_')}.json`,
+                ),
+              );
           }
           this.dialog.closeAll();
         });
@@ -318,24 +351,27 @@ export class StudyPlanComponent implements OnInit {
   chooseImportType(uId: string, start?: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Was möchtest du importieren?',
+        dialogTitle: $localize `Was möchtest du importieren?`,
         dialogContentId: 'select-option-dialog',
         options: [
-          { value: 'individualStudyPlan', label: 'Individuellen Studienplan' },
-          { value: 'studyPlanTemplate', label: 'Offiziellen Musterstudienverlaufsplan für deinen Studiengang' }
+          { value: 'individualStudyPlan', label: $localize `Individuellen Studienplan` },
+          {
+            value: 'studyPlanTemplate',
+            label:
+              $localize `Offiziellen Musterstudienverlaufsplan für deinen Studiengang`,
+          },
         ],
       },
       minWidth: '50vw',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-
       if (result === 'studyPlanTemplate') {
-        this.importStudyPlanTemplate(uId, start)
+        this.importStudyPlanTemplate(uId, start);
       }
 
       if (result === 'individualStudyPlan') {
-        this.importIndividualStudyPlan(uId, start)
+        this.importIndividualStudyPlan(uId, start);
       }
     });
   }
@@ -344,7 +380,7 @@ export class StudyPlanComponent implements OnInit {
   importIndividualStudyPlan(uId: string, start?: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Individuellen Studienplan importieren:',
+        dialogTitle: $localize `Individuellen Studienplan importieren:`,
         dialogContentId: 'import-dialog',
         importType: 'deinen Studienplan',
         startSemester: new Semester(start),
@@ -358,7 +394,9 @@ export class StudyPlanComponent implements OnInit {
         if (
           typeof result === 'object' &&
           Array.isArray(result.semesterPlans) &&
-          this.studyPlanService.checkSemesterPlansStructure(result.semesterPlans) &&
+          this.studyPlanService.checkSemesterPlansStructure(
+            result.semesterPlans,
+          ) &&
           typeof result.status === 'boolean' &&
           typeof result.name === 'string'
         ) {
@@ -370,26 +408,30 @@ export class StudyPlanComponent implements OnInit {
                 expanded: true,
                 userId: uId,
               };
-            }
+            },
           );
           // set status to active, if study plans array is empty to activate imported study plan directly
           const status = this.studyPlans.length === 0 ? true : false;
 
-          const duration = this.user.duration ? this.user.duration : semesterPlans.length;
-          const startSemester = this.user.startSemester ? this.user.startSemester : semesterPlans[0].semester;
+          const duration = this.user.duration
+            ? this.user.duration
+            : semesterPlans.length;
+          const startSemester = this.user.startSemester
+            ? this.user.startSemester
+            : semesterPlans[0].semester;
 
           this.studyPlanService.createStudyPlan(
             result.name,
             startSemester,
             duration,
             semesterPlans,
-            status
+            status,
           );
         } else {
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
             message:
-              'Der Studienplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!',
+              $localize `Der Studienplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!`,
           });
         }
       }
@@ -397,13 +439,14 @@ export class StudyPlanComponent implements OnInit {
     });
   }
 
+  // TODO: Can you translate every element of the following? -> No, imported studyplan name is german based and no translation can be added
   // import degree specific study plan template provided by uni
   importStudyPlanTemplate(uId: string, start?: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Musterstudienverlaufsplan importieren:',
+        dialogTitle: $localize `Musterstudienverlaufsplan importieren:`,
         dialogContentId: 'import-dialog',
-        importType: 'deinen Musterplan',
+        importType: $localize`deinen Musterplan`,
         studyPlanTemplate$: this.studyPlanTemplate$,
         startSemester: new Semester(start),
       },
@@ -415,7 +458,9 @@ export class StudyPlanComponent implements OnInit {
         if (
           typeof result === 'object' &&
           Array.isArray(result.semesterPlans) &&
-          this.studyPlanService.checkSemesterPlansStructure(result.semesterPlans) &&
+          this.studyPlanService.checkSemesterPlansStructure(
+            result.semesterPlans,
+          ) &&
           typeof result.status === 'boolean' &&
           typeof result.name === 'string'
         ) {
@@ -426,7 +471,7 @@ export class StudyPlanComponent implements OnInit {
                 expanded: true,
                 userId: uId,
               };
-            }
+            },
           );
           // set status to active, if study plans array is empty to activate imported study plan directly
           const status = this.studyPlans.length === 0 ? true : false;
@@ -436,13 +481,13 @@ export class StudyPlanComponent implements OnInit {
             semesterPlans[0].semester,
             semesterPlans.length,
             semesterPlans,
-            status
+            status,
           );
         } else {
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
             message:
-              'Der Studienplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!!',
+              $localize `Der Studienplan konnte nicht importiert werden, die Datei hatte nicht die richtige Struktur!!`,
           });
         }
       }

@@ -2,8 +2,8 @@ import { BadRequestError, NotFoundError } from "../../shared/error";
 import { Request, Response, NextFunction } from "express";
 // import { orga2code } from '../../../staticdata/evaluationData/organisations'
 import { Evaluation } from "../../database/mongo";
-import { Evaluation as IEvaluation, Organisation } from "../../../../../interfaces/evaluation";
-import { UserServer } from "../../../../../interfaces/user";
+import { Evaluation as IEvaluation, Organisation } from "@interfaces/evaluation";
+import { UserServer } from "@interfaces/user";
 
 // export async function initEvaluationData(req: Request, res: Response, next: NextFunction) {
 //     try {
@@ -28,7 +28,7 @@ import { UserServer } from "../../../../../interfaces/user";
 //             await Evaluation.findOneAndUpdate(
 //                 { spId },
 //                 { spId, jobEvaluations },
-//                 { upsert: true, new: true, setDefaultsOnInsert: true }
+//                 { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
 //             );
 //         }
 

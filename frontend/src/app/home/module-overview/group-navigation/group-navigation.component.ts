@@ -9,32 +9,36 @@ import {
   OnInit,
   SimpleChanges,
   ViewChild,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ModuleGroup } from '../../../../../../interfaces/module-group';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
-import {
-  Option,
-  SearchSettings,
-} from '../../../../../../interfaces/search';
+import { MatTree, MatTreeNestedDataSource } from '@angular/material/tree';
+import { Option, SearchSettings } from '../../../../../../interfaces/search';
 import { Module } from '../../../../../../interfaces/module';
 import { skipWhile, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { getHoveredModule } from 'src/app/selectors/module-overview.selectors';
 import { getUserStudyPath } from 'src/app/selectors/user.selectors';
-import { PathModule } from '../../../../../../interfaces/study-path';
+import { PathModule, StudyPath } from '../../../../../../interfaces/study-path';
 import { SearchActions } from 'src/app/actions/search-settings.actions';
+import { ModService } from 'src/app/shared/services/module.service';
 
 @Component({
-    selector: 'app-group-navigation',
-    templateUrl: './group-navigation.component.html',
-    styleUrl: './group-navigation.component.scss',
-    standalone: false
+  selector: 'app-group-navigation',
+  templateUrl: './group-navigation.component.html',
+  styleUrl: './group-navigation.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class GroupNavigationComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy
 {
+  private store = inject<Store<State>>(Store);
+  private cdr = inject(ChangeDetectorRef);
+  private modService = inject(ModService);
+
   @ViewChild('tree', { read: ElementRef, static: false })
   treeElement: ElementRef;
   @Input() groups: ModuleGroup[] | undefined;
@@ -46,11 +50,9 @@ export class GroupNavigationComponent
   private destroy$ = new Subject<void>(); // container for subscriptions
 
   expandedModuleDescription: boolean = false;
-  treeControl = new NestedTreeControl<ModuleGroup>((node) => node.children);
+  childrenAccessor = (node: ModuleGroup) => node.children ?? [];
   dataSource = new MatTreeNestedDataSource<ModuleGroup>();
   selectedGroupFilter: Option | undefined;
-
-  constructor(private store: Store<State>, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     // subscribe to hovered Module
@@ -68,11 +70,11 @@ export class GroupNavigationComponent
             if (this.selectedGroup == 'struktur') {
               moduleGroup = this.getModuleGroup(
                 hoveredModule.mgId,
-                this.dataSource.data
+                this.dataSource.data,
               );
             } else if (this.selectedGroup == 'chair') {
               moduleGroup = this.dataSource.data.find(
-                (el) => el.fullName == hoveredModule.chair
+                (el) => el.fullName == hoveredModule.chair,
               );
             }
             if (moduleGroup) {
@@ -96,15 +98,15 @@ export class GroupNavigationComponent
           skipWhile(
             (el) =>
               el.completedModules.length == 0 &&
-              this.dataSource.data.length == 0
-          )
+              this.dataSource.data.length == 0,
+          ),
         )
         .subscribe((studyPath) => {
           if (this.dataSource.data && studyPath.completedModules) {
             this.clearAchievedECTS(this.dataSource.data);
             this.dataSource.data = this.setAchievedEcts(
               this.dataSource.data,
-              studyPath.completedModules
+              studyPath.completedModules,
             );
           }
         });
@@ -112,20 +114,22 @@ export class GroupNavigationComponent
 
     // TODO cleaner solution? Quick fix to make sure the chair filter is still active after leaving and coming back to the module catalog.
     if (changes.selectedGroup) {
-
       this.removeMarkedClass();
 
       setTimeout(() => {
         if (this.searchSettings?.filter && this.groups) {
           const filter = this.searchSettings.filter.find(
-            (el) => el.key === 'mgId' || el.key === 'chair'
+            (el) => el.key === 'mgId' || el.key === 'chair',
           );
           if (filter) {
             let group: ModuleGroup | undefined;
 
             if (this.selectedGroup === 'chair' && filter.key === 'chair') {
-              group = this.groups.find(g => g.fullName === filter.value);
-            } else if (this.selectedGroup === 'struktur' && filter.key === 'mgId') {
+              group = this.groups.find((g) => g.fullName === filter.value);
+            } else if (
+              this.selectedGroup === 'struktur' &&
+              filter.key === 'mgId'
+            ) {
               const id = filter.value.toString().split(' ')[0];
               group = this.getModuleGroup(id, this.groups);
             }
@@ -149,10 +153,10 @@ export class GroupNavigationComponent
     // if filter is preselected, find group and set highlighting
     if (this.searchSettings?.filter && this.groups) {
       const filter = this.searchSettings.filter.find(
-        (el) => el.key === 'mgId' || el.key === 'chair'
+        (el) => el.key === 'mgId' || el.key === 'chair',
       );
       if (filter) {
-        const id = filter.value.toString().split(' ')[0]
+        const id = filter.value.toString().split(' ')[0];
         const group = this.getModuleGroup(id, this.groups);
         if (group) {
           this.setOptionForFilter(group);
@@ -188,7 +192,7 @@ export class GroupNavigationComponent
           SearchActions.addFilterOption({
             context: 'module-overview',
             option,
-          })
+          }),
         );
         this.markSelectedGroupFilter(group);
       }
@@ -199,7 +203,7 @@ export class GroupNavigationComponent
         SearchActions.addFilterOption({
           context: 'module-overview',
           option,
-        })
+        }),
       );
       this.markSelectedGroupFilter(group);
     }
@@ -219,14 +223,14 @@ export class GroupNavigationComponent
     const element = document.getElementById(`${mg.mgId}-description`);
     const icon = document.getElementById(`${mg.mgId}-icon`);
     if (element !== null && icon !== null) {
-      if (icon.classList.contains('bi-chevron-down')) {
+      if (icon.classList.contains('bi-chevron-right')) {
         element.classList.remove('truncate-text');
-        icon.classList.remove('bi-chevron-down');
-        icon.classList.add('bi-chevron-up');
-      } else if (icon.classList.contains('bi-chevron-up')) {
-        element.classList.add('truncate-text');
-        icon.classList.remove('bi-chevron-up');
+        icon.classList.remove('bi-chevron-right');
         icon.classList.add('bi-chevron-down');
+      } else if (icon.classList.contains('bi-chevron-down')) {
+        element.classList.add('truncate-text');
+        icon.classList.remove('bi-chevron-down');
+        icon.classList.add('bi-chevron-right');
       }
     }
   }
@@ -237,36 +241,38 @@ export class GroupNavigationComponent
       const key = this.selectedGroupFilter.key;
       this.selectedGroupFilter = undefined;
       this.removeMarkedClass();
-      this.store.dispatch(SearchActions.deleteFilterOption({
-        context: 'module-overview', 
-        key
-      }));
+      this.store.dispatch(
+        SearchActions.deleteFilterOption({
+          context: 'module-overview',
+          key,
+        }),
+      );
     }
   }
 
   // function to make only one node expandable
-  toggleNode(group: ModuleGroup) {
-    const currentSelection = this.treeControl.expansionModel.selected;
-    const selectionToKeep = currentSelection.filter(mg => {
+  toggleNode(treeControl: MatTree<ModuleGroup>, group: ModuleGroup) {
+    const currentSelection = treeControl._getExpansionModel().selected;
+    const selectionToKeep = currentSelection.filter((mg) => {
       // check cases to keep selection
       // case if current selected mg fits to clicked mg (default to keep selected)
-      if(mg.mgId === group.mgId) {
+      if (mg.mgId === group.mgId) {
         return true;
-      } else if(group.parent) {
+      } else if (group.parent) {
         // if it not fits, check if parent exist and check for potential additional parents
-        if(mg.mgId === group.parent.mgId) {
+        if (mg.mgId === group.parent.mgId) {
           return true;
         } else {
-          return this.checkForParentWithinSelection(mg.mgId, group.parent)
+          return this.checkForParentWithinSelection(mg.mgId, group.parent);
         }
       }
-      
+
       // default case return false
       return false;
-    })
-    this.treeControl.collapseAll();
-    for(let selection of selectionToKeep) {
-      this.treeControl.expand(selection);
+    });
+    treeControl.collapseAll();
+    for (let selection of selectionToKeep) {
+      treeControl.expand(selection);
     }
   }
 
@@ -279,22 +285,24 @@ export class GroupNavigationComponent
   /** ------------------------------------------
    *  --------- Helper functions ---------------
       ------------------------------------------ */
-  private checkForParentWithinSelection(id: string, parent: { mgId: string, root: boolean }): boolean {
-    if(parent.root) {
+  private checkForParentWithinSelection(
+    id: string,
+    parent: { mgId: string; root: boolean },
+  ): boolean {
+    if (parent.root) {
       return id === parent.mgId;
-    } else if(this.groups) {
+    } else if (this.groups) {
       const group = this.getModuleGroup(parent.mgId, this.groups);
-      if(group && group.parent) {
+      if (group && group.parent) {
         return this.checkForParentWithinSelection(id, group.parent);
       }
     }
     return false;
   }
-  
 
   private setAchievedEcts(
     groups: ModuleGroup[],
-    completedModules: PathModule[]
+    completedModules: PathModule[],
   ): ModuleGroup[] {
     for (let group of groups) {
       let modules = completedModules.filter((el) => el.mgId == group.mgId);
@@ -314,7 +322,7 @@ export class GroupNavigationComponent
         group.children = this.setAchievedEcts(group.children, completedModules);
         group.achievedEcts = group.children
           .map((el) => el.achievedEcts)
-          .reduce((pv, cv) => Number(pv) + Number(cv), 0);
+          .reduce((pv, cv) => Number(pv) + Number(cv), group.achievedEcts);
       }
     }
     return groups;
@@ -347,7 +355,7 @@ export class GroupNavigationComponent
   // function to find parents of moduleGroups that are not the root nodes
   private findParentId(
     childId: string,
-    groups: ModuleGroup[]
+    groups: ModuleGroup[],
   ): string | undefined {
     for (let group of groups) {
       if (group.children && group.children.find((el) => el.mgId === childId)) {
@@ -381,7 +389,7 @@ export class GroupNavigationComponent
   // function to iteratively get a module group out of a given array of module groups
   private getModuleGroup(
     mgId: string,
-    groups: ModuleGroup[]
+    groups: ModuleGroup[],
   ): ModuleGroup | undefined {
     let foundModuleGroup = undefined;
     for (let group of groups) {

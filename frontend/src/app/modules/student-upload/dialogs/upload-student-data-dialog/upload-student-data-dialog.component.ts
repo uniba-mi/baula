@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
 
@@ -7,24 +6,43 @@ import { closeDialogMode } from 'src/app/actions/dialog.actions';
   selector: 'app-upload-student-data-dialog',
   templateUrl: './upload-student-data-dialog.component.html',
   styleUrl: './upload-student-data-dialog.component.scss',
-  standalone: false
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class UploadStudentDataDialogComponent {
+  private store = inject(Store);
 
-  consentForm: FormGroup;
+  @Input() onlyStudypath: boolean;
+  @Input() onlyMetaData: boolean;
+  flexNowImportConfirmed = false;
+  metadataConfirmed = false;
+  studypathConfirmed = false;
   fileToUpload: File | null = null;
 
-  constructor(private fb: FormBuilder, private store: Store) {
-    this.consentForm = this.fb.group({
-      agreeToTerms: [false, Validators.requiredTrue],
-    });
+  receiveChanges(confirmations: {
+    flexNowImportConfirmed: boolean;
+    metadataConfirmed: boolean;
+    studypathConfirmed: boolean;
+  }) {
+    this.flexNowImportConfirmed = confirmations.flexNowImportConfirmed;
+    this.metadataConfirmed = confirmations.metadataConfirmed;
+    this.studypathConfirmed = confirmations.studypathConfirmed;
   }
 
-  close(mode: string) {
+  close() {
+    const mode = this.flexNowImportConfirmed ? 'data' : 'noData';
     this.store.dispatch(closeDialogMode({ mode }));
   }
 
   getConsent() {
-    return this.consentForm.valid && this.consentForm.get('agreeToTerms')?.value;
+    if (this.flexNowImportConfirmed) {
+      return {
+        flexNowImportConfirmed: this.flexNowImportConfirmed,
+        metadataConfirmed: this.metadataConfirmed,
+        studypathConfirmed: this.studypathConfirmed,
+      };
+    } else {
+      return undefined;
+    }
   }
 }

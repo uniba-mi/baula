@@ -1,15 +1,15 @@
 <ng-container role="Dialogfenster" aria-label="Dialogfenster">
     <!-- list information about the standard here -->
     <div>
-        <label class="fw-bold">Name:</label>
+        <label class="fw-bold" i18n>Name:</label>
         <p>{{ standard.name }}</p>
     </div>
     <div>
-        <label class="fw-bold">Beschreibung:</label>
+        <label class="fw-bold" i18n>Beschreibung:</label>
         <span [innerHtml]="standard.desc | markdown"></span>
     </div>
     <mat-dialog-actions>
-        <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close i18n>
             Schließen
         </button>
     </mat-dialog-actions>

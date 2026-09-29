@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RestService } from 'src/app/rest.service';
 import { Observable, take } from 'rxjs';
 import { AcademicDate } from '../../../../../../interfaces/academic-date';
@@ -6,12 +6,16 @@ import { Store } from '@ngrx/store';
 import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
 
 @Component({
-    selector: 'app-semester-dates',
-    templateUrl: './semester-dates.component.html',
-    styleUrl: './semester-dates.component.scss',
-    standalone: false
+  selector: 'app-semester-dates',
+  templateUrl: './semester-dates.component.html',
+  styleUrl: './semester-dates.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class SemesterDatesComponent implements OnInit {
+  private rest = inject(RestService);
+  private store = inject(Store);
+
   academicDates$: Observable<AcademicDate[]>;
   expandedPeriods: Set<number> = new Set<number>(); // stores past periods id for expansion
   activePeriods: AcademicDate[] = [];
@@ -19,20 +23,18 @@ export class SemesterDatesComponent implements OnInit {
   today: Date = new Date();
   pastPeriodsExpanded: boolean = false;
 
-  constructor(private rest: RestService, private store: Store) { }
-
   ngOnInit(): void {
-    this.store.select(getActiveSemester).subscribe(semester => {
+    this.store.select(getActiveSemester).subscribe((semester) => {
       if (semester) {
         this.academicDates$ = this.rest.getAcademicDatesOfSemester(semester);
 
         // Subscribe to academic dates and filter both active and past periods
         this.academicDates$.subscribe((dates: AcademicDate[]) => {
-          this.activePeriods = dates.filter(date =>
-            !this.isPeriodOver(date) && date.dateType.typeId !== 6
+          this.activePeriods = dates.filter(
+            (date) => !this.isPeriodOver(date) && date.dateType.typeId !== 6,
           );
-          this.pastPeriods = dates.filter(date =>
-            this.isPeriodOver(date) && date.dateType.typeId !== 6
+          this.pastPeriods = dates.filter(
+            (date) => this.isPeriodOver(date) && date.dateType.typeId !== 6,
           );
         });
       }
@@ -90,14 +92,14 @@ export class SemesterDatesComponent implements OnInit {
     const daysToStart = this.calculateDaysBetween(this.today, startDate);
     const daysToEnd = this.calculateDaysBetween(this.today, endDate);
 
-    const pluralize = (count: number) => count === 1 ? 'Tag' : 'Tagen';
+    const pluralize = (count: number) => (count === 1 ? $localize `Tag` : $localize `:Plural von Tag (day):Tagen`);
 
     if (daysToStart > 0) {
-      return `beginnt in ${daysToStart} ${pluralize(daysToStart)}`;
+      return $localize `beginnt in ${daysToStart} ${pluralize(daysToStart)}`;
     } else if (daysToEnd > 0 && this.isWithinPeriod(date)) {
-      return `endet in ${daysToEnd} ${pluralize(daysToEnd)}`;
+      return $localize `endet in ${daysToEnd} ${pluralize(daysToEnd)}`;
     } else {
-      return `abgeschlossen`;
+      return $localize `abgeschlossen`;
     }
   }
 

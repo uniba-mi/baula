@@ -20,12 +20,16 @@
     "stopLocalDocker": "docker compose -f docker-compose.yml -f docker-compose.override.yml down",
     "stopServerDocker": "docker-compose -f docker-compose.yml -f docker-compose.server.yml down",
     "startBackend": "cd backend/api && npm run startApi",
-    "startFrontend": "cd frontend && ng serve --open --no-hmr",
+    "startFrontend": "cd frontend && ng serve --open",
+    "startFrontendEn": "cd frontend && ng serve --configuration=en",
     "buildFrontendProd": "cd frontend && ng build --configuration=production",
     "buildFrontendTest": "cd frontend && ng build --configuration=test",
     "buildBackend": "cd backend/api && npm run build",
     "buildUserDocs": "cd documentation/user-docs && retype build",
-    "buildTest": "npm run buildBackend && npm run buildFrontendTest && npm run buildUserDocs",
-    "buildProd": "npm run buildBackend && npm run buildFrontendProd && npm run buildUserDocs"
+    "buildDocs": "npm run buildDevDocs && npm run buildUserDocs",
+    "buildTest": "npm run buildBackend && npm run buildFrontendTest && npm run buildDocs",
+    "buildProd": "npm run buildBackend && npm run buildFrontendProd && npm run buildDocs",
+    "buildInitial": "node initial/initial.ts",
+    "generateLanguageFiles": "cd frontend && ng extract-i18n --output-path src/locale && node ../initial/initLanguageFile.js"
   }
 }

@@ -67,7 +67,7 @@ export const candidates = [
 **organisations.ts (Ranking organisations)**
 
 ```
-import { Organisation } from "../../../interfaces/evaluation";
+import { Organisation } from "@interfaces/evaluation";
 
 export const orga2code: { [key: string]: Organisation } = {
   'Fachstudienberatung_Ba_Angew_Inf': { id: 'BAAng', name: 'Bachelorstudiengang Angewandte Informatik' },

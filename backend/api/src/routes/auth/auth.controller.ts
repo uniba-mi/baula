@@ -2,6 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import { RequestWithUser } from "@node-saml/passport-saml/lib/types";
 import { samlStrategy } from "../../config/passport-saml.config";
 import passport from "passport";
+import {
+  localizedHomeUrl,
+  localizedUrl,
+  resolveLocale,
+} from "../../shared/utils/locale";
 
 // Local login
 export function localLogin(req: Request, res: Response, next: NextFunction) {
@@ -25,7 +30,20 @@ export function loginRedirect(req: Request, res: Response) {
   if (!req.user) {
     return res.status(401).send({ success: false, message: "Login failed" });
   }
-  return res.redirect(process.env.DASHBOARD_URL ?? 'back');
+  // the IdP mirrors RelayState back in the ACS POST
+  const locale = resolveLocale(req);
+  const target = localizedUrl(process.env.DASHBOARD_URL, locale);
+  return res.redirect(target ?? 'back');
+}
+
+// Redirect target for a failed SAML login
+export function loginFailureRedirect(req: Request, res: Response) {
+  const locale = resolveLocale(req);
+  const target = localizedUrl(process.env.LOGIN_PAGE_URL, locale);
+  if (!target) {
+    return res.status(401).send({ success: false, message: "Login failed" });
+  }
+  return res.redirect(target);
 }
 
 /**---------------------------------------------
@@ -116,7 +134,12 @@ export function idpInitiatedLogout(req: Request, res: Response) {
             }
           );
         } else {
-          // redirect from idp, only send back success
+          // LogoutResponse of an SP-initiated logout: back to the localized start page
+          const locale = resolveLocale(req);
+          const target = localizedHomeUrl(process.env.DASHBOARD_URL, locale);
+          if (target) {
+            return res.redirect(target);
+          }
           res.sendStatus(200);
         }
       });

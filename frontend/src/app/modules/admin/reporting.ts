@@ -1,5 +1,3 @@
-import { ChartConfiguration, ChartData } from "chart.js"
-
 export interface AdminReport {
     allUsers: number,
     activeUsers: number,
@@ -43,8 +41,8 @@ interface MetaCardItem {
 
 export interface BarChartCardData extends CardData {
     id: string,
-    data: ChartData<'bar'> | undefined,
-    config: ChartConfiguration<'bar'>
+    xLabels: string[],
+    series: { name?: string, data: (number | { value: number, color?: string })[], color?: string }[],
 }
 
 export interface TableCardData extends CardData {

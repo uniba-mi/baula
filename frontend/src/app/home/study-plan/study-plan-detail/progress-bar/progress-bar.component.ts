@@ -2,17 +2,19 @@ import {
   Component,
   Input,
   OnInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   SemesterStudyPath,
-} from '../../../../../../../interfaces/study-path';
-import { SemesterPlan } from '../../../../../../../interfaces/semester-plan';
+} from '@interfaces/study-path';
+import { SemesterPlan } from '@interfaces/semester-plan';
 import { combineLatest, map, Observable, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-progress-bar',
   templateUrl: './progress-bar.component.html',
   styleUrl: './progress-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class ProgressBarComponent {
@@ -54,7 +56,7 @@ export class ProgressBarComponent {
       this.achievedTooltip$ = this.achievedCredits$.pipe(
         map(
           (achievedCredits) =>
-            `Du hast aktuell ${achievedCredits} ECTS von insgesamt ${this.totalCredits} ECTS eingeplant.`
+            $localize `Du hast aktuell ${achievedCredits} ECTS von insgesamt ${this.totalCredits} ECTS eingeplant.`
         )
       );
 
@@ -67,7 +69,7 @@ export class ProgressBarComponent {
       this.plannedTooltip$ = this.plannedCredits$.pipe(
         map(
           (plannedCredits) =>
-            `Du hast aktuell ${plannedCredits} ECTS von insgesamt ${this.totalCredits} ECTS durch bestandene Module erreicht.`
+            $localize `Du hast aktuell ${plannedCredits} ECTS von insgesamt ${this.totalCredits} ECTS durch bestandene Module erreicht.`
         )
       );
     }

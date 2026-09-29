@@ -1,15 +1,35 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { LteRestService } from '../lte-rest.service';
 import { take } from 'rxjs';
-import { MetaCardData, Report, ReportCard } from '../../reporting/reporting';
+import {
+  BarChartCardData,
+  BoxplotCardData,
+  BoxplotStats,
+  computeBoxplotStats,
+  LineChartCardData,
+  MetaCardData,
+  QuoteCardData,
+  Report,
+  ReportCard,
+} from '../../reporting/reporting';
 import { ReportingBaseComponent } from '../../reporting/reporting-base.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectModule, MatSelectChange } from '@angular/material/select';
+import { MatButtonToggleModule, MatButtonToggleChange } from '@angular/material/button-toggle';
 import { Semester } from '../../../../../../interfaces/semester';
 import { MatMenuModule } from '@angular/material/menu';
 import { LongTermEvaluation } from '../../../../../../interfaces/long-term-evaluation';
 import { SharedModule } from '../../shared/shared.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SemesterPipe } from '../../shared/pipes/semester.pipe';
+import { LazyInjectService } from '../../../shared/services/lazy-inject.service';
+import { DownloadService } from '../../../shared/services/download.service';
+
+type ViewMode = 'semester' | 'drilldown';
+
+const ALL_SEMESTERS = 'alle';
+
+const BAR_COLORS = ['#5B8FF9', '#5AD8A6', '#F6BD16', '#E8684A', '#6DC8EC', '#9270CA'];
 
 @Component({
   selector: 'lte-result-page',
@@ -19,133 +39,348 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReportingBaseComponent,
     MatFormFieldModule,
     MatSelectModule,
+    MatButtonToggleModule,
     MatMenuModule,
     SharedModule,
     MatProgressSpinnerModule,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [LteRestService],
 })
 export class ResultPageComponent implements OnInit {
-  surveyResults: LongTermEvaluation[];
+  readonly ALL_SEMESTERS = ALL_SEMESTERS;
+
+  surveyResults: LongTermEvaluation[] = [];
+  viewMode: ViewMode = 'semester';
+
   selectedSemester = new Semester().apNr;
-  semesterList: string[];
+  semesterList: string[] = [];
+
+  personalCodeOptions: { code: string; label: string }[] = [];
+  selectedPersonalCode: string | undefined;
+
   private api = inject(LteRestService);
+  private lazyInject = inject(LazyInjectService);
+  private semesterPipe = new SemesterPipe();
+  private readonly barColor = 'rgba(102, 144, 177, 0.8)';
+
   report: Report | undefined;
-  barChartConfig = {
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
 
   ngOnInit(): void {
     this.api
       .getResults()
       .pipe(take(1))
       .subscribe((results) => {
+        this.surveyResults = results;
         this.semesterList = [
           ...new Set(
-            results.map((el) =>
-              this.getSemesterFromSurveyCode(el.evaluationCode)
-            )
-          )
+            results.map((el) => this.getSemesterFromSurveyCode(el.evaluationCode))
+          ),
         ];
-        this.surveyResults = results;
-        this.updateReport(this.selectedSemester);
+        this.personalCodeOptions = this.buildPersonalCodeOptions(results);
+        this.updateReport();
       });
   }
 
-  updateReport(semester: string) {
-    // limit results to selectedSemester
-    let filteredResults = this.surveyResults.filter(
-      (el) => this.getSemesterFromSurveyCode(el.evaluationCode) === semester
-    );
-    let cards: ReportCard[] = [];
+  // reads the new value directly from the event instead of the two-way-bound property,
+  // which at this point in the change-detection cycle has not been updated yet
+  onViewModeChange(event: MatButtonToggleChange): void {
+    this.viewMode = event.value;
+    this.report = undefined;
+    this.updateReport();
+  }
+
+  onSemesterChange(event: MatSelectChange): void {
+    this.selectedSemester = event.value;
+    this.updateSemesterReport(event.value);
+  }
+
+  onPersonalCodeChange(event: MatSelectChange): void {
+    this.selectedPersonalCode = event.value;
+    this.updateDrilldownReport(event.value);
+  }
+
+  // exports the full, unfiltered survey data set as CSV, regardless of the
+  // currently selected semester/drilldown view
+  exportCsv(): void {
+    const rows = this.surveyResults.map((el) => ({
+      Code: el.personalCode,
+      Zeitraum: el.evaluationCode,
+      Studiengang: el.spName,
+      Fachsemester: el.semester,
+      PU1: el.pu[0],
+      PU2: el.pu[1],
+      PU3: el.pu[2],
+      PU4: el.pu[3],
+      PEOU1: el.peou[0],
+      PEOU2: el.peou[1],
+      PEOU3: el.peou[2],
+      PEOU4: el.peou[3],
+      BI: el.bi,
+      Nutzung: el.use,
+      NPS: el.nps,
+      Feedback: el.feedback,
+    }));
+
+    const date = new Date();
+    const formattedDate = `${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`;
+
+    this.lazyInject
+      .get<DownloadService>(() =>
+        import('../../../shared/services/download.service').then((m) => m.DownloadService)
+      )
+      .then((download) => download.downloadCSVFile(rows, `lte_export_${formattedDate}.csv`));
+  }
+
+  updateReport(): void {
+    if (this.viewMode === 'semester') {
+      this.updateSemesterReport(this.selectedSemester);
+    } else {
+      this.updateDrilldownReport(this.selectedPersonalCode);
+    }
+  }
+
+  private updateSemesterReport(semester: string): void {
+    const isAggregate = semester === ALL_SEMESTERS;
+    const filteredResults = isAggregate
+      ? this.surveyResults
+      : this.surveyResults.filter((el) => this.getSemesterFromSurveyCode(el.evaluationCode) === semester);
+
+    const cards: ReportCard[] = [];
     if (filteredResults.length !== 0) {
-      // generate Cards for survey analytics
       // meta informations
       cards.push({
         id: 'surveyMetaData',
         type: 'meta',
         spacingClasses: 'col-12 col-md-6 col-lg-4 mb-2',
-        cardData: this.generateMetaCardData(filteredResults),
+        cardData: this.generateMetaCardData(
+          filteredResults,
+          isAggregate ? 'über alle Semester hinweg' : 'für das ausgewählte Semester'
+        ),
       });
 
-      // bar chart for participation months
-      const monthListing = this.countOccurences(
-        filteredResults.map((el) => el.evaluationCode)
-      );
-      cards.push({
-        id: 'participationMonthsChart',
+      // boxplots for the TAM constructs and NPS: one group per semester when comparing across
+      // all semesters, otherwise a single unlabeled group for the selected semester
+      const boxplotGroups = isAggregate
+        ? this.chronologicalSemesters().map((s) => ({
+            label: this.semesterPipe.transform(s),
+            results: this.surveyResults.filter((el) => this.getSemesterFromSurveyCode(el.evaluationCode) === s),
+          }))
+        : [{ label: '', results: filteredResults }];
+      const boxplotCard: ReportCard = {
+        id: 'tamBoxplot',
+        type: 'boxplot',
+        spacingClasses: `col-12 ${!isAggregate ? 'col-md-6 col-lg-8' : ''} mb-2`,
+        cardData: this.generateBoxplotCardData(boxplotGroups),
+      };
+
+      // bar chart for participation by month
+      const monthChartCard: ReportCard = {
+        id: 'monthChart',
         type: 'bar',
-        spacingClasses: 'col-12 col-md-6 col-lg-4 mb-2',
-        cardData: {
-          title: 'Teilnehmer nach Monat',
-          data: {
-            labels: monthListing.map((el) => el.name),
-            datasets: [
-              {
-                backgroundColor: 'rgba(102, 144, 177, 0.8)',
-                data: monthListing.map((el) => el.count),
-              },
-            ],
-          },
-          config: this.barChartConfig,
-        },
+        spacingClasses: isAggregate ? 'col-12 col-md-6 col-lg-8 mb-2' : 'col-12 col-md-6 col-lg-4 mb-2',
+        cardData: this.generateBarChartData(
+          $localize`Teilnehmer nach Monat`,
+          this.countOccurencesChronological(filteredResults.map((el) => el.evaluationCode))
+        ),
+      };
+
+      // in the "Kein Semester" view the month chart moves ahead of the boxplot so the two
+      // fill a row together (4+8); per-semester keeps the boxplot first as before
+      if (isAggregate) {
+        cards.push(monthChartCard, boxplotCard);
+      } else {
+        cards.push(boxplotCard, monthChartCard);
+      }
+
+      // bar chart for usage frequency
+      const useOrder = [$localize`täglich`, $localize`mehrmals pro Woche`, $localize`einmal pro Woche`, $localize`seltener`];
+      cards.push({
+        id: 'useChart',
+        type: 'bar',
+        spacingClasses: `col-12 col-md-6 ${!isAggregate ? 'col-lg-4': ''} mb-2`,
+        cardData: isAggregate
+          ? this.generateGroupedBarChartData($localize`Nutzungshäufigkeit`, (el) => el.use, useOrder)
+          : this.generateBarChartData(
+              $localize`Nutzungshäufigkeit`,
+              this.countOccurencesOrdered(filteredResults.map((el) => el.use), useOrder)
+            ),
       });
 
-      // table of studyprogrammes
+      // bar chart for participants' Fachsemester
+      cards.push({
+        id: 'semesterChart',
+        type: 'bar',
+        spacingClasses: `col-12 col-md-6 ${!isAggregate ? 'col-lg-4': ''} mb-2`,
+        cardData: isAggregate
+          ? this.generateGroupedBarChartData($localize`Fachsemester der Teilnehmenden`, (el) => String(el.semester))
+          : this.generateBarChartData(
+              $localize`Fachsemester der Teilnehmenden`,
+              this.countOccurencesNumeric(filteredResults.map((el) => el.semester))
+            ),
+      });
+
+      // table of studyprogrammes (counts are summed across semesters when comparing all of them)
       cards.push({
         id: 'studyprogrammes',
         type: 'table',
-        spacingClasses: 'col-12 col-md-6 col-lg-4 mb-2',
+        spacingClasses: `col-12 col-lg-4 mb-2`,
         cardData: {
-          title: 'Studiengänge der Teilnehmenden',
+          title: $localize`Studiengänge der Teilnehmenden`,
           data: this.countOccurences(filteredResults.map((el) => el.spName)),
           columnKeys: ['name', 'count'],
           columns: [
-            { key: 'name', name: 'Studiengang' },
-            { key: 'count', name: 'Häufigkeit' },
+            { key: 'name', name: $localize`Studiengang` },
+            { key: 'count', name: $localize`Häufigkeit` },
           ],
         },
       });
 
-      // table of feedback
+      // table of feedback, with the survey period attached to each row so it stays traceable
+      // when feedback from several semesters is listed together
       cards.push({
         id: 'feedbacks',
         type: 'table',
-        spacingClasses: 'col-12 mb-2',
+        spacingClasses: `col-12 col-lg-8 mb-2`,
         cardData: {
-          title: 'Feedback der Teilnehmenden',
-          data: filteredResults.map(({ spName, semester, feedback}) => ({ spName, semester, feedback})).filter(el => el.feedback !== ''),
-          columnKeys: ['spName', 'semester', 'feedback'],
+          title: $localize`Feedback der Teilnehmenden`,
+          data: filteredResults
+            .map(({ spName, semester, feedback, evaluationCode }) => ({
+              spName,
+              semester,
+              zeitraum: this.semesterPipe.transform(this.getSemesterFromSurveyCode(evaluationCode)),
+              feedback,
+            }))
+            .filter((el) => el.feedback !== ''),
+          columnKeys: ['spName', 'semester', 'zeitraum', 'feedback'],
           columns: [
-            { key: 'spName', name: 'Studiengang' },
-            { key: 'semester', name: 'FS' },
-            { key: 'feedback', name: 'Feedback'}
+            { key: 'spName', name: $localize`Studiengang` },
+            { key: 'semester', name: $localize`FS` },
+            { key: 'zeitraum', name: $localize`Semester` },
+            { key: 'feedback', name: $localize`Feedback` },
           ],
         },
       });
     }
 
-    this.report = {
-      cards: [...cards],
-    };
+    this.report = { cards };
   }
 
-  resetConsentResponse() {
-    this.api
-      .resetConsentResponse()
-      .pipe(take(1))
-      .subscribe({
-        next: (mes) => {
-          console.log(mes);
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
+  private chronologicalSemesters(): string[] {
+    return [...this.semesterList].sort((a, b) => Number(a) - Number(b));
+  }
+
+  private updateDrilldownReport(personalCode: string | undefined): void {
+    const cards: ReportCard[] = [];
+
+    if (personalCode) {
+      const userResults = this.surveyResults
+        .filter((el) => el.personalCode === personalCode)
+        .sort((a, b) => this.evaluationCodeSortKey(a.evaluationCode) - this.evaluationCodeSortKey(b.evaluationCode));
+
+      if (userResults.length !== 0) {
+        const semesterLabels = userResults.map((el) => this.getSemesterFromSurveyCode(el.evaluationCode));
+        const semesterDisplayLabels = semesterLabels.map((s) => this.semesterPipe.transform(s));
+        const latest = userResults[userResults.length - 1];
+
+        cards.push({
+          id: 'drilldownMeta',
+          type: 'meta',
+          spacingClasses: 'col-12 col-md-6 col-lg-4 mb-2',
+          cardData: {
+            title: $localize`Metainformationen`,
+            items: [
+              { iconClass: 'bi-mortarboard', name: 'Studiengang: ', data: latest.spName },
+              { iconClass: 'bi-person-badge', name: 'Code: ', data: personalCode },
+              {
+                iconClass: 'bi-calendar-range',
+                name: $localize`Verfügbare Semester: `,
+                data: semesterDisplayLabels.join(', '),
+              },
+              {
+                iconClass: 'bi-collection',
+                name: $localize`Verfügbare Fachsemester: `,
+                data: userResults.map((el) => el.semester).join(', '),
+              },
+            ],
+            reportData: userResults,
+          } satisfies MetaCardData,
+        });
+
+        cards.push({
+          id: 'drilldownLineChart',
+          type: 'line',
+          spacingClasses: 'col-12 col-lg-8 mb-2',
+          cardData: {
+            title: $localize`Verlauf PU / PEOU / BI / NPS`,
+            xLabels: semesterDisplayLabels,
+            series: [
+              { name: 'PU', data: userResults.map((el) => this.calculateMean(el.pu)) },
+              { name: 'PEOU', data: userResults.map((el) => this.calculateMean(el.peou)) },
+              { name: 'BI', data: userResults.map((el) => el.bi) },
+              { name: 'NPS', data: userResults.map((el) => el.nps) },
+            ],
+          } satisfies LineChartCardData,
+        });
+
+        cards.push({
+          id: 'drilldownTable',
+          type: 'table',
+          spacingClasses: 'col-12 mb-2',
+          cardData: {
+            title: $localize`Rohdaten je Semester`,
+            data: userResults.map((el, i) => ({
+              semester: semesterDisplayLabels[i],
+              pu: Number(this.calculateMean(el.pu).toFixed(2)),
+              peou: Number(this.calculateMean(el.peou).toFixed(2)),
+              bi: el.bi,
+              use: el.use,
+              nps: el.nps,
+            })),
+            columnKeys: ['semester', 'pu', 'peou', 'bi', 'use', 'nps'],
+            columns: [
+              { key: 'semester', name: $localize`Semester` },
+              { key: 'pu', name: 'PU' },
+              { key: 'peou', name: 'PEOU' },
+              { key: 'bi', name: 'BI' },
+              { key: 'use', name: $localize`Nutzung` },
+              { key: 'nps', name: 'NPS' },
+            ],
+          },
+        });
+
+        cards.push({
+          id: 'drilldownFeedback',
+          type: 'quote',
+          spacingClasses: 'col-12 mb-2',
+          cardData: {
+            title: $localize`Feedback im Verlauf`,
+            quotes: userResults
+              .map((el, i) => ({ text: el.feedback, meta: semesterDisplayLabels[i] }))
+              .filter((quote) => quote.text !== ''),
+          } satisfies QuoteCardData,
+        });
+      }
+    }
+
+    this.report = { cards };
+  }
+
+  private buildPersonalCodeOptions(results: LongTermEvaluation[]): { code: string; label: string }[] {
+    const spNameByCode = new Map<string, string>();
+    const countByCode = new Map<string, number>();
+    results.forEach((el) => {
+      spNameByCode.set(el.personalCode, el.spName);
+      countByCode.set(el.personalCode, (countByCode.get(el.personalCode) ?? 0) + 1);
+    });
+
+    return [...spNameByCode.entries()]
+      .map(([code, spName]) => {
+        const count = countByCode.get(code) ?? 0;
+        const recordLabel = count === 1 ? $localize`1 Datensatz` : $localize`${count} Datensätze`;
+        return { code, label: `${code} (${spName}) · ${recordLabel}` };
+      })
+      .sort((a, b) => a.code.localeCompare(b.code));
   }
 
   private getSemesterFromSurveyCode(surveyCode: string): string {
@@ -162,7 +397,12 @@ export class ResultPageComponent implements OnInit {
     }
   }
 
-  private generateMetaCardData(results: LongTermEvaluation[]): MetaCardData {
+  private evaluationCodeSortKey(surveyCode: string): number {
+    const [month, year] = surveyCode.split('-').map(Number);
+    return year * 100 + month;
+  }
+
+  private generateMetaCardData(results: LongTermEvaluation[], scopeLabel: string): MetaCardData {
     const meanPu = Number(
       this.calculateMean(
         results.map((el) => this.calculateMean(el.pu))
@@ -179,41 +419,106 @@ export class ResultPageComponent implements OnInit {
     const meanNps = Number(
       this.calculateMean(results.map((el) => el.nps)).toFixed(2)
     );
+
     return {
-      title: 'Überblicksinformationen',
+      title: $localize`Überblicksinformationen`,
       items: [
         {
           iconClass: 'bi-people',
-          name: 'Anzahl Teilnehmer: ',
+          name: $localize`Anzahl Teilnehmer: `,
           data: results.length,
-          tooltip: 'Anzahl der Teilnehmer für das ausgewählte Semester.',
+          tooltip: $localize`Anzahl der Teilnehmer ${scopeLabel}.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Perceived Usefulness: ',
+          name: $localize`Perceived Usefulness: `,
           data: meanPu,
-          tooltip: 'Durchschnittswert des PU Score.',
+          tooltip: $localize`Durchschnittswert des PU Score.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Perceived Ease of Use: ',
+          name: $localize`Perceived Ease of Use: `,
           data: meanPeou,
-          tooltip: 'Durchschnittswert des PEOU Score.',
+          tooltip: $localize`Durchschnittswert des PEOU Score.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Behavioral Intention: ',
+          name: $localize`Behavioral Intention: `,
           data: meanBi,
-          tooltip: 'Durchschnittswert des BI Score.',
+          tooltip: $localize`Durchschnittswert des BI Score.`,
         },
         {
           iconClass: 'bi-file-earmark-bar-graph',
-          name: 'Net Promoter Score: ',
+          name: $localize`Net Promoter Score: `,
           data: meanNps,
-          tooltip: 'Durchschnittswert des NPS.',
+          tooltip: $localize`Durchschnittswert des NPS.`,
         },
       ],
       reportData: results,
+    };
+  }
+
+  // computes one boxplot per construct (PU/PEOU/BI/NPS) for a single group of results;
+  // null where a construct has no usable values (e.g. an empty group)
+  private computeBoxplotConstructs(results: LongTermEvaluation[]): (BoxplotStats | null)[] {
+    const meanOrNull = (values: number[]): number | null => {
+      const filtered = values.filter((el) => el !== 0);
+      return filtered.length ? filtered.reduce((pv, cv) => pv + cv) / filtered.length : null;
+    };
+
+    const puValues = results.map((el) => meanOrNull(el.pu)).filter((v): v is number => v !== null);
+    const peouValues = results.map((el) => meanOrNull(el.peou)).filter((v): v is number => v !== null);
+    const biValues = results.map((el) => el.bi).filter((v) => v !== 0);
+    const npsValues = results.map((el) => el.nps).filter((v) => v !== 0);
+
+    return [puValues, peouValues, biValues, npsValues].map((values) =>
+      values.length ? computeBoxplotStats(values) : null
+    );
+  }
+
+  private generateBoxplotCardData(groups: { label: string; results: LongTermEvaluation[] }[]): BoxplotCardData {
+    const groupStats = groups.map((group) => this.computeBoxplotConstructs(group.results));
+
+    return {
+      title: $localize`Verteilung PU / PEOU / BI / NPS`,
+      categories: ['PU', 'PEOU', 'BI', 'NPS'],
+      groups: groups.map((group) => group.label),
+      data: groupStats.map((stats) => stats.map((s) => s?.stats ?? null)),
+      outliers: groupStats.map((stats) => stats.map((s) => s?.outliers ?? [])),
+    };
+  }
+
+  private generateBarChartData(title: string, counts: { name: string; count: number }[]): BarChartCardData {
+    return {
+      title,
+      xLabels: counts.map((el) => el.name),
+      series: [{ data: counts.map((el) => el.count), color: this.barColor }],
+    };
+  }
+
+  // builds a grouped bar chart with one x-axis slot per semester and one series per category,
+  // so categories can be compared side by side across the whole survey history
+  private generateGroupedBarChartData(
+    title: string,
+    valueFn: (el: LongTermEvaluation) => string,
+    orderedCategories?: string[]
+  ): BarChartCardData {
+    const semesters = this.chronologicalSemesters();
+    const resultsBySemester = semesters.map((s) =>
+      this.surveyResults.filter((el) => this.getSemesterFromSurveyCode(el.evaluationCode) === s)
+    );
+    const categories =
+      orderedCategories ??
+      [...new Set(this.surveyResults.map(valueFn))].sort((a, b) => Number(a) - Number(b));
+
+    return {
+      title,
+      xLabels: semesters.map((s) => this.semesterPipe.transform(s)),
+      series: categories.map((category, index) => ({
+        name: category,
+        data: resultsBySemester.map((results) => results.filter((el) => valueFn(el) === category).length),
+        color: BAR_COLORS[index % BAR_COLORS.length],
+      })),
     };
   }
 
@@ -234,8 +539,34 @@ export class ResultPageComponent implements OnInit {
     return result.sort((a, b) => b.count - a.count);
   }
 
+  // like countOccurences, but keeps the given category order instead of sorting by count,
+  // for categories that represent an inherent scale (e.g. usage frequency) rather than a ranking
+  private countOccurencesOrdered(array: string[], order: string[]): { name: string; count: number }[] {
+    const counts = this.countOccurences(array);
+    return order
+      .map((name) => counts.find((el) => el.name === name) ?? { name, count: 0 })
+      .concat(counts.filter((el) => !order.includes(el.name)));
+  }
+
+  private countOccurencesNumeric(values: number[]): { name: string; count: number }[] {
+    const frequencyMap = values.reduce((acc, v) => {
+      acc[v] = (acc[v] || 0) + 1;
+      return acc;
+    }, {} as { [key: number]: number });
+
+    return Object.entries(frequencyMap)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => Number(a.name) - Number(b.name));
+  }
+
+  private countOccurencesChronological(codes: string[]): { name: string; count: number }[] {
+    return this.countOccurences(codes).sort(
+      (a, b) => this.evaluationCodeSortKey(a.name) - this.evaluationCodeSortKey(b.name)
+    );
+  }
+
   private calculateMean(values: number[]): number {
-    values = values.filter((el) => el !== 0); // filter out 0 values
-    return values.reduce((pv, cv) => pv + cv) / values.length;
+    const filtered = values.filter((el) => el !== 0); // filter out 0 values
+    return filtered.length ? filtered.reduce((pv, cv) => pv + cv) / filtered.length : 0;
   }
 }

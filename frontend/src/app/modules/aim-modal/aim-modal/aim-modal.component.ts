@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CompAim, User } from '../../../../../../interfaces/user';
 import { Standard } from '../../bilapp/interfaces/standard';
@@ -9,27 +9,28 @@ import { getUser } from 'src/app/selectors/user.selectors';
 import { CompetenceAimsActions } from 'src/app/actions/user.actions';
 
 @Component({
-    selector: 'app-aim-modal',
-    templateUrl: './aim-modal.component.html',
-    styleUrls: ['./aim-modal.component.scss'],
-    standalone: false
+  selector: 'app-aim-modal',
+  templateUrl: './aim-modal.component.html',
+  styleUrls: ['./aim-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class AimModalComponent {
+  private store = inject<Store<State>>(Store);
+
   standards$: Observable<Standard[]>; // all standards, that are located in state
   user$: Observable<User>;
   competencAims: CompAim[];
   uId: string | undefined;
 
-  constructor(
-    private store: Store<State>
-  ) {
+  constructor() {
     // load relevant data from store or api
     this.standards$ = this.store.select(getAllStandards);
     this.user$ = this.store.select(getUser);
-    this.user$.subscribe(user => {
+    this.user$.subscribe((user) => {
       this.uId = user._id ? user._id : undefined;
       this.competencAims = user.compAims ? user.compAims : [];
-    })
+    });
   }
 
   // event gets triggered, when input changes in the child components, pdates the Aim-Array
@@ -48,6 +49,8 @@ export class AimModalComponent {
   // function to save aims to database
   // TODO: test if update of user state is triggered via database or is needed separately
   saveCompetenceAims() {
-    this.store.dispatch(CompetenceAimsActions.updateCompetenceAims({ aims: this.competencAims }))
+    this.store.dispatch(
+      CompetenceAimsActions.updateCompetenceAims({ aims: this.competencAims }),
+    );
   }
 }

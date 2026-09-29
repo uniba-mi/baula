@@ -57,6 +57,27 @@ Folgende zusätzliche Dateien sind nötig:
 
 **Wichtig**: In Baula unterscheiden wir zwischen Modul, Modullehrveranstaltung und Lehrveranstaltung. Ein Modul stellt dabei nach KMK-Definition eine abgeschlossene Lerneinheit dar, welcher beliebig Modullehrveranstaltungen zugeordnet werden können. Diese sind bei uns abstrakt. Die konkrete Umsetzung einer Modullehrveranstaltung ist dann eine Lehrveranstaltung. Zur Erklärung ein Beispiel: Das Modul WebT besteht aus zwei Modullehrveranstaltungen - einer Vorlesung und einer Übung. Diesen können konkrete Lehrveranstaltungen eines Semesters zugeordent werden, der Übung zu WebT also beispielsweise die Übungsgruppe 1, die Übungsgruppe 2 und die Übungsgruppe 3 im Sommersemester 2025.
 
+### Sprache bei Weiterleitungen ins Frontend
+
+Das Frontend wird pro Sprache unter einem eigenen Präfix ausgeliefert (`/de`, `/en`). Die
+konfigurierten Ziel-URLs (`DASHBOARD_URL`, `LOGIN_PAGE_URL`) bleiben deshalb **ohne** Präfix; es
+wird erst beim Weiterleiten eingesetzt (`shared/utils/locale.ts`).
+
+* Die Sprache wird beim SAML-Login als `RelayState` mitgegeben. Der IdP spiegelt das Feld
+  unverändert zurück, im ACS-POST steht es in `req.body.RelayState`, beim Logout in
+  `req.query.RelayState`.
+* `resolveLocale` prüft in dieser Reihenfolge: `RelayState` → Cookie `baula_locale` → keine
+  Sprache. Ohne Signal bleiben die konfigurierten URLs unverändert; die Standardsprache für
+  präfixfreie Aufrufe setzt allein Apache über `DEFAULT_LOCALE`. Damit funktioniert die lokale
+  Entwicklung, in der das Frontend ohne Sprachpräfix ausgeliefert wird, unverändert.
+* Der `RelayState` wird ausschliesslich gegen die Allow-List `['de','en']` geprüft und **nie** in
+  eine URL interpoliert — er ist clientseitig beeinflussbar und wäre sonst ein Open Redirect.
+* Der `RelayState` trägt bewusst nur das Sprachkürzel: SAML 2.0 Bindings §3.4.3 begrenzt das Feld
+  auf 80 Byte. Die Session ist als Träger unbrauchbar, weil Passport in `req.logIn`
+  `session.regenerate()` aufruft.
+* Die beim IdP registrierten URLs (`SAML_CALLBACK_URL`, `SAML_ENTRY_POINT`, `SAML_LOGOUT_URL`,
+  `LOGOUT_CALLBACK_URL`) dürfen **kein** Sprachpräfix bekommen.
+
 ### Styleguide für Benennung von Routen
 * konsistente Aufteilung in Subrouten für die einzelnen Bereiche
 * konsistente Verwendung von _get_ um Daten abzufragen, _post_ um Daten zu erzeugen, _put_ um Daten zu aktualisieren und _delete_ um Daten zu entfernen. Dabei auch keine Wiederholung des Typs in der Route sondern lediglich über HTTP-Request-Typ steuern.

@@ -1,19 +1,19 @@
 import { NextFunction, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../database/prisma";
 import validator from "validator";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
 import { addAllPriorModules, addExtractedModules, addModuleCourses, findAndBuildModuleHandbookByIdAndVersion } from "../../../shared/helpers/module-helpers";
 import { Module } from "../../../../../../interfaces/module";
-
-const prisma = new PrismaClient();
+import { UserServer } from "@interfaces/user";
 
 export async function getMhbByIdAndVersion(req: Request, res: Response, next: NextFunction) {
-  const mhbId = validator.isAlphanumeric(req.params.id, undefined, { ignore: '_-' }) ? req.params.id : undefined;
-  const version = validator.isInt(req.params.version)
-    ? parseInt(req.params.version)
+  const mhbId = validator.isAlphanumeric(String(req.params.id), undefined, { ignore: '_-' }) ? String(req.params.id) : undefined;
+  const version = validator.isInt(String(req.params.version))
+    ? parseInt(String(req.params.version))
     : undefined;
-  if (mhbId && version) {
-    const mhb = await findAndBuildModuleHandbookByIdAndVersion(mhbId, version);
+  const user = req.user as UserServer
+  if (mhbId && version && user) {
+    const mhb = await findAndBuildModuleHandbookByIdAndVersion(mhbId, version, user.completedModules);
     if (mhb) {
       res.status(200).json(mhb);
     } else {
@@ -24,14 +24,71 @@ export async function getMhbByIdAndVersion(req: Request, res: Response, next: Ne
   }
 }
 
+export async function getUpToDateMhb(req: Request, res: Response, next: NextFunction) {
+  const mhbId = validator.isAlphanumeric(String(req.params.id), undefined, { ignore: '_-' }) ? String(req.params.id) : undefined;
+  const user = req.user as UserServer;
+
+  if(mhbId && user && user.sps && user.sps.length > 0) {
+    const currentMhbVersion = await prisma.sp2Mhb.findFirst({
+      select: {
+        mhbId: true,
+        version: true
+      },
+      where: {
+        mhbId: mhbId,
+        spId: user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId
+      }, 
+      orderBy: {
+        version: 'desc'
+      },
+    })
+    if(currentMhbVersion) {
+      const mhb = await findAndBuildModuleHandbookByIdAndVersion(currentMhbVersion.mhbId, currentMhbVersion.version, user.completedModules);
+      if (mhb) {
+        res.status(200).json(mhb);
+      } else {
+        next(new NotFoundError("The requested module handbook could not be found with this id and version."));
+      }
+    } else {
+      next(new NotFoundError("No module handbook could be found with the given id."));
+    }
+  } else {
+    next(new BadRequestError())
+  }
+}
+
+// all module group ids ever assigned (via Mod2Mg) to any version of a module with this
+// acronym, across all module handbook versions - used by the module group wizard to also
+// suggest groups a module was assigned to in an older MHB, as long as that group still
+// exists in the current MHB (filtered client-side against the current mg tree)
+export async function getModuleGroupIdsForAcronym(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const acronym = validator.isAlphanumeric(String(req.params.acronym), 'de-DE', { ignore: '-. ' }) ? String(req.params.acronym) : undefined;
+
+  if (!acronym) {
+    return next(new BadRequestError());
+  }
+
+  const links = await prisma.mod2Mg.findMany({
+    where: { mod: { acronym } },
+    select: { mgId: true },
+    distinct: ['mgId'],
+  });
+
+  res.status(200).json(links.map((link) => link.mgId));
+}
+
 export async function getModByAcronymAndVersion(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  const acronym = validator.isAlphanumeric(req.params.acronym, 'de-DE', { ignore: '-' }) ? req.params.acronym : undefined;
-  const version = validator.isInt(req.params.version)
-    ? parseInt(req.params.version)
+  const acronym = validator.isAlphanumeric(String(req.params.acronym), 'de-DE', { ignore: '-.' }) ? String(req.params.acronym) : undefined;
+  const version = validator.isInt(String(req.params.version))
+    ? parseInt(String(req.params.version))
     : undefined;
 
   let select = {

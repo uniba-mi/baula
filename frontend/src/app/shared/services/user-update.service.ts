@@ -1,31 +1,26 @@
-import { Injectable } from '@angular/core';
-import {
-  ChartVisibility,
-  Consent,
-  Hint,
-  User,
-} from '../../../../../interfaces/user';
+import { Injectable, inject } from '@angular/core';
+import { ChartVisibility, Consent, Hint, StudyPlanSettings, User } from '@interfaces/user';
 import { UserActions } from 'src/app/actions/user.actions';
 import { Store } from '@ngrx/store';
-import { PathModule } from '../../../../../interfaces/study-path';
-import { TimetableSettings } from '../../../../../interfaces/semester-plan';
+import { PathModule } from '@interfaces/study-path';
+import { TimetableSettings } from '@interfaces/semester-plan';
 import { catchError, concatMap, of, take } from 'rxjs';
 import { SnackbarService } from './snackbar.service';
 import { RestService } from 'src/app/rest.service';
 import { AuthService } from '../auth/auth.service';
 import { config } from 'src/environments/config.local';
 import { AlertType } from '../classes/alert';
+import { LocaleService } from './locale.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserUpdateService {
-  constructor(
-    private store: Store,
-    private snackbar: SnackbarService,
-    private rest: RestService,
-    private auth: AuthService
-  ) {}
+  private store = inject(Store);
+  private snackbar = inject(SnackbarService);
+  private rest = inject(RestService);
+  private auth = inject(AuthService);
+  private locale = inject(LocaleService);
 
   private availableHints: Hint[] = [
     { key: 'module-hint', hasConfirmed: false },
@@ -54,6 +49,7 @@ export class UserUpdateService {
     { key: 'calendar', visible: true },
     { key: 'gpa', visible: true },
     { key: 'personalisation', visible: true },
+    { key: 'feature-wish', visible: true}
   ];
 
   private availableConsents: Consent[] = [
@@ -72,9 +68,23 @@ export class UserUpdateService {
   ];
 
   private availableTimetableSettings: TimetableSettings[] = [
-    { showWeekends: true },
+    {
+      timetableId: 'dashboard',
+      showWeekends: true,
+      selectedView: 'timeGridDay',
+    },
+    {
+      timetableId: 'semesterplan',
+      showWeekends: true,
+      selectedView: 'timeGridWeek',
+    },
     // add future settings here
   ];
+
+  private availableStudyPlanSettings: StudyPlanSettings = {
+    displayGrades: true,
+    displayProgressBar: false
+  }
 
   getHints(): Hint[] {
     return this.availableHints;
@@ -101,6 +111,7 @@ export class UserUpdateService {
     const updatedHints = this.updateUserHints(user);
     const updatedDashboardSettings = this.updateDashboardSettings(user);
     const updatedTimetableSettings = this.updateTimetableSettings(user);
+    const updatedStudyPlanSettings = this.updateStudyPlanSettings(user);
     const updatedModules = this.updateUserModulesWithMgId(user);
     const updatedConsents = this.updateUserConsents(user);
 
@@ -108,23 +119,22 @@ export class UserUpdateService {
       updatedHints ||
       updatedDashboardSettings ||
       updatedTimetableSettings ||
+      updatedStudyPlanSettings ||
       updatedModules ||
       updatedConsents
     ) {
       const updatedUser: User = {
         ...user,
         hints: updatedHints ? updatedHints : user.hints,
-        dashboardSettings: updatedDashboardSettings
-          ? updatedDashboardSettings
-          : user.dashboardSettings,
-        timetableSettings: updatedTimetableSettings
-          ? updatedTimetableSettings
-          : user.timetableSettings,
+        dashboardSettings: updatedDashboardSettings ?? user.dashboardSettings,
+        timetableSettings: updatedTimetableSettings ?? user.timetableSettings,
+        studyPlanSettings: updatedStudyPlanSettings ?? user.studyPlanSettings,
         studyPath: updatedModules
           ? { ...user.studyPath, completedModules: updatedModules }
           : user.studyPath,
         consents: updatedConsents ? updatedConsents : user.consents,
       };
+      
       this.store.dispatch(UserActions.updateUser({ user: updatedUser }));
 
       // optimistic update
@@ -151,15 +161,15 @@ export class UserUpdateService {
         }),
         catchError(() => {
           return of(false);
-        })
+        }),
       )
       .subscribe((success) => {
         if (success) {
-          document.location.href = config.homeUrl;
+          document.location.href = this.locale.localizeUrl(config.homeUrl);
         } else {
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
-            message: 'Es ist ein Fehler beim Löschen aufgetreten.',
+            message: $localize `Es ist ein Fehler beim Löschen aufgetreten.`,
           });
         }
       });
@@ -180,11 +190,41 @@ export class UserUpdateService {
         }
         return acc;
       },
-      []
+      [],
     );
 
     if (updated) {
       return updatedHints;
+    } else {
+      return;
+    }
+  }
+
+  // Compare current dashboard-settings for users with available settings
+  private updateStudyPlanSettings(user: User): StudyPlanSettings | undefined {
+    const currentSettings = user.studyPlanSettings;
+    const updatedSettings = this.availableStudyPlanSettings;
+
+    // case if settings do not exist on user
+    if(!currentSettings) {
+      return updatedSettings;
+    }
+
+    let updated = false;
+    // otherwise check for existance of each key
+    if(currentSettings.displayGrades == undefined) {
+      currentSettings.displayGrades = updatedSettings.displayGrades;
+      updated = true;
+    }
+
+    if(currentSettings.displayProgressBar == undefined) {
+      currentSettings.displayProgressBar = updatedSettings.displayProgressBar;
+      updated = true;
+    }
+
+    // check for change and return updated settings otherwise return undefined
+    if (updated) {
+      return currentSettings;
     } else {
       return;
     }
@@ -207,7 +247,7 @@ export class UserUpdateService {
         }
         return acc;
       },
-      []
+      [],
     );
 
     if (updated) {
@@ -224,10 +264,8 @@ export class UserUpdateService {
 
     const updatedSettings = this.availableTimetableSettings.reduce(
       (acc: TimetableSettings[], setting: TimetableSettings) => {
-        const settingKey = Object.keys(setting)[0];
-
         const existingSetting = currentSettings.find(
-          (el) => Object.keys(el)[0] === settingKey
+          (el) => el.timetableId == setting.timetableId,
         );
 
         // add to settings if does not exist yet
@@ -235,22 +273,12 @@ export class UserUpdateService {
           acc.push(setting);
           updated = true;
         } else {
-          // check if the value is the same
-          const existingValue = existingSetting[settingKey];
-          const newValue = setting[settingKey];
-
-          if (existingValue !== newValue) {
-            // update the setting if value has changed
-            acc.push(setting);
-            updated = true;
-          } else {
-            // keep setting
-            acc.push(existingSetting);
-          }
+          // keep setting
+          acc.push(existingSetting);
         }
         return acc;
       },
-      []
+      [],
     );
 
     if (updated) {
@@ -276,7 +304,7 @@ export class UserUpdateService {
         }
         return acc;
       },
-      []
+      [],
     );
 
     if (updated) {

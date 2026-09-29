@@ -4,6 +4,7 @@ import {
   addDateType,
   getAllAcademicDates,
   getConnectedCoursesForModule,
+  getAllConnectionsForSemester,
   getCronjobLogs,
   deleteAcademicDate,
   deleteDateType,
@@ -19,6 +20,13 @@ import {
   updateModuleEmbeddings,
   getReporting,
   crawlFN2Modules,
+  adminGetUnapprovedWishes,
+  adminApproveWish,
+  adminUnapproveWish,
+  adminDeleteWish,
+  adminAddMessageToWish,
+  adminAddTagToWish,
+  adminRemoveTagFromWish,
 } from "./admin.controller";
 
 const router: Router = express.Router();
@@ -29,6 +37,8 @@ router.get("/report", getReporting);
 
 // get Courses that are connected to the requested module
 router.get("/connections/:id/:version/:semester", getConnectedCoursesForModule);
+// get all module-course <-> course connections of one semester in a single request
+router.get("/connections/:semester", getAllConnectionsForSemester);
 router.get("/connection", initConnectionModulecourse2Course);
 router.post("/connection", createCourseToModuleConnection);
 router.delete("/connection/:mcId/:cId/:semester", deleteCourseToModuleConnection);
@@ -67,5 +77,15 @@ router.post("/crawling/univis", crawlCourses);
 // Add a xml file containing module structure into the database
 router.post('/fnmhb', addModuleStructureToDatabase);
 router.get('/crawling/fnmhbs/:semester', crawlFN2Modules);
+
+// Admin routes for feature wishes
+router.get('/feature-wishes/unapproved', adminGetUnapprovedWishes);
+router.post('/feature-wishes/approve/:id', adminApproveWish);
+router.post('/feature-wishes/unapprove/:id', adminUnapproveWish);
+router.delete('/feature-wishes/delete/:id', adminDeleteWish);
+
+router.post('/feature-wishes/update-admin-message/:id', adminAddMessageToWish);
+router.post('/feature-wishes/add-tag/:id', adminAddTagToWish);
+router.delete('/feature-wishes/remove-tag/:id', adminRemoveTagFromWish);
 
 export { router as admin };

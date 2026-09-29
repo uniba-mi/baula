@@ -1,10 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/config.local';
-import { AcademicDateTemplate, AcademicDate, DateType } from '../../../../../interfaces/academic-date';
-import { ImportLogMessage, Logmessage } from '../../../../../interfaces/logs';
-import { ModuleCourse2CourseConnection } from '../../../../../interfaces/connection';
+import {
+  AcademicDateTemplate,
+  AcademicDate,
+  DateType,
+} from '@interfaces/academic-date';
+import { ImportLogMessage, Logmessage } from '@interfaces/logs';
+import {
+  ModuleCourse2CourseConnection,
+  ModuleCourse2CourseLink,
+} from '@interfaces/connection';
 import { AdminReport } from './reporting';
 
 const httpOptions = {
@@ -17,50 +24,67 @@ const httpOptions = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminRestService {
+  private http = inject(HttpClient);
+
   private urlBase = config.apiUrl + 'baula/admin';
 
-
-  constructor(private http: HttpClient) { }
-
   crawlFlexNow(semester: string): Observable<ImportLogMessage> {
-    return this.http.get<ImportLogMessage>(`${this.urlBase}/crawling/fnmhbs/${semester}`, httpOptions);
-  };
+    return this.http.get<ImportLogMessage>(
+      `${this.urlBase}/crawling/fnmhbs/${semester}`,
+      httpOptions,
+    );
+  }
 
   crawlUnivIS(semester: string): Observable<ImportLogMessage> {
     return this.http.post<ImportLogMessage>(
       `${this.urlBase}/crawling/univis`,
       { semester },
-      httpOptions
+      httpOptions,
     );
   }
 
   initConnectionCourses2Modules(): Observable<string[]> {
-    return this.http.get<string[]>(
+    return this.http.get<string[]>(`${this.urlBase}/connection`, httpOptions);
+  }
+
+  createConnectionCourse2Module(
+    mcId: string,
+    cId: string,
+    semester: string,
+  ): Observable<string> {
+    return this.http.post<string>(
       `${this.urlBase}/connection`,
-      httpOptions
+      {
+        mcId,
+        cId,
+        semester,
+      },
+      httpOptions,
     );
   }
 
-  createConnectionCourse2Module(mcId: string, cId: string, semester: string): Observable<string> {
-    return this.http.post<string>(`${this.urlBase}/connection`, {
-      mcId, 
-      cId,
-      semester
-    }, httpOptions)
-  }
-
-  deleteConnectionCourse2Module(mcId: string, cId: string, semester: string): Observable<string> {
-    return this.http.delete<string>(`${this.urlBase}/connection/${mcId}/${cId}/${semester}`, httpOptions)
+  deleteConnectionCourse2Module(
+    mcId: string,
+    cId: string,
+    semester: string,
+  ): Observable<string> {
+    return this.http.delete<string>(
+      `${this.urlBase}/connection/${mcId}/${cId}/${semester}`,
+      httpOptions,
+    );
   }
 
   /* --------------------------------
   ------ Queries for admin area -----
   ----------------------------------- */
   getAllAcademicDates(): Observable<AcademicDate[]> {
-    return this.http.get<AcademicDate[]>(`${this.urlBase}/academic-dates`, httpOptions)
+    return this.http.get<AcademicDate[]>(
+      `${this.urlBase}/academic-dates`,
+      httpOptions,
+    );
   }
 
   addAcademicDate(date: AcademicDateTemplate): Observable<AcademicDate> {
@@ -71,9 +95,13 @@ export class AdminRestService {
       endtime: date.endtime,
       desc: date.desc,
       semester: date.semester,
-      datetypeId: date.dateType.typeId
-    }
-    return this.http.post<AcademicDate>(`${this.urlBase}/academic-date`, body, httpOptions)
+      datetypeId: date.dateType.typeId,
+    };
+    return this.http.post<AcademicDate>(
+      `${this.urlBase}/academic-date`,
+      body,
+      httpOptions,
+    );
   }
 
   updateAcademicDate(date: AcademicDate): Observable<AcademicDate> {
@@ -85,44 +113,85 @@ export class AdminRestService {
       endtime: date.endtime,
       desc: date.desc,
       semester: date.semester,
-      datetypeId: date.dateType.typeId
-    }
-    return this.http.put<AcademicDate>(`${this.urlBase}/academic-date`, body, httpOptions)
+      datetypeId: date.dateType.typeId,
+    };
+    return this.http.put<AcademicDate>(
+      `${this.urlBase}/academic-date`,
+      body,
+      httpOptions,
+    );
   }
 
   deleteAcademicDate(id: number): Observable<AcademicDate> {
-    return this.http.delete<AcademicDate>(`${this.urlBase}/academic-date/${id}`, httpOptions)
+    return this.http.delete<AcademicDate>(
+      `${this.urlBase}/academic-date/${id}`,
+      httpOptions,
+    );
   }
 
   addDateType(name: string, desc: string): Observable<DateType> {
-    return this.http.post<DateType>(`${this.urlBase}/date-type`, {
-      name, 
-      desc
-    }, httpOptions)
+    return this.http.post<DateType>(
+      `${this.urlBase}/date-type`,
+      {
+        name,
+        desc,
+      },
+      httpOptions,
+    );
   }
 
   updateDateType(dateType: DateType): Observable<DateType> {
-    return this.http.put<DateType>(`${this.urlBase}/date-type`, {
-      id: dateType.typeId,
-      name: dateType.name,
-      desc: dateType.desc
-    }, httpOptions)
+    return this.http.put<DateType>(
+      `${this.urlBase}/date-type`,
+      {
+        id: dateType.typeId,
+        name: dateType.name,
+        desc: dateType.desc,
+      },
+      httpOptions,
+    );
   }
 
   deleteDateType(id: number): Observable<DateType> {
-    return this.http.delete<DateType>(`${this.urlBase}/date-type/${id}`, httpOptions)
+    return this.http.delete<DateType>(
+      `${this.urlBase}/date-type/${id}`,
+      httpOptions,
+    );
   }
 
   getCronjobLog(): Observable<Logmessage[]> {
-    return this.http.get<Logmessage[]>(`${this.urlBase}/logs/cronjob`, httpOptions)
+    return this.http.get<Logmessage[]>(
+      `${this.urlBase}/logs/cronjob`,
+      httpOptions,
+    );
   }
 
   getErrorLogs(): Observable<Logmessage[]> {
-    return this.http.get<Logmessage[]>(`${this.urlBase}/logs/error`, httpOptions)
-  } 
+    return this.http.get<Logmessage[]>(
+      `${this.urlBase}/logs/error`,
+      httpOptions,
+    );
+  }
 
-  getConnectedCoursesForModule(id: string, version: number, semester: string): Observable<ModuleCourse2CourseConnection[]> {
-    return this.http.get<ModuleCourse2CourseConnection[]>(`${this.urlBase}/connections/${id}/${version}/${semester}`, httpOptions)
+  getConnectedCoursesForModule(
+    id: string,
+    version: number,
+    semester: string,
+  ): Observable<ModuleCourse2CourseConnection[]> {
+    return this.http.get<ModuleCourse2CourseConnection[]>(
+      `${this.urlBase}/connections/${id}/${version}/${semester}`,
+      httpOptions,
+    );
+  }
+
+  // all module-course <-> course links of one semester in a single request (ids only)
+  getAllConnectionsForSemester(
+    semester: string,
+  ): Observable<ModuleCourse2CourseLink[]> {
+    return this.http.get<ModuleCourse2CourseLink[]>(
+      `${this.urlBase}/connections/${semester}`,
+      httpOptions,
+    );
   }
 
   /* --------------------------------
@@ -133,7 +202,7 @@ export class AdminRestService {
     return this.http.post<any>(
       this.urlBase + '/fnmhb',
       requestBody,
-      httpOptions
+      httpOptions,
     );
   }
 
@@ -144,7 +213,7 @@ export class AdminRestService {
     return this.http.post<[]>(
       `${this.urlBase}/embeddings/modules`,
       {},
-      httpOptions
+      httpOptions,
     );
   }
 
@@ -152,7 +221,7 @@ export class AdminRestService {
     return this.http.post<[]>(
       `${this.urlBase}/topics/initialize`,
       {},
-      httpOptions
+      httpOptions,
     );
   }
 
@@ -163,6 +232,6 @@ export class AdminRestService {
 
   // Hint reset
   resetNotificationHint(): Observable<string> {
-    return this.http.put<string>(`${this.urlBase}/reset-hint`, {}, httpOptions)
+    return this.http.put<string>(`${this.urlBase}/reset-hint`, {}, httpOptions);
   }
 }

@@ -1,0 +1,29 @@
+<mat-checkbox [(ngModel)]="FlexNowImportConfirmed" (change)="emitChange()" i18n>Ich habe die Datenschutzerklärung zum Zugriff
+    auf FlexNow gelesen
+    und stimme dem Abrufen der Daten zu.</mat-checkbox>
+@if(FlexNowImportConfirmed()) {
+<div class="d-flex ms-4">
+    <div class="vr"></div>
+    <div class="ms-1">
+        <div class="m-2 s-text" i18n>Folgende Daten sollen in meinen Account übernommen werden:</div>
+        <ul class="list-unstyled">
+            @if(!onlyStudypath) {
+            <li>
+                <mat-checkbox checked disabled i18n>Allgemeine Informationen (Studiengang,
+                    Startsemester,
+                    ...) </mat-checkbox>
+            </li>
+            }
+            @if(!onlyMetaData) {
+            <li>
+                <mat-checkbox [(ngModel)]="StudypathConfirmed" (change)="confirmPath()" i18n>Verlaufsinformationen (Abgelegte
+                    Prüfungen, Module und
+                    Lehrveranstaltungen, berechnete Abschlussnote,
+                    Modul- bzw.
+                    Prüfungsnoten)</mat-checkbox>
+            </li>
+            }
+        </ul>
+    </div>
+</div>
+}

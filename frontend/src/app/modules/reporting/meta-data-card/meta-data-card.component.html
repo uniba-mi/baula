@@ -4,7 +4,7 @@
         <mat-card-title>{{ cardData.title }}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="mt-2">
-        @for(item of cardData.items; track item) {
+        @for(item of cardData.items; track item.name) {
             <div class="m-2">
                 <i class="me-1 bi" [class]="item.iconClass"></i>
                 <span class="me-1 fw-bolder">{{ item.name }}</span>
@@ -18,7 +18,7 @@
         <div class="m-2">
             <button class="btn btn-primary" (click)="exportReport()">
                 <i class="bi bi-file-earmark-arrow-down"></i>
-                <span class="ms-1">Export (JSON)</span>
+                <span class="ms-1" i18n>Export (JSON)</span>
             </button>
         </div>
     </mat-card-content>

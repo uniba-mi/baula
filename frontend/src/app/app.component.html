@@ -4,18 +4,28 @@
       <div class="col-auto header-logo d-flex align-items-center">
         <a [href]="homeUrl" title="Baula">
           <picture>
-            <source media="(max-width: 1560px)" srcset="../assets/icon.png">
-            <img src="../assets/baula-light.png" alt="Logo von Baula, ein Absolventenhut mit einem Kompass" id="baula-logo">
+            <source media="(max-width: 1560px)" srcset="../assets/icon.png" />
+            <img
+              src="../assets/baula-light.png"
+              alt="Logo von Baula, ein Absolventenhut mit einem Kompass" i18n-alt
+              id="baula-logo"
+            />
           </picture>
         </a>
       </div>
-      <div class="col-auto d-flex align-items-center">
-        <app-nav *ngIf="user$ | async as user" [user]="user"></app-nav>
-      </div>
-      <div class="col-auto d-flex align-items-center">
-        <app-profile-menu *ngIf="user$ | async as user" [user]="user">
-        </app-profile-menu>
-      </div>
+      @if (user$ | async; as user) {
+        <div class="col-auto d-flex align-items-center">
+          <app-nav [user]="user"></app-nav>
+        </div>
+        <div class="col-auto d-flex align-items-center">
+          <app-locale-switcher></app-locale-switcher>
+          <app-profile-menu [user]="user"> </app-profile-menu>
+        </div>
+      } @else {
+        <div class="col-auto d-flex align-items-center">
+          <app-locale-switcher></app-locale-switcher>
+        </div>
+      }
     </div>
   </div>
 </header>
@@ -29,22 +39,34 @@
 <footer class="bg-blue d-flex justify-content-center justify-content-sm-end">
   <ul class="d-flex flex-column flex-sm-row">
     <li class="my-1 mx-4 text-center">
-      <a class="link text-white" tabindex="0" routerLink="/hilfe">Hilfe & Kontakt
+      <a class="link text-white" tabindex="0" routerLink="/hilfe" i18n
+        >Hilfe & Kontakt
       </a>
     </li>
     <li class="my-1 mx-4 text-center">
-      <a class="link text-white" tabindex="0" routerLink="/ueber-uns">Über BAULA
+      <a class="link text-white" tabindex="0" routerLink="/ueber-uns" i18n
+        >Über BAULA
       </a>
     </li>
     <li class="my-1 mx-4 text-center">
-      <a class="link text-white" tabindex="0" routerLink="/publikationen">Publikationen
+      <a class="link text-white" tabindex="0" routerLink="/publikationen" i18n
+        >Publikationen
       </a>
     </li>
     <li class="my-1 mx-4 text-center">
-      <a class="link text-white" tabindex="0" routerLink="/datenschutz">Datenschutz</a>
+      <a class="link text-white" tabindex="0" routerLink="/datenschutz" i18n
+        >Datenschutz</a
+      >
     </li>
     <li class="my-1 mx-4 text-center">
-      <a class="link text-white" tabindex="0" href="https://www.uni-bamberg.de/impressum/" target="_blank">Impressum</a>
+      <a
+        class="link text-white"
+        tabindex="0"
+        href="https://www.uni-bamberg.de/impressum/"
+        target="_blank"
+        i18n
+        >Impressum</a
+      >
     </li>
   </ul>
 </footer>

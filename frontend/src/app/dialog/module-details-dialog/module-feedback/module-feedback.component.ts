@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DialogComponent } from '../../dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Module } from '../../../../../../interfaces/module';
@@ -11,9 +11,13 @@ import { UserActions } from 'src/app/actions/user.actions';
   selector: 'app-module-feedback',
   templateUrl: './module-feedback.component.html',
   styleUrl: './module-feedback.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModuleFeedbackComponent {
+  private fb = inject(FormBuilder);
+  private store = inject(Store);
+
   @Input() selectedModule: Module;
   @Input() dialog: MatDialogRef<DialogComponent>;
   @Input() feedback: ModuleFeedback | null;
@@ -21,13 +25,26 @@ export class ModuleFeedbackComponent {
   feedbackForm!: FormGroup;
 
   questions = [
-    { id: 'similarmods', label: 'Möchtest du inhaltlich ähnliche Module belegen?' },
-    { id: 'similarchair', label: 'Möchtest du weitere Module dieses oder eines fachlich verwandten Lehrstuhls belegen?' },
-    { id: 'priorknowledge', label: 'Sind die im Modul angegebenen Vorkenntnisse in vollem Umfang nötig?' },
-    { id: 'contentmatch', label: 'Entsprechen die gelernten Inhalte nach deiner Einschätzung der Modulbeschreibung?' },
+    {
+      id: 'similarmods',
+      label: $localize `Möchtest du inhaltlich ähnliche Module belegen?`,
+    },
+    {
+      id: 'similarchair',
+      label:
+        $localize `Möchtest du weitere Module dieses oder eines fachlich verwandten Lehrstuhls belegen?`,
+    },
+    {
+      id: 'priorknowledge',
+      label:
+        $localize `Sind die im Modul angegebenen Vorkenntnisse in vollem Umfang nötig?`,
+    },
+    {
+      id: 'contentmatch',
+      label:
+        $localize `Entsprechen die gelernten Inhalte nach deiner Einschätzung der Modulbeschreibung?`,
+    },
   ];
-
-  constructor(private fb: FormBuilder, private store: Store) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.feedback) {
@@ -54,7 +71,9 @@ export class ModuleFeedbackComponent {
         contentmatch: this.feedbackForm.value.contentmatch,
       };
 
-      this.store.dispatch(UserActions.updateModuleFeedback({ moduleFeedback: feedback }));
+      this.store.dispatch(
+        UserActions.updateModuleFeedback({ moduleFeedback: feedback }),
+      );
     }
   }
 }

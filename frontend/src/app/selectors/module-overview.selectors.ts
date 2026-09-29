@@ -102,9 +102,15 @@ export const getModuleById = (id: string) =>
     modules.find((mod) => mod.mId == id)
   );
 
-export const getOldModuleByAcronym = (acronym: string) =>
+export const getOldModuleByAcronym = (acronym: string, mgId?: string) =>
   createSelector(getAllModules, (modules: Module[]) =>
-    modules.find((mod) => mod.acronym == acronym)
+    modules.find((mod) => {
+      if(mgId) {
+        return mod.acronym == acronym && mod.mgId == mgId
+      } else {
+        return mod.acronym == acronym
+      }
+    })
   );
 
 export const getModuleByAcronym = (acronym: string) =>

@@ -1,28 +1,35 @@
 <ng-container role="Dialogfenster" aria-label="Dialogfenster">
-  <div *ngIf="univisCrawl$ | async as messages;else progressSpinner">
-      <div *ngFor="let message of messages.logs">
-        <i class="text-success bi bi-check-lg"></i> 
-        {{ message }}
-      </div>
-      <mat-accordion *ngIf="messages.detailLog.length > 0">
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title> Detaillierter Log </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div *ngFor="let detail of messages.detailLog">
-            {{ detail }}
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-    <mat-dialog-actions>
-        <button mat-raised-button class="btn btn-outline" mat-dialog-close>
+  @if (univisCrawl$ | async; as messages) {
+    <div>
+      @for (message of messages.logs; track message) {
+        <div>
+          <i class="text-success bi bi-check-lg"></i>
+          {{ message }}
+        </div>
+      }
+      @if (messages.detailLog.length > 0) {
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title i18n> Detaillierter Log </mat-panel-title>
+            </mat-expansion-panel-header>
+            @for (detail of messages.detailLog; track detail) {
+              <div>
+                {{ detail }}
+              </div>
+            }
+          </mat-expansion-panel>
+        </mat-accordion>
+      }
+      <mat-dialog-actions>
+        <button mat-raised-button class="btn btn-outline" mat-dialog-close i18n>
           Abbrechen
         </button>
       </mat-dialog-actions>
-  </div>
-  <!-- Loading spinner -->
-  <ng-template #progressSpinner>
+    </div>
+  } @else {
     <mat-spinner class="mx-auto my-4"></mat-spinner>
-    <div>Don't worry... this process can take up to 10 minutes ☕</div>
-  </ng-template>
+    <div i18n>Don't worry... this process can take up to 10 minutes ☕</div>
+  }
+  <!-- Loading spinner -->
 </ng-container>

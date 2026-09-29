@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { Course } from '../../../../../interfaces/course';
-import { ModuleCourse } from '../../../../../interfaces/module-course';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Course } from '@interfaces/course';
+import { ModuleCourse } from '@interfaces/module-course';
 
 @Component({
     selector: 'app-course-details-dialog',
     templateUrl: './course-details-dialog.component.html',
     styleUrls: ['./course-details-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CourseDetailsDialogComponent {

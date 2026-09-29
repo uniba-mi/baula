@@ -58,5 +58,6 @@ export async function postFetchData(path: string, params: Record<string, any>) {
         return data;
     } catch (error) {
         logError(error);
+        throw error;
     }
 }

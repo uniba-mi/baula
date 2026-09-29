@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../../../database/prisma";
 import {
   BadRequestError,
   logError,
@@ -48,9 +49,8 @@ import {
   upsertPersons,
   upsertStudyprogrammes,
 } from "../../../shared/helpers/fn2mod-helper";
-import { MergedChangelog } from "../../../../../../interfaces/logs";
-
-const prisma = new PrismaClient();
+import { MergedChangelog } from "@interfaces/logs";
+import { FeatureWish } from "../../../database/mongo";
 
 // request to get the logs of the cronjob
 export async function getCronjobLogs(
@@ -233,8 +233,8 @@ export async function deleteAcademicDate(
   res: Response,
   next: NextFunction,
 ) {
-  const id = validator.isNumeric(req.params.id)
-    ? Number(req.params.id)
+  const id = validator.isNumeric(String(req.params.id))
+    ? Number(String(req.params.id))
     : undefined;
 
   if (id) {
@@ -334,7 +334,7 @@ export async function deleteDateType(
   next: NextFunction,
 ) {
   const id = validator.isNumeric(String(req.params.id))
-    ? Number(req.params.id)
+    ? Number(String(req.params.id))
     : undefined;
 
   if (id) {
@@ -359,15 +359,15 @@ export async function getConnectedCoursesForModule(
   res: Response,
   next: NextFunction,
 ) {
-  const moduleId = validator.isAlphanumeric(req.params.id, undefined, {
+  const moduleId = validator.isAlphanumeric(String(req.params.id), undefined, {
     ignore: "_-",
   })
-    ? req.params.id
+    ? String(req.params.id)
     : undefined;
-  const version = validator.isInt(req.params.version)
-    ? Number(req.params.version)
+  const version = validator.isInt(String(req.params.version))
+    ? Number(String(req.params.version))
     : undefined;
-  const semester = validateAndReturnSemester(req.params.semester);
+  const semester = validateAndReturnSemester(String(req.params.semester));
 
   if (moduleId && version && semester) {
     try {
@@ -420,6 +420,38 @@ export async function getConnectedCoursesForModule(
     } catch (error) {
       logError(error);
       next(new BadRequestError("Fehler beim Abrufen der Modulkurse"));
+    }
+  } else {
+    next(new BadRequestError("Die eingegebenen Daten sind nicht valide."));
+  }
+}
+
+export async function getAllConnectionsForSemester(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const semester = validateAndReturnSemester(String(req.params.semester));
+
+  if (semester) {
+    try {
+      // all connections of the semester in one query -> avoids one request per module.
+      // Only the ids are returned: the caller already holds every course of the semester,
+      // so joining the course and module course rows would send the same data twice.
+      const connections = await prisma.course2ModuleCourse.findMany({
+        select: {
+          mcId: true,
+          cId: true,
+          semester: true,
+        },
+        where: {
+          semester: semester,
+        },
+      });
+      res.json(connections);
+    } catch (error) {
+      logError(error);
+      next(new BadRequestError("Fehler beim Abrufen der Verknüpfungen"));
     }
   } else {
     next(new BadRequestError("Die eingegebenen Daten sind nicht valide."));
@@ -594,17 +626,17 @@ export async function deleteCourseToModuleConnection(
   res: Response,
   next: NextFunction,
 ) {
-  const mcId = validator.isAlphanumeric(req.params.mcId, "de-DE", {
+  const mcId = validator.isAlphanumeric(String(req.params.mcId), "de-DE", {
     ignore: "-",
   })
-    ? req.params.mcId
+    ? String(req.params.mcId)
     : undefined;
-  const cId = validator.isAlphanumeric(req.params.cId, "de-DE", {
+  const cId = validator.isAlphanumeric(String(req.params.cId), "de-DE", {
     ignore: "_.",
   })
-    ? req.params.cId
+    ? String(req.params.cId)
     : undefined;
-  const semester = validateAndReturnSemester(req.params.semester);
+  const semester = validateAndReturnSemester(String(req.params.semester));
 
   if (mcId && cId && semester) {
     try {
@@ -658,7 +690,7 @@ export async function crawlFN2Modules(
   res: Response,
   next: NextFunction,
 ) {
-  const semester = checkSemester(req.params.semester);
+  const semester = checkSemester(String(req.params.semester));
   if (semester) {
     let startTime = Date.now();
     let mhbs: string[] = [];
@@ -668,31 +700,33 @@ export async function crawlFN2Modules(
       logError(error);
       next(new BadRequestError("Fehler beim Crawlen der FlexNow-Daten"));
     }
-    if(mhbs.length > 0) {
+    if (mhbs.length > 0) {
       try {
         let changelogs: MergedChangelog[] = [];
-        for(let mhb of mhbs) {
-          changelogs.push(await processFlexNowData(mhb))
+        for (let mhb of mhbs) {
+          changelogs.push(await processFlexNowData(mhb));
         }
         let mergedLogs = generateLogging(changelogs);
 
         let difference = ((Date.now() - startTime) / 1000) | 0;
         let minutes = (difference / 60) | 0;
         let seconds = difference - minutes * 60;
-        
-        mergedLogs.logs.push(`${minutes} Minutes and ${seconds} Seconds to process`);
+
+        mergedLogs.logs.push(
+          `${minutes} Minutes and ${seconds} Seconds to process`,
+        );
         res.status(200).json(mergedLogs);
-      } catch(error) {
-        console.log(error)
-        res.status(400)
+      } catch (error) {
+        console.log(error);
+        res.status(400);
       }
     } else {
-      console.log(mhbs)
       next(
-        new BadRequestError("Es konnten keine Daten von FlexNow geladen werden.")
-      )
+        new BadRequestError(
+          "Es konnten keine Daten von FlexNow geladen werden.",
+        ),
+      );
     }
-    
   } else {
     next(
       new BadRequestError("Das übergebene Semester hat das falsche Format."),
@@ -748,7 +782,7 @@ export async function updateModuleEmbeddings(
         return ModEmbedding.findOneAndUpdate(
           { acronym }, // match by acronym
           { acronym, vector },
-          { upsert: true, new: true, setDefaultsOnInsert: true }, // create new if does not exist
+          { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }, // create new if does not exist
         );
       },
     );
@@ -827,7 +861,7 @@ export async function initTopicsFromJSON(
           keywords: topicData.keywords,
           parentId: parentId,
         },
-        { upsert: true, new: true, setDefaultsOnInsert: true },
+        { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true },
       );
 
       let needsNewEmbedding = true;
@@ -1146,27 +1180,41 @@ async function crawlFlexNow(semester: string): Promise<string[]> {
 
     const body = data.toString();
 
-    const req = https.request(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Content-Length": Buffer.byteLength(body),
-        "User-Agent": "curl/7.88.1",
-        "Accept": "*/*"
-      }
-    }, (res) => {
-      let raw = "";
+    const req = https.request(
+      url,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Length": Buffer.byteLength(body),
+          "User-Agent": "curl/7.88.1",
+          Accept: "*/*",
+        },
+      },
+      (res) => {
+        let raw = "";
 
-      res.on("data", chunk => raw += chunk);
-      res.on("end", () => {
-        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
-          const mhbs = raw.match(/<Modulhandbuch [\s\S]*?<\/Modulhandbuch>/g)
-          resolve(mhbs ?? []);
-        } else {
-          reject(new Error(`Status ${res.statusCode}`));
-        }
-      });
-    });
+        res.on("data", (chunk) => (raw += chunk));
+        res.on("end", () => {
+          if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+            // save xml on local file system for debugging
+            try {
+              fs.writeFileSync(
+                path.join(__dirname, "../../../../staticdata/mhb_export.xml"),
+                raw,
+              );
+            } catch (error) {
+              console.log(error);
+            }
+
+            const mhbs = raw.match(/<Modulhandbuch [\s\S]*?<\/Modulhandbuch>/g);
+            resolve(mhbs ?? []);
+          } else {
+            reject(new Error(`Status ${res.statusCode}`));
+          }
+        });
+      },
+    );
 
     req.on("error", console.error);
     req.write(body);
@@ -1176,23 +1224,23 @@ async function crawlFlexNow(semester: string): Promise<string[]> {
 }
 
 async function processFlexNowData(xml: string): Promise<MergedChangelog> {
-  const dep = await transform(xml, depTemplate);
-  const persons = await transform(xml, personTemplate);
-  const sps = await transform(xml, spTemplate);
-  const mhbs = await transform(xml, mhbTemplate);
-  const mgs = await transform(xml, mgTemplate);
-  const modules = await transform(xml, modTemplate);
-  const mc = await transform(xml, mcTemplate);
-  const sp2mhb = await transform(xml, sp2mhbTemplate);
-  const mhb2mg = await transform(xml, mhb2mgTemplate);
-  const mg2mg = await transform(xml, mg2mgTemplate);
-  const mg2mod = await transform(xml, mg2modTemplate);
-  const m2mc = await transform(xml, m2mcTemplate);
-  const per2mc = await transform(xml, per2mcTemplate);
-  const modExams = await transform(xml, moduleExamTemplate);
+  const dep: any = await transform(xml, depTemplate);
+  const persons: any = await transform(xml, personTemplate);
+  const sps: any = await transform(xml, spTemplate);
+  const mhbs: any = await transform(xml, mhbTemplate);
+  const mgs: any = await transform(xml, mgTemplate);
+  const modules: any = await transform(xml, modTemplate);
+  const mc: any = await transform(xml, mcTemplate);
+  const sp2mhb: any = await transform(xml, sp2mhbTemplate);
+  const mhb2mg: any = await transform(xml, mhb2mgTemplate);
+  const mg2mg: any = await transform(xml, mg2mgTemplate);
+  const mg2mod: any = await transform(xml, mg2modTemplate);
+  const m2mc: any = await transform(xml, m2mcTemplate);
+  const per2mc: any = await transform(xml, per2mcTemplate);
+  const modExams: any = await transform(xml, moduleExamTemplate);
   // module dependencies via own n:m relational table, currently not in use but available.
-  const modDepend = await transform(xml, modDepTemplate);
-  let resultLog: MergedChangelog = {}
+  const modDepend: any = await transform(xml, modDepTemplate);
+  let resultLog: MergedChangelog = {};
 
   // add or update departments in database
   resultLog.department = await upsertDeparmtents(dep);
@@ -1217,7 +1265,7 @@ async function processFlexNowData(xml: string): Promise<MergedChangelog> {
 
   // add modules to database
   const modulesMessage = await upsertModules(modules);
-  resultLog.modules = modulesMessage
+  resultLog.modules = modulesMessage;
 
   // add module exams to database, only when adding modules not resulting in an error
   if (modulesMessage.error) {
@@ -1238,27 +1286,55 @@ async function processFlexNowData(xml: string): Promise<MergedChangelog> {
     data: sp2mhb,
     skipDuplicates: true,
   });
-  resultLog.sp2mhb = { queried: sp2mhb.length, added: resultSp2Mhb.count, updated: 0, deleted: 0, error: false, detailLog: [] }
+  resultLog.sp2mhb = {
+    queried: sp2mhb.length,
+    added: resultSp2Mhb.count,
+    updated: 0,
+    deleted: 0,
+    error: false,
+    detailLog: [],
+  };
 
   const resultMhb2Mg = await prisma.mhb2Mg.createMany({
     data: mhb2mg,
     skipDuplicates: true,
   });
-  resultLog.mhb2mg = { queried: mhb2mg.length, added: resultMhb2Mg.count, updated: 0, deleted: 0, error: false, detailLog: [] }
+  resultLog.mhb2mg = {
+    queried: mhb2mg.length,
+    added: resultMhb2Mg.count,
+    updated: 0,
+    deleted: 0,
+    error: false,
+    detailLog: [],
+  };
 
   // add modulegroup2modulegroup to database, only when adding mgs not resulting in an error
   let resultMg2Mg = await prisma.mg2Mg.createMany({
     data: mg2mg,
     skipDuplicates: true,
   });
-  resultLog.mg2mg = { queried: mg2mg.length, added: resultMg2Mg.count, updated: 0, deleted: 0, error: false, detailLog: [] }
+  resultLog.mg2mg = {
+    queried: mg2mg.length,
+    added: resultMg2Mg.count,
+    updated: 0,
+    deleted: 0,
+    error: false,
+    detailLog: [],
+  };
 
   // add modulegroup2module to database, only when adding mgs and modules not resulting in an error
   let resultMg2Mod = await prisma.mod2Mg.createMany({
     data: mg2mod,
     skipDuplicates: true,
   });
-  resultLog.mg2mod = { queried: mg2mod.length, added: resultMg2Mod.count, updated: 0, deleted: 0, error: false, detailLog: [] }
+  resultLog.mg2mod = {
+    queried: mg2mod.length,
+    added: resultMg2Mod.count,
+    updated: 0,
+    deleted: 0,
+    error: false,
+    detailLog: [],
+  };
 
   // filter invalid values in m2mc connection
   for (let el of m2mc) {
@@ -1270,14 +1346,28 @@ async function processFlexNowData(xml: string): Promise<MergedChangelog> {
     data: m2mc,
     skipDuplicates: true,
   });
-  resultLog.mod2mc = { queried: m2mc.length, added: resultMod2Mc.count, updated: 0, deleted: 0, error: false, detailLog: [] }
+  resultLog.mod2mc = {
+    queried: m2mc.length,
+    added: resultMod2Mc.count,
+    updated: 0,
+    deleted: 0,
+    error: false,
+    detailLog: [],
+  };
 
   // module dependencies via own n:m relational table, currently not in use but available.
   const resultModDepend = await prisma.moduleDep.createMany({
     data: modDepend,
     skipDuplicates: true,
   });
-  resultLog.modDepend = { queried: modDepend.length, added: resultModDepend.count, updated: 0, deleted: 0, error: false, detailLog: [] }
+  resultLog.modDepend = {
+    queried: modDepend.length,
+    added: resultModDepend.count,
+    updated: 0,
+    deleted: 0,
+    error: false,
+    detailLog: [],
+  };
 
   // add connection between persons and modulecourse from course starting
   // transform data, since multiple pIds are contained
@@ -1295,7 +1385,204 @@ async function processFlexNowData(xml: string): Promise<MergedChangelog> {
     data: person2ModCourse,
     skipDuplicates: true,
   });
-  resultLog.per2mc = { queried: person2ModCourse.length, added: resultPer2Mc.count, updated: 0, deleted: 0, error: false, detailLog: [] }
+  resultLog.per2mc = {
+    queried: person2ModCourse.length,
+    added: resultPer2Mc.count,
+    updated: 0,
+    deleted: 0,
+    error: false,
+    detailLog: [],
+  };
 
   return resultLog;
+}
+
+export async function adminGetUnapprovedWishes(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const unapprovedWishes = await FeatureWish.find({ isAllowed: false });
+
+  res.status(200).json(unapprovedWishes);
+}
+
+export async function adminApproveWish(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const wishId = String(req.params.id);
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(
+      new NotFoundError(
+        "Es wurde kein Wunsch mit der übergebenen ID gefunden.",
+      ),
+    );
+    return;
+  }
+
+  wish.isAllowed = true;
+  await wish.save();
+  res.status(200).json({ message: "Der Wunsch wurde genehmigt." });
+}
+
+export async function adminUnapproveWish(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const wishId = String(req.params.id);
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(
+      new NotFoundError(
+        "Es wurde kein Wunsch mit der übergebenen ID gefunden.",
+      ),
+    );
+    return;
+  }
+
+  wish.isAllowed = false;
+  await wish.save();
+  res.status(200).json({ message: "Der Wunsch wurde abgelehnt." });
+}
+
+export async function adminDeleteWish(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const wishId = String(req.params.id);
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(
+      new NotFoundError(
+        "Es wurde kein Wunsch mit der übergebenen ID gefunden.",
+      ),
+    );
+    return;
+  }
+
+  await wish.deleteOne();
+  res.status(200).json({ message: "Der Wunsch wurde gelöscht." });
+}
+
+export async function adminAddMessageToWish(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const wishId = String(req.params.id);
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const message = req.body.adminMessage;
+  // if (!message) {
+  //   next(new BadRequestError("Es wurde keine Message übergeben."));
+  //   return;
+  // }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(
+      new NotFoundError(
+        "Es wurde kein Wunsch mit der übergebenen ID gefunden.",
+      ),
+    );
+    return;
+  }
+
+  wish.adminMessage = message;
+  await wish.save();
+  res.status(200).json({ message: "Die Admin Message wurde gespeichert." });
+}
+
+export async function adminAddTagToWish(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const wishId = String(req.params.id);
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const tag = req.body.tag;
+  if (!tag) {
+    next(new BadRequestError("Es wurde kein Tag übergeben."));
+    return;
+  }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(
+      new NotFoundError(
+        "Es wurde kein Wunsch mit der übergebenen ID gefunden.",
+      ),
+    );
+    return;
+  }
+
+  const trimmedTag = tag.trim();
+  if (wish.tags?.includes(trimmedTag)) {
+    next(new BadRequestError("Dieser Tag wurde bereits hinzugefügt."));
+    return;
+  }
+  wish.tags ? wish.tags.push(trimmedTag) : (wish.tags = [trimmedTag]);
+  await wish.save();
+  res.status(200).json({ message: "Der Tag wurde gespeichert." });
+}
+
+export async function adminRemoveTagFromWish(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const wishId = String(req.params.id);
+  if (!wishId) {
+    next(new BadRequestError("Es wurde keine Wunsch-ID übergeben."));
+    return;
+  }
+
+  const tag = req.body.tag;
+  if (!tag) {
+    next(new BadRequestError("Es wurde kein Tag übergeben."));
+    return;
+  }
+
+  const wish = await FeatureWish.findById(wishId);
+  if (!wish) {
+    next(
+      new NotFoundError(
+        "Es wurde kein Wunsch mit der übergebenen ID gefunden.",
+      ),
+    );
+    return;
+  }
+
+  wish.tags
+    ? (wish.tags = wish.tags.filter((t: string) => t !== tag))
+    : (wish.tags = [tag]);
+  await wish.save();
+  res.status(200).json({ message: "Der Tag wurde gespeichert." });
 }

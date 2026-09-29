@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { Course } from '../../../../../interfaces/course';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Course } from '@interfaces/course';
 
 @Component({
     selector: 'app-resolve-collision-dialog',
     templateUrl: './resolve-collision-dialog.component.html',
     styleUrl: './resolve-collision-dialog.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ResolveCollisionDialogComponent {

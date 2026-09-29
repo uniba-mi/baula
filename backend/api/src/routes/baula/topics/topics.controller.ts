@@ -1,12 +1,12 @@
 import { generateTopicModuleRecommendationsPreGenerated } from "../../../services/topic-service";
 import { Embedding, ModEmbedding, Recommendation, TopicM } from "../../../database/mongo";
-import { Recommendation as IRecommendation, TopicRecommendationResult } from '../../../../../../interfaces/recommendation';
-import { Topic } from "../../../../../../interfaces/topic";
+import { Recommendation as IRecommendation, TopicRecommendationResult } from '@interfaces/recommendation';
+import { Topic } from "@interfaces/topic";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
-import { UserServer } from "../../../../../../interfaces/user";
+import { UserServer } from "@interfaces/user";
 import validator from "validator";
 import { extractModules } from "../../../shared/helpers/module-helpers";
-import { RecommendedModule, Source } from "../../../../../../interfaces/recommendation";
+import { RecommendedModule, Source } from "@interfaces/recommendation";
 import { NextFunction, Request, Response } from "express";
 
 export async function getTopicTree(req: Request, res: Response, next: NextFunction) {
@@ -65,8 +65,8 @@ export async function recommendModulesByTopicsPreGenerated(req: Request, res: Re
     try {
         // Step 1: Validate user and extract MHB information
         const user = req.user as UserServer;
-        const mhbId = user.sps?.[0]?.mhbId;
-        const mhbVersion = user.sps?.[0]?.mhbVersion;
+        const mhbId = user.sps?.filter(sp => sp.status == 'Immatrikuliert')[0]?.mhbId;
+        const mhbVersion = user.sps?.filter(sp => sp.status == 'Immatrikuliert')[0]?.mhbVersion;
 
         if (
             !mhbId ||

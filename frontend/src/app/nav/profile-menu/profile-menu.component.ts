@@ -1,21 +1,25 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { MStudyProgramme, User } from '../../../../../interfaces/user';
+import { Component, Input, SimpleChanges, inject, ChangeDetectionStrategy } from '@angular/core';
+import { MStudyProgramme, User } from '@interfaces/user';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { take } from 'rxjs';
 import { config } from 'src/environments/config.local';
 import { Router } from '@angular/router';
+import { LocaleService } from 'src/app/shared/services/locale.service';
 
 @Component({
   selector: 'app-profile-menu',
   templateUrl: './profile-menu.component.html',
   styleUrl: './profile-menu.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ProfileMenuComponent {
+  private auth = inject(AuthService);
+  private locale = inject(LocaleService);
+  router = inject(Router);
+
   @Input() user: User;
   bilappAvailable: boolean = false;
-
-  constructor(private auth: AuthService, public router: Router) {}
 
   logout() {
     if (this.user.authType === 'saml') {
@@ -35,7 +39,7 @@ export class ProfileMenuComponent {
         .pipe(take(1))
         .subscribe((success) => {
           if (success) {
-            document.location.href = config.homeUrl;
+            document.location.href = this.locale.localizeUrl(config.homeUrl);
           }
         });
     }
@@ -43,7 +47,7 @@ export class ProfileMenuComponent {
 
   login() {
     // forward to login url if login button is clicked
-    document.location.href = config.dashboardUrl;
+    document.location.href = this.locale.localizeUrl(config.dashboardUrl);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

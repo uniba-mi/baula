@@ -29,6 +29,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { AuthInterceptor } from 'src/app/shared/auth/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConnectionCardComponent } from './module-course-connection/connection-card/connection-card.component';
@@ -37,7 +38,6 @@ import { CourseConnectionCardComponent } from './dialogs/edit-connection-dialog/
 import { ErrorLogsComponent } from './error-logs/error-logs.component';
 import { AdminRecsComponent } from './admin-recs/admin-recs.component';
 import { ReportingComponent } from './reporting/reporting.component';
-import { BaseChartDirective } from 'ng2-charts';
 import { SharedModule } from '../shared/shared.module';
 import { SemesterSelectionFormComponent } from './shared/semester-selection-form/semester-selection-form.component';
 import { ResultPageComponent } from '../long-term-evaluation/result-page/result-page.component';
@@ -47,7 +47,9 @@ import { TableCardComponent } from '../reporting/table-card/table-card.component
 import { ReportingBaseComponent } from '../reporting/reporting-base.component';
 import { OtherActionsComponent } from './other-actions/other-actions.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import { AdminFeatureWishesComponent } from './admin-feature-wishes/admin-feature-wishes.component';
+import { MatTabGroup } from '@angular/material/tabs';
+import { AdminSingleFeatureWishComponent } from './admin-feature-wishes/admin-single-feature-wish/admin-single-feature-wish.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     AdminRecsComponent,
     ReportingComponent,
     SemesterSelectionFormComponent,
-    OtherActionsComponent
+    OtherActionsComponent,
+    AdminFeatureWishesComponent,
+    AdminSingleFeatureWishComponent,
   ],
   imports: [
     CommonModule,
@@ -92,13 +96,14 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatCardModule,
     MatCheckboxModule,
     MatAutocompleteModule,
-    BaseChartDirective,
-    SharedModule, 
+    MatButtonToggleModule,
+    SharedModule,
     ResultPageComponent,
     ReportingBaseComponent,
     BarChartCardComponent,
     TableCardComponent,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTabGroup
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

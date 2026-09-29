@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { PlanCourse, SemesterPlan, SemesterPlanTemplate } from "../../../../../../interfaces/semester-plan";
+import { PlanCourse, SemesterPlan, SemesterPlanTemplate } from "@interfaces/semester-plan";
 import { StudyPlan } from "../../../database/mongo";
 import {
   validateAndReturnCourse,
@@ -10,13 +10,11 @@ import {
 } from "../../../shared/helpers/custom-validator";
 import validator from "validator";
 import { BadRequestError, logError, NotFoundError } from "../../../shared/error";
-import { PrismaClient } from "@prisma/client";
-import { UserGeneratedModule } from "../../../../../../interfaces/user-generated-module";
-import { UserServer } from "../../../../../../interfaces/user";
+import { prisma } from "../../../database/prisma";
+import { UserGeneratedModule } from "@interfaces/user-generated-module";
+import { UserServer } from "@interfaces/user";
 import { logger } from "../../../shared/utils/logger";
 import { findActiveStudyPlan, findStudyPlan } from "../../../shared/helpers/plan-helper";
-
-const prisma = new PrismaClient();
 
 export async function createUserGeneratedModule(
   req: Request,
@@ -29,8 +27,9 @@ export async function createUserGeneratedModule(
     : undefined;
   const module = validateAndReturnUserGeneratedModule(req.body.module);
   const ects = module && module.ects ? Number(module.ects) : 0;
+  const user = req.user as UserServer;
 
-  const studyPlan = await findStudyPlan(studyPlanId);
+  const studyPlan = await findStudyPlan(studyPlanId, user._id);
 
   if (studyPlan && semesterPlanId && module) {
     const semesterPlan = studyPlan.semesterPlans.find(
@@ -78,16 +77,21 @@ export async function addModule(
       ? req.body.module
       : undefined;
   const ects = !Number.isNaN(Number(req.body.ects)) ? Number(req.body.ects) : 0;
+  const user = req.user as UserServer;
 
   if (studyPlanId && semesterPlanId && mod) {
     try {
       const updatedStudyPlan = await StudyPlan.findOneAndUpdate(
-        { _id: studyPlanId, "semesterPlans._id": semesterPlanId },
+        {
+          _id: studyPlanId,
+          userId: user._id,
+          "semesterPlans._id": semesterPlanId,
+        },
         {
           $push: { "semesterPlans.$.modules": mod },
           $inc: { "semesterPlans.$.summedEcts": ects },
         },
-        { new: true, runValidators: true }
+        { returnDocument: 'after', runValidators: true }
       );
 
       if (updatedStudyPlan) {
@@ -139,6 +143,7 @@ export async function updateUserGeneratedModule(
     ? req.body.moduleId
     : undefined;
   const module = validateAndReturnUserGeneratedModule(req.body.module);
+  const user = req.user as UserServer;
 
   if (!studyPlanId || !semesterPlanId || !module || !moduleId) {
     return next(new BadRequestError("Ungültige Inputs"));
@@ -148,6 +153,7 @@ export async function updateUserGeneratedModule(
     const studyPlan = await StudyPlan.findOne(
       {
         _id: studyPlanId,
+        userId: user._id,
         "semesterPlans._id": semesterPlanId,
         "semesterPlans.userGeneratedModules._id": moduleId,
       },
@@ -179,6 +185,7 @@ export async function updateUserGeneratedModule(
     const updatedStudyPlan = await StudyPlan.findOneAndUpdate(
       {
         _id: studyPlanId,
+        userId: user._id,
         "semesterPlans._id": semesterPlanId,
         "semesterPlans.userGeneratedModules._id": moduleId,
       },
@@ -194,7 +201,7 @@ export async function updateUserGeneratedModule(
         },
       },
       {
-        new: true,
+        returnDocument: 'after',
         arrayFilters: [
           { "semesterPlan._id": semesterPlanId },
           { "module._id": moduleId },
@@ -231,8 +238,8 @@ export async function initSemesterPlans(
   const id =
     typeof req.body.studyPlanId == "string" ? req.body.studyPlanId : undefined;
   const semesterPlans: SemesterPlanTemplate[] = req.body.semesterPlans;
-  const studyPlan = await findStudyPlan(id);
   const user = req.user as UserServer;
+  const studyPlan = await findStudyPlan(id, user._id);
   if (Array.isArray(semesterPlans) && studyPlan && user) {
     for (let semesterPlan of semesterPlans) {
       // check if userId is set correctly otherwise set it
@@ -262,7 +269,7 @@ export async function addSemesterPlanToStudyPlan(
     ? req.body.semester
     : undefined;
   if (spId && user._id && semester) {
-    const studyPlan = await findStudyPlan(spId);
+    const studyPlan = await findStudyPlan(spId, user._id);
     if (studyPlan) {
       try {
         const newSemesterPlan: any = {
@@ -304,8 +311,9 @@ export async function updateSemesterPlanAimedEcts(
     validator.isInt(String(req.body.aimedEcts), { min: 0, max: 210 })
       ? Number(req.body.aimedEcts)
       : undefined;
+  const user = req.user as UserServer;
 
-  const studyPlan = await findStudyPlan(spId);
+  const studyPlan = await findStudyPlan(spId, user._id);
 
   if (studyPlan && semesterPlanId && aimedEcts) {
     const semesterPlan = studyPlan.semesterPlans.find(
@@ -336,8 +344,9 @@ export async function updateIsPastSemester(
     ? req.body.semesterPlanId
     : undefined;
   const isPast = Boolean(req.body.isPast);
+  const user = req.user as UserServer;
 
-  const studyPlan = await findStudyPlan(spId);
+  const studyPlan = await findStudyPlan(spId, user._id);
 
   if (studyPlan && semesterPlanId && isPast) {
     const semesterPlan = studyPlan.semesterPlans.find(
@@ -377,8 +386,9 @@ export async function deleteModule(
   const ects = !Number.isNaN(Number(req.body.ects))
     ? Number(req.body.ects)
     : undefined;
+  const user = req.user as UserServer;
 
-  const studyPlan = await findStudyPlan(studyPlanId);
+  const studyPlan = await findStudyPlan(studyPlanId, user._id);
 
   if (studyPlan && semesterPlanId && mod && ects) {
     const semesterPlan = studyPlan.semesterPlans.find(
@@ -420,8 +430,9 @@ export async function deleteUserGeneratedModule(
     ? req.body.semesterPlanId
     : undefined;
   const module = validateAndReturnUserGeneratedModule(req.body.module);
+  const user = req.user as UserServer;
 
-  const studyPlan = await findStudyPlan(studyPlanId);
+  const studyPlan = await findStudyPlan(studyPlanId, user._id);
 
   if (studyPlan && semesterPlanId && module) {
     const semesterPlan = studyPlan.semesterPlans.find(
@@ -469,8 +480,9 @@ export async function deleteUserGeneratedModules(
   const moduleIds: string[] = Array.isArray(req.body.moduleIds)
     ? req.body.moduleIds
     : [];
+  const user = req.user as UserServer;
 
-  const studyPlan = await findStudyPlan(studyPlanId);
+  const studyPlan = await findStudyPlan(studyPlanId, user._id);
 
   if (studyPlan && semesterPlanId && moduleIds.length > 0) {
     const semesterPlan = studyPlan.semesterPlans.find(

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ExtendedJob, Job } from '../../../../../../../interfaces/job';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { ExtendedJob, Job } from '@interfaces/job';
 import { MatDialog } from '@angular/material/dialog';
 import { ModService } from 'src/app/shared/services/module.service';
 import { Store } from '@ngrx/store';
@@ -10,25 +10,24 @@ import {
   ConfirmationDialogComponent,
   ConfirmationDialogData,
 } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
-import { PathModule } from '../../../../../../../interfaces/study-path';
-import { Module } from '../../../../../../../interfaces/module';
+import { PathModule } from '@interfaces/study-path';
+import { Module } from '@interfaces/module';
 
 @Component({
   selector: 'app-job-card',
   standalone: false,
   templateUrl: './job-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './job-card.component.scss',
 })
 export class JobCardComponent implements OnInit {
+  private dialog = inject(MatDialog);
+  private modService = inject(ModService);
+  private store = inject(Store);
+
   @Input() job: ExtendedJob | undefined;
   @Input() studyPathModules: PathModule[] | null;
   recModules$: Observable<Module[]> | undefined;
-
-  constructor(
-    private dialog: MatDialog,
-    private modService: ModService,
-    private store: Store
-  ) {}
 
   ngOnInit(): void {
     if (this.job && this.job.recModules && this.studyPathModules) {
@@ -36,7 +35,7 @@ export class JobCardComponent implements OnInit {
       this.recModules$ = this.modService.getFullModulesByAcronyms(
         this.job.recModules
           .filter((module) => !acronyms.includes(module.acronym))
-          .map((module) => module.acronym)
+          .map((module) => module.acronym),
       );
     }
   }
@@ -45,7 +44,7 @@ export class JobCardComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogComponent, {
       maxWidth: window.innerWidth < 1400 ? '90vw' : '50vw',
       data: {
-        dialogTitle: 'Job bearbeiten',
+        dialogTitle: $localize`Job bearbeiten`,
         dialogContentId: 'edit-job',
         job,
       },
@@ -64,11 +63,11 @@ export class JobCardComponent implements OnInit {
 
   openDeleteConfirmationDialog(job: Job) {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Jobanzeige löschen?',
+      dialogTitle: $localize`Jobanzeige löschen?`,
       actionType: 'delete',
-      confirmationItem: `die Jobanzeige "${job.title}"`,
-      confirmButtonLabel: 'Löschen',
-      cancelButtonLabel: 'Abbrechen',
+      confirmationItem: $localize`die Jobanzeige "${job.title}"`,
+      confirmButtonLabel: $localize`Löschen`,
+      cancelButtonLabel: $localize`Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         this.deleteJob(job);

@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AlertType } from 'src/app/shared/classes/alert';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { Semester } from '../../../../../interfaces/semester';
-import { StudyPlan } from '../../../../../interfaces/study-plan';
+import { Semester } from '@interfaces/semester';
+import { StudyPlan } from '@interfaces/study-plan';
 import { Observable, take } from 'rxjs';
 import { AnalyticsService } from 'src/app/shared/services/analytics.service';
 
@@ -10,9 +10,13 @@ import { AnalyticsService } from 'src/app/shared/services/analytics.service';
   selector: 'app-import-dialog',
   templateUrl: './import-dialog.component.html',
   styleUrls: ['./import-dialog.component.scss'],
-  standalone: false
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ImportDialogComponent {
+  private snackbar = inject(SnackbarService);
+  private analytics = inject(AnalyticsService);
+
   @Input() importType: string;
   @Input() startSemester: Semester | undefined;
   @Input() studyPlanTemplate$: Observable<StudyPlan> | undefined;
@@ -28,8 +32,6 @@ export class ImportDialogComponent {
   showRecencyWarning: boolean = false;
   previousSemester: string | undefined;
   loading: boolean = false;
-
-  constructor(private snackbar: SnackbarService, private analytics: AnalyticsService) { }
 
   ngOnInit() {
     // init logic for template study plans
@@ -58,7 +60,7 @@ export class ImportDialogComponent {
           },
           () => {
             this.loading = false;
-          }
+          },
         );
       }
     }
@@ -85,8 +87,9 @@ export class ImportDialogComponent {
         try {
           this.upload = JSON.parse(fileReader.result as string);
           if (this.importType === 'deinen Studienplan') {
-
-            this.analytics.trackEvent('StudyplanOverwrite', { filename: this.filename });
+            this.analytics.trackEvent('StudyplanOverwrite', {
+              filename: this.filename,
+            });
 
             this.extractData(this.upload);
           }
@@ -95,18 +98,22 @@ export class ImportDialogComponent {
           this.filename = undefined;
           this.snackbar.openSnackBar({
             type: AlertType.DANGER,
-            message: 'Die ausgewählte Datei ist keine valide .json-Datei.',
+            message: $localize `Die ausgewählte Datei ist keine valide .json-Datei.`,
           });
         }
       };
       fileReader.onerror = (error) => {
-        console.log(error);
+        this.snackbar.openSnackBar({
+          type: AlertType.DANGER,
+          message:
+            'Es ist ein unerwarteter Fehler aufgetreten, probier es später nochmal. Falls der Fehler bestehen bleibt, melde dich beim Baula-Team.',
+        });
       };
     } else {
       this.snackbar.openSnackBar({
         type: AlertType.DANGER,
         message:
-          'Die ausgewählte Datei hat nicht den richtigen Dateityp! Lade bitte eine .json-Datei hoch.',
+          $localize `Die ausgewählte Datei hat nicht den richtigen Dateityp! Lade bitte eine .json-Datei hoch.`,
       });
 
       this.analytics.trackEvent('InvalidFileType', { message: 'Not JSON' });

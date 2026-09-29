@@ -1,35 +1,35 @@
 <mat-accordion class="moduleGroup" multi>
   <!-- iterate over the modules and display all modules that are children from the higher modulegroup -->
-  <mat-expansion-panel class="my-3 shadow-none border-bottom pb-2" *ngFor="let module of structure; index as i">
-    <!-- display the name of the modulegroup -->
-    <mat-expansion-panel-header>
-      <span class="moduleGroupHeader">{{ module.containerName }}</span>
-    </mat-expansion-panel-header>
-    <!-- display all courses of this modulegroup-->
-    <div id="collapse" *ngIf="module.courses">
-      <div>
-        <ng-container 
-          *ngIf="module.courses.length > 0;then coursesExist; else coursesDoesntExist">
-        </ng-container>
-
-        <ng-template #coursesExist>
-          <ng-container *ngIf="selectedCourses$ | async as selectedCourses">
-            <div *ngFor="let course of module.courses" class="mb-3">
-              <app-course-item
-                [course]="course"
-                [selectedCourses]="selectedCourses"
-                [moduleId]="module.containerId"
-              >
-              </app-course-item>
-            </div>
-          </ng-container>
-        </ng-template>
-        <!--TODO Better Message? Maybe give a possible message as prop from parent component-->
-        <ng-template #coursesDoesntExist>
-          <div> Derzeit keine Lehrveranstaltungen vorhanden!</div>
-        </ng-template>
-
-      </div>
-    </div>
-  </mat-expansion-panel>
+  @for (module of structure; track module; let i = $index) {
+    <mat-expansion-panel class="my-3 shadow-none border-bottom pb-2">
+      <!-- display the name of the modulegroup -->
+      <mat-expansion-panel-header>
+        <span class="moduleGroupHeader">{{ module.containerName }}</span>
+      </mat-expansion-panel-header>
+      <!-- display all courses of this modulegroup-->
+      @if (module.courses) {
+        <div id="collapse">
+          <div>
+            @if (module.courses.length > 0) {
+              @if (selectedCourses$ | async; as selectedCourses) {
+                @for (course of module.courses; track course) {
+                  <div class="mb-3">
+                    <app-course-item
+                      [course]="course"
+                      [selectedCourses]="selectedCourses"
+                      [moduleId]="module.containerId"
+                      >
+                    </app-course-item>
+                  </div>
+                }
+              }
+            } @else {
+              <div i18n> Derzeit keine Lehrveranstaltungen vorhanden!</div>
+            }
+            <!--TODO Better Message? Maybe give a possible message as prop from parent component-->
+          </div>
+        </div>
+      }
+    </mat-expansion-panel>
+  }
 </mat-accordion>

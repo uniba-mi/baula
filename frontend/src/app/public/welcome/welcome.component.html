@@ -2,18 +2,18 @@
   <mat-card appearance="outlined" class=" welcome-card w-75 mx-auto my-4">
     <div class="row welcome d-flex flex-column flex-md-row justify-content-between align-items-center">
       <div class="welcome-text col-md-6 text-center text-md-start">
-        <h1>
+        <h1 i18n>
           Willkommen bei <span class="acronym">BAULA</span>, Deinem persönlichen
           Studien&shy;assistenten
         </h1>
-        <h3>
+        <h3 i18n>
           Der digitale Studienassistent – das neue Tool zur Studienplanung an
           der Universität Bamberg unterstützt Dich bei der Semesterplanung und
           langfristigen Planung.
         </h3>
         <div class="row my-3">
           <div class="col-auto">
-            <button class="btn btn-primary my-1 py-3 px-4" (click)="login()">
+            <button class="btn btn-primary my-1 py-3 px-4" (click)="login()" i18n>
               Jetzt mit deiner Studienplanung beginnen!
             </button>
           </div>
@@ -23,9 +23,9 @@
         <picture>
           <source media="(max-width: 799px)" srcset="../../../assets/welcome_600.jpg" />
           <source media="(min-width: 800px)" srcset="../../../assets/welcome_800.jpg" />
-          <img class="w-100" src="../../../assets/welcome_1280.jpg" alt="Student mit Laptop" />
+          <img class="w-100" src="../../../assets/welcome_1280.jpg" alt="Student mit Laptop" i18n-alt/>
         </picture>
-        <p class="attribution text-end mt-2">
+        <p class="attribution text-end mt-2" i18n>
           Designed by:
           <a class="link" href="https://de.freepik.com/">Freepik</a>
         </p>
@@ -34,26 +34,26 @@
     <div class="row mb-4">
       <div class="row justify-content-center">
         <div class="col-12">
-          <p class="mx-4 text-gray text-center">Gefördert von:</p>
+          <p class="mx-4 text-gray text-center" i18n>Gefördert von:</p>
         </div>
       </div>
       <div class="row justify-content-center align-items-center mt-2">
         <div class="col-6 col-md-3 col-lg-2 text-center">
-          <img class="sponsor w-75" src="../../assets/voll-ki.svg" alt="Das Logo des Projekts VoLL-KI" />
+          <img class="sponsor w-75" src="../../assets/voll-ki.svg" alt="Das Logo des Projekts VoLL-KI" i18n-alt/>
         </div>
         <div class="col-6 col-md-3 col-lg-2 text-center">
           <img class="sponsor w-75" src="../../assets/bmftr.png"
-            alt="Das Logo des Bundesministerium für Forschung, Technologie und Raumfahrt (BMFTR)" />
+            alt="Das Logo des Bundesministerium für Forschung, Technologie und Raumfahrt (BMFTR)" i18n-alt/>
         </div>
         <div class="col-6 col-md-4 col-lg-2 text-center">
-          <img class="sponsor w-75" src="../../assets/dikule_transparent.png" alt="Das Logo des Projekts DiKuLe" />
+          <img class="sponsor w-75" src="../../assets/dikule_transparent.png" alt="Das Logo des Projekts DiKuLe" i18n-alt/>
         </div>
         <div class="col-6 col-md-4 col-lg-2 text-center">
-          <img class="sponsor w-75" src="../../../assets/bakule_blau.png" alt="Das Logo des Projekts BaKuLe" />
+          <img class="sponsor w-75" src="../../../assets/bakule_blau.png" alt="Das Logo des Projekts BaKuLe" i18n-alt/>
         </div>
         <div class="col-6 col-md-4 col-lg-2 text-center">
           <img class="sponsor w-75" src="../../assets/Logo_Stiftung_Hochschullehre_pos.png"
-            alt="Das Logo der Stiftung Innovation in der Hochschullehre (StIL)" />
+            alt="Das Logo der Stiftung Innovation in der Hochschullehre (StIL)" i18n-alt/>
         </div>
       </div>
     </div>

@@ -4,13 +4,12 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FuseSearchService } from 'src/app/shared/services/fuse-search.service';
 import { Module } from '../../../../../../interfaces/module';
-import {
-  Option,
-  SearchSettings,
-} from '../../../../../../interfaces/search';
+import { Option, SearchSettings } from '../../../../../../interfaces/search';
 import { ExtendedModuleGroup } from '../../../../../../interfaces/module-group';
 import { Observable } from 'rxjs';
 import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
@@ -21,9 +20,13 @@ import { Store } from '@ngrx/store';
   selector: 'app-module-list',
   templateUrl: './module-list.component.html',
   styleUrls: ['./module-list.component.scss'],
-  standalone: false
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ModuleListComponent implements OnInit, OnChanges {
+  private fuseSearch = inject(FuseSearchService);
+  private store = inject<Store<State>>(Store);
+
   //@Input() moduleGroup: ModuleGroup;
   @Input() modules: Module[] | null;
   @Input() searchSettings: SearchSettings | null | undefined;
@@ -33,8 +36,6 @@ export class ModuleListComponent implements OnInit, OnChanges {
   searchResult: Module[] = [];
   compulsory: string = '';
   structure$: Observable<ExtendedModuleGroup[]>;
-
-  constructor(private fuseSearch: FuseSearchService, private store: Store<State>) { }
 
   ngOnInit(): void {
     if (this.modules) {
@@ -47,11 +48,7 @@ export class ModuleListComponent implements OnInit, OnChanges {
     if (changes.modules && this.modules) {
       this.searchResult = this.searchModules(this.modules);
     }
-    if (
-      this.searchSettings &&
-      changes.searchSettings &&
-      this.modules
-    ) {
+    if (this.searchSettings && changes.searchSettings && this.modules) {
       this.searchResult = this.searchModules(this.modules);
     }
 
@@ -61,14 +58,20 @@ export class ModuleListComponent implements OnInit, OnChanges {
   }
 
   filterModules(modules: Module[], filters: Option[]): Module[] {
-
-    const hideTakenPassedFilter = filters.find(filter => filter.key === 'hideTakenPassed');
+    const hideTakenPassedFilter = filters.find(
+      (filter) => filter.key === 'hideTakenPassed',
+    );
     let result = modules;
-    if (hideTakenPassedFilter && hideTakenPassedFilter.value === 'hideTakenPassed') {
+    if (
+      hideTakenPassedFilter &&
+      hideTakenPassedFilter.value === 'hideTakenPassed'
+    ) {
       result = this.filterTakenAndPassedModules(result);
     }
 
-    const regularFilters = filters.filter(filter => filter.key !== 'hideTakenPassed');
+    const regularFilters = filters.filter(
+      (filter) => filter.key !== 'hideTakenPassed',
+    );
 
     if (regularFilters.length > 0) {
       result = result.filter((module) => {
@@ -81,7 +84,8 @@ export class ModuleListComponent implements OnInit, OnChanges {
           return (
             module[filter.key as keyof typeof module].includes(filter.value) ||
             module[filter.key as keyof typeof module] === filter.value ||
-            (typeof filter.value == 'string' && filter.value.includes(module[filter.key as keyof typeof module]))
+            (typeof filter.value == 'string' &&
+              filter.value.includes(module[filter.key as keyof typeof module]))
           );
         });
       });
@@ -97,14 +101,18 @@ export class ModuleListComponent implements OnInit, OnChanges {
       if (this.searchSettings.filter && this.searchSettings.filter.length > 0) {
         result = this.filterModules(modules, this.searchSettings.filter);
       }
-      if (this.searchSettings && this.searchSettings.term !== '' && this.acronyms) {
+      if (
+        this.searchSettings &&
+        this.searchSettings.term !== '' &&
+        this.acronyms
+      ) {
         result = this.fuseSearch.search(
           result,
           this.searchSettings.term,
           this.searchSettings.searchIn,
           this.acronyms,
-          0.2
-        )
+          0.2,
+        );
       }
       return result;
     } else {
@@ -113,8 +121,8 @@ export class ModuleListComponent implements OnInit, OnChanges {
   }
 
   filterTakenAndPassedModules(modules: Module[]): Module[] {
-    return modules.filter(module =>
-      !this.passedOrTakenAcronyms.includes(module.acronym)
+    return modules.filter(
+      (module) => !this.passedOrTakenAcronyms.includes(module.acronym),
     );
   }
 }

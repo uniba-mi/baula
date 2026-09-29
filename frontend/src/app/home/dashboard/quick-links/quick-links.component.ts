@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { ChartMetadata, chartMetadata } from 'src/app/shared/constants/chart-metadata';
 
 @Component({
     selector: 'app-quick-links',
     templateUrl: './quick-links.component.html',
     styleUrl: './quick-links.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class QuickLinksComponent implements OnInit {

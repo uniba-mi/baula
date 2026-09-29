@@ -1,0 +1,79 @@
+<mat-tab-group class="feature-wish-component">
+    <!-- Make a wish + top wishes -->
+    <mat-tab label="Feature-Wunsch" i18n-label>
+        <br>
+        <mat-card-content class="container-fluid d-block pt-0">
+            <div class="mb-3">
+                <app-icon-picker (selectedIconChange)="selectedIcon = $event"></app-icon-picker>
+            </div>
+            <div class="mb-3">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label i18n>Feature-Titel</mat-label>
+                    <input matInput [(ngModel)]="title" placeholder="Gebe einen Titel ein" i18n-placeholder id="title" maxlength="200">
+                </mat-form-field>
+            </div>
+            <div class="mb-3">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label i18n>Feature-Beschreibung</mat-label>
+                    <textarea matInput [(ngModel)]="description" placeholder="Füge eine Beschreibung hinzu" i18n-placeholder rows="4"
+                        maxlength="1000"></textarea>
+                </mat-form-field>
+            </div>
+
+            <button color="primary" class="w-100 btn btn-outline" (click)="submitFeatureWish()" i18n>Feature-Wunsch
+                absenden</button>
+
+            <!-- Error/ Succes message div -->
+            <div class="alert alert-danger p-2 m-2" role="alert" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+            <div class="alert alert-success p-2 m-2" role="alert" *ngIf="successMessage">
+                {{ successMessage }}
+            </div>
+
+            <mat-list>
+                <h2 i18n><i class="bi bi-trophy-fill" style="color:goldenrod;"></i> Top Feature-Wünsche</h2>
+                @for (wish of topFeaturesWished; track wish) {
+                <app-single-feature-wish [wish]="wish"
+                    [rank]="topFeaturesWished.indexOf(wish) + 1"></app-single-feature-wish>
+                }
+            </mat-list>
+        </mat-card-content>
+    </mat-tab>
+    <!-- All wishes -->
+    <mat-tab label="Alle Wünsche" i18n-label>
+        <div class="alert alert-danger p-2 m-2" role="alert" *ngIf="allWishesErrorMessage">
+            {{ allWishesErrorMessage }}
+        </div>
+
+        <div class="all-wishes">
+            @for (wish of allFeaturesWished; track wish) {
+            <div class="m-3">
+                <app-single-feature-wish [wish]="wish" [rank]="allFeaturesWished.indexOf(wish) + 1"
+                    [withDescription]="true"></app-single-feature-wish>
+            </div>
+            }
+        </div>
+    </mat-tab>
+    <!-- Unapproved Wishes -->
+    <mat-tab label="Deine ungenehmigten Wünsche" i18n-label>
+        <div class="alert alert-danger p-2 m-2" role="alert" *ngIf="usersUnapprovedWishesErrorMessage">
+            {{ usersUnapprovedWishesErrorMessage }}
+        </div>
+
+        <div class="all-wishes">
+            @for (wish of usersUnapprovedWishes; track wish) {
+            <div class="m-3">
+                <app-single-feature-wish [wish]="wish" [rank]="usersUnapprovedWishes.indexOf(wish) + 1"
+                    [withDescription]="true" [withLikeButton]="false" [withDeleteButton]="true"
+                    [deleteFunction]="deleteUsersUnapprovedWish"></app-single-feature-wish>
+            </div>
+            }
+        </div>
+        @if (usersUnapprovedWishes.length == 0) {
+        <div class="alert alert-info p-2 m-2" i18n>
+            Du hast derzeit keine ungenehmigten Wünsche vorliegen.
+        </div>
+        }
+    </mat-tab>
+</mat-tab-group>

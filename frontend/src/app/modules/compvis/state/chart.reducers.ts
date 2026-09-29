@@ -58,9 +58,25 @@ export const reducer = createReducer(
       }
     }
 
+    // setInitialBars replaces every Bar instance, which would otherwise
+    // silently orphan state.selectedBar (still pointing at a discarded
+    // object) and lose the selection highlight - re-apply it to its match
+    // in the freshly built bars, if the competence is still present.
+    let selectedBar = state.selectedBar;
+    if (selectedBar) {
+      const match = barsBuffer.find(
+        (bar) => bar.competence.compId === selectedBar!.competence.compId
+      );
+      if (match) {
+        match.fill = 'var(--ub-red)';
+      }
+      selectedBar = match;
+    }
+
     return {
       ...state,
       bars: barsBuffer,
+      selectedBar,
     };
   }),
   on(ChartActions.setBars, (state, props) => {

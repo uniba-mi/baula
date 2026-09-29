@@ -1,18 +1,27 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  inject,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject, combineLatest, forkJoin, of } from 'rxjs';
 import {
   SemesterPlanActions,
   StudyPlanActions,
 } from 'src/app/actions/study-planning.actions';
-import { User } from '../../../../../../interfaces/user';
+import { StudyPlanSettings, User } from '../../../../../../interfaces/user';
 import {
   getSemesterList,
+  getStudyPlanSettings,
   getUser,
   getUserStudyPath,
   getUserStudyprogrammes,
 } from 'src/app/selectors/user.selectors';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {
   PathModule,
   SemesterStudyPath,
@@ -38,8 +47,11 @@ import {
   getStudyPlans,
 } from 'src/app/selectors/study-planning.selectors';
 import {
-  filter, first, map,
+  filter,
+  first,
+  map,
   shareReplay,
+  skipWhile,
   switchMap,
   take,
   takeUntil,
@@ -48,8 +60,11 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { TransformationService } from 'src/app/shared/services/transformation.service';
 import { UserGeneratedModule } from '../../../../../../interfaces/user-generated-module';
-import { getModuleByAcronym, getOldModuleByAcronym } from 'src/app/selectors/module-overview.selectors';
-import { StudyPathActions, UserActions } from 'src/app/actions/user.actions';
+import {
+  getModuleByAcronym,
+  getOldModuleByAcronym,
+} from 'src/app/selectors/module-overview.selectors';
+import { SettingsActions, StudyPathActions, UserActions } from 'src/app/actions/user.actions';
 import { StudyPlan } from '../../../../../../interfaces/study-plan';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { ScreenSizeService } from 'src/app/shared/services/screen-size.service';
@@ -63,9 +78,21 @@ import { StudyPlanService } from 'src/app/shared/services/study-plan.service';
   selector: 'app-study-plan-detail',
   templateUrl: './study-plan-detail.component.html',
   styleUrls: ['./study-plan-detail.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class StudyPlanDetailComponent implements OnInit {
+  private store = inject(Store);
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private transform = inject(TransformationService);
+  private studyPlanService = inject(StudyPlanService);
+  private cdr = inject(ChangeDetectorRef);
+  private screenSizeService = inject(ScreenSizeService);
+  private flexnowService = inject(FlexnowService);
+  private modService = inject(ModService);
+  private validation = inject(PlanningValidationService);
+
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   maintenance = false; // Variable to disable features and make maintenance message visible
@@ -84,19 +111,27 @@ export class StudyPlanDetailComponent implements OnInit {
   selectedSemesterPlans$: Observable<SemesterPlan[] | undefined>;
   studyPlanDetailHint: string = 'studyPlanDetail-hint';
   studyPlanDetailMessage: string =
-    'Hier hast du die Möglichkeit, dein ganzes Studium zu planen. Plane, welche Module du in welchem Semester belegen möchtest und überprüfe, ob du damit alle ECTS-Vorgaben deines Studiums erreichst. Platzhalter erlauben es Dir, individuelle Inhalte anzulegen. Wenn du die Seitenleiste ausklappst, siehst du Modulempfehlungen für deinen Studiengang.';
+    $localize `Hier hast du die Möglichkeit, dein ganzes Studium zu planen. Plane, welche Module du in welchem Semester belegen möchtest und überprüfe, ob du damit alle ECTS-Vorgaben deines Studiums erreichst. Platzhalter erlauben es Dir, individuelle Inhalte anzulegen. Wenn du die Seitenleiste ausklappst, siehst du Modulempfehlungen für deinen Studiengang.`;
 
   // conditions for sidenav to open
   isActivePlan$: Observable<boolean>;
   plannedModules$: Observable<string[] | undefined>;
 
+  showECTSProgress: String = $localize `ECTS Fortschritt anzeigen`;
+  hideECTSProgress: String = $localize `ECTS Fortschritt verstecken`;
+  showGrades: String = $localize `Noten einblenden`;
+  hideGrades: String = $localize `Noten ausblenden`;
+  showModuleRecommendations: string = $localize `Modulempfehlungen ausklappen`;
+  hideModuleRecommendations: string = $localize `Modulempfehlungen einklappen`;
+
+
   // scrolling
   canScrollLeft = false;
   canScrollRight = false;
   private resizeObserver?: ResizeObserver;
-  @ViewChild('semesterContainer', { static: false }) semesterContainer!: ElementRef;
+  @ViewChild('semesterContainer', { static: false })
+  semesterContainer!: ElementRef;
 
-  displayProgressBar: boolean = false;
   hintsOpened = false;
   hints: PlanningHints[] = [];
   hintsIconColor: string = 'standard';
@@ -107,58 +142,56 @@ export class StudyPlanDetailComponent implements OnInit {
   isSmallScreen: boolean = false;
   expandedSemesters: { [semesterName: string]: boolean } = {};
   closeMode: string;
-  availableSemesters$: Observable<Semester[]>;
-
-  constructor(
-    private store: Store,
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private transform: TransformationService,
-    private studyPlanService: StudyPlanService,
-    private cdr: ChangeDetectorRef,
-    private screenSizeService: ScreenSizeService,
-    private flexnowService: FlexnowService,
-    private modService: ModService,
-    private validation: PlanningValidationService,
-  ) { }
+  flexNowAvailable$: Observable<boolean>;
+  studyPlanSettings$: Observable<StudyPlanSettings | undefined>;
+  displayProgressBar$: Observable<boolean>;
 
   ngOnInit(): void {
     this.user$ = this.store.pipe(select(getUser));
-    this.user$.pipe(take(1)).subscribe((user) => {
+    this.flexNowAvailable$ = this.store.pipe(select(getUser)).pipe(
+      map(user => this.flexnowService.flexNowImportEnabled(user))
+    )
+    this.user$.pipe(skipWhile(user => !user._id)).pipe(take(1)).subscribe((user) => {
       this.user = user;
     });
     this.semesterPlans$ = this.store.select(
-      getSemesterPlansOfSelectedStudyPlan
+      getSemesterPlansOfSelectedStudyPlan,
     );
+    this.studyPlanSettings$ = this.store.select(getStudyPlanSettings)
+    this.displayProgressBar$ = this.studyPlanSettings$.pipe(
+      map(el => el?.displayProgressBar ?? false)
+    )
 
     /** transform semesterPlans$ into metaSemesters$ so initial details for display are given and additional info (different for path and plan)
      *  are loaded by children directly. Avoids redundancy in this component.*/
     this.metaSemesters$ = this.semesterPlans$.pipe(
-      map(semesterPlans => {
+      map((semesterPlans) => {
         if (!semesterPlans) return [];
 
-        return semesterPlans.map(plan => {
+        return semesterPlans.map((plan) => {
           const metaSemester: MetaSemester = {
             semester: plan.semester,
             isPastSemester: plan.isPastSemester,
-            expanded: plan.expanded
+            expanded: plan.expanded,
           };
           return metaSemester;
         });
       }),
-      shareReplay(1) // caching
+      shareReplay(1), // caching
     );
 
     this.semesterPlans$.subscribe((semesterPlans) => {
       if (semesterPlans) {
-
         const eligibleSemesterPlan =
           this.getEarliestEligibleSemester(semesterPlans);
 
         if (eligibleSemesterPlan) {
-          this.eligibleSemesterId = !this.isCurrentSemester(eligibleSemesterPlan.semester) ? eligibleSemesterPlan._id : null
+          this.eligibleSemesterId = !this.isCurrentSemester(
+            eligibleSemesterPlan.semester,
+          )
+            ? eligibleSemesterPlan._id
+            : null;
         }
-
       } else {
         this.eligibleSemesterId = null;
       }
@@ -167,17 +200,12 @@ export class StudyPlanDetailComponent implements OnInit {
     this.studyPath$ = this.store.select(getUserStudyPath);
     this.semesters$ = this.store.select(getSemesterList);
 
-    // for flexnow
-    this.availableSemesters$ = this.semesters$.pipe(
-      map(semesters => semesters.filter(semester => !semester.isFutureSemester()))
-    );
-
     this.selectedStudyPlan$ = this.store.select(getSelectedStudyPlan);
 
     this.route.params.subscribe((param) => {
       this.studyPlanId = param.id;
       this.store.dispatch(
-        StudyPlanActions.selectStudyPlan({ studyPlanId: this.studyPlanId })
+        StudyPlanActions.selectStudyPlan({ studyPlanId: this.studyPlanId }),
       );
 
       // load expanded state of semesters
@@ -193,9 +221,13 @@ export class StudyPlanDetailComponent implements OnInit {
         }
       });
 
-    this.activeSemesters$ = this.store.select(getSemesterList).pipe(
-      map((semesterlist): string[] => semesterlist.map(semester => semester.name))
-    );
+    this.activeSemesters$ = this.store
+      .select(getSemesterList)
+      .pipe(
+        map((semesterlist): string[] =>
+          semesterlist.map((semester) => semester.name),
+        ),
+      );
 
     this.updateSemesterStudyPath();
 
@@ -212,8 +244,8 @@ export class StudyPlanDetailComponent implements OnInit {
     ]).pipe(
       map(
         ([selectedStudyPlanId, activeStudyPlanId]) =>
-          selectedStudyPlanId === activeStudyPlanId
-      )
+          selectedStudyPlanId === activeStudyPlanId,
+      ),
     );
 
     this.store.select(getUserStudyprogrammes).subscribe((studyprogrammes) => {
@@ -223,30 +255,29 @@ export class StudyPlanDetailComponent implements OnInit {
     });
 
     this.plannedModules$ = this.store.select(
-      getPlannedModulesOfActiveStudyPlan
+      getPlannedModulesOfActiveStudyPlan,
     );
 
-    this.screenSizeService.isSmallScreen$.pipe(take(1)).subscribe(isSmall => {
+    this.screenSizeService.isSmallScreen$.pipe(take(1)).subscribe((isSmall) => {
       this.isSmallScreen = isSmall;
     });
 
-    combineLatest([
-      this.selectedStudyPlan$,
-      this.isActivePlan$
-    ]).pipe(
-      takeUntil(this.destroy$),
-      filter(([plan, isActive]) => !!plan && isActive === true)
-    ).subscribe(([studyPlan]) => {
-      if (studyPlan) {
-        this.validation.checkForModulePlanningHints(studyPlan);
-      }
-    });
+    combineLatest([this.selectedStudyPlan$, this.isActivePlan$])
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(([plan, isActive]) => !!plan && isActive === true),
+      )
+      .subscribe(([studyPlan]) => {
+        if (studyPlan) {
+          this.validation.checkForModulePlanningHints(studyPlan);
+        }
+      });
 
     this.store
       .select(getPlanningHints)
       .pipe(
         takeUntil(this.destroy$),
-        map(hints => hints.filter(h => h.context === 'module-planning'))
+        map((hints) => hints.filter((h) => h.context === 'module-planning')),
       )
       .subscribe((hints) => {
         this.hints = hints;
@@ -256,15 +287,23 @@ export class StudyPlanDetailComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.metaSemesters$.pipe( // wait for data
-      filter(metaSemesters => !!metaSemesters && metaSemesters.length > 0),
-      take(1)
-    ).subscribe(() => {
-      setTimeout(() => {
-        this.updateScrollState();
-        this.setupScrollObserver();
-      }, 100);
-    });
+    this.metaSemesters$
+      .pipe(
+        // wait for data
+        filter((metaSemesters) => !!metaSemesters && metaSemesters.length > 0),
+        take(1),
+      )
+      .subscribe(() => {
+        setTimeout(() => {
+          this.updateScrollState();
+          this.setupScrollObserver();
+        }, 100);
+      });
+  }
+
+  toggleGradeVisibility(settings: StudyPlanSettings) {
+    settings.displayGrades = !settings.displayGrades
+    this.store.dispatch(SettingsActions.updateStudyPlanSettings({ settings }))
   }
 
   updateHintsIconColor(hints: PlanningHints[]) {
@@ -272,10 +311,10 @@ export class StudyPlanDetailComponent implements OnInit {
       this.hintsIconColor = 'standard';
     } else {
       const hasDangerOrCollision = hints.some(
-        hint => hint.type === 'collision' || hint.type === 'risk'
+        (hint) => hint.type === 'collision' || hint.type === 'risk',
       );
 
-      const hasWarning = hints.some(hint => hint.type === 'warning');
+      const hasWarning = hints.some((hint) => hint.type === 'warning');
 
       if (hasDangerOrCollision) {
         this.hintsIconColor = 'danger';
@@ -288,7 +327,8 @@ export class StudyPlanDetailComponent implements OnInit {
   }
 
   onSemesterToggled(semesterName: string): void {
-    this.expandedSemesters[semesterName] = !this.expandedSemesters[semesterName];
+    this.expandedSemesters[semesterName] =
+      !this.expandedSemesters[semesterName];
     this.saveExpandedState(semesterName);
     setTimeout(() => {
       this.updateScrollState();
@@ -316,7 +356,7 @@ export class StudyPlanDetailComponent implements OnInit {
   }
 
   importCompleteFlexNowData() {
-    this.flexnowService.triggerFlexNowDataLoading(this.availableSemesters$);
+    this.flexnowService.triggerFlexNowDataLoading('update-studypath');
   }
 
   private setupScrollObserver(): void {
@@ -340,7 +380,7 @@ export class StudyPlanDetailComponent implements OnInit {
 
       container.scrollTo({
         left: container.scrollLeft - scrollAmount,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }
@@ -352,7 +392,7 @@ export class StudyPlanDetailComponent implements OnInit {
 
       container.scrollTo({
         left: container.scrollLeft + scrollAmount,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }
@@ -370,25 +410,31 @@ export class StudyPlanDetailComponent implements OnInit {
     const clientWidth = container.clientWidth;
 
     this.canScrollLeft = scrollLeft > 0;
-    this.canScrollRight = scrollLeft < (scrollWidth - clientWidth - 1);
+    this.canScrollRight = scrollLeft < scrollWidth - clientWidth - 1;
   }
 
-  toggleProgressBar() {
-    this.displayProgressBar = !this.displayProgressBar;
+  toggleProgressBar(settings: StudyPlanSettings) {
+    settings.displayProgressBar = !settings.displayProgressBar;
+    this.store.dispatch(SettingsActions.updateStudyPlanSettings({ settings }))
   }
 
-  getMatchingSemesterPlan(semesterPlans: SemesterPlan[], semesterName: string): SemesterPlan | undefined {
-    return semesterPlans.find(plan => plan.semester === semesterName);
+  getMatchingSemesterPlan(
+    semesterPlans: SemesterPlan[],
+    semesterName: string,
+  ): SemesterPlan | undefined {
+    return semesterPlans.find((plan) => plan.semester === semesterName);
   }
 
   // checking which semester plan is the earliest which is not in the past (= semester plan to be finished by the user)
-  getEarliestEligibleSemester(semesterPlans: SemesterPlan[]): SemesterPlan | null {
+  getEarliestEligibleSemester(
+    semesterPlans: SemesterPlan[],
+  ): SemesterPlan | null {
     if (!semesterPlans || semesterPlans.length === 0) {
       return null;
     }
     const upcomingSemesters = semesterPlans.filter((sp) => !sp.isPastSemester);
     const sortedSemesters = upcomingSemesters.sort((a, b) =>
-      a.semester.localeCompare(b.semester)
+      a.semester.localeCompare(b.semester),
     );
     return sortedSemesters.length > 0 ? sortedSemesters[0] : null;
   }
@@ -406,8 +452,13 @@ export class StudyPlanDetailComponent implements OnInit {
     return semesterName === currentSemester.name;
   }
 
-  getNextSemester(metaSemesters: MetaSemester[], currentIndex: number): MetaSemester | null {
-    return currentIndex + 1 < metaSemesters.length ? metaSemesters[currentIndex + 1] : null;
+  getNextSemester(
+    metaSemesters: MetaSemester[],
+    currentIndex: number,
+  ): MetaSemester | null {
+    return currentIndex + 1 < metaSemesters.length
+      ? metaSemesters[currentIndex + 1]
+      : null;
   }
 
   // updates the displayal of semesters in the component
@@ -417,8 +468,8 @@ export class StudyPlanDetailComponent implements OnInit {
       this.semesters$,
     ]).pipe(
       switchMap(([studyPath, semesters]) =>
-        this.transform.transformStudyPath(studyPath, semesters)
-      )
+        this.transform.transformStudyPath(studyPath, semesters),
+      ),
     );
   }
 
@@ -430,7 +481,8 @@ export class StudyPlanDetailComponent implements OnInit {
 
   onRecsSidenavTabClicked(tabIndex: number): void {
     if (this.sidenav) {
-      if (!this.sidenav.opened) { // opens when tab is clicked
+      if (!this.sidenav.opened) {
+        // opens when tab is clicked
         this.sidenav.open();
       }
     }
@@ -438,7 +490,8 @@ export class StudyPlanDetailComponent implements OnInit {
 
   onRecsSidenavClosed(): void {
     if (this.sidenav) {
-      if (this.sidenav.opened) { // close when close button is clicked
+      if (this.sidenav.opened) {
+        // close when close button is clicked
         this.sidenav.close();
       }
     }
@@ -447,7 +500,7 @@ export class StudyPlanDetailComponent implements OnInit {
   // for conditional display of adding semester option
   isLastSemesterActive(
     metaSemesters: MetaSemester[],
-    activeSemesters: string[]
+    activeSemesters: string[],
   ): boolean {
     if (!metaSemesters || metaSemesters.length === 0) {
       return false;
@@ -458,13 +511,13 @@ export class StudyPlanDetailComponent implements OnInit {
 
   openAddSemesterDialog(): void {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Weiteres Semester anhängen?',
+      dialogTitle: $localize`Weiteres Semester anhängen?`,
       actionType: 'add',
       warningMessage:
-        'Bitte füge nur ein Semester hinzu, wenn du auch wirklich ein weiteres Semester studierst, denn hierdurch wird die Studienzeit in deinem Profil verlängert.',
-      confirmationItem: 'ein neues Semester',
-      confirmButtonLabel: 'Hinzufügen',
-      cancelButtonLabel: 'Abbrechen',
+        $localize `Bitte füge nur ein Semester hinzu, wenn du auch wirklich ein weiteres Semester studierst, denn hierdurch wird die Studienzeit in deinem Profil verlängert.`,
+      confirmationItem: $localize`ein neues Semester`,
+      confirmButtonLabel: $localize`Hinzufügen`,
+      cancelButtonLabel: $localize`Abbrechen`,
       confirmButtonClass: 'btn btn-primary',
       callbackMethod: () => {
         this.addSemester();
@@ -505,10 +558,11 @@ export class StudyPlanDetailComponent implements OnInit {
           SemesterPlanActions.addSemesterPlanToStudyPlan({
             studyPlanId: this.studyPlanId,
             semester: nextSem.name,
-          })
+          }),
         );
 
-        setTimeout(() => { // TODO check if this works on test
+        setTimeout(() => {
+          // TODO check if this works on test
           this.updateScrollState();
         }, 50);
 
@@ -534,7 +588,7 @@ export class StudyPlanDetailComponent implements OnInit {
                 duration: user.duration + 1,
               };
               this.store.dispatch(
-                UserActions.updateUser({ user: updatedUser })
+                UserActions.updateUser({ user: updatedUser }),
               );
             }
           }
@@ -551,28 +605,63 @@ export class StudyPlanDetailComponent implements OnInit {
       userGeneratedModules: semesterUserGeneratedModules,
     } = semesterPlan;
 
-    if (
-      semesterModuleStrings.length === 0 &&
-      semesterUserGeneratedModules.length === 0
-    ) {
-      this.confirmFinishingEmptySemester(semesterPlan.semester);
-      return;
-    }
+    // check for modules already completed for this semester (e.g. via an earlier
+    // FlexNow bulk import) that were never added to the semester's plan - these
+    // need to be shown/reviewed too, otherwise a later "Mit FlexNow abgleichen"
+    // can't find their real _id and would push a duplicate instead of updating them
+    this.store
+      .select(getUserStudyPath)
+      .pipe(take(1))
+      .subscribe((studyPath) => {
+        const alreadyCompletedForSemester = studyPath.completedModules.filter(
+          (mod) => mod.semester === semesterPlan.semester,
+        );
+
+        // skip the quick confirm and open the full stepper whenever there's anything to
+        // review - planned modules/placeholders, already-completed-but-unplanned modules,
+        // or FlexNow is available so the "Mit FlexNow abgleichen" step stays reachable -
+        // the stepper already handles the zero-modules case ("Es liegen keine Module vor" + "Ohne Abschließen")
+        if (
+          semesterModuleStrings.length === 0 &&
+          semesterUserGeneratedModules.length === 0 &&
+          alreadyCompletedForSemester.length === 0 &&
+          !this.flexnowService.flexNowImportEnabled(this.user)
+        ) {
+          this.confirmFinishingEmptySemester(semesterPlan.semester);
+          return;
+        }
+
+        this.buildAndOpenFinishSemesterStepper(
+          semesterPlan,
+          alreadyCompletedForSemester,
+        );
+      });
+  }
+
+  private buildAndOpenFinishSemesterStepper(
+    semesterPlan: SemesterPlan,
+    alreadyCompletedForSemester: PathModule[],
+  ): void {
+    const {
+      modules: semesterModuleStrings,
+      userGeneratedModules: semesterUserGeneratedModules,
+    } = semesterPlan;
 
     const pathModuleObservable =
       semesterModuleStrings.length > 0
         ? forkJoin(
-          semesterModuleStrings.map((acronym) =>
-            this.getModuleDetailsWithStatus(acronym, semesterPlan)
+            semesterModuleStrings.map((acronym) =>
+              this.getModuleDetailsWithStatus(acronym, semesterPlan),
+            ),
           )
-        )
         : of([]);
 
     const userGeneratedModuleObservable =
       semesterUserGeneratedModules.length > 0
         ? this.appendStatusAndGradeToUserGeneratedModules(
-          semesterUserGeneratedModules, semesterPlan.semester
-        )
+            semesterUserGeneratedModules,
+            semesterPlan.semester,
+          )
         : of([]);
 
     // fetch all modules with details and statuses
@@ -580,7 +669,7 @@ export class StudyPlanDetailComponent implements OnInit {
       ([modules, updatedUserGeneratedModules]) => {
         // build pathModules from the semester plan's modules and userGeneratedModules
         const pathModules: PathModule[] = modules.filter(
-          (module): module is PathModule => module !== null
+          (module): module is PathModule => module !== null,
         );
 
         // add userGeneratedModules to pathModules
@@ -601,55 +690,79 @@ export class StudyPlanDetailComponent implements OnInit {
           pathModules.push(userGeneratedPathMod);
         });
 
+        // include modules already completed for this semester that aren't part of
+        // the plan yet (see openFinishSemesterDialog for why)
+        const isSameModule = (a: PathModule, b: PathModule): boolean =>
+          (!!a._id && !!b._id && a._id === b._id) ||
+          (a.acronym === b.acronym && a.semester === b.semester);
+        alreadyCompletedForSemester.forEach((completedModule) => {
+          const alreadyCovered = pathModules.some((mod) => isSameModule(mod, completedModule));
+          if (!alreadyCovered) {
+            pathModules.push(completedModule);
+          }
+        });
+
         const dialogRef = this.dialog.open(DialogComponent, {
           data: {
-            dialogTitle: 'Semester abschließen',
+            dialogTitle: $localize `Semester abschließen`,
             dialogContentId: 'finish-semester-stepper',
             missingModules: pathModules.length > 0 ? pathModules : [], // opens for all (user generated) modules, can also be empty
+            semester: semesterPlan.semester,
           },
           disableClose: true,
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            if (result.emptySelect && !result.droppedModules) {
-              this.updateIsPastSemestersForAllPlans(semesterPlan.semester)
-            } else { // semester finish with data
-              this.handleSemesterFinishResult(result.pathModules, semesterPlan, result.droppedModules);
+            if (result.emptySelect) {
+              this.updateIsPastSemestersForAllPlans(semesterPlan.semester);
+            } else {
+              // semester finish with data
+              this.handleSemesterFinishResult(
+                result.pathModules,
+                semesterPlan,
+                result.droppedModules,
+              );
             }
           }
         });
-      }
+      },
     );
   }
 
-  handleSemesterFinishResult(pathModules: PathModule[], semesterPlan: SemesterPlan, droppedModules: PathModule[]) {
-
+  handleSemesterFinishResult(
+    pathModules: PathModule[],
+    semesterPlan: SemesterPlan,
+    droppedModules: PathModule[],
+  ) {
     if (pathModules.length > 0 || droppedModules.length > 0) {
-
       this.store.dispatch(
         StudyPathActions.finishSemester({
           completedModules: pathModules,
           droppedModules: droppedModules,
-          semester: semesterPlan.semester
-        })
+          semester: semesterPlan.semester,
+        }),
       );
 
-      this.store.select(getStudyPlans).pipe(
-        map(updatedStudyPlans => {
-          return updatedStudyPlans.some(plan =>
-            plan.semesterPlans.some(sp =>
-              sp.semester === semesterPlan.semester && sp.isPastSemester === true
-            )
-          );
-        }),
-        filter(isUpdated => isUpdated === true),
-        first()
-      ).subscribe(() => {
-
-        this.cdr.detectChanges();
-        this.updateSemesterStudyPath();
-      });
+      this.store
+        .select(getStudyPlans)
+        .pipe(
+          map((updatedStudyPlans) => {
+            return updatedStudyPlans.some((plan) =>
+              plan.semesterPlans.some(
+                (sp) =>
+                  sp.semester === semesterPlan.semester &&
+                  sp.isPastSemester === true,
+              ),
+            );
+          }),
+          filter((isUpdated) => isUpdated === true),
+          first(),
+        )
+        .subscribe(() => {
+          this.cdr.detectChanges();
+          this.updateSemesterStudyPath();
+        });
 
       this.dialog.closeAll();
     }
@@ -658,12 +771,13 @@ export class StudyPlanDetailComponent implements OnInit {
   // confirm dialog for finishing an empty semester
   confirmFinishingEmptySemester(semester: string) {
     const confirmationDialogInterface: ConfirmationDialogData = {
-      dialogTitle: 'Semester ohne Module abschließen?',
-      confirmationItem: 'dem Semesterabschluss ohne Module oder Platzhalter',
-      confirmButtonLabel: 'Abschließen',
-      cancelButtonLabel: 'Abbrechen',
+      dialogTitle: $localize `Semester ohne Module abschließen?`,
+      confirmationItem: $localize`dem Semesterabschluss ohne Module oder Platzhalter`,
+      confirmButtonLabel: $localize`Abschließen`,
+      cancelButtonLabel: $localize`Abbrechen`,
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
+        console.log('leeres Semester abgeschlossen')
         this.updateIsPastSemestersForAllPlans(semester);
         this.updateSemesterStudyPath(); // ensure study path is up to date
       },
@@ -688,7 +802,7 @@ export class StudyPlanDetailComponent implements OnInit {
                     studyPlanId: plan._id,
                     semesterPlanId: semesterPlan._id,
                     isPast: true,
-                  })
+                  }),
                 );
               }
             });
@@ -704,44 +818,43 @@ export class StudyPlanDetailComponent implements OnInit {
   // status and grade needs to be fetched extra (MongoDB) because is not saved with Module (MariaDB)
   private getModuleDetailsWithStatus(
     acronym: string,
-    semesterPlan: SemesterPlan
+    semesterPlan: SemesterPlan,
   ): Observable<PathModule | null> {
     return forkJoin({
-      details: forkJoin({ // fetch current AND old modules
+      details: forkJoin({
+        // fetch current AND old modules
         current: this.store.select(getModuleByAcronym(acronym)).pipe(take(1)),
-        old: this.store.select(getOldModuleByAcronym(acronym)).pipe(take(1))
-      }).pipe(
-        map(({ current, old }) => current || old)
-      ),
+        old: this.store.select(getOldModuleByAcronym(acronym)).pipe(take(1)),
+      }).pipe(map(({ current, old }) => current || old)),
       status: this.store.select(getUserStudyPath).pipe(
         take(1),
         map((studyPath) => {
           const moduleInSemester = studyPath.completedModules.find(
             (mod) =>
-              mod.acronym === acronym && mod.semester === semesterPlan.semester
+              mod.acronym === acronym && mod.semester === semesterPlan.semester,
           );
           return moduleInSemester?.status || 'open';
-        })
+        }),
       ),
       grade: this.store.select(getUserStudyPath).pipe(
         take(1),
         map((studyPath) => {
           const moduleInSemester = studyPath.completedModules.find(
             (mod) =>
-              mod.acronym === acronym && mod.semester === semesterPlan.semester
+              mod.acronym === acronym && mod.semester === semesterPlan.semester,
           );
           return moduleInSemester?.grade || 0;
-        })
+        }),
       ),
       _id: this.store.select(getUserStudyPath).pipe(
         take(1),
         map((studyPath) => {
           const moduleInSemester = studyPath.completedModules.find(
             (mod) =>
-              mod.acronym === acronym && mod.semester === semesterPlan.semester
+              mod.acronym === acronym && mod.semester === semesterPlan.semester,
           );
           return moduleInSemester?._id;
-        })
+        }),
       ),
     }).pipe(
       map(({ details, status, grade, _id }) => {
@@ -758,22 +871,23 @@ export class StudyPlanDetailComponent implements OnInit {
           semester: semesterPlan.semester,
           isUserGenerated: false,
           flexNowImported: false,
-          grade
+          grade,
         };
-      })
+      }),
     );
   }
 
   // helper for appending status and grade to user-generated modules
   private appendStatusAndGradeToUserGeneratedModules(
-    userGeneratedModules: UserGeneratedModule[], semester: string,
+    userGeneratedModules: UserGeneratedModule[],
+    semester: string,
   ): Observable<PathModule[]> {
     return this.store.select(getUserStudyPath).pipe(
       take(1),
       map((studyPath) => {
         return userGeneratedModules.map((userGeneratedMod) => {
           const completedModule = studyPath.completedModules.find(
-            (mod) => mod._id === userGeneratedMod._id
+            (mod) => mod._id === userGeneratedMod._id,
           );
 
           // setting name and acronym depending on fn module or placeholder fields
@@ -781,29 +895,35 @@ export class StudyPlanDetailComponent implements OnInit {
           let name;
 
           if (userGeneratedMod.flexNowImported) {
-            name = completedModule?.name || userGeneratedMod.name || userGeneratedMod?.notes || '-'
-          }
-          else {
-            name = userGeneratedMod?.notes || '-'
+            name =
+              completedModule?.name ||
+              userGeneratedMod.name ||
+              userGeneratedMod?.notes ||
+              '-';
+          } else {
+            name = userGeneratedMod?.notes || '-';
           }
 
           return {
             ...userGeneratedMod,
             name,
             semester,
-            acronym: completedModule?.acronym || userGeneratedMod?.acronym || userGeneratedMod?.name,
+            acronym:
+              completedModule?.acronym ||
+              userGeneratedMod?.acronym ||
+              userGeneratedMod?.name,
             status: completedModule?.status || 'open',
             grade: completedModule?.grade || 0,
             isUserGenerated: true,
           };
         });
-      })
+      }),
     );
   }
 
   openEditStudyPlanDialog(studyPlanId: string, studyPlan: StudyPlan) {
-
-    if (studyPlan && studyPlanId) { // edit existing study plan
+    if (studyPlan && studyPlanId) {
+      // edit existing study plan
 
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
@@ -821,7 +941,6 @@ export class StudyPlanDetailComponent implements OnInit {
           .select(getCloseDialogMode)
           .subscribe((mode) => (this.closeMode = mode));
         if (this.closeMode === 'data') {
-          console.log(studyPlanId, studyPlan)
           this.studyPlanService.updateStudyPlan(studyPlanId, studyPlan);
         } else {
           return;

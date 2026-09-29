@@ -24,6 +24,7 @@ import {
   crawlStudentDataViaFlexNow,
   deleteModuleFeedback,
   updateFavouriteModule,
+  updateStudyPlanSettings,
 } from "./user.controller";
 
 const router: Router = express.Router();
@@ -539,6 +540,65 @@ router.put("/timetable-settings", updateTimetableSettings);
 
 /**
  * @swagger
+ * /user/study-plan-settings:
+ *   put:
+ *     tags: [User::Settings]
+ *     summary: Update study plan settings
+ *     description: Updates user's study plan display settings
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - displayGrades
+ *               - displayProgressBar
+ *             properties:
+ *               displayGrades:
+ *                 type: Boolean
+ *                 description: Setting if grades should be displayed
+ *                 example: true
+ *               displayProgressBar:
+ *                 type: Boolean
+ *                 description: Setting if progress bar should be displayed
+ *                 example: false
+ *     responses:
+ *       200:
+ *         description: study plan settings updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *             required:
+ *               - displayGrades
+ *               - displayProgressBar
+ *             properties:
+ *               displayGrades:
+ *                 type: Boolean
+ *                 description: Setting if grades should be displayed
+ *                 example: true
+ *               displayProgressBar:
+ *                 type: Boolean
+ *                 description: Setting if progress bar should be displayed
+ *                 example: false
+ *       400:
+ *         description: Invalid input
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BadRequestError'
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
+ */
+router.put("/study-plan-settings", updateStudyPlanSettings);
+
+/**
+ * @swagger
  * /user/favourite-module:
  *   put:
  *     tags: [User::Preferences]
@@ -655,7 +715,7 @@ router.put("/excluded-module", updateExcludedModule);
  *             schema:
  *               $ref: '#/components/schemas/BadRequestError'
  */
-router.put("/topic", toggleTopic)
+router.put("/topic", toggleTopic);
 
 /**
  * @swagger
@@ -1029,7 +1089,7 @@ router.delete("/study-path/module", deleteModuleFromStudyPath);
  *             schema:
  *               $ref: '#/components/schemas/NotFoundError'
  */
-router.delete("/module-feedback", deleteModuleFeedback)
+router.delete("/module-feedback", deleteModuleFeedback);
 
 /**
  * @swagger
@@ -1072,7 +1132,7 @@ router.delete("/module-feedback", deleteModuleFeedback)
  *             schema:
  *               $ref: '#/components/schemas/NotFoundError'
  */
-router.delete("/job", deleteJob)
+router.delete("/job", deleteJob);
 
 /**
  * @swagger
@@ -1105,6 +1165,6 @@ router.delete("/job", deleteJob)
  *             schema:
  *               $ref: '#/components/schemas/NotFoundError'
  */
-router.delete("/", deleteUser)
+router.delete("/", deleteUser);
 
 export { router as user };

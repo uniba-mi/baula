@@ -1,21 +1,24 @@
-<ng-container *ngIf="modules && modules.length; else noData">
-    <!-- clear button (for favourites) -->
-    <div *ngIf="showClearButton" class="empty-button-wrapper d-flex justify-content-end">
-        <button class="btn btn-secondary btn-clear-favourites float-right mb-4" tabindex=0 (click)="onClearList()"
-            (keyup.enter)="onClearList()">
-            Merkliste löschen
-        </button>
+@if (modules && modules.length) {
+  <!-- clear button (for favourites) -->
+  @if (showClearButton) {
+    <div class="empty-button-wrapper d-flex justify-content-end">
+      <button class="btn btn-secondary btn-clear-favourites float-right mb-4" tabindex=0 (click)="onClearList()"
+        (keyup.enter)="onClearList()" i18n>
+        Merkliste löschen
+      </button>
     </div>
-    <!-- module list -->
-    <div cdkDropList *ngFor="let module of modules" id="sidenav-drop-list" [cdkDropListData]="modules">
-        <app-recs-module-card [module]="module" [listType]="listType" [droppedModules]="droppedModules"
-            [allJobs]="allJobs" [allTopics]="allTopics" (moduleFavouriteToggled)="onToggleFavourite($event)"
-            [cdkDragDisabled]="isDragDisabled" cdkDrag [cdkDragData]="module">
-        </app-recs-module-card>
+  }
+  <!-- module list -->
+  @for (module of modules; track module) {
+    <div cdkDropList id="sidenav-drop-list" [cdkDropListData]="modules">
+      <app-recs-module-card [module]="module" [listType]="listType" [droppedModules]="droppedModules"
+        [allJobs]="allJobs" [allTopics]="allTopics" (moduleFavouriteToggled)="onToggleFavourite($event)"
+        [cdkDragDisabled]="isDragDisabled" cdkDrag [cdkDragData]="module">
+      </app-recs-module-card>
     </div>
-</ng-container>
-<ng-template #noData>
-    <mat-card appearance="outlined" class="my-3 p-4">
-        <app-no-data [noDataMessage]="noDataMessage" [diagram]="false"></app-no-data>
-    </mat-card>
-</ng-template>
+  }
+} @else {
+  <mat-card appearance="outlined" class="my-3 p-4">
+    <app-no-data [noDataMessage]="noDataMessage" [diagram]="false"></app-no-data>
+  </mat-card>
+}

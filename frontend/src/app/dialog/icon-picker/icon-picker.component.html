@@ -1,0 +1,18 @@
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <h3 i18n>
+                Icon auswählen: <i class="{{ selectedIcon }}" *ngIf="selectedIcon"></i>
+            </h3>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="picker-container">
+        <div class="d-flex flex-wrap justify-content-center m-2 icon-container" id="icon-picker">
+            @for (icon of icons; track icon) {
+            <button class="btn btn-light p-1" (click)="selectIcon(icon)">
+                <i class="{{ icon }}" style="font-size: 1.5rem;"></i>
+            </button>
+            }
+        </div>
+    </div>
+</mat-expansion-panel>

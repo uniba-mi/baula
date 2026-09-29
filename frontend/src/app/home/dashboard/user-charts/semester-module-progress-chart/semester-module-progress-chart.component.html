@@ -1,9 +1,8 @@
 <mat-card-content>
-    <canvas baseChart *ngIf="noDataMessage; else noData" class="chart" [data]="barChartData" [options]="barChartOptions"
-        [type]="'bar'">
-    </canvas>
+  @if (noDataMessage) {
+    <reporting-bar-chart-card [cardData]="cardData" [bare]="true"></reporting-bar-chart-card>
+  } @else {
+    <app-no-data [diagram]=true noDataBtnText="Studienverlauf aus FlexNow laden" noDataLinkText="/app/profil/integrationen-verwalten" i18n-noDataBtnText></app-no-data>
+  }
 </mat-card-content>
 
-<ng-template #noData>
-    <app-no-data [diagram]=true noDataBtnText="Studienverlauf aus FlexNow laden" noDataLinkText="/app/profil/verlauf-verwalten"></app-no-data>
-</ng-template>

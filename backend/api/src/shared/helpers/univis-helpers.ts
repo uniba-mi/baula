@@ -1,12 +1,11 @@
-import { Course, Term, UnivISCourse } from "../../../../../interfaces/course";
-import { Prisma, PrismaClient } from "@prisma/client";
-import { Room } from "../../../../../interfaces/room";
-import { Person } from "../../../../../interfaces/person";
-import { CompetenceFulfillment } from "../../../../../interfaces/competence";
+import { Course, Term, UnivISCourse } from "@interfaces/course";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../../database/prisma";
+import { Room } from "@interfaces/room";
+import { Person } from "@interfaces/person";
+import { CompetenceFulfillment } from "@interfaces/competence";
 import { CompetenceReader } from "./competence-reader";
 import validator from "validator";
-
-const prisma = new PrismaClient();
 
 export function transformUnivISCourse(
   univisCourse: UnivISCourse,
@@ -411,7 +410,10 @@ function transformTerms(terms: any): Term[] {
 export function transformDozs(dozs: { person: Person }[]): Person[] {
   let result: Person[] = [];
   for (let person of dozs) {
-    result.push(person.person);
+    const duplicate = result.find(el => el.pId == person.person.pId)
+    if(!duplicate) {
+      result.push(person.person);
+    }
   }
   return result;
 }

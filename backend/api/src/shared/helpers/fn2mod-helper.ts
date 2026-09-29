@@ -1,19 +1,17 @@
 import {
   Department,
   Prisma,
-  PrismaClient,
   StudyProgramme,
 } from "@prisma/client";
+import { prisma } from "../../database/prisma";
 import { logError } from "../error";
-import { Person } from "../../../../../interfaces/person";
-import { ModuleHandbook } from "../../../../../interfaces/module-handbook";
+import { Person } from "@interfaces/person";
+import { ModuleHandbook } from "@interfaces/module-handbook";
 import {
   Changelog,
   ImportLogMessage,
   MergedChangelog,
-} from "../../../../../interfaces/logs";
-
-const prisma = new PrismaClient();
+} from "@interfaces/logs";
 
 export async function upsertDeparmtents(
   departments: Department[],

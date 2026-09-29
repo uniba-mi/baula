@@ -1,84 +1,157 @@
 <nav class="navbar navbar-expand pb-0 row">
   <div class="col d-flex justify-content-between align-items-end">
     <ul class="main-nav navbar-nav me-auto align-items-start">
-      <ng-container *ngIf="user.shibId !== ''">
+      @if (user.shibId !== "") {
         <!-- nav components for studyassistant -->
         <li class="nav-item me-xl-5 me-lg-4 me-md-3">
-          <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Dashboard"
-            routerLink="app/dashboard" routerLinkActive="active">
+          <span
+            class="nav-link"
+            role="button"
+            tabindex="0"
+            aria-haspopup="false"
+            aria-label="Dashboard"
+            i18n-aria-label
+            routerLink="app/dashboard"
+            routerLinkActive="active"
+          >
             <i class="bi bi-person-vcard"></i>
-            <span class="d-none d-lg-inline ms-2">Dashboard</span>
-            <span class="d-none d-lg-none d-sm-inline ms-2">Board</span>
+            <span class="d-none d-lg-inline ms-2" i18n>Dashboard</span>
+            <span class="d-none d-lg-none d-sm-inline ms-2" i18n="Nav Board Element">Board</span>
           </span>
         </li>
         <li class="nav-item me-xl-5 me-lg-4 me-md-3">
-          <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Modulkatalog"
-            routerLink="app/modulkatalog" routerLinkActive="active">
+          <span
+            class="nav-link"
+            role="button"
+            tabindex="0"
+            aria-haspopup="false"
+            aria-label="Modulkatalog"
+            i18n-aria-label
+            routerLink="app/modulkatalog"
+            routerLinkActive="active"
+          >
             <i class="bi bi-book"></i>
-            <span class="d-none d-xxl-inline ms-2">Modulkatalog</span>
-            <span class="d-none d-xxl-none d-sm-inline ms-2">Module</span>
+            <span class="d-none d-xxl-inline ms-2" i18n>Modulkatalog</span>
+            <span class="d-none d-xxl-none d-sm-inline ms-2" i18n>Module</span>
           </span>
         </li>
         <li class="nav-item me-xl-5 me-lg-4 me-md-3">
-          <button class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Semesterplanung"
-            routerLink="app/semester" routerLinkActive="active">
+          <button
+            class="nav-link"
+            role="button"
+            tabindex="0"
+            aria-haspopup="false"
+            aria-label="Semesterplanung"
+            i18n-aria-label
+            routerLink="app/semester"
+            routerLinkActive="active"
+          >
             <i class="bi bi-calendar2-week"></i>
-            <span class="d-none d-lg-inline ms-2">Stundenplan</span>
-            <span class="d-none d-lg-none d-sm-inline ms-2">Stundenplan</span>
+            <span class="d-none d-lg-inline ms-2" i18n>Stundenplan</span>
+            <span class="d-none d-lg-none d-sm-inline ms-2" i18n>Stundenplan</span>
           </button>
         </li>
-        <li id="study_prog_nav_item"
-          class="nav-item me-xl-5 me-lg-4 me-md-3 plausible-event-name=Studyprogression+Navbar">
-          <ng-container *ngIf="id$">
-            <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Studienverlaufsplan"
-              routerLink="app/studium/studienplan/{{ id$ }}" routerLinkActive="active">
+        <li
+          id="study_prog_nav_item"
+          class="nav-item me-xl-5 me-lg-4 me-md-3 plausible-event-name=Studyprogression+Navbar"
+        >
+          @if (id$) {
+            <span
+              class="nav-link"
+              role="button"
+              tabindex="0"
+              aria-haspopup="false"
+              aria-label="Studienverlaufsplan"
+              i18n-aria-label
+              routerLink="app/studium/studienplan/{{ id$ }}"
+              routerLinkActive="active"
+            >
               <i class="bi bi-list-ol"></i>
-              <span class="d-none d-xxl-inline ms-2">Studienverlaufsplan</span>
-              <span class="d-none d-xxl-none d-sm-inline ms-2">Verlaufsplan</span>
+              <span class="d-none d-xxl-inline ms-2" i18n>Studienverlaufsplan</span>
+              <span class="d-none d-xxl-none d-sm-inline ms-2" i18n
+                >Verlaufsplan</span
+              >
             </span>
-          </ng-container>
-          <ng-container *ngIf="!id$">
-            <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Studienverlaufsplan"
-              routerLink="app/studium/ueberblick" routerLinkActive="active">
+          } @else {
+            <span
+              class="nav-link"
+              role="button"
+              tabindex="0"
+              aria-haspopup="false"
+              aria-label="Studienverlaufsplan"
+              i18n-aria-label
+              routerLink="app/studium/ueberblick"
+              routerLinkActive="active"
+            >
               <i class="bi bi-list-ol"></i>
-              <span class="d-none d-lg-inline ms-2">Studienverlaufsplan</span>
-              <span class="d-none d-lg-none d-sm-inline ms-2">Studium</span>
+              <span class="d-none d-lg-inline ms-2" i18n>Studienverlaufsplan</span>
+              <span class="d-none d-lg-none d-sm-inline ms-2" i18n>Studium</span>
             </span>
-          </ng-container>
+          }
         </li>
-        <li class="nav-item me-xl-5 me-lg-4 me-md-3" *ngIf="!bilappAvailable && isWIAIStudent">
-          <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Empfehlungsbereich"
-            routerLink="app/personalisierung" routerLinkActive="active">
-            <span class="d-flex align-items-center gap-2">
-              <i class="bi bi-magic"></i>
-              <span class="d-none d-xl-inline">Personalisierung</span>
-              <span class="d-none d-xl-inline badge beta-badge">Beta</span>
+        @if (!bilappAvailable && isWIAIStudent) {
+          <li class="nav-item me-xl-5 me-lg-4 me-md-3">
+            <span
+              class="nav-link"
+              role="button"
+              tabindex="0"
+              aria-haspopup="false"
+              aria-label="Empfehlungsbereich"
+              i18n-aria-label
+              routerLink="app/personalisierung"
+              routerLinkActive="active"
+            >
+              <span class="d-flex align-items-center gap-2">
+                <i class="bi bi-magic"></i>
+                <span class="d-none d-xl-inline" i18n>Personalisierung</span>
+                <span class="d-none d-xl-inline badge beta-badge" i18n>Beta</span>
+              </span>
             </span>
-          </span>
-        </li>
+          </li>
+        }
         <!-- TODO uncomment for evaluation -->
         <!-- <li class="nav-item me-xl-5 me-lg-4 me-md-3" *ngIf="user.roles.includes('advisor')">
-          <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Evaluation"
-            routerLink="app/evaluation" routerLinkActive="active">
-            <i class="bi bi-clipboard2-check"></i>
-            <span class="d-none d-xl-inline ms-2">Evaluation</span>
-          </span>
-        </li> -->
-        <li class="nav-item me-xl-5 me-lg-4 me-md-3" *ngIf="user.roles.includes('admin')">
-          <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Admin-Bereich"
-            routerLink="app/admin" routerLinkActive="active">
-            <i class="bi bi-incognito"></i>
-            <span class="d-none d-xl-inline ms-2">Admin</span>
-          </span>
-        </li>
-        <li class="nav-item me-xl-5 me-lg-4 me-md-3" *ngIf="bilappAvailable">
-          <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Kompetenzvisualisierung"
-            routerLink="app/kompetenzen" routerLinkActive="active">
-            <i class="bi bi-clipboard-data"></i>
-            <span class="d-none d-md-inline ms-2">Kompetenzen</span>
-          </span>
-        </li>
-      </ng-container>
+        <span class="nav-link" role="button" tabindex="0" aria-haspopup="false" aria-label="Evaluation"
+          routerLink="app/evaluation" routerLinkActive="active">
+          <i class="bi bi-clipboard2-check"></i>
+          <span class="d-none d-xl-inline ms-2">Evaluation</span>
+        </span>
+      </li> -->
+        @if (user.roles.includes("admin")) {
+          <li class="nav-item me-xl-5 me-lg-4 me-md-3">
+            <span
+              class="nav-link"
+              role="button"
+              tabindex="0"
+              aria-haspopup="false"
+              aria-label="Admin-Bereich"
+              i18n-aria-label
+              routerLink="app/admin"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-incognito"></i>
+              <span class="d-none d-xl-inline ms-2" i18n>Admin</span>
+            </span>
+          </li>
+        }
+        @if (bilappAvailable) {
+          <li class="nav-item me-xl-5 me-lg-4 me-md-3">
+            <span
+              class="nav-link"
+              role="button"
+              tabindex="0"
+              aria-haspopup="false"
+              aria-label="Kompetenzvisualisierung"
+              i18n-aria-label
+              routerLink="app/kompetenzen"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-clipboard-data"></i>
+              <span class="d-none d-md-inline ms-2" i18n>Kompetenzen</span>
+            </span>
+          </li>
+        }
+      }
     </ul>
   </div>
 </nav>

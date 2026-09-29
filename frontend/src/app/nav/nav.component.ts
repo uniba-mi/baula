@@ -4,6 +4,8 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -17,12 +19,15 @@ import {
 import { StudyPlanActions } from '../actions/study-planning.actions';
 
 @Component({
-    selector: 'app-nav',
-    templateUrl: './nav.component.html',
-    styleUrls: ['./nav.component.scss'],
-    standalone: false
+  selector: 'app-nav',
+  templateUrl: './nav.component.html',
+  styleUrls: ['./nav.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class NavComponent implements OnInit, OnChanges {
+  private store = inject(Store);
+
   @Input() user: User;
   studyprogrammes$: Observable<StudyProgramme[]>;
   semesters$: Observable<Semester[]>;
@@ -34,9 +39,9 @@ export class NavComponent implements OnInit, OnChanges {
   selectedStudyPlanId$: Observable<string>;
   isWIAIStudent: boolean = false;
 
-  constructor(
-    private store: Store,
-  ) {
+  constructor() {
+    const store = this.store;
+
     this.activeStudyPlanId$ = store.select(getActiveStudyPlanId);
   }
 
@@ -48,9 +53,7 @@ export class NavComponent implements OnInit, OnChanges {
           if (activeId !== '') {
             this.id$ = activeId;
           } else {
-            this.store.dispatch(
-              StudyPlanActions.loadActiveStudyPlan()
-            );
+            this.store.dispatch(StudyPlanActions.loadActiveStudyPlan());
           }
           if (!activeId) {
             this.id$ = 'notfound';
@@ -78,10 +81,10 @@ export class NavComponent implements OnInit, OnChanges {
   }
 
   checkForWIAIStudyprogramme(sps: MStudyProgramme[]): boolean {
-    if (sps[0].faculty === 'WIAI') { // checking for first programme only
+    if (sps[0].faculty === 'WIAI') {
+      // checking for first programme only
       return true;
     }
     return false;
   }
-
 }

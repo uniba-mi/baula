@@ -9,17 +9,17 @@ export class CourseLangPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): string {
     switch (value) {
       case 'de':
-        return 'Deutsch';
+        return $localize`Deutsch`;
       case 'en':
-        return 'Englisch';
+        return $localize`Englisch`;
       case 'it':
-        return 'Italienisch';
+        return $localize`Italienisch`;
       case 'es':
-        return 'Spanisch';
+        return $localize`Spanisch`;
       case 'eg':
-        return 'Deutsch/Englisch on Demand'
+        return $localize`Deutsch/Englisch on Demand`
       default:
-        return 'Sonstige Sprache'
+        return $localize`Sonstige Sprache`
     }
   }
 

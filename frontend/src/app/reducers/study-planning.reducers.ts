@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { StudyPlan } from '../../../../interfaces/study-plan';
-import { ModulePlanningActions, UserGeneratedModuleActions, SemesterPlanActions, StudyPlanActions, CoursePlanningActions, TimetableActions, LoadingActions } from '../actions/study-planning.actions';
+import { ModulePlanningActions, UserGeneratedModuleActions, SemesterPlanActions, StudyPlanActions, CoursePlanningActions, TimetableActions } from '../actions/study-planning.actions';
 import { PlanningHints } from '../../../../interfaces/semester-plan';
 import { Semester } from '../../../../interfaces/semester';
 
@@ -35,7 +35,6 @@ export interface State {
   selectedStudyPlanId: string;
   activeStudyPlanId: string;
   activeSemester: string;
-  loading: boolean;
   hints: PlanningHints[];
   showFinishSemesterHint: boolean;
 }
@@ -45,7 +44,6 @@ export const initialState: State = {
   selectedStudyPlanId: '',
   activeStudyPlanId: '',
   activeSemester: new Semester().name,
-  loading: false,
   showFinishSemesterHint: false,
   hints: []
 };
@@ -507,20 +505,5 @@ export const reducer = createReducer(
         } : plan
       )
     };
-  }),
-
-  // Loading 
-  on(LoadingActions.startLoading, (state) => {
-    return {
-      ...state,
-      loading: true,
-    };
-  }),
-
-  on(LoadingActions.stopLoading, (state) => {
-    return {
-      ...state,
-      loading: false,
-    };
-  }),
+  })
 );

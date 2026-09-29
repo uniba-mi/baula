@@ -1,0 +1,89 @@
+<div class="card mb-3">
+    <div class="card-body">
+        <!-- Wish information -->
+        <h5 class="card-title">
+            @if (wish.icon) {
+            <i class="{{ wish.icon }}"></i>
+            } {{ wish.title }}
+        </h5>
+        <p class="card-text">{{ wish.description }}</p>
+        <!-- Wish operations (approve, unapprove, delete) -->
+        <div class="row g-2">
+            @if (approveButton) {
+            <div class="col-auto">
+                <button class="btn btn-success ms-2" (click)="approveWish()" i18n>Genehmigen</button>
+            </div>
+            }
+            @if (unapproveButton) {
+            <div class="col-auto">
+                <button class="btn btn-warning ms-2" (click)="unapproveWish()" i18n>Ablehnen</button>
+            </div>
+            }
+            @if (deleteButton) {
+            <div class="col-auto">
+                <button class="btn btn-danger ms-2" (click)="deleteWish()" i18n>Löschen</button>
+            </div>
+            }
+        </div>
+
+        @if (!simpleView) {
+        <!-- Admin message -->
+        <mat-divider class="my-3"></mat-divider>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label i18n>Admin Message</mat-label>
+
+            <textarea matInput [(ngModel)]="adminMessage">
+            </textarea>
+        </mat-form-field>
+        <!-- TODO: Add i18n for following @if -->
+        <button class="btn btn-success ms-2" (click)="updateAdminMessage()"
+            [disabled]="adminMessage === initialAdminMessage">
+            @if (wish.adminMessage) {
+            Admin Message aktualisieren
+            } @else {
+            Admin Message speichern
+            }
+        </button>
+        @if (adminMessageErrorMessage) {
+        <div class="alert alert-danger mt-2">
+            {{ adminMessageErrorMessage }}
+        </div>
+        }
+        <mat-divider class="my-3"></mat-divider>
+
+        <!-- Tags -->
+        @for (tag of wish.tags; track tag) {
+        <span class="chip me-2 tag-button"> 
+            <div class="btn" (click)="removeTag(tag)">
+                {{ tag }} <i class="bi bi-x-lg"></i>
+            </div>
+        </span>
+        }
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label i18n>Tag hinzufügen</mat-label>
+
+            <textarea matInput [(ngModel)]="tagToAdd">
+            </textarea>
+        </mat-form-field>
+        <button class="btn btn-success" (click)="addTag()" i18n>Tag hinzufügen</button>
+        @if (tagToAddErrorMessage) {
+        <div class="alert alert-danger mt-2">
+            {{ tagToAddErrorMessage }}
+        </div>
+        }
+        @if (tagToAddSuccessMessage) {
+        <div class="alert alert-success mt-2">
+            {{ tagToAddSuccessMessage }}
+        </div>
+        }
+
+        <!-- Footer -->
+        <div class="card-footer text-muted mt-3">
+            <i class="bi bi-calendar-check-fill"></i>{{ wish.createdAt | date:'short' }}
+            @if (showLikes) {
+            ;<i class="bi bi-hand-thumbs-up"></i>{{ wish.likes }}
+            }
+        </div>
+        }
+    </div>
+</div>

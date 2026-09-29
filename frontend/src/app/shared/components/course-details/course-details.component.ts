@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Course } from '../../../../../../interfaces/course';
 import { ModuleCourse } from '../../../../../../interfaces/module-course';
 
@@ -6,6 +6,7 @@ import { ModuleCourse } from '../../../../../../interfaces/module-course';
     selector: 'app-course-details',
     templateUrl: './course-details.component.html',
     styleUrl: './course-details.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CourseDetailsComponent implements OnInit {
@@ -50,7 +51,7 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   toggleCourseOrganisation(course: Course, mode: string) {
-    const element = document.getElementById(`${course.id}-organisation`);
+    const element = document.getElementById(`${course.id}-${this.context}-organisation`);
     if (element !== null) {
       if (mode === 'expand') {
         element.classList.remove('truncate-text');
@@ -64,7 +65,7 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   toggleCourseDescription(course: Course, mode: string) {
-    const element = document.getElementById(`${course.id}-description`);
+    const element = document.getElementById(`${course.id}-${this.context}-description`);
     if (element !== null) {
       if (mode === 'expand') {
         element.classList.remove('truncate-text');

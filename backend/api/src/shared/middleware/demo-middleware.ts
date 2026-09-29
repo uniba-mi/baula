@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { User } from "../../../../../interfaces/user";
+import { User } from "@interfaces/user";
 
 export function denyDemoWrites(
   req: Request,

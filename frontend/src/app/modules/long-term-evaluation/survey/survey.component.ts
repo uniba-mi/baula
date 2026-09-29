@@ -1,4 +1,4 @@
-import { Component, inject, model, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, model, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -42,79 +42,82 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatIconModule,
     MatCheckboxModule,
     PrivacyStatementComponent,
-    MatTooltipModule
+    MatTooltipModule,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [LteRestService],
 })
 export class SurveyComponent implements OnInit, OnDestroy {
-  data: { evaluationCode: string; spName: string; semester: number, consentGiven: boolean | undefined } = inject(MAT_DIALOG_DATA);
+  dialogRef = inject<MatDialogRef<SurveyComponent>>(MatDialogRef);
+  private screenSizeService = inject(ScreenSizeService);
+
+  data: {
+    evaluationCode: string;
+    spName: string;
+    semester: number;
+    consentGiven: boolean | undefined;
+  } = inject(MAT_DIALOG_DATA);
   private api = inject(LteRestService);
   readonly dismiss = model(false);
   likertScale = [
-    'Stimme überhaupt nicht zu',
-    'Stimme nicht zu',
-    'Stimme eher nicht zu',
-    'Weder noch',
-    'Stimme eher zu',
-    'Stimme zu',
-    'Stimme vollkommen zu',
+    $localize `Stimme überhaupt nicht zu`,
+    $localize `Stimme nicht zu`,
+    $localize `Stimme eher nicht zu`,
+    $localize `Weder noch`,
+    $localize `Stimme eher zu`,
+    $localize `Stimme zu`,
+    $localize `Stimme vollkommen zu`,
   ];
   view: 'intro' | 'survey' = 'intro';
   puLikertQuestions = [
     {
       id: 'pu1',
-      text: 'Die Nutzung von Baula verbessert meine Studienplanung.',
+      text: $localize `Die Nutzung von Baula verbessert meine Studienplanung.`,
     },
     {
       id: 'pu2',
-      text: 'Mit Baula kann ich meine Studienplanung produktiver gestalten.',
+      text: $localize `Mit Baula kann ich meine Studienplanung produktiver gestalten.`,
     },
     {
       id: 'pu3',
-      text: 'Baula macht meine Studienplanung insgesamt effizienter.',
+      text: $localize `Baula macht meine Studienplanung insgesamt effizienter.`,
     },
     {
       id: 'pu4',
-      text: 'Insgesamt ist Baula für meine Studienplanung nützlich.',
+      text: $localize `Insgesamt ist Baula für meine Studienplanung nützlich.`,
     },
-    
   ];
   peouLikertQuestions = [
     {
       id: 'peou1',
-      text: 'Die Bedienung von Baula ist für mich klar und verständlich.',
+      text: $localize `Die Bedienung von Baula ist für mich klar und verständlich.`,
     },
     {
       id: 'peou2',
-      text: 'Der Umgang mit Baula fällt mir ohne großen Aufwand leicht.',
+      text: $localize `Der Umgang mit Baula fällt mir ohne großen Aufwand leicht.`,
     },
     {
       id: 'peou3',
-      text: 'Ich finde Baula insgesamt einfach zu bedienen.',
+      text: $localize `Ich finde Baula insgesamt einfach zu bedienen.`,
     },
     {
       id: 'peou4',
-      text: 'Es ist für mich unkompliziert, Baula so zu nutzen, wie ich es möchte.',
-    }
+      text: $localize `Es ist für mich unkompliziert, Baula so zu nutzen, wie ich es möchte.`,
+    },
   ];
   biLikertQuestion = {
-      id: 'bi',
-      text: 'Ich habe vor, Baula auch in den kommenden Semestern zu nutzen.',
-  }
-  
+    id: 'bi',
+    text: $localize `Ich habe vor, Baula auch in den kommenden Semestern zu nutzen.`,
+  };
+
   isLargeScreen: boolean;
   private subscriptions: Subscription = new Subscription();
-
-  constructor(
-    public dialogRef: MatDialogRef<SurveyComponent>,
-    private screenSizeService: ScreenSizeService
-  ) {}
 
   ngOnInit(): void {
     this.subscriptions.add(
       this.screenSizeService.isLargeScreen$.subscribe((isLargeScreen) => {
         this.isLargeScreen = isLargeScreen;
-      })
+      }),
     );
   }
 
@@ -221,7 +224,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
           error: (error) => {
             console.log(error);
             this.dialogRef.close(result);
-          }
+          },
         });
     }
   }

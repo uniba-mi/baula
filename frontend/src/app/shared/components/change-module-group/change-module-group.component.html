@@ -1,0 +1,21 @@
+@if (structuredModuleGroups) {
+  <mat-form-field appearance="outline">
+    <mat-label>Modulgruppe</mat-label>
+    <mat-select #mgForm [formControl]="selectedModuleGroup" [value]="mgId" placeholder="Bitte wählen" i18n-placeholder
+      (selectionChange)="select(mgForm.value)">
+      @for (group of structuredModuleGroups; track group) {
+        <mat-option [value]="group.mgId"
+          [ngStyle]="{'padding-left': ((group.level ?? 0) * 10 + 10) + 'px'}"> {{ group.path }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+}
+
+<!-- show mg wizard -->
+<div class="wrapper w-90 mt-0">
+  <app-module-group-wizard [mgId]="mgId" [structuredModuleGroups]="structuredModuleGroups"
+    [possibleMgIdsBasedOnAcronym]="possibleMgIdsBasedOnAcronym$ | async"
+    (groupSelected)="selectSimilarGroup($event)">
+  </app-module-group-wizard>
+</div>

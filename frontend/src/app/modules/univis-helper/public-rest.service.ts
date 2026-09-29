@@ -1,8 +1,8 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Competence } from '../../../../../interfaces/competence';
-import { ModuleAcronym } from '../../../../../interfaces/module';
+import { Competence } from '@interfaces/competence';
+import { ModuleAcronym } from '@interfaces/module';
 import { Standard } from '../bilapp/interfaces/standard';
 import { BilAppCourseShort, BilAppCourse } from './interfaces/bilapp';
 import { config } from 'src/environments/config.local';
@@ -17,19 +17,25 @@ const httpOptions = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PublicRestService {
-  private urlBase = config.apiUrl + 'bilapp/'
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
-  
+  private urlBase = config.apiUrl + 'bilapp/';
+
   getModules(): Observable<ModuleAcronym[]> {
-    return this.http.get<ModuleAcronym[]>(`${this.urlBase}modules`, httpOptions);
+    return this.http.get<ModuleAcronym[]>(
+      `${this.urlBase}modules`,
+      httpOptions,
+    );
   }
 
   getCompetences(): Observable<Competence[]> {
-    return this.http.get<Competence[]>(`${this.urlBase}competences/children/uppest`, httpOptions);
+    return this.http.get<Competence[]>(
+      `${this.urlBase}competences/children/uppest`,
+      httpOptions,
+    );
   }
 
   getStandards(): Observable<Standard[]> {
@@ -38,12 +44,17 @@ export class PublicRestService {
 
   // get existing courses from BilApp
   getBilAppCourses(semester: string): Observable<BilAppCourseShort[]> {
-    return this.http.get<BilAppCourseShort[]>(`${this.urlBase}courses/${semester}`, httpOptions)
+    return this.http.get<BilAppCourseShort[]>(
+      `${this.urlBase}courses/${semester}`,
+      httpOptions,
+    );
   }
 
   // get competence and module connection from BilApp-Course
   getCompetenceAndModuleFromCourse(id: string): Observable<BilAppCourse> {
-    return this.http.get<BilAppCourse>(`${this.urlBase}course/${id}`, httpOptions)
+    return this.http.get<BilAppCourse>(
+      `${this.urlBase}course/${id}`,
+      httpOptions,
+    );
   }
-  
 }

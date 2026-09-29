@@ -1,0 +1,54 @@
+<div class="container">
+    <section>
+        <mat-checkbox (change)="simpleView = $event.checked" i18n>Simple Ansicht verwenden</mat-checkbox>
+        <mat-checkbox [checked]="true" (change)="showApprovedWishes = $event.checked" i18n>Genehmigte Wünsche
+            anzeigen</mat-checkbox>
+        <mat-checkbox [checked]="true" (change)="showUnapprovedWishes = $event.checked" i18n>Ungenehmigte Wünsche
+            anzeigen</mat-checkbox>
+    </section>
+
+    <div class="row">
+
+        <!-- Approved -->
+        <div class="col">
+            @if (showApprovedWishes && showUnapprovedWishes) {
+                <h2 i18n>Genehmigte und noch nicht genehmigte Wünsche</h2>
+            } @else if(showApprovedWishes) {
+                <h2 i18n>Genehmigte Wünsche</h2>
+            } @else if (showUnapprovedWishes) {
+                <h2 i18n>Noch nicht genehmigte Wünsche</h2>
+            } @else {
+                <h2 i18n>Derzeit werden keine Wünsche angezeigt.</h2>
+            }
+
+            <div class="row">
+                @if (showApprovedWishes) {
+                @for (wish of approvedWishes; track wish) {
+                <div class="col-6 col-lg-3">
+                    <app-admin-single-feature-wish [showLikes]="true" [wish]="wish" [deleteButton]="true"
+                        [unapproveButton]="true" (delete)="deleteWish($event)" (approve)="approveWish($event)"
+                        (unapprove)="unapproveWish($event)" [simpleView]="simpleView">
+                    </app-admin-single-feature-wish>
+                </div>
+                }
+                }
+
+                @if (showUnapprovedWishes) {
+                @for (wish of unapprovedWishes; track wish) {
+                <div class="col-6 col-lg-3">
+                    <app-admin-single-feature-wish [wish]="wish" [deleteButton]="true" [approveButton]="true"
+                        (delete)="deleteWish($event)" (approve)="approveWish($event)"
+                        (unapprove)="unapproveWish($event)" [simpleView]="simpleView">
+                    </app-admin-single-feature-wish>
+                </div>
+                }
+                }
+            </div>
+
+            <div class="row">
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AdminRestService } from '../admin-rest.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
@@ -9,16 +9,15 @@ import { AdminDialogComponent } from '../dialogs/admin-dialog.component';
   selector: 'fn2dnd',
   templateUrl: './fn2xml-dnd.component.html',
   styleUrls: ['./fn2xml-dnd.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class Fn2xmlDndComponent implements OnInit {
-  selectedSemester: string = '';
+  private rest = inject(AdminRestService);
+  private snackbar = inject(SnackbarService);
+  private dialog = inject(MatDialog);
 
-  constructor(
-    private rest: AdminRestService,
-    private snackbar: SnackbarService,
-    private dialog: MatDialog
-  ) {}
+  selectedSemester: string = '';
 
   ngOnInit(): void {}
 
@@ -55,7 +54,7 @@ export class Fn2xmlDndComponent implements OnInit {
     if (this.selectedSemester !== '') {
       this.dialog.open(AdminDialogComponent, {
         data: {
-          dialogTitle: 'FlexNow Modulhandbuch Crawl gestartet...',
+          dialogTitle: $localize `FlexNow Modulhandbuch Crawl gestartet...`,
           dialogContentId: 'univis-crawl-dialog',
           univisCrawl$: this.rest.crawlFlexNow(this.selectedSemester),
         },
@@ -64,7 +63,7 @@ export class Fn2xmlDndComponent implements OnInit {
     } else {
       this.snackbar.openSnackBar({
         type: AlertType.DANGER,
-        message: 'Es wurde kein Semester ausgewählt!',
+        message: $localize `Es wurde kein Semester ausgewählt!`,
       });
     }
   }

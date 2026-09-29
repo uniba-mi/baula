@@ -139,7 +139,7 @@ const routes: Routes = [
             component: UserDataComponent,
           },
           {
-            path: 'verlauf-verwalten',
+            path: 'integrationen-verwalten',
             component: StudyPathUpdateComponent,
           },
           {

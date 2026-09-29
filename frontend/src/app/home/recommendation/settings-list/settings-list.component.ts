@@ -1,7 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { delay, map, Observable, of, switchMap, take } from 'rxjs';
-import { FavoriteModulesActions, ExcludedModuleActions, UserActions } from 'src/app/actions/user.actions';
-import { getAllModuleFeedback, getFavouriteModuleAcronyms, getExcludedModulesAcronyms, getUser } from 'src/app/selectors/user.selectors';
+import {
+  FavoriteModulesActions,
+  ExcludedModuleActions,
+  UserActions,
+} from 'src/app/actions/user.actions';
+import {
+  getAllModuleFeedback,
+  getFavouriteModuleAcronyms,
+  getExcludedModulesAcronyms,
+  getUser,
+} from 'src/app/selectors/user.selectors';
 import { Module } from '../../../../../../interfaces/module';
 import { ModuleFeedback, User } from '../../../../../../interfaces/user';
 import { ModService } from 'src/app/shared/services/module.service';
@@ -9,18 +18,27 @@ import { select, Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { Recommendation } from '../../../../../../interfaces/recommendation';
 import { RecsRestService } from 'src/app/modules/recommendations/recs-rest.service';
-import { ConfirmationDialogComponent, ConfirmationDialogData } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
+import {
+  ConfirmationDialogComponent,
+  ConfirmationDialogData,
+} from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
-type ListItem = ModuleFeedback | Module
+type ListItem = ModuleFeedback | Module;
 
 @Component({
   selector: 'app-settings-list',
   standalone: false,
   templateUrl: './settings-list.component.html',
-  styleUrl: './settings-list.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './settings-list.component.scss',
 })
 export class SettingsListComponent {
+  private store = inject(Store);
+  private modService = inject(ModService);
+  private recsService = inject(RecsRestService);
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
 
   @Input() preview: boolean = false;
   @Input() type: 'blacklist' | 'merkliste' | 'feedback';
@@ -33,13 +51,10 @@ export class SettingsListComponent {
   feedbackItems$: Observable<ModuleFeedback[]>;
   recommendations$: Observable<Recommendation[]>;
 
-  constructor(private store: Store, private modService: ModService, private recsService: RecsRestService, private route: ActivatedRoute, private dialog: MatDialog,
-  ) { }
-
   ngOnInit() {
-
     if (!this.preview) {
-      // get type from route data
+      // get type from route data 
+      // TODO: add to localize when routing is translated!!!
       this.type = this.route.snapshot.data['type'] || 'merkliste';
     }
 
@@ -54,24 +69,26 @@ export class SettingsListComponent {
   }
 
   private loadData(): void {
-
     // get blacklist modules
-    this.blacklistItems$ = this.store.select(getExcludedModulesAcronyms).pipe(
-      switchMap((modIds: string[]) =>
-        modIds.length > 0
-          ? this.modService.getFullModulesByAcronyms(modIds)
-          : of([])
-      )
-    );
+    this.blacklistItems$ = this.store
+      .select(getExcludedModulesAcronyms)
+      .pipe(
+        switchMap((modIds: string[]) =>
+          modIds.length > 0
+            ? this.modService.getFullModulesByAcronyms(modIds)
+            : of([]),
+        ),
+      );
 
     // get favourite modules
-    this.favouriteItems$ = this.store.pipe(select(getFavouriteModuleAcronyms),
+    this.favouriteItems$ = this.store.pipe(
+      select(getFavouriteModuleAcronyms),
       switchMap((favouriteAcronyms: string[]) =>
         favouriteAcronyms.length > 0
           ? this.modService.getFullModulesByAcronyms(favouriteAcronyms)
-          : of([])
-      )
-    )
+          : of([]),
+      ),
+    );
 
     this.feedbackItems$ = this.store.select(getAllModuleFeedback);
   }
@@ -84,15 +101,17 @@ export class SettingsListComponent {
         return this.blacklistItems$;
       case 'feedback':
         return this.feedbackItems$.pipe(
-          switchMap(feedbackItems =>
-            this.store.select(getExcludedModulesAcronyms).pipe(
-              map(blacklistAcronyms =>
-                feedbackItems.filter(feedback =>
-                  !blacklistAcronyms.includes(feedback.acronym)
-                )
-              )
-            )
-          )
+          switchMap((feedbackItems) =>
+            this.store
+              .select(getExcludedModulesAcronyms)
+              .pipe(
+                map((blacklistAcronyms) =>
+                  feedbackItems.filter(
+                    (feedback) => !blacklistAcronyms.includes(feedback.acronym),
+                  ),
+                ),
+              ),
+          ),
         );
       default:
         return of([]);
@@ -102,28 +121,30 @@ export class SettingsListComponent {
   getTitle(): string {
     const titles = {
       preview: {
-        merkliste: 'Merkliste',
-        blacklist: 'Blacklist',
-        feedback: 'Feedback'
+        merkliste: $localize`Merkliste`,
+        blacklist: $localize`Blacklist`,
+        feedback: $localize`Feedback`,
       },
       standard: {
-        merkliste: 'Alle Module auf deiner Merkliste',
-        blacklist: 'Alle Module auf deiner Blacklist',
-        feedback: 'Module, zu denen du positives Feedback gegeben hast.'
-      }
+        merkliste: $localize`Alle Module auf deiner Merkliste`,
+        blacklist: $localize`Alle Module auf deiner Blacklist`,
+        feedback: $localize`Module, zu denen du positives Feedback gegeben hast.`,
+      },
     };
 
-    return this.preview ? titles.preview[this.type] : titles.standard[this.type];
+    return this.preview
+      ? titles.preview[this.type]
+      : titles.standard[this.type];
   }
 
   get tooltipText(): string {
     switch (this.type) {
       case 'merkliste':
-        return 'Module, die du für später speichern möchtest.';
+        return $localize `Module, die du für später speichern möchtest.`;
       case 'blacklist':
-        return 'Module, die du aus deinen Empfehlungen ausschließen möchtest.';
+        return $localize `Module, die du aus deinen Empfehlungen ausschließen möchtest.`;
       case 'feedback':
-        return 'Dein abgegebenes Feedback zu Modulen.';
+        return $localize `Dein abgegebenes Feedback zu Modulen.`;
       default:
         return '';
     }
@@ -135,28 +156,27 @@ export class SettingsListComponent {
         const blacklistItem = item as Module;
         this.store.dispatch(
           ExcludedModuleActions.deleteExcludedModule({
-            acronym: blacklistItem.acronym
-          })
+            acronym: blacklistItem.acronym,
+          }),
         );
         break;
       case 'merkliste':
         const favouriteItem = item as Module;
         this.store.dispatch(
           FavoriteModulesActions.toggleFavouriteModule({
-            acronym: favouriteItem.acronym
-          })
+            acronym: favouriteItem.acronym,
+          }),
         );
         break;
       case 'feedback':
-
         const feedbackItem = item as ModuleFeedback;
 
         const confirmationDialogInterface: ConfirmationDialogData = {
-          dialogTitle: 'Feedback zum Modul löschen?',
+          dialogTitle: $localize`Feedback zum Modul löschen?`,
           actionType: 'delete',
-          confirmationItem: `dein Feedback zum Modul "${feedbackItem.acronym}"`,
-          confirmButtonLabel: 'Löschen',
-          cancelButtonLabel: 'Abbrechen',
+          confirmationItem: $localize`dein Feedback zum Modul "${feedbackItem.acronym}"`,
+          confirmButtonLabel: $localize`Löschen`,
+          cancelButtonLabel: $localize`Abbrechen`,
           confirmButtonClass: 'btn btn-danger',
           callbackMethod: () => {
             this.deleteFeedback(feedbackItem.acronym);
@@ -186,13 +206,13 @@ export class SettingsListComponent {
   }
 
   deleteFeedback(acronym: string) {
-    console.log('deleting', acronym)
+    console.log('deleting', acronym);
 
     // delete from feedback in user (and personal recommendation via effect)
     this.store.dispatch(
       UserActions.deleteModuleFeedback({
-        moduleFeedback: { acronym }
-      })
+        moduleFeedback: { acronym },
+      }),
     );
     this.dialog.closeAll();
   }
@@ -200,10 +220,7 @@ export class SettingsListComponent {
   editFeedback(item: ModuleFeedback): void {
     this.modService.selectModuleFromAcronymString(item.acronym, 'feedback');
 
-    this.dialog.afterAllClosed.pipe(
-      take(1),
-      delay(500)
-    ).subscribe(() => {
+    this.dialog.afterAllClosed.pipe(take(1), delay(500)).subscribe(() => {
       this.recommendations$ = this.recsService.getPersonalRecommendations();
     });
   }
@@ -225,14 +242,14 @@ export class SettingsListComponent {
       return item.name;
     } else if (this.isFeedback(item)) {
       const feedback = item as any;
-      return `Feedback zu ${feedback.acronym}` || 'Feedback';
+      return $localize `Feedback zu ${feedback.acronym}` || $localize `Feedback`;
     }
     return '';
   }
 
   getRecommendedModulesForFeedback(
     feedbackAcronym: string,
-    recommendations: Recommendation[]
+    recommendations: Recommendation[],
   ): Array<{ acronym: string; score: number }> {
     if (!recommendations || recommendations.length === 0) {
       return [];
@@ -245,18 +262,22 @@ export class SettingsListComponent {
     }
 
     return userRec.recommendedMods
-      .filter(recMod =>
+      .filter((recMod) =>
         recMod.source?.some(
-          source => source.type === 'feedback_similarmods' && source.identifier === feedbackAcronym
-        )
+          (source) =>
+            source.type === 'feedback_similarmods' &&
+            source.identifier === feedbackAcronym,
+        ),
       )
-      .map(recMod => {
+      .map((recMod) => {
         const feedbackSource = recMod.source?.find(
-          source => source.type === 'feedback_similarmods' && source.identifier === feedbackAcronym
+          (source) =>
+            source.type === 'feedback_similarmods' &&
+            source.identifier === feedbackAcronym,
         );
         return {
           acronym: recMod.acronym,
-          score: feedbackSource?.score || 0
+          score: feedbackSource?.score || 0,
         };
       });
   }
@@ -264,13 +285,13 @@ export class SettingsListComponent {
   get noDataMessage(): string {
     switch (this.type) {
       case 'merkliste':
-        return 'Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf "Merken", damit hier Module angezeigt werden.';
+        return $localize `Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf "Merken", damit hier Module angezeigt werden.`;
       case 'blacklist':
-        return 'Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf "Nicht mehr vorschlagen", damit hier Module angezeigt werden.';
+        return $localize `Klicke im Dreipunktmenü der empfohlenenen Modulkarten auf "Nicht mehr vorschlagen", damit hier Module angezeigt werden.`;
       case 'feedback':
-        return 'Nachdem du ein Modul abgeschlossen hast, kannst du über die Moduldetails (Tab Feedback) Feedback geben. Wenn es Modulempfehlungen dazu gibt, werden diese hier angezeigt.';
+        return $localize `Nachdem du ein Modul abgeschlossen hast, kannst du über die Moduldetails (Tab Feedback) Feedback geben. Wenn es Modulempfehlungen dazu gibt, werden diese hier angezeigt.`;
       default:
-        return 'Keine Daten vorhanden.';
+        return $localize `Keine Daten vorhanden.`;
     }
   }
 }

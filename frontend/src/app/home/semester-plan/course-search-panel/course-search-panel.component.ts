@@ -6,6 +6,8 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   FormArray,
@@ -14,15 +16,19 @@ import {
   FormGroup,
   UntypedFormControl,
 } from '@angular/forms';
-import {
-  Option,
-  SearchSettings,
-} from '../../../../../../interfaces/search';
+import { Option, SearchSettings } from '../../../../../../interfaces/search';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { ActivatedRoute } from '@angular/router';
 import { RestService } from 'src/app/rest.service';
-import { debounceTime, fromEvent, Observable, skipWhile, Subject, take, takeUntil } from 'rxjs';
+import {
+  debounceTime,
+  fromEvent,
+  Observable,
+  skipWhile,
+  Subject,
+  takeUntil,
+} from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { AnalyticsService } from 'src/app/shared/services/analytics.service';
@@ -32,13 +38,21 @@ import { getSearchSettingsByContext } from 'src/app/selectors/search-settings.se
   selector: 'app-course-search-panel',
   templateUrl: './course-search-panel.component.html',
   styleUrls: ['./course-search-panel.component.scss'],
-  standalone: false
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CourseSearchPanelComponent implements OnInit, OnDestroy {
+  private store = inject<Store<State>>(Store);
+  private route = inject(ActivatedRoute);
+  private rest = inject(RestService);
+  private fb = inject(FormBuilder);
+  private analytics = inject(AnalyticsService);
+
   @Output() search = new EventEmitter<SearchSettings>();
   @Output() openSidenav = new EventEmitter<Boolean>();
   @ViewChild('select') select: MatSelect;
-  @ViewChild('courseSearchInput', { static: true }) courseSearchInput: ElementRef;
+  @ViewChild('courseSearchInput', { static: true })
+  courseSearchInput: ElementRef;
   ngUnsubscribe = new Subject<void>();
   searchSettings$: Observable<SearchSettings | undefined>;
   searchSettings: SearchSettings;
@@ -62,29 +76,29 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
   searchInOptions: Option[] = [
     {
       value: 'name',
-      name: 'Titel',
+      name: $localize`Titel`,
       key: 'name',
       selected: true,
     },
     {
       value: 'desc',
-      name: 'Beschreibung',
+      name: $localize`Beschreibung`,
       key: 'desc',
     },
     {
       value: 'short',
-      name: 'Kurzbezeichnung',
+      name: $localize`Kurzbezeichnung`,
       key: 'short',
       selected: true,
     },
     {
       value: 'organizational',
-      name: 'Organisatorisches',
+      name: $localize`Organisatorisches`,
       key: 'organizational',
     },
     {
       value: 'mId',
-      name: 'Modulnummer/kürzel',
+      name: $localize`Modulnummer/kürzel`,
       key: 'mId',
       selected: true,
     },
@@ -92,7 +106,7 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
 
   advancedSearchOptions = this.fb.group({
     searchInFields: new FormControl(
-      this.searchInOptions.filter((el) => el.selected).map((el) => el.key)
+      this.searchInOptions.filter((el) => el.selected).map((el) => el.key),
     ),
     detailSearch: this.fb.array([
       this.fb.group({
@@ -112,14 +126,6 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
       onlySelectedCourses: false,
     }),
   });
-
-  constructor(
-    private store: Store<State>,
-    private route: ActivatedRoute,
-    private rest: RestService,
-    private fb: FormBuilder,
-    private analytics: AnalyticsService
-  ) { }
 
   ngOnInit(): void {
     fromEvent(this.courseSearchInput.nativeElement, 'input')
@@ -203,7 +209,7 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
   // catches detail search request
   onDetailSearchChange(event: Event) {
     event.preventDefault();
-    this.emitSearch(false)
+    this.emitSearch(false);
   }
 
   private trackSearchEvent(searchSettings: SearchSettings): void {
@@ -214,14 +220,17 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
     this.trackDebounceTimer = setTimeout(() => {
       // Only track if the search term or filters have changed
       const filtersApplied = searchSettings.advancedSearch?.filter;
-      const hasFilters = filtersApplied && Object.values(filtersApplied).some(value => value);
+      const hasFilters =
+        filtersApplied && Object.values(filtersApplied).some((value) => value);
 
-      if ((searchSettings.term.trim() !== '' || hasFilters) && searchSettings.term !== this.lastTrackedQuery) {
-
+      if (
+        (searchSettings.term.trim() !== '' || hasFilters) &&
+        searchSettings.term !== this.lastTrackedQuery
+      ) {
         this.analytics.trackEvent('CourseSearch', {
           action: 'Search Course',
           term: searchSettings.term,
-          filters: JSON.stringify(searchSettings.advancedSearch?.filter)
+          filters: JSON.stringify(searchSettings.advancedSearch?.filter),
         });
 
         this.lastTrackedQuery = searchSettings.term; // prevent duplicate tracking
@@ -256,7 +265,7 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
       : ['mId', 'name']; // default
 
     this.advancedSearchOptions.controls['searchInFields'].patchValue(
-      searchFields
+      searchFields,
     );
     this.emitSearch(false);
   }
@@ -292,7 +301,7 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
 
   resetDetailSearchField(index: number) {
     const detailSearchArray = this.advancedSearchOptions.get(
-      'detailSearch'
+      'detailSearch',
     ) as FormArray;
     detailSearchArray.at(index).reset({
       term: '',
@@ -317,13 +326,13 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
       {
         term: '',
         searchIn: '',
-      }
+      },
     ]);
   }
 
   resetAllFilters() {
     this.resetSearchOptions();
-    this.emitSearch(false)
+    this.emitSearch(false);
   }
 
   // calculate selected filters count to display in badge
@@ -332,12 +341,12 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
 
     // detail search fields
     const detailSearchArray = this.advancedSearchOptions.get(
-      'detailSearch'
+      'detailSearch',
     ) as FormArray;
     count += detailSearchArray.controls.reduce(
       (acc, control) =>
         acc + (control.value.term || control.value.searchIn ? 1 : 0),
-      0
+      0,
     );
 
     // filters
@@ -373,7 +382,7 @@ export class CourseSearchPanelComponent implements OnInit, OnDestroy {
   patchValuesToForm(options: SearchSettings) {
     if (options.searchIn.length > 2) {
       this.advancedSearchOptions.controls['searchInFields'].patchValue(
-        options.searchIn
+        options.searchIn,
       );
       this.fulltextSearchEnabled = true;
     }

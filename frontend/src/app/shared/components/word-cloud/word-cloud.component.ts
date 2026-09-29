@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-word-cloud',
-  standalone: false,
   templateUrl: './word-cloud.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './word-cloud.component.scss'
 })
 export class WordCloudComponent {

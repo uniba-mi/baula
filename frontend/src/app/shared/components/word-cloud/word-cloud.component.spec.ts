@@ -8,7 +8,7 @@ describe('WordCloudComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WordCloudComponent]
+      imports: [WordCloudComponent]
     })
     .compileComponents();
 

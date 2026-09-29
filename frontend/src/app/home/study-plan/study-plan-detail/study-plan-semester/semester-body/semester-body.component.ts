@@ -1,9 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Module } from '../../../../../../../../interfaces/module';
 import { ModService } from 'src/app/shared/services/module.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, map, Observable, of, switchMap, take, takeWhile, tap } from 'rxjs';
+import {
+  EMPTY,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+  takeWhile,
+  tap,
+} from 'rxjs';
 import {
   getAllDistinctModules,
   getOldModuleByAcronym,
@@ -19,9 +28,7 @@ import {
   ConfirmationDialogData,
   ConfirmationDialogComponent,
 } from 'src/app/dialog/confirmation-dialog/confirmation-dialog.component';
-import {
-  UserGeneratedModule,
-} from '../../../../../../../../interfaces/user-generated-module';
+import { UserGeneratedModule } from '../../../../../../../../interfaces/user-generated-module';
 import {
   closeUserGeneratedModuleDialog,
   openUserGeneratedModuleDialog,
@@ -32,7 +39,11 @@ import {
   SemesterStudyPath,
   StudyPath,
 } from '../../../../../../../../interfaces/study-path';
-import { SemesterPlan, MetaSemester, ItemActionName } from '../../../../../../../../interfaces/semester-plan';
+import {
+  SemesterPlan,
+  MetaSemester,
+  ItemActionName,
+} from '../../../../../../../../interfaces/semester-plan';
 import {
   getSemesterList,
   getUser,
@@ -53,9 +64,16 @@ import { DragDropService } from 'src/app/shared/services/drag-drop.service';
   standalone: false,
 
   templateUrl: './semester-body.component.html',
-  styleUrl: './semester-body.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './semester-body.component.scss',
 })
 export class SemesterBodyComponent {
+  private modService = inject(ModService);
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+  private snackbarService = inject(SnackbarService);
+  private screenSizeService = inject(ScreenSizeService);
+  private dragDropService = inject(DragDropService);
 
   @Input() metaSemester: MetaSemester;
   @Input() studyPlanId: string;
@@ -67,7 +85,7 @@ export class SemesterBodyComponent {
   user: User;
   closeMode: string;
   isSmallScreen: boolean = false;
-  structuredModuleGroups$: Observable<ExtendedModuleGroup[]>
+  structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
   semesterPlan$: Observable<SemesterPlan>;
   studyPath$: Observable<StudyPath>;
 
@@ -75,51 +93,61 @@ export class SemesterBodyComponent {
   modules: Module[];
   semesters$: Observable<Semester[]>;
 
-  constructor(
-    private modService: ModService,
-    private store: Store,
-    private dialog: MatDialog,
-    private snackbarService: SnackbarService,
-    private screenSizeService: ScreenSizeService,
-    private dragDropService: DragDropService,
-  ) { }
-
   ngOnInit() {
-    this.screenSizeService.isSmallScreen$.pipe(take(1)).subscribe(isSmall => {
+    this.screenSizeService.isSmallScreen$.pipe(take(1)).subscribe((isSmall) => {
       this.isSmallScreen = isSmall;
     });
     this.user$ = this.store.pipe(select(getUser));
     this.user$.subscribe((user) => {
       this.user = user;
-    })
+    });
     this.studyPath$ = this.store.select(getUserStudyPath);
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);
 
     this.modules$ = this.store.select(getAllDistinctModules);
-    this.modules$.pipe(takeWhile((mod) => mod.length === 0, true)).subscribe((modules) => {
-      this.modules = modules;
-    });
+    this.modules$
+      .pipe(takeWhile((mod) => mod.length === 0, true))
+      .subscribe((modules) => {
+        this.modules = modules;
+      });
 
     // load old modules
     for (let mod of this.semesterPlan.modules) {
-      if (!this.modules.map(el => el.acronym).includes(mod)) {
-        this.store.dispatch(UnknownModulesActions.loadUnknownModule({ acronym: mod }))
+      if (!this.modules.map((el) => el.acronym).includes(mod)) {
+        this.store.dispatch(
+          UnknownModulesActions.loadUnknownModule({ acronym: mod }),
+        );
       }
     }
 
     this.semesters$ = this.store.select(getSemesterList);
   }
 
-  handleModuleAction(event: { action: ItemActionName, data: any }) {
+  handleModuleAction(event: { action: ItemActionName; data: any }) {
     const { action, data } = event;
 
     switch (action) {
       case 'select':
-        this.selectModule(data);
+        if (!data.isUserGenerated) {
+          // no select for ug modules
+          if (!this.metaSemester.isPastSemester) {
+            this.selectModule(data);
+          } else {
+            this.openModuleDetailsDialog(
+              data.acronym || data,
+              'details',
+              false,
+            );
+          }
+        }
         break;
 
       case 'feedback':
-        this.openModuleDetailsDialog(data.acronym || data);
+        if (!this.metaSemester.isPastSemester) {
+          this.openModuleDetailsDialog(data.acronym || data, 'feedback', true); // allowPlanning true for type Module
+        } else {
+          this.openModuleDetailsDialog(data.acronym || data, 'feedback', false); // allowPlanning false for type pathModule
+        }
         break;
 
       case 'moveToSem':
@@ -134,19 +162,23 @@ export class SemesterBodyComponent {
             this.semesterPlan._id,
             this.semesterPlan.semester,
             data._id,
-            data
+            data,
           );
         }
         break;
 
       case 'delete':
         if (this.metaSemester.isPastSemester) {
-          this.openDeletePathModuleDialog(data._id, data.acronym, this.semesterPlan.semester);
+          this.openDeletePathModuleDialog(
+            data._id,
+            data.acronym,
+            this.semesterPlan.semester,
+          );
         } else if (!data.mId) {
           this.openDeleteUserGeneratedModuleDialog(
             this.semesterPlan._id,
             this.semesterPlan.semester,
-            data
+            data,
           );
         } else {
           this.openDeleteModuleDialog(
@@ -154,7 +186,7 @@ export class SemesterBodyComponent {
             this.semesterPlan.semester,
             data.acronym,
             data.name,
-            data.ects
+            data.ects,
           );
         }
         break;
@@ -187,37 +219,45 @@ export class SemesterBodyComponent {
     return this.store.select(getOldModuleByAcronym(acronym));
   }
 
-  openModuleDetailsDialog(acronym: string) { // open on tab feedback
-    this.modService.selectModuleFromAcronymString(acronym, 'feedback');
+  openModuleDetailsDialog(
+    acronym: string,
+    activeTab: string,
+    allowPlanning: boolean,
+  ) {
+    // open on tab feedback
+    this.modService.selectModuleFromAcronymString(
+      acronym,
+      activeTab,
+      allowPlanning,
+    );
   }
 
   openChangeModuleGroupDialog(event: any, module: PathModule): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        dialogTitle: 'Modulgruppe bearbeiten',
+        dialogContentId: 'change-module-group-dialog',
+        mgId: module.mgId,
+        structuredModuleGroups$: this.structuredModuleGroups$,
+        acronym: module.acronym,
+      },
+    });
 
-    // if only fn upload mg name is there, but no proper mgid
-    this.getModulePath(module.mgId).pipe(take(1)).subscribe(path => {
-      const pathExists = !!path;
-
-      const dialogRef = this.dialog.open(DialogComponent, {
-        data: {
-          dialogTitle: 'Modulgruppe bearbeiten',
-          dialogContentId: 'change-module-group-dialog',
-          mgId: module.mgId,
-          structuredModuleGroups$: this.structuredModuleGroups$,
-          showMgWizard: !pathExists,
-        },
-      });
-
-      dialogRef.afterClosed().subscribe((mgId) => {
-        if (mgId) {
-          this.store.select(getCloseDialogMode).pipe(take(1)).subscribe((mode) => {
+    dialogRef.afterClosed().subscribe((mgId) => {
+      if (mgId) {
+        this.store
+          .select(getCloseDialogMode)
+          .pipe(take(1))
+          .subscribe((mode) => {
             this.closeMode = mode;
             if (this.closeMode === 'data') {
               module.mgId = mgId === undefined ? 'open' : mgId;
-              this.store.dispatch(StudyPathActions.updateModuleInStudyPath({ module }));
+              this.store.dispatch(
+                StudyPathActions.updateModuleInStudyPath({ module }),
+              );
             }
           });
-        }
-      });
+      }
     });
   }
 
@@ -226,66 +266,80 @@ export class SemesterBodyComponent {
       return of(null);
     }
     return this.structuredModuleGroups$.pipe(
-      map(groups => {
-        const group = groups.find(g => g.mgId === mgId);
+      map((groups) => {
+        const group = groups.find((g) => g.mgId === mgId);
         return group ? group.path : null;
-      })
+      }),
     );
   }
 
   // open dialog to select semester to move items on small screens
   openSelectSemesterDialog(data: any) {
-
     const availableTargetSemesters$ = this.semesters$.pipe(
-      map(semesters => semesters.filter(semester => !semester.isPastSemester() && semester.name !== this.semesterPlan.semester))
+      map((semesters) =>
+        semesters.filter(
+          (semester) =>
+            !semester.isPastSemester() &&
+            semester.name !== this.semesterPlan.semester,
+        ),
+      ),
     );
 
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Semester wählen',
+        dialogTitle: $localize `Semester wählen`,
         dialogContentId: 'select-semester-dialog',
         semesters$: availableTargetSemesters$,
       },
     });
 
-    dialogRef.afterClosed().pipe(
-      switchMap((targetSemester) => {
-        if (targetSemester) {
-          return this.store.select(getSemesterPlanIdBySemester(targetSemester)).pipe(
-            take(1),
-            tap((targetSemesterPlanId) => {
-              if (targetSemesterPlanId) {
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((targetSemester) => {
+          if (targetSemester) {
+            return this.store
+              .select(getSemesterPlanIdBySemester(targetSemester))
+              .pipe(
+                take(1),
+                tap((targetSemesterPlanId) => {
+                  if (targetSemesterPlanId) {
+                    this.semesters$.pipe(take(1)).subscribe((semesters) => {
+                      const targetSemesterData = semesters.find(
+                        (s) => s.fullName === targetSemester,
+                      );
+                      const isTargetPastSemester =
+                        !!targetSemesterData?.isPastSemester;
 
-                this.semesters$.pipe(take(1)).subscribe(semesters => {
-                  const targetSemesterData = semesters.find(s => s.fullName === targetSemester);
-                  const isTargetPastSemester = !!targetSemesterData?.isPastSemester;
-
-                  // dragDropService handles drop (same logic..)
-                  this.dragDropService.handleDrop(
-                    data,
-                    this.semesterPlan._id,
-                    this.semesterPlan.semester,
-                    targetSemesterPlanId,
-                    targetSemester,
-                    this.studyPlanId,
-                    isTargetPastSemester
-                  );
-                });
-              } else {
-                console.error('Keine ID gefunden für Semester:', targetSemester);
-              }
-            })
-          );
-        } else {
-          return EMPTY;
-        }
-      }),
-      take(1)
-    ).subscribe();
+                      // dragDropService handles drop (same logic..)
+                      this.dragDropService.handleDrop(
+                        data,
+                        this.semesterPlan._id,
+                        this.semesterPlan.semester,
+                        targetSemesterPlanId,
+                        targetSemester,
+                        this.studyPlanId,
+                        isTargetPastSemester,
+                      );
+                    });
+                  } else {
+                    console.error(
+                      $localize `Keine ID gefunden für Semester:`,
+                      targetSemester,
+                    );
+                  }
+                }),
+              );
+          } else {
+            return EMPTY;
+          }
+        }),
+        take(1),
+      )
+      .subscribe();
   }
 
   openEditGradeDialog(event: any, module: PathModule) {
-
     switch (module.status) {
       case 'passed':
         this.openGradeDialog(module, 1.0, 4.0);
@@ -293,7 +347,8 @@ export class SemesterBodyComponent {
       case 'taken':
         this.snackbarService.openSnackBar({
           type: AlertType.WARNING,
-          message: 'Für ein Modul, das du nur belegt, aber nicht abgeschlossen hast, kannst du keine Note hinzufügen.',
+          message:
+            $localize `Für ein Modul, das du nur belegt, aber nicht abgeschlossen hast, kannst du keine Note hinzufügen.`,
         });
         break;
       case 'failed':
@@ -305,7 +360,6 @@ export class SemesterBodyComponent {
   }
 
   openGradeDialog(module: PathModule, minGrade: number, maxGrade: number) {
-
     let inputGrade = module.grade || 0;
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
@@ -313,11 +367,11 @@ export class SemesterBodyComponent {
         dialogContentId: 'edit-grade-dialog',
         grade: inputGrade,
         minGrade: minGrade,
-        maxGrade: maxGrade
+        maxGrade: maxGrade,
       },
     });
 
-    dialogRef.afterClosed().subscribe(grade => {
+    dialogRef.afterClosed().subscribe((grade) => {
       if (grade !== undefined && grade !== module.grade) {
         const formattedGrade = Number(grade.toString().replace(',', '.'));
         if (formattedGrade >= minGrade && formattedGrade <= maxGrade) {
@@ -329,21 +383,17 @@ export class SemesterBodyComponent {
   }
 
   updateGrade(module: PathModule) {
-
     // legacy
     if (module.mgId === undefined) {
-      module.mgId = 'open'
+      module.mgId = 'open';
     }
 
-    this.store.dispatch(
-      StudyPathActions.updateModuleInStudyPath({ module })
-    );
+    this.store.dispatch(StudyPathActions.updateModuleInStudyPath({ module }));
 
     this.dialog.closeAll();
   }
 
   openEditPathModuleDialog(semester: string, pathModule?: PathModule) {
-
     // either exists (update) or create new with the following details
     const pathModuleData: PathModule = pathModule || {
       acronym: '',
@@ -365,29 +415,35 @@ export class SemesterBodyComponent {
       },
     });
 
-    dialogRef.afterClosed().pipe(take(1)).subscribe(pathModule => {
-      if (pathModule) {
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((pathModule) => {
+        if (pathModule) {
+          const newPathModule = {
+            ...pathModule,
+            semester: pathModule.semester ? pathModule.semester : semester,
+            grade: Number(pathModule.grade),
+            ects: Number(pathModule.ects),
+            mgId: pathModule.mgId ? pathModule.mgId : 'init',
+            isUserGenerated: true,
+            flexNowImported: pathModule.flexNowImported
+              ? pathModule.flexNowImported
+              : false,
+          };
 
-        const newPathModule = {
-          ...pathModule,
-          semester: pathModule.semester ? pathModule.semester : semester,
-          grade: Number(pathModule.grade),
-          ects: Number(pathModule.ects),
-          mgId: pathModule.mgId ? pathModule.mgId : 'init',
-          isUserGenerated: true,
-          flexNowImported: pathModule.flexNowImported ? pathModule.flexNowImported : false,
-        };
-
-        this.store.dispatch(StudyPathActions.updateModuleInStudyPath({ module: newPathModule }))
-      }
-    });
+          this.store.dispatch(
+            StudyPathActions.updateModuleInStudyPath({ module: newPathModule }),
+          );
+        }
+      });
   }
 
   openUserGeneratedModuleDialog(
     ppId: string,
     ppSem?: string,
     moduleId?: string,
-    module?: UserGeneratedModule
+    module?: UserGeneratedModule,
   ) {
     if (module && moduleId && ppSem) {
       // edit existing user generated module
@@ -408,7 +464,6 @@ export class SemesterBodyComponent {
             .select(getCloseDialogMode)
             .subscribe((mode) => (this.closeMode = mode));
           if (this.closeMode === 'data') {
-
             module.ects = Number(module.ects); // convert to number
 
             this.store.dispatch(
@@ -418,7 +473,7 @@ export class SemesterBodyComponent {
                 semesterPlanSemester: ppSem,
                 moduleId: moduleId,
                 module: module,
-              })
+              }),
             );
 
             this.store.dispatch(closeUserGeneratedModuleDialog());
@@ -433,7 +488,7 @@ export class SemesterBodyComponent {
     semesterPlanSemester: string,
     moduleAcronym: string,
     moduleName: string,
-    ects: number
+    ects: number,
   ) {
     const confirmationDialogInterface: ConfirmationDialogData = {
       dialogTitle: 'Modul wirklich aus dem Studienplan entfernen?',
@@ -450,7 +505,7 @@ export class SemesterBodyComponent {
             semesterPlanSemester,
             acronym: moduleAcronym,
             ects,
-          })
+          }),
         );
         this.dialog.closeAll();
       },
@@ -463,7 +518,7 @@ export class SemesterBodyComponent {
   openDeleteUserGeneratedModuleDialog(
     semesterPlanId: string,
     semesterPlanSemester: string,
-    module: UserGeneratedModule
+    module: UserGeneratedModule,
   ) {
     const confirmationDialogInterface: ConfirmationDialogData = {
       dialogTitle: 'Platzhalter wirklich löschen?',
@@ -478,8 +533,8 @@ export class SemesterBodyComponent {
             studyPlanId: this.studyPlanId,
             semesterPlanId,
             semesterPlanSemester,
-            module
-          })
+            module,
+          }),
         );
         this.dialog.closeAll();
       },
@@ -492,7 +547,7 @@ export class SemesterBodyComponent {
   openDeletePathModuleDialog(
     pathModuleId: string | undefined,
     pathModuleAcronym: string,
-    semester: string
+    semester: string,
   ) {
     // event.stopPropagation();
     const confirmationDialogInterface: ConfirmationDialogData = {
@@ -504,10 +559,12 @@ export class SemesterBodyComponent {
       confirmButtonClass: 'btn btn-danger',
       callbackMethod: () => {
         if (pathModuleId) {
-          this.store.dispatch(StudyPathActions.deleteModuleFromStudyPath({
-            id: pathModuleId,
-            semester
-          }));
+          this.store.dispatch(
+            StudyPathActions.deleteModuleFromStudyPath({
+              id: pathModuleId,
+              semester,
+            }),
+          );
         }
         this.dialog.closeAll();
       },

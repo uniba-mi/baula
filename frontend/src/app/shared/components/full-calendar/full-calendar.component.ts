@@ -10,11 +10,15 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import deLocale from '@fullcalendar/core/locales/de';
+import enLocale from '@fullcalendar/core/locales/en-gb';
+// TODO: Import as english, where appropriate
 import listPlugin from '@fullcalendar/list';
 import { Course } from '../../../../../../interfaces/course';
 import {
@@ -42,7 +46,6 @@ import {
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { FullCalendarComponent as FullCalendar } from '@fullcalendar/angular';
-import { TimetableActions } from 'src/app/actions/user.actions';
 import { getTimetableSettings } from 'src/app/selectors/user.selectors';
 import { CoursePlanningActions } from 'src/app/actions/study-planning.actions';
 import { CourseService } from '../../services/course.service';
@@ -51,17 +54,31 @@ import { TransformationService } from '../../services/transformation.service';
 import { PlanningValidationService } from '../../services/planning-validation.service';
 import { getPlanningHints } from 'src/app/selectors/study-planning.selectors';
 import { AlertType } from '../../classes/alert';
-import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { AnalyticsService } from '../../services/analytics.service';
+import { SettingsActions } from 'src/app/actions/user.actions';
+import { LocaleService } from 'src/app/shared/services/locale.service';
 
 @Component({
   selector: 'app-full-calendar',
   templateUrl: './full-calendar.component.html',
   styleUrl: './full-calendar.component.scss',
-  standalone: false
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FullCalendarComponent
-  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  implements OnInit, OnChanges, AfterViewInit, OnDestroy
+{
+  private store = inject<Store<State>>(Store);
+  dialog = inject(MatDialog);
+  private rest = inject(RestService);
+  private cdr = inject(ChangeDetectorRef);
+  private cService = inject(CourseService);
+  private validation = inject(PlanningValidationService);
+  private transform = inject(TransformationService);
+  private snackbar = inject(SnackbarService);
+  private analytics = inject(AnalyticsService);
+  private locale = inject(LocaleService);
+
   @ViewChild('calendar') fullCalendar: FullCalendar;
   @Input() initalView: string;
   @Input() isWidget: boolean;
@@ -89,18 +106,6 @@ export class FullCalendarComponent
   planingHints$: Observable<PlanningHints[]>;
   initialLoad: boolean = true;
 
-  constructor(
-    private store: Store<State>,
-    public dialog: MatDialog,
-    private rest: RestService,
-    private cdr: ChangeDetectorRef,
-    private cService: CourseService,
-    private validation: PlanningValidationService,
-    private transform: TransformationService,
-    private snackbar: SnackbarService,
-    private analytics: AnalyticsService
-  ) { }
-
   ngOnInit(): void {
     this.calendarOptions = {
       themeSystem: 'bootstrap5',
@@ -112,7 +117,7 @@ export class FullCalendarComponent
       dayHeaderFormat: {
         weekday: 'short',
       },
-      locale: deLocale,
+      locale: this.locale.current == "en" ? enLocale : deLocale,
       businessHours: {
         daysOfWeek: [1, 2, 3, 4, 5], // Monday - Thursday
         startTime: '08:00', // a start time (10am in this example)
@@ -125,7 +130,7 @@ export class FullCalendarComponent
         if (info.event.extendedProps.course) {
           this.cService.openCourseDetails(
             info.event.extendedProps.course,
-            true
+            true,
           );
         }
       },
@@ -133,7 +138,7 @@ export class FullCalendarComponent
 
     // determine semester period
     const teachingPeriod = this.academicDates.find((date) =>
-      date.dateType.name.includes('Vorlesungszeit')
+      date.dateType.name.includes('Vorlesungszeit'),
     );
     if (teachingPeriod) {
       this.teachingPeriod = teachingPeriod;
@@ -144,12 +149,14 @@ export class FullCalendarComponent
       .select(getTimetableSettings)
       .pipe(take(1))
       .subscribe((timetableSettings) => {
-        const showWeekendsSetting = timetableSettings.find((setting) =>
-          setting.hasOwnProperty('showWeekends')
+        const timetableId = this.isWidget ? 'dashboard' : 'semesterplan';
+        const setting = timetableSettings.find(
+          (setting) => setting.timetableId == timetableId,
         );
 
-        if (showWeekendsSetting) {
-          this.calendarOptions.weekends = showWeekendsSetting.showWeekends;
+        if (setting) {
+          this.calendarOptions.weekends = setting.showWeekends;
+          this.calendarOptions.initialView = setting.selectedView;
         }
       });
 
@@ -158,14 +165,14 @@ export class FullCalendarComponent
       .pipe(
         skipWhile((hints) => {
           return hints.length === 0 && !this.events;
-        })
+        }),
       )
       .pipe(takeUntil(this.destroy$))
       .subscribe((hints) => {
         if (this.events) {
           if (hints.length !== 0) {
             this.hintsIconColor = hints.find(
-              (el) => el.type === 'collision' || el.type === 'danger'
+              (el) => el.type === 'collision' || el.type === 'danger',
             )
               ? 'danger'
               : 'warning';
@@ -227,7 +234,7 @@ export class FullCalendarComponent
         return;
       }
 
-      let lastScrollDirection = "none";
+      let lastScrollDirection = 'none';
 
       scrollContainer.addEventListener('wheel', (event) => {
         const wheelEvent = event as WheelEvent;
@@ -235,13 +242,12 @@ export class FullCalendarComponent
         const el = event.currentTarget as HTMLElement;
 
         // Determine scroll direction
-        const scrollDirection = wheelEvent.deltaY > 0 ? "down" : "up";
+        const scrollDirection = wheelEvent.deltaY > 0 ? 'down' : 'up';
         if (scrollDirection !== lastScrollDirection) {
           lastScrollDirection = scrollDirection;
         }
 
         this.analytics.trackEvent('ScrollView', { direction: scrollDirection });
-
       });
     }, 2000);
   }
@@ -270,7 +276,7 @@ export class FullCalendarComponent
     // Get items that only occur in the left array,
     // using the compareFunction to determine equality.
     const hint = hints.filter(
-      (hint) => !this.currentHints.some((cHint) => isSameHint(hint, cHint))
+      (hint) => !this.currentHints.some((cHint) => isSameHint(hint, cHint)),
     );
     return hint[0] ? hint[0] : undefined;
   }
@@ -325,6 +331,13 @@ export class FullCalendarComponent
 
   changeView(view: string) {
     this.fullCalendar.getApi().changeView(view);
+    // update the timetable settings in the db
+    this.store.dispatch(
+      SettingsActions.updateTimetableSettings({
+        timetableId: this.isWidget ? 'dashboard' : 'semesterplan',
+        selectedView: view,
+      }),
+    );
     this.updateDate();
   }
 
@@ -333,9 +346,10 @@ export class FullCalendarComponent
 
     // update the timetable settings in the db
     this.store.dispatch(
-      TimetableActions.updateTimetableSettings({
+      SettingsActions.updateTimetableSettings({
+        timetableId: this.isWidget ? 'dashboard' : 'semesterplan',
         showWeekends: this.calendarOptions.weekends,
-      })
+      }),
     );
   }
 
@@ -349,7 +363,7 @@ export class FullCalendarComponent
             catchError((error) => {
               console.warn(
                 `Course with ID ${course.id} could not be loaded`,
-                error
+                error,
               );
               if (!this.deletedCourses.find((el) => el.id == course.id)) {
                 this.deletedCourses.push({
@@ -359,14 +373,14 @@ export class FullCalendarComponent
               }
               // Return `null` to handle the error and allow filtering later
               return of(null);
-            })
-          )
-        )
+            }),
+          ),
+        ),
       ).pipe(
         map((courses): Course[] => {
           // Type guard to filter out null values and let TypeScript know
           return courses.filter((course): course is Course => course !== null);
-        })
+        }),
       );
     } else {
       this.courses$ = of([]);
@@ -388,7 +402,7 @@ export class FullCalendarComponent
           this.planCourses,
           this.activePlan.modules,
           this.events,
-          this.teachingPeriod
+          this.teachingPeriod,
         );
       }
     });
@@ -397,7 +411,7 @@ export class FullCalendarComponent
   deselectDeletedCourse(course: DeletedCourse) {
     // remove course from deletedCourses-Array
     const indexToDelete = this.deletedCourses.findIndex(
-      (el) => el.id == course.id
+      (el) => el.id == course.id,
     );
     if (indexToDelete >= 0) {
       this.deletedCourses.splice(indexToDelete, 1);
@@ -406,7 +420,7 @@ export class FullCalendarComponent
       CoursePlanningActions.deselectCourse({
         semester: this.activePlan.semester,
         courseId: course.id,
-      })
+      }),
     );
   }
 }

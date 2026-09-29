@@ -1,26 +1,34 @@
-import { Component, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { PathModule } from '../../../../../../../interfaces/study-path';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { PathModule } from '@interfaces/study-path';
 import { getStructuredModuleGroups } from 'src/app/selectors/module-overview.selectors';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription, map, take } from 'rxjs';
-import { ExtendedModuleGroup } from '../../../../../../../interfaces/module-group';
+import { ExtendedModuleGroup } from '@interfaces/module-group';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
-import { Semester } from '../../../../../../../interfaces/semester';
+import { Semester } from '@interfaces/semester';
 import { getSemesterList } from 'src/app/selectors/user.selectors';
 
 @Component({
-    selector: 'app-upload-student-data-stepper',
-    templateUrl: './upload-student-data-stepper.component.html',
-    styleUrl: './upload-student-data-stepper.component.scss',
-    standalone: false
+  selector: 'app-upload-student-data-stepper',
+  templateUrl: './upload-student-data-stepper.component.html',
+  styleUrl: './upload-student-data-stepper.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class UploadStudentDataStepperComponent {
+  private fb = inject(FormBuilder);
+  private store = inject(Store);
 
   @Input() missingModules: PathModule[];
   stepperForm: FormGroup;
   structuredModuleGroups$: Observable<ExtendedModuleGroup[]>;
-  semesters$: Observable<Semester[]>
+  semesters$: Observable<Semester[]>;
   similarGroups: ExtendedModuleGroup[] = [];
   private subscriptions: Subscription = new Subscription();
   showRecommendations: boolean = false;
@@ -28,20 +36,18 @@ export class UploadStudentDataStepperComponent {
   showNoEditHint: boolean = false;
   showNoGradeHint: boolean = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private store: Store,
-  ) {
+  constructor() {
     this.stepperForm = this.fb.group({});
   }
 
   ngOnInit(): void {
-
     this.structuredModuleGroups$ = this.store.select(getStructuredModuleGroups);
     this.semesters$ = this.store.select(getSemesterList);
     if (this.semesters$) {
       this.semesters$ = this.semesters$.pipe(
-        map(semesters => semesters.filter(semester => !semester.isFutureSemester()))
+        map((semesters) =>
+          semesters.filter((semester) => !semester.isFutureSemester()),
+        ),
       );
     }
     this.initializeForm();
@@ -49,19 +55,17 @@ export class UploadStudentDataStepperComponent {
 
   private initializeForm(): void {
     this.stepperForm = this.fb.group({});
-    this.missingModules.forEach(module => {
-
+    this.missingModules.forEach((module) => {
       const moduleFormGroup = this.fb.group({
         acronym: [module.acronym, Validators.required],
         name: [module.name, Validators.required],
         notes: [module.notes],
         status: [module.status, Validators.required],
-        ects: [module.ects, [
-          Validators.required,
-          Validators.min(1),
-          Validators.max(30)
-        ]],
-        grade: [(module.grade).toString(), []],
+        ects: [
+          module.ects,
+          [Validators.required, Validators.min(1), Validators.max(30)],
+        ],
+        grade: [module.grade.toString(), []],
         semester: [module.semester, Validators.required],
         mgId: [module.mgId ? module.mgId : ''],
         // exams: this.fb.array(module.exams.map(exam => this.initExamGroup(exam))),
@@ -69,22 +73,28 @@ export class UploadStudentDataStepperComponent {
         flexNowImported: [module.flexNowImported],
       });
       this.stepperForm.addControl(module.acronym, moduleFormGroup);
-      this.setupAcronymSubscription(moduleFormGroup.get('acronym') as FormControl, module.acronym);
+      this.setupAcronymSubscription(
+        moduleFormGroup.get('acronym') as FormControl,
+        module.acronym,
+      );
       this.setupStatusChanges(moduleFormGroup);
     });
   }
 
   // to remove the suggestions on subform change
-  private setupAcronymSubscription(control: FormControl, initialAcronym: string): void {
+  private setupAcronymSubscription(
+    control: FormControl,
+    initialAcronym: string,
+  ): void {
     this.subscriptions.add(
-      control.valueChanges.subscribe(value => {
+      control.valueChanges.subscribe((value) => {
         if (value !== initialAcronym) {
           this.similarGroups = [];
           this.showRecommendations = false;
           this.showNoEditHint = false;
           this.showNoGradeHint = false;
         }
-      })
+      }),
     );
   }
 
@@ -92,7 +102,7 @@ export class UploadStudentDataStepperComponent {
     const statusControl = formGroup.get('status') as FormControl;
     const gradeControl = formGroup.get('grade') as FormControl;
 
-    statusControl.valueChanges.subscribe(status => {
+    statusControl.valueChanges.subscribe((status) => {
       this.showNoEditHint = false;
       this.showNoGradeHint = false;
 
@@ -103,12 +113,12 @@ export class UploadStudentDataStepperComponent {
           this.showNoGradeHint = true;
           break;
         case 'passed':
-          gradeControl.setValidators([Validators.required, Validators.min(1), Validators.max(4)]);
+          gradeControl.setValidators([Validators.min(1), Validators.max(4)]);
           gradeControl.enable();
           break;
         case 'failed':
           gradeControl.setValue(5);
-          gradeControl.setValidators([Validators.required, Validators.min(5), Validators.max(5)]);
+          gradeControl.setValidators([Validators.min(5), Validators.max(5)]);
           gradeControl.disable();
           this.showNoEditHint = true;
           break;
@@ -163,7 +173,7 @@ export class UploadStudentDataStepperComponent {
 
   getData() {
     if (this.stepperForm.valid) {
-      return this.stepperForm.value
+      return this.stepperForm.value;
     } else {
       return;
     }
@@ -180,4 +190,3 @@ export class UploadStudentDataStepperComponent {
     this.subscriptions.unsubscribe();
   }
 }
-

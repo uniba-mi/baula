@@ -52,18 +52,7 @@ export class Semester {
 
     // gets new name in the format 2022w etc.
     static getCurrentSemesterName(): string {
-        const today = new Date();
-        const currentYear = today.getFullYear();
-        const currentMonth = today.getMonth();
-        let currentSemesterType;
-
-        if (currentMonth >= 2 && currentMonth < 8) {
-            currentSemesterType = 's';
-        } else {
-            currentSemesterType = 'w';
-        }
-
-        return `${currentYear}${currentSemesterType}`;
+        return new Semester().name;
     }
 
     get semesterDate() {
@@ -73,7 +62,8 @@ export class Semester {
     }
 
     get shortName() {
-        let term, year = '';
+        let term = '';
+        let year = '';
         if (this.name.endsWith('w')) {
             term = 'WS ';
             year = `${this.name.slice(0, 4)}/${Number(this.name.slice(2, 4)) + 1}`
@@ -85,7 +75,8 @@ export class Semester {
     }
 
     get fullName() {
-        let year, term = '';
+        let year = '';
+        let term = '';
         if (this.name.endsWith('w')) {
             term = 'Wintersemester ';
             year = `${this.name.slice(0, 4)}/${Number(this.name.slice(2, 4)) + 1}`
@@ -114,7 +105,7 @@ export class Semester {
 
     private currentSemester() {
         const today = new Date();
-        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        //const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const year = today.getFullYear();
         // get month starts from 0 (january) to 11 (december)
         // current WS: Sept (8) - Feb (1)
@@ -141,7 +132,7 @@ export class Semester {
     // is a semester a past semester
     isPastSemester(): boolean {
         const today = new Date();
-        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        //const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth();
 
@@ -160,7 +151,7 @@ export class Semester {
     // is a semester a future semester
     isFutureSemester(): boolean {
         const today = new Date();
-        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        //const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth();
 
@@ -179,7 +170,7 @@ export class Semester {
     // current semester based on date
     isCurrentSemester(): boolean {
         const today = new Date();
-        // const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
+        //const today = new Date(2027, 5, 4, 0, 0, 0); // set to future date for Semesterabschluss debugging
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth();
 

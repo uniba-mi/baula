@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -13,26 +13,31 @@ import { getSelectedSemesterPlanSemesterById } from 'src/app/selectors/study-pla
 import { AlertType } from 'src/app/shared/classes/alert';
 import { PlanningValidationService } from 'src/app/shared/services/planning-validation.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { Module } from '../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { RecsHelperService } from 'src/app/modules/recommendations/recs-helper.service';
-import { PathModule } from '../../../../../interfaces/study-path';
-import { ModService } from 'src/app/shared/services/module.service';
+import { PathModule } from '@interfaces/study-path';
 
 @Component({
   selector: 'app-add-module-dialog',
   templateUrl: './add-module-dialog.component.html',
   styleUrls: ['./add-module-dialog.component.scss'],
-  standalone: false
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class AddModuleDialogComponent implements OnInit {
+  private store = inject(Store);
+  private planningValidation = inject(PlanningValidationService);
+  private snackbar = inject(SnackbarService);
+  private formBuilder = inject(FormBuilder);
+  private recsHelperService = inject(RecsHelperService);
+
   @Input() modules: Module[];
   @Input() semesterPlanId: string;
   selectedModule: Module | undefined;
   semesterPlanSemester: string | undefined;
   displayPriorModuleWarning: boolean = false;
   warningMessage: string = '';
-  moduleNames: string[] = [];
-  selectedModuleName = new FormControl('');
+  selectedModuleName = new FormControl<string | Module>('');
   filteredModules: Observable<Module[]>;
   addModuleForm: FormGroup;
 
@@ -40,24 +45,18 @@ export class AddModuleDialogComponent implements OnInit {
   priorModuleWarningMessage: string;
   passedOrTakenModules: PathModule[];
 
-  constructor(
-    private store: Store,
-    private planningValidation: PlanningValidationService,
-    private snackbar: SnackbarService,
-    private formBuilder: FormBuilder,
-    private recsHelperService: RecsHelperService,
-    private modService: ModService,
-  ) { }
-
   ngOnInit(): void {
+    this.modules = this.modules.filter(
+      (mod) => !mod.isOld && !mod.hasIssue && !mod.notExistingModule,
+    );
+
     this.addModuleForm = this.formBuilder.group({
       moduleName: this.selectedModuleName,
     });
 
-    this.moduleNames = this.modules.map((mod) => mod.name);
     this.filteredModules = this.selectedModuleName.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filter(value || ''))
+      map((value) => this._filter(value || '')),
     );
 
     // get passed modules from study path
@@ -68,14 +67,20 @@ export class AddModuleDialogComponent implements OnInit {
       });
   }
 
-  private _filter(value: string): Module[] {
-    const filterValue = value.toLowerCase();
+  private _filter(value: string | Module): Module[] {
+    const filterValue = (
+      typeof value === 'string' ? value : value.name
+    ).toLowerCase();
 
     return this.modules.filter(
       (mod) =>
         mod.name.toLowerCase().includes(filterValue) ||
-        mod.acronym.toLowerCase().includes(filterValue)
+        mod.acronym.toLowerCase().includes(filterValue),
     );
+  }
+
+  displayModule(module: string | Module): string {
+    return typeof module === 'string' ? module : `${module?.acronym} ${module?.name}`;
   }
 
   async selectModule(event?: MatAutocompleteSelectedEvent) {
@@ -84,11 +89,7 @@ export class AddModuleDialogComponent implements OnInit {
     ]);
 
     if (event) {
-      const selectedValue = event.option.value;
-
-      this.selectedModule =
-        this.modules.find((mod) => mod.name === selectedValue) ||
-        this.modules.find((mod) => mod.acronym === selectedValue);
+      this.selectedModule = event.option.value;
     }
 
     // set prior module warning to false
@@ -102,7 +103,7 @@ export class AddModuleDialogComponent implements OnInit {
     if (this.selectedModule && this.semesterPlanSemester) {
       let planningValidationResult = this.planningValidation.isModuleOffered(
         this.selectedModule,
-        this.semesterPlanSemester
+        this.semesterPlanSemester,
       );
       if (!planningValidationResult.success) {
         this.snackbar.openSnackBar({
@@ -116,7 +117,7 @@ export class AddModuleDialogComponent implements OnInit {
     if (this.selectedModule) {
       if (this.selectedModule.allPriorModules.length > 0) {
         let priorModuleCheck = this.planningValidation.priorModulesTaken(
-          this.selectedModule
+          this.selectedModule,
         );
         if (!priorModuleCheck.success) {
           this.displayPriorModuleWarning = true;
@@ -124,20 +125,6 @@ export class AddModuleDialogComponent implements OnInit {
         }
       }
     }
-  }
-
-  selectModuleByAcronym(acronym: string) {
-    this.selectedModule = this.modules.find((mod) => mod.acronym == acronym);
-
-    if (this.selectedModule) {
-      this.selectedModuleName.setValue(this.selectedModule.name);
-    }
-
-    this.selectModule();
-  }
-
-  viewModuleAcronym(acronym: string) {
-    this.modService.selectModuleFromAcronymString(acronym);
   }
 
   clearInput() {
@@ -152,15 +139,8 @@ export class AddModuleDialogComponent implements OnInit {
 
   // provides dialog data for call in component
   getSelectedModuleFromDialog() {
-    if (this.selectedModuleName) {
-      this.selectedModule = this.modules.find(
-        (mod) => mod.name == this.selectedModuleName.value
-      );
-      return {
-        module: this.selectedModule,
-      };
-    } else {
-      return;
-    }
+    return {
+      module: this.selectedModule,
+    };
   }
 }

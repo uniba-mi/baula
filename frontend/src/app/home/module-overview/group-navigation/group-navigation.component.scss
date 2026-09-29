@@ -30,7 +30,7 @@
   * Leaf nodes need to have padding so as to align with other non-leaf nodes
   * under the same parent.
   */
-.navigation-tree div[role=group] > .mat-tree-node {
+.navigation-tree div[role=group] .mat-nested-tree-node > div {
   padding-left: 1rem;
 }
 

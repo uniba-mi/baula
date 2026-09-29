@@ -5,6 +5,8 @@ import {
   OnChanges,
   OnInit,
   Output,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { User } from '../../../../../../interfaces/user';
 import {
@@ -13,7 +15,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Observable, catchError, firstValueFrom, map, of, take } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  firstValueFrom,
+  map,
+  of,
+  shareReplay,
+  take,
+} from 'rxjs';
 import { Semester } from '../../../../../../interfaces/semester';
 import { StudyProgramme } from '../../../../../../interfaces/study-programme';
 import { ModuleHandbook } from '../../../../../../interfaces/module-handbook';
@@ -21,14 +31,22 @@ import { RestService } from 'src/app/rest.service';
 import { Store } from '@ngrx/store';
 import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
 import { AuthService } from 'src/app/shared/auth/auth.service';
+import { TransformationService } from 'src/app/shared/services/transformation.service';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UserFormComponent implements OnInit, OnChanges {
+  private rest = inject(RestService);
+  private formBuilder = inject(FormBuilder);
+  private store = inject(Store);
+  private auth = inject(AuthService);
+  private transform = inject(TransformationService);
+
   @Input() user: User;
   @Input() isEdit: boolean = false; // if is edit (= update profile) semester should not be editable
   @Output() submitUser = new EventEmitter<User>();
@@ -45,29 +63,24 @@ export class UserFormComponent implements OnInit, OnChanges {
   fulltime: boolean;
   startSemesters: Semester[];
 
-  /****Important: *** 
-  Currently we use the names and desc as keys, since they are readable to user as unique as the spId and poVersion.
-  This might be a future bug, if this assumption becomes wrong.
+  /****Wichtig: ***
+  Die Auswahl läuft für Nutzende lesbar über name und desc.
+  desc ist aber nur INNERHALB eines Studiengangs eindeutig, nicht global: mehrere
+  Studiengänge teilen sich denselben desc-Wert (z. B. BAI23 und BAI30). Track-Keys
+  im Template müssen deshalb spId/poVersion verwenden, niemals desc.
   *********/
   spNames: string[];
-  spVersions$: Observable<any[]>;
+  spVersions$: Observable<StudyProgramme[]>;
   possiblePOs$: Observable<StudyProgramme[]>;
   bachelors: string[];
   masters: string[];
   teacherEducation: string[];
   others: string[];
 
-  constructor(
-    private rest: RestService,
-    private formBuilder: FormBuilder,
-    private store: Store,
-    private auth: AuthService
-  ) {}
-
   ngOnInit(): void {
     // fallback is current semester
     this.selectedStartSemester = new FormControl(
-      this.user?.startSemester ? this.user.startSemester : new Semester().name
+      this.user?.startSemester ? this.user.startSemester : new Semester().name,
     );
 
     this.startSemesters = this.returnInitialSemesterList();
@@ -118,7 +131,9 @@ export class UserFormComponent implements OnInit, OnChanges {
       catchError((error) => {
         this.auth.forceReload(error);
         return of([]); // Return an empty array or handle the error as needed
-      })
+      }),
+      // eine Antwort für alle Subscriber: stabile Objektidentität und weniger Requests
+      shareReplay({ bufferSize: 1, refCount: false }),
     );
 
     if (
@@ -135,7 +150,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       .pipe(
         map((sps) => sps.map((el) => el.name)),
         map((names) => [...new Set(names)]),
-        take(1)
+        take(1),
       )
       .subscribe((names) => {
         this.spNames = names;
@@ -146,7 +161,7 @@ export class UserFormComponent implements OnInit, OnChanges {
           (el) =>
             !el.startsWith('Bachelor') &&
             !el.startsWith('Master') &&
-            !el.startsWith('Lehramt')
+            !el.startsWith('Lehramt'),
         );
       });
   }
@@ -177,12 +192,12 @@ export class UserFormComponent implements OnInit, OnChanges {
   selectSpName(name: string) {
     this.userForm.controls['spName'].addValidators([Validators.required]);
     this.possiblePOs$ = this.studyprogrammes$.pipe(
-      map((sps) => sps.filter((el) => el.name == name))
+      map((sps) => sps.filter((el) => el.name == name)),
     );
 
-    this.spVersions$ = this.possiblePOs$.pipe(
-      map((sps) => sps.map((el) => el.desc))
-    );
+    // die POs selbst durchreichen: desc allein ist kein eindeutiger Key
+
+    this.spVersions$ = this.possiblePOs$;
 
     this.presetStudyprogramme(name);
   }
@@ -212,11 +227,11 @@ export class UserFormComponent implements OnInit, OnChanges {
 
         // select po with the highest version (should be the newest)
         const highestPoVersion = Math.max(
-          ...selectedPos.map((el) => el.poVersion)
+          ...selectedPos.map((el) => el.poVersion),
         );
 
         this.selectedStudyprogramme = pos.find(
-          (el) => el.poVersion === highestPoVersion
+          (el) => el.poVersion === highestPoVersion,
         );
       } else {
         this.selectedStudyprogramme = pos[0];
@@ -231,6 +246,7 @@ export class UserFormComponent implements OnInit, OnChanges {
             poVersion: this.selectedStudyprogramme.poVersion,
             name: this.selectedStudyprogramme.name,
             faculty: this.selectedStudyprogramme.faculty,
+            status: 'Immatrikuliert',
             mhbId: '',
             mhbVersion: 0,
           },
@@ -249,20 +265,14 @@ export class UserFormComponent implements OnInit, OnChanges {
     if (mhbs.length != 1) {
       // set programmetype and semesterdate for further selection of most appropriate mhb
       const programmeType = spName.startsWith('Bachelor')
-        ? 'Bachelor'
+        ? $localize `Bachelor`
         : spName.startsWith('Master')
-        ? 'Master'
-        : 'Lehramt';
+          ? $localize `Master`
+          : $localize `Lehramt`;
       const semesterDate = new Semester().semesterDate;
 
-      // transform semester strings into Date
       const dates = mhbs.map((el) => {
-        let semesterString = '';
-        if (el.semester.startsWith('Winter')) {
-          semesterString = `${el.semester.slice(-9, -5)}w`;
-        } else {
-          semesterString = `${el.semester.slice(-4)}s`;
-        }
+        let semesterString = this.transform.transformFlexNowFormat(el.semester);
         return new Semester(semesterString).semesterDate;
       });
 
@@ -273,7 +283,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       // if more than one mhb is possible prefilter handbooks by programmeType
       if (possibleMhbs.length > 1) {
         possibleMhbs = possibleMhbs.filter((el) =>
-          el.name.startsWith(programmeType)
+          el.name.startsWith(programmeType),
         );
       }
 
@@ -309,7 +319,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     const studyprogrammes = await firstValueFrom(this.studyprogrammes$);
     // find studyprogramme
     this.selectedStudyprogramme = studyprogrammes.find(
-      (el) => el.desc == version && el.name == spName
+      (el) => el.desc == version && el.name == spName,
     );
     if (this.selectedStudyprogramme) {
       this.user.sps = [
@@ -318,6 +328,7 @@ export class UserFormComponent implements OnInit, OnChanges {
           poVersion: this.selectedStudyprogramme.poVersion,
           name: this.selectedStudyprogramme.name,
           faculty: this.selectedStudyprogramme.faculty,
+          status: 'Immatrikuliert',
           mhbId: '',
           mhbVersion: 0,
         },
@@ -326,7 +337,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       if (this.selectedStudyprogramme.mhbs) {
         this.preselectModuleHandbook(
           this.selectedStudyprogramme.mhbs,
-          this.selectedStudyprogramme.name
+          this.selectedStudyprogramme.name,
         );
       }
     }
@@ -336,7 +347,9 @@ export class UserFormComponent implements OnInit, OnChanges {
     const studyprogrammes = await firstValueFrom(this.studyprogrammes$);
     // find studyprogramme
     if (user.sps && user.sps.length !== 0) {
-      const spFromUser = user.sps[0];
+      const spFromUser = user.sps.filter(
+        (sp) => sp.status == 'Immatrikuliert',
+      )[0];
       const studyprogramme = studyprogrammes.find((el) => {
         return (
           el.spId == spFromUser.spId && el.poVersion == spFromUser.poVersion
@@ -344,12 +357,12 @@ export class UserFormComponent implements OnInit, OnChanges {
       });
       if (studyprogramme) {
         this.possiblePOs$ = of(
-          studyprogrammes.filter((el) => el.name == studyprogramme.name)
+          studyprogrammes.filter((el) => el.name == studyprogramme.name),
         );
 
-        this.spVersions$ = this.possiblePOs$.pipe(
-          map((sps) => sps.map((el) => el.desc))
-        );
+        // die POs selbst durchreichen: desc allein ist kein eindeutiger Key
+
+        this.spVersions$ = this.possiblePOs$;
 
         // set studyprogramme value
         this.selectedSpName.setValue(studyprogramme.name);
@@ -365,8 +378,12 @@ export class UserFormComponent implements OnInit, OnChanges {
         });
         if (moduleHandbook) {
           if (this.user.sps && this.user.sps.length !== 0) {
-            this.user.sps[0].mhbId = moduleHandbook.mhbId;
-            this.user.sps[0].mhbVersion = moduleHandbook.version;
+            this.user.sps.filter(
+              (sp) => sp.status == 'Immatrikuliert',
+            )[0].mhbId = moduleHandbook.mhbId;
+            this.user.sps.filter(
+              (sp) => sp.status == 'Immatrikuliert',
+            )[0].mhbVersion = moduleHandbook.version;
           }
           this.selectedModuleHandbook.setValue(moduleHandbook);
         }
@@ -377,7 +394,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   // TODO: Currently only the first entry, where the smallest Distance occurs is returned, this may lead to a wrong selection!
   private getIndexWithSmallestDistance(
     dateArray: Date[],
-    targedDate: Date
+    targedDate: Date,
   ): number[] {
     const distance = dateArray.map((el) => {
       return Math.abs(targedDate.valueOf() - el.valueOf());
@@ -392,17 +409,29 @@ export class UserFormComponent implements OnInit, OnChanges {
     return idx;
   }
 
+  /**
+   * Vergleicht Modulhandbücher inhaltlich statt über die Objektreferenz.
+   * Notwendig, weil getStudyprogrammes() bei jedem Aufruf neue Objektinstanzen
+   * liefert und mat-select sonst per === vergleicht - die Vorauswahl ginge sonst
+   * beim nächsten Laden wieder verloren.
+   */
+  compareModuleHandbooks = (a: ModuleHandbook, b: ModuleHandbook): boolean =>
+    !!a && !!b && a.mhbId === b.mhbId && a.version === b.version;
+
   selectModuleHandbook(mhb: ModuleHandbook) {
     this.userForm.controls['mhb'].addValidators([Validators.required]);
     if (this.user.sps && this.user.sps.length !== 0) {
-      this.user.sps[0].mhbId = mhb.mhbId;
-      this.user.sps[0].mhbVersion = mhb.version;
+      this.user.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbId =
+        mhb.mhbId;
+      this.user.sps.filter(
+        (sp) => sp.status == 'Immatrikuliert',
+      )[0].mhbVersion = mhb.version;
       this.selectedModuleHandbook.setValue(mhb);
       this.store.dispatch(
         ModuleHandbookActions.loadModuleHandbook({
           id: mhb.mhbId,
           version: mhb.version,
-        })
+        }),
       );
       this.emitChanges();
     }

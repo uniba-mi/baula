@@ -1,20 +1,25 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { closeDialogMode } from 'src/app/actions/dialog.actions';
-import { UserGeneratedModule, UserGeneratedModuleTemplate } from '../../../../../interfaces/user-generated-module';
+import {
+  UserGeneratedModule,
+  UserGeneratedModuleTemplate,
+} from '@interfaces/user-generated-module';
 
 @Component({
-    selector: 'app-user-generated-module-dialog',
-    templateUrl: './user-generated-module-dialog.component.html',
-    styleUrls: ['./user-generated-module-dialog.component.scss'],
-    standalone: false
+  selector: 'app-user-generated-module-dialog',
+  templateUrl: './user-generated-module-dialog.component.html',
+  styleUrls: ['./user-generated-module-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class UserGeneratedModuleDialogComponent implements OnInit {
+  private store = inject(Store);
+  private formBuilder = inject(FormBuilder);
+
   @Input() module: UserGeneratedModuleTemplate;
   moduleForm: FormGroup;
-
-  constructor(private store: Store, private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     // create or fill form fields

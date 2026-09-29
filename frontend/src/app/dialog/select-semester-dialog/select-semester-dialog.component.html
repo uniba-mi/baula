@@ -1,56 +1,59 @@
-<ng-container role="Dialogfenster" aria-label="Dialogfenster">
-    <form [formGroup]="semesterForm">
-        <div class="content-wrapper">
-            <!-- single select mode -->
-            <ng-container *ngIf="!isMultiMode()">
-                <mat-form-field appearance="outline">
-                    <mat-label>Semester</mat-label>
-                    <mat-select #semester [formControl]="selectedSemester" aria-label="Dropdown zur Semesterwahl"
-                        required>
-                        <mat-option *ngFor="let semester of semesters$ | async" [value]="semester.name"
-                            [ngClass]="{'active-semester': semester.name === activeSemester}">
-                            {{ semester.name | Semester }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="selectedSemester.invalid && selectedSemester.touched">
-                        Das ist ein Pflichtfeld.
-                    </mat-error>
-                </mat-form-field>
-            </ng-container>
-            <!-- multi select mode -->
-            <ng-container *ngIf="isMultiMode()">
-                <div class="semester-selection">
-
-                    <!-- select all option -->
-                    <div class="select-all-item mb-2 p-2">
-                        <mat-checkbox [checked]="isAllSelected()" [indeterminate]="isIndeterminate()"
-                            (change)="toggleSelectAll()" (click)="$event.stopPropagation()">
-                            Alle auswählen
-                        </mat-checkbox>
-                    </div>
-
-                    <mat-divider></mat-divider>
-
-                    <!-- individual semesters -->
-                    <mat-selection-list [formControl]="selectedSemesters" class="semester-list">
-                        <mat-list-option *ngFor="let semester of semesters$ | async" [value]="semester.name"
-                            [class.active-semester]="semester.name === activeSemester">
-                            {{ semester.shortName }}
-                        </mat-list-option>
-                    </mat-selection-list>
-                </div>
-            </ng-container>
+<ng-container role="Dialogfenster" aria-label="Dialogfenster" i18n-aria-label>
+  <form [formGroup]="semesterForm">
+    <div class="content-wrapper">
+      <!-- single select mode -->
+      @if (!isMultiMode()) {
+        <mat-form-field appearance="outline">
+          <mat-label i18n>Semester</mat-label>
+          <mat-select #semester [formControl]="selectedSemester" aria-label="Dropdown zur Semesterwahl" i18n-aria-label
+            required>
+            @for (semester of semesters$ | async; track semester) {
+              <mat-option [value]="semester.name"
+                [ngClass]="{'active-semester': semester.name === activeSemester}">
+                {{ semester.name | Semester }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (selectedSemester.invalid && selectedSemester.touched) {
+            <mat-error i18n>
+              Das ist ein Pflichtfeld.
+            </mat-error>
+          }
+        </mat-form-field>
+      }
+      <!-- multi select mode -->
+      @if (isMultiMode()) {
+        <div class="semester-selection">
+          <!-- select all option -->
+          <div class="select-all-item mb-2 p-2">
+            <mat-checkbox [checked]="isAllSelected()" [indeterminate]="isIndeterminate()"
+              (change)="toggleSelectAll()" (click)="$event.stopPropagation()" i18n>
+              Alle auswählen
+            </mat-checkbox>
+          </div>
+          <mat-divider></mat-divider>
+          <!-- individual semesters -->
+          <mat-selection-list [formControl]="selectedSemesters" class="semester-list">
+            @for (semester of semesters$ | async; track semester) {
+              <mat-list-option [value]="semester.name"
+                [class.active-semester]="semester.name === activeSemester">
+                {{ semester.shortName }}
+              </mat-list-option>
+            }
+          </mat-selection-list>
         </div>
+      }
+    </div>
 
-        <mat-dialog-actions>
-            <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
-                (keyup)="close('noData')">
-                Abbrechen
-            </button>
-            <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="getSemester()"
-                [disabled]="!isValidSelection()" (click)="close('data')" (keyup)="close('data')">
-                Übernehmen
-            </button>
-        </mat-dialog-actions>
-    </form>
+    <mat-dialog-actions>
+      <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
+        (keyup)="close('noData')" i18n>
+        Abbrechen
+      </button>
+      <button mat-raised-button class="btn btn-primary" [mat-dialog-close]="getSemester()"
+        [disabled]="!isValidSelection()" (click)="close('data')" (keyup)="close('data')" i18n>
+        Übernehmen
+      </button>
+    </mat-dialog-actions>
+  </form>
 </ng-container>

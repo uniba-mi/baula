@@ -1,0 +1,114 @@
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      variables: 
+        ENV_FILES_PATH: /home/gitlab-runner/envFilesTest
+        RUNNER_TAG: live-test-server
+        DEPLOY_DIR: /home/gitlab-runner/baula-test
+        FRONTEND_BUILD_MODE: PROD_BUILD_FRONTEND_TEST
+    - if: $CI_COMMIT_BRANCH == "main"
+      variables:
+        ENV_FILES_PATH: /home/gitlab-runner/envFilesProd
+        DEPLOY_DIR: /home/gitlab-runner/baula-prod
+        RUNNER_TAG: live-prod-server
+        FRONTEND_BUILD_MODE: PROD_BUILD_FRONTEND_PROD
+
+default:
+  tags:
+    - $RUNNER_TAG
+
+stages:
+  - install_dependencies
+  - create_required_files
+  - build_backend
+  - build_docs
+  - build_frontend
+  - deploy
+
+variables:
+  GIT_STRATEGY: fetch
+  GIT_CLEAN_FLAGS: "" 
+
+cache:
+  key: 
+    files:
+      - backend/api/package-lock.json
+      - frontend/package-lock.json
+  paths:
+    - backend/api/node_modules
+    - frontend/node_modules
+
+before_script:
+  - source ~/.nvm/nvm.sh
+
+install_dependencies:
+  stage: install_dependencies
+  dependencies: []
+  script:
+    - cd backend/api && npm install
+    - cd ../../frontend && npm install
+
+create_required_files:
+  stage: create_required_files
+  dependencies: []
+  script:
+    - COPY_PATH=$ENV_FILES_PATH npm run buildInitial PROD_COPY_FILES
+  artifacts:
+    paths:
+      - backend/api/src/certs
+      - backend/api/src
+      - backend/api/environment
+      - frontend/src/environments
+      - .env
+    expire_in: 1 day
+
+build_backend:
+  stage: build_backend
+  dependencies:
+    - install_dependencies
+    - create_required_files
+  script:
+    - cd backend/api && npm run generateDB && cd ../../
+    - npm run buildInitial PROD_BUILD_BACKEND
+  artifacts:
+    paths:
+      - backend/api/dist
+    expire_in: 1 day
+
+build_docs:
+  stage: build_docs
+  dependencies: []
+  script:
+    - npm run buildInitial PROD_BUILD_DOCS
+  artifacts:
+    paths:
+      - server/app/docs
+    expire_in: 1 day
+
+build_frontend:
+  stage: build_frontend
+  dependencies:
+    - install_dependencies
+    - create_required_files
+  script:
+    - rm -rf ./server/app/browser
+    - npm run buildInitial $FRONTEND_BUILD_MODE
+  artifacts:
+    paths:
+      - server/app/browser
+    expire_in: 1 day
+
+deploy:
+  stage: deploy
+  dependencies:
+    - install_dependencies
+    - create_required_files
+    - build_backend
+    - build_docs
+    - build_frontend
+  script:
+    #- rm -rf /home/gitlab-runner/deployment
+    - DEPLOY_DIR=$DEPLOY_DIR npm run buildInitial PROD_DEPLOY
+    - cd $DEPLOY_DIR && docker-compose -f docker-compose.yml -f docker-compose.server.yml down
+    - cd $DEPLOY_DIR && npm run startServerDocker
+

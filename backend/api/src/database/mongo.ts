@@ -1,26 +1,89 @@
 import mongoose, {
   HydratedDocument,
   model,
-  Query,
+  QueryWithHelpers,
   Schema,
   Model,
 } from "mongoose";
-import { SemesterPlan as ISemesterPlan } from "../../../../interfaces/semester-plan";
+import { SemesterPlan as ISemesterPlan } from "@interfaces/semester-plan";
 import { ObjectId } from "mongodb";
-import { StudyPlan as IStudyPlan } from "../../../../interfaces/study-plan";
-import { Recommendation as IRecommendation } from "../../../../interfaces/recommendation";
-import { Embedding as IEmbedding, ModuleEmbedding as IModEmbedding  } from "../../../../interfaces/embedding";
-import { Exam as IExam } from "../../../../interfaces/study-path";
-import { LongTermEvaluation as ILongTermEvaluation } from "../../../../interfaces/long-term-evaluation";
-import { Topic as ITopic } from "../../../../interfaces/topic";
-import { UserServer as IUser } from "../../../../interfaces/user";
-import { Evaluation as IEvaluation } from "../../../../interfaces/evaluation";
+import { StudyPlan as IStudyPlan } from "@interfaces/study-plan";
+import { Recommendation as IRecommendation } from "@interfaces/recommendation";
+import {
+  Embedding as IEmbedding,
+  ModuleEmbedding as IModEmbedding,
+} from "@interfaces/embedding";
+import { ExamAttempt as IExamAttempt } from "@interfaces/study-path";
+import { LongTermEvaluation as ILongTermEvaluation } from "@interfaces/long-term-evaluation";
+import { Topic as ITopic } from "@interfaces/topic";
+import { UserServer as IUser } from "@interfaces/user";
+import { Evaluation as IEvaluation } from "@interfaces/evaluation";
+import { FeatureWish as IFeatureWish } from "@interfaces/feature-wish";
+import { logger } from "../shared/utils/logger";
 
-const uri = process.env.MONGO_DATABASE_URL
-  ? process.env.MONGO_DATABASE_URL.toString()
-  : "";
+const uri = process.env.MONGO_DATABASE_URL;
 
-export const connection = mongoose.connect(uri);
+if (!uri) {
+  throw new Error("MONGO_DATABASE_URL environment variable is required");
+}
+
+const mongoUri: string = uri;
+
+mongoose.set("strictQuery", true);
+
+mongoose.connection.on("connected", () => logger.info("MongoDB verbunden."));
+mongoose.connection.on("error", (err) =>
+  logger.error("MongoDB-Verbindungsfehler:", err),
+);
+mongoose.connection.on("disconnected", () =>
+  logger.warn("MongoDB-Verbindung getrennt."),
+);
+
+const MONGO_OPTIONS = {
+  maxPoolSize: 100,
+  socketTimeoutMS: 30000,
+  connectTimeoutMS: 30000,
+  serverSelectionTimeoutMS: 30000,
+  retryWrites: true,
+  retryReads: true,
+  appName: "Baula-Backend",
+};
+
+const MAX_CONNECT_ATTEMPTS = 10;
+const INITIAL_RETRY_DELAY_MS = 1000;
+const MAX_RETRY_DELAY_MS = 30000;
+
+/**
+ * Starts connection to mongodb and retries 
+ * @returns true, as soon as connection is ready, false if no connection is enabled
+ */
+export async function connectMongo(): Promise<boolean> {
+  let delayMs = INITIAL_RETRY_DELAY_MS;
+
+  for (let attempt = 1; attempt <= MAX_CONNECT_ATTEMPTS; attempt++) {
+    try {
+      await mongoose.connect(mongoUri, MONGO_OPTIONS);
+      return true;
+    } catch (err) {
+      if (attempt === MAX_CONNECT_ATTEMPTS) {
+        logger.error(
+          `MongoDB-Verbindung nach ${MAX_CONNECT_ATTEMPTS} Versuchen aufgegeben:`,
+          err,
+        );
+        return false;
+      }
+
+      logger.warn(
+        `MongoDB-Verbindung fehlgeschlagen (Versuch ${attempt}/${MAX_CONNECT_ATTEMPTS}), nächster Versuch in ${delayMs / 1000}s:`,
+        err,
+      );
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      delayMs = Math.min(delayMs * 2, MAX_RETRY_DELAY_MS);
+    }
+  }
+
+  return false;
+}
 
 // MongoDB Schemas -> Structure of the models
 // longterm evaluation schema
@@ -92,7 +155,7 @@ const LongTermEvaluationSchema: Schema = new Schema<ILongTermEvaluation>(
       maxlength: 1000,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const SemesterPlanSchema: Schema = new Schema<ISemesterPlan>(
@@ -165,7 +228,7 @@ const SemesterPlanSchema: Schema = new Schema<ISemesterPlan>(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const StudyPlanSchema: Schema = new Schema<IStudyPlan>(
@@ -179,7 +242,7 @@ const StudyPlanSchema: Schema = new Schema<IStudyPlan>(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Recommendation
@@ -198,8 +261,9 @@ const RecommendationSchema: Schema = new Schema<IRecommendation>(
           {
             type: {
               type: String,
-              match: /(job)|(topic)|(interest)|(cohort)|(feedback_similarmods)/g, // or others
-              required: true
+              match:
+                /(job)|(topic)|(interest)|(cohort)|(feedback_similarmods)/g, // or others
+              required: true,
             },
             identifier: {
               type: String,
@@ -233,7 +297,7 @@ const RecommendationSchema: Schema = new Schema<IRecommendation>(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const TopicSchema: Schema = new Schema<ITopic>(
@@ -264,7 +328,7 @@ const TopicSchema: Schema = new Schema<ITopic>(
       type: String,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // all embeddings except for module embeddings with id as identifier, e. g. jobId
@@ -286,7 +350,7 @@ const EmbeddingSchema: Schema = new Schema<IEmbedding>(
       max: 1.0,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const ModEmbeddingSchema: Schema = new Schema<IModEmbedding>(
@@ -306,16 +370,42 @@ const ModEmbeddingSchema: Schema = new Schema<IModEmbedding>(
       max: 1.0,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Query helpers for UserSchema
 type UserModelType = Model<IUser, UserQueryHelpers>;
-type UserModelQuery = Query<any, HydratedDocument<IUser>, UserQueryHelpers> &
-  UserQueryHelpers;
+type UserModelQuery = QueryWithHelpers<
+  any,
+  HydratedDocument<IUser>,
+  UserQueryHelpers
+>;
 interface UserQueryHelpers {
-  byShibId(this: UserModelQuery, shibId: String): UserModelQuery;
+  byShibId(shibId: string): UserModelQuery;
 }
+
+const ExamAttemptSchema: Schema = new Schema<IExamAttempt>(
+  {
+    examId: String,
+    name: String,
+    count: {
+      type: Number,
+      required: true,
+    },
+    grade: Number,
+    semester: {
+      type: String,
+      match: /(\d{4}((w)|(s)))/g,
+    },
+    status: {
+      type: String,
+      match: /(taken)|(failed)|(passed)|(open)/g,
+    },
+    remark: String,
+    flexNowImported: Boolean,
+  },
+  { _id: false },
+);
 
 // UserSchema
 const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
@@ -361,7 +451,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
           type: String,
           match: /(taken)|(failed)|(passed)|(open)/g,
         },
-        // exams: [ExamSchema],
+        examAttempts: [ExamAttemptSchema],
         semester: {
           type: String,
           match: /(\d{4}((w)|(s)))/g,
@@ -397,6 +487,10 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         faculty: String,
         mhbId: String,
         mhbVersion: Number,
+        status: String,
+        startSemster: String,
+        duration: Number,
+        maxEcts: Number,
       },
     ],
     fulltime: {
@@ -409,7 +503,20 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
         visible: Boolean,
       },
     ],
-    timetableSettings: [{ showWeekends: Boolean }],
+    timetableSettings: [
+      {
+        timetableId: {
+          type: String,
+          enum: ["dashboard", "semesterplan"],
+        },
+        showWeekends: Boolean,
+        selectedView: String,
+      },
+    ],
+    studyPlanSettings: {
+      displayGrades: Boolean,
+      displayProgressBar: Boolean,
+    },
     favouriteModulesAcronyms: [String],
     excludedModulesAcronyms: [String],
     hints: [
@@ -504,9 +611,12 @@ const UserSchema = new Schema<IUser, UserModelType, {}, UserQueryHelpers>(
   },
   {
     timestamps: true,
-  }
+  },
 );
-UserSchema.query.byShibId = function (shibId: String): UserModelQuery {
+UserSchema.query.byShibId = function (
+  this: UserModelQuery,
+  shibId: string,
+): UserModelQuery {
   return this.findOne({ shibId: shibId });
 };
 
@@ -540,31 +650,65 @@ const EvaluationSchema: Schema = new Schema<IEvaluation>(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
+);
+
+// Feature Wish
+const FeatureWishSchema: Schema = new Schema<IFeatureWish>(
+  {
+    _id: {
+      type: String,
+      required: true,
+      default: () => new mongoose.Types.ObjectId().toString(),
+    },
+    createdAt: Date,
+    title: String,
+    description: String,
+    isAllowed: Boolean,
+    likedBy: [
+      {
+        type: ObjectId,
+        reference: "UserSchema",
+        required: true,
+      },
+    ],
+    createdBy: {
+      type: ObjectId,
+      reference: "UserSchema",
+    },
+    icon: String,
+    adminMessage: String,
+    tags: [String],
+  },
+  { timestamps: true },
 );
 
 // Create models
 export const SemesterPlan = model<ISemesterPlan>(
   "Semesterplan",
-  SemesterPlanSchema
+  SemesterPlanSchema,
 );
 export const StudyPlan = model<IStudyPlan>("Studyplan", StudyPlanSchema);
 export const User = model<IUser, UserModelType>("User", UserSchema);
 export const TopicM = model<ITopic>("Topic", TopicSchema);
 export const Recommendation = model<IRecommendation>(
   "Recommendation",
-  RecommendationSchema
+  RecommendationSchema,
 );
 export const Embedding = model<IEmbedding>("Embedding", EmbeddingSchema);
 export const ModEmbedding = model<IModEmbedding>(
   "ModEmbedding",
-  ModEmbeddingSchema
+  ModEmbeddingSchema,
 );
 export const Evaluation = mongoose.model<IEvaluation>(
   "Evaluation",
-  EvaluationSchema
+  EvaluationSchema,
 );
 export const LongTermEvaluation = model<ILongTermEvaluation>(
   "LongTermEvaluation",
-  LongTermEvaluationSchema
+  LongTermEvaluationSchema,
+);
+export const FeatureWish = model<IFeatureWish>(
+  "FeatureWish",
+  FeatureWishSchema,
 );

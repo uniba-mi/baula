@@ -11,9 +11,9 @@ export class SemesterPipe implements PipeTransform {
     let year = Number(value.slice(0, 4))
     let result = '';
     if ((value.endsWith('w') || value.endsWith('2')) && !Number.isNaN(year)) {
-      result = `Wintersemester ${year}/${year + 1}`;
+      result = $localize`Wintersemester ${year}/${year + 1}`;
     } else if ((value.endsWith('s') || value.endsWith('1')) && !Number.isNaN(year)) {
-      result = `Sommersemester ${year}`;
+      result = $localize`Sommersemester ${year}`;
     }
     return result;
   }

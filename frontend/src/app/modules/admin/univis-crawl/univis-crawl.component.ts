@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { getSemesterList } from 'src/app/selectors/user.selectors';
 import { Semester } from '../../../../../../interfaces/semester';
@@ -12,22 +12,21 @@ import { AdminDialogComponent } from '../dialogs/admin-dialog.component';
 import { Logmessage } from '../../../../../../interfaces/logs';
 
 @Component({
-    selector: 'admin-univis-crawl',
-    templateUrl: './univis-crawl.component.html',
-    styleUrls: ['./univis-crawl.component.scss'],
-    standalone: false
+  selector: 'admin-univis-crawl',
+  templateUrl: './univis-crawl.component.html',
+  styleUrls: ['./univis-crawl.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class UnivisCrawlComponent implements OnInit {
+  private store = inject<Store<State>>(Store);
+  private rest = inject(AdminRestService);
+  private snackbar = inject(SnackbarService);
+  private dialog = inject(MatDialog);
+
   semesters$: Observable<Semester[]>;
   selectedSemester: string = '';
   cronjobLogs$: Observable<Logmessage[]>;
-
-  constructor(
-    private store: Store<State>,
-    private rest: AdminRestService,
-    private snackbar: SnackbarService,
-    private dialog: MatDialog
-  ) {}
 
   ngOnInit(): void {
     this.semesters$ = this.store.select(getSemesterList);
@@ -42,7 +41,7 @@ export class UnivisCrawlComponent implements OnInit {
     if (this.selectedSemester !== '') {
       this.dialog.open(AdminDialogComponent, {
         data: {
-          dialogTitle: 'UnivIS Crawl gestartet...',
+          dialogTitle: $localize `UnivIS Crawl gestartet...`,
           dialogContentId: 'univis-crawl-dialog',
           univisCrawl$: this.rest.crawlUnivIS(this.selectedSemester),
         },
@@ -51,7 +50,7 @@ export class UnivisCrawlComponent implements OnInit {
     } else {
       this.snackbar.openSnackBar({
         type: AlertType.DANGER,
-        message: 'Es wurde kein Semester ausgewählt!',
+        message: $localize `Es wurde kein Semester ausgewählt!`,
       });
     }
   }

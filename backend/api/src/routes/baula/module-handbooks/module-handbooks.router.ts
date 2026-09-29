@@ -1,12 +1,123 @@
 import express, { Router } from "express";
-import { 
-    getMhbByIdAndVersion, 
+import {
+    getMhbByIdAndVersion,
     getModByAcronymAndVersion,
+    getModuleGroupIdsForAcronym,
     getModules,
+    getUpToDateMhb,
 } from './module-handbooks.controller';
 
 const router: Router = express.Router();
 
+/**
+ * @swagger
+ * /module-handbooks/modules/{acronym}/{version}:
+ *   get:
+ *     summary: Get a specific module from all modules by acronym and version
+ *     tags: [ModuleHandbook::Modules]
+ *     parameters:
+ *       - in: path
+ *         name: acronym
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Module acronym (abbreviation)
+ *         example: MOD-A
+ *       - in: path
+ *         name: version
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Module version
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Module
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Module'
+ *       400:
+ *         description: The request was invalid or malformed.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BadRequestError'
+ *       404:
+ *         description: The requested module could not be found with this acronym and version.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
+ */
+/**
+ * @swagger
+ * /module-handbooks/modules/{acronym}/module-groups:
+ *   get:
+ *     summary: Get all module group ids ever assigned to any version of a module by acronym
+ *     tags: [ModuleHandbook::Modules]
+ *     parameters:
+ *       - in: path
+ *         name: acronym
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Module acronym (abbreviation)
+ *         example: MOD-A
+ *     responses:
+ *       200:
+ *         description: Module group ids
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: string
+ *       400:
+ *         description: The request was invalid or malformed.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BadRequestError'
+ */
+// must be registered before /modules/:acronym/:version, otherwise "module-groups" would
+// match that route's :version param instead of this one
+router.get('/modules/:acronym/module-groups', getModuleGroupIdsForAcronym);
+
+router.get('/modules/:acronym/:version', getModByAcronymAndVersion);
+
+/**
+ * @swagger
+ * /module-handbooks/modules:
+ *   get:
+ *     summary: Get all modules from the database
+ *     tags: [ModuleHandbook::Modules]
+ *     responses:
+ *       200:
+ *         description: All modules
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                  $ref: '#/components/schemas/Module'
+ *       400:
+ *         description: The request was invalid or malformed.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BadRequestError'
+ *       404:
+ *         description: No modules could be found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
+ */
+router.get('/modules', getModules);
+
+// the module handbook wildcards are registered last, otherwise '/:id' would swallow every
+// literal route below it - '/modules' would be read as the module handbook with id 'modules'
 /**
  * @swagger
  * /module-handbooks/{id}/{version}:
@@ -52,32 +163,25 @@ router.get('/:id/:version', getMhbByIdAndVersion);
 
 /**
  * @swagger
- * /module-handbooks/modules/{acronym}/{version}:
+ * /module-handbooks/{id}:
  *   get:
- *     summary: Get a specific module from all modules by acronym and version
- *     tags: [ModuleHandbook::Modules]
+ *     summary: Get module handbook with newest version by id
+ *     tags: [ModuleHandbook]
  *     parameters:
  *       - in: path
- *         name: acronym
+ *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: Module acronym (abbreviation)
- *         example: MOD-A
- *       - in: path
- *         name: version
- *         required: true
- *         schema:
- *           type: integer
- *         description: Module version
- *         example: 1
+ *         description: Module handbook id
+ *         example: MHB1
  *     responses:
  *       200:
- *         description: Module
+ *         description: Module handbook
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Module'
+ *               $ref: '#/components/schemas/ModuleHandbook'
  *       400:
  *         description: The request was invalid or malformed.
  *         content:
@@ -85,42 +189,12 @@ router.get('/:id/:version', getMhbByIdAndVersion);
  *             schema:
  *               $ref: '#/components/schemas/BadRequestError'
  *       404:
- *         description: The requested module could not be found with this acronym and version.
+ *         description: No module handbook could be found with the given id.
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/NotFoundError'
  */
-router.get('/modules/:acronym/:version', getModByAcronymAndVersion);
-
-/**
- * @swagger
- * /module-handbooks/modules:
- *   get:
- *     summary: Get all modules from the database
- *     tags: [ModuleHandbook::Modules]
- *     responses:
- *       200:
- *         description: All modules
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                  $ref: '#/components/schemas/Module'
- *       400:
- *         description: The request was invalid or malformed.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/BadRequestError'
- *       404:
- *         description: No modules could be found.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/NotFoundError'
- */
-router.get('/modules', getModules);
+router.get('/:id', getUpToDateMhb)
 
 export { router as moduleHandbooks };

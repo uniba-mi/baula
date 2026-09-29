@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/reducers';
 import { getSemesterList } from 'src/app/selectors/user.selectors';
 import { Semester } from '../../../../../../../../interfaces/semester';
-import { changeUnit, changeView } from '../../../../compvis/state/chart.actions';
+import {
+  changeUnit,
+  changeView,
+} from '../../../../compvis/state/chart.actions';
 import { getUnit, getView } from '../../../../compvis/state/chart.selectors';
 import { MatDialog } from '@angular/material/dialog';
 import { AimModalComponent } from 'src/app/modules/aim-modal/aim-modal/aim-modal.component';
@@ -13,12 +16,16 @@ import { getActiveSemester } from 'src/app/selectors/study-planning.selectors';
 import { TimetableActions } from 'src/app/actions/study-planning.actions';
 
 @Component({
-    selector: 'app-settings',
-    templateUrl: './settings.component.html',
-    styleUrls: ['./settings.component.scss'],
-    standalone: false
+  selector: 'app-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class SettingsComponent {
+  private store = inject<Store<State>>(Store);
+  dialog = inject(MatDialog);
+
   unit$: Observable<string>;
   selectedSemester$: Observable<string>;
   selectedView$: Observable<string>;
@@ -27,26 +34,21 @@ export class SettingsComponent {
 
   selectedSemester: string;
 
-  constructor(private store: Store<State>,
-              public dialog: MatDialog
-              //private _snackBar: MatSnackBar
-            ) { }
-
   ngOnInit(): void {
     this.selectedView$ = this.store.pipe(select(getView));
     this.semesters$ = this.store.pipe(select(getSemesterList));
     this.selectedSemester$ = this.store.pipe(select(getActiveSemester));
     this.unit$ = this.store.pipe(select(getUnit));
     this.semesterSelection = new FormControl();
-    
-    this.selectedSemester$.subscribe( semester => {
+
+    this.selectedSemester$.subscribe((semester) => {
       this.selectedSemester = semester;
-      this.semesterSelection.patchValue(semester)
-    });  
+      this.semesterSelection.patchValue(semester);
+    });
   }
 
   updateUnit(unit: string) {
-    this.store.dispatch(changeUnit( { unit } ))
+    this.store.dispatch(changeUnit({ unit }));
   }
 
   changeView(view: string) {
@@ -56,9 +58,13 @@ export class SettingsComponent {
 
   selectSemester() {
     //if (this.selectedSemester !== semester) {
-      this.store.dispatch(TimetableActions.updateActiveSemester({ semester: this.selectedSemester }));
-      //this.store.dispatch(new DeselectBar());
-      /* this._snackBar.open('Neues Semester ausgewählt!', undefined, {
+    this.store.dispatch(
+      TimetableActions.updateActiveSemester({
+        semester: this.selectedSemester,
+      }),
+    );
+    //this.store.dispatch(new DeselectBar());
+    /* this._snackBar.open('Neues Semester ausgewählt!', undefined, {
         panelClass: ['alert', 'alert-success']
       }) */
     //}
@@ -66,5 +72,5 @@ export class SettingsComponent {
 
   openAimDialog() {
     this.dialog.open(AimModalComponent);
-  }  
+  }
 }

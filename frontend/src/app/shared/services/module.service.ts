@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
@@ -6,20 +6,34 @@ import {
   getAllModules,
   getDistinctModules,
 } from 'src/app/selectors/module-overview.selectors';
-import { Module } from '../../../../../interfaces/module';
+import { Module } from '@interfaces/module';
 import { AlertType } from '../classes/alert';
 import { SnackbarService } from './snackbar.service';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  map,
+} from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ModuleInteractionActions } from 'src/app/actions/module-overview.actions';
-import { UserGeneratedModule } from '../../../../../interfaces/user-generated-module';
-import { PathModule } from '../../../../../interfaces/study-path';
+import { UserGeneratedModule } from '@interfaces/user-generated-module';
+import { PathModule } from '@interfaces/study-path';
+import { ModuleHandbook } from '@interfaces/module-handbook';
+import { moduleChanges } from '../constants/module-mapping';
+import { RestService } from 'src/app/rest.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ModService {
+  private store = inject(Store);
+  private snackbar = inject(SnackbarService);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private rest = inject(RestService);
+
   modulesInState$: any;
 
   // for status updates everywhere without reloading
@@ -28,15 +42,16 @@ export class ModService {
   >(null);
   currentAcronym$ = this.moduleAcronymSource.asObservable();
 
-  constructor(
-    private store: Store,
-    private snackbar: SnackbarService,
-    private dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  moduleChanges = moduleChanges;
+  newModules = moduleChanges.map((el) => el.newModuleAcronym);
+  oldModules = moduleChanges.map((el) => el.oldModuleAcronym);
 
-  selectModuleFromAcronymString(acronym: string, activeTab: string = 'details', mgId?: string) {
+  selectModuleFromAcronymString(
+    acronym: string,
+    activeTab: string = 'details',
+    allowPlanning: boolean = true,
+    mgId?: string,
+  ) {
     // select module from state where acronym matches the given acronym
     this.modulesInState$ = this.store.select(getAllModules);
 
@@ -47,7 +62,7 @@ export class ModService {
         module = modules.find((mod: Module) => mod.acronym === acronym);
       } else {
         module = modules.find(
-          (mod: Module) => mod.acronym === acronym && mod.mgId === mgId
+          (mod: Module) => mod.acronym === acronym && mod.mgId === mgId,
         );
       }
 
@@ -58,7 +73,7 @@ export class ModService {
             queryParams: { id: module.mId, mgId: module.mgId },
           });
         } else {
-          this.openDetailsDialog(module, activeTab)
+          this.openDetailsDialog(module, activeTab, allowPlanning);
         }
       } else {
         this.router.navigate([], {
@@ -67,10 +82,31 @@ export class ModService {
         this.snackbar.openSnackBar({
           type: AlertType.DANGER,
           message:
-            'Kein passendes Modul gefunden. Informiere dich auf der Universitätsseite über das Modul, da es nicht in unserem Modulbestand vorliegt.',
+            $localize `Kein passendes Modul gefunden. Informiere dich auf der Universitätsseite über das Modul, da es nicht in unserem Modulbestand vorliegt.`,
         });
       }
     });
+  }
+
+  // Function to compare mhbs
+  compareMhbs(baseMhb: ModuleHandbook, targetMhb: ModuleHandbook): string {
+    return 'Es hat sich nichts geändert.';
+  }
+
+  // Function to identify if a module is included in the module mapping, returns oldAcronym
+  isEquivalent(newAcronym: string): string | undefined {
+    const mapping = moduleChanges.find(
+      (el) => el.newModuleAcronym == newAcronym,
+    );
+    return mapping ? mapping.oldModuleAcronym : undefined;
+  }
+
+  // Function to identify possible modulegroups of given acronym - includes module
+  // groups from older module handbook versions the module was ever assigned to, not
+  // just the currently loaded one (the module group wizard filters this list against
+  // the current MHB's own group tree, so only still-existing groups get suggested)
+  findModuleGroups(acronym: string): Observable<string[]> {
+    return this.rest.getModuleGroupIdsForAcronym(acronym);
   }
 
   // retrieve modules based on acronyms
@@ -78,14 +114,19 @@ export class ModService {
     return this.store.pipe(
       select(getDistinctModules),
       map((modules) =>
-        modules.filter((module) => acronyms.includes(module.acronym))
-      )
+        modules.filter((module) => acronyms.includes(module.acronym)),
+      ),
     );
   }
 
   // pass activeTab if other tab than details should appear, e. g. 'feedback' for feedback tab
   // keep is used to check, if module should selected untrimmed or if mgId should be trimmed
-  openDetailsDialog(module: Module, activeTab: string = 'details', keep?: boolean) {
+  openDetailsDialog(
+    module: Module,
+    activeTab: string = 'details',
+    allowPlanning?: boolean,
+    keep?: boolean,
+  ) {
     if (!keep) {
       const courses = module.mCourses;
       const extractedPreviousModules = module.extractedPrevModules;
@@ -111,10 +152,13 @@ export class ModService {
         module.offerEnd,
         module.workload,
       );
-      
+
       module.addCourses(courses);
       module.addExtractedPrevModules(extractedPreviousModules);
-      module.addAllPriorModules([...module.extractedPrevModules, ...module.prevModules.map((mod: Module) => mod.acronym)]);
+      module.addAllPriorModules([
+        ...module.extractedPrevModules,
+        ...module.prevModules.map((mod: Module) => mod.acronym),
+      ]);
     }
 
     this.store.dispatch(ModuleInteractionActions.setSelectedModule({ module }));
@@ -123,6 +167,7 @@ export class ModService {
       data: {
         dialogContentId: 'module-details-dialog',
         selectedModule: module,
+        allowPlanning: allowPlanning ?? true,
         activeTab,
       },
       enterAnimationDuration: 100,

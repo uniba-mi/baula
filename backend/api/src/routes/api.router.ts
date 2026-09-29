@@ -10,8 +10,6 @@ import { evaluation } from './evaluation/evaluation.router';
 
 const router: Router = express.Router();
 
-router.use(express.json());
-
 router.get("/", ensureAuthenticated, (req: Request, res: Response, next: NextFunction) => {
     if (req.user) {
         res.status(200).json({ user: req.user })
@@ -25,7 +23,7 @@ router.use('/docs/baula', swaggerUi.serveFiles(swaggerBaulaConfig, swaggerOption
 router.use('/docs/bilapp', swaggerUi.serveFiles(swaggerBilAppConfig, swaggerOptions), swaggerUi.setup(swaggerBilAppConfig));
 
 router.use('/baula', ensureAuthenticated, denyDemoWrites, baula);
-router.use('/bilapp', bilapp)
+router.use('/bilapp', bilapp);
 router.use('/evaluation', ensureAuthenticated, denyDemoWrites, evaluation);
 
 export { router as api };

@@ -1,33 +1,53 @@
-.bar {
-    padding-left: 100px;
-}
-
-.bar:hover {
-    opacity: 0.5;
-    cursor: pointer;
-}
-
 .visibility {
     visibility: hidden;
     display: inline-block;
 }
 
-.axis-text {
-    font-size: 14pt;
+#bar-chart {
+    // scales with the viewport instead of a fixed height that dwarfs small/
+    // laptop screens (pushing the legend far below it); floor matches
+    // reporting-echarts-host's own min-height so it never collapses smaller
+    height: clamp(320px, 42vh, 480px);
 }
 
 .legend {
     font-size: 1.15rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.25rem 0 0;
 }
 
-@media (min-width: 992px) and (max-width: 1400px){
-    #bar-chart {
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-swatch {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+.legend-line {
+    display: inline-block;
+    width: 20px;
+    height: 3px;
+    background: #0FB500;
+}
+
+// min-height guards against short/laptop viewports, where the 200vh scroll
+// room made the chart look absurdly stretched with a huge gap before the
+// legend - on those screens the chart+legend just flow normally instead
+@media (min-width: 992px) and (max-width: 1400px) and (min-height: 700px) {
+    // chart + legend stick together as one unit, instead of just the chart
+    // canvas sticking while the legend scrolls away underneath it
+    .sticky-chart {
         position: sticky;
         top: 0;
-        width: 35vw;
-        height: auto;
     }
- 
+
     .min-vh-200 {
         height: 200vh;
     }

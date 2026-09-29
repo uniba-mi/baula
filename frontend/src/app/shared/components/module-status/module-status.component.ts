@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Module } from '../../../../../../interfaces/module';
 import { Store } from '@ngrx/store';
 import { PathModule, StudyPath } from '../../../../../../interfaces/study-path';
@@ -14,14 +14,20 @@ import { take, takeUntil } from 'rxjs/operators';
 import { StudyPathActions } from 'src/app/actions/user.actions';
 import { UserGeneratedModule } from '../../../../../../interfaces/user-generated-module';
 import { ModService } from '../../services/module.service';
+import { moduleChanges } from '../../constants/module-mapping';
 
 @Component({
-    selector: 'app-module-status',
-    templateUrl: './module-status.component.html',
-    styleUrls: ['./module-status.component.scss'],
-    standalone: false
+  selector: 'app-module-status',
+  templateUrl: './module-status.component.html',
+  styleUrls: ['./module-status.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ModuleStatusComponent implements OnInit {
+  private store = inject(Store);
+  private dialog = inject(MatDialog);
+  private modService = inject(ModService);
+
   @Input() studyPath$: Observable<StudyPath>;
   @Input() modType: string;
   @Input() openedFromModuleOffer: boolean = false;
@@ -30,25 +36,38 @@ export class ModuleStatusComponent implements OnInit {
   @Input() pathModule: PathModule;
   @Input() statusSemester: string | undefined;
   @Input() openedWithSemesterSet: boolean; // true for opening from study plan
+  @Input() mgId: string;
+  @Input() showStatusText: boolean = false;
   status: string | undefined;
   grade: number | undefined;
   activePlan$: Observable<StudyPlan | undefined>;
   closeMode: string;
   user: User;
-  mgId: string;
   displayStatusOnHover: string = '';
   private destroy$ = new Subject<void>();
   statusOptions: Status[] = [
-    { status: 'passed', name: 'Bestanden', iconClass: 'bi bi-check-lg text-success' },
-    { status: 'taken', name: 'Belegt', iconClass: 'bi bi-dash-lg' },
-    { status: 'failed', name: 'Nicht bestanden', iconClass: 'bi bi-x-lg text-danger' },
-    { status: 'open', name: 'Nicht belegt', iconClass: 'bi bi-question-lg' },
+    {
+      status: 'passed',
+      name: $localize`Bestanden`,
+      iconClass: 'bi bi-check-lg text-success',
+    },
+    { status: 'taken', name: $localize`Belegt`, iconClass: 'bi bi-dash-lg' },
+    {
+      status: 'failed',
+      name: $localize`Nicht bestanden`,
+      iconClass: 'bi bi-x-lg text-danger',
+    },
+    { status: 'open', name: $localize`Nicht belegt`, iconClass: 'bi bi-question-lg' },
   ];
-
-  constructor(private store: Store, private dialog: MatDialog, private modService: ModService) { }
+  moduleChanges = moduleChanges;
+  newModules = moduleChanges.map((el) => el.newModuleAcronym);
+  oldModules = moduleChanges.map((el) => el.oldModuleAcronym);
 
   ngOnInit(): void {
-    this.store.select(getUser).pipe(take(1)).subscribe((user) => this.user = user)
+    this.store
+      .select(getUser)
+      .pipe(take(1))
+      .subscribe((user) => (this.user = user));
 
     this.studyPath$.pipe(takeUntil(this.destroy$)).subscribe((studyPath) => {
       this.updateModuleDataFromStudyPath(studyPath);
@@ -58,30 +77,52 @@ export class ModuleStatusComponent implements OnInit {
   }
 
   private updateModuleDataFromStudyPath(studyPath: StudyPath): void {
-    const moduleToCheck = this.pathModule || this.module || this.userGeneratedModule;
+    const moduleToCheck =
+      this.pathModule || this.module || this.userGeneratedModule;
     if (moduleToCheck) {
-      this.statusSemester = this.checkSemesterForModule(studyPath, moduleToCheck, this.statusSemester);
-      this.status = this.checkStatusForModule(studyPath, moduleToCheck, this.statusSemester);
-      this.grade = this.checkGradeForModule(studyPath, moduleToCheck, this.statusSemester);
+      this.statusSemester = this.checkSemesterForModule(
+        studyPath,
+        moduleToCheck,
+        this.statusSemester,
+      );
+      this.status = this.checkStatusForModule(
+        studyPath,
+        moduleToCheck,
+        this.statusSemester,
+      );
+      this.grade = this.checkGradeForModule(
+        studyPath,
+        moduleToCheck,
+        this.statusSemester,
+      );
       this.updateDisplayStatusOnHover();
     }
   }
 
   // get module's unique identifier (_id)
-  getModuleId(module: PathModule | UserGeneratedModule | Module, spath: StudyPath, semester: string | undefined): string | undefined {
+  getModuleId(
+    module: PathModule | UserGeneratedModule | Module,
+    spath: StudyPath,
+    semester: string | undefined,
+  ): string | undefined {
     // identify type between UserGeneratedModules | Module | PathModule
-    const moduleType = module === this.userGeneratedModule
-      ? 'UserGeneratedModule'
-      : module === this.pathModule
-        ? 'PathModule'
-        : module === this.module
-          ? 'Module'
-          : 'Unknown Type';
+    const moduleType =
+      module === this.userGeneratedModule
+        ? 'UserGeneratedModule'
+        : module === this.pathModule
+          ? 'PathModule'
+          : module === this.module
+            ? 'Module'
+            : 'Unknown Type';
 
     if (moduleType === 'UserGeneratedModule' || moduleType === 'PathModule') {
-      return module._id!
+      return module._id!;
     } else if (moduleType === 'Module') {
-      const matchingModule = this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
+      const matchingModule = this.findCorrespondingModuleInStudyPath(
+        spath,
+        module.acronym,
+        semester,
+      );
 
       return matchingModule ? matchingModule._id : undefined;
     }
@@ -89,59 +130,94 @@ export class ModuleStatusComponent implements OnInit {
   }
 
   // get current values from store
-  private checkStatusForModule(spath: StudyPath, module: Module | PathModule | UserGeneratedModule, semester: string | undefined): string | undefined {
+  private checkStatusForModule(
+    spath: StudyPath,
+    module: Module | PathModule | UserGeneratedModule,
+    semester: string | undefined,
+  ): string | undefined {
     const moduleId = this.getModuleId(module, spath, semester);
     if (moduleId) {
       const matchingModule = semester
-        ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
+        ? spath.completedModules.find(
+            (mod) => mod._id === moduleId && mod.semester === semester,
+          )
         : this.findCorrespondingModuleInStudyPath(spath, moduleId, semester);
       return matchingModule?.status || 'open';
     }
     return;
   }
 
-  private checkSemesterForModule(spath: StudyPath, module: Module | PathModule | UserGeneratedModule, semester: string | undefined): string | undefined {
+  private checkSemesterForModule(
+    spath: StudyPath,
+    module: Module | PathModule | UserGeneratedModule,
+    semester: string | undefined,
+  ): string | undefined {
     const moduleId = this.getModuleId(module, spath, semester);
     if (semester) {
       return semester;
     } else {
       // Otherwise, find the corresponding module in the study path
       const matchingModule = semester
-        ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-        : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
+        ? spath.completedModules.find(
+            (mod) => mod._id === moduleId && mod.semester === semester,
+          )
+        : this.findCorrespondingModuleInStudyPath(
+            spath,
+            module.acronym,
+            semester,
+          );
       return matchingModule?.semester || undefined;
     }
   }
 
-  private checkGradeForModule(spath: StudyPath, module: PathModule, semester: string | undefined): number | undefined {
+  private checkGradeForModule(
+    spath: StudyPath,
+    module: PathModule,
+    semester: string | undefined,
+  ): number | undefined {
     const moduleId = this.getModuleId(module, spath, semester);
     const matchingModule = semester
-      ? spath.completedModules.find(mod => mod._id === moduleId && mod.semester === semester)
-      : this.findCorrespondingModuleInStudyPath(spath, module.acronym, semester);
-    return matchingModule?.grade || undefined
+      ? spath.completedModules.find(
+          (mod) => mod._id === moduleId && mod.semester === semester,
+        )
+      : this.findCorrespondingModuleInStudyPath(
+          spath,
+          module.acronym,
+          semester,
+        );
+    return matchingModule?.grade || undefined;
   }
 
   private findCorrespondingModuleInStudyPath(
     spath: StudyPath,
     acronym: string,
-    semester: string | undefined
+    semester: string | undefined,
   ): PathModule | undefined {
-
     // check for modules with the same acronym in the study path
-    const filteredModules = spath.completedModules.filter(mod => mod.acronym === acronym);
-
+    // first identify if module is included within moduleChanges
+    const oldAcronym = this.modService.isEquivalent(acronym);
+    // map module if acronym maps or if module change -> if studypath module maps to module change also include into filtered modules
+    const filteredModules = spath.completedModules.filter(
+      (mod) =>
+        (mod.mgId == this.mgId || this.mgId == 'init') &&
+        (mod.acronym === acronym || (oldAcronym && oldAcronym == mod.acronym)),
+    );
     // if a semester is given (= study plan semester), check if one of the matching modules is in the same semester
     if (this.openedWithSemesterSet) {
-      return filteredModules.find(mod => mod.semester === semester);
+      return filteredModules.find((mod) => mod.semester === semester);
     }
 
     // else (= module catalog), use the most recent occurence of the acronym in the study path
-    return filteredModules.sort((a, b) => b.semester.localeCompare(a.semester))[0];
+    return filteredModules.sort((a, b) =>
+      b.semester.localeCompare(a.semester),
+    )[0];
   }
 
   // get full name for status display on hover
   getStatusName(status: string | undefined): string {
-    const statusObj = this.statusOptions.find(option => option.status === status);
+    const statusObj = this.statusOptions.find(
+      (option) => option.status === status,
+    );
     return statusObj ? statusObj.name : 'Nicht belegt';
   }
 
@@ -159,7 +235,6 @@ export class ModuleStatusComponent implements OnInit {
   }
 
   openChangeStatusDialog(event: any, modType: string) {
-
     event.stopPropagation();
 
     // dialog cannot be opened from module catalog and rec sidenav
@@ -175,20 +250,28 @@ export class ModuleStatusComponent implements OnInit {
     // filter status options based on modType, open not needed in spath semesters due to delete
     let dialogStatusOptions = this.statusOptions;
     if (modType === 'path') {
-      dialogStatusOptions = this.statusOptions.filter(option =>
-        option.status === 'passed' || option.status === 'failed' || option.status === 'taken');
+      dialogStatusOptions = this.statusOptions.filter(
+        (option) =>
+          option.status === 'passed' ||
+          option.status === 'failed' ||
+          option.status === 'taken',
+      );
     }
 
     // pass different data to dialog (module, pathmodule, userGeneratedModule)
-    const moduleData = modType === 'path'
-      ? this.pathModule
-      : this.userGeneratedModule
-        ? this.userGeneratedModule
-        : this.module;
-
+    const moduleData =
+      modType === 'path'
+        ? this.pathModule
+        : this.userGeneratedModule
+          ? this.userGeneratedModule
+          : this.module;
 
     this.studyPath$.pipe(take(1)).subscribe((studyPath) => {
-      const moduleId = this.getModuleId(moduleData, studyPath, this.statusSemester);
+      const moduleId = this.getModuleId(
+        moduleData,
+        studyPath,
+        this.statusSemester,
+      );
 
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
@@ -198,43 +281,53 @@ export class ModuleStatusComponent implements OnInit {
           status: this.status,
           statusSemester: this.statusSemester,
           grade: this.grade,
-          moduleData
+          moduleData,
         },
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-
         if (result) {
           this.store
             .select(getCloseDialogMode)
             .subscribe((mode) => (this.closeMode = mode));
 
           if (this.closeMode === 'data') {
-
-            const { status, semester, grade } = result;
+            const { status, semester, grade, mgId } = result;
 
             // declare data
-            let moduleVersion, moduleAcronym: string, moduleMgId, moduleName, moduleEcts: number, isUserGenerated, flexNowImported;
+            let moduleVersion,
+              moduleAcronym: string,
+              moduleMgId,
+              moduleName,
+              moduleEcts: number,
+              isUserGenerated,
+              flexNowImported;
 
             if (modType === 'path') {
               moduleAcronym = this.pathModule.acronym;
               moduleName = this.pathModule.name;
               moduleEcts = this.pathModule.ects;
-              moduleMgId = 'init'; // set mgId to init to prevent false value due to preselect of one mgId instead of selection out of all possible mgIds
+              moduleMgId = mgId ? mgId : 'init';
               isUserGenerated = this.pathModule.isUserGenerated;
               flexNowImported = this.pathModule.flexNowImported;
             } else if (this.userGeneratedModule) {
-              moduleAcronym = this.userGeneratedModule.acronym ? this.userGeneratedModule.acronym : this.userGeneratedModule.name;
+              moduleAcronym = this.userGeneratedModule.acronym
+                ? this.userGeneratedModule.acronym
+                : this.userGeneratedModule.name;
               //moduleMgId = this.userGeneratedModule.mgId !== undefined ? this.userGeneratedModule.mgId : 'init';
-              moduleMgId = 'init'; // set mgId to init to prevent false value due to preselect of one mgId instead of selection out of all possible mgIds
-              moduleName =  this.userGeneratedModule.name || this.userGeneratedModule.notes || '-';
+              moduleMgId = mgId ? mgId : 'init';
+              moduleName =
+                this.userGeneratedModule.name ||
+                this.userGeneratedModule.notes ||
+                '-';
               moduleEcts = this.userGeneratedModule.ects;
               isUserGenerated = true;
               flexNowImported = this.userGeneratedModule.flexNowImported;
-            } else { // non user generated module
+            } else {
+              // non user generated module
               moduleVersion = this.module.version;
               moduleAcronym = this.module.acronym;
-              moduleMgId = 'init'; // set mgId to undefined to prevent false value due to preselect of one mgId instead of selection out of all possible mgIds
+              moduleMgId = mgId ? mgId : 'init';
               moduleName = this.module.name;
               moduleEcts = this.module.ects;
               isUserGenerated = false;
@@ -242,7 +335,9 @@ export class ModuleStatusComponent implements OnInit {
             }
 
             // if dialog returns semester (= when opened in module overview), use it, else use this semester
-            const semesterString: string = result.semester ? result.semester : this.statusSemester;
+            const semesterString: string = result.semester
+              ? result.semester
+              : this.statusSemester;
 
             // After the dialog, update module status and semester
             const updatedModule = {
@@ -261,16 +356,21 @@ export class ModuleStatusComponent implements OnInit {
 
             // if status is set to open, delete module from study path
             if (moduleId && semesterString && status === 'open') {
-              this.store.dispatch(StudyPathActions.deleteModuleFromStudyPath({ id: moduleId, semester: semesterString }));
+              this.store.dispatch(
+                StudyPathActions.deleteModuleFromStudyPath({
+                  id: moduleId,
+                  semester: semesterString,
+                }),
+              );
             } else {
               // we do not use updateModuleInStudyPath here because we do not only edit a specific module in the study path, but need a semester-dependent update
-              const updatedCompletedModules = [updatedModule]
+              const updatedCompletedModules = [updatedModule];
               // for other cases update module in study path
 
               this.store.dispatch(
                 StudyPathActions.updateStudyPath({
-                  completedModules: updatedCompletedModules
-                })
+                  completedModules: updatedCompletedModules,
+                }),
               );
             }
           }
@@ -290,5 +390,4 @@ export class ModuleStatusComponent implements OnInit {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChartVisibility, CompAim, Hint, Consent, User, ConsentType, UserServer, ModuleFeedback } from '../../../../interfaces/user';
+import { ChartVisibility, CompAim, Hint, Consent, User, ConsentType, UserServer, ModuleFeedback, StudyPlanSettings } from '../../../../interfaces/user';
 import { StudyPath, PathModule } from '../../../../interfaces/study-path';
 import { TimetableSettings } from '../../../../interfaces/semester-plan';
 import { ExtendedJob, Jobtemplate } from '../../../../interfaces/job';
@@ -33,6 +33,15 @@ export const UserActions = createActionGroup({
   }
 });
 
+export const StudyProgrammeActions = createActionGroup({
+  source: 'Study Programme', 
+  events: {
+    'Change Modulehandbook': props<{ mhbId: string, version: number }>(),
+    'Change Modulehandbook Success': props<{ updatedUser: User }>(),
+    'Change Modulehandbook Failure': props<{ error: HttpErrorResponse }>()
+  }
+})
+
 export const StudyPathActions = createActionGroup({
   source: 'Study Path',
   events: {
@@ -48,29 +57,27 @@ export const StudyPathActions = createActionGroup({
     'Delete Module From Study Path': props<{ id: string; semester: string }>(),
     'Delete Module From Study Path Success': props<{ studyPath: StudyPath }>(),
     'Delete Module From Study Path Failure': props<{ error: any }>(),
-    'Delete Study Path': emptyProps(),
-    'Delete Study Path Success': emptyProps(),
+    'Delete Study Path': props<{ onlyFlexNowImported: boolean }>(),
+    'Delete Study Path Success': props<{ onlyFlexNowImported: boolean }>(),
     'Delete Study Path Failure': props<{ error: any }>(),
   },
 });
 
-export const DashboardActions = createActionGroup({
-  source: 'Dashboard',
+export const SettingsActions = createActionGroup({
+  source: 'Settings',
   events: {
     'Update Dashboard View': props<{ chartName: string }>(),
     'Update Dashboard View Success': props<{ settings: ChartVisibility[] }>(),
-    'Update Dashboard View Failure': props<{ error: HttpErrorResponse }>()
-  }
-});
-
-export const TimetableActions = createActionGroup({
-  source: 'Timetable',
-  events: {
-    'Update Timetable Settings': props<{ showWeekends: boolean; }>(),
+    'Update Dashboard View Failure': props<{ error: HttpErrorResponse }>(),
+    'Update Timetable Settings': props<{ timetableId: 'dashboard' | 'semesterplan', showWeekends?: boolean; selectedView?: string }>(),
     'Update Timetable Settings Success': props<{ settings: TimetableSettings[]; }>(),
-    'Update Timetable Settings Failure': props<{ error: HttpErrorResponse }>()
+    'Update Timetable Settings Failure': props<{ error: HttpErrorResponse }>(),
+    'Update Study Plan Settings': props<{ settings: StudyPlanSettings }>(),
+    'Update Study Plan Settings Success': props<{ settings: StudyPlanSettings }>(),
+    'Update Study Plan Settings Failure': props<{ error: HttpErrorResponse }>()
   }
-});
+})
+
 
 export const FavoriteModulesActions = createActionGroup({
   source: 'Favorite Modules',

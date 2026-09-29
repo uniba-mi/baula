@@ -7,14 +7,14 @@ import {
 import validator from "validator";
 import { User, Recommendation } from "../../../database/mongo";
 import mongoose from "mongoose";
-import { UserServer } from "../../../../../../interfaces/user";
+import { UserServer } from "@interfaces/user";
 import { BadRequestError, NotFoundError } from "../../../shared/error";
-import { ExtendedJob, Job, Jobtemplate } from "../../../../../../interfaces/job";
+import { ExtendedJob, Job, Jobtemplate } from "@interfaces/job";
 import {
   validateAndReturnJobtemplate,
   validateObjectId,
 } from "../../../shared/helpers/custom-validator";
-import { RecommendedModule } from "../../../../../../interfaces/recommendation";
+import { RecommendedModule } from "@interfaces/recommendation";
 import { extractModules } from "../../../shared/helpers/module-helpers";
 import path from "path";
 import { readJsonFile } from "../../../shared/helpers/process-data-helper";
@@ -91,8 +91,8 @@ export async function recommendModulesToJob(
       : undefined;
 
   // get mhbId and mhbVersion from user
-  const mhbId = user.sps?.[0]?.mhbId;
-  const mhbVersion = user.sps?.[0]?.mhbVersion;
+  const mhbId = user.sps?.filter(sp => sp.status == 'Immatrikuliert')[0]?.mhbId;
+  const mhbVersion = user.sps?.filter(sp => sp.status == 'Immatrikuliert')[0]?.mhbVersion;
   if (
     !mhbId ||
     !mhbVersion ||
@@ -110,7 +110,7 @@ export async function recommendModulesToJob(
     keywords: req.body.job.keywords,
   });
 
-  if (!job || !modules || !user.sps || !user.sps[0].spId) {
+  if (!job || !modules || !user.sps || !user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId) {
     next(new BadRequestError("Invalid job input or modules!"));
   } else {
     let savedJob: Job | null | undefined = await saveJob(user._id, job, id);
@@ -124,7 +124,7 @@ export async function recommendModulesToJob(
             }
           | undefined =
           job.inputMode === "mock"
-            ? await getMockedJobRecommendation(job, user.sps[0].spId)
+            ? await getMockedJobRecommendation(job, user.sps.filter(sp => sp.status == 'Immatrikuliert')[0].spId)
             : await jobModuleProposalKeyWordsRequest(
                 job.title,
                 job.keywords,
@@ -196,7 +196,7 @@ async function saveJob(
             },
           },
         },
-        { new: true }
+        { returnDocument: 'after' }
       );
       return newJob;
     } catch (error) {

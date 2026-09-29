@@ -1,4 +1,4 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, inject } from '@angular/core';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Directive({
@@ -6,9 +6,9 @@ import { AnalyticsService } from '../services/analytics.service';
   standalone: false,
 })
 export class HoverTrackerDirective {
-  private isHovered = false;
+  private analytics = inject(AnalyticsService);
 
-  constructor(private analytics: AnalyticsService) { }
+  private isHovered = false;
 
   // used to track any hover effects globally
   @HostListener('mouseenter', ['$event'])
@@ -16,13 +16,13 @@ export class HoverTrackerDirective {
     if (!this.isHovered) {
       this.isHovered = true;
       const targetElement = event.currentTarget as HTMLElement;
-      const elementLabel = targetElement.id || targetElement.className || targetElement.tagName;
+      const elementLabel =
+        targetElement.id || targetElement.className || targetElement.tagName;
 
       this.analytics.trackEvent('hover', {
         action: 'Enter',
-        element: elementLabel
+        element: elementLabel,
       });
-
     }
   }
 

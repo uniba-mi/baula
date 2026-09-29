@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Semester } from '../../../../interfaces/semester';
-import { Consent, User } from '../../../../interfaces/user';
+import { Consent, MStudyProgramme, User } from '../../../../interfaces/user';
 import {
   StudyPlanActions,
   TimetableActions,
@@ -30,14 +30,24 @@ import { Router } from '@angular/router';
 import { SurveyComponent } from '../modules/long-term-evaluation/survey/survey.component';
 import { LongTermEvaluation } from '../../../../interfaces/long-term-evaluation';
 import { StudyPlanService } from '../shared/services/study-plan.service';
+import { PathModule } from '../../../../interfaces/study-path';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HomeComponent implements OnInit {
+  private dialog = inject(MatDialog);
+  private store = inject(Store);
+  private studyPlanService = inject(StudyPlanService);
+  private userUpdateService = inject(UserUpdateService);
+  private api = inject(RestService);
+  private indexedDB = inject(IndexedDbService);
+  private router = inject(Router);
+
   semesters$: Observable<Semester[]>;
   user$: Observable<User>;
   user: User;
@@ -48,16 +58,6 @@ export class HomeComponent implements OnInit {
   templatesAvailable: boolean = false;
   notificationActive: boolean = false;
   privacyDialogActive: boolean = true;
-
-  constructor(
-    private dialog: MatDialog,
-    private store: Store,
-    private studyPlanService: StudyPlanService,
-    private userUpdateService: UserUpdateService,
-    private api: RestService,
-    private indexedDB: IndexedDbService,
-    private router: Router
-  ) {}
 
   ngOnInit(): void {
     this.user$ = this.store.select(getUser);
@@ -70,9 +70,9 @@ export class HomeComponent implements OnInit {
       .then(() => console.info('Lehrveranstaltungen wurden geladen!'))
       .catch((error) =>
         console.error(
-          'Beim Laden der Lehrveranstaltungen ist ein Fehler aufgetreten! ' +
-            error
-        )
+          $localize `Beim Laden der Lehrveranstaltungen ist ein Fehler aufgetreten! ` +
+            error,
+        ),
       );
   }
 
@@ -83,9 +83,13 @@ export class HomeComponent implements OnInit {
         this.user = user;
         this.loadUserData(user);
         const notificationEnabled = user.hints?.find(
-          (hint) => hint.key === 'notification-dialog' && !hint.hasConfirmed
+          (hint) => hint.key === 'notification-dialog' && !hint.hasConfirmed,
         );
-        if (notificationEnabled && this.notificationActive && !user.roles.includes('demo')) {
+        if (
+          notificationEnabled &&
+          this.notificationActive &&
+          !user.roles.includes('demo')
+        ) {
           this.openNotificationDialog();
         }
         if (this.router.url.endsWith('app')) {
@@ -115,9 +119,10 @@ export class HomeComponent implements OnInit {
     if (user.sps) {
       this.store.dispatch(
         ModuleHandbookActions.loadModuleHandbook({
-          id: user.sps[0].mhbId,
-          version: user.sps[0].mhbVersion,
-        })
+          id: user.sps.filter((sp) => sp.status == 'Immatrikuliert')[0].mhbId,
+          version: user.sps.filter((sp) => sp.status == 'Immatrikuliert')[0]
+            .mhbVersion,
+        }),
       );
     }
 
@@ -129,7 +134,7 @@ export class HomeComponent implements OnInit {
         // update privacy change consent
         const privacyConsents =
           updatedUser.consents?.filter(
-            (consent) => consent.ctype === '2512-privacy-change'
+            (consent) => consent.ctype === '2512-privacy-change',
           ) || [];
 
         const latestPrivacyConsent =
@@ -170,21 +175,21 @@ export class HomeComponent implements OnInit {
                   .select(getActiveStudyPlanId)
                   .pipe(
                     takeWhile((id) => id === '', true),
-                    take(1)
+                    take(1),
                   )
                   .subscribe((activeId) => {
                     if (activeId === '') {
                       this.store.dispatch(
-                        StudyPlanActions.loadActiveStudyPlan()
+                        StudyPlanActions.loadActiveStudyPlan(),
                       );
                       // load semester plan
                       const semester = new Semester().name;
                       this.store.dispatch(
-                        TimetableActions.updateActiveSemester({ semester })
+                        TimetableActions.updateActiveSemester({ semester }),
                       );
                     }
                   });
-              })
+              }),
             )
             .subscribe((studyPlans) => {
               // legacy update of study plans
@@ -215,17 +220,26 @@ export class HomeComponent implements OnInit {
       this.store.dispatch(UserActions.setUserData({ user }));
       // dispatch change of sp and mhb to store
       this.store.dispatch(
-        selectStudyProgramme({ studyProgramme: user.sps[0].spId })
+        selectStudyProgramme({
+          studyProgramme: user.sps.filter(
+            (sp: MStudyProgramme) => sp.status == 'Immatrikuliert',
+          )[0].spId,
+        }),
       );
 
       // set first semester info and load study plan uni template
       const currentSemester = Semester.getCurrentSemesterName();
       const currentSemesterType = currentSemester.slice(-1) as 'w' | 's';
+      const moduleOfCurrentSemester =
+        this.user.studyPath.completedModules.filter(
+          (mod) => mod.semester == currentSemester,
+        );
       // study plan loading logic for first semester students
       if (this.user.startSemester === currentSemester && this.user.sps) {
         this.isFirstSemesterStudent = true;
-
-        const spId = this.user.sps[0].spId;
+        const spId = this.user.sps.filter(
+          (sp) => sp.status == 'Immatrikuliert',
+        )[0].spId;
 
         // check if a template is available for spId
         this.api
@@ -238,7 +252,7 @@ export class HomeComponent implements OnInit {
               this.studyPlanTemplate$ =
                 this.api.getLatestTemplateForStudyProgram(
                   spId,
-                  currentSemesterType
+                  currentSemesterType,
                 );
 
               this.studyPlanTemplate$.pipe(take(1)).subscribe({
@@ -247,11 +261,11 @@ export class HomeComponent implements OnInit {
                 },
               });
             } else {
-              this.createDefaultStudyPlan();
+              this.createDefaultStudyPlan(moduleOfCurrentSemester);
             }
           });
       } else {
-        this.createDefaultStudyPlan();
+        this.createDefaultStudyPlan(moduleOfCurrentSemester);
       }
       this.router.navigate(['app', 'dashboard']);
     });
@@ -261,7 +275,7 @@ export class HomeComponent implements OnInit {
   openImportDialog(uId: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        dialogTitle: 'Musterstudienplan importieren',
+        dialogTitle: $localize `Musterstudienplan importieren`,
         dialogContentId: 'import-dialog',
         importType: 'deinen Musterplan',
         isFirstSemesterStudent: this.isFirstSemesterStudent,
@@ -302,7 +316,7 @@ export class HomeComponent implements OnInit {
         ...el,
         expanded: true,
         userId: uId,
-      })
+      }),
     );
 
     this.studyPlanService.createStudyPlan(
@@ -310,19 +324,20 @@ export class HomeComponent implements OnInit {
       semesterPlans[0].semester,
       semesterPlans.length,
       semesterPlans,
-      true
+      true,
     );
 
     this.dialog.closeAll();
   }
 
-  createDefaultStudyPlan() {
+  createDefaultStudyPlan(modules?: PathModule[]) {
     this.studyPlanService.createStudyPlan(
-      'Mein Studienplan',
+      $localize `Mein Studienplan`,
       this.user.startSemester,
       this.user.duration,
       undefined,
-      true
+      true,
+      modules,
     );
 
     this.dialog.closeAll();
@@ -342,7 +357,7 @@ export class HomeComponent implements OnInit {
           UserActions.updateHint({
             key: 'notification-dialog',
             hasConfirmed: true,
-          })
+          }),
         );
       }
     });
@@ -351,13 +366,23 @@ export class HomeComponent implements OnInit {
   openBaKuLeSurveyDialog() {
     // get latest bakule consent
     // Sort by timestamp in descending order
-    const surveyConsent = this.user.consents.filter(
-      (el) => el.ctype === 'bakule-survey'
-    ).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-    const latestSurveyConsent = surveyConsent.length > 0 ? surveyConsent[0] : undefined;
+    const surveyConsent = this.user.consents
+      .filter((el) => el.ctype === 'bakule-survey')
+      .sort(
+        (a, b) =>
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+      );
+    const latestSurveyConsent =
+      surveyConsent.length > 0 ? surveyConsent[0] : undefined;
 
-    if (!latestSurveyConsent || !latestSurveyConsent.hasResponded || this.isTimestampOlderThanThreeMonthsOrInNewSemster(new Date(latestSurveyConsent.timestamp))) {
-      const month = new Date().getMonth()+1;
+    if (
+      !latestSurveyConsent ||
+      !latestSurveyConsent.hasResponded ||
+      this.isTimestampOlderThanThreeMonthsOrInNewSemster(
+        new Date(latestSurveyConsent.timestamp),
+      )
+    ) {
+      const month = new Date().getMonth() + 1;
       const year = new Date().getFullYear();
       const dialogRef = this.dialog.open(SurveyComponent, {
         disableClose: true,
@@ -368,9 +393,9 @@ export class HomeComponent implements OnInit {
             : '',
           semester: this.findSemesterCount(
             this.user.startSemester ?? new Semester().name,
-            this.user.duration ?? 6
+            this.user.duration ?? 6,
           ),
-          consentGiven: latestSurveyConsent?.hasConfirmed
+          consentGiven: latestSurveyConsent?.hasConfirmed,
         },
       });
       dialogRef
@@ -379,26 +404,30 @@ export class HomeComponent implements OnInit {
         .subscribe((result: boolean | LongTermEvaluation) => {
           if (typeof result === 'boolean') {
             // in case of true, user does not want to participate this semester update consent to false
-            if(result) {
-              this.store.dispatch(UserActions.addConsent({
-                ctype: 'bakule-survey',
-                hasConfirmed: false,
-                hasResponded: true,
-                timestamp: new Date(),
-              }))
+            if (result) {
+              this.store.dispatch(
+                UserActions.addConsent({
+                  ctype: 'bakule-survey',
+                  hasConfirmed: false,
+                  hasResponded: true,
+                  timestamp: new Date(),
+                }),
+              );
             }
             // else case not exist, when false is returned user not responded this time open dialog again
           } else {
-            // user completed survey, when latestSurveyConsent not exists or hasConfirmed is false, than add new consent
-            if(!latestSurveyConsent || !latestSurveyConsent.hasConfirmed) {
-              this.store.dispatch(UserActions.addConsent({
+            // user completed survey: always record a fresh consent with the current timestamp,
+            // otherwise latestSurveyConsent.timestamp stays frozen at the first-ever confirmation
+            // once hasConfirmed is already true, causing the dialog to reopen (and create duplicate
+            // survey entries) on every later login instead of only once per semester
+            this.store.dispatch(
+              UserActions.addConsent({
                 ctype: 'bakule-survey',
                 hasConfirmed: true,
                 hasResponded: true,
                 timestamp: new Date(),
-              }))
-            }
-            // else do nothing, since nothing changed
+              }),
+            );
           }
         });
     }
@@ -408,7 +437,7 @@ export class HomeComponent implements OnInit {
     const semesters = new Semester(startSemester)
       .getSemesterList(duration)
       .map((el) => el.name);
-    return semesters.indexOf(new Semester().name)+1;
+    return semesters.indexOf(new Semester().name) + 1;
   }
 
   openPrivacyChangeDialog() {
@@ -428,10 +457,10 @@ export class HomeComponent implements OnInit {
               hasConfirmed: true,
               hasResponded: true,
               timestamp: new Date(),
-            })
+            }),
           );
         } else if (result.choice === 'decline') {
-          this.userUpdateService.deleteUser(this.user)
+          this.userUpdateService.deleteUser(this.user);
         }
       }
     });
@@ -447,26 +476,30 @@ export class HomeComponent implements OnInit {
     return dateFromTimestamp < oneWeekAgo;
   }
 
-  private isTimestampOlderThanThreeMonthsOrInNewSemster(timestamp: Date): boolean {
-    const threeMonthsAgo = new Date(new Date().getTime() - (3 * 30 * 24 * 60 * 60 * 1000)); // Millisekunden von drei Monaten
+  private isTimestampOlderThanThreeMonthsOrInNewSemster(
+    timestamp: Date,
+  ): boolean {
+    const threeMonthsAgo = new Date(
+      new Date().getTime() - 3 * 30 * 24 * 60 * 60 * 1000,
+    ); // Millisekunden von drei Monaten
     const currentSemester = new Semester().apNr;
     const year = Number(currentSemester.slice(0, 4));
     const stampYear = timestamp.getFullYear();
     const stampMonth = timestamp.getMonth();
 
-    if(timestamp > threeMonthsAgo) {
+    if (timestamp > threeMonthsAgo) {
       return false;
     }
 
     if (stampMonth < 3 && year == stampYear - 1) {
-        // represents winter semester ending
-        return false;
+      // represents winter semester ending
+      return false;
     } else if (stampMonth >= 3 && stampMonth < 9 && year === stampYear) {
-        // representing summer semester
-        return false;
+      // representing summer semester
+      return false;
     } else if (stampMonth >= 9 && year === stampYear) {
-        // representing winter semester beginning
-        return false;
+      // representing winter semester beginning
+      return false;
     }
 
     return true;

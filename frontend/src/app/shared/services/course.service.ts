@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Course } from '../../../../../interfaces/course';
+import { Injectable, inject } from '@angular/core';
+import { Course } from '@interfaces/course';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { Store } from '@ngrx/store';
@@ -7,14 +7,11 @@ import { State } from 'src/app/reducers';
 import { CoursePlanningActions } from 'src/app/actions/study-planning.actions';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CourseService {
-
-  constructor(
-    public dialog: MatDialog,
-    private store: Store<State>,
-  ) { }
+  dialog = inject(MatDialog);
+  private store = inject<Store<State>>(Store);
 
   // open details for given course, if selected true, than deselect button is displayed otherwise hidden
   openCourseDetails(course: Course, selected: boolean) {
@@ -30,7 +27,10 @@ export class CourseService {
     dialog.afterClosed().subscribe((course: Course) => {
       if (course && selected) {
         this.store.dispatch(
-          CoursePlanningActions.deselectCourse({ semester: course.semester, courseId: course.id })
+          CoursePlanningActions.deselectCourse({
+            semester: course.semester,
+            courseId: course.id,
+          }),
         );
       }
     });

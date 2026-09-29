@@ -1,25 +1,21 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { Module } from '../../../../../../../interfaces/module';
-import { ModuleGroup } from '../../../../../../../interfaces/module-group';
-import { StudyPath } from '../../../../../../../interfaces/study-path';
-import { ChartConfiguration } from 'chart.js';
+import { Component, Input, OnChanges, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Module } from '@interfaces/module';
+import { ModuleGroup } from '@interfaces/module-group';
+import { StudyPath } from '@interfaces/study-path';
+import { PieCardData } from 'src/app/modules/reporting/reporting';
 
 @Component({
     selector: 'app-module-group-progress-chart',
     templateUrl: './module-group-progress-chart.component.html',
     styleUrls: ['./module-group-progress-chart.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ModuleGroupProgressChartComponent implements OnInit, OnChanges {
   @Input() studyPath: StudyPath;
   @Input() mgs: ModuleGroup[] | undefined | null;
 
-  public moduleGroupChartLabels: string[] = ['Bestanden', 'Nicht bestanden', 'Belegt', 'Nicht belegt'];
-  public moduleGroupChartDatasets: ChartConfiguration<'pie'>['data']['datasets'];
-
-  public moduleGroupChartOptions: ChartConfiguration<'pie'>['options'] = {
-    responsive: false
-  };
+  public cardData: PieCardData | undefined;
 
   constructor() { }
 
@@ -36,17 +32,15 @@ export class ModuleGroupProgressChartComponent implements OnInit, OnChanges {
   }
 
   private setDatasets(mgs: ModuleGroup[]) {
-    let result: ChartConfiguration<'pie'>['data']['datasets'] = [];
-    for(let mg of mgs) {
-      result.push({
-        label: mg.name.toString(),
-        backgroundColor: ['rgba(172, 204, 61, 0.8)', 'rgba(235, 105, 114, 0.8)', 'rgba(102, 144, 177, 0.8)', 'rgb(159, 159, 156, 0.8)'],
-        hoverBackgroundColor: ['rgba(172, 204, 61, 0.8)', 'rgba(235, 105, 114, 0.8)', 'rgba(102, 144, 177, 0.8)', 'rgb(159, 159, 156, 0.8)'],
-        hoverBorderColor: ['#97bf0d', '#e6444f', 'rgba(102, 144, 177)', 'rgb(159, 159, 156)'],
-        data: this.calculateModuleCountsForModuleGroup(mg, this.studyPath)
-      })
-    }
-    this.moduleGroupChartDatasets = result;
+    this.cardData = {
+      title: $localize`Belegungen in Modulgruppen`,
+      categories: [$localize`Bestanden`, $localize`Nicht bestanden`, $localize`Belegt`, $localize`Nicht belegt`],
+      colors: ['rgba(172, 204, 61, 0.8)', 'rgba(235, 105, 114, 0.8)', 'rgba(102, 144, 177, 0.8)', 'rgb(159, 159, 156, 0.8)'],
+      rings: mgs.map((mg) => ({
+        name: mg.name.toString(),
+        data: this.calculateModuleCountsForModuleGroup(mg, this.studyPath),
+      })),
+    } satisfies PieCardData;
   }
 
   private calculateModuleCountsForModuleGroup(mg: ModuleGroup, path: StudyPath): number[] {

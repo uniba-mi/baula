@@ -1,10 +1,28 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  inject,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { take } from 'rxjs';
 import { EvaluationRestService } from './evaluation-rest.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { AlertType } from 'src/app/shared/classes/alert';
-import { Evaluation, EvaluationJob, JobEvaluation, ModuleCandidate, Organisation, RankedModule } from '../../../../../interfaces/evaluation';
+import {
+  Evaluation,
+  EvaluationJob,
+  JobEvaluation,
+  ModuleCandidate,
+  Organisation,
+  RankedModule,
+} from '@interfaces/evaluation';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -13,9 +31,15 @@ import { Router } from '@angular/router';
   selector: 'app-evaluation',
   templateUrl: './evaluation.component.html',
   styleUrls: ['./evaluation.component.scss'],
-  standalone: false
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class EvaluationComponent implements OnInit {
+  private api = inject(EvaluationRestService);
+  private evalRest = inject(EvaluationRestService);
+  private snackbar = inject(SnackbarService);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
 
   @ViewChild('descContainer', { static: false }) descContainer!: ElementRef;
 
@@ -42,35 +66,41 @@ export class EvaluationComponent implements OnInit {
 
   evaluationData: Evaluation | null = null;
 
-  constructor(private api: EvaluationRestService, private evalRest: EvaluationRestService, private snackbar: SnackbarService, private dialog: MatDialog, private router: Router) { }
-
   ngOnInit(): void {
-
     // Get evaluation data per organsiation (e. g. chair)
-    this.api.getOrganisationByCode().pipe(take(1)).subscribe((selectedOrga) => {
-      if (selectedOrga) {
-        this.selectedOrga = selectedOrga;
-        this.evalRest.getEvaluationsBySpId(selectedOrga.id).pipe(take(1)).subscribe((evaluation) => {
-          this.evaluationData = evaluation;
+    this.api
+      .getOrganisationByCode()
+      .pipe(take(1))
+      .subscribe((selectedOrga) => {
+        if (selectedOrga) {
+          this.selectedOrga = selectedOrga;
+          this.evalRest
+            .getEvaluationsBySpId(selectedOrga.id)
+            .pipe(take(1))
+            .subscribe((evaluation) => {
+              this.evaluationData = evaluation;
 
-          this.sections = evaluation.jobEvaluations.map((jobEval: JobEvaluation) => jobEval.job);
+              this.sections = evaluation.jobEvaluations.map(
+                (jobEval: JobEvaluation) => jobEval.job,
+              );
 
-          // For progress calculation and green highlighting
-          this.initializeCompletedSections(evaluation.jobEvaluations);
+              // For progress calculation and green highlighting
+              this.initializeCompletedSections(evaluation.jobEvaluations);
 
-          this.isLoading = false;
-        });
-      } else {
-        this.router.navigate(['/app/evaluation']);
-      }
-    });
+              this.isLoading = false;
+            });
+        } else {
+          this.router.navigate(['/app/evaluation']);
+        }
+      });
   }
 
   // Assuming that when there is data in the gold standard that it is completed (due to validation)
   initializeCompletedSections(jobEvaluations: JobEvaluation[]): void {
     let completedCount = 0;
 
-    jobEvaluations.forEach(jobEval => { // Section is completed if it holds ranked modules
+    jobEvaluations.forEach((jobEval) => {
+      // Section is completed if it holds ranked modules
       if (jobEval.rankedModules && jobEval.rankedModules.length > 0) {
         this.completedSections[jobEval.job.jobId] = true;
         completedCount++;
@@ -80,7 +110,10 @@ export class EvaluationComponent implements OnInit {
     });
 
     // Calculate progress percentage
-    this.progressValue = jobEvaluations.length > 0 ? (completedCount / jobEvaluations.length) * 100 : 0;
+    this.progressValue =
+      jobEvaluations.length > 0
+        ? (completedCount / jobEvaluations.length) * 100
+        : 0;
   }
 
   setDropListConnections() {
@@ -91,14 +124,20 @@ export class EvaluationComponent implements OnInit {
   // Select and load module via tab click
   selectSection(section: EvaluationJob, index: number) {
     if (this.selectedSection) {
-
-      const currentSectionComplete = this.completedSections[this.selectedSection.jobId] || false;
+      const currentSectionComplete =
+        this.completedSections[this.selectedSection.jobId] || false;
 
       // Check if changes have been made and not saved
-      if (!this.initialSelection && this.moduleDataAvailable && !currentSectionComplete && !this.saveClicked) {
+      if (
+        !this.initialSelection &&
+        this.moduleDataAvailable &&
+        !currentSectionComplete &&
+        !this.saveClicked
+      ) {
         this.snackbar.openSnackBar({
           type: AlertType.DANGER,
-          message: 'Bitte ordnen Sie alle Module einem Feld zu und klicken Sie auf "Speichern", bevor Sie einen anderen Abschnitt auswählen.'
+          message:
+            $localize `Bitte ordnen Sie alle Module einem Feld zu und klicken Sie auf "Speichern", bevor Sie einen anderen Abschnitt auswählen.`,
         });
         return;
       }
@@ -107,7 +146,7 @@ export class EvaluationComponent implements OnInit {
       if (this.changesMade && this.moduleDataAvailable && !this.saveClicked) {
         this.snackbar.openSnackBar({
           type: AlertType.DANGER,
-          message: 'Bitte speichern Sie Ihre Eingaben.'
+          message: $localize `Bitte speichern Sie Ihre Eingaben.`,
         });
         return;
       }
@@ -135,7 +174,9 @@ export class EvaluationComponent implements OnInit {
       return;
     }
 
-    const jobEvaluation = this.evaluationData.jobEvaluations.find(je => je.job.jobId === jobId);
+    const jobEvaluation = this.evaluationData.jobEvaluations.find(
+      (je) => je.job.jobId === jobId,
+    );
 
     if (!jobEvaluation) {
       this.moduleDataAvailable = false;
@@ -155,19 +196,22 @@ export class EvaluationComponent implements OnInit {
 
     const rankedModules = jobEvaluation.rankedModules || [];
 
-    const rankedAcronyms = rankedModules.map(rm => rm.acronym);
+    const rankedAcronyms = rankedModules.map((rm) => rm.acronym);
 
-    this.candidates = allCandidates.filter(candidate =>
-      !rankedAcronyms.includes(candidate.acronym)
+    this.candidates = allCandidates.filter(
+      (candidate) => !rankedAcronyms.includes(candidate.acronym),
     );
 
     rankedModules.forEach((rankedModule) => {
       const ranking = rankedModule.ranking;
 
-      const candidateData = allCandidates.find(c => c.acronym === rankedModule.acronym);
+      const candidateData = allCandidates.find(
+        (c) => c.acronym === rankedModule.acronym,
+      );
 
       if (candidateData) {
-        if (ranking === 100) { // Irrelevant ones have ranking 100
+        if (ranking === 100) {
+          // Irrelevant ones have ranking 100
           this.irrelevantItems.push(candidateData);
         } else if (ranking >= 0 && ranking < numberOfDropAreas) {
           this.dropAreas[ranking].push(candidateData);
@@ -182,13 +226,17 @@ export class EvaluationComponent implements OnInit {
 
   drop(event: CdkDragDrop<ModuleCandidate[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
     } else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex
+        event.currentIndex,
       );
     }
     this.changesMade = true;
@@ -212,25 +260,31 @@ export class EvaluationComponent implements OnInit {
     }
 
     // Create ranked modules from drop areas
-    const rankedModules = this.dropAreas.map((area, index) => {
-      return area.map((item): RankedModule => ({
+    const rankedModules = this.dropAreas
+      .map((area, index) => {
+        return area.map(
+          (item): RankedModule => ({
+            acronym: item.acronym,
+            name: item.name,
+            content: item.content,
+            skills: item.skills,
+            chair: item.chair,
+            ranking: index,
+          }),
+        );
+      })
+      .flat();
+
+    const irrelevantRanked = this.irrelevantItems.map(
+      (item): RankedModule => ({
         acronym: item.acronym,
         name: item.name,
         content: item.content,
         skills: item.skills,
         chair: item.chair,
-        ranking: index
-      }));
-    }).flat();
-
-    const irrelevantRanked = this.irrelevantItems.map((item): RankedModule => ({
-      acronym: item.acronym,
-      name: item.name,
-      content: item.content,
-      skills: item.skills,
-      chair: item.chair,
-      ranking: 100
-    }));
+        ranking: 100,
+      }),
+    );
 
     const allRankedModules = [...rankedModules, ...irrelevantRanked];
 
@@ -240,55 +294,60 @@ export class EvaluationComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.evalRest.updateJobEvaluation(
-      this.selectedOrga.id,
-      this.selectedSection.jobId,
-      allRankedModules,
-      this.comment
-    ).pipe(take(1)).subscribe({
-      next: (response) => {
-        this.snackbar.openSnackBar({
-          type: AlertType.SUCCESS,
-          message: "Zuordnung wurde gespeichert.",
-        });
+    this.evalRest
+      .updateJobEvaluation(
+        this.selectedOrga.id,
+        this.selectedSection.jobId,
+        allRankedModules,
+        this.comment,
+      )
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          this.snackbar.openSnackBar({
+            type: AlertType.SUCCESS,
+            message: $localize `Zuordnung wurde gespeichert.`,
+          });
 
-        // Update local data
-        if (this.evaluationData && this.selectedSection) {
-          const jobEvalIndex = this.evaluationData.jobEvaluations.findIndex(
-            je => je.job.jobId === this.selectedSection!.jobId
-          );
+          // Update local data
+          if (this.evaluationData && this.selectedSection) {
+            const jobEvalIndex = this.evaluationData.jobEvaluations.findIndex(
+              (je) => je.job.jobId === this.selectedSection!.jobId,
+            );
 
-          if (jobEvalIndex !== -1) { // Update local eval data
-            this.evaluationData.jobEvaluations[jobEvalIndex].rankedModules = allRankedModules;
-            this.evaluationData.jobEvaluations[jobEvalIndex].comment = this.comment;
+            if (jobEvalIndex !== -1) {
+              // Update local eval data
+              this.evaluationData.jobEvaluations[jobEvalIndex].rankedModules =
+                allRankedModules;
+              this.evaluationData.jobEvaluations[jobEvalIndex].comment =
+                this.comment;
+            }
           }
-        }
 
-        this.completedSections[this.selectedSection!.jobId] = true;
+          this.completedSections[this.selectedSection!.jobId] = true;
 
-        this.initializeCompletedSections(this.evaluationData!.jobEvaluations);
+          this.initializeCompletedSections(this.evaluationData!.jobEvaluations);
 
-        this.saveClicked = true;
-        this.changesMade = false;
-        this.originalComment = this.comment;
-        this.isLoading = false;
-      },
-      error: () => {
-        this.snackbar.openSnackBar({
-          type: AlertType.DANGER,
-          message: "Zuordnung konnte nicht gespeichert werden.",
-        });
-        this.isLoading = false;
-      }
-    });
-
+          this.saveClicked = true;
+          this.changesMade = false;
+          this.originalComment = this.comment;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.snackbar.openSnackBar({
+            type: AlertType.DANGER,
+            message: $localize `Zuordnung konnte nicht gespeichert werden.`,
+          });
+          this.isLoading = false;
+        },
+      });
   }
 
   copyToClipboard(desc: string) {
     navigator.clipboard.writeText(desc).then(() => {
       this.snackbar.openSnackBar({
         type: AlertType.SUCCESS,
-        message: 'Text in die Zwischenablage kopiert!',
+        message: $localize `Text in die Zwischenablage kopiert!`,
       });
     });
   }
@@ -310,7 +369,7 @@ export class EvaluationComponent implements OnInit {
       `);
       newWindow.document.close();
     } else {
-      alert('Popup-Blocker aktiv? Neues Fenster konnte nicht geöffnet werden.');
+      alert($localize `Popup-Blocker aktiv? Neues Fenster konnte nicht geöffnet werden.`);
     }
   }
 

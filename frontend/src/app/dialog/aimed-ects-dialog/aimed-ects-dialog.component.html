@@ -3,30 +3,38 @@
     <div class="content-wrapper">
       <div class="input-field-wrapper">
         <mat-form-field appearance="outline">
-          <mat-label>ECTS:</mat-label>
+          <mat-label i18n>ECTS:</mat-label>
           <input matInput #aimedEcts formControlName="aimedEcts" type="number" min="1" max="300" [value]="aimedEcts" />
-          <mat-error *ngIf="
-              aimedEctsForm.controls.aimedEcts.touched &&
-              aimedEctsForm.controls.aimedEcts.invalid
-            "><span *ngIf="
-                aimedEctsForm.controls.aimedEcts.errors?.min ||
-                aimedEctsForm.controls.aimedEcts.errors?.max
-              ">Die ECTS müssen mindestens 1 und maximal 300 sein.</span><span
-              *ngIf="aimedEctsForm.controls.aimedEcts.errors?.pattern">Bitte gib hier nur Ganzzahlen an.</span><span
-              *ngIf="aimedEctsForm.controls.aimedEcts.errors?.required">Das ist ein Pflichtfeld.</span></mat-error>
+          @if (
+            aimedEctsForm.controls.aimedEcts.touched &&
+            aimedEctsForm.controls.aimedEcts.invalid
+            ) {
+            <mat-error>@if (
+              aimedEctsForm.controls.aimedEcts.errors?.min ||
+              aimedEctsForm.controls.aimedEcts.errors?.max
+              ) {
+              <span i18n>Die ECTS müssen mindestens 1 und maximal 300 sein.</span>
+              }@if (aimedEctsForm.controls.aimedEcts.errors?.pattern) {
+              <span i18n
+              >Bitte gib hier nur Ganzzahlen an.</span>
+              }@if (aimedEctsForm.controls.aimedEcts.errors?.required) {
+              <span i18n
+              >Das ist ein Pflichtfeld.</span>
+            }</mat-error>
+          }
         </mat-form-field>
         <i class="bi bi-info-circle"
           matTooltip="Gib hier die ECTS ein, die du in dem gewählten Semester erreichen möchtest."
-          matTooltipClass="custom-tooltip" appTooltip></i>
+        matTooltipClass="custom-tooltip" appTooltip></i>
       </div>
     </div>
     <mat-dialog-actions>
       <button mat-raised-button class="btn btn-outline" mat-dialog-close (click)="close('noData')"
-        (keyup)="close('noData')">
+        (keyup)="close('noData')" i18n>
         Abbrechen
       </button>
       <button mat-raised-button class="btn btn-primary" [disabled]="!aimedEctsForm.valid"
-        [mat-dialog-close]="aimedEctsForm.controls.aimedEcts.value" (click)="close('data')" (keyup)="close('data')">
+        [mat-dialog-close]="aimedEctsForm.controls.aimedEcts.value" (click)="close('data')" (keyup)="close('data')" i18n>
         Speichern
       </button>
     </mat-dialog-actions>

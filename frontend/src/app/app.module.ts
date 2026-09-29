@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ErrorHandler, Inject, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, inject } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
@@ -8,13 +8,13 @@ import { Router } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import {
   HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
+  withXhr
 } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -33,7 +33,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -50,7 +49,7 @@ import { UserEffects } from './effects/user.effects';
 import * as fromModuleOverview from './reducers/module-overview.reducer';
 import * as fromDialog from './reducers/dialog.reducer';
 import * as fromSearchSettings from './reducers/search-settings.reducer';
-import * as fromEvaluation from './reducers/evaluation.reducer'
+import * as fromEvaluation from './reducers/evaluation.reducer';
 import { ModuleOverviewEffects } from './effects/module-overview.effects';
 import { environment } from '../environments/environment';
 import * as fromStudyPlanning from './reducers/study-planning.reducers';
@@ -67,8 +66,6 @@ import { SemesterPlanComponent } from './home/semester-plan/semester-plan.compon
 import { StudyPlanComponent } from './home/study-plan/study-plan.component';
 import { CourseListComponent } from './home/semester-plan/course-list/course-list.component';
 import { CourseItemComponent } from './home/semester-plan/course-item/course-item.component';
-import { ExpandCourseTypePipe } from './shared/pipes/expand-course-type.pipe';
-import { ShowWeekdayPipe } from './shared/pipes/show-weekday.pipe';
 import { StudyPlanDetailComponent } from './home/study-plan/study-plan-detail/study-plan-detail.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
@@ -134,6 +131,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { MaintenanceMessageComponent } from './shared/components/maintenance-message/maintenance-message.component';
 import { ProfileMenuComponent } from './nav/profile-menu/profile-menu.component';
+import { LocaleSwitcherComponent } from './shared/components/locale-switcher/locale-switcher.component';
 import { GroupNavigationComponent } from './home/module-overview/group-navigation/group-navigation.component';
 import { UserDataComponent } from './home/user-profile/user-data/user-data.component';
 import { StudyPathUpdateComponent } from './home/user-profile/study-path-update/study-path-update.component';
@@ -166,8 +164,21 @@ import { PersonalisationStatusComponent } from './home/dashboard/personalisation
 import { WordCloudComponent } from './shared/components/word-cloud/word-cloud.component';
 import { DataPreviewComponent } from './home/recommendation/data-preview/data-preview.component';
 import { SettingsListComponent } from './home/recommendation/settings-list/settings-list.component';
-import { HintsSidenavComponent } from './shared/components/hints-sidenav/hints-sidenav.component';import { NotFoundComponent } from './public/not-found/not-found.component';
+import { HintsSidenavComponent } from './shared/components/hints-sidenav/hints-sidenav.component';
+import { NotFoundComponent } from './public/not-found/not-found.component';
 import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluation-dialog/evaluation-dialog.component';
+import { UploadStudentDataConfirmationComponent } from './modules/student-upload/dialogs/upload-student-data-confirmation/upload-student-data-confirmation.component';
+import { UpdateMhbDialogComponent } from './dialog/update-mhb-dialog/update-mhb-dialog.component';
+import { ChangeModuleGroupComponent } from './shared/components/change-module-group/change-module-group.component';
+import { DebugDialogComponent } from './shared/components/debug-dialog/debug-dialog.component';
+import { ManageStatusComponent } from './dialog/module-details-dialog/manage-status/manage-status.component';
+import { BarChartCardComponent } from './modules/reporting/bar-chart-card/bar-chart-card.component';
+import { LineChartCardComponent } from './modules/reporting/line-chart-card/line-chart-card.component';
+import { PieChartCardComponent } from './modules/reporting/pie-chart-card/pie-chart-card.component';
+import { FeatureWishComponent } from './home/dashboard/feature-wish/feature-wish.component';
+import { SingleFeatureWishComponent } from './home/dashboard/feature-wish/single-feature-wish/single-feature-wish.component';
+import { IconPickerComponent } from './dialog/icon-picker/icon-picker.component';
+import { LoadingComponent } from './shared/components/loading/loading.component';
 
 
 @NgModule({
@@ -185,9 +196,7 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     CourseListComponent,
     CourseItemComponent,
     StudentUploadComponent,
-    ExpandCourseTypePipe,
     DecimalFormatPipe,
-    ShowWeekdayPipe,
     StudyPlanDetailComponent,
     DialogComponent,
     DashboardComponent,
@@ -251,6 +260,7 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     CourseFormatPipe,
     LoginComponent,
     ProfileMenuComponent,
+    LocaleSwitcherComponent,
     MaintenanceMessageComponent,
     GroupNavigationComponent,
     UserDataComponent,
@@ -277,9 +287,17 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     NotFoundComponent,
     RecommendationsListComponent,
     PersonalisationStatusComponent,
-    WordCloudComponent,
     DataPreviewComponent,
-    SettingsListComponent
+    SettingsListComponent,
+    UploadStudentDataConfirmationComponent,
+    UpdateMhbDialogComponent,
+    ChangeModuleGroupComponent,
+    DebugDialogComponent,
+    ManageStatusComponent,
+    FeatureWishComponent,
+    SingleFeatureWishComponent,
+    IconPickerComponent,
+    LoadingComponent
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -287,7 +305,6 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     MatSnackBarModule,
     MatExpansionModule,
     MatDialogModule,
@@ -314,20 +331,20 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     ]),
     StoreModule.forFeature(
       fromModuleOverview.moduleOverviewFeatureKey,
-      fromModuleOverview.reducer
+      fromModuleOverview.reducer,
     ),
     StoreModule.forFeature(fromDialog.dialogFeatureKey, fromDialog.reducer),
     StoreModule.forFeature(
       fromStudyPlanning.studyPlanningFeatureKey,
-      fromStudyPlanning.reducer
+      fromStudyPlanning.reducer,
     ),
     StoreModule.forFeature(
       fromSearchSettings.searchSettingsFeatureKey,
-      fromSearchSettings.reducer
+      fromSearchSettings.reducer,
     ),
     StoreModule.forFeature(
       fromEvaluation.evaluationFeatureKey,
-      fromEvaluation.reducer
+      fromEvaluation.reducer,
     ),
     MatExpansionModule,
     MatSnackBarModule,
@@ -342,7 +359,6 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     MatSidenavModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    BaseChartDirective,
     MatPaginatorModule,
     SharedModule,
     MatRadioModule,
@@ -350,12 +366,15 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
     MatTabsModule,
     FullCalendarModule,
     MatTreeModule,
+    WordCloudComponent,
+    BarChartCardComponent,
+    LineChartCardComponent,
+    PieChartCardComponent,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'de' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    provideHttpClient(withInterceptorsFromDi()),
-    provideCharts(withDefaultRegisterables()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
     {
       provide: ErrorHandler,
       useValue: createErrorHandler({
@@ -366,16 +385,10 @@ import { EvaluationDialogComponent } from './modules/evaluation/dialog/evaluatio
       provide: TraceService,
       deps: [Router],
     },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: () => () => { },
-      deps: [TraceService],
-      multi: true,
-    },
   ],
 })
 export class AppModule {
-  constructor(@Inject(LOCALE_ID) locale: string) {
+  constructor() {
     registerLocaleData(localeDe);
   }
 }
