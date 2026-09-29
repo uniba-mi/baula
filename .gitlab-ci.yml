@@ -2,14 +2,14 @@ workflow:
   rules:
     - if: $CI_COMMIT_BRANCH == "develop"
       variables: 
-        ENV_FILES_PATH: /home/gitlab-runner/envFiles
+        ENV_FILES_PATH: /home/gitlab-runner/envFilesTest
         RUNNER_TAG: live-test-server
         DEPLOY_DIR: /home/gitlab-runner/baula-test
         COMPOSE_PROJECT_NAME: baula-test
         FRONTEND_BUILD_MODE: PROD_BUILD_FRONTEND_TEST
     - if: $CI_COMMIT_BRANCH == "main"
       variables:
-        ENV_FILES_PATH: /home/gitlab-runner/envFiles
+        ENV_FILES_PATH: /home/gitlab-runner/envFilesProd
         DEPLOY_DIR: /home/gitlab-runner/baula-test
         COMPOSE_PROJECT_NAME: baula-test
         FRONTEND_BUILD_MODE: PROD_BUILD_FRONTEND_PROD
