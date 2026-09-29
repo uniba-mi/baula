@@ -1,10 +1,22 @@
 workflow:
   rules:
     - if: $CI_COMMIT_BRANCH == "develop"
+      variables: 
+        ENV_FILES_PATH: /home/gitlab-runner/envFiles
+        RUNNER_TAG: live-test-server
+        DEPLOY_DIR: /home/gitlab-runner/baula-test
+        COMPOSE_PROJECT_NAME: baula-test
+        FRONTEND_BUILD_MODE: PROD_BUILD_FRONTEND_TEST
+    - if: $CI_COMMIT_BRANCH == "main"
+      variables:
+        ENV_FILES_PATH: /home/gitlab-runner/envFiles
+        DEPLOY_DIR: /home/gitlab-runner/baula-test
+        COMPOSE_PROJECT_NAME: baula-test
+        FRONTEND_BUILD_MODE: PROD_BUILD_FRONTEND_PROD
 
 default:
   tags:
-    - live-test-server
+    - $RUNNER_TAG
 
 stages:
   - install_dependencies
@@ -43,7 +55,7 @@ create_required_files:
   dependencies: []
   script:
     #- npm run buildInitial CREATE_CONFIG_AND_ENV CREATE_CERTS CREATE_TEMPLATES CREATE_LOCAL_USERS PROD_CREATE_ENV
-    - COPY_PATH=/home/gitlab-runner/envFiles npm run buildInitial PROD_COPY_FILES
+    - COPY_PATH=$ENV_FILES_PATH npm run buildInitial PROD_COPY_FILES
   artifacts:
     paths:
       - backend/api/src/certs
@@ -85,7 +97,7 @@ build_frontend:
     - create_required_files
   script:
     - rm -rf ./server/app/browser
-    - npm run buildInitial PROD_BUILD_FRONTEND
+    - npm run buildInitial $FRONTEND_BUILD_MODE
   artifacts:
     paths:
       - server/app/browser
@@ -115,6 +127,6 @@ deploy:
   script:
     #- rm -rf /home/gitlab-runner/deployment
     - npm run buildInitial PROD_DEPLOY
-    - cd /home/gitlab-runner/baula-test && docker-compose -f docker-compose.yml -f docker-compose.server.yml down
-    - cd /home/gitlab-runner/baula-test && npm run startServerDocker
+    - cd $DEPLOY_DIR && docker-compose -f docker-compose.yml -f docker-compose.server.yml down
+    - cd $DEPLOY_DIR && npm run startServerDocker
 
