@@ -49,6 +49,7 @@ const paths = [
     "backend/python",
     ".env"
 ]
+
 const rootDir = getRootDir();
 
 const deployDir = process.env.DEPLOY_DIR;
