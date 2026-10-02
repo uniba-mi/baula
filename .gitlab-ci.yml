@@ -82,7 +82,7 @@ build_docs:
   dependencies: []
   script:
     - 'echo "url: $DOCS_URL" > ./documentation/user-docs/retype.yml'
-    - npm run buildInitial PROD_BUILD_DOCS
+    - npm run buildUserDocs
   artifacts:
     paths:
       - server/app/docs
