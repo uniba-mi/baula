@@ -25,7 +25,7 @@
     "buildFrontendProd": "cd frontend && ng build --configuration=production",
     "buildFrontendTest": "cd frontend && ng build --configuration=test",
     "buildBackend": "cd backend/api && npm run build",
-    "buildUserDocs": "cd documentation/user-docs && retype build && cp -r ./.retype ../../server/app/docs",
+    "buildUserDocs": "cd documentation/user-docs && retype build && mkdir -p ../../server/app/docs && cp -r ./.retype ../../server/app/docs",
     "buildDocs": "npm run buildDevDocs && npm run buildUserDocs",
     "buildTest": "npm run buildBackend && npm run buildFrontendTest && npm run buildDocs",
     "buildProd": "npm run buildBackend && npm run buildFrontendProd && npm run buildDocs",
