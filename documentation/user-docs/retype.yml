@@ -1,5 +1,5 @@
 input: .
-output: ../../server/app/docs
+# output: ../../server/app/docs
 
 # url: docs.example.com # Use your website address here
 
