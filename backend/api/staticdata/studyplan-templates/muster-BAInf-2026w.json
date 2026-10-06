@@ -1,0 +1,164 @@
+{
+  "name": "Musterplan B. Sc. Informatik (WS26/27)",
+  "status": true,
+  "semesterPlans": [
+    {
+      "modules": [
+        "WiMa-B-001",
+        "WiMa-B-002",
+        "Inf-Einf-B",
+        "Inf-DM-B",
+        "Inf-Ment-B"
+      ],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2026w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 31,
+      "expanded": true
+    },
+    {
+      "modules": ["MOBI-DBS-B", "AI-AuD-B", "Inf-LBR-B", "Inf-GRABS-B"],
+      "userGeneratedModules": [],
+      "courses": [],
+      "semester": "2027s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["PSI-IntroSP-B", "COMNET-RN-B", "HCI-IS-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "68de7d6559cadf6cda0d3a16"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "68de7d6559cadf6cda0d3a17"
+        }
+      ],
+      "courses": [],
+      "semester": "2027w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["MI-WAIAI-B", "EESYS-SaD-B", "DSG-IDistrSys-B", "SWT-FSE-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "68de7d6559cadf6cda0d3a18"
+        }
+      ],
+      "courses": [],
+      "semester": "2028s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    },
+    {
+      "modules": ["PSI-EDS-B", "ESE-SEL-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "68de7d6559cadf6cda0d3a19"
+        },
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "68de7d6559cadf6cda0d3a1a"
+        },
+        {
+          "name": "Seminar",
+          "ects": 3,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "68de7d6559cadf6cda0d3a1b"
+        },
+        {
+          "name": "Modul außerhalb WIAI",
+          "ects": 5,
+          "notes": "Anwendungskontext Wirtschaftsinformatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "68de7d6559cadf6cda0d3a1c"
+        }
+      ],
+      "courses": [],
+      "semester": "2028w",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 29,
+      "expanded": true
+    },
+    {
+      "modules": ["Inf-Thesis-B"],
+      "userGeneratedModules": [
+        {
+          "name": "Fachmodul",
+          "ects": 6,
+          "notes": "Wahlpflichtbereich Informatik",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "68de7d6559cadf6cda0d3a1d"
+        },
+        {
+          "name": "Wahlmodul",
+          "ects": 3,
+          "notes": "überfachliche Qualifikationen",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "68de7d6559cadf6cda0d3a1e"
+        },
+        {
+          "name": "Projekt",
+          "ects": 6,
+          "notes": "Bereich Seminar & Projekt",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "68de7d6559cadf6cda0d3a20"
+        },
+        {
+          "name": "Wahlmodul",
+          "ects": 3,
+          "notes": "überfachliche Qualifikation",
+          "status": "open",
+          "flexNowImported": false,
+          "_id": "6ac34ecb24710a9b6ce8a3f3"
+        }
+      ],
+      "courses": [],
+      "semester": "2029s",
+      "isPastSemester": false,
+      "aimedEcts": 30,
+      "summedEcts": 30,
+      "expanded": true
+    }
+  ]
+}

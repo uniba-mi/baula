@@ -539,4 +539,12 @@ export const moduleChanges: ModuleChangelog[] = [
         newModuleName: "Fixed Income & International Finance",
         newModuleSemesterStart: "SS26"
     },
+    {
+        oldModuleAcronym: "Kinf-GeoInf-B",
+        oldModuleName: "Geoinformationssysteme",
+        oldModuleSemesterEnd: "SS25",
+        newModuleAcronym: "AI-GeoInf-B",
+        newModuleName: "Geoinformationssysteme",
+        newModuleSemesterStart: "WS26/27"
+    },
 ];
