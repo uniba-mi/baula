@@ -539,4 +539,76 @@ export const moduleChanges: ModuleChangelog[] = [
         newModuleName: "Fixed Income & International Finance",
         newModuleSemesterStart: "SS26"
     },
+    {
+        oldModuleAcronym: "Kinf-GeoInf-B",
+        oldModuleName: "Geoinformationssysteme",
+        oldModuleSemesterEnd: "SS25",
+        newModuleAcronym: "AI-GeoInf-B",
+        newModuleName: "Geoinformationssysteme",
+        newModuleSemesterStart: "WS26/27"
+    },
+    {
+        oldModuleAcronym: "BA Soz D.6.1 B",
+        oldModuleName: "Grundlagen der Ergonomie",
+        oldModuleSemesterEnd: "SS26",
+        newModuleAcronym: "BASozD2V8",
+        newModuleName: "Ergonomische Gestaltung der Arbeits- und Lebenswelt",
+        newModuleSemesterStart: "WS26/27"
+    },
+    {
+        oldModuleAcronym: "BA Soz D.5.1 F",
+        oldModuleName: "Soziologie der medialen Kommunikation: Einführung in die Mediensoziologie",
+        oldModuleSemesterEnd: "SS26",
+        newModuleAcronym: "BASozD1E6",
+        newModuleName: "Einführung in die Mediensoziologie",
+        newModuleSemesterStart: "WS26/27"
+    },
+    {
+        oldModuleAcronym: "BA Soz D.6.1 A",
+        oldModuleName: "Grundlagen der Arbeitswissenschaft",
+        oldModuleSemesterEnd: "SS26",
+        newModuleAcronym: "BASozD1E1",
+        newModuleName: "Einführung in die Arbeitswissenschaft",
+        newModuleSemesterStart: "WS26/27"
+    },
+    {
+        oldModuleAcronym: "MASOZ-ST1",
+        oldModuleName: "Soziologische Theorie und Forschung",
+        oldModuleSemesterEnd: "SS26",
+        newModuleAcronym: "MSSR-A1",
+        newModuleName: "Sociological Theory and Research",
+        newModuleSemesterStart: "WS26/27"
+    },
+    {
+        oldModuleAcronym: "MASOZ-ST2",
+        oldModuleName: "Soziologische Theorie",
+        oldModuleSemesterEnd: "SS26",
+        newModuleAcronym: "MSSR-A2",
+        newModuleName: "Advanced Sociological Theory: Building on Theoretical Foundations",
+        newModuleSemesterStart: "WS26/27"
+    },
+    {
+        oldModuleAcronym: "MASOZ-MES1",
+        oldModuleName: "Research Design",
+        oldModuleSemesterEnd: "SS26",
+        newModuleAcronym: "MSSR-B1",
+        newModuleName: "Research Design",
+        newModuleSemesterStart: "WS26/27"
+    },
+    {
+        oldModuleAcronym: "MASOZ-KMI1",
+        oldModuleName: "Kommunikation, Medien und Öffentlichkeit",
+        oldModuleSemesterEnd: "SS26",
+        newModuleAcronym: "MSSR-C3.1",
+        newModuleName: "Communication, Media and Publics",
+        newModuleSemesterStart: "WS26/27"
+    },
+    {
+        oldModuleAcronym: "MASOZ-POA1",
+        oldModuleName: "Personal und Arbeit",
+        oldModuleSemesterEnd: "SS26",
+        newModuleAcronym: "MSSR-C4.3",
+        newModuleName: "Human Resource Management and Labour Studies",
+        newModuleSemesterStart: "WS26/27"
+    },
 ];

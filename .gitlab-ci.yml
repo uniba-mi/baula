@@ -6,12 +6,14 @@ workflow:
         RUNNER_TAG: live-test-server
         DEPLOY_DIR: /home/gitlab-runner/baula-test
         FRONTEND_BUILD_MODE: PROD_BUILD_FRONTEND_TEST
+        DOCS_URL: https://baula-test.minf.uni-bamberg.de/docs/user/
     - if: $CI_COMMIT_BRANCH == "main"
       variables:
         ENV_FILES_PATH: /home/gitlab-runner/envFilesProd
         DEPLOY_DIR: /home/gitlab-runner/baula-prod
         RUNNER_TAG: live-prod-server
         FRONTEND_BUILD_MODE: PROD_BUILD_FRONTEND_PROD
+        DOCS_URL: https://baula.minf.uni-bamberg.de/docs/user/
 
 default:
   tags:
@@ -79,7 +81,8 @@ build_docs:
   stage: build_docs
   dependencies: []
   script:
-    - npm run buildInitial PROD_BUILD_DOCS
+    - 'echo "url: $DOCS_URL" > ./documentation/user-docs/retype.yml'
+    - npm run buildUserDocs
   artifacts:
     paths:
       - server/app/docs
