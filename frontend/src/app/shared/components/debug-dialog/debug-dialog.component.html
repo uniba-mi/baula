@@ -22,7 +22,7 @@
             </ul>
             <hr class="my-2" />
             <h3 i18n>Angaben zu Studiengängen:</h3>
-            @for (sp of data.metadata.sps; track sp.spId) {
+            @for (sp of data.raw.metadata; track sp.spId) {
             <mat-card appearance="outlined" class="m-2 p-2">
                 <mat-card-header>
                     <mat-card-title>{{ sp.name }} ({{ sp.faculty }})</mat-card-title>
@@ -31,6 +31,16 @@
                     <div i18n>Status: {{ sp.status }}</div>
                     <div i18n>Studiendauer: {{ sp.duration }}</div>
                     <div i18n>ECTS: {{ sp.maxEcts }}</div>
+                    <div>Semester:</div>
+                    <ul>
+                        @for(semester of sp.semesters; track semester.semester) {
+                            <li>{{semester.count}}. Semester ({{semester.semester | Semester }}) 
+                                | {{ semester.type }}
+                                {{ semester.startSemester ? '| Startsemester' : ''}} 
+                                {{ semester.endSemester ? '| EndSemester' : ''}} 
+                                | {{ semester.partTime ? 'Teilzeit' : 'Vollzeit'}}</li>
+                        }
+                    </ul>
                 </mat-card-content>
             </mat-card>
             } @empty {

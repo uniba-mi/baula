@@ -534,7 +534,7 @@ export class FlexnowService {
         withLatestFrom(this.currentUser$, this.store.select(getModules)),
         map(([flexNowOutput, user, mhbModules]) => {
 
-          if (this.debuggingMode && mode == 'update-studypath') {
+          if (this.debuggingMode) {
             this.dialog.open(DebugDialogComponent, {
               data: flexNowOutput,
             });
