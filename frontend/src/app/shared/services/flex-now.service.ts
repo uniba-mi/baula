@@ -46,6 +46,7 @@ import { ModuleHandbookActions } from 'src/app/actions/module-overview.actions';
 import { TransformationService } from './transformation.service';
 import { SnackbarService } from './snackbar.service';
 import { mergeFlexNowModulesIntoMissingModules } from '../helpers/flex-now-merge.helper';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -62,7 +63,7 @@ export class FlexnowService {
   lastFlexNowStudypathConsent$: Observable<Consent | null>;
   currentUser$: Observable<User>;
   private unsubscribe$ = new Subject<void>();
-  debuggingMode = false;
+  debuggingMode = !environment.production; // enable debuggingMode in test environment
 
   constructor() {
     this.lastFlexnowApiConsent$ = this.store.select(
