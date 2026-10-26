@@ -25,6 +25,8 @@ import { LongTermEvaluation } from '../../../../../../interfaces/long-term-evalu
 import { LteRestService } from '../lte-rest.service';
 import { PrivacyStatementComponent } from '../privacy-statement/privacy-statement.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { AlertType } from 'src/app/shared/classes/alert';
 
 @Component({
   selector: 'lte-survey',
@@ -50,6 +52,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class SurveyComponent implements OnInit, OnDestroy {
   dialogRef = inject<MatDialogRef<SurveyComponent>>(MatDialogRef);
   private screenSizeService = inject(ScreenSizeService);
+  private snackBarService = inject(SnackbarService);
 
   data: {
     evaluationCode: string;
@@ -218,11 +221,18 @@ export class SurveyComponent implements OnInit, OnDestroy {
         .pipe(take(1))
         .subscribe({
           next: () => {
-            console.log('Eintrag in Datenbank gespeichert!');
+            this.snackBarService.openSnackBar({
+              type: AlertType.SUCCESS,
+              message: 'Eintrag in Datenbank gespeichert!'
+            });
             this.dialogRef.close(result);
           },
           error: (error) => {
             console.log(error);
+            this.snackBarService.openSnackBar({
+              type: AlertType.DANGER,
+              message: 'Der Eintrag konnte nicht in der Datenbank gespeichert werden.'
+            })
             this.dialogRef.close(result);
           },
         });
