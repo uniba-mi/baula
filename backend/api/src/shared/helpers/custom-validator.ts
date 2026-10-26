@@ -181,7 +181,7 @@ export const validateAndReturnSurveyResult = (
     result.evaluationCode &&
     validator.matches(result.evaluationCode, /\d{1,2}-20\d{2}/) &&
     result.spName &&
-    validator.isAscii(result.spName) &&
+    validator.isAlpha(result.spName, undefined, { ignore: ' .#+|()&:/ß _-äöü'}) &&
     result.semester &&
     validator.isInt(String(result.semester), { min: 0, max: 20 }) &&
     result.pu &&
